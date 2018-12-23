@@ -1,0 +1,28 @@
+Package: brio
+Title: Data I/O for Bioinformatics
+Description: Extension of the rio package with improved support for biological
+    data structures.
+Version: 0.1.0
+Date: 2018-12-23
+Authors@R: person(
+    "Michael", "Steinbaugh",
+    email = "mike@steinbaugh.com",
+    role = c("aut", "cre"),
+    comment = c(ORCID = "0000-0002-2403-2221"))
+URL: https://github.com/steinbaugh/brio/
+BugReports: https://github.com/steinbaugh/brio/issues/
+License: MIT + file LICENSE
+Encoding: UTF-8
+Depends: R (>= 3.5)
+Imports:
+    bioverbs (>= 0.1),
+    goalie (>= 0.2.2),
+    methods,
+    rio (>= 0.5.16),
+    rtracklayer (>= 1.42.1),
+    tibble (>= 1.4.2),
+    tools
+Remotes: steinbaugh/bioverbs
+biocViews: DataImport
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 6.1.1
