@@ -14,9 +14,14 @@ assignAndSaveData(name, object, envir = parent.frame(),
 \item{name}{\code{character(1)}.
 Desired variable name.}
 
+\item{object}{Object.}
+
 \item{envir}{\code{environment}.
 Environment to use for assignment.
 Defaults to \code{\link[=parent.frame]{parent.frame()}}, the calling environment.}
+
+\item{dir}{\code{character(1)}.
+Directory path.}
 
 \item{ext}{\code{character(1)}.
 R data serialized (RDS; "\code{rds}") or R data ("\code{rda}", "\code{RData}"). RDS is

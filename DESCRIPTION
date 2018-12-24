@@ -18,6 +18,7 @@ Imports:
     Matrix (>= 1.2),
     R.utils (>= 2.7),
     RCurl (>= 1.95),
+    S4Vectors,
     SingleCellExperiment,
     SummarizedExperiment,
     bioverbs (>= 0.1),
@@ -58,5 +59,7 @@ Collate:
     'params.R'
     'pasteURL.R'
     'realpath.R'
+    'sanitizeColData.R'
+    'sanitizeRowData.R'
     'transmit.R'
     'writeCounts.R'

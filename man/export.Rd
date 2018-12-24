@@ -38,6 +38,9 @@ or in lieu of specifying \code{file}.}
 \item{name}{\code{character(1)}.
 Name to use on disk. If \code{NULL}, will use the name of the object instead.}
 
+\item{dir}{\code{character(1)}.
+Directory path.}
+
 \item{compress}{\code{logical(1)}.
 Apply gzip compression to all files.}
 
