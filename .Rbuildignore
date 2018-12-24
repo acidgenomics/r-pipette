@@ -1,4 +1,6 @@
+^_pkgdown\.yml$
 ^.*\.Rproj$
+^\.lintr$
 ^\.Rproj\.user$
 ^docs$
 ^pkgdown$
