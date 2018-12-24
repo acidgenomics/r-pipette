@@ -15,15 +15,19 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Depends: R (>= 3.5)
 Imports:
+    Matrix (>= 1.2),
     SingleCellExperiment,
     SummarizedExperiment,
     bioverbs (>= 0.1),
     goalie (>= 0.2.2),
+    jsonlite (>= 1.6),
     methods,
+    readxl (>= 1.2),
     rio (>= 0.5.16),
     rtracklayer (>= 1.42.1),
     tibble (>= 1.4.2),
-    tools
+    tools,
+    yaml (>= 2.2)
 Remotes: steinbaugh/bioverbs
 biocViews: DataImport
 Roxygen: list(markdown = TRUE)
