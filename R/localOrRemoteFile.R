@@ -10,22 +10,13 @@
 #'   Local file paths or remote URLs.
 #'
 #' @return `character`.
-#' Local file paths. Stops on a missing file.
+#' Local file path(s). Stops on a missing file.
 #'
-#' @seealso `tempdir`.
+#' @seealso [tempdir()].
 #'
 #' @examples
-#' ## Import a single file.
-#' file <- file.path(basejumpCacheURL, "rnaseq_counts.csv.gz")
+#' file <- file.path(exampleDir, "rnaseq_counts.csv")
 #' x <- localOrRemoteFile(file)
-#' basename(x)
-#'
-#' ## Import multiple files (vectorized).
-#' files <- file.path(
-#'     basejumpCacheURL,
-#'     c("rnaseq_counts.csv.gz", "single_cell_counts.mtx.gz")
-#' )
-#' x <- localOrRemoteFile(files)
 #' basename(x)
 localOrRemoteFile <- function(file) {
     assert(isCharacter(file))
@@ -38,22 +29,14 @@ localOrRemoteFile <- function(file) {
             # Remote file mode.
             if (isTRUE(isAURL(file))) {
                 assert(hasInternet())
-                ext <- str_match(basename(file), extPattern) %>%
-                    .[1L, 2L:3L] %>%
-                    na.omit() %>%
-                    paste(collapse = "")
+                ext <- str_match(basename(file), extPattern)[1L, 2L:3L]
+                ext <- na.omit(ext)
+                ext <- paste(ext, collapse = "")
                 assert(hasLength(ext))
                 # Fix for binary files (typically on Windows).
                 # https://github.com/tidyverse/readxl/issues/374
                 binary <- c(
-                    "bz2",
-                    "gz",
-                    "rda",
-                    "rds",
-                    "xls",
-                    "xlsx",
-                    "xz",
-                    "zip"
+                    "bz2", "gz", "rda", "rds", "xls", "xlsx", "xz", "zip"
                 )
                 if (ext %in% binary) {
                     # Write binary.
