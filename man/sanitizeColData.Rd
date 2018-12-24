@@ -2,12 +2,9 @@
 % Please edit documentation in R/sanitizeColData.R
 \name{sanitizeColData}
 \alias{sanitizeColData}
-\alias{sanitizeSampleData}
 \title{Sanitize column data}
 \usage{
 sanitizeColData(object)
-
-sanitizeSampleData(object)
 }
 \arguments{
 \item{object}{\code{DataFrame}.}
@@ -41,9 +38,9 @@ is applied.
 
 \examples{
 data(rse, package = "basejump")
-from <- sampleData(rse)
+from <- colData(rse)
 print(from)
-to <- sanitizeSampleData(from)
+to <- sanitizeColData(from)
 all(vapply(to, is.factor, logical(1L)))
 print(to)
 }
