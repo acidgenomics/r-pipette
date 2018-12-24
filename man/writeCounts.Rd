@@ -37,16 +37,8 @@ This function is desired for interactive use and interprets object
 names using non-standard evaluation.
 }
 \examples{
-library(SummarizedExperiment)
-library(SingleCellExperiment)
-
-data(rse, sce)
-
-rnaseq_counts <- SummarizedExperiment::assay(rse)
-single_cell_counts <- SummarizedExperiment::assay(sce)
-
-writeCounts(rnaseq_counts, single_cell_counts, dir = "example")
-list.files("example")
+counts <- matrix(data = seq_len(100L), nrow = 10)
+writeCounts(counts, dir = "example")
 
 ## Clean up.
 unlink("example", recursive = TRUE)

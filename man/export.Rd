@@ -23,7 +23,7 @@
 }
 \arguments{
 \item{x}{\code{ANY}.
-An object supporting \link[base:dim]{dim}, to be written to disk.}
+An object supporting \code{\link[base:dim]{dim()}}, to be written to disk.}
 
 \item{file}{\code{character(1)}.
 File path. Specify \code{file} or \code{format} but not both.}
@@ -71,32 +71,12 @@ are always moved to a "\code{rowname}" column in the CSV export.
 }
 
 \examples{
-library(SummarizedExperiment)
-library(SingleCellExperiment)
-data(rse, sce)
-
-## matrix ====
-rnaseq_counts <- SummarizedExperiment::assay(rse)
-export(rnaseq_counts, format = "csv")
-
-## sparseMatrix ====
-single_cell_counts <- SummarizedExperiment::assay(sce)
-export(single_cell_counts, format = "mtx")
+counts <- matrix(data = seq_len(100L), nrow = 10)
+export(counts, format = "csv")
 
 ## Clean up.
-file.remove(c(
-    "rnaseq_counts.csv",
-    "single_cell_counts.mtx",
-    "single_cell_counts.mtx.colnames",
-    "single_cell_counts.mtx.rownames"
-))
-
-## SummarizedExperiment ====
-export(rse, dir = "example")
-
-## SingleCellExperiment ====
-export(sce, dir = "example")
+file.remove("counts.csv")
 }
 \seealso{
-\code{rio::export()}.
+\code{\link[rio:export]{rio::export()}}.
 }

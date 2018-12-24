@@ -31,11 +31,12 @@ Overwrite existing file.}
     for workspace format version 1.}
 }
 \value{
-Invisible named \code{character}. File paths.
+Invisible named \code{character}.
+File paths.
 }
 \description{
-Wrapper for \code{save} supporting quick, interactive saving of object names
-passed as symbols.
+Wrapper for \code{\link[base:save]{save()}} supporting quick, interactive saving of
+object names passed as symbols.
 }
 \details{
 This function always saves each object into a separate file rather than
@@ -44,16 +45,19 @@ combining multiple objects into a single file.
 \note{
 This function is desired for interactive use and interprets object
 names using non-standard evaluation. It will \strong{overwrite} existing files
-on disk, following the same conventions as \code{save}.
+on disk, following the same conventions as \code{\link[base:save]{save()}}.
 }
 \examples{
-data(rse, sce)
-saveData(rse, sce, dir = "example")
+x <- 1
+saveData(x, dir = "example")
 list.files("example")
 
 ## Clean up.
 unlink("example", recursive = TRUE)
 }
 \seealso{
-\code{save}, \code{saveRDS}.
+\itemize{
+\item \code{\link[base:save]{save()}}
+\item \code{\link[base:saveRDS]{saveRDS()}}.
+}
 }
