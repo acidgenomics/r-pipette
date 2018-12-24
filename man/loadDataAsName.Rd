@@ -12,6 +12,12 @@ loadDataAsName(..., dir = getOption("brio.load.dir", "."),
 \code{newName1} = \code{oldName1}, \code{newName2} = \code{oldName2}. Note that these
 arguments are interpreted using non-standard evaluation, and \emph{should not
 be quoted}.}
+
+\item{dir}{\code{character(1)}.
+Directory path.}
+
+\item{envir}{\code{environment}.
+Environment.}
 }
 \value{
 Invisible named \code{character}. File paths.

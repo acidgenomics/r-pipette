@@ -4,8 +4,16 @@
 \alias{params}
 \title{Parameters}
 \arguments{
+\item{dir}{\code{character(1)}.
+Directory path.}
+
+\item{envir}{\code{environment}.
+Environment.}
+
 \item{file}{\code{character(1)}.
 File path.}
+
+\item{object}{Object.}
 }
 \description{
 Parameters

@@ -9,6 +9,9 @@ loadRemoteData(url, envir = globalenv())
 \arguments{
 \item{url}{\code{character}.
 Remote URL file path(s) to R data.}
+
+\item{envir}{\code{environment}.
+Environment.}
 }
 \value{
 Invisible named \code{character}.
