@@ -21,7 +21,7 @@ Imports:
     SingleCellExperiment,
     SummarizedExperiment,
     bioverbs (>= 0.1),
-    data.table (>= 1.18),
+    data.table (>= 1.11),
     goalie (>= 0.2.2),
     jsonlite (>= 1.6),
     methods,
@@ -33,6 +33,8 @@ Imports:
     tibble (>= 1.4),
     tools,
     yaml (>= 2.2)
+Suggests:
+    basejump (>= 0.9.1)
 Remotes:
     steinbaugh/bioverbs@develop
 biocViews: DataImport
