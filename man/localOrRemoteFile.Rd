@@ -12,7 +12,7 @@ Local file paths or remote URLs.}
 }
 \value{
 \code{character}.
-Local file paths. Stops on a missing file.
+Local file path(s). Stops on a missing file.
 }
 \description{
 Dynamically handle a local or remote file path
@@ -22,19 +22,10 @@ This function is vectorized and supports mixed local and remote paths. Remote
 files are downloaded locally to a temporary directory.
 }
 \examples{
-## Import a single file.
-file <- file.path(basejumpCacheURL, "rnaseq_counts.csv.gz")
+file <- system.file("extdata/example.csv", package = "brio")
 x <- localOrRemoteFile(file)
-basename(x)
-
-## Import multiple files (vectorized).
-files <- file.path(
-    basejumpCacheURL,
-    c("rnaseq_counts.csv.gz", "single_cell_counts.mtx.gz")
-)
-x <- localOrRemoteFile(files)
 basename(x)
 }
 \seealso{
-\code{tempdir}.
+\code{\link[=tempdir]{tempdir()}}.
 }
