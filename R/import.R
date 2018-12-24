@@ -147,7 +147,7 @@ import <- function(
     assert(isString(file))
     file <- localOrRemoteFile(file)
     dataFrame <- match.arg(dataFrame)
-    
+
     ext <- str_match(basename(file), extPattern)[1L, 2L]
     # Simplify the extension matching by converting to uppercase.
     ext <- toupper(ext)
@@ -341,7 +341,7 @@ import <- function(
         "Importing", basename(file), "using Matrix::readMM()."
     ))
     data <- readMM(file = file, ...)
-    
+
     # Add the rownames automatically using `.rownames` sidecar file.
     rownamesFile <- paste(file, "rownames", sep = ".")
     rownamesFile <- tryCatch(
@@ -357,7 +357,7 @@ import <- function(
     if (!is.null(rownamesFile)) {
         rownames(data) <- .importSidecar(rownamesFile)
     }
-    
+
     # Add the colnames automatically using `.colnames` sidecar file.
     colnamesFile <- paste(file, "colnames", sep = ".")
     colnamesFile <- tryCatch(
@@ -373,7 +373,7 @@ import <- function(
     if (!is.null(colnamesFile)) {
         colnames(data) <- .importSidecar(colnamesFile)
     }
-    
+
     data
 }
 

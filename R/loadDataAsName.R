@@ -23,13 +23,13 @@ loadDataAsName <- function(..., dir, envir = globalenv()) {
     files <- .listData(names = dots, dir = dir)
     names(files) <- names(dots)
     assert(is.environment(envir))
-    
+
     # Check to see if any of the new names already exist in environment.
     names <- names(dots)
     if (!isTRUE(allAreNonExisting(names, envir = envir, inherits = FALSE))) {
         .safeLoadExistsError(names)
     }
-    
+
     # Note that we can skip safe loading here because we have already checked
     # for existing names in environment outside of the loop call.
     if (any(grepl("\\.rds$", files))) {
@@ -52,7 +52,7 @@ loadDataAsName <- function(..., dir, envir = globalenv()) {
             MoreArgs = list(envir = safe)
         ))
         assert(areSetEqual(dots, ls(safe)))
-        
+
         # Now assign to the desired object names.
         invisible(mapply(
             FUN = function(from, to, safe, envir) {
@@ -69,7 +69,7 @@ loadDataAsName <- function(..., dir, envir = globalenv()) {
             USE.NAMES = FALSE
         ))
     }
-    
+
     invisible(files)
 }
 

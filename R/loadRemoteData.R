@@ -43,12 +43,12 @@ loadRemoteData <- function(url, envir = globalenv()) {
         ignore.case = TRUE
     )
     names(url) <- names
-    
+
     # Check to make sure the objects don't already exist.
     if (!isTRUE(allAreNonExisting(names, envir = envir, inherits = FALSE))) {
         .safeLoadExistsError(names)
     }
-    
+
     # Download the files to tempdir and return a character matrix of mappings.
     invisible(mapply(
         name = names,
@@ -59,7 +59,7 @@ loadRemoteData <- function(url, envir = globalenv()) {
             assign(x = name, value = data, envir = envir)
         }
     ))
-    
+
     assert(allAreExisting(names, envir = envir, inherits = FALSE))
     invisible(url)
 }
