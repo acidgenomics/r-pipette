@@ -1,3 +1,4 @@
+# FIXME match.call approch doesn't work here...need to use standardizeCall
 # FIXME Think about how we want to handle "humanize" mode.
 
 
@@ -17,7 +18,7 @@
 #' [readr]: https://readr.tidyverse.org/
 #'
 #' @param x `ANY`.
-#'   An object supporting [dim][base::dim], to be written to disk.
+#'   An object supporting [`dim()`][base::dim], to be written to disk.
 #' @param file `character(1)`.
 #'   File path. Specify `file` or `format` but not both.
 #' @param format `character(1)`.
@@ -37,34 +38,14 @@
 #' @return Invisible `character`.
 #' File path(s).
 #'
-#' @seealso `rio::export()`.
+#' @seealso [rio::export()].
 #'
 #' @examples
-#' library(SummarizedExperiment)
-#' library(SingleCellExperiment)
-#' data(rse, sce)
-#'
-#' ## matrix ====
-#' rnaseq_counts <- SummarizedExperiment::assay(rse)
-#' export(rnaseq_counts, format = "csv")
-#'
-#' ## sparseMatrix ====
-#' single_cell_counts <- SummarizedExperiment::assay(sce)
-#' export(single_cell_counts, format = "mtx")
+#' counts <- matrix(data = seq_len(100L), nrow = 10)
+#' export(counts, format = "csv")
 #'
 #' ## Clean up.
-#' file.remove(c(
-#'     "rnaseq_counts.csv",
-#'     "single_cell_counts.mtx",
-#'     "single_cell_counts.mtx.colnames",
-#'     "single_cell_counts.mtx.rownames"
-#' ))
-#'
-#' ## SummarizedExperiment ====
-#' export(rse, dir = "example")
-#'
-#' ## SingleCellExperiment ====
-#' export(sce, dir = "example")
+#' file.remove("counts.csv")
 NULL
 
 
@@ -93,7 +74,7 @@ export.ANY <-  # nolint
         if (missing(file) && missing(format)) {
             stop("Must specify `file` and/or `format`.", call. = FALSE)
         } else if (missing(file)) {
-            call <- match.call()
+            call <- standardizeCall()
             sym <- call[["x"]]
             assert(is.symbol(sym))
             name <- as.character(sym)
