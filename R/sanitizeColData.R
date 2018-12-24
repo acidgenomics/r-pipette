@@ -22,14 +22,6 @@
 #'
 #' @return `DataFrame`.
 #' Contains only `atomic` columns.
-#'
-#' @examples
-#' data(rse, package = "basejump")
-#' from <- colData(rse)
-#' print(from)
-#' to <- sanitizeColData(from)
-#' all(vapply(to, is.factor, logical(1L)))
-#' print(to)
 sanitizeColData <- function(object) {
     assert(
         is(object, "DataFrame"),

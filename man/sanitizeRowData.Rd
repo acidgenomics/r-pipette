@@ -21,18 +21,3 @@ Coerce row annotations (e.g. genes or transcripts) to \code{DataFrame}, and keep
 only \code{atomic} columns. Complex columns (e.g. Entrez ID \code{list}) will fail to
 write to disk as CSVs.
 }
-\examples{
-data(rse, package = "basejump")
-
-## rowData.
-x <- SummarizedExperiment::rowData(rse)
-x <- sanitizeRowData(x)
-vapply(x, is.atomic, logical(1L))
-print(x)
-
-## rowRanges.
-x <- SummarizedExperiment::rowRanges(rse)
-x <- sanitizeRowRanges(x)
-vapply(x, is.atomic, logical(1L))
-print(x)
-}

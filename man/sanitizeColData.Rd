@@ -36,11 +36,3 @@ is applied.
 }
 }
 
-\examples{
-data(rse, package = "basejump")
-from <- colData(rse)
-print(from)
-to <- sanitizeColData(from)
-all(vapply(to, is.factor, logical(1L)))
-print(to)
-}
