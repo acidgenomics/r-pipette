@@ -171,6 +171,10 @@ import <- function(
         data <- .importRDA(file, ...)
     } else if (ext %in% c("GFF", "GFF3", "GTF")) {
         data <- .importGFF(file, ...)
+    } else if (ext == "GMT") {
+        data <- .importGMT(file, ...)
+    } else if (ext == "GMX") {
+        data <- .importGMX(file, ...)
     } else if (ext == "JSON") {
         data <- .importJSON(file, ...)
     } else if (ext %in% c("YAML", "YML")) {
@@ -292,16 +296,27 @@ import <- function(
 
 
 
+# @seealso `fgsea::gmtPathways()`.
 .importGMT <- function(file, ...) {
-    # FIXME
-    stop("Not added yet")
+    lines <- read_lines(file, ...)
+    lines <- strsplit(lines, split = "\t")
+    pathways <- lapply(lines, tail, n = -2L)
+    names(pathways) <- vapply(
+        X = lines,
+        FUN = head,
+        FUN.VALUE = character(1),
+        n = 1L
+    )
+    pathways
 }
 
 
 
 .importGMX <- function(file, ...) {
-    # FIXME
-    stop("Not added yet")
+    lines <- read_lines(file, ...)
+    pathways <- list(tail(lines, n = -2L))
+    names(pathways) <- lines[[1L]]
+    pathways
 }
 
 
