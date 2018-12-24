@@ -31,16 +31,8 @@
 #' names using non-standard evaluation.
 #'
 #' @examples
-#' library(SummarizedExperiment)
-#' library(SingleCellExperiment)
-#'
-#' data(rse, sce)
-#'
-#' rnaseq_counts <- SummarizedExperiment::assay(rse)
-#' single_cell_counts <- SummarizedExperiment::assay(sce)
-#'
-#' writeCounts(rnaseq_counts, single_cell_counts, dir = "example")
-#' list.files("example")
+#' counts <- matrix(data = seq_len(100L), nrow = 10)
+#' writeCounts(counts, dir = "example")
 #'
 #' ## Clean up.
 #' unlink("example", recursive = TRUE)
@@ -51,19 +43,18 @@ writeCounts <- function(..., dir = ".", compress = FALSE) {
         stop("Use `compress` instead of `gzip`.")
     }
 
-    dots <- dots_list(...)
-    assert(is.list(dots))
-    names <- dots(..., character = TRUE)
+    data <- list(...)
+    dots <- dots(..., character = TRUE)
     dir <- initDir(dir)
     assert(isFlag(compress))
 
     # Iterate across the dot objects and write to disk.
-    message(paste0("Writing ", toString(names), " to ", dir, "."))
+    message(paste0("Writing ", toString(dots), " to ", dir, "."))
 
     # Put the names first in the call here.
     files <- mapply(
-        name <- names,
-        x <- dots,
+        name = dots,
+        x =  data,
         FUN = function(name, x) {
             if (is.matrix(x)) {
                 if (isTRUE(compress)) {
@@ -81,7 +72,7 @@ writeCounts <- function(..., dir = ".", compress = FALSE) {
                 stop(paste(name, "is not a matrix."))
             }
             file <- file.path(dir, paste0(name, ".", format))
-            do.call(what = export, args = list(x = x, file = file))
+            export(x = x, file = file)
         },
         SIMPLIFY = FALSE,
         USE.NAMES = TRUE
