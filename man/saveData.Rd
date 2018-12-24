@@ -15,6 +15,9 @@ Note that these arguments are interpreted as symbols using non-standard
 evaluation for convenience during interactive use, and \emph{must not be
 quoted}.}
 
+\item{dir}{\code{character(1)}.
+Directory path.}
+
 \item{ext}{\code{character(1)}.
 R data serialized (RDS; "\code{rds}") or R data ("\code{rda}", "\code{RData}"). RDS is
 preferred when saving single objects per file, which is always the

@@ -100,6 +100,8 @@
 #' @param dataFrame `character(1)`.
 #'   Data frame class to return. Can be set globally using the `brio.data.frame`
 #'   option.
+#' @param ... Additional arguments, passed to the respective internal loading
+#'   function.
 #'
 #' Current recommendations (by priority):
 #'
@@ -228,8 +230,7 @@ import <- function(
     message(paste(
         "Importing", basename(file), "using data.table::fread()."
     ))
-    requireNamespace("data.table", quietly = TRUE)
-    data <- data.table::fread(file = file, na.strings = naStrings, ...)
+    data <- fread(file = file, na.strings = naStrings, ...)
     # Coerce tibble to data.frame.
     data <- as.data.frame(data)
 }
@@ -241,8 +242,7 @@ import <- function(
     message(paste(
         "Importing", basename(file), "using readxl::read_excel()."
     ))
-    requireNamespace("readxl", quietly = TRUE)
-    data <- readxl::read_excel(path = file, na = naStrings, ...)
+    data <- read_excel(path = file, na = naStrings, ...)
     # Coerce data.table to data.frame.
     data <- as.data.frame(data)
     data
@@ -310,8 +310,7 @@ import <- function(
     message(paste(
         "Importing", basename(file), "using jsonlite::read_json()."
     ))
-    requireNamespace("jsonlite", quietly = TRUE)
-    jsonlite::read_json(path = file, ...)
+    read_json(path = file, ...)
 }
 
 
@@ -320,7 +319,7 @@ import <- function(
     message(paste(
         "Importing", basename(file), "using yaml::yaml.load_file()."
     ))
-    yaml::yaml.load_file(input = file, ...)
+    yaml.load_file(input = file, ...)
 }
 
 
@@ -330,8 +329,7 @@ import <- function(
     message(paste(
         "Importing", basename(file), "using readr::read_lines()."
     ))
-    requireNamespace("readr", quietly = TRUE)
-    readr::read_lines(file, ...)
+    read_lines(file, ...)
 }
 
 
@@ -342,8 +340,7 @@ import <- function(
     message(paste(
         "Importing", basename(file), "using Matrix::readMM()."
     ))
-    requireNamespace("Matrix", quietly = TRUE)
-    data <- Matrix::readMM(file = file, ...)
+    data <- readMM(file = file, ...)
     
     # Add the rownames automatically using `.rownames` sidecar file.
     rownamesFile <- paste(file, "rownames", sep = ".")
@@ -358,7 +355,7 @@ import <- function(
         }
     )
     if (!is.null(rownamesFile)) {
-        rownames(data) <- .import.sidecar(rownamesFile)
+        rownames(data) <- .importSidecar(rownamesFile)
     }
     
     # Add the colnames automatically using `.colnames` sidecar file.
@@ -374,7 +371,7 @@ import <- function(
         }
     )
     if (!is.null(colnamesFile)) {
-        colnames(data) <- .import.sidecar(colnamesFile)
+        colnames(data) <- .importSidecar(colnamesFile)
     }
     
     data
@@ -388,7 +385,7 @@ import <- function(
         "Importing", basename(file),
         "using readr::read_lines()."
     ))
-    readr::read_lines(file = file, na = naStrings, ...)
+    read_lines(file = file, na = naStrings, ...)
 }
 
 
@@ -398,8 +395,7 @@ import <- function(
     message(paste(
         "Importing", basename(file), "using readr::read_tsv()."
     ))
-    requireNamespace("readr", quietly = TRUE)
-    data <- readr::read_tsv(file = file, na = naStrings, ...)
+    data <- read_tsv(file = file, na = naStrings, ...)
     assert(
         isSubset("id", colnames(data)),
         hasNoDuplicates(data[["id"]])

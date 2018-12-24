@@ -1,10 +1,6 @@
-# FIXME match.call approch doesn't work here...need to use standardizeCall
-# FIXME Think about how we want to handle "humanize" mode.
-
-
-
 #' @name export
 #' @inherit bioverbs::export
+#' @inheritParams params
 #'
 #' @section Row names:
 #'
@@ -205,7 +201,8 @@ setMethod(
         assert(isCharacter(assayNames))
         message(paste("Exporting assays:", toString(assayNames)))
         if (isTRUE(humanize)) {
-            g2s <- Gene2Symbol(x)
+            requireNamespace("basejump", quietly = TRUE)
+            g2s <- basejump::Gene2Symbol(x)
         } else {
             g2s <- NULL
         }
@@ -253,8 +250,9 @@ setMethod(
 # NOTE This step will break if `rowData` doesn't contain `entrezID`.
 .export.Ensembl2Entrez <-  # nolint
     function(x, ext, dir) {
+        requireNamespace("basejump", quietly = TRUE)
         export(
-            x = Ensembl2Entrez(x),
+            x = basejump::Ensembl2Entrez(x),
             file = file.path(dir, paste0("Ensembl2Entrez", ext))
         )
     }
@@ -263,8 +261,9 @@ setMethod(
 
 .export.Gene2Symbol <-  # nolint
     function(x, ext, dir) {
+        requireNamespace("basejump", quietly = TRUE)
         export(
-            x = Gene2Symbol(x),
+            x = basejump::Gene2Symbol(x),
             file = file.path(dir, paste0("Gene2Symbol", ext))
         )
     }
@@ -301,7 +300,6 @@ setMethod(
 # columns per matrix. This requires gene-to-symbol mappings to be defined in
 # `rowData`, otherwise the function will intentionally error. In this case,
 # we're also consistently not using a "rowname" column in the output.
-# TODO Include 1:1 Ensembl2Entrez mappings in output.
 export.SummarizedExperiment <-  # nolint
     function(
         x,

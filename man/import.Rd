@@ -11,9 +11,8 @@ import(file, ..., dataFrame = c("data.frame", "DataFrame", "tbl_df",
 \item{file}{\code{character(1)}.
 File path.}
 
-\item{dataFrame}{\code{character(1)}.
-Data frame class to return. Can be set globally using the \code{brio.data.frame}
-option.
+\item{...}{Additional arguments, passed to the respective internal loading
+function.
 
 Current recommendations (by priority):
 \itemize{
@@ -42,6 +41,10 @@ Current recommendations (by priority):
 \item See \code{help(topic = "data.table", package = "data.table")} for details.
 }
 }}
+
+\item{dataFrame}{\code{character(1)}.
+Data frame class to return. Can be set globally using the \code{brio.data.frame}
+option.}
 }
 \value{
 Varies, depending on the file extension:
