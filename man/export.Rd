@@ -14,12 +14,10 @@
 \S4method{export}{sparseMatrix}(x, file, format)
 
 \S4method{export}{SummarizedExperiment}(x, name = NULL, dir = ".",
-  compress = FALSE, humanize = FALSE, slotNames = c("assays",
-  "colData", "rowData", "Gene2Symbol", "Ensembl2Entrez"))
+  compress = FALSE, slotNames = c("assays", "colData", "rowData"))
 
 \S4method{export}{SingleCellExperiment}(x, name = NULL, dir = ".",
-  compress = FALSE, humanize = FALSE, slotNames = c("assays",
-  "colData", "rowData", "Gene2Symbol", "Ensembl2Entrez"))
+  compress = FALSE, slotNames = c("assays", "colData", "rowData"))
 }
 \arguments{
 \item{x}{\code{ANY}.
@@ -43,10 +41,6 @@ Directory path.}
 
 \item{compress}{\code{logical(1)}.
 Apply gzip compression to all files.}
-
-\item{humanize}{\code{logical(1)}.
-Automatically convert gene IDs to gene symbols in the row names and sample
-IDs to sample names in the column names.}
 
 \item{slotNames}{\code{character}.
 Names of slots to include when writing to disk.}
