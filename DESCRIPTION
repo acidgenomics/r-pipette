@@ -35,8 +35,6 @@ Imports:
     tools,
     utils,
     yaml (>= 2.2)
-Suggests:
-    basejump (>= 0.9.1)
 Remotes:
     steinbaugh/bioverbs@develop
 biocViews: DataImport
