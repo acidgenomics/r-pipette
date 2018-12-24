@@ -14,7 +14,8 @@
 #' @return Invisible named `character`. File paths.
 #'
 #' @examples
-#' loadDataAsName(renamed = example, dir = exampleDir)
+#' dir <- system.file("extdata", package = "brio")
+#' loadDataAsName(renamed = example, dir = dir)
 #' class(renamed)
 loadDataAsName <- function(..., dir, envir = globalenv()) {
     dots <- dots(..., character = TRUE)

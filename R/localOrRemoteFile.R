@@ -15,7 +15,7 @@
 #' @seealso [tempdir()].
 #'
 #' @examples
-#' file <- file.path(exampleDir, "rnaseq_counts.csv")
+#' file <- system.file("extdata/example.csv", package = "brio")
 #' x <- localOrRemoteFile(file)
 #' basename(x)
 localOrRemoteFile <- function(file) {
