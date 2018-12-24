@@ -10,24 +10,9 @@
 #'
 #' @return `DataFrame`.
 #' Contains only `atomic` columns.
-#'
-#' @examples
-#' data(rse, package = "basejump")
-#'
-#' ## rowData.
-#' x <- SummarizedExperiment::rowData(rse)
-#' x <- sanitizeRowData(x)
-#' vapply(x, is.atomic, logical(1L))
-#' print(x)
-#'
-#' ## rowRanges.
-#' x <- SummarizedExperiment::rowRanges(rse)
-#' x <- sanitizeRowRanges(x)
-#' vapply(x, is.atomic, logical(1L))
-#' print(x)
 sanitizeRowData <- function(object) {
     assert(isAny(object, classes = c("GRanges", "DataFrame")))
-    .atomicDataFrame(object)
+    .atomize(object)
 }
 
 
