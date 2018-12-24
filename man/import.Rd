@@ -4,14 +4,16 @@
 \alias{import}
 \title{Import}
 \usage{
-import(file, ...)
+import(file, ..., dataFrame = c("data.frame", "DataFrame", "tbl_df",
+  "data.table"))
 }
 \arguments{
 \item{file}{\code{character(1)}.
 File path.}
 
-\item{dataFrame}{\code{character(1)}. Data frame class to return. Can be set
-globally using the \code{brio.data.frame} option.
+\item{dataFrame}{\code{character(1)}.
+Data frame class to return. Can be set globally using the \code{brio.data.frame}
+option.
 
 Current recommendations (by priority):
 \itemize{
@@ -69,21 +71,21 @@ Imported by \code{\link[data.table:fread]{data.table::fread()}}.
 \item \code{XLSX}/\code{XLS}: Excel workbook.\cr
 Imported by \code{\link[readxl:read_excel]{readxl::read_excel()}}.
 \item \code{MTX}: MatrixMarket sparse matrix.\cr
-Imported by \code{Matrix::readMM}.
+Imported by \code{\link[Matrix:readMM]{Matrix::readMM()}}.
 \item \code{GTF}/\code{GFF}/\code{GFF3}: General Feature Format.\cr
-Imported by \code{rtracklayer::import}.
+Imported by \code{\link[rtracklayer:import]{rtracklayer::import()}}.
 \item \code{JSON}: JSON.
-Imported by \code{jsonlite::read_json}.
+Imported by \code{\link[jsonlite:read_json]{jsonlite::read_json()}}.
 \item \code{YAML}/\code{YML}: YAML.
-Imported by \code{yaml::yaml.load_file}
+Imported by \code{\link[yaml:yaml.load_file]{yaml::yaml.load_file()}}.
 \item \code{RDA}/\code{RDATA}: R Data.
 \itemize{
 \item Imported by \code{load}.
 \item Must contain a single object.
-\item Doesn't require internal object name to match, unlike \code{loadData}.
+\item Doesn't require internal object name to match, unlike \code{\link[=loadData]{loadData()}}.
 }
 \item \code{RDS}: R Data Serialized.\cr
-Imported by \code{readRDS}.
+Imported by \code{\link[base:readRDS]{readRDS()}}.
 }
 
 These file formats will be imported as source code lines by
@@ -94,14 +96,14 @@ These file formats are blacklisted, and intentionally not supported:
 
 If a file format isn't supported natively (or blacklisted), the
 \href{https://cran.r-project.org/web/packages/rio/index.html}{rio} package will
-be used as a fallback attempt. See \code{rio::import} for details.
+be used as a fallback attempt. See \code{\link[rio:import]{rio::import()}} for details.
 }
 \section{Delimited Files (CSV/TSV)}{
 
 
-\code{import} uses the \code{fread} function of the  \href{https://cran.r-project.org/package=data.table}{data.table} package to
-import standard CSV and TSV files. This should work automatically for most
-files without issue.
+\code{\link[=import]{import()}} uses the \code{\link[data.table:fread]{fread()}} function of the
+\href{https://cran.r-project.org/package=data.table}{data.table} package to import standard CSV and TSV files. This should work
+automatically for most files without issue.
 
 Here are some notable exceptions:
 \itemize{
@@ -111,8 +113,9 @@ is \code{numeric}, set \code{header = TRUE} here to force the column name.
 
 See \code{help(topic = "fread", package = "data.table")} for details.
 
-The \code{read_csv} and \code{read_tsv} functions of the \href{https://readr.tidyverse.org}{readr} package
-are good alternatives, which return \code{tibble} data frames (\code{tbl_df}).
+The \code{\link[readr:read_csv]{read_csv()}} and \code{\link[readr:read_tsv]{read_tsv()}}
+functions of the \href{https://readr.tidyverse.org}{readr} package are good alternatives, which return
+\code{tibble} data frames (\code{tbl_df}).
 }
 
 \section{Matrix Market Exchange (MTX/MEX)}{
@@ -152,38 +155,9 @@ Also supports some additional extensions commonly used with the
 }
 
 \examples{
-url <- basejumpCacheURL
-
-## Comma Separated Values
-x <- import(file = file.path(url, "example.csv"))
+file <- system.file("extdata/example.csv", package = "brio")
+x <- import(file)
 print(x)
-
-## Tab Separated Values
-x <- import(file = file.path(url, "example.tsv"))
-
-## Microsoft Excel Worksheet
-x <- import(file = file.path(url, "example.xlsx"))
-print(x)
-
-## R Data
-x <- import(file = file.path(url, "rnaseq_counts.rda"))
-class(x)
-
-## GTF/GFF
-# x <- import(file = file.path(url, "example.gtf"))
-# summary(x)
-
-## JSON
-# x <- import(file = file.path(url, "example.json"))
-# names(x)
-
-## YAML
-# x <- import(file = file.path(url, "example.yml"))
-# names(x)
-
-## Counts Table (i.e. aligned counts from bcbio)
-# x <- import(file = file.path(url, "example.counts"))
-# colSums(x)
 }
 \seealso{
 \itemize{

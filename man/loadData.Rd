@@ -39,8 +39,12 @@ This function is desired for interactive use and interprets object
 names using non-standard evaluation.
 }
 \examples{
-loadData(example, dir = system.file("extdata", package = "basejump"))
+dir <- system.file("extdata", package = "brio")
+loadData(example, dir = dir)
 }
 \seealso{
-\code{load}, \code{readRDS}.
+\itemize{
+\item \code{\link[base:load]{load()}}.
+\item \code{\link[base:readRDS]{readRDS()}}.
+}
 }
