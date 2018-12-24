@@ -1,14 +1,14 @@
 #' Save data
 #'
-#' Wrapper for `save` supporting quick, interactive saving of object names
-#' passed as symbols.
+#' Wrapper for [`save()`][base::save] supporting quick, interactive saving of
+#' object names passed as symbols.
 #'
 #' This function always saves each object into a separate file rather than
 #' combining multiple objects into a single file.
 #'
 #' @note This function is desired for interactive use and interprets object
 #'   names using non-standard evaluation. It will **overwrite** existing files
-#'   on disk, following the same conventions as `save`.
+#'   on disk, following the same conventions as [`save()`][base::save].
 #'
 #' @export
 #' @inheritParams loadData
@@ -21,13 +21,16 @@
 #'   preferred when saving single objects per file, which is always the
 #'   convention of `saveData`, regardless of the extension used.
 #'
-#' @seealso `save`, `saveRDS`.
+#' @seealso
+#' - [`save()`][base::save]
+#' - [`saveRDS()`][base::saveRDS].
 #'
-#' @return Invisible named `character`. File paths.
+#' @return Invisible named `character`.
+#' File paths.
 #'
 #' @examples
-#' data(rse, sce)
-#' saveData(rse, sce, dir = "example")
+#' x <- 1
+#' saveData(x, dir = "example")
 #' list.files("example")
 #'
 #' ## Clean up.
