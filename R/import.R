@@ -1,3 +1,8 @@
+# GMT/GMX:
+# https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats
+
+
+
 #' Import
 #'
 #' Read file by extension into R.
@@ -16,19 +21,19 @@
 #' - `XLSX`/`XLS`: Excel workbook.\cr
 #'   Imported by [readxl::read_excel()].
 #' - `MTX`: MatrixMarket sparse matrix.\cr
-#'   Imported by `Matrix::readMM`.
+#'   Imported by [Matrix::readMM()].
 #' - `GTF`/`GFF`/`GFF3`: General Feature Format.\cr
-#'   Imported by `rtracklayer::import`.
+#'   Imported by [rtracklayer::import()].
 #' - `JSON`: JSON.
-#'   Imported by `jsonlite::read_json`.
+#'   Imported by [jsonlite::read_json()].
 #' - `YAML`/`YML`: YAML.
-#'   Imported by `yaml::yaml.load_file`
+#'   Imported by [yaml::yaml.load_file()].
 #' - `RDA`/`RDATA`: R Data.
 #'     - Imported by `load`.
 #'     - Must contain a single object.
-#'     - Doesn't require internal object name to match, unlike `loadData`.
+#'     - Doesn't require internal object name to match, unlike [loadData()].
 #' - `RDS`: R Data Serialized.\cr
-#'   Imported by `readRDS`.
+#'   Imported by [`readRDS()`][base::readRDS].
 #'
 #' These file formats will be imported as source code lines by
 #' [readr::read_lines()]: `LOG`, `MD`, `PY`, `R`, `RMD`, `SH`.
@@ -38,13 +43,13 @@
 #'
 #' If a file format isn't supported natively (or blacklisted), the
 #' [rio](https://cran.r-project.org/web/packages/rio/index.html) package will
-#' be used as a fallback attempt. See `rio::import` for details.
+#' be used as a fallback attempt. See [rio::import()] for details.
 #'
 #' @section Delimited Files (CSV/TSV):
 #'
-#' `import` uses the `fread` function of the  [data.table][] package to
-#' import standard CSV and TSV files. This should work automatically for most
-#' files without issue.
+#' [import()] uses the [`fread()`][data.table::fread] function of the
+#' [data.table][] package to import standard CSV and TSV files. This should work
+#' automatically for most files without issue.
 #'
 #' Here are some notable exceptions:
 #'
@@ -53,8 +58,9 @@
 #'
 #' See `help(topic = "fread", package = "data.table")` for details.
 #'
-#' The `read_csv` and `read_tsv` functions of the [readr][] package
-#' are good alternatives, which return `tibble` data frames (`tbl_df`).
+#' The [`read_csv()`][readr::read_csv] and [`read_tsv()`][readr::read_tsv]
+#' functions of the [readr][] package are good alternatives, which return
+#' `tibble` data frames (`tbl_df`).
 #'
 #' [data.table]: https://cran.r-project.org/package=data.table
 #' [readr]: https://readr.tidyverse.org
@@ -91,8 +97,9 @@
 #' @export
 #' @inheritParams params
 #'
-#' @param dataFrame `character(1)`. Data frame class to return. Can be set
-#'   globally using the `brio.data.frame` option.
+#' @param dataFrame `character(1)`.
+#'   Data frame class to return. Can be set globally using the `brio.data.frame`
+#'   option.
 #'
 #' Current recommendations (by priority):
 #'
@@ -127,45 +134,21 @@
 #' - [Matrix](https://cran.r-project.org/web/packages/Matrix/index.html).
 #'
 #' @examples
-#' url <- basejumpCacheURL
-#'
-#' ## Comma Separated Values
-#' x <- import(file = file.path(url, "example.csv"))
+#' file <- system.file("extdata/example.csv", package = "brio")
+#' x <- import(file)
 #' print(x)
-#'
-#' ## Tab Separated Values
-#' x <- import(file = file.path(url, "example.tsv"))
-#'
-#' ## Microsoft Excel Worksheet
-#' x <- import(file = file.path(url, "example.xlsx"))
-#' print(x)
-#'
-#' ## R Data
-#' x <- import(file = file.path(url, "rnaseq_counts.rda"))
-#' class(x)
-#'
-#' ## GTF/GFF
-#' # x <- import(file = file.path(url, "example.gtf"))
-#' # summary(x)
-#'
-#' ## JSON
-#' # x <- import(file = file.path(url, "example.json"))
-#' # names(x)
-#'
-#' ## YAML
-#' # x <- import(file = file.path(url, "example.yml"))
-#' # names(x)
-#'
-#' ## Counts Table (i.e. aligned counts from bcbio)
-#' # x <- import(file = file.path(url, "example.counts"))
-#' # colSums(x)
-import <- function(file, ...) {
+import <- function(
+    file,
+    ...,
+    dataFrame = c("data.frame", "DataFrame", "tbl_df", "data.table")
+) {
+    assert(isString(file))
     file <- localOrRemoteFile(file)
-    dataFrame <- match.arg(arg = dataFrame, choices = .dataFrameChoices)
-
-    # Note that matching is case insensitive.
-    ext <- 
-    ext <- toupper(str_match(basename(file), extPattern)[1L, 2L])
+    dataFrame <- match.arg(dataFrame)
+    
+    ext <- str_match(basename(file), extPattern)[1L, 2L]
+    # Simplify the extension matching by converting to uppercase.
+    ext <- toupper(ext)
 
     # Error on blacklisted extension.
     if (ext %in% c("DOC", "DOCX", "PDF", "PPT", "PPTX")) {
@@ -175,91 +158,31 @@ import <- function(file, ...) {
         ))
     }
 
-    # How we declare NA strings depends on the file extension.
+    # How we set NA strings depends on the file extension.
     if (ext %in% c("CSV", "TSV", "TXT")) {
-        message(paste(
-            "Importing", basename(file), "using data.table::fread()."
-        ))
-        data <- fread(file = file, na.strings = naStrings, ...)
-        # Coerce tibble to data.frame.
-        data <- as.data.frame(data)
+        data <- .importDelim(file, ...)
     } else if (ext %in% c("XLS", "XLSX")) {
-        message(paste("Importing", basename(file), "using readxl::read_excel()."))
-        data <- read_excel(path = file, na = naStrings, ...)
-        # Coerce data.table to data.frame.
-        data <- as.data.frame(data)
-    } else if (ext %in% c("LOG", "MD", "PY", "R", "RMD", "SH")) {
-        message(paste(
-            "Importing", basename(file), "using readr::read_lines()."
-        ))
-        data <- read_lines(file = file, ...)
-    } else if (ext %in% c("COLNAMES", "ROWNAMES")) {
-        message(paste(
-            "Importing", basename(file), "using readr::read_lines()."
-        ))
-        data <- read_lines(file = file, na = naStrings, ...)
-    } else if (ext == "COUNTS") {
-        # bcbio count matrix.
-        message(paste(
-            "Importing", basename(file), "using readr::read_tsv()."
-        ))
-        data <- read_tsv(file = file, na = naStrings, ...)
-        assert(
-            isSubset("id", colnames(data)),
-            hasNoDuplicates(data[["id"]])
-        )
-        # Coerce to matrix.
-        data <- as.data.frame(data)
-        data <- column_to_rownames(data, var = "id")
-        data <- as.matrix(data)
-    } else if (ext %in% c("GFF", "GFF3", "GTF")) {
-        message(paste(
-            "Importing", basename(file), "using rtracklayer::import()."
-        ))
-        requireNamespace("rtracklayer")
-        data <- tryCatch(
-            expr = do.call(what = rtracklayer::import, args = args),
-            error = function(e) {
-                stop("GFF file failed to load.")  # nocov
-            },
-            warning = function(w) {
-                stop("GFF file failed to load.")  # nocov
-            }
-        )
-    } else if (ext == "MTX") {
-        .importMTX(file = file, args = args)
-    } else if (ext %in% c("RDA", "RDATA")) {
-        message(paste(
-            "Importing", basename(file), "using base::load()."
-        ))
-        safe <- new.env()
-        args[["envir"]] <- safe
-        object <- do.call(what = load, args = args)
-        if (length(safe) != 1L) {
-            stop("File does not contain a single object.")
-        }
-        data <- get(object, envir = safe, inherits = FALSE)
+        data <- .importExcel(file, ...)
     } else if (ext == "RDS") {
-        message(paste(
-            "Importing", basename(file), "using base::readRDS()."
-        ))
-        data <- do.call(what = readRDS, args = args)
+        data <- .importRDS(file, ...)
+    } else if (ext %in% c("RDA", "RDATA")) {
+        data <- .importRDA(file, ...)
+    } else if (ext %in% c("GFF", "GFF3", "GTF")) {
+        data <- .importGFF(file, ...)
     } else if (ext == "JSON") {
-        message(paste(
-            "Importing", basename(file), "using jsonlite::read_json()."
-        ))
-        data <- do.call(what = read_json, args = args)
+        data <- .importJSON(file, ...)
     } else if (ext %in% c("YAML", "YML")) {
-        message(paste(
-            "Importing", basename(file), "using yaml::yaml.load_file()."
-        ))
-        data <- do.call(what = yaml.load_file, args = args)
+        data <- .importYAML(file, ...)
+    } else if (ext %in% c("LOG", "MD", "PY", "R", "RMD", "SH")) {
+        data <- .importLines(file, ...)
+    } else if (ext == "MTX") {
+        data <- .importMTX(file, ...)
+    } else if (ext %in% c("COLNAMES", "ROWNAMES")) {
+        data <- .importSidecar(file, ...)
+    } else if (ext == "COUNTS") {
+        data <- .importCounts(file, ...)
     } else {
-        message(paste(
-            "Importing", basename(file), "using rio::import()."
-        ))
-        requireNamespace("rio")
-        data <- do.call(what = rio::import, args = args)
+        data <- .importRio(file, ...)
     }
 
     if (is.data.frame(data)) {
@@ -290,26 +213,138 @@ import <- function(file, ...) {
 
 
 
-# https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats
-.import.gmt <- function(x) {
-    print("hello")
+.importRio <- function(file, ...) {
+    message(paste(
+        "Importing", basename(file), "using rio::import()."
+    ))
+    requireNamespace("rio", quietly = TRUE)
+    rio::import(file, ...)
 }
 
 
 
-.importGMX <- function(x) {
+# CSV, TSV, TXT
+.importDelim <- function(file, ...) {
+    message(paste(
+        "Importing", basename(file), "using data.table::fread()."
+    ))
+    requireNamespace("data.table", quietly = TRUE)
+    data <- data.table::fread(file = file, na.strings = naStrings, ...)
+    # Coerce tibble to data.frame.
+    data <- as.data.frame(data)
+}
+
+
+
+# Microsoft Excel
+.importExcel <- function(file, ...) {
+    message(paste(
+        "Importing", basename(file), "using readxl::read_excel()."
+    ))
+    requireNamespace("readxl", quietly = TRUE)
+    data <- readxl::read_excel(path = file, na = naStrings, ...)
+    # Coerce data.table to data.frame.
+    data <- as.data.frame(data)
+    data
+}
+
+
+
+.importRDS <- function(file, ...) {
+    message(paste(
+        "Importing", basename(file), "using base::readRDS()."
+    ))
+    readRDS(file, ...)
+}
+
+
+
+.importRDA <- function(file, ...) {
+    message(paste(
+        "Importing", basename(file), "using base::load()."
+    ))
+    safe <- new.env()
+    object <- load(file, envir = safe, ...)
+    if (length(safe) != 1L) {
+        stop("File does not contain a single object.")
+    }
+    get(object, envir = safe, inherits = FALSE)
+}
+
+
+
+# GFF, GTF
+.importGFF <- function(file, ...) {
+    message(paste(
+        "Importing", basename(file), "using rtracklayer::import()."
+    ))
+    requireNamespace("rtracklayer", quietly = TRUE)
+    tryCatch(
+        expr = rtracklayer::import(con = file, ...),
+        error = function(e) {
+            stop("GFF file failed to load.")  # nocov
+        },
+        warning = function(w) {
+            stop("GFF file failed to load.")  # nocov
+        }
+    )
+}
+
+
+
+.importGMT <- function(file, ...) {
+    # FIXME
+    stop("Not added yet")
+}
+
+
+
+.importGMX <- function(file, ...) {
+    # FIXME
+    stop("Not added yet")
+}
+
+
+
+.importJSON <- function(file, ...) {
+    message(paste(
+        "Importing", basename(file), "using jsonlite::read_json()."
+    ))
+    requireNamespace("jsonlite", quietly = TRUE)
+    jsonlite::read_json(path = file, ...)
+}
+
+
+
+.importYAML <- function(file, ...) {
+    message(paste(
+        "Importing", basename(file), "using yaml::yaml.load_file()."
+    ))
+    yaml::yaml.load_file(input = file, ...)
+}
+
+
+
+# Source code lines
+.importLines <- function(file, ...) {
+    message(paste(
+        "Importing", basename(file), "using readr::read_lines()."
+    ))
+    requireNamespace("readr", quietly = TRUE)
+    readr::read_lines(file, ...)
 }
 
 
 
 # Sparse matrix. Note that we're warning the user if row and column
 # name sidecar files don't exist.
-.importMTX <- function(file, args) {
+.importMTX <- function(file, ...) {
     message(paste(
         "Importing", basename(file), "using Matrix::readMM()."
     ))
-    data <- do.call(what = readMM, args = args)
-
+    requireNamespace("Matrix", quietly = TRUE)
+    data <- Matrix::readMM(file = file, ...)
+    
     # Add the rownames automatically using `.rownames` sidecar file.
     rownamesFile <- paste(file, "rownames", sep = ".")
     rownamesFile <- tryCatch(
@@ -323,14 +358,9 @@ import <- function(file, ...) {
         }
     )
     if (!is.null(rownamesFile)) {
-        message(paste(
-            "Importing", basename(rownamesFile),
-            "using readr::read_lines()."
-        ))
-        rownames <- read_lines(file = rownamesFile, na = naStrings)
-        rownames(data) <- rownames
+        rownames(data) <- .import.sidecar(rownamesFile)
     }
-
+    
     # Add the colnames automatically using `.colnames` sidecar file.
     colnamesFile <- paste(file, "colnames", sep = ".")
     colnamesFile <- tryCatch(
@@ -344,13 +374,41 @@ import <- function(file, ...) {
         }
     )
     if (!is.null(colnamesFile)) {
-        message(paste(
-            "Importing", basename(colnamesFile),
-            "using readr::read_lines()."
-        ))
-        colnames <- read_lines(file = colnamesFile, na = naStrings)
-        colnames(data) <- colnames
+        colnames(data) <- .import.sidecar(colnamesFile)
     }
+    
+    data
+}
 
+
+
+# Sparse matrix sidecar files (.rownames, .colnames)
+.importSidecar <- function(file, ...) {
+    message(paste(
+        "Importing", basename(file),
+        "using readr::read_lines()."
+    ))
+    readr::read_lines(file = file, na = naStrings, ...)
+}
+
+
+
+# bcbio count matrix.
+.importCounts <- function(file, ...) {
+    message(paste(
+        "Importing", basename(file), "using readr::read_tsv()."
+    ))
+    requireNamespace("readr", quietly = TRUE)
+    data <- readr::read_tsv(file = file, na = naStrings, ...)
+    assert(
+        isSubset("id", colnames(data)),
+        hasNoDuplicates(data[["id"]])
+    )
+    # Coerce tibble to data frame.
+    data <- as.data.frame(data)
+    # Need to move the "id" column to rownames.
+    data <- column_to_rownames(data, var = "id")
+    # Coerce data.frame to matrix.
+    data <- as.matrix(data)
     data
 }

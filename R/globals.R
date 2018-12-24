@@ -1,7 +1,3 @@
-exampleDir <- system.file("extdata", package = "brio")
-
-
-
 #' File extension pattern
 #'
 #' Note optional matching of compression formats.
@@ -29,3 +25,23 @@ formalsList <- list(
 #' @examples
 #' naStrings
 naStrings <- c("", "NA", "#N/A", "NULL", "null")
+
+
+
+#' R data load error
+#' @export
+#' @examples
+#' message(rdataLoadError)
+rdataLoadError <- paste(
+    "Failed to load data.",
+    "R data files must contain '.rda', '.rds', or '.RData' extension.",
+    sep = "\n"
+)
+
+
+
+#' R data extension pattern
+#' @export
+#' @examples
+#' rdataExtPattern
+rdataExtPattern <- "\\.(rd[a|ata|s])$"

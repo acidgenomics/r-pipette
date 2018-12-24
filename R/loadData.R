@@ -34,7 +34,8 @@
 #' - [`readRDS()`][base::readRDS].
 #'
 #' @examples
-#' loadData(example, dir = exampleDir)
+#' dir <- system.file("extdata", package = "brio")
+#' loadData(example, dir = dir)
 loadData <- function(..., dir, envir = globalenv()) {
     names <- dots(..., character = TRUE)
     files <- .listData(names = names, dir = dir)

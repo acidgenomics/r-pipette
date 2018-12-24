@@ -1,5 +1,7 @@
 # TODO Need to improve error messages here rather than simply using asserts.
 
+
+
 #' Transmit files from a remote FTP server
 #'
 #' Utility function that supports easy file matching and download from a remote
@@ -66,8 +68,7 @@ transmit <- function(
     )
 
     # Get the name of the server.
-    server <- str_match(string = remoteDir, pattern = "^.*//([^/]+)/.*$") %>%
-        .[1L, 2L]
+    server <- str_match(remoteDir, "^.*//([^/]+)/.*$")[1L, 2L]
     assert(isString(server))
 
     # Error and inform the user if the FTP connection fails.
@@ -78,8 +79,8 @@ transmit <- function(
     }
 
     remoteTxt <- getURL(remoteDir)
-    if (!isTRUE(
-        is.character(remoteTxt) &&
+    if (!all(
+        is.character(remoteTxt),
         length(remoteTxt) > 0L
     )) {
         stop("Failed to list directory contents.")
@@ -88,22 +89,17 @@ transmit <- function(
     # Match the `-` at begining for file.
     # `-rwxrwxr-x`: File
     # `drwxrwxr-x`: Directory
-    remoteFiles <- remoteTxt %>%
-        read_lines() %>%
-        .[grepl("^-", .)] %>%
-        # File name is at the end, not including a space.
-        str_extract(pattern = "[^\\s]+$")
+    remoteFiles <- read_lines(remoteTxt)
+    remoteFiles <- remoteFiles[grepl("^-", remoteFiles)]
+    # File name is at the end, not including a space.
+    remoteFiles <- str_extract(remoteFiles, "[^\\s]+$")
     assert(hasLength(remoteFiles))
 
     # Apply pattern matching.
     match <- str_subset(remoteFiles, pattern)
     assert(hasLength(match))
 
-    message(paste(
-        "Files matching pattern:",
-        printString(match),
-        sep = "\n"
-    ))
+    message(sprintf("Files matching pattern:\n%s", toString(match)))
 
     # Concatenate using paste but strip the trailing slash (see above).
     remotePaths <- paste(gsub("/$", "", remoteDir), match, sep = "/")
