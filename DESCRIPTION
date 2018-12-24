@@ -1,5 +1,5 @@
 Package: brio
-Title: Data I/O for Bioinformatics
+Title: Biological R Input/Output
 Description: Extension of the rio package with improved support for biological
     data structures.
 Version: 0.1.0
