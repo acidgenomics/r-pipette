@@ -1,3 +1,7 @@
+exampleDir <- system.file("extdata", package = "brio")
+
+
+
 #' File extension pattern
 #'
 #' Note optional matching of compression formats.
