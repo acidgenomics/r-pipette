@@ -25,9 +25,9 @@
 #'
 #' @examples
 #' data(rse, package = "basejump")
-#' from <- sampleData(rse)
+#' from <- colData(rse)
 #' print(from)
-#' to <- sanitizeSampleData(from)
+#' to <- sanitizeColData(from)
 #' all(vapply(to, is.factor, logical(1L)))
 #' print(to)
 sanitizeColData <- function(object) {
@@ -38,35 +38,13 @@ sanitizeColData <- function(object) {
         hasColnames(object),
         hasValidDimnames(object)
     )
-    .atomicDataFrame(object)
-}
-
-
-
-#' @rdname sanitizeColData
-#' @export
-sanitizeSampleData <- function(object) {
-    assert(
-        # Require `sampleName` column.
-        "sampleName" %in% colnames(object),
-        # Check for any duplicate rows.
-        hasNoDuplicates(object[["sampleName"]])
-    )
-    # Drop blacklisted columns.
-    blacklist <- c("interestingGroups", "sampleID")
-    object <- object[, setdiff(colnames(object), blacklist), drop = FALSE]
-    # This will flatten the S4 columns if possible and drop non-atomic.
-    object <- sanitizeColData(object)
-    # Ensure all columns are factors, with up-to-date levels.
-    object <- .factorize(object)
-    # Return.
-    object
+    .atomize(object)
 }
 
 
 
 # Consider exporting this.
-.atomicDataFrame <- function(object) {
+.atomize <- function(object) {
     # First, coerce to S3 data frame.
     # This step helps coerce nested S4 data to atomic columns.
     # This will also decode Rle columns.
@@ -82,7 +60,7 @@ sanitizeSampleData <- function(object) {
 
 
 # Consider exporting this.
-# See `encode` for Rle approach.
+# See `encode()` for Rle approach.
 .factorize <- function(object) {
     out <- lapply(
         X = object,
