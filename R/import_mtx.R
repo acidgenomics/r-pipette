@@ -19,7 +19,7 @@ import_mtx <- function(file, ...) {
         }
     )
     if (!is.null(rownamesFile)) {
-        rownames(data) <- import.mtx.sidecar(rownamesFile)
+        rownames(data) <- import_mtx_sidecar(rownamesFile)
     }
 
     # Add the colnames automatically using `.colnames` sidecar file.
