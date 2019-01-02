@@ -4,8 +4,7 @@
 \alias{import}
 \title{Import}
 \usage{
-import(file, ..., dataFrame = c("data.frame", "DataFrame", "tbl_df",
-  "data.table"))
+import(file, ...)
 }
 \arguments{
 \item{file}{\code{character(1)}.
@@ -41,10 +40,6 @@ Current recommendations (by priority):
 \item See \code{help(topic = "data.table", package = "data.table")} for details.
 }
 }}
-
-\item{dataFrame}{\code{character(1)}.
-Data frame class to return. Can be set globally using the \code{brio.data.frame}
-option.}
 }
 \value{
 Varies, depending on the file extension:
@@ -121,6 +116,12 @@ functions of the \href{https://readr.tidyverse.org}{readr} package are good alte
 \code{tibble} data frames (\code{tbl_df}).
 }
 
+\section{Google Sheets}{
+
+
+Public Google Sheets are now supported. Simply paste in the URL.
+}
+
 \section{Matrix Market Exchange (MTX/MEX)}{
 
 
@@ -145,6 +146,12 @@ Additional information:
 }
 }
 
+\section{GMT/GMX files}{
+
+
+Refer to the Broad Institute \href{https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats}{GSEA wiki} for details.
+}
+
 \section{bcbio files}{
 
 
@@ -154,6 +161,19 @@ Also supports some additional extensions commonly used with the
 \item \code{COUNTS}: Counts table (e.g. RNA-seq aligned counts).
 \item \code{COLNAMES}: Sidecar file containing column names.
 \item \code{ROWNAMES}: Sidecar file containing row names.
+}
+}
+
+\section{Data frame return}{
+
+
+By default, \code{\link[=import]{import()}} returns a standard \code{data.frame}. However, any of these
+desired output formats can be set globally using \code{brio.data.frame}:
+\itemize{
+\item \code{data.frame}
+\item \code{DataFrame} (S4Vectors).
+\item \code{data.table} (data.table).
+\item \code{tbl_df} (tibble).
 }
 }
 
