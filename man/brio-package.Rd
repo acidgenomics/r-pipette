@@ -6,8 +6,8 @@
 \alias{brio-package}
 \title{brio}
 \description{
-Extension of the rio package with improved support for biological data
-structures.
+Extension of the rio and rtracklayer packages with improved support for
+biological data structures.
 }
 \seealso{
 Useful links:
