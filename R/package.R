@@ -1,8 +1,8 @@
 #' brio
-#' 
-#' Extension of the rio package with improved support for biological data
-#' structures.
-#' 
+#'
+#' Extension of the rio and rtracklayer packages with improved support for
+#' biological data structures.
+#'
 #' @importFrom Matrix readMM writeMM
 #' @importFrom RCurl getURL url.exists
 #' @importFrom R.utils gzip
@@ -17,16 +17,13 @@
 #'   hasNoDuplicates hasRownames hasRows hasValidDimnames isAFile isAURL isAny
 #'   isCharacter isFlag isMatchingRegex isNonEmpty isString isSubset
 #'   matchArgsToDoCall standardizeCall
-#' @importFrom jsonlite read_json
 #' @importFrom methods as is
 #' @importFrom readr read_lines read_tsv write_lines
-#' @importFrom readxl read_excel
 #' @importFrom stats na.omit
 #' @importFrom stringr str_extract str_match str_subset
 #' @importFrom tibble as_tibble column_to_rownames
 #' @importFrom tools file_path_sans_ext
-#' @importFrom utils download.file
-#' @importFrom yaml yaml.load_file
+#' @importFrom utils download.file head tail
 "_PACKAGE"
 
 # NAMESPACE conflicts
