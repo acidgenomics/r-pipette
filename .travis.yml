@@ -1,0 +1,46 @@
+# Travis-CI configuration for Bioconductor packages
+# https://docs.travis-ci.com/user/languages/r
+
+# Temporarily enable when caching package library.
+script: true
+
+language: r
+cache: packages
+sudo: false
+bioc_required: true
+
+matrix:
+  include:
+  - os: osx
+    r: bioc-release
+    warnings_are_errors: true
+  - os: linux
+    r: bioc-release
+    warnings_are_errors: true
+  - os: linux
+    r: bioc-devel
+    warnings_are_errors: true
+  fast_finish: true
+
+env:
+  global:
+    - LINTR_COMMENT_BOT=true
+
+r_packages:
+  - covr
+bioc_packages:
+  - BiocCheck
+github_packages:
+  - mjsteinbaugh/lintr
+
+after_success:
+  - Rscript -e 'lintr::lint_package()'
+  - Rscript -e 'covr::codecov()'
+  - R CMD BiocCheck .
+
+notifications:
+  email:
+    recipients:
+      - mike@steinbaugh.com
+    on_success: change
+    on_failure: always
