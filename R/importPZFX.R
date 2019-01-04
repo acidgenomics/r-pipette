@@ -1,4 +1,5 @@
-import_pzfx <- function(file, ...) {
+# Import GraphPad Prism files directly into R!
+importPZFX <- function(file, ...) {
     message(paste(
         "Importing", basename(file), "using pzfx::read_pzfx()."
     ))

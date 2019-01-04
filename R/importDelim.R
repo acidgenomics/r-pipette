@@ -1,4 +1,4 @@
-import_delim <- function(file, ...) {
+importDelim <- function(file, ...) {
     message(paste(
         "Importing", basename(file), "using data.table::fread()."
     ))
