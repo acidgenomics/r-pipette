@@ -1,5 +1,5 @@
 # bcbio count matrix file.
-import_counts <- function(file, ...) {
+importCounts <- function(file, ...) {
     message(paste(
         "Importing", basename(file), "using readr::read_tsv()."
     ))
