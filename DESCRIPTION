@@ -39,7 +39,8 @@ Suggests:
     pzfx (>= 0.1),
     readxl (>= 1.2)
 Remotes:
-    steinbaugh/bioverbs
+    steinbaugh/bioverbs,
+    steinbaugh/goalie
 biocViews: DataImport
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
