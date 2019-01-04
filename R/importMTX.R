@@ -1,6 +1,6 @@
 # Sparse matrix. Note that we're warning the user if row and column
 # name sidecar files don't exist.
-import_mtx <- function(file, ...) {
+importMTX <- function(file, ...) {
     message(paste(
         "Importing", basename(file), "using Matrix::readMM()."
     ))
@@ -19,7 +19,7 @@ import_mtx <- function(file, ...) {
         }
     )
     if (!is.null(rownamesFile)) {
-        rownames(data) <- import_mtx_sidecar(rownamesFile)
+        rownames(data) <- importSidecar(rownamesFile)
     }
 
     # Add the colnames automatically using `.colnames` sidecar file.
@@ -35,7 +35,7 @@ import_mtx <- function(file, ...) {
         }
     )
     if (!is.null(colnamesFile)) {
-        colnames(data) <- import_mtx_sidecar(colnamesFile)
+        colnames(data) <- importSidecar(colnamesFile)
     }
 
     data
@@ -44,7 +44,7 @@ import_mtx <- function(file, ...) {
 
 
 # Sparse matrix sidecar files (.rownames, .colnames)
-import_mtx_sidecar <- function(file, ...) {
+importSidecar <- function(file, ...) {
     message(paste(
         "Importing sidecar", basename(file),
         "using readr::read_lines()."
