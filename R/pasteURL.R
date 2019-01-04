@@ -13,6 +13,9 @@
 #'   supported. Use `"none"` if you want to prepare a URL that already contains
 #'   a protocol in the first element of the dots.
 #'
+#' @return `character`.
+#' URL path, containing forward slashes (`/`).
+#'
 #' @examples
 #' ## HTTPS
 #' x <- pasteURL(
