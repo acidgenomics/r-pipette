@@ -3,7 +3,7 @@ Title: Biological R Input/Output
 Description: Extension of the rio and rtracklayer packages with improved support
     for biological data structures.
 Version: 0.1.1
-Date: 2019-01-02
+Date: 2019-01-04
 Authors@R: person(
     "Michael", "Steinbaugh",
     email = "mike@steinbaugh.com",
@@ -50,20 +50,18 @@ Collate:
     'dots.R'
     'export-methods.R'
     'import.R'
-    'import_counts.R'
-    'import_delim.R'
-    'import_gmt.R'
-    'import_gmx.R'
-    'import_json.R'
-    'import_lines.R'
-    'import_mtx.R'
-    'import_pzfx.R'
-    'import_rda.R'
-    'import_rds.R'
-    'import_using_rio.R'
-    'import_using_rtracklayer.R'
-    'import_xlsx.R'
-    'import_yaml.R'
+    'importCounts.R'
+    'importDelim.R'
+    'importGMT.R'
+    'importGMX.R'
+    'importJSON.R'
+    'importLines.R'
+    'importMTX.R'
+    'importPZFX.R'
+    'importRDA.R'
+    'importRDS.R'
+    'importXLSX.R'
+    'importYAML.R'
     'initDir.R'
     'loadData.R'
     'loadDataAsName.R'
