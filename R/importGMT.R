@@ -1,5 +1,5 @@
 # @seealso `fgsea::gmtPathways()`.
-import_gmt <- function(file, ...) {
+importGMT <- function(file, ...) {
     lines <- read_lines(file, ...)
     lines <- strsplit(lines, split = "\t")
     pathways <- lapply(lines, tail, n = -2L)

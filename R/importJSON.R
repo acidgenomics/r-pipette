@@ -1,4 +1,4 @@
-import_json <- function(file, ...) {
+importJSON <- function(file, ...) {
     message(paste(
         "Importing", basename(file), "using jsonlite::read_json()."
     ))

@@ -1,4 +1,4 @@
-import_rda <- function(file, ...) {
+importRDA <- function(file, ...) {
     message(paste(
         "Importing", basename(file), "using base::load()."
     ))

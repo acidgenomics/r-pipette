@@ -1,4 +1,4 @@
-import_rds <- function(file, ...) {
+importRDS <- function(file, ...) {
     message(paste(
         "Importing", basename(file), "using base::readRDS()."
     ))
