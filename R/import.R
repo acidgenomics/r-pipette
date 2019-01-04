@@ -166,32 +166,34 @@ import <- function(file, ...) {
 
     # How we set NA strings depends on the file extension.
     if (ext %in% c("CSV", "FWF", "PSV", "TSV", "TXT")) {
-        data <- import_delim(file, ...)
+        data <- importDelim(file, ...)
     } else if (ext %in% c("XLS", "XLSB", "XLSX")) {
-        data <- import_xlsx(file, ...)
+        data <- importXLSX(file, ...)
     } else if (ext == "RDS") {
-        data <- import_rds(file, ...)
+        data <- importRDS(file, ...)
     } else if (ext %in% c("RDA", "RDATA")) {
-        data <- import_rda(file, ...)
+        data <- importRDA(file, ...)
     } else if (ext == "GMT") {
-        data <- import_gmt(file, ...)
+        data <- importGMT(file, ...)
     } else if (ext == "GMX") {
-        data <- import_gmx(file, ...)
+        data <- importGMX(file, ...)
     } else if (ext == "JSON") {
-        data <- import_json(file, ...)
+        data <- importJSON(file, ...)
     } else if (ext %in% c("YAML", "YML")) {
-        data <- import_yaml(file, ...)
+        data <- importYAML(file, ...)
     } else if (ext == "MTX") {
-        data <- import_mtx(file, ...)
+        data <- importMTX(file, ...)
     } else if (ext == "COUNTS") {
-        data <- import_counts(file, ...)
+        data <- importCounts(file, ...)
+    } else if (ext %in% c("LOG", "MD", "PY", "R", "RMD", "SH")) {
+        data <- importLines(file, ...)
     } else if (ext %in% c(
         "BED", "BED15", "BEDGRAPH", "BEDPE",
         "BROADPEAK", "NARROWPEAK",
         "GFF", "GFF1", "GFF2", "GFF3", "GTF",
         "BIGWIG", "BW", "WIG"
     )) {
-        data <- import_using_rtracklayer(file, ...)
+        data <- .rtracklayerImport(file, ...)
     } else if (ext %in% c(
         "GSHEET",  # Google Sheets, matched by URL (see above)
         "ODS",  # OpenDocument (LibreOffice)
@@ -206,9 +208,7 @@ import <- function(file, ...) {
         "DBF",  # dBase Database File
         "DIF"  # Data Interchange Format
     )) {
-        data <- import_using_rio(file, ...)
-    } else if (ext %in% c("LOG", "MD", "PY", "R", "RMD", "SH")) {
-        data <- import_lines(file, ...)
+        data <- .rioImport(file, ...)
     } else {
         stop(paste0(
             "Import of ", basename(file), " failed.\n",
@@ -240,4 +240,33 @@ import <- function(file, ...) {
     }
 
     data
+}
+
+
+
+.rioImport <- function(file, ...) {
+    message(paste(
+        "Importing", basename(file), "using rio::import()."
+    ))
+    requireNamespace("rio", quietly = TRUE)
+    rio::import(file, ...)
+}
+
+
+
+# Using `tryCatch()` here to error if there are any warnings.
+.rtracklayerImport <- function(file, ...) {
+    message(paste(
+        "Importing", basename(file), "using rtracklayer::import()."
+    ))
+    requireNamespace("rtracklayer", quietly = TRUE)
+    tryCatch(
+        expr = rtracklayer::import(file, ...),
+        error = function(e) {
+            stop("File failed to load.")  # nocov
+        },
+        warning = function(w) {
+            stop("File failed to load.")  # nocov
+        }
+    )
 }
