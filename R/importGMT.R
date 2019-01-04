@@ -6,7 +6,7 @@ importGMT <- function(file, ...) {
     names(pathways) <- vapply(
         X = lines,
         FUN = head,
-        FUN.VALUE = character(1),
+        FUN.VALUE = character(1L),
         n = 1L
     )
     pathways
