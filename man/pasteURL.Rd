@@ -14,6 +14,10 @@ Desired protocol to use. Defaults to HTTPS but HTTP and FTP are also
 supported. Use \code{"none"} if you want to prepare a URL that already contains
 a protocol in the first element of the dots.}
 }
+\value{
+\code{character}.
+URL path, containing forward slashes (\code{/}).
+}
 \description{
 Concatenate strings to form a URL
 }
