@@ -10,9 +10,6 @@ matrix:
     r: bioc-release
   - os: linux
     r: bioc-release
-  - os: linux
-    r: bioc-devel
-  fast_finish: true
 
 env:
   global:

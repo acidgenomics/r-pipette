@@ -26,23 +26,25 @@
 #' Local file paths.
 #'
 #' @examples
-#' remoteDir <- paste(
-#'     "ftp://ftp.pantherdb.org",
-#'     "sequence_classifications",
-#'     "current_release",
-#'     sep = "/"
-#' )
-#' readme <- transmit(
-#'     remoteDir = remoteDir,
-#'     pattern = "README",
-#'     rename = "panther_readme.txt",
-#'     compress = TRUE
-#' )
-#' basename(readme)
-#' file.exists(readme)
+#' ## This doesn't work reliably on Travis CI.
+#'
+#' ## remoteDir <- paste(
+#' ##     "ftp://ftp.pantherdb.org",
+#' ##     "sequence_classifications",
+#' ##     "current_release",
+#' ##     sep = "/"
+#' ## )
+#' ## readme <- transmit(
+#' ##     remoteDir = remoteDir,
+#' ##     pattern = "README",
+#' ##     rename = "panther_readme.txt",
+#' ##     compress = TRUE
+#' ## )
+#' ## basename(readme)
+#' ## file.exists(readme)
 #'
 #' ## Clean up.
-#' unlink(readme)
+#' ## unlink(readme)
 transmit <- function(
     remoteDir,
     localDir = ".",
