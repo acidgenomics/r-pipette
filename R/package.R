@@ -34,3 +34,7 @@
 #' @importFrom R.utils gzip
 #' @export
 R.utils::gzip
+
+#' @importFrom utils untar
+#' @export
+utils::untar
