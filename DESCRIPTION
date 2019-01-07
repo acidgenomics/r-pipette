@@ -18,6 +18,7 @@ Imports:
     Matrix (>= 1.2),
     R.utils (>= 2.7),
     RCurl (>= 1.95),
+    S4Transformer (>= 0.1),
     S4Vectors (>= 0.18),
     SingleCellExperiment (>= 1.2),
     SummarizedExperiment (>= 1.10),
@@ -42,15 +43,12 @@ biocViews: DataImport
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
 Collate: 
-    'as-methods.R'
     'globals.R'
     'saveData.R'
     'assignAndSaveData.R'
-    'atomize.R'
     'basenameSansExt.R'
     'dots.R'
     'export-methods.R'
-    'factorize.R'
     'import.R'
     'importCounts.R'
     'importDelim.R'
