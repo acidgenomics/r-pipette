@@ -4,6 +4,7 @@
 \name{reexports}
 \alias{reexports}
 \alias{gzip}
+\alias{untar}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -14,5 +15,7 @@ below to see their documentation.
   \item{bioverbs}{\code{\link[bioverbs]{export}}}
 
   \item{R.utils}{\code{\link[R.utils]{gzip}}}
+
+  \item{utils}{\code{\link[utils]{untar}}}
 }}
 
