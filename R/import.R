@@ -160,6 +160,8 @@ import <- function(file, ...) {
     } else {
         file <- localOrRemoteFile(file)
         ext <- str_match(basename(file), extPattern)[1L, 2L]
+        # Strip the compressed file extension, if necessary.
+        ext <- gsub(compressExtPattern, "", ext)
         # Simplify the extension matching by converting to uppercase.
         ext <- toupper(ext)
     }
