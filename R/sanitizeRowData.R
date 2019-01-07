@@ -12,7 +12,7 @@
 #' Contains only `atomic` columns.
 sanitizeRowData <- function(object) {
     assert(isAny(object, classes = c("GRanges", "DataFrame")))
-    .atomize(object)
+    atomize(object)
 }
 
 

@@ -8,7 +8,7 @@
 #' @importFrom Matrix readMM writeMM
 #' @importFrom RCurl getURL url.exists
 #' @importFrom R.utils gzip
-#' @importFrom S4Transformer as.data.frame as_tibble
+#' @importFrom S4Transformer as.data.frame as_tibble atomize
 #' @importFrom SingleCellExperiment reducedDims
 #' @importFrom SummarizedExperiment assayNames assayNames<- assays colData
 #'   rowData rowRanges

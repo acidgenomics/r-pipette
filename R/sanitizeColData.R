@@ -30,5 +30,5 @@ sanitizeColData <- function(object) {
         hasColnames(object),
         hasValidDimnames(object)
     )
-    .atomize(object)
+    atomize(object)
 }
