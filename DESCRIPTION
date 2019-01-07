@@ -37,6 +37,7 @@ Suggests:
     pzfx (>= 0.1),
     readxl (>= 1.2)
 Remotes:
+    steinbaugh/S4Transformer,
     steinbaugh/bioverbs,
     steinbaugh/goalie
 biocViews: DataImport
