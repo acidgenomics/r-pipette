@@ -1,3 +1,8 @@
+# FIXME Check that bz2 and xz work. Currently using gz.
+compressExtPattern <- "\\.(bz2|gz|xz)$"
+
+
+
 #' File extension pattern
 #'
 #' Note optional matching of compression formats.
