@@ -1,3 +1,7 @@
+# FIXME Unit test bz2, gz, and xz compressed files.
+
+
+
 #' Import
 #'
 #' Read file by extension into R.
