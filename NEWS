@@ -1,9 +1,14 @@
 ## brio v0.1.1 (2018-01-04)
 
-- Added Travis CI and AppVeyor CI support.
+- Added [Travis CI][] and [AppVeyor CI][] support.
 - Documentation fixes and miscellaneous tweaks to pass build checks.
 
 
 ## brio v0.1.0 (2018-12-24)
 
-Initial release. Migrated input-output (IO) functions from basejump.
+Initial release. Migrated input-output (IO) functions from [basejump][].
+
+
+[AppVeyor CI]: https://www.appveyor.com/
+[basejump]: https://steinbaugh.com/basejump/
+[Travis CI]: https://travis-ci.com/
