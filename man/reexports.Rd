@@ -3,7 +3,13 @@
 \docType{import}
 \name{reexports}
 \alias{reexports}
+\alias{compressFile}
+\alias{decompressFile}
+\alias{bzip2}
+\alias{bunzip2}
 \alias{gzip}
+\alias{gunzip}
+\alias{tar}
 \alias{untar}
 \title{Objects exported from other packages}
 \keyword{internal}
@@ -14,8 +20,8 @@ below to see their documentation.
 \describe{
   \item{bioverbs}{\code{\link[bioverbs]{export}}}
 
-  \item{R.utils}{\code{\link[R.utils]{gzip}}}
+  \item{R.utils}{\code{\link[R.utils]{compressFile}}, \code{\link[R.utils]{decompressFile}}, \code{\link[R.utils]{bzip2}}, \code{\link[R.utils]{bunzip2}}, \code{\link[R.utils]{gzip}}, \code{\link[R.utils]{gunzip}}}
 
-  \item{utils}{\code{\link[utils]{untar}}}
+  \item{utils}{\code{\link[utils]{tar}}, \code{\link[utils]{untar}}}
 }}
 
