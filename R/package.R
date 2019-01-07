@@ -3,10 +3,12 @@
 #' Extension of the rio and rtracklayer packages with improved support for
 #' biological data structures.
 #'
+#' @importMethodsFrom S4Transformer coerce
+#'
 #' @importFrom Matrix readMM writeMM
 #' @importFrom RCurl getURL url.exists
 #' @importFrom R.utils gzip
-#' @importFrom S4Vectors as.data.frame
+#' @importFrom S4Transformer as.data.frame as_tibble atomize
 #' @importFrom SingleCellExperiment reducedDims
 #' @importFrom SummarizedExperiment assayNames assayNames<- assays colData
 #'   rowData rowRanges

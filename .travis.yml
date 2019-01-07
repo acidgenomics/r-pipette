@@ -6,13 +6,10 @@ cache: packages
 
 matrix:
   include:
+  - os: linux
+    r: bioc-release
   - os: osx
     r: bioc-release
-  - os: linux
-    r: bioc-release
-  - os: linux
-    r: bioc-devel
-  fast_finish: true
 
 env:
   global:

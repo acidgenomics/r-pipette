@@ -18,8 +18,8 @@
 #' @note This function is desired for interactive use and interprets object
 #'   names using non-standard evaluation.
 #'
-#' @inheritParams params
 #' @export
+#' @inheritParams params
 
 #' @param ... Object names.
 #'   Note that these arguments are interpreted as symbols using non-standard
