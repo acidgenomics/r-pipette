@@ -6,9 +6,9 @@ cache: packages
 
 matrix:
   include:
-  - os: osx
-    r: bioc-release
   - os: linux
+    r: bioc-release
+  - os: osx
     r: bioc-release
 
 env:
