@@ -70,3 +70,19 @@ utils::tar
 #' @importFrom utils untar
 #' @export
 utils::untar
+
+
+
+# Consider defining these in goalie package.
+
+#' @importFrom R.utils isCompressedFile
+#' @export
+R.utils::isCompressedFile
+
+#' @importFrom R.utils isBzipped
+#' @export
+R.utils::isBzipped
+
+#' @importFrom R.utils isGzipped
+#' @export
+R.utils::isGzipped
