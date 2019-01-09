@@ -11,6 +11,9 @@
 \alias{gunzip}
 \alias{tar}
 \alias{untar}
+\alias{isCompressedFile}
+\alias{isBzipped}
+\alias{isGzipped}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -20,7 +23,7 @@ below to see their documentation.
 \describe{
   \item{bioverbs}{\code{\link[bioverbs]{export}}}
 
-  \item{R.utils}{\code{\link[R.utils]{compressFile}}, \code{\link[R.utils]{decompressFile}}, \code{\link[R.utils]{bzip2}}, \code{\link[R.utils]{bunzip2}}, \code{\link[R.utils]{gzip}}, \code{\link[R.utils]{gunzip}}}
+  \item{R.utils}{\code{\link[R.utils]{compressFile}}, \code{\link[R.utils]{decompressFile}}, \code{\link[R.utils]{bzip2}}, \code{\link[R.utils]{bunzip2}}, \code{\link[R.utils]{gzip}}, \code{\link[R.utils]{gunzip}}, \code{\link[R.utils]{isCompressedFile}}, \code{\link[R.utils]{isBzipped}}, \code{\link[R.utils]{isGzipped}}}
 
   \item{utils}{\code{\link[utils]{tar}}, \code{\link[utils]{untar}}}
 }}
