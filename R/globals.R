@@ -1,3 +1,7 @@
+# Using this for `extPattern()` also.
+# Order is important here.
+compressExtPattern <- "\\.(bz2|gz|xz)"
+
 #' File extension pattern
 #'
 #' Note optional matching of compression formats.
@@ -5,7 +9,17 @@
 #' @export
 #' @examples
 #' extPattern
-extPattern <- "\\.([a-zA-Z0-9]+)(\\.bz|bz2|gz|xz)?$"
+extPattern <- paste0(
+    "\\.([a-zA-Z0-9]+)",
+    "(", compressExtPattern, ")?$"
+)
+
+#' Compression extension pattern
+#'
+#' @export
+#' @examples
+#' compressExtPattern
+compressExtPattern <- paste0(compressExtPattern, "$")
 
 
 

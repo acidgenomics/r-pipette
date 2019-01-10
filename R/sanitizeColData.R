@@ -30,41 +30,5 @@ sanitizeColData <- function(object) {
         hasColnames(object),
         hasValidDimnames(object)
     )
-    .atomize(object)
-}
-
-
-
-# Consider exporting this.
-.atomize <- function(object) {
-    # First, coerce to S3 data frame.
-    # This step helps coerce nested S4 data to atomic columns.
-    # This will also decode Rle columns.
-    object <- as.data.frame(object)
-    # Keep only atomic columns. Complex columns won't write to disk as CSVs
-    # or work with R Markdown functions.
-    keep <- vapply(X = object, FUN = is.atomic, FUN.VALUE = logical(1L))
-    object <- object[, keep, drop = FALSE]
-    assert(hasLength(object))
-    as(object, "DataFrame")
-}
-
-
-
-# Consider exporting this.
-# See `encode()` for Rle approach.
-.factorize <- function(object) {
-    out <- lapply(
-        X = object,
-        FUN = function(x) {
-            droplevels(as.factor(x))
-        }
-    )
-    out <- as(out, class(object)[[1L]])
-    names(out) <- names(object)
-    rownames <- rownames(object)
-    if (!is.null(rownames)) {
-        rownames(out) <- rownames
-    }
-    out
+    atomize(object)
 }
