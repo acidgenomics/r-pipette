@@ -1,7 +1,6 @@
-# FIXME Check that bz2 and xz work. Currently using gz.
-compressExtPattern <- "\\.(bz2|gz|xz)$"
-
-
+# Using this for `extPattern()` also.
+# Order is important here.
+compressExtPattern <- "\\.(bz2|gz|xz)"
 
 #' File extension pattern
 #'
@@ -10,7 +9,17 @@ compressExtPattern <- "\\.(bz2|gz|xz)$"
 #' @export
 #' @examples
 #' extPattern
-extPattern <- "\\.([a-zA-Z0-9]+)(\\.bz|bz2|gz|xz)?$"
+extPattern <- paste0(
+    "\\.([a-zA-Z0-9]+)",
+    "(", compressExtPattern, ")?$"
+)
+
+#' Compression extension pattern
+#'
+#' @export
+#' @examples
+#' compressExtPattern
+compressExtPattern <- paste0(compressExtPattern, "$")
 
 
 
