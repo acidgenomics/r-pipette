@@ -163,9 +163,9 @@ import <- function(file, ...) {
         ext <- "GSHEET"
     } else {
         file <- localOrRemoteFile(file)
-        ext <- str_match(basename(file), extPattern)
         # Note that here we're ignoring the compression format extension.
         # Simplify the extension matching by converting to uppercase.
+        ext <- str_match(basename(file), extPattern)
         ext <- toupper(ext[1L, 2L])
     }
 
