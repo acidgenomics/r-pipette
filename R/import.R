@@ -1,7 +1,3 @@
-# FIXME Unit test bz2, gz, and xz compressed files.
-
-
-
 #' Import
 #'
 #' Read file by extension into R.
@@ -162,11 +158,7 @@ import <- function(file, ...) {
     if (grepl("docs\\.google\\.com/spreadsheets/", file)) {
         ext <- "GSHEET"
     } else {
-        file <- localOrRemoteFile(file)
-        # Note that here we're ignoring the compression format extension.
-        # Simplify the extension matching by converting to uppercase.
-        ext <- str_match(basename(file), extPattern)
-        ext <- toupper(ext[1L, 2L])
+        ext <- toupper(str_match(basename(file), extPattern)[1L, 2L])
     }
 
     # How we set NA strings depends on the file extension.
@@ -250,6 +242,7 @@ import <- function(file, ...) {
 
 
 .rioImport <- function(file, ...) {
+    file <- localOrRemoteFile(file)
     message(paste(
         "Importing", basename(file), "using rio::import()."
     ))
@@ -261,6 +254,7 @@ import <- function(file, ...) {
 
 # Using `tryCatch()` here to error if there are any warnings.
 .rtracklayerImport <- function(file, ...) {
+    file <- localOrRemoteFile(file)
     message(paste(
         "Importing", basename(file), "using rtracklayer::import()."
     ))
