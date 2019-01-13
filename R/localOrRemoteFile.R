@@ -60,43 +60,56 @@ localOrRemoteFile <- function(file) {
         SIMPLIFY = TRUE,
         USE.NAMES = FALSE
     )
-    file <- realpath(file)
 
-    # Auto decompress, if necessary.
-    # Note that `data.table::fread()` still doesn't natively support this.
-    if (!grepl(compressExtPattern, file)) {
-        return(file)
-    }
-    message(paste("Decompressing", basename(file), "in tempdir()."))
-    compressExt <-
-        toupper(str_match(basename(file), compressExtPattern)[1L, 2L])
-    if (compressExt %in% c("BZ2", "GZ", "XZ")) {
-        # Using the R.utils package to handle BZ2, GZ, XZ.
-        if (compressExt == "BZ2") {
-            FUN <- bzfile
-        } else if (compressExt == "GZ") {
-            FUN <- gzfile
-        } else if (compressExt == "XZ") {
-            FUN <- xzfile
-        }
-        file <- decompressFile(
-            filename = file,
-            ext = compressExt,
-            FUN = FUN,
-            temporary = TRUE,
-            skip = FALSE,
-            overwrite = TRUE,
-            remove = FALSE
-        )
-    } else if (compressExt == "ZIP") {
-        # Using the utils package to handle ZIP.
-        file <- unzip(
-            zipfile = file,
-            overwrite = TRUE,
-            exdir = tempdir()
-        )
-        # Ensure we're returning a string.
-        file <- file[[1L]]
-    }
-    file
+    .autoDecompress(file)
+}
+
+
+
+# Auto decompress, if necessary.
+# Note that `data.table::fread()` still doesn't natively support this.
+.autoDecompress <- function(file) {
+    file <- realpath(file)
+    vapply(
+        X = file,
+        FUN = function(file) {
+            if (!grepl(compressExtPattern, file)) {
+                return(file)
+            }
+            message(paste("Decompressing", basename(file), "in tempdir()."))
+            compressExt <-
+                toupper(str_match(basename(file), compressExtPattern)[1L, 2L])
+            if (compressExt %in% c("BZ2", "GZ", "XZ")) {
+                # Using the R.utils package to handle BZ2, GZ, XZ.
+                if (compressExt == "BZ2") {
+                    FUN <- bzfile
+                } else if (compressExt == "GZ") {
+                    FUN <- gzfile
+                } else if (compressExt == "XZ") {
+                    FUN <- xzfile
+                }
+                file <- decompressFile(
+                    filename = file,
+                    ext = compressExt,
+                    FUN = FUN,
+                    temporary = TRUE,
+                    skip = FALSE,
+                    overwrite = TRUE,
+                    remove = FALSE
+                )
+            } else if (compressExt == "ZIP") {
+                # Using the utils package to handle ZIP.
+                file <- unzip(
+                    zipfile = file,
+                    overwrite = TRUE,
+                    exdir = tempdir()
+                )
+                # Ensure we're returning a string.
+                file <- file[[1L]]
+            }
+            file
+        },
+        FUN.VALUE = character(1),
+        USE.NAMES = FALSE
+    )
 }
