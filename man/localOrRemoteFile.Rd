@@ -17,10 +17,20 @@ Local file path(s). Stops on a missing file.
 \description{
 Dynamically handle a local or remote file path
 }
-\note{
+\section{Vectorization}{
+
+
 This function is vectorized and supports mixed local and remote paths. Remote
 files are downloaded locally to a temporary directory.
 }
+
+\section{Compressed files}{
+
+
+Compressed files will automatically be decompressed. Currently, these file
+extensions are natively supported: \code{BZ2}, \code{GZ}, \code{XZ}, \code{ZIP}.
+}
+
 \examples{
 file <- system.file("extdata/example.csv", package = "brio")
 x <- localOrRemoteFile(file)
