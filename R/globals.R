@@ -1,6 +1,24 @@
+globalVariables(".")
+
+
+
+packageVersion <- packageVersion("brio")
+
+#' brio package cache URL
+#' @keywords internal
+#' @export
+#' @examples
+#' brioCacheURL
+brioCacheURL <- paste0(
+    "http://brio.seq.cloud/",
+    "v", packageVersion$major, ".", packageVersion$minor  # nolint
+)
+
+
+
 # Using this for `extPattern()` also.
 # Order is important here.
-compressExtPattern <- "\\.(bz2|gz|xz)"
+compressExtPattern <- "\\.(bz2|gz|xz|zip)"
 
 #' File extension pattern
 #'
@@ -15,7 +33,6 @@ extPattern <- paste0(
 )
 
 #' Compression extension pattern
-#'
 #' @export
 #' @examples
 #' compressExtPattern
