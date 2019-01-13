@@ -1,4 +1,5 @@
 importYAML <- function(file, ...) {
+    file <- localOrRemoteFile(file)
     message(paste(
         "Importing", basename(file), "using yaml::yaml.load_file()."
     ))

@@ -1,4 +1,5 @@
 importXLSX <- function(file, ...) {
+    file <- localOrRemoteFile(file)
     message(paste(
         "Importing", basename(file), "using readxl::read_excel()."
     ))

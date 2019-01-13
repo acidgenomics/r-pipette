@@ -158,7 +158,7 @@ import <- function(file, ...) {
     if (grepl("docs\\.google\\.com/spreadsheets/", file)) {
         ext <- "GSHEET"
     } else {
-        file <- localOrRemoteFile(file)
+        ext <- toupper(str_match(basename(file), extPattern)[1L, 2L])
     }
 
     # How we set NA strings depends on the file extension.
@@ -242,6 +242,7 @@ import <- function(file, ...) {
 
 
 .rioImport <- function(file, ...) {
+    file <- localOrRemoteFile(file)
     message(paste(
         "Importing", basename(file), "using rio::import()."
     ))
@@ -253,6 +254,7 @@ import <- function(file, ...) {
 
 # Using `tryCatch()` here to error if there are any warnings.
 .rtracklayerImport <- function(file, ...) {
+    file <- localOrRemoteFile(file)
     message(paste(
         "Importing", basename(file), "using rtracklayer::import()."
     ))
