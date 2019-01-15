@@ -299,7 +299,7 @@ test_that("transmit : Rename and compress", {
     unlink("readme.txt.gz")
 })
 
-# TODO Improve the error messages for these.
+# FIXME Improve the error messages for these.
 test_that("transmit : Invalid parameters", {
     skip_on_travis()
     expect_error(
