@@ -11,7 +11,10 @@
 #' @return `DataFrame`.
 #' Contains only `atomic` columns.
 sanitizeRowData <- function(object) {
-    assert(isAny(object, classes = c("GRanges", "DataFrame")))
+    assert(
+        is(object, "DataFrame"),
+        hasRownames(object)
+    )
     atomize(object)
 }
 
@@ -19,4 +22,10 @@ sanitizeRowData <- function(object) {
 
 #' @rdname sanitizeRowData
 #' @export
-sanitizeRowRanges <- sanitizeRowData
+sanitizeRowRanges <- function(object) {
+    assert(
+        is(object, "GRanges"),
+        hasNames(object)
+    )
+    atomize(object)
+}
