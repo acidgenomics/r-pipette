@@ -8,8 +8,9 @@
 #'
 #' @param object `DataFrame` or `GRanges`.
 #'
-#' @return `DataFrame`.
+#' @return `DataFrame` or `GRanges`.
 #' Contains only `atomic` columns.
+#' Applies to [`mcols()`][S4Vectors::mcols] for `GRanges`.
 sanitizeRowData <- function(object) {
     assert(
         is(object, "DataFrame"),

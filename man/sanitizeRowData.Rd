@@ -13,8 +13,9 @@ sanitizeRowRanges(object)
 \item{object}{\code{DataFrame} or \code{GRanges}.}
 }
 \value{
-\code{DataFrame}.
+\code{DataFrame} or \code{GRanges}.
 Contains only \code{atomic} columns.
+Applies to \code{\link[S4Vectors:mcols]{mcols()}} for \code{GRanges}.
 }
 \description{
 Coerce row annotations (e.g. genes or transcripts) to \code{DataFrame}, and keep
