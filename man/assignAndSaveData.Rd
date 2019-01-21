@@ -5,10 +5,10 @@
 \title{Assign and save data}
 \usage{
 assignAndSaveData(name, object, envir = parent.frame(),
-  dir = getOption("brio.save.dir", "."),
-  ext = getOption("brio.save.ext", "rds"),
-  overwrite = getOption("brio.save.overwrite", TRUE),
-  compress = getOption("brio.save.compress", TRUE))
+  dir = getOption("basejump.save.dir", "."),
+  ext = getOption("basejump.save.ext", "rds"),
+  overwrite = getOption("basejump.save.overwrite", TRUE),
+  compress = getOption("basejump.save.compress", TRUE))
 }
 \arguments{
 \item{name}{\code{character(1)}.
