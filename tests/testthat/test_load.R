@@ -70,6 +70,7 @@ test_that("loadData : Duplicate RDA and RDS files", {
 })
 
 test_that("loadData : Invalid arguments", {
+    # FIXME This check is failing on AppVeyor CI.
     expect_error(
         object = loadData(gr, dir = "XXX"),
         regexp = "No such file or directory"
@@ -119,6 +120,7 @@ test_that("loadDataAsName : Multiple objects in single file", {
 })
 
 test_that("loadDataAsName : Invalid arguments", {
+    # FIXME This check is failing on AppVeyor CI.
     expect_error(
         object = loadDataAsName(data = gr, dir = "XXX"),
         regexp = "No such file or directory"
