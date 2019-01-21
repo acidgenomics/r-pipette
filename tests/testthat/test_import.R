@@ -1,5 +1,6 @@
 context("Import")
 
+# FIXME I think this won't work unless the package is installed?
 load(system.file("extdata", "rse.rda", package = "brio"))
 load(system.file("extdata", "sce.rda", package = "brio"))
 mat <- SummarizedExperiment::assay(rse)
@@ -8,6 +9,7 @@ sparse <- SummarizedExperiment::assay(sce)
 
 
 # import =======================================================================
+# FIXME This check is failing on AppVeyor CI.
 with_parameters_test_that(
     "import : data frame", {
         object <- import(file = paste0("example.", ext))
@@ -132,6 +134,7 @@ test_that("import : R script", {
     )
 })
 
+# FIXME This check is failing on AppVeyor CI.
 test_that("import : R Data", {
     # R data.
     object <- import("example.rda")
@@ -180,6 +183,7 @@ test_that("localOrRemoteFile : Vectorized", {
     expect_identical(basename(urls), basename(files))
 })
 
+# FIXME This check is failing on AppVeyor CI.
 test_that("localOrRemoteFile : Missing file", {
     expect_error(
         object = localOrRemoteFile("XXX.csv"),
