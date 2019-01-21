@@ -4,7 +4,7 @@
 \alias{loadData}
 \title{Load data}
 \usage{
-loadData(..., dir = getOption("brio.load.dir", "."),
+loadData(..., dir = getOption("basejump.load.dir", "."),
   envir = globalenv())
 }
 \arguments{
