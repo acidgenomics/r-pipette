@@ -215,7 +215,7 @@ import <- function(file, ...) {
 
     if (is.data.frame(data)) {
         # Coerce data frame to desired global output, if necessary.
-        pref <- getOption("brio.data.frame")
+        pref <- getOption("basejump.data.frame")
         if (isString(pref)) {
             data <- switch(
                 data.frame = as.data.frame(data),

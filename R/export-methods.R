@@ -221,7 +221,7 @@ setMethod(
 .export.colData <-  # nolint
     function(x, ext, dir) {
         export(
-            x = sanitizeColData(colData(x)),
+            x = atomize(colData(x)),
             file = file.path(dir, paste0("colData", ext))
         )
     }
@@ -237,7 +237,7 @@ setMethod(
         } else {
             data <- rowData(x)
         }
-        data <- sanitizeRowData(data)
+        data <- atomize(data)
         # Coerce the GRanges to a standard data.frame.
         data <- as.data.frame(data)
         assert(identical(rownames(data), rownames(x)))

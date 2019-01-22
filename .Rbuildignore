@@ -3,3 +3,6 @@
 ^\.lintr$
 ^\.travis\.yml$
 ^appveyor\.yml$
+^docs$
+^pkgdown$
+^_pkgdown\.yml$
