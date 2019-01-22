@@ -2,7 +2,7 @@
 #' @inherit bioverbs::atomize
 #' @inheritParams params
 #' @examples
-#' df <- DataFrame(a = "a", b = list(a = seq_len(3)))
+#' df <- S4Vectors::DataFrame(a = "a", b = list(a = seq_len(3)))
 #' lapply(df, is.atomic)
 #' x <- atomize(df)
 NULL
