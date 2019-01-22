@@ -4,20 +4,29 @@ load(system.file("extdata", "rse.rda", package = "brio"))
 
 
 
-# sanitizeRowData ==============================================================
-test_that("sanitizeRowData", {
-    object <- sanitizeRowData(rowRanges(rse))
-    expect_s4_class(object, "GRanges")
-    df <- as.data.frame(object)
-    expect_true(hasRownames(df))
+# atomize ======================================================================
+test_that("atomize : DataFrame", {
+    object <- atomize(rowData(rse))
+    expect_s4_class(object, "DataFrame")
+    expect_true(hasRownames(object))
     expect_identical(
-        object = lapply(df, class),
+        object = lapply(object, class),
         expected = list(
-            seqnames = "factor",
-            start = "integer",
-            end = "integer",
-            width = "integer",
-            strand = "factor",
+            geneID = "character",
+            geneName = "factor",
+            geneBiotype = "factor",
+            broadClass = "factor"
+        )
+    )
+})
+
+test_that("atomize : GRanges", {
+    object <- atomize(rowRanges(rse))
+    expect_s4_class(object, "GRanges")
+    expect_true(hasNames(object))
+    expect_identical(
+        object = lapply(S4Vectors::mcols(object), class),
+        expected = list(
             geneID = "character",
             geneName = "factor",
             geneBiotype = "factor",
