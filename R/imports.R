@@ -3,14 +3,13 @@
 
 
 
-#' @importClassesFrom GenomicRanges GRanges
-#'
 #' @importMethodsFrom transformer coerce
 #'
+#' @importFrom GenomicRanges GRanges
 #' @importFrom Matrix readMM writeMM
 #' @importFrom RCurl getURL url.exists
 #' @importFrom R.utils gzip
-#' @importFrom S4Vectors Rle mcols mcols<-
+#' @importFrom S4Vectors DataFrame Rle mcols mcols<-
 #' @importFrom SingleCellExperiment reducedDims
 #' @importFrom SummarizedExperiment assayNames assayNames<- assays colData
 #'   rowData rowRanges
