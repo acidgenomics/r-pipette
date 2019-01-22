@@ -11,6 +11,9 @@
 
 \S4method{decode}{GRanges}(x)
 }
+\arguments{
+\item{x}{Object.}
+}
 \value{
 Modified object.
 Columns will be decoded and no longer \code{Rle} class.
