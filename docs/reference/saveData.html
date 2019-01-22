@@ -81,6 +81,9 @@ object names passed as symbols." />
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -114,10 +117,10 @@ object names passed as symbols.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>saveData</span>(<span class='no'>...</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"brio.save.dir"</span>, <span class='st'>"."</span>),
-  <span class='kw'>ext</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"brio.save.ext"</span>, <span class='st'>"rds"</span>),
-  <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"brio.save.overwrite"</span>, <span class='fl'>TRUE</span>),
-  <span class='kw'>compress</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"brio.save.compress"</span>, <span class='fl'>TRUE</span>))</pre>
+    <pre class="usage"><span class='fu'>saveData</span>(<span class='no'>...</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"basejump.save.dir"</span>, <span class='st'>"."</span>),
+  <span class='kw'>ext</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"basejump.save.ext"</span>, <span class='st'>"rds"</span>),
+  <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"basejump.save.overwrite"</span>, <span class='fl'>TRUE</span>),
+  <span class='kw'>compress</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"basejump.save.compress"</span>, <span class='fl'>TRUE</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -183,7 +186,7 @@ on disk, following the same conventions as <code><a href='https://www.rdocumenta
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>
-<span class='fu'>saveData</span>(<span class='no'>x</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>"example"</span>)</div><div class='output co'>#&gt; <span class='message'>Saving x.rds to /Users/mike/git/brio/docs/reference/example</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>list.files</a></span>(<span class='st'>"example"</span>)</div><div class='output co'>#&gt; [1] "x.rds"</div><div class='input'>
+<span class='fu'>saveData</span>(<span class='no'>x</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>"example"</span>)</div><div class='output co'>#&gt; <span class='message'>Saving x.rds to /data01/home/bioinfo/git/brio/docs/reference/example</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>list.files</a></span>(<span class='st'>"example"</span>)</div><div class='output co'>#&gt; [1] "x.rds"</div><div class='input'>
 <span class='co'>## Clean up.</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/unlink'>unlink</a></span>(<span class='st'>"example"</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div></pre>
   </div>
