@@ -40,6 +40,12 @@ sanitizeRowData <- function(...) {
     .Defunct("atomize")
 }
 
+#' @rdname defunct
+#' @export
+sanitizeRowRanges <- function(...) {
+    .Defunct("atomize")
+}
+
 
 
 # nolint end

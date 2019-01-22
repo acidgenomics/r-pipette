@@ -4,11 +4,14 @@
 \alias{defunct}
 \alias{sanitizeColData}
 \alias{sanitizeRowData}
+\alias{sanitizeRowRanges}
 \title{Defunct functions}
 \usage{
 sanitizeColData(...)
 
 sanitizeRowData(...)
+
+sanitizeRowRanges(...)
 }
 \value{
 \code{.Defunct}.
