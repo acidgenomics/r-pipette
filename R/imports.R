@@ -5,9 +5,11 @@
 
 #' @importMethodsFrom transformer coerce
 #'
+#' @importFrom GenomicRanges GRanges
 #' @importFrom Matrix readMM writeMM
 #' @importFrom RCurl getURL url.exists
 #' @importFrom R.utils gzip
+#' @importFrom S4Vectors DataFrame Rle mcols mcols<-
 #' @importFrom SingleCellExperiment reducedDims
 #' @importFrom SummarizedExperiment assayNames assayNames<- assays colData
 #'   rowData rowRanges
@@ -24,6 +26,6 @@
 #' @importFrom stringr str_extract str_match str_subset
 #' @importFrom tibble as_tibble column_to_rownames
 #' @importFrom tools file_path_sans_ext
-#' @importFrom transformer as.data.frame as_tibble atomize
+#' @importFrom transformer as.data.frame as_tibble
 #' @importFrom utils download.file head tail
 NULL
