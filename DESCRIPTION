@@ -38,6 +38,7 @@ Collate:
     'atomize-methods.R'
     'basenameSansExt.R'
     'decode-methods.R'
+    'deprecated.R'
     'dots.R'
     'encode-methods.R'
     'export-methods.R'
