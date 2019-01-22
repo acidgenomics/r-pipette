@@ -1,13 +1,12 @@
 context("Sanitize")
 
-# FIXME This approach results in build check failure.
 load(system.file("extdata", "rse.rda", package = "brio"))
 
 
 
-# sanitizeRowData ==============================================================
-test_that("sanitizeRowData", {
-    object <- sanitizeRowData(rowData(rse))
+# atomize ======================================================================
+test_that("atomize : DataFrame", {
+    object <- atomize(rowData(rse))
     expect_s4_class(object, "DataFrame")
     expect_true(hasRownames(object))
     expect_identical(
@@ -21,8 +20,8 @@ test_that("sanitizeRowData", {
     )
 })
 
-test_that("sanitizeRowRanges", {
-    object <- sanitizeRowRanges(rowRanges(rse))
+test_that("atomize : GRanges", {
+    object <- atomize(rowRanges(rse))
     expect_s4_class(object, "GRanges")
     expect_true(hasNames(object))
     expect_identical(
