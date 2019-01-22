@@ -2,7 +2,7 @@
 #' @inherit bioverbs::factorize
 #' @inheritParams params
 #' @examples
-#' df <- DataFrame(a = letters[seq_len(5)], b = seq_len(5))
+#' df <- S4Vectors::DataFrame(a = letters[seq_len(5)], b = seq_len(5))
 #' x <- factorize(df)
 NULL
 
