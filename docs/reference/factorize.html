@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Sanitize column data — sanitizeColData • brio</title>
+<title>Factorize — factorize • brio</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,10 +32,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Sanitize column data — sanitizeColData" />
+<meta property="og:title" content="Factorize — factorize" />
 
-<meta property="og:description" content="Standardize data describing the colummns (e.g. samples or cells), keeping
-only atomic columns." />
+<meta property="og:description" content="Coerce all columns in the object to factor (i.e. stringsAsFactors)." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -81,6 +80,9 @@ only atomic columns." />
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -102,52 +104,41 @@ only atomic columns." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Sanitize column data</h1>
-    <small class="dont-index">Source: <a href='https://github.com/steinbaugh/brio/blob/master/R/sanitizeColData.R'><code>R/sanitizeColData.R</code></a></small>
-    <div class="hidden name"><code>sanitizeColData.Rd</code></div>
+    <h1>Factorize</h1>
+    <small class="dont-index">Source: <a href='https://github.com/steinbaugh/brio/blob/master/R/factorize-methods.R'><code>R/factorize-methods.R</code></a></small>
+    <div class="hidden name"><code>factorize.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Standardize data describing the colummns (e.g. samples or cells), keeping
-only <code>atomic</code> columns.</p>
+    <p>Coerce all columns in the object to <code>factor</code> (i.e. <code>stringsAsFactors</code>).</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>sanitizeColData</span>(<span class='no'>object</span>)</pre>
+    <pre class="usage"><span class='co'># S4 method for ANY</span>
+<span class='fu'>factorize</span>(<span class='no'>object</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p><code>DataFrame</code>.</p></td>
+      <td><p>Object.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>DataFrame</code>.
-Contains only <code>atomic</code> columns.</p>
+    <p>Modified object.
+All columns will be coerced to <code>factor</code>.</p>
     
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Always applied:</p><ul>
-<li><p>Non-<code>atomic</code> columns will be flattened to <code>atomic</code> if possible, and
-otherwise dropped.</p></li>
-</ul>
-    
-    <h2 class="hasAnchor" id="sample-data"><a class="anchor" href="#sample-data"></a>Sample data</h2>
-
-    
-    <p>The following conventions are enforced:</p><ul>
-<li><p>Required columns: <code>sampleName</code>.</p></li>
-<li><p>Blacklisted columns: <code>interestingGroups</code>, <code>sampleID</code>.</p></li>
-<li><p>All columns get coerced to <code>factor</code> and <code><a href='https://www.rdocumentation.org/packages/base/topics/droplevels'>droplevels()</a></code>
-is applied.</p></li>
-</ul>
+    <div class='dont-index'><p><code>encode()</code> for run-length encoding (Rle) approach.</p></div>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>DataFrame</span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='no'>letters</span>[<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq_len</a></span>(<span class='fl'>5</span>)], <span class='kw'>b</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq_len</a></span>(<span class='fl'>5</span>))</div><div class='output co'>#&gt; <span class='error'>Error in DataFrame(a = letters[seq_len(5)], b = seq_len(5)): could not find function "DataFrame"</span></div><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>factorize</span>(<span class='no'>df</span>)</div><div class='output co'>#&gt; <span class='error'>Error in unique.default(x, nmax = nmax): unique() applies only to vectors</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -156,10 +147,10 @@ is applied.</p></li>
       
       <li><a href="#value">Value</a></li>
 
-      <li><a href="#details">Details</a></li>
-
-      <li><a href="#sample-data">Sample data</a></li>
-          </ul>
+      <li><a href="#see-also">See also</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>
