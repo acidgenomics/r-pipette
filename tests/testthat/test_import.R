@@ -1,15 +1,14 @@
 context("Import")
 
-# FIXME I think this won't work unless the package is installed?
 load(system.file("extdata", "rse.rda", package = "brio"))
 load(system.file("extdata", "sce.rda", package = "brio"))
+
 mat <- SummarizedExperiment::assay(rse)
 sparse <- SummarizedExperiment::assay(sce)
 
 
 
 # import =======================================================================
-# FIXME This check is failing on AppVeyor CI.
 with_parameters_test_that(
     "import : data frame", {
         object <- import(file = paste0("example.", ext))
@@ -263,7 +262,8 @@ remoteDir <- paste(
 )
 
 test_that("transmit", {
-    skip_on_travis()
+    # If you get URL time outs, enable this:
+    # skip_on_travis()
 
     object <- transmit(
         remoteDir = remoteDir,

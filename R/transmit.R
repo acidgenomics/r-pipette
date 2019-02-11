@@ -51,8 +51,10 @@ transmit <- function(
     assert(
         hasInternet(),
         isString(remoteDir),
-        # Check for public FTP protocol.
-        isMatchingRegex(remoteDir, "^ftp\\://")
+        # Check for public FTP protocol. Note that we're wrapping with `all()`
+        # here because the check is parameterized, and includes name, which
+        # causes the check to fail on R 3.4.
+        all(isMatchingRegex(remoteDir, "^ftp\\://"))
     )
     # `RCurl::getURL` requires a trailing slash.
     if (!grepl("/$", remoteDir)) {
