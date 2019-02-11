@@ -72,7 +72,7 @@ test_that("loadData : Duplicate RDA and RDS files", {
 test_that("loadData : Invalid arguments", {
     expect_error(
         object = loadData(gr, dir = "XXX"),
-        regexp = "No such file or directory"
+        regexp = "path\\[1\\]"
     )
     expect_error(
         object = loadData(gr, dir = ".", envir = "XXX"),
@@ -129,7 +129,7 @@ test_that("loadDataAsName : Multiple objects in single file", {
 test_that("loadDataAsName : Invalid arguments", {
     expect_error(
         object = loadDataAsName(data = gr, dir = "XXX"),
-        regexp = "No such file or directory"
+        regexp = "path\\[1\\]"
     )
     expect_error(
         object = loadDataAsName(data = gr, dir = ".", envir = "XXX"),
