@@ -262,8 +262,9 @@ remoteDir <- paste(
 )
 
 test_that("transmit", {
-    # If you get URL time outs, enable this:
-    # skip_on_travis()
+    # Travis is still having issues with FTP connections.
+    # Test these steps locally instead.
+    skip_on_travis()
 
     object <- transmit(
         remoteDir = remoteDir,
