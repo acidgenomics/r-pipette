@@ -8,7 +8,7 @@ test_that("loadData", {
 
     # R data.
     expect_identical(
-        object = loadData(gr, envir = envir),
+        object = loadData(gr, dir = ".", envir = envir),
         expected = c(gr = realpath("gr.rda"))
     )
     # Note that we're defaulting to global environment.
@@ -16,7 +16,7 @@ test_that("loadData", {
 
     # R data serialized.
     expect_identical(
-        object = loadData(serialized, envir = envir),
+        object = loadData(serialized, dir = ".", envir = envir),
         expected = c(
             serialized = realpath("serialized.rds")
         )
@@ -26,14 +26,14 @@ test_that("loadData", {
 # Don't allow RDS/RDA soup.
 test_that("loadData : Mixed extensions", {
     expect_error(
-        object = loadData(gr, serialized) %>% basename(),
+        object = basename(loadData(gr, serialized, dir = ".")),
         regexp = "RDS/RDA/RDATA"
     )
 })
 
 test_that("loadData : Standard evaluation", {
     expect_error(
-        object = loadData("gr.rda"),
+        object = loadData("gr.rda", dir = "."),
         regexp = "non-standard evaluation"
     )
 })
@@ -43,40 +43,39 @@ test_that("loadData : Already exists", {
     envir <- new.env()
     envir[["gr"]] <- TRUE
     expect_error(
-        object = loadData(gr, envir = envir),
+        object = loadData(gr, dir = ".", envir = envir),
         regexp = "reassignment"
     )
 })
 
 test_that("loadData : Multiple objects in single file", {
     expect_error(
-        object = loadData(multi),
+        object = loadData(multi, dir = "."),
         regexp = "multi.rda contains multiple objects: x, y"
     )
 })
 
 test_that("loadData : Renamed file", {
     expect_error(
-        object = loadData(renamed),
+        object = loadData(renamed, dir = "."),
         regexp = "renamed.rda has been renamed."
     )
 })
 
 test_that("loadData : Duplicate RDA and RDS files", {
     expect_error(
-        object = loadData(example),
+        object = loadData(example, dir = "."),
         regexp = "example is not unique on disk."
     )
 })
 
 test_that("loadData : Invalid arguments", {
-    # FIXME This check is failing on AppVeyor CI.
     expect_error(
         object = loadData(gr, dir = "XXX"),
         regexp = "No such file or directory"
     )
     expect_error(
-        object = loadData(gr, envir = "XXX"),
+        object = loadData(gr, dir = ".", envir = "XXX"),
         regexp = "is.environment"
     )
 })
@@ -86,47 +85,54 @@ test_that("loadData : Invalid arguments", {
 # loadDataAsName ===============================================================
 test_that("loadDataAsName : Non-standard evaluation", {
     envir <- new.env()
-    object <- loadDataAsName(new = serialized, envir = envir)
+    object <- loadDataAsName(
+        new = serialized,
+        dir = ".",
+        envir = envir
+    )
     expect_identical(names(object), "new")
     # We're defaulting to global environment.
     expect_true(exists("new", envir = envir, inherits = FALSE))
     # Now that the objects are loaded, let's check to make sure we can't
     # accidentally overwrite in the current environment.
     expect_error(
-        object = loadDataAsName(new = serialized, envir = envir),
+        object = loadDataAsName(
+            new = serialized,
+            dir = ".",
+            envir = envir
+        ),
         regexp = "reassignment"
     )
 })
 
 test_that("loadData : Standard evaluation", {
     expect_error(
-        object = loadDataAsName(data = "gr.rda"),
+        object = loadDataAsName(data = "gr.rda", dir = "."),
         regexp = "non-standard evaluation"
     )
 })
 
 test_that("loadDataAsName : Missing files", {
     expect_error(
-        object = loadDataAsName(data = XXX),
+        object = loadDataAsName(data = XXX, dir = "."),
         regexp = rdataLoadError
     )
 })
 
 test_that("loadDataAsName : Multiple objects in single file", {
     expect_error(
-        object = loadDataAsName(data = multi),
+        object = loadDataAsName(data = multi, dir = "."),
         regexp = "multi.rda contains multiple objects: x, y"
     )
 })
 
 test_that("loadDataAsName : Invalid arguments", {
-    # FIXME This check is failing on AppVeyor CI.
     expect_error(
         object = loadDataAsName(data = gr, dir = "XXX"),
         regexp = "No such file or directory"
     )
     expect_error(
-        object = loadDataAsName(data = gr, envir = "XXX"),
+        object = loadDataAsName(data = gr, dir = ".", envir = "XXX"),
         regexp = "is.environment"
     )
 })
