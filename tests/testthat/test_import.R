@@ -1,17 +1,21 @@
 context("Import")
 
-# FIXME I think this won't work unless the package is installed?
 load(system.file("extdata", "rse.rda", package = "brio"))
 load(system.file("extdata", "sce.rda", package = "brio"))
+
 mat <- SummarizedExperiment::assay(rse)
 sparse <- SummarizedExperiment::assay(sce)
 
 
 
 # import =======================================================================
-# FIXME This check is failing on AppVeyor CI.
+# AppVeyor is choking on XLSX file.
+# Evaluation error: zip file 'XXX\example.xlsx' cannot be opened.
+# You can see this error in the `testthat.Rout.fail` artefact file.
 with_parameters_test_that(
     "import : data frame", {
+        skip_on_appveyor()
+
         object <- import(file = paste0("example.", ext))
         expect_is(object, "data.frame")
     },
@@ -134,8 +138,12 @@ test_that("import : R script", {
     )
 })
 
-# FIXME This check is failing on AppVeyor CI.
+# AppVeyor has a cryptic failure here.
+# cannot read workspace version 167772160 written by R 512.3.5;
+# need R 256.2.3 or newer
 test_that("import : R Data", {
+    skip_on_appveyor()
+
     # R data.
     object <- import("example.rda")
     expect_s4_class(object, "DataFrame")
@@ -183,11 +191,13 @@ test_that("localOrRemoteFile : Vectorized", {
     expect_identical(basename(urls), basename(files))
 })
 
-# FIXME This check is failing on AppVeyor CI.
+# `normalizePath() returns different error messages depending on the R version.
+# Current: No such file or directory
+# AppVeyor: The system cannot find the file specified
 test_that("localOrRemoteFile : Missing file", {
     expect_error(
         object = localOrRemoteFile("XXX.csv"),
-        regexp = "No such file"
+        regexp = "path\\[1\\]"
     )
 })
 
@@ -263,6 +273,8 @@ remoteDir <- paste(
 )
 
 test_that("transmit", {
+    # Travis is still having issues with FTP connections.
+    # Test these steps locally instead.
     skip_on_travis()
 
     object <- transmit(
