@@ -2,7 +2,17 @@
 % Please edit documentation in R/deprecated.R
 \name{deprecated}
 \alias{deprecated}
+\alias{sanitizeColData}
+\alias{sanitizeRowData}
+\alias{sanitizeRowRanges}
 \title{Deprecated functions}
+\usage{
+sanitizeColData(...)
+
+sanitizeRowData(...)
+
+sanitizeRowRanges(...)
+}
 \value{
 \code{.Deprecated}.
 }
