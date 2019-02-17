@@ -44,6 +44,7 @@ Collate:
     'encode-methods.R'
     'export-methods.R'
     'factorize-methods.R'
+    'fileExt.R'
     'import.R'
     'importCounts.R'
     'importDelim.R'
