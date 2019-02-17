@@ -1,20 +1,38 @@
 #' Get the base name without the file extension
 #'
-#' @details
-#' This function is vectorized and supports multiple file paths.
+#' @note This function intentionally doesn't check whether a file exists.
 #'
 #' @export
-#' @inherit base::basename
+#' @param path `character`.
+#'   File path(s).
+#'   This function is vectorized and supports multiple files.
+#'
+#' @return `character`.
+#' Character vector of same length as `path` input, with file extension removed.
+#' Returns `NA` if no extension is detected.
 #'
 #' @seealso
 #' - [`basename()`][base::basename].
 #' - `tools::file_path_sans_ext()`.
 #'
 #' @examples
-#' basenameSansExt(c("dir/file.txt", "dir/archive.tar.gz"))
+#' basenameSansExt(c("dir/foo.txt", "dir/bar.tar.gz", "dir/"))
 basenameSansExt <- function(path) {
+    # `basename()` is vectorized.
     x <- basename(path = path)
-    x <- sub(pattern = compressExtPattern, replacement = "", x = x)
-    x <- sub(pattern = "([^.]+)\\.[[:alnum:]]+$", replacement = "\\1", x = x)
+    x <- vapply(
+        X = x,
+        FUN = function(x) {
+            if (isTRUE(
+                grepl(pattern = extPattern, x = x, ignore.case = TRUE)
+            )) {
+                sub(pattern = extPattern, replacement = "", x = x)
+            } else {
+                NA_character_
+            }
+        },
+        FUN.VALUE = character(1L),
+        USE.NAMES = FALSE
+    )
     x
 }
