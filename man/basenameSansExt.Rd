@@ -7,44 +7,23 @@
 basenameSansExt(path)
 }
 \arguments{
-\item{path}{character vector, containing path names.}
+\item{path}{\code{character}.
+File path(s).
+This function is vectorized and supports multiple files.}
 }
 \value{
-A character vector of the same length as \code{path}.  A zero-length
-  input will give a zero-length output with no error.
-
-  Paths not containing any separators are taken to be in the current
-  directory, so \code{dirname} returns \code{"."}.
-
-  If an element of \code{path} is \code{\link{NA}}, so is the result.
-
-  \code{""} is not a valid pathname, but is returned unchanged.
+\code{character}.
+Character vector of same length as \code{path} input, with file extension removed.
+Returns \code{NA} if no extension is detected.
 }
 \description{
-\code{basename} removes all of the path up to and including the last
-  path separator (if any).
-
-  \code{dirname} returns the part of the \code{path} up to but
-  excluding the last path separator, or \code{"."} if there is no path
-  separator.
+Get the base name without the file extension
 }
-\details{
-This function is vectorized and supports multiple file paths.
+\note{
+This function intentionally doesn't check whether a file exists.
 }
-\section{Behaviour on Windows}{
-
-  On Windows this will accept either \code{\\} or \code{/} as the path
-  separator, but \code{dirname} will return a path using \code{/}
-  (except if on a network share, when the leading \code{\\\\} will be
-  preserved).  Expect these only to be able to handle complete
-  paths, and not for example just a network share or a drive.
-
-  UTF-8-encoded path names not valid in the current locale can be used.
-
-}
-
 \examples{
-basenameSansExt(c("dir/file.txt", "dir/archive.tar.gz"))
+basenameSansExt(c("dir/foo.txt", "dir/bar.tar.gz", "dir/"))
 }
 \seealso{
 \itemize{
