@@ -1,7 +1,13 @@
 ## brio 0.1.7 (2019-02-15)
 
+### New functions
+
+- `fileExt`: An improved variation on `tools::file_ext`.
+
 ### Minor changes
 
+- `basenameSansExt`: Tightened up this function to return `NA` on match failure.
+  This behaves simiarly to the new `fileExt` function.
 - Switching back from defunct to deprecated for `sanitizeColData`,
   `sanitizeRowData`, `sanitizeRowRanges`, since these functions are still in use
   by bcbioRNASeq v0.2.9.
