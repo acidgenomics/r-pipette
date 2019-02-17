@@ -1,4 +1,4 @@
-#' Get the base name without the file extension
+#' Base name without the file extension
 #'
 #' @note This function intentionally doesn't check whether a file exists.
 #'
