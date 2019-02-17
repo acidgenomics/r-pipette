@@ -2,7 +2,7 @@
 % Please edit documentation in R/basenameSansExt.R
 \name{basenameSansExt}
 \alias{basenameSansExt}
-\title{Get the base name without the file extension}
+\title{Base name without the file extension}
 \usage{
 basenameSansExt(path)
 }
@@ -17,7 +17,7 @@ Character vector of same length as \code{path} input, with file extension remove
 Returns \code{NA} if no extension is detected.
 }
 \description{
-Get the base name without the file extension
+Base name without the file extension
 }
 \note{
 This function intentionally doesn't check whether a file exists.
