@@ -22,7 +22,7 @@ compressExtPattern <- "\\.(bz2|gz|xz|zip)"
 
 #' File extension pattern
 #'
-#' Note optional matching of compression formats.
+#' Note the optional matching of compression formats here.
 #'
 #' @export
 #' @examples

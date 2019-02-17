@@ -9,7 +9,7 @@
 extPattern
 }
 \description{
-Note optional matching of compression formats.
+Note the optional matching of compression formats here.
 }
 \examples{
 extPattern
