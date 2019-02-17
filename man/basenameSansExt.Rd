@@ -29,11 +29,7 @@ A character vector of the same length as \code{path}.  A zero-length
   separator.
 }
 \details{
-For \code{dirname} \link{tilde expansion} of the path is done.
-
-  Trailing path separators are removed before dissecting the path,
-  and for \code{dirname} any trailing file separators are removed
-  from the result.
+This function is vectorized and supports multiple file paths.
 }
 \section{Behaviour on Windows}{
 
@@ -48,9 +44,11 @@ For \code{dirname} \link{tilde expansion} of the path is done.
 }
 
 \examples{
-basenameSansExt("dir/file.txt")
-basenameSansExt("dir/archive.tar.gz")
+basenameSansExt(c("dir/file.txt", "dir/archive.tar.gz"))
 }
 \seealso{
-\code{\link[base:basename]{basename()}}.
+\itemize{
+\item \code{\link[base:basename]{basename()}}.
+\item \code{tools::file_path_sans_ext()}.
+}
 }
