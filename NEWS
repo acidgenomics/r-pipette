@@ -34,6 +34,7 @@ This release helps ensure backward compatibility with R 3.4.
 - Miscellaneous CI fixes to [Travis CI] and [AppVeyor CI].
 
 
+
 ## brio 0.1.4 (2019-01-21)
 
 ### New functions
@@ -56,6 +57,7 @@ deal specifically with file input/output:
 - `realpath`: Removed unnecessary assert check using `allHaveAccess`, since
   `normalizePath` already checks for this when `mustWork = TRUE`.
 - Added initial code coverage support using [testthat][].
+
 
 
 ## brio 0.1.3 (2019-12-13)
