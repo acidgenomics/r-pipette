@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get the base name without the file extension — basenameSansExt • brio</title>
+<title>Base name without the file extension — basenameSansExt • brio</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,13 +32,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Get the base name without the file extension — basenameSansExt" />
+<meta property="og:title" content="Base name without the file extension — basenameSansExt" />
 
-<meta property="og:description" content="basename removes all of the path up to and including the last
-  path separator (if any).
-dirname returns the part of the path up to but
-  excluding the last path separator, or &quot;.&quot; if there is no path
-  separator." />
+<meta property="og:description" content="Base name without the file extension" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -69,7 +65,7 @@ dirname returns the part of the path up to but
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">brio</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7</span>
       </span>
     </div>
 
@@ -108,18 +104,14 @@ dirname returns the part of the path up to but
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get the base name without the file extension</h1>
+    <h1>Base name without the file extension</h1>
     <small class="dont-index">Source: <a href='https://github.com/steinbaugh/brio/blob/master/R/basenameSansExt.R'><code>R/basenameSansExt.R</code></a></small>
     <div class="hidden name"><code>basenameSansExt.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p><code>basename</code> removes all of the path up to and including the last
-  path separator (if any).</p>
-<p><code>dirname</code> returns the part of the <code>path</code> up to but
-  excluding the last path separator, or <code>"."</code> if there is no path
-  separator.</p>
+    <p>Base name without the file extension</p>
     
     </div>
 
@@ -130,43 +122,32 @@ dirname returns the part of the path up to but
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>path</th>
-      <td><p>character vector, containing path names.</p></td>
+      <td><p><code>character</code>.
+File path(s).
+This function is vectorized and supports multiple files.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A character vector of the same length as <code>path</code>.  A zero-length
-  input will give a zero-length output with no error.</p>
-<p>Paths not containing any separators are taken to be in the current
-  directory, so <code>dirname</code> returns <code>"."</code>.</p>
-<p>If an element of <code>path</code> is <code><a href='https://www.rdocumentation.org/packages/base/topics/NA'>NA</a></code>, so is the result.</p>
-<p><code>""</code> is not a valid pathname, but is returned unchanged.</p>
+    <p><code>character</code>.
+Character vector of same length as <code>path</code> input, with file extension removed.
+Returns <code>NA</code> if no extension is detected.</p>
     
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>For <code>dirname</code> <a href='https://www.rdocumentation.org/packages/base/topics/path.expand'>tilde expansion</a> of the path is done.</p>
-<p>Trailing path separators are removed before dissecting the path,
-  and for <code>dirname</code> any trailing file separators are removed
-  from the result.</p>
-    
-    <h2 class="hasAnchor" id="behaviour-on-windows"><a class="anchor" href="#behaviour-on-windows"></a>Behaviour on Windows</h2>
-
-    
-    <p>On Windows this will accept either <code>\</code> or <code>/</code> as the path
-  separator, but <code>dirname</code> will return a path using <code>/</code>
-  (except if on a network share, when the leading <code>\\</code> will be
-  preserved).  Expect these only to be able to handle complete
-  paths, and not for example just a network share or a drive.</p>
-<p>UTF-8-encoded path names not valid in the current locale can be used.</p>
+    <p>This function intentionally doesn't check whether a file exists.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://www.rdocumentation.org/packages/base/topics/basename'>basename()</a></code>.</p></div>
+    <div class='dont-index'><ul>
+<li><p><code><a href='https://www.rdocumentation.org/packages/base/topics/basename'>basename()</a></code>.</p></li>
+<li><p><code><a href='https://www.rdocumentation.org/packages/tools/topics/fileutils'>tools::file_path_sans_ext()</a></code>.</p></li>
+</ul></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>basenameSansExt</span>(<span class='st'>"dir/file.txt"</span>)</div><div class='output co'>#&gt; [1] "file"</div><div class='input'><span class='fu'>basenameSansExt</span>(<span class='st'>"dir/archive.tar.gz"</span>)</div><div class='output co'>#&gt; [1] "archive"</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>basenameSansExt</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"dir/foo.txt"</span>, <span class='st'>"dir/bar.tar.gz"</span>, <span class='st'>"dir/"</span>))</div><div class='output co'>#&gt; [1] "foo" "bar" NA   </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -175,9 +156,7 @@ dirname returns the part of the path up to but
       
       <li><a href="#value">Value</a></li>
 
-      <li><a href="#details">Details</a></li>
-
-      <li><a href="#behaviour-on-windows">Behaviour on Windows</a></li>
+      <li><a href="#note">Note</a></li>
 
       <li><a href="#see-also">See also</a></li>
       
