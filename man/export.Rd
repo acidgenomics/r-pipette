@@ -71,6 +71,14 @@ Here we're performing any internal tibble coercion step to ensure row names
 are always moved to a "\code{rowname}" column in the CSV export.
 }
 
+\section{Exporting vectors}{
+
+
+Use \code{\link[base:writeLines]{writeLines()}} instead of \code{\link[=export]{export()}} to write vectors
+to disk. An S4 character method may be defined in a future update, but it is
+intentionally unsupported in the current release.
+}
+
 \examples{
 counts <- matrix(data = seq_len(100L), nrow = 10)
 export(counts, format = "csv")
