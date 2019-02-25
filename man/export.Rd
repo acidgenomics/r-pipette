@@ -3,15 +3,23 @@
 \docType{methods}
 \name{export}
 \alias{export}
-\alias{export,ANY-method}
+\alias{export,data.frame-method}
+\alias{export,DataFrame-method}
+\alias{export,matrix-method}
 \alias{export,sparseMatrix-method}
 \alias{export,SummarizedExperiment-method}
 \alias{export,SingleCellExperiment-method}
 \title{Export}
 \usage{
-\S4method{export}{ANY}(x, file, format, ...)
+\S4method{export}{data.frame}(x, file, format, ...)
+
+\S4method{export}{DataFrame}(x, file, format, ...)
+
+\S4method{export}{matrix}(x, file, format, ...)
 
 \S4method{export}{sparseMatrix}(x, file, format)
+
+\S4method{export}{matrix}(x, file, format, ...)
 
 \S4method{export}{SummarizedExperiment}(x, name = NULL, dir = ".",
   compress = FALSE, slotNames = c("assays", "colData", "rowData"))
