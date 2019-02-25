@@ -25,7 +25,6 @@
 #' @importFrom stats na.omit
 #' @importFrom stringr str_extract str_match str_subset
 #' @importFrom tibble as_tibble column_to_rownames
-#' @importFrom tools file_path_sans_ext
 #' @importFrom transformer as.data.frame as_tibble
 #' @importFrom utils download.file head tail
 NULL
