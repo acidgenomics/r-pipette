@@ -1,3 +1,46 @@
 authors:
   Michael Steinbaugh:
     href: /
+
+reference:
+  - title: Import/export of flat files
+    contents:
+    - import
+    - export
+  - title: Import of R data
+    contents:
+    - starts_with("assign")
+    - starts_with("load")
+  - title: Export of R data
+    contents:
+    - starts_with("save")
+  - title: Matrix-specific export
+    contents:
+    - writeCounts
+  - title: File transfers
+    contents:
+    - initDir
+    - localOrRemoteFile
+    - transmit
+  - title: File names
+    contents:
+    - basenameSansExt
+    - fileExt
+    - pasteURL
+    - realpath
+  - title: File pattern matching
+    contents:
+    - compressExtPattern
+    - extPattern
+    - rdataExtPattern
+  - title: Data sanitization
+    contents:
+    - atomize
+    - decode
+    - encode
+    - factorize
+    - naStrings
+  - title: Miscellaneous
+    contents:
+    - dots
+    - rdataLoadError
