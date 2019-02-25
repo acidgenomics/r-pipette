@@ -1,3 +1,14 @@
+## brio 0.1.8 (2019-02-25)
+
+### Minor changes
+
+- `export`: Tightened up the method support, removing the `ANY` method. Now
+  we're explicitly exporting `data.frame`, `DataFrame`, `matrix`, and `GRanges`
+  methods. This also has the added benefit of making the documentation more
+  readable.
+
+
+
 ## brio 0.1.7 (2019-02-15)
 
 ### New functions

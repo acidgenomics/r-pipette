@@ -62,7 +62,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">brio</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.8</span>
       </span>
     </div>
 
@@ -115,7 +115,27 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
+          <h2 id="section-import-export-of-flat-files" class="hasAnchor"><a href="#section-import-export-of-flat-files" class="anchor"></a>Import/export of flat files</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="import.html">import()</a></code> </p>
+        </td>
+        <td><p>Import</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="export.html">export(<i>&lt;data.frame&gt;</i>)</a></code> <code><a href="export.html">export(<i>&lt;DataFrame&gt;</i>)</a></code> <code><a href="export.html">export(<i>&lt;matrix&gt;</i>)</a></code> <code><a href="export.html">export(<i>&lt;sparseMatrix&gt;</i>)</a></code> <code><a href="export.html">export(<i>&lt;matrix&gt;</i>)</a></code> <code><a href="export.html">export(<i>&lt;SummarizedExperiment&gt;</i>)</a></code> <code><a href="export.html">export(<i>&lt;SingleCellExperiment&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Export</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-import-of-r-data" class="hasAnchor"><a href="#section-import-of-r-data" class="anchor"></a>Import of R data</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
@@ -125,78 +145,6 @@
           <p><code><a href="assignAndSaveData.html">assignAndSaveData()</a></code> </p>
         </td>
         <td><p>Assign and save data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="atomize.html">atomize(<i>&lt;data.frame&gt;</i>)</a></code> <code><a href="atomize.html">atomize(<i>&lt;DataFrame&gt;</i>)</a></code> <code><a href="atomize.html">atomize(<i>&lt;GRanges&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Atomize</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="basenameSansExt.html">basenameSansExt()</a></code> </p>
-        </td>
-        <td><p>Base name without the file extension</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="compressExtPattern.html">compressExtPattern</a></code> </p>
-        </td>
-        <td><p>Compression extension pattern</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="decode.html">decode(<i>&lt;DataFrame&gt;</i>)</a></code> <code><a href="decode.html">decode(<i>&lt;GRanges&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Decode column data that uses run-length encoding</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="dots.html">dots()</a></code> </p>
-        </td>
-        <td><p>Extract dots from function</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="encode.html">encode(<i>&lt;DataFrame&gt;</i>)</a></code> <code><a href="encode.html">encode(<i>&lt;GRanges&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Encode using run-length encoding</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="export.html">export(<i>&lt;ANY&gt;</i>)</a></code> <code><a href="export.html">export(<i>&lt;sparseMatrix&gt;</i>)</a></code> <code><a href="export.html">export(<i>&lt;SummarizedExperiment&gt;</i>)</a></code> <code><a href="export.html">export(<i>&lt;SingleCellExperiment&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Export</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="extPattern.html">extPattern</a></code> </p>
-        </td>
-        <td><p>File extension pattern</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="factorize.html">factorize(<i>&lt;ANY&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Factorize</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="fileExt.html">fileExt()</a></code> </p>
-        </td>
-        <td><p>File extension</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="import.html">import()</a></code> </p>
-        </td>
-        <td><p>Import</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="initDir.html">initDir()</a></code> </p>
-        </td>
-        <td><p>Initialize Directory</p></td>
       </tr><tr>
         
         <td>
@@ -215,6 +163,48 @@
           <p><code><a href="loadRemoteData.html">loadRemoteData()</a></code> </p>
         </td>
         <td><p>Load remote data</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-export-of-r-data" class="hasAnchor"><a href="#section-export-of-r-data" class="anchor"></a>Export of R data</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="saveData.html">saveData()</a></code> </p>
+        </td>
+        <td><p>Save data</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-matrix-specific-export" class="hasAnchor"><a href="#section-matrix-specific-export" class="anchor"></a>Matrix-specific export</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="writeCounts.html">writeCounts()</a></code> </p>
+        </td>
+        <td><p>Write counts</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-file-transfers" class="hasAnchor"><a href="#section-file-transfers" class="anchor"></a>File transfers</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="initDir.html">initDir()</a></code> </p>
+        </td>
+        <td><p>Initialize Directory</p></td>
       </tr><tr>
         
         <td>
@@ -224,9 +214,29 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="naStrings.html">naStrings</a></code> </p>
+          <p><code><a href="transmit.html">transmit()</a></code> </p>
         </td>
-        <td><p><code>NA</code> strings</p></td>
+        <td><p>Transmit files from a remote FTP server</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-file-names" class="hasAnchor"><a href="#section-file-names" class="anchor"></a>File names</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="basenameSansExt.html">basenameSansExt()</a></code> </p>
+        </td>
+        <td><p>Base name without the file extension</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="fileExt.html">fileExt()</a></code> </p>
+        </td>
+        <td><p>File extension</p></td>
       </tr><tr>
         
         <td>
@@ -236,39 +246,93 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="realpath.html">realpath()</a></code> </p>
+        </td>
+        <td><p>Express file paths in canonical form</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-file-pattern-matching" class="hasAnchor"><a href="#section-file-pattern-matching" class="anchor"></a>File pattern matching</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="compressExtPattern.html">compressExtPattern</a></code> </p>
+        </td>
+        <td><p>Compression extension pattern</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="extPattern.html">extPattern</a></code> </p>
+        </td>
+        <td><p>File extension pattern</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="rdataExtPattern.html">rdataExtPattern</a></code> </p>
         </td>
         <td><p>R data extension pattern</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-data-sanitization" class="hasAnchor"><a href="#section-data-sanitization" class="anchor"></a>Data sanitization</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="atomize.html">atomize(<i>&lt;data.frame&gt;</i>)</a></code> <code><a href="atomize.html">atomize(<i>&lt;DataFrame&gt;</i>)</a></code> <code><a href="atomize.html">atomize(<i>&lt;GRanges&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Atomize</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="decode.html">decode(<i>&lt;DataFrame&gt;</i>)</a></code> <code><a href="decode.html">decode(<i>&lt;GRanges&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Decode column data that uses run-length encoding</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="encode.html">encode(<i>&lt;DataFrame&gt;</i>)</a></code> <code><a href="encode.html">encode(<i>&lt;GRanges&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Encode using run-length encoding</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="factorize.html">factorize(<i>&lt;ANY&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Factorize</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="naStrings.html">naStrings</a></code> </p>
+        </td>
+        <td><p><code>NA</code> strings</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-miscellaneous" class="hasAnchor"><a href="#section-miscellaneous" class="anchor"></a>Miscellaneous</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="dots.html">dots()</a></code> </p>
+        </td>
+        <td><p>Extract dots from function</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="rdataLoadError.html">rdataLoadError</a></code> </p>
         </td>
         <td><p>R data load error</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="realpath.html">realpath()</a></code> </p>
-        </td>
-        <td><p>Express file paths in canonical form</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="saveData.html">saveData()</a></code> </p>
-        </td>
-        <td><p>Save data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="transmit.html">transmit()</a></code> </p>
-        </td>
-        <td><p>Transmit files from a remote FTP server</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="writeCounts.html">writeCounts()</a></code> </p>
-        </td>
-        <td><p>Write counts</p></td>
       </tr>
     </tbody>
     </table>
@@ -277,7 +341,15 @@
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#section-import-export-of-flat-files">Import/export of flat files</a></li>
+      <li><a href="#section-import-of-r-data">Import of R data</a></li>
+      <li><a href="#section-export-of-r-data">Export of R data</a></li>
+      <li><a href="#section-matrix-specific-export">Matrix-specific export</a></li>
+      <li><a href="#section-file-transfers">File transfers</a></li>
+      <li><a href="#section-file-names">File names</a></li>
+      <li><a href="#section-file-pattern-matching">File pattern matching</a></li>
+      <li><a href="#section-data-sanitization">Data sanitization</a></li>
+      <li><a href="#section-miscellaneous">Miscellaneous</a></li>
     </ul>
   </div>
 </div>
