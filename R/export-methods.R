@@ -13,6 +13,12 @@
 #'
 #' [readr]: https://readr.tidyverse.org/
 #'
+#' @section Exporting vectors:
+#'
+#' Use [`writeLines()`][base::writeLines] instead of [export()] to write vectors
+#' to disk. An S4 character method may be defined in a future update, but it is
+#' intentionally unsupported in the current release.
+#'
 #' @param x `ANY`.
 #'   An object supporting [`dim()`][base::dim], to be written to disk.
 #' @param file `character(1)`.
@@ -50,20 +56,40 @@ bioverbs::export
 
 
 
-# ANY : matrix, data.frame, DataFrame, etc. ====================================
-# Coerce to tibble in this method to always preserve rownames.
-# Note that `rio::export` does not preserve rownames by default.
-export.ANY <-  # nolint
+# Don't export an ANY method here. We want to keep the method support tight
+# and working consistently for only expected data classes.
+
+# Future support:
+# - DataFrameList
+# - GRangesList
+
+
+
+# data.frame ===================================================================
+# This method covers standard data.frame but is also intended to work for
+# data.table and tbl_df classes. Note that `rio::export()` does not preserve
+# rownames by default, so we're ensuring rownames get coerced to "rowname"
+# column consistently.
+export.data.frame <-  # nolint
     function(x, file, format, ...) {
-        # Ensure rownames are automatically moved to `rowname` column.
+        # Keep the `as.data.frame()` call here, so we can inherit the
+        # `data.frame` method in other S4 methods.
+        x <- as.data.frame(x)
+
+        # Ensure row names are automatically moved to `rowname` column.
         if (hasRownames(x)) {
             rownames <- "rowname"
         } else {
             rownames <- NULL
         }
-        x <- as.data.frame(x)
+
+        # Now we're ready to coerce to tibble internally, which helps us
+        # move the row names into a column.
         x <- as_tibble(x, rownames = rownames)
         assert(hasRows(x), hasCols(x))
+
+        # Juggle the file and format arguments, like rio package.
+        # Specify one but not both.
         if (missing(file) && missing(format)) {
             stop("Must specify `file` and/or `format`.", call. = FALSE)
         } else if (missing(file)) {
@@ -76,8 +102,11 @@ export.ANY <-  # nolint
         } else if (missing(format)) {
             assert(isString(file))
         }
+
         # Ensure directory is created automatically.
         initDir(dir = dirname(file))
+
+        # Now attach rio package and call `export()` on our data frame.
         requireNamespace("rio", quietly = TRUE)
         suppressMessages(
             file <- do.call(
@@ -85,6 +114,7 @@ export.ANY <-  # nolint
                 args = list(x = x, file = file, ...)
             )
         )
+
         file <- realpath(file)
         message(paste0("Exported ", basename(file), "."))
         invisible(file)
@@ -96,8 +126,38 @@ export.ANY <-  # nolint
 #' @export
 setMethod(
     f = "export",
-    signature = signature("ANY"),
-    definition = export.ANY
+    signature = signature("data.frame"),
+    definition = export.data.frame
+)
+
+
+
+# DataFrame ====================================================================
+export.DataFrame <- export.data.frame  # nolint
+
+
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature("DataFrame"),
+    definition = export.DataFrame
+)
+
+
+
+# matrix =======================================================================
+export.matrix <- export.DataFrame  # nolint
+
+
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature("matrix"),
+    definition = export.matrix
 )
 
 
@@ -181,6 +241,21 @@ setMethod(
     f = "export",
     signature = signature("sparseMatrix"),
     definition = export.sparseMatrix
+)
+
+
+
+# GRanges ======================================================================
+export.GRanges <- export.DataFrame  # nolint
+
+
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature("matrix"),
+    definition = export.GRanges
 )
 
 

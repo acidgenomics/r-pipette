@@ -3,15 +3,23 @@
 \docType{methods}
 \name{export}
 \alias{export}
-\alias{export,ANY-method}
+\alias{export,data.frame-method}
+\alias{export,DataFrame-method}
+\alias{export,matrix-method}
 \alias{export,sparseMatrix-method}
 \alias{export,SummarizedExperiment-method}
 \alias{export,SingleCellExperiment-method}
 \title{Export}
 \usage{
-\S4method{export}{ANY}(x, file, format, ...)
+\S4method{export}{data.frame}(x, file, format, ...)
+
+\S4method{export}{DataFrame}(x, file, format, ...)
+
+\S4method{export}{matrix}(x, file, format, ...)
 
 \S4method{export}{sparseMatrix}(x, file, format)
+
+\S4method{export}{matrix}(x, file, format, ...)
 
 \S4method{export}{SummarizedExperiment}(x, name = NULL, dir = ".",
   compress = FALSE, slotNames = c("assays", "colData", "rowData"))
@@ -61,6 +69,14 @@ write row names by design. This is a \emph{really poor} default setting for
 handling genomic data, which often contain gene identifiers in the row names.
 Here we're performing any internal tibble coercion step to ensure row names
 are always moved to a "\code{rowname}" column in the CSV export.
+}
+
+\section{Exporting vectors}{
+
+
+Use \code{\link[base:writeLines]{writeLines()}} instead of \code{\link[=export]{export()}} to write vectors
+to disk. An S4 character method may be defined in a future update, but it is
+intentionally unsupported in the current release.
 }
 
 \examples{
