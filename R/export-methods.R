@@ -13,6 +13,12 @@
 #'
 #' [readr]: https://readr.tidyverse.org/
 #'
+#' @section Exporting vectors:
+#'
+#' Use [`writeLines()`][base::writeLines] instead of [export()] to write vectors
+#' to disk. An S4 character method may be defined in a future update, but it is
+#' intentionally unsupported in the current release.
+#'
 #' @param x `ANY`.
 #'   An object supporting [`dim()`][base::dim], to be written to disk.
 #' @param file `character(1)`.
