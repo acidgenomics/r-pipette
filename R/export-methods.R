@@ -66,6 +66,10 @@ bioverbs::export
 # column consistently.
 export.data.frame <-  # nolint
     function(x, file, format, ...) {
+        # Keep the `as.data.frame()` call here, so we can inherit the
+        # `data.frame` method in other S4 methods.
+        x <- as.data.frame(x)
+
         # Ensure row names are automatically moved to `rowname` column.
         if (hasRownames(x)) {
             rownames <- "rowname"
@@ -73,6 +77,8 @@ export.data.frame <-  # nolint
             rownames <- NULL
         }
 
+        # Now we're ready to coerce to tibble internally, which helps us
+        # move the row names into a column.
         x <- as_tibble(x, rownames = rownames)
         assert(hasRows(x), hasCols(x))
 
@@ -121,15 +127,7 @@ setMethod(
 
 
 # DataFrame ====================================================================
-export.DataFrame <-  # nolint
-    function(x, file, format, ...) {
-        export(
-            x = as_tibble(x, rownames = "rowname"),
-            file = file,
-            format = format,
-            ...
-        )
-    }
+export.DataFrame <- export.data.frame  # nolint
 
 
 
