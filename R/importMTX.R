@@ -2,7 +2,6 @@
 # name sidecar files don't exist.
 importMTX <- function(file, ...) {
     assert(isString(file))
-
     # Add the rownames automatically using `.rownames` sidecar file.
     rownamesFile <- paste(file, "rownames", sep = ".")
     rownamesFile <- tryCatch(
@@ -15,7 +14,6 @@ importMTX <- function(file, ...) {
             NULL
         }
     )
-
     # Add the colnames automatically using `.colnames` sidecar file.
     colnamesFile <- paste(file, "colnames", sep = ".")
     colnamesFile <- tryCatch(
@@ -28,22 +26,17 @@ importMTX <- function(file, ...) {
             NULL
         }
     )
-
     file <- localOrRemoteFile(file)
-    message(paste(
-        "Importing", basename(file), "using Matrix::readMM()."
-    ))
-    data <- readMM(file = file, ...)
-
+    message(paste("Importing", basename(file), "using Matrix::readMM()."))
+    object <- readMM(file = file, ...)
     if (!is.null(rownamesFile)) {
-        rownames(data) <- .importSidecar(rownamesFile)
+        rownames(object) <- .importSidecar(rownamesFile)
     }
-
     if (!is.null(colnamesFile)) {
-        colnames(data) <- .importSidecar(colnamesFile)
+        colnames(object) <- .importSidecar(colnamesFile)
     }
-
-    data
+    object <- .slotVersion(object, pkg = "Matrix")
+    object
 }
 
 

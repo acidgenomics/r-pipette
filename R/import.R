@@ -152,6 +152,8 @@
 #' x <- import(file)
 #' print(x)
 import <- function(file, ...) {
+    # Note that we're not using a `localOrRemoteFile()` call for `file` here,
+    # so we can support Google Sheets.
     assert(isString(file))
 
     # Allow Google Sheets import using rio.
@@ -163,49 +165,51 @@ import <- function(file, ...) {
 
     # How we set NA strings depends on the file extension.
     if (ext %in% c("CSV", "FWF", "PSV", "TSV", "TXT")) {
-        data <- importDelim(file, ...)
+        object <- importDelim(file, ...)
     } else if (ext %in% c("XLS", "XLSB", "XLSX")) {
-        data <- importXLSX(file, ...)
+        object <- importXLSX(file, ...)
     } else if (ext == "RDS") {
-        data <- importRDS(file, ...)
+        object <- importRDS(file, ...)
     } else if (ext %in% c("RDA", "RDATA")) {
-        data <- importRDA(file, ...)
+        object <- importRDA(file, ...)
     } else if (ext == "GMT") {
-        data <- importGMT(file, ...)
+        object <- importGMT(file, ...)
     } else if (ext == "GMX") {
-        data <- importGMX(file, ...)
+        object <- importGMX(file, ...)
     } else if (ext == "JSON") {
-        data <- importJSON(file, ...)
+        object <- importJSON(file, ...)
     } else if (ext %in% c("YAML", "YML")) {
-        data <- importYAML(file, ...)
+        object <- importYAML(file, ...)
     } else if (ext == "MTX") {
-        data <- importMTX(file, ...)
+        object <- importMTX(file, ...)
     } else if (ext == "COUNTS") {
-        data <- importCounts(file, ...)
+        object <- importCounts(file, ...)
     } else if (ext %in% c("LOG", "MD", "PY", "R", "RMD", "SH")) {
-        data <- importLines(file, ...)
+        object <- importLines(file, ...)
     } else if (ext %in% c(
         "BED", "BED15", "BEDGRAPH", "BEDPE",
         "BROADPEAK", "NARROWPEAK",
         "GFF", "GFF1", "GFF2", "GFF3", "GTF",
         "BIGWIG", "BW", "WIG"
     )) {
-        data <- .rtracklayerImport(file, ...)
+        object <- .rtracklayerImport(file, ...)
     } else if (ext %in% c(
-        "GSHEET",  # Google Sheets, matched by URL (see above)
-        "ODS",  # OpenDocument (LibreOffice)
-        "MAT",  # Matlab
-        "DTA",  # Stata
-        "SAS7BDAT", "XPT",  # SASS
-        "POR", "SAV",  # SPSS
-        "MTP",  # Minitab
-        "SYD",  # Systat
-        "REC",  # Epi Info
-        "ARFF",  # Weka Attribute-Relation File Format
-        "DBF",  # dBase Database File
-        "DIF"  # Data Interchange Format
+        "ARFF",      # Weka Attribute-Relation File Format
+        "DBF",       # dBase Database File
+        "DIF",       # Data Interchange Format
+        "DTA",       # Stata
+        "GSHEET",    # Google Sheets, matched by URL (see above)
+        "MAT",       # Matlab
+        "MTP",       # Minitab
+        "ODS",       # OpenDocument (LibreOffice)
+        "POR",       # SPSS
+        "SAS7BDAT",  # SASS
+        "SAV",       # SPSS
+        "SYD",       # Systat
+        "REC",       # Epi Info
+        "XPT"        # SASS
     )) {
-        data <- .rioImport(file, ...)
+        object <- .rioImport(file, ...)
     } else {
         stop(paste0(
             "Import of ", basename(file), " failed.\n",
@@ -213,41 +217,54 @@ import <- function(file, ...) {
         ))
     }
 
-    if (is.data.frame(data)) {
+    if (is.data.frame(object)) {
         # Coerce data frame to desired global output, if necessary.
         pref <- getOption("basejump.data.frame")
         if (isString(pref)) {
-            data <- switch(
-                data.frame = as.data.frame(data),
-                DataFrame = as(data, "DataFrame"),
-                tbl_df = as_tibble(data),
-                data.table = as.data.table(data)
+            object <- switch(
+                data.frame = as.data.frame(object),
+                DataFrame = as(object, "DataFrame"),
+                tbl_df = as_tibble(object),
+                data.table = as.data.table(object)
             )
         }
 
         # Set rownames automatically, if supported.
         if (
-            isAny(data, c("data.frame", "DataFrame")) &&
-            "rowname" %in% colnames(data)
+            isAny(object, c("data.frame", "DataFrame")) &&
+            "rowname" %in% colnames(object)
         ) {
             message("Setting rownames from `rowname` column.")
-            rownames(data) <- data[["rowname"]]
-            data[["rowname"]] <- NULL
+            rownames(object) <- object[["rowname"]]
+            object[["rowname"]] <- NULL
         }
     }
 
-    data
+    # Slot data provenance metadata into object.
+    metadata <- list(
+        file = file,
+        brio = packageVersion("brio"),
+        date = Sys.Date(),
+        call = match.call()
+    )
+    if (isS4(object)) {
+        metadata(object) <- c(metadata(object), metadata)
+    } else {
+        attributes(object) <- c(attributes(object), metadata)
+    }
+
+    object
 }
 
 
 
 .rioImport <- function(file, ...) {
     file <- localOrRemoteFile(file)
-    message(paste(
-        "Importing", basename(file), "using rio::import()."
-    ))
+    message(paste("Importing", basename(file), "using rio::import()."))
     requireNamespace("rio", quietly = TRUE)
-    rio::import(file, ...)
+    object <- rio::import(file, ...)
+    object <- .slotVersion(object, pkg = "rio")
+    object
 }
 
 
@@ -255,11 +272,9 @@ import <- function(file, ...) {
 # Using `tryCatch()` here to error if there are any warnings.
 .rtracklayerImport <- function(file, ...) {
     file <- localOrRemoteFile(file)
-    message(paste(
-        "Importing", basename(file), "using rtracklayer::import()."
-    ))
+    message(paste("Importing", basename(file), "using rtracklayer::import()."))
     requireNamespace("rtracklayer", quietly = TRUE)
-    tryCatch(
+    object <- tryCatch(
         expr = rtracklayer::import(file, ...),
         error = function(e) {
             stop("File failed to load.")  # nocov
@@ -268,4 +283,19 @@ import <- function(file, ...) {
             stop("File failed to load.")  # nocov
         }
     )
+    object <- .slotVersion(object, pkg = "rtracklayer")
+    object
+}
+
+
+
+# Slot package version into object, for data provenance.
+.slotVersion <- function(object, pkg) {
+    version <- packageVersion(pkg)
+    if (isS4(object)) {
+        metadata(object)[[pkg]] <- version
+    } else {
+        attr(object, pkg) <- version
+    }
+    object
 }
