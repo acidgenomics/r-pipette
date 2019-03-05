@@ -3,6 +3,6 @@ importJSON <- function(file, ...) {
     message(paste("Importing", basename(file), "using jsonlite::read_json()."))
     requireNamespace("jsonlite", quietly = TRUE)
     object <- jsonlite::read_json(path = file, ...)
-    object <- .slotVersion(object, pkg = "jsonlite")
+    object <- .slotMetadata(object, pkg = "jsonlite", fun = "read_json")
     object
 }

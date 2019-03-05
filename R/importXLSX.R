@@ -5,6 +5,6 @@ importXLSX <- function(file, ...) {
     object <- readxl::read_excel(path = file, na = naStrings, ...)
     # Coerce tbl_df to data.frame.
     object <- as.data.frame(object)
-    object <- .slotVersion(object, pkg = "readxl")
+    object <- .slotMetadata(object, pkg = "readxl", fun = "read_excel")
     object
 }
