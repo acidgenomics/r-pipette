@@ -12,6 +12,6 @@ importCounts <- function(file, ...) {
     object <- column_to_rownames(object, var = "id")
     # Coerce data frame to matrix.
     object <- as.matrix(object)
-    object <- .slotVersion(object, pkg = "readr")
+    object <- .slotMetadata(object, pkg = "readr", fun = "read_tsv")
     object
 }

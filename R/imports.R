@@ -9,7 +9,7 @@
 #' @importFrom Matrix readMM writeMM
 #' @importFrom RCurl getURL url.exists
 #' @importFrom R.utils gzip
-#' @importFrom S4Vectors DataFrame Rle mcols mcols<-
+#' @importFrom S4Vectors DataFrame Rle mcols mcols<- metadata metadata<-
 #' @importFrom SingleCellExperiment reducedDims
 #' @importFrom SummarizedExperiment assayNames assayNames<- assays colData
 #'   rowData rowRanges
@@ -20,11 +20,11 @@
 #'   hasNoDuplicates hasRownames hasRows hasValidDimnames isAFile isAURL isAny
 #'   isCharacter isFlag isMatchingRegex isNonEmpty isString isSubset
 #'   matchArgsToDoCall standardizeCall
-#' @importFrom methods as is
+#' @importFrom methods as is slotNames validObject
 #' @importFrom readr read_lines read_tsv write_lines
 #' @importFrom stats na.omit
 #' @importFrom stringr str_extract str_match str_subset
 #' @importFrom tibble as_tibble column_to_rownames
 #' @importFrom transformer as.data.frame as_tibble
-#' @importFrom utils download.file head tail
+#' @importFrom utils download.file head packageVersion tail
 NULL

@@ -3,6 +3,6 @@ importLines <- function(file, ...) {
     file <- localOrRemoteFile(file)
     message(paste("Importing", basename(file), "using readr::read_lines()."))
     object <- read_lines(file, ...)
-    object <- .slotVersion(object, pkg = "readr")
+    object <- .slotMetadata(object, pkg = "readr", fun = "read_lines")
     object
 }

@@ -35,7 +35,7 @@ importMTX <- function(file, ...) {
     if (!is.null(colnamesFile)) {
         colnames(object) <- .importSidecar(colnamesFile)
     }
-    object <- .slotVersion(object, pkg = "Matrix")
+    object <- .slotMetadata(object, pkg = "Matrix", fun = "readMM")
     object
 }
 

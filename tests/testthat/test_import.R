@@ -3,39 +3,41 @@ context("Import")
 load(system.file("extdata", "rse.rda", package = "brio"))
 load(system.file("extdata", "sce.rda", package = "brio"))
 
-mat <- SummarizedExperiment::assay(rse)
-sparse <- SummarizedExperiment::assay(sce)
+assay <- SummarizedExperiment::assay
+mcols <- S4Vectors::mcols
+metadata <- S4Vectors::metadata
+seqnames <- GenomicRanges::seqnames
+
+mat <- assay(rse)
+sparse <- assay(sce)
 
 
 
 # import =======================================================================
-# AppVeyor is choking on XLSX file.
-# Evaluation error: zip file 'XXX\example.xlsx' cannot be opened.
-# You can see this error in the `testthat.Rout.fail` artefact file.
+# AppVeyor chokes on XLSX file.
 with_parameters_test_that(
     "import : data frame", {
-        skip_on_appveyor()
-
-        object <- import(file = paste0("example.", ext))
+        if (ext == "xlsx") skip_on_appveyor()
+        file <- paste0("example.", ext)
+        object <- import(file)
         expect_is(object, "data.frame")
+        expect_identical(
+            object = attr(object, "brio")[["file"]],
+            expected = realpath(file)
+        )
     },
-    ext = c(
-        "csv",
-        "csv.gz",
-        "tsv",
-        "xlsx"
-    )
+    ext = c("csv", "csv.gz", "tsv", "xlsx")
 )
 
 test_that("import : GFF3", {
     object <- import("example.gff3")
     expect_s4_class(object, "GRanges")
     expect_identical(
-        object = levels(GenomicRanges::seqnames(object)),
+        object = levels(seqnames(object)),
         expected = "1"
     )
     expect_identical(
-        object = colnames(S4Vectors::mcols(object)),
+        object = colnames(mcols(object)),
         expected = c(
             "source",
             "type",
@@ -66,17 +68,21 @@ test_that("import : GFF3", {
             "protein_id"
         )
     )
+    expect_identical(
+        object = metadata(object)[["brio"]][["rtracklayer"]],
+        expected = packageVersion("rtracklayer")
+    )
 })
 
 test_that("import : GTF", {
     object <- import("example.gtf")
     expect_s4_class(object, "GRanges")
     expect_identical(
-        object = levels(GenomicRanges::seqnames(object)),
+        object = levels(seqnames(object)),
         expected = "1"
     )
     expect_identical(
-        object = colnames(S4Vectors::mcols(object)),
+        object = colnames(mcols(object)),
         expected = c(
             "source",
             "type",
@@ -102,6 +108,10 @@ test_that("import : GTF", {
             "protein_version"
         )
     )
+    expect_identical(
+        object = metadata(object)[["brio"]][["rtracklayer"]],
+        expected = packageVersion("rtracklayer")
+    )
 })
 
 test_that("import : MatrixMarket file (.mtx)", {
@@ -113,6 +123,11 @@ test_that("import : MatrixMarket file (.mtx)", {
             c("gene0001", "gene0002"),
             c("cell001", "cell002")
         )
+    )
+    # Note that sparseMatrix S4 class doesn't support `metadata()`.
+    expect_identical(
+        object = attr(object, "brio")[["importer"]],
+        expected = "Matrix::readMM"
     )
 })
 
@@ -128,6 +143,10 @@ test_that("import : Counts file (.counts)", {
             "ENSMUSG00000102851",
             "ENSMUSG00000103377"
         )
+    )
+    expect_identical(
+        object = attr(object, "brio")[["importer"]],
+        expected = "readr::read_tsv"
     )
 })
 

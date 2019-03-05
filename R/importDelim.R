@@ -4,6 +4,6 @@ importDelim <- function(file, ...) {
     object <- fread(file = file, na.strings = naStrings, ...)
     # Coerce data.table to data.frame.
     object <- as.data.frame(object)
-    object <- .slotVersion(object, pkg = "data.table")
+    object <- .slotMetadata(object, pkg = "data.table", fun = "fread")
     object
 }

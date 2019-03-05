@@ -241,18 +241,25 @@ import <- function(file, ...) {
     }
 
     # Slot data provenance metadata into object.
-    metadata <- list(
-        file = file,
+    newMeta <- list(
         brio = packageVersion("brio"),
+        file = if (isAFile(file)) { realpath(file) } else { file },
         date = Sys.Date(),
         call = match.call()
     )
-    if (isS4(object)) {
-        metadata(object) <- c(metadata(object), metadata)
+    if (isS4(object) && "metadata" %in% slotNames(object)) {
+        meta <- metadata(object)[["brio"]]
+        meta <- c(meta, newMeta)
+        meta <- meta[sort(names(meta))]
+        metadata(object)[["brio"]] <- meta
     } else {
-        attributes(object) <- c(attributes(object), metadata)
+        meta <- attr(object, "brio")
+        meta <- c(meta, newMeta)
+        meta <- meta[sort(names(meta))]
+        attr(object, "brio") <- meta
     }
 
+    validObject(object)
     object
 }
 
@@ -263,7 +270,7 @@ import <- function(file, ...) {
     message(paste("Importing", basename(file), "using rio::import()."))
     requireNamespace("rio", quietly = TRUE)
     object <- rio::import(file, ...)
-    object <- .slotVersion(object, pkg = "rio")
+    object <- .slotMetadata(object, pkg = "rio", fun = "import")
     object
 }
 
@@ -283,19 +290,25 @@ import <- function(file, ...) {
             stop("File failed to load.")  # nocov
         }
     )
-    object <- .slotVersion(object, pkg = "rtracklayer")
+    object <- .slotMetadata(object, pkg = "rtracklayer", fun = "import")
     object
 }
 
 
 
-# Slot package version into object, for data provenance.
-.slotVersion <- function(object, pkg) {
+# Slot data provenance metadata.
+.slotMetadata <- function(object, pkg, fun) {
+    assert(isString(pkg), isString(fun))
+    importer <- paste0(pkg, "::", fun)
     version <- packageVersion(pkg)
-    if (isS4(object)) {
-        metadata(object)[[pkg]] <- version
+    if (isS4(object) && "metadata" %in% slotNames(object)) {
+        metadata(object)[["brio"]][["importer"]] <- importer
+        metadata(object)[["brio"]][[pkg]] <- version
     } else {
-        attr(object, pkg) <- version
+        # Use `attr()` instead of `attributes()` here. It doesn't error on
+        # assignment when the object doesn't already have attributes.
+        attr(object, "brio")[["importer"]] <- importer
+        attr(object, "brio")[[pkg]] <- version
     }
     object
 }

@@ -154,10 +154,3 @@ transmit <- function(
     names(files) <- match
     invisible(files)
 }
-
-
-
-# FIXME
-# Slot useful metadata/attributes into object.
-# - S3: `attributes()`
-# - S4: `metadata()`
