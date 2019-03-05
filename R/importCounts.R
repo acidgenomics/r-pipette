@@ -1,18 +1,17 @@
 # bcbio count matrix file.
 importCounts <- function(file, ...) {
-    message(paste(
-        "Importing", basename(file), "using readr::read_tsv()."
-    ))
-    data <- read_tsv(file = file, na = naStrings, ...)
+    message(paste("Importing", basename(file), "using readr::read_tsv()."))
+    object <- read_tsv(file = file, na = naStrings, ...)
     assert(
-        isSubset("id", colnames(data)),
-        hasNoDuplicates(data[["id"]])
+        isSubset("id", colnames(object)),
+        hasNoDuplicates(object[["id"]])
     )
     # Coerce tibble to data frame.
-    data <- as.data.frame(data)
+    object <- as.data.frame(object)
     # Need to move the "id" column to rownames.
-    data <- column_to_rownames(data, var = "id")
-    # Coerce data.frame to matrix.
-    data <- as.matrix(data)
-    data
+    object <- column_to_rownames(object, var = "id")
+    # Coerce data frame to matrix.
+    object <- as.matrix(object)
+    object <- .slotVersion(object, pkg = "readr")
+    object
 }

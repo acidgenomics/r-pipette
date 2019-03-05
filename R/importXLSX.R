@@ -1,11 +1,10 @@
 importXLSX <- function(file, ...) {
     file <- localOrRemoteFile(file)
-    message(paste(
-        "Importing", basename(file), "using readxl::read_excel()."
-    ))
+    message(paste("Importing", basename(file), "using readxl::read_excel()."))
     requireNamespace("readxl", quietly = TRUE)
-    data <- readxl::read_excel(path = file, na = naStrings, ...)
+    object <- readxl::read_excel(path = file, na = naStrings, ...)
     # Coerce tbl_df to data.frame.
-    data <- as.data.frame(data)
-    data
+    object <- as.data.frame(object)
+    object <- .slotVersion(object, pkg = "readxl")
+    object
 }
