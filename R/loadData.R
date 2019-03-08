@@ -25,6 +25,8 @@
 #'   Note that these arguments are interpreted as symbols using non-standard
 #'   evaluation for convenience during interactive use, and *must not be
 #'   quoted*.
+#' @param list `character`.
+#'   A character vector containing the names of objects to be loaded.
 #'
 #' @return Invisible `character`.
 #' File paths.
@@ -35,9 +37,29 @@
 #'
 #' @examples
 #' dir <- system.file("extdata", package = "brio")
-#' loadData(example, dir = dir)
-loadData <- function(..., dir, envir = globalenv()) {
-    names <- dots(..., character = TRUE)
+#'
+#' ## Interactive mode ====
+#' ## Note that this method uses non-standard evaluation.
+#' loadData(rse, sce, dir = dir)
+#'
+#' ## List mode ====
+#' ## Note that this method uses standard evaluation.
+#' ## Use this approach inside of functions.
+#' list <- c("rse", "sce")
+#' loadData(list = list)
+loadData <- function(
+    ...,
+    list = NULL,
+    dir,
+    envir = globalenv()
+) {
+    if (!is.null(list)) {
+        assert(isCharacter(list))
+        names <- list
+        rm(list)
+    } else {
+        names <- dots(..., character = TRUE)
+    }
     files <- .listData(names = names, dir = dir)
     assert(is.environment(envir))
     if (all(grepl(
