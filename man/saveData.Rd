@@ -7,7 +7,8 @@
 saveData(..., dir = getOption("basejump.save.dir", "."),
   ext = getOption("basejump.save.ext", "rds"),
   overwrite = getOption("basejump.save.overwrite", TRUE),
-  compress = getOption("basejump.save.compress", TRUE))
+  compress = getOption("basejump.save.compress", TRUE), list = NULL,
+  envir = parent.frame())
 }
 \arguments{
 \item{...}{Object names.
@@ -19,9 +20,9 @@ quoted}.}
 Directory path.}
 
 \item{ext}{\code{character(1)}.
-R data serialized (RDS; "\code{rds}") or R data ("\code{rda}", "\code{RData}"). RDS is
+R data serialized (\code{RDS}) or R data (\code{RDA}, \code{RDATA}). RDS is
 preferred when saving single objects per file, which is always the
-convention of \code{saveData}, regardless of the extension used.}
+convention of \code{\link[=saveData]{saveData()}}, regardless of the extension used.}
 
 \item{overwrite}{\code{logical(1)}.
 Overwrite existing file.}
@@ -32,6 +33,15 @@ Overwrite existing file.}
     \code{"bzip2"} or \code{"xz"} specify the type of
     compression.  Ignored when \code{file} is a connection and
     for workspace format version 1.}
+
+\item{list}{\code{character}.
+A character vector containing the names of objects to be saved.
+Note that this approach differs from \code{\link[base:save]{save()}} in that the
+objects are saved individually to disk, instead of inside a single R data
+file. Requires objects to be defined in \code{\link[base:globalenv]{globalenv()}}.}
+
+\item{envir}{\code{environment}.
+Environment.}
 }
 \value{
 Invisible named \code{character}.
@@ -51,12 +61,29 @@ names using non-standard evaluation. It will \strong{overwrite} existing files
 on disk, following the same conventions as \code{\link[base:save]{save()}}.
 }
 \examples{
-x <- 1
-saveData(x, dir = "example")
-list.files("example")
+dir <- "example"
+
+## Interactive mode ====
+## Note that this method uses non-standard evaluation.
+a <- 1
+b <- 2
+saveData(a, b, dir = dir)
+list.files(dir)
 
 ## Clean up.
-unlink("example", recursive = TRUE)
+unlink(dir, recursive = TRUE)
+
+## List mode ====
+## Note that this method uses standard evaluation.
+## Use this approach inside of functions.
+a <- 1
+b <- 2
+list <- c("a", "b")
+saveData(list = list, dir = dir)
+list.files(dir)
+
+## Clean up.
+unlink(dir, recursive = TRUE)
 }
 \seealso{
 \itemize{
