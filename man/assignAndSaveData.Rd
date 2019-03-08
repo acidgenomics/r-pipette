@@ -8,7 +8,8 @@ assignAndSaveData(name, object, envir = parent.frame(),
   dir = getOption("basejump.save.dir", "."),
   ext = getOption("basejump.save.ext", "rds"),
   overwrite = getOption("basejump.save.overwrite", TRUE),
-  compress = getOption("basejump.save.compress", TRUE))
+  compress = getOption("basejump.save.compress", TRUE),
+  envir = parent.frame())
 }
 \arguments{
 \item{name}{\code{character(1)}.

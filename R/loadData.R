@@ -55,9 +55,9 @@
 #' rm(rse, sce)
 loadData <- function(
     ...,
-    list = NULL,
     dir,
-    envir = globalenv()
+    envir = globalenv(),
+    list = NULL
 ) {
     if (!is.null(list)) {
         assert(isCharacter(list))
