@@ -1,3 +1,19 @@
+## brio 0.1.9 (2019-03-08)
+
+### Major changes
+
+- `loadData` and `saveData` now support `list` argument, supporting a character
+  vector of object names. This allows for programmatic use of the functions
+  with standard evaluation. For reference, this approach is inspired by the
+  method defined in `save`.
+
+### Minor changes
+
+- `import`: Data provenance metadata is now slotted into `attributes` for S3
+  return (e.g. `data.frame`) and `metadata` for S4 return (e.g. `DataFrame`).
+
+
+
 ## brio 0.1.8 (2019-02-25)
 
 ### Minor changes

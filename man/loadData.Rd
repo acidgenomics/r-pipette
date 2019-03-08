@@ -5,7 +5,7 @@
 \title{Load data}
 \usage{
 loadData(..., dir = getOption("basejump.load.dir", "."),
-  envir = globalenv())
+  envir = globalenv(), list = NULL)
 }
 \arguments{
 \item{...}{Object names.
@@ -18,6 +18,9 @@ Directory path.}
 
 \item{envir}{\code{environment}.
 Environment.}
+
+\item{list}{\code{character}.
+A character vector containing the names of objects to be loaded.}
 }
 \value{
 Invisible \code{character}.
@@ -25,19 +28,19 @@ File paths.
 }
 \description{
 Load R data files from a directory using symbols rather than complete file
-paths. Supports "\code{.rds}", "\code{.rda}", and "\code{.RData}" file extensions.
+paths. Supports \code{RDS}, \code{RDA}, and \code{RDATA} file extensions.
 }
 \details{
-\code{loadData} is opinionated about the format of R data files it will accept.
-\code{save} allows for the saving of multiple objects into a single R data file.
-This can later result in unexpected accidental replacement of an existing
-object in the current environment. Since an R data file internally stores the
-name of an object, if the file is later renamed the object name will no
-longer match.
+\code{\link[=loadData]{loadData()}} is opinionated about the format of R data files it will accept.
+\code{\link[base:save]{save()}} allows for the saving of multiple objects into a
+single R data file. This can later result in unexpected accidental
+replacement of an existing object in the current environment. Since an R data
+file internally stores the name of an object, if the file is later renamed
+the object name will no longer match.
 
-To avoid any accidental replacements, \code{loadData} will only load R data
+To avoid any accidental replacements, \code{\link[=loadData]{loadData()}} will only load R data
 files that contain a single object, and the internal object name must match
-the file name exactly. Additionally, \code{loadData} will intentionally error if
+the file name exactly. Additionally, \code{\link[=loadData]{loadData()}} will intentionally error if
 an object with the same name already exists in the destination \code{environment}.
 }
 \note{
@@ -46,7 +49,22 @@ names using non-standard evaluation.
 }
 \examples{
 dir <- system.file("extdata", package = "brio")
-loadData(example, dir = dir)
+
+## Interactive mode ====
+## Note that this method uses non-standard evaluation.
+loadData(rse, sce, dir = dir)
+
+## Clean up.
+rm(rse, sce)
+
+## List mode ====
+## Note that this method uses standard evaluation.
+## Use this approach inside of functions.
+list <- c("rse", "sce")
+loadData(list = list, dir = dir)
+
+## Clean up.
+rm(rse, sce)
 }
 \seealso{
 \itemize{
