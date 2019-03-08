@@ -4,14 +4,95 @@
 \alias{import}
 \title{Import}
 \usage{
-import(file, ...)
+import(file, sheet = 1L)
 }
 \arguments{
 \item{file}{\code{character(1)}.
 File path.}
 
-\item{...}{Additional arguments, passed to the respective internal loading
-function.
+\item{sheet}{\code{character(1)} (recommended) or \code{integer(1)}.
+\emph{Apples only to Excel Workbook or Google Sheet import.}
+Sheet to read. Either a string (the name of a sheet), or an integer (the
+position of the sheet). Defaults to the first sheet.}
+}
+\value{
+Varies, depending on the file extension:
+\itemize{
+\item \emph{Default.} \code{CSV}, \code{TSV}, \code{TXT}, \code{XLS}, \code{XLSX}: \code{data.frame}.
+See \code{Data frame return} section for details on how to change the default
+return type.
+\item \code{GTF}, \code{GFF}: \code{GRanges}.
+\item \code{MTX}: \code{sparseMatrix}.
+\item \code{JSON}, \code{YAML}: \code{list}.
+\item \emph{Source code or log.} \code{LOG}, \code{MD}, \code{PY}, \code{R}, \code{RMD}, \code{SH}: \code{character}.
+}
+}
+\description{
+Read file by extension into R.
+}
+\details{
+Remote URLs and compressed files are supported. All extensions are case
+insensitive.
+
+\code{\link[=import]{import()}} supports automatic loading of common file types, by wrapping
+popular importer functions. The function is intentionally designed to be
+simple. If you need more complex import settings, just call the wrapped
+importer directly instead.
+}
+\section{Supported file types}{
+
+\itemize{
+\item \code{CSV}: Comma Separated Values.\cr
+Imported by \code{\link[data.table:fread]{data.table::fread()}}.
+\item \code{TSV} Tab Separated Values.\cr
+Imported by \code{\link[data.table:fread]{data.table::fread()}}.
+\item \code{TXT}: Text file. \emph{Ambiguous, not recommended}.\cr
+Imported by \code{\link[data.table:fread]{data.table::fread()}}.
+\item \code{XLSX}, \code{XLS}: Excel workbook.\cr
+Imported by \code{\link[readxl:read_excel]{readxl::read_excel()}}.
+\item \code{MTX}: MatrixMarket sparse matrix.\cr
+Imported by \code{\link[Matrix:readMM]{Matrix::readMM()}}.
+\item \code{GTF}, \code{GFF}, \code{GFF3}: General Feature Format.\cr
+Imported by \code{\link[rtracklayer:import]{rtracklayer::import()}}.
+\item \code{JSON}: JSON.
+Imported by \code{\link[jsonlite:read_json]{jsonlite::read_json()}}.
+\item \code{YAML}, \code{YML}: YAML.
+Imported by \code{\link[yaml:yaml.load_file]{yaml::yaml.load_file()}}.
+\item \code{RDA}, \code{RDATA}: R Data.
+\itemize{
+\item Imported by \code{load}.
+\item Must contain a single object.
+\item Doesn't require internal object name to match, unlike \code{\link[=loadData]{loadData()}}.
+}
+\item \code{RDS}: R Data Serialized.\cr
+Imported by \code{\link[base:readRDS]{readRDS()}}.
+}
+
+These file formats will be imported as source code lines by
+\code{\link[readr:read_lines]{readr::read_lines()}}: \code{LOG}, \code{MD}, \code{PY}, \code{R}, \code{RMD}, \code{SH}.
+
+These file formats are blacklisted, and intentionally not supported:
+\code{DOC}, \code{DOCX}, \code{PDF}, \code{PPT}, \code{PPTX}.
+
+If a file format isn't supported natively (or blacklisted), the
+\href{https://cran.r-project.org/web/packages/rio/index.html}{rio} package will
+be used as a fallback attempt. See \code{\link[rio:import]{rio::import()}} for details.
+}
+
+\section{Data frame return}{
+
+
+By default, \code{\link[=import]{import()}} returns a standard \code{data.frame} for delimited/column
+formatted data. However, any of these desired output formats can be set
+globally using \code{options(brio.data.frame = "data.frame")}:
+\itemize{
+\item \code{data.frame} (base; default).
+\item \code{DataFrame} (S4Vectors).
+\item \code{data.table} (data.table).
+\item \code{tbl_df} (tibble).
+}
+
+Note that \code{stringsAsFactors} is always disabled for import.
 
 Current recommendations (by priority):
 \itemize{
@@ -39,63 +120,9 @@ Current recommendations (by priority):
 \item Does not allow rownames.
 \item See \code{help(topic = "data.table", package = "data.table")} for details.
 }
-}}
 }
-\value{
-Varies, depending on the file extension:
-\itemize{
-\item Default: \code{DataFrame}.
-\item \code{MTX}: \code{sparseMatrix}.
-\item \code{GTF}/\code{GFF}: \code{GRanges}.
-\item \code{JSON}/\code{YAML}: \code{list}.
-\item Source code or log: \code{character}.
-}
-}
-\description{
-Read file by extension into R.
-}
-\details{
-Remote URLs and compressed files are supported. All extensions are case
-insensitive.
-
-This function supports automatic loading of common file types:
-\itemize{
-\item \code{CSV}: Comma Separated Values.\cr
-Imported by \code{\link[data.table:fread]{data.table::fread()}}.
-\item \code{TSV} Tab Separated Values.\cr
-Imported by \code{\link[data.table:fread]{data.table::fread()}}.
-\item \code{TXT}: Text file. \emph{Ambiguous, not recommended}.\cr
-Imported by \code{\link[data.table:fread]{data.table::fread()}}.
-\item \code{XLSX}/\code{XLS}: Excel workbook.\cr
-Imported by \code{\link[readxl:read_excel]{readxl::read_excel()}}.
-\item \code{MTX}: MatrixMarket sparse matrix.\cr
-Imported by \code{\link[Matrix:readMM]{Matrix::readMM()}}.
-\item \code{GTF}/\code{GFF}/\code{GFF3}: General Feature Format.\cr
-Imported by \code{\link[rtracklayer:import]{rtracklayer::import()}}.
-\item \code{JSON}: JSON.
-Imported by \code{\link[jsonlite:read_json]{jsonlite::read_json()}}.
-\item \code{YAML}/\code{YML}: YAML.
-Imported by \code{\link[yaml:yaml.load_file]{yaml::yaml.load_file()}}.
-\item \code{RDA}/\code{RDATA}: R Data.
-\itemize{
-\item Imported by \code{load}.
-\item Must contain a single object.
-\item Doesn't require internal object name to match, unlike \code{\link[=loadData]{loadData()}}.
-}
-\item \code{RDS}: R Data Serialized.\cr
-Imported by \code{\link[base:readRDS]{readRDS()}}.
 }
 
-These file formats will be imported as source code lines by
-\code{\link[readr:read_lines]{readr::read_lines()}}: \code{LOG}, \code{MD}, \code{PY}, \code{R}, \code{RMD}, \code{SH}.
-
-These file formats are blacklisted, and intentionally not supported:
-\code{DOC}, \code{DOCX}, \code{PDF}, \code{PPT}, \code{PPTX}.
-
-If a file format isn't supported natively (or blacklisted), the
-\href{https://cran.r-project.org/web/packages/rio/index.html}{rio} package will
-be used as a fallback attempt. See \code{\link[rio:import]{rio::import()}} for details.
-}
 \section{Delimited Files (CSV/TSV)}{
 
 
@@ -164,19 +191,6 @@ Also supports some additional extensions commonly used with the
 }
 }
 
-\section{Data frame return}{
-
-
-By default, \code{\link[=import]{import()}} returns a standard \code{data.frame}. However, any of these
-desired output formats can be set globally using \code{brio.data.frame}:
-\itemize{
-\item \code{data.frame}
-\item \code{DataFrame} (S4Vectors).
-\item \code{data.table} (data.table).
-\item \code{tbl_df} (tibble).
-}
-}
-
 \examples{
 file <- system.file("extdata/example.csv", package = "brio")
 x <- import(file)
@@ -184,6 +198,7 @@ print(x)
 }
 \seealso{
 \itemize{
+\item \code{utils::read.table()}.
 \item \href{http://readr.tidyverse.org}{readr}.
 \item \href{http://readxl.tidyverse.org}{readxl}.
 \item \href{https://cran.r-project.org/web/packages/Matrix/index.html}{Matrix}.
