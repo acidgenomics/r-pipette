@@ -4,7 +4,7 @@
 \alias{loadData}
 \title{Load data}
 \usage{
-loadData(..., dir = getOption("basejump.load.dir", "."),
+loadData(..., list = NULL, dir = getOption("basejump.load.dir", "."),
   envir = globalenv())
 }
 \arguments{
@@ -12,6 +12,9 @@ loadData(..., dir = getOption("basejump.load.dir", "."),
 Note that these arguments are interpreted as symbols using non-standard
 evaluation for convenience during interactive use, and \emph{must not be
 quoted}.}
+
+\item{list}{\code{character}.
+A character vector containing the names of objects to be loaded.}
 
 \item{dir}{\code{character(1)}.
 Directory path.}
@@ -46,7 +49,16 @@ names using non-standard evaluation.
 }
 \examples{
 dir <- system.file("extdata", package = "brio")
-loadData(example, dir = dir)
+
+## Interactive mode ====
+## Note that this method uses non-standard evaluation.
+loadData(rse, sce, dir = dir)
+
+## List mode ====
+## Note that this method uses standard evaluation.
+## Use this approach inside of functions.
+list <- c("rse", "sce")
+loadData(list = list)
 }
 \seealso{
 \itemize{
