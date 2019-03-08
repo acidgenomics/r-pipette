@@ -17,9 +17,9 @@
 #' @importFrom goalie assert allAreExisting allAreNonExisting allAreURLs
 #'   allHaveAccess areDisjointSets areSameLength areSetEqual bapply
 #'   formalCompress hasColnames hasCols hasInternet hasLength hasNames
-#'   hasNoDuplicates hasRownames hasRows hasValidDimnames isAFile isAURL isAny
-#'   isCharacter isFlag isMatchingRegex isNonEmpty isScalar isString isSubset
-#'   matchArgsToDoCall standardizeCall
+#'   hasNoDuplicates hasRownames hasRows hasValidNames hasValidDimnames isAFile
+#'   isAURL isAny isCharacter isFlag isMatchingRegex isNonEmpty isScalar
+#'   isString isSubset matchArgsToDoCall standardizeCall
 #' @importFrom methods as is slotNames validObject
 #' @importFrom readr read_lines read_tsv write_lines
 #' @importFrom stats na.omit
