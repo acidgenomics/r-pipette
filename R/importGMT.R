@@ -1,7 +1,8 @@
+# Import a GMT file, for GSEA.
 # @seealso `fgsea::gmtPathways()`.
-importGMT <- function(file, ...) {
+importGMT <- function(file) {
     file <- localOrRemoteFile(file)
-    lines <- read_lines(file, ...)
+    lines <- read_lines(file)
     lines <- strsplit(lines, split = "\t")
     pathways <- lapply(lines, tail, n = -2L)
     names(pathways) <- vapply(
