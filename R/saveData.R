@@ -21,6 +21,11 @@
 #'   R data serialized (RDS; "`rds`") or R data ("`rda`", "`RData`"). RDS is
 #'   preferred when saving single objects per file, which is always the
 #'   convention of `saveData`, regardless of the extension used.
+#' @param list `character`.
+#'   A character vector containing the names of objects to be saved.
+#'   Note that this approach differs from [`save()`][base::save] in that the
+#'   objects are saved individually to disk, instead of inside a single R data
+#'   file. Requires objects to be defined in [`globalenv()`][base::globalenv].
 #'
 #' @seealso
 #' - [`save()`][base::save]
@@ -30,15 +35,53 @@
 #' File paths.
 #'
 #' @examples
-#' x <- 1
-#' saveData(x, dir = "example")
-#' list.files("example")
+#' dir <- "example"
+#'
+#' ## Interactive mode ====
+#' ## Note that this method uses non-standard evaluation.
+#'
+#' a <- 1
+#' b <- 2
+#'
+#' saveData(a, b, dir = dir)
+#' list.files(dir)
 #'
 #' ## Clean up.
-#' unlink("example", recursive = TRUE)
-saveData <- function(..., dir, ext, overwrite, compress) {
-    objects <- list(...)
-    names(objects) <- dots(..., character = TRUE)
+#' unlink(dir, recursive = TRUE)
+#'
+#' ## List mode ====
+#' ## Note that this method uses standard evaluation.
+#' ## Use this approach inside of functions.
+#'
+#' a <- 1
+#' b <- 2
+#' list <- c("a", "b")
+#'
+#' saveData(list = list, dir = dir)
+#' list.files(dir)
+#'
+#' ## Clean up.
+#' unlink(dir, recursive = TRUE)
+saveData <- function(
+    ...,
+    list = NULL,
+    dir,
+    ext,
+    overwrite,
+    compress
+) {
+    if (!is.null(list)) {
+        # Character vector list mode (similar to `save()`).
+        assert(isCharacter(list))
+        objects <- mget(x = list, envir = globalenv(), inherits = FALSE)
+        names(objects) <- list
+        rm(list)
+    } else {
+        # Non-standard evaluation mode (default).
+        objects <- list(...)
+        names(objects) <- dots(..., character = TRUE)
+    }
+
     dir <- initDir(dir)
     ext <- match.arg(arg = ext, choices = c("rds", "rda", "RData"))
     assert(
