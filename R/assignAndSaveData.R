@@ -21,7 +21,12 @@
 #'
 #' @examples
 #' x <- 1
-#' assignAndSaveData(name = "example", object = x, ext = "rds")
+#' assignAndSaveData(
+#'     name = "example",
+#'     object = x,
+#'     dir = ".",
+#'     ext = "rds"
+#' )
 #' exists("example", inherits = FALSE)
 #' file.exists("example.rds")
 #'
