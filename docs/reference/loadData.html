@@ -117,8 +117,8 @@ paths. Supports <code>RDS</code>, <code>RDA</code>, and <code>RDATA</code> file 
     
     </div>
 
-    <pre class="usage"><span class='fu'>loadData</span>(<span class='no'>...</span>, <span class='kw'>list</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"basejump.load.dir"</span>, <span class='st'>"."</span>),
-  <span class='kw'>envir</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/environment'>globalenv</a></span>())</pre>
+    <pre class="usage"><span class='fu'>loadData</span>(<span class='no'>...</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"basejump.load.dir"</span>, <span class='st'>"."</span>),
+  <span class='kw'>envir</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/environment'>globalenv</a></span>(), <span class='kw'>list</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -131,11 +131,6 @@ evaluation for convenience during interactive use, and <em>must not be
 quoted</em>.</p></td>
     </tr>
     <tr>
-      <th>list</th>
-      <td><p><code>character</code>.
-A character vector containing the names of objects to be loaded.</p></td>
-    </tr>
-    <tr>
       <th>dir</th>
       <td><p><code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>.
 Directory path.</p></td>
@@ -144,6 +139,11 @@ Directory path.</p></td>
       <th>envir</th>
       <td><p><code>environment</code>.
 Environment.</p></td>
+    </tr>
+    <tr>
+      <th>list</th>
+      <td><p><code>character</code>.
+A character vector containing the names of objects to be loaded.</p></td>
     </tr>
     </table>
     
