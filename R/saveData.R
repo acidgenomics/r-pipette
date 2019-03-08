@@ -39,10 +39,8 @@
 #'
 #' ## Interactive mode ====
 #' ## Note that this method uses non-standard evaluation.
-#'
 #' a <- 1
 #' b <- 2
-#'
 #' saveData(a, b, dir = dir)
 #' list.files(dir)
 #'
@@ -52,11 +50,9 @@
 #' ## List mode ====
 #' ## Note that this method uses standard evaluation.
 #' ## Use this approach inside of functions.
-#'
 #' a <- 1
 #' b <- 2
 #' list <- c("a", "b")
-#'
 #' saveData(list = list, dir = dir)
 #' list.files(dir)
 #'
@@ -64,16 +60,20 @@
 #' unlink(dir, recursive = TRUE)
 saveData <- function(
     ...,
-    list = NULL,
     dir,
     ext,
     overwrite,
-    compress
+    compress,
+    list = NULL,
+    envir = parent.frame()
 ) {
     if (!is.null(list)) {
         # Character vector list mode (similar to `save()`).
-        assert(isCharacter(list))
-        objects <- mget(x = list, envir = globalenv(), inherits = FALSE)
+        assert(
+            isCharacter(list),
+            is.environment(envir)
+        )
+        objects <- mget(x = list, envir = envir, inherits = FALSE)
         names(objects) <- list
         rm(list)
     } else {

@@ -4,8 +4,8 @@
 \alias{loadData}
 \title{Load data}
 \usage{
-loadData(..., list = NULL, dir = getOption("basejump.load.dir", "."),
-  envir = globalenv())
+loadData(..., dir = getOption("basejump.load.dir", "."),
+  envir = globalenv(), list = NULL)
 }
 \arguments{
 \item{...}{Object names.
@@ -13,14 +13,14 @@ Note that these arguments are interpreted as symbols using non-standard
 evaluation for convenience during interactive use, and \emph{must not be
 quoted}.}
 
-\item{list}{\code{character}.
-A character vector containing the names of objects to be loaded.}
-
 \item{dir}{\code{character(1)}.
 Directory path.}
 
 \item{envir}{\code{environment}.
 Environment.}
+
+\item{list}{\code{character}.
+A character vector containing the names of objects to be loaded.}
 }
 \value{
 Invisible \code{character}.

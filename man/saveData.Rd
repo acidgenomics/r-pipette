@@ -4,22 +4,17 @@
 \alias{saveData}
 \title{Save data}
 \usage{
-saveData(..., list = NULL, dir = getOption("basejump.save.dir", "."),
+saveData(..., dir = getOption("basejump.save.dir", "."),
   ext = getOption("basejump.save.ext", "rds"),
   overwrite = getOption("basejump.save.overwrite", TRUE),
-  compress = getOption("basejump.save.compress", TRUE))
+  compress = getOption("basejump.save.compress", TRUE), list = NULL,
+  envir = parent.frame())
 }
 \arguments{
 \item{...}{Object names.
 Note that these arguments are interpreted as symbols using non-standard
 evaluation for convenience during interactive use, and \emph{must not be
 quoted}.}
-
-\item{list}{\code{character}.
-A character vector containing the names of objects to be saved.
-Note that this approach differs from \code{\link[base:save]{save()}} in that the
-objects are saved individually to disk, instead of inside a single R data
-file. Requires objects to be defined in \code{\link[base:globalenv]{globalenv()}}.}
 
 \item{dir}{\code{character(1)}.
 Directory path.}
@@ -38,6 +33,15 @@ Overwrite existing file.}
     \code{"bzip2"} or \code{"xz"} specify the type of
     compression.  Ignored when \code{file} is a connection and
     for workspace format version 1.}
+
+\item{list}{\code{character}.
+A character vector containing the names of objects to be saved.
+Note that this approach differs from \code{\link[base:save]{save()}} in that the
+objects are saved individually to disk, instead of inside a single R data
+file. Requires objects to be defined in \code{\link[base:globalenv]{globalenv()}}.}
+
+\item{envir}{\code{environment}.
+Environment.}
 }
 \value{
 Invisible named \code{character}.
@@ -61,10 +65,8 @@ dir <- "example"
 
 ## Interactive mode ====
 ## Note that this method uses non-standard evaluation.
-
 a <- 1
 b <- 2
-
 saveData(a, b, dir = dir)
 list.files(dir)
 
@@ -74,11 +76,9 @@ unlink(dir, recursive = TRUE)
 ## List mode ====
 ## Note that this method uses standard evaluation.
 ## Use this approach inside of functions.
-
 a <- 1
 b <- 2
 list <- c("a", "b")
-
 saveData(list = list, dir = dir)
 list.files(dir)
 
