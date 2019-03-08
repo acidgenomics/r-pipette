@@ -140,7 +140,7 @@ are not supported. For that more advanced use case, refer to the
 \href{https://googledrive.tidyverse.org/}{googledrive} package for usage details.
 }
 
-\section{Matrix Market Exchange (MTX, MEX)}{
+\section{Matrix Market Exchange (MTX)}{
 
 
 Reading a Matrix Market Exchange file requires \code{ROWNAMES} and \code{COLNAMES}
