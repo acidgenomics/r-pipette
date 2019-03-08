@@ -117,7 +117,7 @@
 #'
 #' [googledrive]: https://googledrive.tidyverse.org/
 #'
-#' @section Matrix Market Exchange (MTX, MEX):
+#' @section Matrix Market Exchange (MTX):
 #'
 #' Reading a Matrix Market Exchange file requires `ROWNAMES` and `COLNAMES`
 #' sidecar files containing the corresponding row and column names of the sparse
@@ -267,10 +267,17 @@ import <- function(file, sheet = 1L) {
         pref <- getOption("basejump.data.frame")
         if (isString(pref)) {
             object <- switch(
-                data.frame = as.data.frame(object),
+                data.frame = object,
                 DataFrame = as(object, "DataFrame"),
-                tbl_df = as_tibble(object),
-                data.table = as.data.table(object)
+                tbl_df = as_tibble(
+                    x = object,
+                    .name_repair = "minimal",
+                    rownames = NULL
+                ),
+                data.table = as.data.table(
+                    x = object,
+                    keep.rownames = FALSE
+                )
             )
         }
 
@@ -308,7 +315,10 @@ import <- function(file, sheet = 1L) {
         attr(object, "brio") <- meta
     }
 
-    # FIXME Warn if names aren't syntactically valid.
+    # Check for syntactically valid names and warn the user, if necessary.
+    if (!hasValidNames(object)) {
+        warning("Object does not contain syntactically valid names.")
+    }
 
     validObject(object)
     object
