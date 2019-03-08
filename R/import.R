@@ -315,9 +315,12 @@ import <- function(file, sheet = 1L) {
         attr(object, "brio") <- meta
     }
 
-    # Check for syntactically valid names and warn the user, if necessary.
+    # Check for syntactically valid names and inform the user, if necessary.
     if (!hasValidNames(object)) {
-        warning("Object does not contain syntactically valid names.")
+        message(paste(
+            basename(file),
+            "does not return syntactically valid names."
+        ))
     }
 
     validObject(object)
