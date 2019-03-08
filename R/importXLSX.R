@@ -1,3 +1,5 @@
+# Note that `read_excel()` doesn't currently support automatic blank lines
+# removal, so ensure that is fixed downstream.
 importXLSX <- function(file, sheet = 1L) {
     file <- localOrRemoteFile(file)
     message(paste("Importing", basename(file), "using readxl::read_excel()."))
@@ -7,6 +9,7 @@ importXLSX <- function(file, sheet = 1L) {
         sheet = sheet,
         col_names = TRUE,
         na = naStrings,
+        trim_ws = TRUE,
         # Keep quiet.
         progress = FALSE,
         # Don't attempt name repair.
