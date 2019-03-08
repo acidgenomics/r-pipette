@@ -18,9 +18,9 @@
 #' @param overwrite `logical(1)`.
 #'   Overwrite existing file.
 #' @param ext `character(1)`.
-#'   R data serialized (RDS; "`rds`") or R data ("`rda`", "`RData`"). RDS is
+#'   R data serialized (`RDS`) or R data (`RDA`, `RDATA`). RDS is
 #'   preferred when saving single objects per file, which is always the
-#'   convention of `saveData`, regardless of the extension used.
+#'   convention of [saveData()], regardless of the extension used.
 #' @param list `character`.
 #'   A character vector containing the names of objects to be saved.
 #'   Note that this approach differs from [`save()`][base::save] in that the
