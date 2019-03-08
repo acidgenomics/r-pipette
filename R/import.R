@@ -2,120 +2,93 @@
 #'
 #' Read file by extension into R.
 #'
-#' Remote URLs and compressed files are supported. All extensions are case
-#' insensitive.
-#'
-#' This function supports automatic loading of common file types:
-#'
-#' - `CSV`: Comma Separated Values.\cr
-#'   Imported by [data.table::fread()].
-#' - `TSV` Tab Separated Values.\cr
-#'   Imported by [data.table::fread()].
-#' - `TXT`: Text file. *Ambiguous, not recommended*.\cr
-#'   Imported by [data.table::fread()].
-#' - `XLSX`/`XLS`: Excel workbook.\cr
-#'   Imported by [readxl::read_excel()].
-#' - `MTX`: MatrixMarket sparse matrix.\cr
-#'   Imported by [Matrix::readMM()].
-#' - `GTF`/`GFF`/`GFF3`: General Feature Format.\cr
-#'   Imported by [rtracklayer::import()].
-#' - `JSON`: JSON.
-#'   Imported by [jsonlite::read_json()].
-#' - `YAML`/`YML`: YAML.
-#'   Imported by [yaml::yaml.load_file()].
-#' - `RDA`/`RDATA`: R Data.
-#'     - Imported by `load`.
-#'     - Must contain a single object.
-#'     - Doesn't require internal object name to match, unlike [loadData()].
-#' - `RDS`: R Data Serialized.\cr
-#'   Imported by [`readRDS()`][base::readRDS].
-#'
-#' These file formats will be imported as source code lines by
-#' [readr::read_lines()]: `LOG`, `MD`, `PY`, `R`, `RMD`, `SH`.
-#'
-#' These file formats are blacklisted, and intentionally not supported:
-#' `DOC`, `DOCX`, `PDF`, `PPT`, `PPTX`.
-#'
-#' If a file format isn't supported natively (or blacklisted), the
-#' [rio](https://cran.r-project.org/web/packages/rio/index.html) package will
-#' be used as a fallback attempt. See [rio::import()] for details.
-#'
-#' @section Delimited Files (CSV/TSV):
-#'
-#' [import()] uses the [`fread()`][data.table::fread] function of the
-#' [data.table][] package to import standard CSV and TSV files. This should work
-#' automatically for most files without issue.
-#'
-#' Here are some notable exceptions:
-#'
-#' - Columns headers should be `character`. In the event that a column name
-#'   is `numeric`, set `header = TRUE` here to force the column name.
-#'
-#' See `help(topic = "fread", package = "data.table")` for details.
-#'
-#' The [`read_csv()`][readr::read_csv] and [`read_tsv()`][readr::read_tsv]
-#' functions of the [readr][] package are good alternatives, which return
-#' `tibble` data frames (`tbl_df`).
-#'
-#' [data.table]: https://cran.r-project.org/package=data.table
-#' [readr]: https://readr.tidyverse.org
-#'
-#' @section Google Sheets:
-#'
-#' Public Google Sheets are now supported. Simply paste in the URL.
-#'
-#' @section Matrix Market Exchange (MTX/MEX):
-#'
-#' Reading a Matrix Market Exchange (`MTX`) file now requires `COLNAMES` and
-#' `ROWNAMES` sidecar files containing the `colnames` and `rownames` of
-#' the sparse matrix. Legacy support for manual loading of these sidecar files
-#' is provided.
-#'
-#' @section General Feature Format (GFF/GTF):
-#'
-#' The GFF (General Feature Format) format consists of one line per feature,
-#' each containing 9 columns of data, plus optional track definition lines. The
-#' GTF (General Transfer Format) is identical to GFF version 2.
-#'
-#' Column names follow the [Ensembl conventions](https://bit.ly/2K6EBla).
-#
-#' Additional information:
-#'
-#' - [Ensembl](http://www.ensembl.org/info/website/upload/gff.html)
-#' - [Gencode](http://www.gencodegenes.org/gencodeformat.html)
-#'
-#' @section GMT/GMX files:
-#'
-#' Refer to the Broad Institute [GSEA wiki][] for details.
-#'
-#' [GSEA wiki]: https://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats
-#'
-#' @section bcbio files:
-#'
-#' Also supports some additional extensions commonly used with the
-#' [bcbio](https://bcbio-nextgen.readthedocs.io) pipeline:
-#'
-#' - `COUNTS`: Counts table (e.g. RNA-seq aligned counts).
-#' - `COLNAMES`: Sidecar file containing column names.
-#' - `ROWNAMES`: Sidecar file containing row names.
-#'
-#' @section Data frame return:
-#'
-#' By default, [import()] returns a standard `data.frame`. However, any of these
-#' desired output formats can be set globally using `brio.data.frame`:
-#'
-#' - `data.frame`
-#' - `DataFrame` (S4Vectors).
-#' - `data.table` (data.table).
-#' - `tbl_df` (tibble).
+#' [import()] supports automatic loading of common file types, by wrapping
+#' popular importer functions. The function is intentionally designed to be
+#' simple. Remote URLs and compressed files are supported. If you need more
+#' complex import settings, just call the wrapped importer directly instead.
 #'
 #' @export
 #' @inheritParams params
-#
-#' @param ... Additional arguments, passed to the respective internal loading
-#'   function.
 #'
-#' Current recommendations (by priority):
+#' @param sheet
+#'   *Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.*\cr
+#'   `character(1)` or `integer(1)`.
+#'   Sheet to read. Either a string (the name of a sheet), or an integer (the
+#'   position of the sheet). Defaults to the first sheet.
+#'
+#' @return Varies, depending on the file type.
+#'
+#' - **Plain text delimited** (`CSV`, `TSV`, `TXT`): `data.frame`.\cr
+#'   Data separated by commas, tabs, or visual spaces.\cr
+#'   Note that TXT structure is amgibuous and actively discouraged.\cr
+#'   Refer to `Data frame return` section for details on how to change the
+#'   default return type to `DataFrame`, `tbl_df` or `data.table`.\cr
+#'   Imported by [data.table::fread()].
+#' - **Excel workbook** (`XLSX`, `XLS`): `data.frame`.\cr
+#'   Resave in plain text delimited format instead, if possible.\cr
+#'   Imported by [readxl::read_excel()].
+#' - **GraphPad Prism project** (`PZFX`): `data.frame`.\cr
+#'   Experimental. Consider resaving in CSV format instead.\cr
+#'   Imported by [pzfx::read_pzfx()].
+#' - **General feature format** (`GFF`, `GFF1`, `GFF2`, `GFF3`, `GTF`):
+#'   `GRanges`.\cr
+#'   Imported by [rtracklayer::import()].
+#' - **MatrixMarket exchange sparse matrix** (`MTX`): `sparseMatrix`.\cr
+#'   Imported by [Matrix::readMM()].
+#' - **Gene sets (for GSEA)** (`GMT`, `GMX`): `character`.\cr
+#'   Imported by [readr::read_lines()], with additional processing.
+#' - **Browser extensible data** (`BED`, `BED15`, `BEDGRAPH`, `BEDPE`):
+#'   `GRanges`.\cr
+#'   Imported by [rtracklayer::import()].
+#' - **ChIP-seq peaks** (`BROADPEAK`, `NARROWPEAK`): `GRanges`.\cr
+#'   Imported by [rtracklayer::import()].
+#' - **Wiggle track format** (`BIGWIG`, `BW`, `WIG`): `GRanges`.\cr
+#'   Imported by [rtracklayer::import()].
+#' - **JSON serialization data** (`JSON`): `list`.\cr
+#'   Imported by [jsonlite::read_json()].
+#' - **YAML serialization data** (`YAML`, `YML`): `list`.\cr
+#'   Imported by [yaml::yaml.load_file()].
+#' - **Lines** (`LOG`, `MD`, `PY`, `R`, `RMD`, `SH`): `character`.
+#'   Source code or log files.\cr
+#'   Imported by [readr::read_lines()].
+#' - **R data serialized** (`RDS`): *variable*.\cr
+#'   Currently recommend over RDA, if possible.\cr
+#'   Imported by [`readRDS()`][base::readRDS].
+#' - **R data** (`RDA`, `RDATA`): *variable*.\cr
+#'   Must contain a single object.
+#'   Doesn't require internal object name to match, unlike [loadData()].\cr
+#'   Imported by [`load()`][base::load].
+#' - **Infrequently used rio-compatible formats** (`ARFF`, `DBF`, `DIF`, `DTA`,
+#'   `MAT`, `MTP`, `ODS`, `POR`, `SAS7BDAT`, `SAV`, `SYD`, `REC`, `XPT`):
+#'   *variable*.\cr
+#'   Imported by [rio::import()].
+#'
+#' @section Row and column names:
+#'
+#' **Row names.** Row name handling has become an inconsistent mess in R because
+#' of differential support in base R, tidyverse, data.table, and Bioconductor.
+#' To maintain sanity, [import()] attempts to handle row names automatically.
+#' The function checks for a `rowname` column in delimited data, and moves these
+#' values into the object's row names, if supported by the return type (e.g.
+#' `data.frame`, `DataFrame`). Note that `tbl_df` (tibble) and `data.table`
+#' intentionally do not support row names. When returning in this format, no
+#' attempt to assign the `rowname` column into the return object's row names is
+#' made. Note that [import()] is strict about this matching and only checks for
+#' a `rowname` column, similar to the default syntax recommended in
+#' [tibble::rownames_to_column()].
+#'
+#' **Column names.** [import()] assumes that delimited files always contain
+#' column names. If you are working with a file that doens't contain column
+#' names, call the wrapped importer function directly instead. It's strongly
+#' recommended to always define column names in a supported file type.
+#'
+#' @section Data frame return:
+#'
+#' By default, [import()] returns a standard `data.frame` for delimited/column
+#' formatted data. However, any of these desired output formats can be set
+#' globally using `options(brio.data.frame = "data.frame")`.
+#'
+#' Supported return types:
 #'
 #' - `data.frame`: Base R default. Generally recommended.
 #'   - S3 class.
@@ -134,78 +107,154 @@
 #'   - Does not allow rownames.
 #'   - See `help(topic = "data.table", package = "data.table")` for details.
 #'
-#' @return Varies, depending on the file extension:
+#' Note that `stringsAsFactors` is always disabled for import.
 #'
-#' - Default: `DataFrame`.
-#' - `MTX`: `sparseMatrix`.
-#' - `GTF`/`GFF`: `GRanges`.
-#' - `JSON`/`YAML`: `list`.
-#' - Source code or log: `character`.
+#' @section Google Sheets:
+#'
+#' Public Google Sheets are supported. Simply paste in the URL. Private sheets
+#' are not supported. For that more advanced use case, refer to the
+#' [googledrive][] package for usage details.
+#'
+#' [googledrive]: https://googledrive.tidyverse.org/
+#'
+#' @section Matrix Market Exchange (MTX):
+#'
+#' Reading a Matrix Market Exchange file requires `ROWNAMES` and `COLNAMES`
+#' sidecar files containing the corresponding row and column names of the sparse
+#' matrix.
+#'
+#' @section General feature format (GFF, GTF):
+#'
+#' The GFF (General Feature Format) format consists of one line per feature,
+#' each containing 9 columns of data, plus optional track definition lines. The
+#' GTF (General Transfer Format) is identical to GFF version 2.
+#'
+#' [basejump][] exports the specialized `makeGRangesFromGFF()` function that
+#' makes GFF loading simple.
+#
+#' See also:
+#'
+#' - [Ensembl spec](http://www.ensembl.org/info/website/upload/gff.html)
+#' - [GENCODE spec](http://www.gencodegenes.org/gencodeformat.html)
+#'
+#' [basejump]: https://steinbaugh.com/basejump/
+#'
+#' @section Gene sets (GMT, GMX):
+#'
+#' Refer to the Broad Institute [GSEA wiki][] for details.
+#'
+#' [GSEA wiki]: https://goo.gl/3ZkDPb
+#'
+#' @section bcbio count matrix:
+#'
+#' [bcbio][] count matrix and related sidecar files are natively supported.
+#'
+#' - `COUNTS`: Counts table (e.g. RNA-seq aligned counts).
+#' - `COLNAMES`: Sidecar file containing column names.
+#' - `ROWNAMES`: Sidecar file containing row names.
+#'
+#' [bcbio]: https://bcbio-nextgen.readthedocs.io/
+#'
+#' @section Blacklisted extensions:
+#'
+#' These file formats are blacklisted, and intentionally not supported:
+#' `DOC`, `DOCX`, `PDF`, `PPT`, `PPTX`.
 #'
 #' @seealso
+#'
+#' Packages:
+#'
+#' - [rio](https://cran.r-project.org/package=rio).
+#' - [rtracklayer](http://bioconductor.org/packages/rtracklayer/).
+#' - [data.table](http://r-datatable.com/).
+#' - [googledrive](https://googledrive.tidyverse.org/)
 #' - [readr](http://readr.tidyverse.org).
 #' - [readxl](http://readxl.tidyverse.org).
-#' - [Matrix](https://cran.r-project.org/web/packages/Matrix/index.html).
+#'
+#' Importer functions:
+#'
+#' - `rio::import()`.
+#' - `rtracklayer::import()`.
+#' - `data.table::fread()`.
+#' - `readr::read_csv()`.
+#' - `utils::read.table()`.
 #'
 #' @examples
 #' file <- system.file("extdata/example.csv", package = "brio")
 #' x <- import(file)
 #' print(x)
-import <- function(file, ...) {
-    assert(isString(file))
+import <- function(file, sheet = 1L) {
+    # Note that we're not using a `localOrRemoteFile()` call for `file` here,
+    # so we can support Google Sheets.
+    assert(
+        isString(file),
+        isScalar(sheet)
+    )
 
-    # Allow Google Sheets import using rio.
+    # Allow Google Sheets import using rio, by matching the URL.
+    # Otherwise, coerce the file extension to uppercase, for easy matching.
     if (grepl("docs\\.google\\.com/spreadsheets/", file)) {
         ext <- "GSHEET"
     } else {
         ext <- toupper(str_match(basename(file), extPattern)[1L, 2L])
     }
 
-    # How we set NA strings depends on the file extension.
+    # Discourage use of TXT extension.
+    if (ext == "TXT") {
+        warning("TXT format is amgibuous. Consider resaving in CSV format.")
+    }
+
     if (ext %in% c("CSV", "FWF", "PSV", "TSV", "TXT")) {
-        data <- importDelim(file, ...)
+        object <- importDelim(file)
     } else if (ext %in% c("XLS", "XLSB", "XLSX")) {
-        data <- importXLSX(file, ...)
+        object <- importXLSX(file, sheet = sheet)
+    } else if (ext == "GSHEET") {
+        # Google Sheet, matched by URL (see above).
+        object <- .rioImport(file, sheet = sheet)
+    } else if (ext == "PZFX") {
+        # GraphPad Prism project.
+        object <- importPZFX(file, sheet = sheet)
     } else if (ext == "RDS") {
-        data <- importRDS(file, ...)
+        object <- importRDS(file)
     } else if (ext %in% c("RDA", "RDATA")) {
-        data <- importRDA(file, ...)
+        object <- importRDA(file)
     } else if (ext == "GMT") {
-        data <- importGMT(file, ...)
+        object <- importGMT(file)
     } else if (ext == "GMX") {
-        data <- importGMX(file, ...)
+        object <- importGMX(file)
     } else if (ext == "JSON") {
-        data <- importJSON(file, ...)
+        object <- importJSON(file)
     } else if (ext %in% c("YAML", "YML")) {
-        data <- importYAML(file, ...)
+        object <- importYAML(file)
     } else if (ext == "MTX") {
-        data <- importMTX(file, ...)
+        object <- importMTX(file)
     } else if (ext == "COUNTS") {
-        data <- importCounts(file, ...)
+        object <- importCounts(file)
     } else if (ext %in% c("LOG", "MD", "PY", "R", "RMD", "SH")) {
-        data <- importLines(file, ...)
+        object <- importLines(file)
     } else if (ext %in% c(
         "BED", "BED15", "BEDGRAPH", "BEDPE",
         "BROADPEAK", "NARROWPEAK",
         "GFF", "GFF1", "GFF2", "GFF3", "GTF",
         "BIGWIG", "BW", "WIG"
     )) {
-        data <- .rtracklayerImport(file, ...)
+        object <- .rtracklayerImport(file)
     } else if (ext %in% c(
-        "GSHEET",  # Google Sheets, matched by URL (see above)
-        "ODS",  # OpenDocument (LibreOffice)
-        "MAT",  # Matlab
-        "DTA",  # Stata
-        "SAS7BDAT", "XPT",  # SASS
-        "POR", "SAV",  # SPSS
-        "MTP",  # Minitab
-        "SYD",  # Systat
-        "REC",  # Epi Info
-        "ARFF",  # Weka Attribute-Relation File Format
-        "DBF",  # dBase Database File
-        "DIF"  # Data Interchange Format
+        "ARFF",      # Weka Attribute-Relation File Format
+        "DBF",       # dBase Database File
+        "DIF",       # Data Interchange Format
+        "DTA",       # Stata
+        "MAT",       # Matlab
+        "MTP",       # Minitab
+        "ODS",       # OpenDocument (LibreOffice)
+        "POR",       # SPSS
+        "SAS7BDAT",  # SASS
+        "SAV",       # SPSS
+        "SYD",       # Systat
+        "REC",       # Epi Info
+        "XPT"        # SASS
     )) {
-        data <- .rioImport(file, ...)
+        object <- .rioImport(file)
     } else {
         stop(paste0(
             "Import of ", basename(file), " failed.\n",
@@ -213,54 +262,117 @@ import <- function(file, ...) {
         ))
     }
 
-    if (is.data.frame(data)) {
+    if (is.data.frame(object)) {
         # Coerce data frame to desired global output, if necessary.
         pref <- getOption("basejump.data.frame")
         if (isString(pref)) {
-            data <- switch(
-                data.frame = as.data.frame(data),
-                DataFrame = as(data, "DataFrame"),
-                tbl_df = as_tibble(data),
-                data.table = as.data.table(data)
+            object <- switch(
+                data.frame = object,
+                DataFrame = as(object, "DataFrame"),
+                tbl_df = as_tibble(
+                    x = object,
+                    .name_repair = "minimal",
+                    rownames = NULL
+                ),
+                data.table = as.data.table(
+                    x = object,
+                    keep.rownames = FALSE
+                )
             )
         }
 
         # Set rownames automatically, if supported.
         if (
-            isAny(data, c("data.frame", "DataFrame")) &&
-            "rowname" %in% colnames(data)
+            isAny(object, c("data.frame", "DataFrame")) &&
+            "rowname" %in% colnames(object)
         ) {
             message("Setting rownames from `rowname` column.")
-            rownames(data) <- data[["rowname"]]
-            data[["rowname"]] <- NULL
+            rownames(object) <- object[["rowname"]]
+            object[["rowname"]] <- NULL
         }
     }
 
-    data
+    # Slot data provenance metadata into object.
+    newMeta <- list(
+        brio = packageVersion("brio"),
+        file = if (isAFile(file)) {
+            realpath(file)
+        } else {
+            file
+        },
+        date = Sys.Date(),
+        call = match.call()
+    )
+    if (isS4(object) && "metadata" %in% slotNames(object)) {
+        meta <- metadata(object)[["brio"]]
+        meta <- c(meta, newMeta)
+        meta <- meta[sort(names(meta))]
+        metadata(object)[["brio"]] <- meta
+    } else {
+        meta <- attr(object, "brio")
+        meta <- c(meta, newMeta)
+        meta <- meta[sort(names(meta))]
+        attr(object, "brio") <- meta
+    }
+
+    # Check for syntactically valid names and warn the user, if necessary.
+    if (!hasValidNames(object)) {
+        warning("Object does not contain syntactically valid names.")
+    }
+
+    validObject(object)
+    object
 }
 
 
 
+# nolint start
+#
+# Let user set `naStrings` in call.
+#
+# Use `parse()` to generate expression from string.
+# Then pull call from first element of expression.
+#
+# See also:
+# - https://stackoverflow.com/questions/1743698
+# - https://stackoverflow.com/a/40164111
+# - http://adv-r.had.co.nz/Expressions.html
+#
+# Recommended:
+# > formals(import)[["naStrings"]] <-
+# >     parse(text = paste0(
+# >         "getOption(\"basejump.na.strings\", ",
+# >         deparse(naStrings),
+# >         ")"
+# >     ))[[1L]]
+#
+# Alternative:
+# > quote(getOption("basejump.na.strings", naStrings))
+#
+# nolint end
+
+
+
+# Note that we're keeping `...` to allow passthrough of `sheet` argument to
+# easily load Google Sheet (see above).
 .rioImport <- function(file, ...) {
     file <- localOrRemoteFile(file)
-    message(paste(
-        "Importing", basename(file), "using rio::import()."
-    ))
+    message(paste("Importing", basename(file), "using rio::import()."))
     requireNamespace("rio", quietly = TRUE)
-    rio::import(file, ...)
+    object <- rio::import(file, ...)
+    object <- .slotMetadata(object, pkg = "rio", fun = "import")
+    object
 }
 
 
 
 # Using `tryCatch()` here to error if there are any warnings.
-.rtracklayerImport <- function(file, ...) {
+.rtracklayerImport <- function(file) {
     file <- localOrRemoteFile(file)
-    message(paste(
-        "Importing", basename(file), "using rtracklayer::import()."
-    ))
+    message(paste("Importing", basename(file), "using rtracklayer::import()."))
     requireNamespace("rtracklayer", quietly = TRUE)
-    tryCatch(
-        expr = rtracklayer::import(file, ...),
+    object <- tryCatch(
+        expr = rtracklayer::import(file),
         error = function(e) {
             stop("File failed to load.")  # nocov
         },
@@ -268,4 +380,25 @@ import <- function(file, ...) {
             stop("File failed to load.")  # nocov
         }
     )
+    object <- .slotMetadata(object, pkg = "rtracklayer", fun = "import")
+    object
+}
+
+
+
+# Slot data provenance metadata.
+.slotMetadata <- function(object, pkg, fun) {
+    assert(isString(pkg), isString(fun))
+    importer <- paste0(pkg, "::", fun)
+    version <- packageVersion(pkg)
+    if (isS4(object) && "metadata" %in% slotNames(object)) {
+        metadata(object)[["brio"]][["importer"]] <- importer
+        metadata(object)[["brio"]][[pkg]] <- version
+    } else {
+        # Use `attr()` instead of `attributes()` here. It doesn't error on
+        # assignment when the object doesn't already have attributes.
+        attr(object, "brio")[["importer"]] <- importer
+        attr(object, "brio")[[pkg]] <- version
+    }
+    object
 }
