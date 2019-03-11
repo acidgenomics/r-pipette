@@ -1,4 +1,25 @@
-context("Transmit")
+context("File downloads")
+
+test_that("localOrRemoteFile : Vectorized", {
+    urls <- paste(brioCacheURL, c("example.csv", "example.rda"), sep = "/")
+    files <- localOrRemoteFile(urls)
+    expect_is(files, "character")
+    expect_identical(basename(urls), basename(files))
+})
+
+# `normalizePath() returns different error messages depending on the R version.
+# Current: No such file or directory
+# AppVeyor: The system cannot find the file specified
+test_that("localOrRemoteFile : Missing file", {
+    expect_error(
+        object = localOrRemoteFile("XXX.csv"),
+        regexp = "path\\[1\\]"
+    )
+})
+
+
+
+context("Transmit (FTP file matching)")
 
 # Note that only FTP is currently supported.
 remoteDir <- paste(
@@ -49,7 +70,6 @@ test_that("transmit : Rename and compress", {
     unlink("readme.txt.gz")
 })
 
-# FIXME Improve the error messages for these.
 test_that("transmit : Invalid parameters", {
     skip_on_travis()
     expect_error(

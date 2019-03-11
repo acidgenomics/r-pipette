@@ -21,7 +21,13 @@
 #' @seealso [tempdir()].
 #'
 #' @examples
+#' ## Local
 #' file <- system.file("extdata/example.csv", package = "brio")
+#' x <- localOrRemoteFile(file)
+#' basename(x)
+#'
+#' ## Remote
+#' file <- "http://basejump.seq.cloud/v0.9/hgnc.txt.gz"
 #' x <- localOrRemoteFile(file)
 #' basename(x)
 localOrRemoteFile <- function(file) {
@@ -37,14 +43,25 @@ localOrRemoteFile <- function(file) {
             }
             # Remote file mode.
             assert(hasInternet())
-            ext <- str_match(basename(file), extPattern)[1L, 2L:3L]
-            ext <- na.omit(ext)
-            ext <- paste(ext, collapse = "")
+            # Note that for `.gtf.gz` we want to return only `.gz` here.
+            # This behavor differs from matching using `extPattern` global.
+            ext <- str_match(
+                string = basename(file),
+                pattern = "\\.([a-zA-Z0-9]+)$"
+            )
+            ext <- na.omit(ext[1L, 2L])
             assert(hasLength(ext))
-            # Fix for binary files (typically on Windows).
+            # Write mode for binary files. Applies to Windows.
             # https://github.com/tidyverse/readxl/issues/374
             binary <- c(
-                "bz2", "gz", "rda", "rds", "xls", "xlsx", "xz", "zip"
+                "bz2",
+                "gz",
+                "rda",
+                "rds",
+                "xls",
+                "xlsx",
+                "xz",
+                "zip"
             )
             if (ext %in% binary) {
                 # Write binary.
@@ -60,7 +77,6 @@ localOrRemoteFile <- function(file) {
         SIMPLIFY = TRUE,
         USE.NAMES = FALSE
     )
-
     .autoDecompress(file)
 }
 
@@ -82,16 +98,16 @@ localOrRemoteFile <- function(file) {
             if (compressExt %in% c("BZ2", "GZ", "XZ")) {
                 # Using the R.utils package to handle BZ2, GZ, XZ.
                 if (compressExt == "BZ2") {
-                    FUN <- bzfile
+                    fun <- bzfile
                 } else if (compressExt == "GZ") {
-                    FUN <- gzfile
+                    fun <- gzfile
                 } else if (compressExt == "XZ") {
-                    FUN <- xzfile
+                    fun <- xzfile
                 }
                 file <- decompressFile(
                     filename = file,
                     ext = compressExt,
-                    FUN = FUN,
+                    FUN = fun,
                     temporary = TRUE,
                     skip = FALSE,
                     overwrite = TRUE,
@@ -109,7 +125,7 @@ localOrRemoteFile <- function(file) {
             }
             file
         },
-        FUN.VALUE = character(1),
+        FUN.VALUE = character(1L),
         USE.NAMES = FALSE
     )
 }

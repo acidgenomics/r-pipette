@@ -26,7 +26,7 @@
 #'
 #' @return Invisible `list`.
 #' File paths.
-#' 
+#'
 #' @note This function is desired for interactive use and interprets object
 #' names using non-standard evaluation.
 #'
