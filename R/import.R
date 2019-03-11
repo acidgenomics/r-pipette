@@ -199,11 +199,6 @@ import <- function(file, sheet = 1L) {
         ext <- toupper(str_match(basename(file), extPattern)[1L, 2L])
     }
 
-    # Discourage use of TXT extension.
-    if (ext == "TXT") {
-        message("TXT format is amgibuous. Resave as CSV if possible.")
-    }
-
     if (ext %in% c("CSV", "FWF", "PSV", "TSV", "TXT")) {
         object <- importDelim(file)
     } else if (ext %in% c("XLS", "XLSB", "XLSX")) {
