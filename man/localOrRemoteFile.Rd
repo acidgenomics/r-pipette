@@ -32,7 +32,13 @@ extensions are natively supported: \code{BZ2}, \code{GZ}, \code{XZ}, \code{ZIP}.
 }
 
 \examples{
+## Local
 file <- system.file("extdata/example.csv", package = "brio")
+x <- localOrRemoteFile(file)
+basename(x)
+
+## Remote
+file <- "http://basejump.seq.cloud/v0.9/hgnc.txt.gz"
 x <- localOrRemoteFile(file)
 basename(x)
 }
