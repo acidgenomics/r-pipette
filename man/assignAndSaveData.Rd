@@ -8,7 +8,8 @@ assignAndSaveData(name, object, envir = parent.frame(),
   dir = getOption("basejump.save.dir", "."),
   ext = getOption("basejump.save.ext", "rds"),
   overwrite = getOption("basejump.save.overwrite", TRUE),
-  compress = getOption("basejump.save.compress", TRUE))
+  compress = getOption("basejump.save.compress", TRUE),
+  envir = parent.frame())
 }
 \arguments{
 \item{name}{\code{character(1)}.
@@ -24,9 +25,9 @@ Defaults to \code{\link[=parent.frame]{parent.frame()}}, the calling environment
 Directory path.}
 
 \item{ext}{\code{character(1)}.
-R data serialized (RDS; "\code{rds}") or R data ("\code{rda}", "\code{RData}"). RDS is
+R data serialized (\code{RDS}) or R data (\code{RDA}, \code{RDATA}). RDS is
 preferred when saving single objects per file, which is always the
-convention of \code{saveData}, regardless of the extension used.}
+convention of \code{\link[=saveData]{saveData()}}, regardless of the extension used.}
 
 \item{overwrite}{\code{logical(1)}.
 Overwrite existing file.}
@@ -51,7 +52,12 @@ This function attempts to follow the same order as \code{assign}.
 }
 \examples{
 x <- 1
-assignAndSaveData(name = "example", object = x, ext = "rds")
+assignAndSaveData(
+    name = "example",
+    object = x,
+    dir = ".",
+    ext = "rds"
+)
 exists("example", inherits = FALSE)
 file.exists("example.rds")
 

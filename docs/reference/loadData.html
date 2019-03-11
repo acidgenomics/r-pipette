@@ -35,7 +35,7 @@
 <meta property="og:title" content="Load data — loadData" />
 
 <meta property="og:description" content="Load R data files from a directory using symbols rather than complete file
-paths. Supports &quot;.rds&quot;, &quot;.rda&quot;, and &quot;.RData&quot; file extensions." />
+paths. Supports RDS, RDA, and RDATA file extensions." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -66,7 +66,7 @@ paths. Supports &quot;.rds&quot;, &quot;.rda&quot;, and &quot;.RData&quot; file 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">brio</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.10</span>
       </span>
     </div>
 
@@ -113,12 +113,12 @@ paths. Supports &quot;.rds&quot;, &quot;.rda&quot;, and &quot;.RData&quot; file 
     <div class="ref-description">
     
     <p>Load R data files from a directory using symbols rather than complete file
-paths. Supports "<code>.rds</code>", "<code>.rda</code>", and "<code>.RData</code>" file extensions.</p>
+paths. Supports <code>RDS</code>, <code>RDA</code>, and <code>RDATA</code> file extensions.</p>
     
     </div>
 
     <pre class="usage"><span class='fu'>loadData</span>(<span class='no'>...</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"basejump.load.dir"</span>, <span class='st'>"."</span>),
-  <span class='kw'>envir</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/environment'>globalenv</a></span>())</pre>
+  <span class='kw'>envir</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/environment'>globalenv</a></span>(), <span class='kw'>list</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -140,6 +140,11 @@ Directory path.</p></td>
       <td><p><code>environment</code>.
 Environment.</p></td>
     </tr>
+    <tr>
+      <th>list</th>
+      <td><p><code>character</code>.
+A character vector containing the names of objects to be loaded.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -149,15 +154,15 @@ File paths.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>loadData</code> is opinionated about the format of R data files it will accept.
-<code>save</code> allows for the saving of multiple objects into a single R data file.
-This can later result in unexpected accidental replacement of an existing
-object in the current environment. Since an R data file internally stores the
-name of an object, if the file is later renamed the object name will no
-longer match.</p>
-<p>To avoid any accidental replacements, <code>loadData</code> will only load R data
+    <p><code>loadData()</code> is opinionated about the format of R data files it will accept.
+<code><a href='https://www.rdocumentation.org/packages/base/topics/save'>save()</a></code> allows for the saving of multiple objects into a
+single R data file. This can later result in unexpected accidental
+replacement of an existing object in the current environment. Since an R data
+file internally stores the name of an object, if the file is later renamed
+the object name will no longer match.</p>
+<p>To avoid any accidental replacements, <code>loadData()</code> will only load R data
 files that contain a single object, and the internal object name must match
-the file name exactly. Additionally, <code>loadData</code> will intentionally error if
+the file name exactly. Additionally, <code>loadData()</code> will intentionally error if
 an object with the same name already exists in the destination <code>environment</code>.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
@@ -175,7 +180,21 @@ names using non-standard evaluation.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>dir</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"brio"</span>)
-<span class='fu'>loadData</span>(<span class='no'>example</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='no'>dir</span>)</div><div class='output co'>#&gt; <span class='message'>Loading example.rds from /data00/home/bioinfo/git/brio/inst/extdata</span></div></pre>
+
+<span class='co'>## Interactive mode ====</span>
+<span class='co'>## Note that this method uses non-standard evaluation.</span>
+<span class='fu'>loadData</span>(<span class='no'>rse</span>, <span class='no'>sce</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='no'>dir</span>)</div><div class='output co'>#&gt; <span class='message'>Loading rse.rda, sce.rda from /data00/home/michael.steinbaugh/git/brio/inst/extdata</span></div><div class='input'>
+<span class='co'>## Clean up.</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rm'>rm</a></span>(<span class='no'>rse</span>, <span class='no'>sce</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: object 'rse' not found</span></div><div class='output co'>#&gt; <span class='warning'>Warning: object 'sce' not found</span></div><div class='input'>
+<span class='co'>## List mode ====</span>
+<span class='co'>## Note that this method uses standard evaluation.</span>
+<span class='co'>## Use this approach inside of functions.</span>
+<span class='no'>list</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"rse"</span>, <span class='st'>"sce"</span>)
+<span class='fu'>loadData</span>(<span class='kw'>list</span> <span class='kw'>=</span> <span class='no'>list</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='no'>dir</span>)</div><div class='output co'>#&gt; <span class='message'>Loading rse.rda, sce.rda from /data00/home/michael.steinbaugh/git/brio/inst/extdata</span></div><div class='output co'>#&gt; <span class='error'>Error: "rse" exists in environment.</span>
+#&gt; <span class='error'>The basejump load functions do not allow reassignment.</span>
+#&gt; <span class='error'>We recommending either adding a rm() step or using readRDS().</span></div><div class='input'>
+<span class='co'>## Clean up.</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rm'>rm</a></span>(<span class='no'>rse</span>, <span class='no'>sce</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: object 'rse' not found</span></div><div class='output co'>#&gt; <span class='warning'>Warning: object 'sce' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
