@@ -201,7 +201,7 @@ import <- function(file, sheet = 1L) {
 
     # Discourage use of TXT extension.
     if (ext == "TXT") {
-        warning("TXT format is amgibuous. Consider resaving in CSV format.")
+        message("TXT format is amgibuous. Resave as CSV if possible.")
     }
 
     if (ext %in% c("CSV", "FWF", "PSV", "TSV", "TXT")) {
