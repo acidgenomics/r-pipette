@@ -28,8 +28,9 @@
   compress = FALSE, slotNames = c("assays", "colData", "rowData"))
 }
 \arguments{
-\item{x}{\code{ANY}.
-An object supporting \code{\link[base:dim]{dim()}}, to be written to disk.}
+\item{x}{Object.
+An object supporting \code{\link[base:dim]{dim()}}, or a supported class capable
+of being coerced to \code{data.frame}, to be written to disk.}
 
 \item{file}{\code{character(1)}.
 File path. Specify \code{file} or \code{format} but not both.}
