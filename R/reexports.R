@@ -1,10 +1,14 @@
+#' @name compressFile
 #' @importFrom R.utils compressFile
 #' @export
-R.utils::compressFile
+#' @noRd
+NULL
 
+#' @name decompressFile
 #' @importFrom R.utils decompressFile
 #' @export
-R.utils::decompressFile
+#' @noRd
+NULL
 
 
 
