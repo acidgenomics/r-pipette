@@ -50,10 +50,10 @@ NULL
 
 
 
+#' @name export
 #' @importFrom bioverbs export
-#' @aliases NULL
 #' @export
-bioverbs::export
+NULL
 
 
 

@@ -9,10 +9,10 @@ NULL
 
 
 
+#' @name atomize
 #' @importFrom bioverbs atomize
-#' @aliases NULL
 #' @export
-bioverbs::atomize
+NULL
 
 
 

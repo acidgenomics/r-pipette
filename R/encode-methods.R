@@ -20,10 +20,10 @@ NULL
 
 
 
+#' @name encode
 #' @importFrom bioverbs encode
-#' @aliases NULL
 #' @export
-bioverbs::encode
+NULL
 
 
 
