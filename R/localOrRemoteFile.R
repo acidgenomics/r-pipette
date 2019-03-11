@@ -82,16 +82,16 @@ localOrRemoteFile <- function(file) {
             if (compressExt %in% c("BZ2", "GZ", "XZ")) {
                 # Using the R.utils package to handle BZ2, GZ, XZ.
                 if (compressExt == "BZ2") {
-                    FUN <- bzfile
+                    fun <- bzfile
                 } else if (compressExt == "GZ") {
-                    FUN <- gzfile
+                    fun <- gzfile
                 } else if (compressExt == "XZ") {
-                    FUN <- xzfile
+                    fun <- xzfile
                 }
                 file <- decompressFile(
                     filename = file,
                     ext = compressExt,
-                    FUN = FUN,
+                    FUN = fun,
                     temporary = TRUE,
                     skip = FALSE,
                     overwrite = TRUE,
@@ -109,7 +109,7 @@ localOrRemoteFile <- function(file) {
             }
             file
         },
-        FUN.VALUE = character(1),
+        FUN.VALUE = character(1L),
         USE.NAMES = FALSE
     )
 }
