@@ -318,6 +318,19 @@ import <- function(file, sheet = 1L) {
         ))
     }
 
+    # Inform the user when encountering duplicate names.
+    names <- try(names(object))
+    if (isCharacter(names)) {
+        dupes <- duplicated(names)
+        if (any(dupes)) {
+            dupes <- sort(unique(names[dupes]))
+            warning(paste(
+                length(dupes), "duplicate names:",
+                toString(dupes, width = 200L)
+            ))
+        }
+    }
+
     validObject(object)
     object
 }
