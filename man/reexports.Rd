@@ -4,8 +4,6 @@
 \docType{import}
 \name{reexports}
 \alias{reexports}
-\alias{compressFile}
-\alias{decompressFile}
 \alias{bzip2}
 \alias{bunzip2}
 \alias{gzip}
@@ -26,7 +24,7 @@ below to see their documentation.
 \describe{
   \item{bioverbs}{\code{\link[bioverbs]{atomize}}, \code{\link[bioverbs]{encode}}, \code{\link[bioverbs]{export}}, \code{\link[bioverbs]{factorize}}}
 
-  \item{R.utils}{\code{\link[R.utils]{compressFile}}, \code{\link[R.utils]{decompressFile}}, \code{\link[R.utils]{bzip2}}, \code{\link[R.utils]{bunzip2}}, \code{\link[R.utils]{gzip}}, \code{\link[R.utils]{gunzip}}, \code{\link[R.utils]{isCompressedFile}}, \code{\link[R.utils]{isBzipped}}, \code{\link[R.utils]{isGzipped}}}
+  \item{R.utils}{\code{\link[R.utils]{bzip2}}, \code{\link[R.utils]{bunzip2}}, \code{\link[R.utils]{gzip}}, \code{\link[R.utils]{gunzip}}, \code{\link[R.utils]{isCompressedFile}}, \code{\link[R.utils]{isBzipped}}, \code{\link[R.utils]{isGzipped}}}
 
   \item{S4Vectors}{\code{\link[S4Vectors]{decode}}}
 
