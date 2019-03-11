@@ -1,3 +1,13 @@
+## brio 0.1.10 (2019-03-11)
+
+### Minor changes
+
+- `localOrRemoteFile`: Binary file extension pattern matching bug fix. Applies
+  to files downloaded on Windows. If `download.file` is not called with mode
+  `wb` (write binary) for files on Windows, decompression will fail.
+
+
+
 ## brio 0.1.9 (2019-03-08)
 
 ### Major changes
