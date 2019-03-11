@@ -19,10 +19,11 @@ NULL
 
 
 
+#' @name decode
 #' @importFrom S4Vectors decode
 #' @aliases NULL
 #' @export
-S4Vectors::decode
+NULL
 
 
 
