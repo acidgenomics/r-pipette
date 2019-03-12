@@ -1,87 +1,61 @@
-#' @name compressFile
 #' @importFrom R.utils compressFile
 #' @export
-#' @noRd
-NULL
+R.utils::compressFile
 
-#' @name decompressFile
 #' @importFrom R.utils decompressFile
 #' @export
-#' @noRd
-NULL
+R.utils::decompressFile
 
 
 
-#' @name bzip2
 #' @importFrom R.utils bzip2
 #' @export
-#' @noRd
-NULL
+R.utils::bzip2
 
-#' @name bunzip2
 #' @importFrom R.utils bunzip2
 #' @export
-#' @noRd
-NULL
+R.utils::bunzip2
 
 
 
-#' @name gzip
 #' @importFrom R.utils gzip
 #' @export
-#' @noRd
-NULL
+R.utils::gzip
 
-#' @name gunzip
 #' @importFrom R.utils gunzip
 #' @export
-#' @noRd
-NULL
+R.utils::gunzip
 
 
 
-#' @name tar
 #' @importFrom utils tar
 #' @export
-#' @noRd
-NULL
+utils::tar
 
-#' @name untar
 #' @importFrom utils untar
 #' @export
-#' @noRd
-NULL
+utils::untar
 
 
 
-#' @name zip
 #' @importFrom utils zip
 #' @export
-#' @noRd
-NULL
+utils::zip
 
-#' @name unzip
 #' @importFrom utils unzip
 #' @export
-#' @noRd
-NULL
+utils::unzip
 
 
 
-#' @name isCompressedFile
 #' @importFrom R.utils isCompressedFile
 #' @export
-#' @noRd
-NULL
+R.utils::isCompressedFile
 
-#' @name isBzipped
 #' @importFrom R.utils isBzipped
 #' @export
-#' @noRd
-NULL
+R.utils::isBzipped
 
-#' @name isGzipped
 #' @importFrom R.utils isGzipped
 #' @export
-#' @noRd
-NULL
+R.utils::isGzipped
