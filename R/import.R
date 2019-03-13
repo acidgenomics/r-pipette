@@ -24,9 +24,13 @@
 #'   Refer to `Data frame return` section for details on how to change the
 #'   default return type to `DataFrame`, `tbl_df` or `data.table`.\cr
 #'   Imported by [data.table::fread()].
-#' - **Excel workbook** (`XLSX`, `XLS`): `data.frame`.\cr
+#' - **Excel workbook** (`XLSB`, `XLSX`): `data.frame`.\cr
 #'   Resave in plain text delimited format instead, if possible.\cr
 #'   Imported by [readxl::read_excel()].
+#' - **Legacy Excel workbook (pre-2007)** (`XLS`): `data.frame`.\cr
+#'   Resave in plain text delimited format instead, if possible.\cr
+#'   Note that import of files in this format is slow.\cr
+#'   Imported by [gdata::read.xls()].
 #' - **GraphPad Prism project** (`PZFX`): `data.frame`.\cr
 #'   Experimental. Consider resaving in CSV format instead.\cr
 #'   Imported by [pzfx::read_pzfx()].
@@ -201,7 +205,9 @@ import <- function(file, sheet = 1L) {
 
     if (ext %in% c("CSV", "FWF", "PSV", "TSV", "TXT")) {
         object <- importDelim(file)
-    } else if (ext %in% c("XLS", "XLSB", "XLSX")) {
+    } else if (ext == "XLS") {
+        object <- importXLS(file, sheet = sheet)
+    } else if (ext %in% c("XLSB", "XLSX")) {
         object <- importXLSX(file, sheet = sheet)
     } else if (ext == "GSHEET") {
         # Google Sheet, matched by URL (see above).
