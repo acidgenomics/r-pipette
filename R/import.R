@@ -331,7 +331,8 @@ import <- function(file, sheet = 1L) {
         }
     }
 
-    validObject(object)
+    # Don't run object validity check with `validObject()` here.
+
     object
 }
 
