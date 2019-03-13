@@ -8,10 +8,10 @@ NULL
 
 
 
+#' @name factorize
 #' @importFrom bioverbs factorize
-#' @aliases NULL
 #' @export
-bioverbs::factorize
+NULL
 
 
 
