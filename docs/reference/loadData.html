@@ -66,7 +66,7 @@ paths. Supports RDS, RDA, and RDATA file extensions." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">brio</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.11</span>
       </span>
     </div>
 
@@ -183,14 +183,14 @@ names using non-standard evaluation.</p>
 
 <span class='co'>## Interactive mode ====</span>
 <span class='co'>## Note that this method uses non-standard evaluation.</span>
-<span class='fu'>loadData</span>(<span class='no'>rse</span>, <span class='no'>sce</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='no'>dir</span>)</div><div class='output co'>#&gt; <span class='message'>Loading rse.rda, sce.rda from /data00/home/michael.steinbaugh/git/brio/inst/extdata</span></div><div class='input'>
+<span class='fu'>loadData</span>(<span class='no'>rse</span>, <span class='no'>sce</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='no'>dir</span>)</div><div class='output co'>#&gt; <span class='message'>Loading rse.rda, sce.rda from /Users/mike/git/brio/inst/extdata</span></div><div class='input'>
 <span class='co'>## Clean up.</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rm'>rm</a></span>(<span class='no'>rse</span>, <span class='no'>sce</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: object 'rse' not found</span></div><div class='output co'>#&gt; <span class='warning'>Warning: object 'sce' not found</span></div><div class='input'>
 <span class='co'>## List mode ====</span>
 <span class='co'>## Note that this method uses standard evaluation.</span>
 <span class='co'>## Use this approach inside of functions.</span>
 <span class='no'>list</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"rse"</span>, <span class='st'>"sce"</span>)
-<span class='fu'>loadData</span>(<span class='kw'>list</span> <span class='kw'>=</span> <span class='no'>list</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='no'>dir</span>)</div><div class='output co'>#&gt; <span class='message'>Loading rse.rda, sce.rda from /data00/home/michael.steinbaugh/git/brio/inst/extdata</span></div><div class='output co'>#&gt; <span class='error'>Error: "rse" exists in environment.</span>
+<span class='fu'>loadData</span>(<span class='kw'>list</span> <span class='kw'>=</span> <span class='no'>list</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='no'>dir</span>)</div><div class='output co'>#&gt; <span class='message'>Loading rse.rda, sce.rda from /Users/mike/git/brio/inst/extdata</span></div><div class='output co'>#&gt; <span class='error'>Error: "rse" exists in environment.</span>
 #&gt; <span class='error'>The basejump load functions do not allow reassignment.</span>
 #&gt; <span class='error'>We recommending either adding a rm() step or using readRDS().</span></div><div class='input'>
 <span class='co'>## Clean up.</span>

@@ -24,9 +24,13 @@
 #'   Refer to `Data frame return` section for details on how to change the
 #'   default return type to `DataFrame`, `tbl_df` or `data.table`.\cr
 #'   Imported by [data.table::fread()].
-#' - **Excel workbook** (`XLSX`, `XLS`): `data.frame`.\cr
+#' - **Excel workbook** (`XLSB`, `XLSX`): `data.frame`.\cr
 #'   Resave in plain text delimited format instead, if possible.\cr
 #'   Imported by [readxl::read_excel()].
+#' - **Legacy Excel workbook (pre-2007)** (`XLS`): `data.frame`.\cr
+#'   Resave in plain text delimited format instead, if possible.\cr
+#'   Note that import of files in this format is slow.\cr
+#'   Imported by [gdata::read.xls()].
 #' - **GraphPad Prism project** (`PZFX`): `data.frame`.\cr
 #'   Experimental. Consider resaving in CSV format instead.\cr
 #'   Imported by [pzfx::read_pzfx()].
@@ -199,14 +203,11 @@ import <- function(file, sheet = 1L) {
         ext <- toupper(str_match(basename(file), extPattern)[1L, 2L])
     }
 
-    # Discourage use of TXT extension.
-    if (ext == "TXT") {
-        warning("TXT format is amgibuous. Consider resaving in CSV format.")
-    }
-
     if (ext %in% c("CSV", "FWF", "PSV", "TSV", "TXT")) {
         object <- importDelim(file)
-    } else if (ext %in% c("XLS", "XLSB", "XLSX")) {
+    } else if (ext == "XLS") {
+        object <- importXLS(file, sheet = sheet)
+    } else if (ext %in% c("XLSB", "XLSX")) {
         object <- importXLSX(file, sheet = sheet)
     } else if (ext == "GSHEET") {
         # Google Sheet, matched by URL (see above).
@@ -323,7 +324,21 @@ import <- function(file, sheet = 1L) {
         ))
     }
 
-    validObject(object)
+    # Inform the user when encountering duplicate names.
+    names <- try(names(object))
+    if (isCharacter(names)) {
+        dupes <- duplicated(names)
+        if (any(dupes)) {
+            dupes <- sort(unique(names[dupes]))
+            warning(paste(
+                length(dupes), "duplicate names:",
+                toString(dupes, width = 200L)
+            ))
+        }
+    }
+
+    # Don't run object validity check with `validObject()` here.
+
     object
 }
 
