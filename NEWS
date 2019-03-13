@@ -6,6 +6,7 @@
   files. `readxl::read_excel` doesn't work consistently for some files and
   returns `libxls` error. In the meantime, use gdata package, which is slow
   but works.
+- Removed `validObject` check in `import` call.
 
 
 
