@@ -24,9 +24,13 @@ Note that TXT structure is amgibuous and actively discouraged.\cr
 Refer to \code{Data frame return} section for details on how to change the
 default return type to \code{DataFrame}, \code{tbl_df} or \code{data.table}.\cr
 Imported by \code{\link[data.table:fread]{data.table::fread()}}.
-\item \strong{Excel workbook} (\code{XLSX}, \code{XLS}): \code{data.frame}.\cr
+\item \strong{Excel workbook} (\code{XLSB}, \code{XLSX}): \code{data.frame}.\cr
 Resave in plain text delimited format instead, if possible.\cr
 Imported by \code{\link[readxl:read_excel]{readxl::read_excel()}}.
+\item \strong{Legacy Excel workbook (pre-2007)} (\code{XLS}): \code{data.frame}.\cr
+Resave in plain text delimited format instead, if possible.\cr
+Note that import of files in this format is slow.\cr
+Imported by \code{\link[gdata:read.xls]{gdata::read.xls()}}.
 \item \strong{GraphPad Prism project} (\code{PZFX}): \code{data.frame}.\cr
 Experimental. Consider resaving in CSV format instead.\cr
 Imported by \code{\link[pzfx:read_pzfx]{pzfx::read_pzfx()}}.
