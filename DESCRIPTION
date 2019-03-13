@@ -2,8 +2,8 @@ Package: brio
 Title: Biological R input/output
 Description: Extension of the rio and rtracklayer packages with improved support
     for biological data structures.
-Version: 0.1.10
-Date: 2019-03-11
+Version: 0.1.11
+Date: 2019-03-13
 Authors@R: person(
     "Michael", "Steinbaugh",
     email = "mike@steinbaugh.com",
@@ -23,7 +23,7 @@ Imports:
         tibble (>= 2.0.1), yaml (>= 2.2),
     methods, stats, utils
 Suggests:
-    pzfx (>= 0.2), readxl (>= 1.3),
+    gdata (>= 2.18), pzfx (>= 0.2), readxl (>= 1.3),
     patrick, testthat
 Remotes:
     steinbaugh/bioverbs,
@@ -56,6 +56,7 @@ Collate:
     'importPZFX.R'
     'importRDA.R'
     'importRDS.R'
+    'importXLS.R'
     'importXLSX.R'
     'importYAML.R'
     'imports.R'

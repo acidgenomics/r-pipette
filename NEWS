@@ -1,3 +1,15 @@
+## brio 0.1.11 (2019-03-13)
+
+### Minor changes
+
+- `import`: Switched to using `gdata::read.xls` to import legacy XLS binary
+  files. `readxl::read_excel` doesn't work consistently for some files and
+  returns `libxls` error. In the meantime, use gdata package, which is slow
+  but works.
+- Removed `validObject` check in `import` call.
+
+
+
 ## brio 0.1.10 (2019-03-11)
 
 ### Minor changes
