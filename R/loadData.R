@@ -59,15 +59,28 @@ loadData <- function(
     envir = globalenv(),
     list = NULL
 ) {
-    if (!is.null(list)) {
-        assert(isCharacter(list))
+    assert(
+        is.environment(envir),
+        isCharacter(list, nullOK = TRUE)
+    )
+
+    if (isCharacter(list)) {
         names <- list
         rm(list)
+        # By default, assume user has passed in actual file paths.
+        # Otherwise, behave like NSE method, and attempt to add dir.
+        if (allAreFiles(names)) {
+            files <- realpath(names)
+        } else {
+            files <- .listData(names = names, dir = dir)
+        }
     } else {
         names <- dots(..., character = TRUE)
+        files <- .listData(names = names, dir = dir)
     }
-    files <- .listData(names = names, dir = dir)
-    assert(is.environment(envir))
+
+    assert(allAreFiles(files))
+
     if (all(grepl(
         pattern = "\\.rds$",
         x = files,
@@ -87,6 +100,7 @@ loadData <- function(
             "Don't mix RDS/RDA/RDATA files in a single directory."
         ))
     }
+
     lapply(X = files, FUN = fun, envir = envir)
     assert(allAreExisting(names, envir = envir, inherits = FALSE))
     invisible(files)
