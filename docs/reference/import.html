@@ -65,7 +65,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">brio</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.11</span>
       </span>
     </div>
 
@@ -143,9 +143,13 @@ Note that TXT structure is amgibuous and actively discouraged.<br />
 Refer to <code>Data frame return</code> section for details on how to change the
 default return type to <code>DataFrame</code>, <code>tbl_df</code> or <code>data.table</code>.<br />
 Imported by <code><a href='https://www.rdocumentation.org/packages/data.table/topics/fread'>data.table::fread()</a></code>.</p></li>
-<li><p><strong>Excel workbook</strong> (<code>XLSX</code>, <code>XLS</code>): <code>data.frame</code>.<br />
+<li><p><strong>Excel workbook</strong> (<code>XLSB</code>, <code>XLSX</code>): <code>data.frame</code>.<br />
 Resave in plain text delimited format instead, if possible.<br />
 Imported by <code><a href='https://readxl.tidyverse.org/reference/read_excel.html'>readxl::read_excel()</a></code>.</p></li>
+<li><p><strong>Legacy Excel workbook (pre-2007)</strong> (<code>XLS</code>): <code>data.frame</code>.<br />
+Resave in plain text delimited format instead, if possible.<br />
+Note that import of files in this format is slow.<br />
+Imported by <code><a href='https://www.rdocumentation.org/packages/gdata/topics/read.xls'>gdata::read.xls()</a></code>.</p></li>
 <li><p><strong>GraphPad Prism project</strong> (<code>PZFX</code>): <code>data.frame</code>.<br />
 Experimental. Consider resaving in CSV format instead.<br />
 Imported by <code><a href='https://www.rdocumentation.org/packages/pzfx/topics/read_pzfx'>pzfx::read_pzfx()</a></code>.</p></li>
