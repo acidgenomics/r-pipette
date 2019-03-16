@@ -1,3 +1,15 @@
+## brio 0.1.12 (2019-03-16)
+
+### Minor changes
+
+- `import`: Added initial `rownames` and `colnames` parameter support for
+  `data.frame` import. I strongly recommend leaving these enabled by default.
+  However, these are useful in some edge cases when loading data from remote
+  servers (e.g. WormBase).
+- `export`: Removed `...` passthrough for `data.frame` method.
+
+
+
 ## brio 0.1.11 (2019-03-13)
 
 ### Minor changes
