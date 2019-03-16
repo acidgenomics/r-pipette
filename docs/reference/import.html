@@ -65,7 +65,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">brio</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.12</span>
       </span>
     </div>
 
@@ -115,7 +115,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>import</span>(<span class='no'>file</span>, <span class='kw'>sheet</span> <span class='kw'>=</span> <span class='fl'>1L</span>)</pre>
+    <pre class="usage"><span class='fu'>import</span>(<span class='no'>file</span>, <span class='kw'>sheet</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>rownames</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>colnames</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -208,11 +208,13 @@ intentionally do not support row names. When returning in this format, no
 attempt to assign the <code>rowname</code> column into the return object's row names is
 made. Note that <code>import()</code> is strict about this matching and only checks for
 a <code>rowname</code> column, similar to the default syntax recommended in
-<code><a href='https://tibble.tidyverse.org/reference/rownames.html'>tibble::rownames_to_column()</a></code>.</p>
+<code><a href='https://tibble.tidyverse.org/reference/rownames.html'>tibble::rownames_to_column()</a></code>. To disable this behavior, set
+<code>rownames = FALSE</code>, and no attempt will be made to set the row names.</p>
 <p><strong>Column names.</strong> <code>import()</code> assumes that delimited files always contain
 column names. If you are working with a file that doens't contain column
-names, call the wrapped importer function directly instead. It's strongly
-recommended to always define column names in a supported file type.</p>
+names, either set <code>colnames = FALSE</code> or call the wrapped importer function
+directly instead. It's strongly recommended to always define column names in
+a supported file type.</p>
     
     <h2 class="hasAnchor" id="data-frame-return"><a class="anchor" href="#data-frame-return"></a>Data frame return</h2>
 
