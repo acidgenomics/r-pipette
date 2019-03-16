@@ -72,7 +72,7 @@ NULL
 # rownames by default, so we're ensuring rownames get coerced to "rowname"
 # column consistently.
 export.data.frame <-  # nolint
-    function(x, file, format, ...) {
+    function(x, file, format) {
         # Keep the `as.data.frame()` call here, so we can inherit the
         # `data.frame` method in other S4 methods.
         x <- as.data.frame(x)
@@ -112,7 +112,7 @@ export.data.frame <-  # nolint
         suppressMessages(
             file <- do.call(
                 what = rio::export,
-                args = list(x = x, file = file, ...)
+                args = list(x = x, file = file)
             )
         )
 
