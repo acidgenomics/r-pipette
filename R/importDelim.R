@@ -1,10 +1,10 @@
 # Import a delimited file (e.g. CSV, TSV).
-importDelim <- function(file) {
+importDelim <- function(file, colnames = TRUE) {
     file <- localOrRemoteFile(file)
     message(paste("Importing", basename(file), "using data.table::fread()."))
     object <- fread(
         file = file,
-        header = TRUE,
+        header = colnames,
         # Sanitize NA columns, with our improved defaults.
         na.strings = naStrings,
         # Never set factors on import automatically.
