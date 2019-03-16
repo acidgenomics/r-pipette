@@ -68,8 +68,8 @@ loadData <- function(
         names <- list
         rm(list)
         # By default, assume user has passed in actual file paths.
-        # Otherwise, behave like NSE method, and attempt to add dir.
-        if (allAreFiles(names)) {
+        # Otherwise, behave like NSE method, and attempt to add `dir`.
+        if (isTRUE(allAreFiles(names))) {
             files <- realpath(names)
         } else {
             files <- .listData(names = names, dir = dir)
