@@ -4,7 +4,7 @@
 \alias{import}
 \title{Import}
 \usage{
-import(file, sheet = 1L)
+import(file, sheet = 1L, rownames = TRUE, colnames = TRUE)
 }
 \arguments{
 \item{file}{\code{character(1)}.
@@ -90,12 +90,14 @@ intentionally do not support row names. When returning in this format, no
 attempt to assign the \code{rowname} column into the return object's row names is
 made. Note that \code{\link[=import]{import()}} is strict about this matching and only checks for
 a \code{rowname} column, similar to the default syntax recommended in
-\code{\link[tibble:rownames_to_column]{tibble::rownames_to_column()}}.
+\code{\link[tibble:rownames_to_column]{tibble::rownames_to_column()}}. To disable this behavior, set
+\code{rownames = FALSE}, and no attempt will be made to set the row names.
 
 \strong{Column names.} \code{\link[=import]{import()}} assumes that delimited files always contain
 column names. If you are working with a file that doens't contain column
-names, call the wrapped importer function directly instead. It's strongly
-recommended to always define column names in a supported file type.
+names, either set \code{colnames = FALSE} or call the wrapped importer function
+directly instead. It's strongly recommended to always define column names in
+a supported file type.
 }
 
 \section{Data frame return}{
