@@ -11,15 +11,15 @@
 \alias{export,SingleCellExperiment-method}
 \title{Export}
 \usage{
-\S4method{export}{data.frame}(x, file, format, ...)
+\S4method{export}{data.frame}(x, file, format)
 
-\S4method{export}{DataFrame}(x, file, format, ...)
+\S4method{export}{DataFrame}(x, file, format)
 
-\S4method{export}{matrix}(x, file, format, ...)
+\S4method{export}{matrix}(x, file, format)
 
 \S4method{export}{sparseMatrix}(x, file, format)
 
-\S4method{export}{matrix}(x, file, format, ...)
+\S4method{export}{matrix}(x, file, format)
 
 \S4method{export}{SummarizedExperiment}(x, name = NULL, dir = ".",
   compress = FALSE, slotNames = c("assays", "colData", "rowData"))
@@ -39,8 +39,6 @@ File path. Specify \code{file} or \code{format} but not both.}
 An optional character string containing the
 file format, which can be used to override the format inferred from \code{file},
 or in lieu of specifying \code{file}.}
-
-\item{...}{Additional arguments.}
 
 \item{name}{\code{character(1)}.
 Name to use on disk. If \code{NULL}, will use the name of the object instead.}
