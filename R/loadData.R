@@ -43,7 +43,7 @@
 #' loadData(rse, sce, dir = dir)
 #'
 #' ## Clean up.
-#' rm(rse, sce)
+#' rm(rse, sce, inherits = TRUE)
 #'
 #' ## List mode ====
 #' ## Note that this method uses standard evaluation.
@@ -52,7 +52,7 @@
 #' loadData(list = list, dir = dir)
 #'
 #' ## Clean up.
-#' rm(rse, sce)
+#' rm(rse, sce, inherits = TRUE)
 loadData <- function(
     ...,
     dir,
