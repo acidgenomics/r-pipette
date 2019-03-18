@@ -196,7 +196,13 @@ These file formats are blacklisted, and intentionally not supported:
 
 \examples{
 file <- system.file("extdata/example.csv", package = "brio")
+
+## Row and column names enabled.
 x <- import(file)
+print(head(x))
+
+## Row and column names disabled.
+x <- import(file, rownames = FALSE, colnames = FALSE)
 print(head(x))
 }
 \seealso{

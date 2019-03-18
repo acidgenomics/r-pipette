@@ -314,13 +314,23 @@ See also:</p><ul>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata/example.csv"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"brio"</span>)
+
+<span class='co'>## Row and column names enabled.</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>import</span>(<span class='no'>file</span>)</div><div class='output co'>#&gt; <span class='message'>Importing example.csv using data.table::fread().</span></div><div class='output co'>#&gt; <span class='message'>Setting rownames from `rowname` column.</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>x</span>))</div><div class='output co'>#&gt;       sample1 sample2 sample3 sample4
 #&gt; gene1      16      20      13      16
 #&gt; gene2      29      22      43      50
 #&gt; gene3     243     245     186     184
 #&gt; gene4       7      14      25      16
 #&gt; gene5       1       1       2       2
-#&gt; gene6      10      17      18      11</div></pre>
+#&gt; gene6      10      17      18      11</div><div class='input'>
+<span class='co'>## Row and column names disabled.</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>import</span>(<span class='no'>file</span>, <span class='kw'>rownames</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>colnames</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='message'>Importing example.csv using data.table::fread().</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>x</span>))</div><div class='output co'>#&gt;        V1      V2      V3      V4      V5
+#&gt; 1 rowname sample1 sample2 sample3 sample4
+#&gt; 2   gene1      16      20      13      16
+#&gt; 3   gene2      29      22      43      50
+#&gt; 4   gene3     243     245     186     184
+#&gt; 5   gene4       7      14      25      16
+#&gt; 6   gene5       1       1       2       2</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
