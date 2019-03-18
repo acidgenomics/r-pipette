@@ -5,10 +5,10 @@
 \title{Assign and save data}
 \usage{
 assignAndSaveData(name, object, envir = parent.frame(),
-  dir = getOption("basejump.save.dir", "."),
-  ext = getOption("basejump.save.ext", "rds"),
-  overwrite = getOption("basejump.save.overwrite", TRUE),
-  compress = getOption("basejump.save.compress", TRUE),
+  dir = getOption("basejump.save.dir", default = "."),
+  ext = getOption("basejump.save.ext", default = "rds"),
+  overwrite = getOption("basejump.save.overwrite", default = TRUE),
+  compress = getOption("basejump.save.compress", default = TRUE),
   envir = parent.frame())
 }
 \arguments{

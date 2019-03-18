@@ -65,7 +65,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">brio</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.12</span>
       </span>
     </div>
 
@@ -115,7 +115,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>import</span>(<span class='no'>file</span>, <span class='kw'>sheet</span> <span class='kw'>=</span> <span class='fl'>1L</span>)</pre>
+    <pre class="usage"><span class='fu'>import</span>(<span class='no'>file</span>, <span class='kw'>sheet</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>rownames</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>colnames</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -131,6 +131,18 @@ File path.</p></td>
 <code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code> or <code><a href='https://www.rdocumentation.org/packages/base/topics/integer'>integer(1)</a></code>.
 Sheet to read. Either a string (the name of a sheet), or an integer (the
 position of the sheet). Defaults to the first sheet.</p></td>
+    </tr>
+    <tr>
+      <th>rownames</th>
+      <td><p><code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>.
+Automatically assign row names, if <code>rowname</code> column is defined.
+Applies to file types that return <code>data.frame</code> only.</p></td>
+    </tr>
+    <tr>
+      <th>colnames</th>
+      <td><p><code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>.
+Automatically assign column names, using the first header row.
+Applies to file types that return <code>data.frame</code> only.</p></td>
     </tr>
     </table>
     
@@ -208,11 +220,13 @@ intentionally do not support row names. When returning in this format, no
 attempt to assign the <code>rowname</code> column into the return object's row names is
 made. Note that <code>import()</code> is strict about this matching and only checks for
 a <code>rowname</code> column, similar to the default syntax recommended in
-<code><a href='https://tibble.tidyverse.org/reference/rownames.html'>tibble::rownames_to_column()</a></code>.</p>
+<code><a href='https://tibble.tidyverse.org/reference/rownames.html'>tibble::rownames_to_column()</a></code>. To disable this behavior, set
+<code>rownames = FALSE</code>, and no attempt will be made to set the row names.</p>
 <p><strong>Column names.</strong> <code>import()</code> assumes that delimited files always contain
 column names. If you are working with a file that doens't contain column
-names, call the wrapped importer function directly instead. It's strongly
-recommended to always define column names in a supported file type.</p>
+names, either set <code>colnames = FALSE</code> or call the wrapped importer function
+directly instead. It's strongly recommended to always define column names in
+a supported file type.</p>
     
     <h2 class="hasAnchor" id="data-frame-return"><a class="anchor" href="#data-frame-return"></a>Data frame return</h2>
 
@@ -312,57 +326,23 @@ See also:</p><ul>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata/example.csv"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"brio"</span>)
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>import</span>(<span class='no'>file</span>)</div><div class='output co'>#&gt; <span class='message'>Importing example.csv using data.table::fread().</span></div><div class='output co'>#&gt; <span class='message'>Setting rownames from `rowname` column.</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;        sample1 sample2 sample3 sample4
-#&gt; gene1       16      20      13      16
-#&gt; gene2       29      22      43      50
-#&gt; gene3      243     245     186     184
-#&gt; gene4        7      14      25      16
-#&gt; gene5        1       1       2       2
-#&gt; gene6       10      17      18      11
-#&gt; gene7        1       2       0       3
-#&gt; gene8        8      27       7       4
-#&gt; gene9        1       0       6       2
-#&gt; gene10      13       0       1       2
-#&gt; gene11      30      12       6       5
-#&gt; gene12      25      25      14      34
-#&gt; gene13      13      57      21      25
-#&gt; gene14     162      85      85      62
-#&gt; gene15       0       2       9       1
-#&gt; gene16      28      13      26      12
-#&gt; gene17     142     392     376     215
-#&gt; gene18     147      92      97     129
-#&gt; gene19       5       4       7       0
-#&gt; gene20       3       0       9       0
-#&gt; gene21      16       4       8       7
-#&gt; gene22      34      22      47      44
-#&gt; gene23       1       0       0       0
-#&gt; gene24      18      46      39      49
-#&gt; gene25       3      19      16      25
-#&gt; gene26      39      93      35      88
-#&gt; gene27      17      26      18      39
-#&gt; gene28      48     147      68     117
-#&gt; gene29       4       3       1       0
-#&gt; gene30      20      18      21       8
-#&gt; gene31       7       1      11       9
-#&gt; gene32     131     114      59     133
-#&gt; gene33      12      27      13      13
-#&gt; gene34      20      10      10      15
-#&gt; gene35      47      56      22      52
-#&gt; gene36      14      48      54      76
-#&gt; gene37      26       3      46      10
-#&gt; gene38      10      16      34      18
-#&gt; gene39       0       0       0       4
-#&gt; gene40       6       9       0       9
-#&gt; gene41       0       1       1       2
-#&gt; gene42       3       2      11       6
-#&gt; gene43      16       4      14      23
-#&gt; gene44       1       6       7       5
-#&gt; gene45      33      26       8       9
-#&gt; gene46       8       6       0      19
-#&gt; gene47      37      70      51      10
-#&gt; gene48      47      20      14      53
-#&gt; gene49      26      69      52      40
-#&gt; gene50       1       0       0       2</div></pre>
+
+<span class='co'>## Row and column names enabled.</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>import</span>(<span class='no'>file</span>)</div><div class='output co'>#&gt; <span class='message'>Importing example.csv using data.table::fread().</span></div><div class='output co'>#&gt; <span class='message'>Setting rownames from `rowname` column.</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>x</span>))</div><div class='output co'>#&gt;       sample1 sample2 sample3 sample4
+#&gt; gene1      16      20      13      16
+#&gt; gene2      29      22      43      50
+#&gt; gene3     243     245     186     184
+#&gt; gene4       7      14      25      16
+#&gt; gene5       1       1       2       2
+#&gt; gene6      10      17      18      11</div><div class='input'>
+<span class='co'>## Row and column names disabled.</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>import</span>(<span class='no'>file</span>, <span class='kw'>rownames</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>colnames</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='message'>Importing example.csv using data.table::fread().</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>x</span>))</div><div class='output co'>#&gt;        V1      V2      V3      V4      V5
+#&gt; 1 rowname sample1 sample2 sample3 sample4
+#&gt; 2   gene1      16      20      13      16
+#&gt; 3   gene2      29      22      43      50
+#&gt; 4   gene3     243     245     186     184
+#&gt; 5   gene4       7      14      25      16
+#&gt; 6   gene5       1       1       2       2</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
