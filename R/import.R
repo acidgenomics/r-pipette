@@ -15,6 +15,12 @@
 #'   `character(1)` or `integer(1)`.
 #'   Sheet to read. Either a string (the name of a sheet), or an integer (the
 #'   position of the sheet). Defaults to the first sheet.
+#' @param rownames `logical(1)`.
+#'   Automatically assign row names, if `rowname` column is defined.
+#'   Applies to file types that return `data.frame` only.
+#' @param colnames `logical(1)`.
+#'   Automatically assign column names, using the first header row.
+#'   Applies to file types that return `data.frame` only.
 #'
 #' @return Varies, depending on the file type.
 #'

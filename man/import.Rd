@@ -14,6 +14,14 @@ File path.}
 \code{character(1)} or \code{integer(1)}.
 Sheet to read. Either a string (the name of a sheet), or an integer (the
 position of the sheet). Defaults to the first sheet.}
+
+\item{rownames}{\code{logical(1)}.
+Automatically assign row names, if \code{rowname} column is defined.
+Applies to file types that return \code{data.frame} only.}
+
+\item{colnames}{\code{logical(1)}.
+Automatically assign column names, using the first header row.
+Applies to file types that return \code{data.frame} only.}
 }
 \value{
 Varies, depending on the file type.
