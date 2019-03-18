@@ -188,7 +188,7 @@
 #' @examples
 #' file <- system.file("extdata/example.csv", package = "brio")
 #' x <- import(file)
-#' print(x)
+#' print(head(x))
 import <- function(
     file,
     sheet = 1L,

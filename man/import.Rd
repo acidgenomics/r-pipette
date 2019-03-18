@@ -197,7 +197,7 @@ These file formats are blacklisted, and intentionally not supported:
 \examples{
 file <- system.file("extdata/example.csv", package = "brio")
 x <- import(file)
-print(x)
+print(head(x))
 }
 \seealso{
 Packages:

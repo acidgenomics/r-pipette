@@ -4,7 +4,7 @@
 \alias{loadData}
 \title{Load data}
 \usage{
-loadData(..., dir = getOption("basejump.load.dir", "."),
+loadData(..., dir = getOption("basejump.load.dir", default = "."),
   envir = globalenv(), list = NULL)
 }
 \arguments{
@@ -55,7 +55,7 @@ dir <- system.file("extdata", package = "brio")
 loadData(rse, sce, dir = dir)
 
 ## Clean up.
-rm(rse, sce)
+rm(rse, sce, inherits = TRUE)
 
 ## List mode ====
 ## Note that this method uses standard evaluation.
@@ -64,7 +64,7 @@ list <- c("rse", "sce")
 loadData(list = list, dir = dir)
 
 ## Clean up.
-rm(rse, sce)
+rm(rse, sce, inherits = TRUE)
 }
 \seealso{
 \itemize{
