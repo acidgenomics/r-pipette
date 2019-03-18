@@ -4,11 +4,11 @@
 \alias{saveData}
 \title{Save data}
 \usage{
-saveData(..., dir = getOption("basejump.save.dir", "."),
-  ext = getOption("basejump.save.ext", "rds"),
-  overwrite = getOption("basejump.save.overwrite", TRUE),
-  compress = getOption("basejump.save.compress", TRUE), list = NULL,
-  envir = parent.frame())
+saveData(..., dir = getOption("basejump.save.dir", default = "."),
+  ext = getOption("basejump.save.ext", default = "rds"),
+  overwrite = getOption("basejump.save.overwrite", default = TRUE),
+  compress = getOption("basejump.save.compress", default = TRUE),
+  list = NULL, envir = parent.frame())
 }
 \arguments{
 \item{...}{Object names.
