@@ -41,12 +41,24 @@ compressExtPattern <- paste0(compressExtPattern, "$")
 
 
 formalsList <- list(
-    data.frame = quote(getOption("basejump.data.frame", "data.frame")),
-    load.dir = quote(getOption("basejump.load.dir", ".")),
-    save.dir = quote(getOption("basejump.save.dir", ".")),
-    save.ext = quote(getOption("basejump.save.ext", "rds")),
-    save.overwrite = quote(getOption("basejump.save.overwrite", TRUE)),
-    save.compress = quote(getOption("basejump.save.compress", TRUE))
+    data.frame = quote(
+        getOption("basejump.data.frame", default = "data.frame")
+    ),
+    load.dir = quote(
+        getOption("basejump.load.dir", default = ".")
+    ),
+    save.dir = quote(
+        getOption("basejump.save.dir", default = ".")
+    ),
+    save.ext = quote(
+        getOption("basejump.save.ext", default = "rds")
+    ),
+    save.overwrite = quote(
+        getOption("basejump.save.overwrite", default = TRUE)
+    ),
+    save.compress = quote(
+        getOption("basejump.save.compress", default = TRUE)
+    )
 )
 
 

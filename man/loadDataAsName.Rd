@@ -4,7 +4,7 @@
 \alias{loadDataAsName}
 \title{Load data as name}
 \usage{
-loadDataAsName(..., dir = getOption("basejump.load.dir", "."),
+loadDataAsName(..., dir = getOption("basejump.load.dir", default = "."),
   envir = globalenv())
 }
 \arguments{

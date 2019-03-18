@@ -65,7 +65,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">brio</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.12</span>
       </span>
     </div>
 
@@ -116,19 +116,19 @@
     </div>
 
     <pre class="usage"><span class='co'># S4 method for data.frame</span>
-<span class='fu'>export</span>(<span class='no'>x</span>, <span class='no'>file</span>, <span class='no'>format</span>, <span class='no'>...</span>)
+<span class='fu'>export</span>(<span class='no'>x</span>, <span class='no'>file</span>, <span class='no'>format</span>)
 
 <span class='co'># S4 method for DataFrame</span>
-<span class='fu'>export</span>(<span class='no'>x</span>, <span class='no'>file</span>, <span class='no'>format</span>, <span class='no'>...</span>)
+<span class='fu'>export</span>(<span class='no'>x</span>, <span class='no'>file</span>, <span class='no'>format</span>)
 
 <span class='co'># S4 method for matrix</span>
-<span class='fu'>export</span>(<span class='no'>x</span>, <span class='no'>file</span>, <span class='no'>format</span>, <span class='no'>...</span>)
+<span class='fu'>export</span>(<span class='no'>x</span>, <span class='no'>file</span>, <span class='no'>format</span>)
 
 <span class='co'># S4 method for sparseMatrix</span>
 <span class='fu'>export</span>(<span class='no'>x</span>, <span class='no'>file</span>, <span class='no'>format</span>)
 
 <span class='co'># S4 method for matrix</span>
-<span class='fu'>export</span>(<span class='no'>x</span>, <span class='no'>file</span>, <span class='no'>format</span>, <span class='no'>...</span>)
+<span class='fu'>export</span>(<span class='no'>x</span>, <span class='no'>file</span>, <span class='no'>format</span>)
 
 <span class='co'># S4 method for SummarizedExperiment</span>
 <span class='fu'>export</span>(<span class='no'>x</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>"."</span>,
@@ -158,10 +158,6 @@ File path. Specify <code>file</code> or <code>format</code> but not both.</p></t
 An optional character string containing the
 file format, which can be used to override the format inferred from <code>file</code>,
 or in lieu of specifying <code>file</code>.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Additional arguments.</p></td>
     </tr>
     <tr>
       <th>name</th>

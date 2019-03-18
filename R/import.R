@@ -15,6 +15,12 @@
 #'   `character(1)` or `integer(1)`.
 #'   Sheet to read. Either a string (the name of a sheet), or an integer (the
 #'   position of the sheet). Defaults to the first sheet.
+#' @param rownames `logical(1)`.
+#'   Automatically assign row names, if `rowname` column is defined.
+#'   Applies to file types that return `data.frame` only.
+#' @param colnames `logical(1)`.
+#'   Automatically assign column names, using the first header row.
+#'   Applies to file types that return `data.frame` only.
 #'
 #' @return Varies, depending on the file type.
 #'
@@ -79,12 +85,14 @@
 #' attempt to assign the `rowname` column into the return object's row names is
 #' made. Note that [import()] is strict about this matching and only checks for
 #' a `rowname` column, similar to the default syntax recommended in
-#' [tibble::rownames_to_column()].
+#' [tibble::rownames_to_column()]. To disable this behavior, set
+#' `rownames = FALSE`, and no attempt will be made to set the row names.
 #'
 #' **Column names.** [import()] assumes that delimited files always contain
 #' column names. If you are working with a file that doens't contain column
-#' names, call the wrapped importer function directly instead. It's strongly
-#' recommended to always define column names in a supported file type.
+#' names, either set `colnames = FALSE` or call the wrapped importer function
+#' directly instead. It's strongly recommended to always define column names in
+#' a supported file type.
 #'
 #' @section Data frame return:
 #'
@@ -185,14 +193,26 @@
 #'
 #' @examples
 #' file <- system.file("extdata/example.csv", package = "brio")
+#'
+#' ## Row and column names enabled.
 #' x <- import(file)
-#' print(x)
-import <- function(file, sheet = 1L) {
-    # Note that we're not using a `localOrRemoteFile()` call for `file` here,
-    # so we can support Google Sheets.
+#' print(head(x))
+#'
+#' ## Row and column names disabled.
+#' x <- import(file, rownames = FALSE, colnames = FALSE)
+#' print(head(x))
+import <- function(
+    file,
+    sheet = 1L,
+    rownames = TRUE,
+    colnames = TRUE
+) {
+    # We're supporting remote files, so don't check using `isAFile()` here.
     assert(
         isString(file),
-        isScalar(sheet)
+        isScalar(sheet),
+        isFlag(rownames),
+        isFlag(colnames)
     )
 
     # Allow Google Sheets import using rio, by matching the URL.
@@ -204,16 +224,19 @@ import <- function(file, sheet = 1L) {
     }
 
     if (ext %in% c("CSV", "FWF", "PSV", "TSV", "TXT")) {
-        object <- importDelim(file)
+        object <- importDelim(file, colnames = colnames)
     } else if (ext == "XLS") {
-        object <- importXLS(file, sheet = sheet)
+        object <- importXLS(file, sheet = sheet, colnames = colnames)
     } else if (ext %in% c("XLSB", "XLSX")) {
-        object <- importXLSX(file, sheet = sheet)
+        object <- importXLSX(file, sheet = sheet, colnames = colnames)
     } else if (ext == "GSHEET") {
         # Google Sheet, matched by URL (see above).
+        # Assuming Google Sheet contains column names. Consider reworking
+        # this passthrough in a future update, if we need to disable.
         object <- .rioImport(file, sheet = sheet)
     } else if (ext == "PZFX") {
         # GraphPad Prism project.
+        # Note that Prism files always contain column names.
         object <- importPZFX(file, sheet = sheet)
     } else if (ext == "RDS") {
         object <- importRDS(file)
@@ -228,8 +251,10 @@ import <- function(file, sheet = 1L) {
     } else if (ext %in% c("YAML", "YML")) {
         object <- importYAML(file)
     } else if (ext == "MTX") {
+        # We're always requiring row and column sidecar files for MTX.
         object <- importMTX(file)
     } else if (ext == "COUNTS") {
+        # bcbio counts format always contains row and column names.
         object <- importCounts(file)
     } else if (ext %in% c("LOG", "MD", "PY", "R", "RMD", "SH")) {
         object <- importLines(file)
@@ -285,7 +310,8 @@ import <- function(file, sheet = 1L) {
         # Set rownames automatically, if supported.
         if (
             isAny(object, c("data.frame", "DataFrame")) &&
-            "rowname" %in% colnames(object)
+            "rowname" %in% colnames(object) &&
+            isTRUE(rownames)
         ) {
             message("Setting rownames from `rowname` column.")
             rownames(object) <- object[["rowname"]]

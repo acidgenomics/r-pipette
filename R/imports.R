@@ -14,8 +14,8 @@
 #' @importFrom SummarizedExperiment assayNames assayNames<- assays colData
 #'   rowData rowRanges
 #' @importFrom data.table as.data.table fread
-#' @importFrom goalie assert allAreExisting allAreNonExisting allAreURLs
-#'   allHaveAccess areDisjointSets areSameLength areSetEqual bapply
+#' @importFrom goalie assert allAreExisting allAreFiles allAreNonExisting
+#'   allAreURLs allHaveAccess areDisjointSets areSameLength areSetEqual bapply
 #'   formalCompress hasColnames hasCols hasInternet hasLength hasNames
 #'   hasNoDuplicates hasRownames hasRows hasValidNames hasValidDimnames isAFile
 #'   isAURL isAny isCharacter isFlag isMatchingRegex isNonEmpty isScalar
