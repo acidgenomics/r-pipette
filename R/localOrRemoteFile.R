@@ -82,8 +82,11 @@ localOrRemoteFile <- function(file) {
 
 
 
-# Auto decompress, if necessary.
-# Note that `data.table::fread()` still doesn't natively support this.
+# Auto decompress, if necessary. Note that `data.table::fread()` still doesn't
+# natively support compressed files. R on Windows can run into `tempdir()` write
+# permission issues, unless R is running as administrator. Ensure that
+# decompressed is removed manually before attempting to overwrite, otherwise
+# this step can error out.
 .autoDecompress <- function(file) {
     file <- realpath(file)
     vapply(
@@ -93,8 +96,33 @@ localOrRemoteFile <- function(file) {
                 return(file)
             }
             message(paste("Decompressing", basename(file), "in tempdir()."))
-            compressExt <-
-                toupper(str_match(basename(file), compressExtPattern)[1L, 2L])
+
+            # Get the compression extension and decompressed file basename.
+            match <- str_match(
+                string = basename(file),
+                pattern = compressExtPattern
+            )
+            assert(is.matrix(match), nrow(match) == 1L)
+            match <- match[1L, , drop = TRUE]
+            compressExt <- toupper(match[[2L]])
+
+            # Fix for Windows R erroring out on failure to overwrite tempfile.
+            decompressedFile <- file.path(
+                tempdir(),
+                sub(
+                    pattern = compressExtPattern,
+                    replacement = "",
+                    x = basename(file)
+                )
+            )
+            if (file.exists(decompressedFile)) {
+                # If the `file.remove()` call still errors out, alternatively
+                # can resort to `unlink()` here instead. If this still errors
+                # out, maybe encourage user to run R as admin or switch off
+                # Windows, because this is a pain to manage.
+                file.remove(decompressedFile)
+            }
+
             if (compressExt %in% c("BZ2", "GZ", "XZ")) {
                 # Using the R.utils package to handle BZ2, GZ, XZ.
                 if (compressExt == "BZ2") {
