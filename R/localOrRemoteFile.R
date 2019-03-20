@@ -82,8 +82,11 @@ localOrRemoteFile <- function(file) {
 
 
 
-# Auto decompress, if necessary.
-# Note that `data.table::fread()` still doesn't natively support this.
+# Auto decompress, if necessary. Note that `data.table::fread()` still doesn't
+# natively support compressed files. R on Windows can run into `tempdir()` write
+# permission issues, unless R is running as administrator. Ensure that
+# decompressed is removed manually before attempting to overwrite, otherwise
+# this step can error out.
 .autoDecompress <- function(file) {
     file <- realpath(file)
     vapply(
@@ -93,8 +96,28 @@ localOrRemoteFile <- function(file) {
                 return(file)
             }
             message(paste("Decompressing", basename(file), "in tempdir()."))
-            compressExt <-
-                toupper(str_match(basename(file), compressExtPattern)[1L, 2L])
+
+            # Get the compression extension and decompressed file basename.
+            match <- str_match(
+                string = basename(file),
+                pattern = compressExtPattern
+            )
+            assert(is.matrix(match), nrow(match) == 1L)
+            match <- match[1L, , drop = TRUE]
+            compressExt <- toupper(match[[2L]])
+
+            # Attempt to force removal of an existing decompressed file on
+            # Windows, which can error out on some machines. Fail with a clear
+            # error message if and when this occurs.
+            if (identical(.Platform[["OS.type"]], "windows")) {
+                decompressedFile <- sub(
+                    pattern = compressExtPattern,
+                    replacement = "",
+                    x = basename(file)
+                )
+                .removeTempFile(decompressedFile)
+            }
+
             if (compressExt %in% c("BZ2", "GZ", "XZ")) {
                 # Using the R.utils package to handle BZ2, GZ, XZ.
                 if (compressExt == "BZ2") {
@@ -128,4 +151,33 @@ localOrRemoteFile <- function(file) {
         FUN.VALUE = character(1L),
         USE.NAMES = FALSE
     )
+}
+
+
+
+# Fix attempt for Windows R erroring out on failure to overwrite tempfile.
+# This can happen for some non-admin user accounts, which is annoying.
+# https://support.rstudio.com/hc/en-us/community/posts/115007456107
+# TMPDIR
+.removeTempFile <- function(file) {
+    file <- file.path(tempdir(), file)
+    if (file.exists(file)) {
+        file.remove(file)
+    }
+    if (file.exists(file)) {
+        unlink(file, force = TRUE)
+    }
+    if (file.exists(file)) {
+        stop(paste(
+            "Failed to remove temporary file:",
+            file,
+            "This is a known issue with R on Windows.",
+            "Consider these alternatives:",
+            "  1. Set TMPDIR to an alternate location in `.Renviron` file.",
+            "  2. Run R as Administrator.",
+            "  3. Switch to macOS or Linux.",
+            sep = "\n"
+        ))
+    }
+    invisible()
 }
