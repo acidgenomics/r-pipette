@@ -12,6 +12,7 @@ matrix:
   allow_failures:
     - os: osx
     - r: bioc-devel
+  fast_finish: true
 
 branches:
   only:
