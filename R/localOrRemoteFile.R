@@ -106,21 +106,16 @@ localOrRemoteFile <- function(file) {
             match <- match[1L, , drop = TRUE]
             compressExt <- toupper(match[[2L]])
 
-            # Fix for Windows R erroring out on failure to overwrite tempfile.
-            decompressedFile <- file.path(
-                tempdir(),
-                sub(
+            # Attempt to force removal of an existing decompressed file on
+            # Windows, which can error out on some machines. Fail with a clear
+            # error message if and when this occurs.
+            if (identical(.Platform[["OS.type"]], "windows")) {
+                decompressedFile <- sub(
                     pattern = compressExtPattern,
                     replacement = "",
                     x = basename(file)
                 )
-            )
-            if (file.exists(decompressedFile)) {
-                # If the `file.remove()` call still errors out, alternatively
-                # can resort to `unlink()` here instead. If this still errors
-                # out, maybe encourage user to run R as admin or switch off
-                # Windows, because this is a pain to manage.
-                file.remove(decompressedFile)
+                .removeTempFile(decompressedFile)
             }
 
             if (compressExt %in% c("BZ2", "GZ", "XZ")) {
@@ -156,4 +151,33 @@ localOrRemoteFile <- function(file) {
         FUN.VALUE = character(1L),
         USE.NAMES = FALSE
     )
+}
+
+
+
+# Fix attempt for Windows R erroring out on failure to overwrite tempfile.
+# This can happen for some non-admin user accounts, which is annoying.
+# https://support.rstudio.com/hc/en-us/community/posts/115007456107
+# TMPDIR
+.removeTempFile <- function(file) {
+    file <- file.path(tempdir(), file)
+    if (file.exists(file)) {
+        file.remove(file)
+    }
+    if (file.exists(file)) {
+        unlink(file, force = TRUE)
+    }
+    if (file.exists(file)) {
+        stop(paste(
+            "Failed to remove temporary file:",
+            file,
+            "This is a known issue with R on Windows.",
+            "Consider these alternatives:",
+            "  1. Set TMPDIR to an alternate location in `.Renviron` file.",
+            "  2. Run R as Administrator.",
+            "  3. Switch to macOS or Linux.",
+            sep = "\n"
+        ))
+    }
+    invisible()
 }
