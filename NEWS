@@ -1,3 +1,13 @@
+## brio 0.1.3 (2019-03-20)
+
+### Minor changes
+
+- `localOrRemoteFile`: Improved error message for Windows users when tempfile
+  can't be removed successfully. This can happen on systems when the user is
+  not running as Administrator, but doesn't happen on macOS or Linux.
+
+
+
 ## brio 0.1.12 (2019-03-17)
 
 ### Minor changes
