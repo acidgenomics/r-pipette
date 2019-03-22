@@ -3,7 +3,6 @@
 ^\.lintr$
 ^\.travis\.yml$
 ^appveyor\.yml$
-^CNAME$
 ^docs$
 ^pkgdown$
 ^_pkgdown\.yml$
