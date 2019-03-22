@@ -66,7 +66,7 @@ object names passed as symbols." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">brio</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.13</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.14</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@ object names passed as symbols." />
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/steinbaugh/brio">
+  <a href="https://github.com/acidgenomics/brio">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -106,7 +106,7 @@ object names passed as symbols." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Save data</h1>
-    <small class="dont-index">Source: <a href='https://github.com/steinbaugh/brio/blob/master/R/saveData.R'><code>R/saveData.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/acidgenomics/brio/blob/master/R/saveData.R'><code>R/saveData.R</code></a></small>
     <div class="hidden name"><code>saveData.Rd</code></div>
     </div>
 
@@ -205,7 +205,7 @@ on disk, following the same conventions as <code><a href='https://www.rdocumenta
 <span class='co'>## Note that this method uses non-standard evaluation.</span>
 <span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>
 <span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fl'>2</span>
-<span class='fu'>saveData</span>(<span class='no'>a</span>, <span class='no'>b</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='no'>dir</span>)</div><div class='output co'>#&gt; <span class='message'>Saving a.rds, b.rds to /Users/mike/git/brio/docs/reference/example</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>list.files</a></span>(<span class='no'>dir</span>)</div><div class='output co'>#&gt; [1] "a.rds" "b.rds"</div><div class='input'>
+<span class='fu'>saveData</span>(<span class='no'>a</span>, <span class='no'>b</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='no'>dir</span>)</div><div class='output co'>#&gt; <span class='message'>Saving a.rds, b.rds to /data00/home/michael.steinbaugh/git/packages/brio/docs/reference/example</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>list.files</a></span>(<span class='no'>dir</span>)</div><div class='output co'>#&gt; [1] "a.rds" "b.rds"</div><div class='input'>
 <span class='co'>## Clean up.</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/unlink'>unlink</a></span>(<span class='no'>dir</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
@@ -215,7 +215,7 @@ on disk, following the same conventions as <code><a href='https://www.rdocumenta
 <span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>
 <span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fl'>2</span>
 <span class='no'>list</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"a"</span>, <span class='st'>"b"</span>)
-<span class='fu'>saveData</span>(<span class='kw'>list</span> <span class='kw'>=</span> <span class='no'>list</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='no'>dir</span>)</div><div class='output co'>#&gt; <span class='message'>Saving a.rds, b.rds to /Users/mike/git/brio/docs/reference/example</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>list.files</a></span>(<span class='no'>dir</span>)</div><div class='output co'>#&gt; [1] "a.rds" "b.rds"</div><div class='input'>
+<span class='fu'>saveData</span>(<span class='kw'>list</span> <span class='kw'>=</span> <span class='no'>list</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='no'>dir</span>)</div><div class='output co'>#&gt; <span class='message'>Saving a.rds, b.rds to /data00/home/michael.steinbaugh/git/packages/brio/docs/reference/example</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>list.files</a></span>(<span class='no'>dir</span>)</div><div class='output co'>#&gt; [1] "a.rds" "b.rds"</div><div class='input'>
 <span class='co'>## Clean up.</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/unlink'>unlink</a></span>(<span class='no'>dir</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div></pre>
   </div>
@@ -240,7 +240,7 @@ on disk, following the same conventions as <code><a href='https://www.rdocumenta
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='/'>Michael Steinbaugh</a>.</p>
+  <p>Developed by <a href='https://steinbaugh.com/'>Michael Steinbaugh</a>, <a href='https://acidgenomics.com/'>Acid Genomics</a>.</p>
 </div>
 
 <div class="pkgdown">
