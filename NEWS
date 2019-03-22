@@ -1,3 +1,11 @@
+## brio 0.1.4 (2019-03-22)
+
+### Minor changes
+
+- Migrated code to [Acid Genomics][].
+
+
+
 ## brio 0.1.3 (2019-03-20)
 
 ### Minor changes
@@ -172,8 +180,9 @@ Initial release. Migrated input-output (IO) functions from [basejump][].
 
 
 
+[Acid Genomics]: https://acidgenomics.com/
 [AppVeyor CI]: https://www.appveyor.com/
-[basejump]: https://steinbaugh.com/basejump/
+[basejump]: https://basejump.steinbaugh.com/
 [testthat]: http://testthat.r-lib.org/
-[transformer]: https://steinbaugh.com/transformer/
+[transformer]: https://transformer.steinbaugh.com/
 [Travis CI]: https://travis-ci.com/

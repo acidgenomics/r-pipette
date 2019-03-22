@@ -12,13 +12,19 @@ biological data structures.
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/steinbaugh/brio/}
-  \item Report bugs at \url{https://github.com/steinbaugh/brio/issues/}
+  \item \url{https://brio.acidgenomics.com/}
+  \item \url{https://github.com/acidgenomics/brio/}
+  \item Report bugs at \url{https://github.com/acidgenomics/brio/issues/}
 }
 
 }
 \author{
 \strong{Maintainer}: Michael Steinbaugh \email{mike@steinbaugh.com} (0000-0002-2403-2221)
+
+Other contributors:
+\itemize{
+  \item Acid Genomics [copyright holder, funder]
+}
 
 }
 \keyword{internal}
