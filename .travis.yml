@@ -27,7 +27,7 @@ r_packages:
 bioc_packages:
   - BiocCheck
 github_packages:
-  - steinbaugh/lintr
+  - acidgenomics/lintr
 
 after_success:
   - R CMD BiocCheck .
