@@ -3,7 +3,7 @@
 export(assignAndSaveData)
 export(atomize)
 export(basenameSansExt)
-export(brioCacheURL)
+export(brioTestsURL)
 export(bunzip2)
 export(bzip2)
 export(compressExtPattern)
