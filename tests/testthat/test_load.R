@@ -142,7 +142,7 @@ test_that("loadDataAsName : Invalid arguments", {
 # loadRemoteData ===============================================================
 test_that("loadRemoteData", {
     envir <- new.env()
-    url <- paste(brioCacheURL, "example.rds", sep = "/")
+    url <- paste(brioTestsURL, "example.rds", sep = "/")
     object <- loadRemoteData(url, envir = envir)
     # Character matrix of loaded files.
     expect_is(object, "character")
@@ -156,7 +156,7 @@ test_that("loadRemoteData : Already loaded", {
     envir[["example"]] <- TRUE
     expect_error(
         object = loadRemoteData(
-            url = paste(brioCacheURL, "example.rda", sep = "/"),
+            url = paste(brioTestsURL, "example.rda", sep = "/"),
             envir = envir
         ),
         regexp = "reassignment"
@@ -165,7 +165,7 @@ test_that("loadRemoteData : Already loaded", {
 
 test_that("loadRemoteData : Invalid arguments", {
     expect_error(
-        loadRemoteData(paste(brioCacheURL, "mmusculus.gtf", sep = "/")),
+        loadRemoteData(paste(brioTestsURL, "mmusculus.gtf", sep = "/")),
         rdataLoadError
     )
     expect_error(
@@ -174,7 +174,7 @@ test_that("loadRemoteData : Invalid arguments", {
     )
     expect_error(
         object = loadRemoteData(
-            url = paste(paste(brioCacheURL, "example.rda", sep = "/")),
+            url = paste(paste(brioTestsURL, "example.rda", sep = "/")),
             envir = "XXX"
         ),
         regexp = "is.environment"

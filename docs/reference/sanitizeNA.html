@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Write counts — writeCounts • brio</title>
+<title>Sanitize NA values — sanitizeNA • brio</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,13 +32,11 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Write counts — writeCounts" />
+<meta property="og:title" content="Sanitize NA values — sanitizeNA" />
 
-<meta property="og:description" content="Supports both bulk and single-cell RNA-seq count matrices. Bulk RNA-seq
-counts are written to disk as comma separated values (&quot;.CSV&quot;). Single-cell
-RNA-seq counts are written to disk in MatrixMarket format (&quot;.MTX&quot;), along
-with the sample barcodes (&quot;.COLNAMES&quot;), and gene identifiers
-(&quot;.ROWNAMES&quot;)." />
+<meta property="og:description" content="Standardize empty strings (&quot;&quot;), character NAs (&quot;NA&quot;), and NULL values
+inside a character vector to NA_character_. Other atomic data types are
+returned unmodified." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -108,65 +106,70 @@ with the sample barcodes (&quot;.COLNAMES&quot;), and gene identifiers
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Write counts</h1>
-    <small class="dont-index">Source: <a href='https://github.com/acidgenomics/brio/blob/master/R/writeCounts.R'><code>R/writeCounts.R</code></a></small>
-    <div class="hidden name"><code>writeCounts.Rd</code></div>
+    <h1>Sanitize NA values</h1>
+    <small class="dont-index">Source: <a href='https://github.com/acidgenomics/brio/blob/master/R/sanitizeNA-methods.R'><code>R/sanitizeNA-methods.R</code></a></small>
+    <div class="hidden name"><code>sanitizeNA.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Supports both bulk and single-cell RNA-seq count matrices. Bulk RNA-seq
-counts are written to disk as comma separated values ("<code>.CSV</code>"). Single-cell
-RNA-seq counts are written to disk in MatrixMarket format ("<code>.MTX</code>"), along
-with the sample barcodes ("<code>.COLNAMES</code>"), and gene identifiers
-("<code>.ROWNAMES</code>").</p>
+    <p>Standardize empty strings (<code>""</code>), character NAs (<code>"NA"</code>), and <code>NULL</code> values
+inside a character vector to <code>NA_character_</code>. Other <code>atomic</code> data types are
+returned unmodified.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>writeCounts</span>(<span class='no'>...</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>"."</span>, <span class='kw'>compress</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='co'># S4 method for atomic</span>
+<span class='fu'>sanitizeNA</span>(<span class='no'>object</span>)
+
+<span class='co'># S4 method for character</span>
+<span class='fu'>sanitizeNA</span>(<span class='no'>object</span>)
+
+<span class='co'># S4 method for factor</span>
+<span class='fu'>sanitizeNA</span>(<span class='no'>object</span>)
+
+<span class='co'># S4 method for data.frame</span>
+<span class='fu'>sanitizeNA</span>(<span class='no'>object</span>)
+
+<span class='co'># S4 method for DataFrame</span>
+<span class='fu'>sanitizeNA</span>(<span class='no'>object</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>...</th>
-      <td><p>Symbols.
-Unquoted object names containing count matrices.</p></td>
-    </tr>
-    <tr>
-      <th>dir</th>
-      <td><p><code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>.
-Output directory.</p></td>
-    </tr>
-    <tr>
-      <th>compress</th>
-      <td><p><code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>.
-Compress the files using gzip.</p></td>
+      <th>object</th>
+      <td><p>Object.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Invisible <code>list</code>.
-File paths.</p>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>Automatic gzip compression is offered as a user-defined option. This setting
-is enabled by default to save disk space. Note that the <a href='http://readr.tidyverse.org/'>readr</a> package,
-built into <a href='https://www.rstudio.com/'>RStudio</a>, now natively supports compressed files.</p>
-    
-    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
-
-    <p>This function is desired for interactive use and interprets object
-names using non-standard evaluation.</p>
+    <p>Modified object.
+Sanitized to contain proper <code>NA</code> values.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>counts</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq_len</a></span>(<span class='fl'>100L</span>), <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>10</span>)
-<span class='fu'>writeCounts</span>(<span class='no'>counts</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>"example"</span>)</div><div class='output co'>#&gt; <span class='message'>Writing counts to /data00/home/michael.steinbaugh/git/packages/brio/docs/reference/example.</span></div><div class='output co'>#&gt; <span class='message'>Exported counts.csv.</span></div><div class='input'>
-<span class='co'>## Clean up.</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/unlink'>unlink</a></span>(<span class='st'>"example"</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div></pre>
+    <pre class="examples"><div class='input'><span class='co'>## character ====</span>
+<span class='no'>from</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>as.character</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1L</span>, <span class='st'>"x"</span>, <span class='st'>""</span>, <span class='st'>"NA"</span>, <span class='st'>"NULL"</span>))
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>from</span>)</div><div class='output co'>#&gt; [1] "1"    "x"    ""     "NA"   "NULL"</div><div class='input'><span class='no'>to</span> <span class='kw'>&lt;-</span> <span class='fu'>sanitizeNA</span>(<span class='no'>from</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>to</span>)</div><div class='output co'>#&gt; [1] "1" "x" NA  NA  NA </div><div class='input'>
+<span class='co'>## DataFrame ====</span>
+<span class='no'>from</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>S4Vectors</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/S4Vectors/topics/DataFrame-class'>DataFrame</a></span>(
+    <span class='kw'>a</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"foo"</span>, <span class='st'>""</span>),
+    <span class='kw'>b</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>NA</span>, <span class='st'>"bar"</span>),
+    <span class='kw'>row.names</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"c"</span>, <span class='st'>"d"</span>)
+)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>from</span>)</div><div class='output co'>#&gt; DataFrame with 2 rows and 2 columns
+#&gt;             a           b
+#&gt;   &lt;character&gt; &lt;character&gt;
+#&gt; c         foo          NA
+#&gt; d                     bar</div><div class='input'><span class='no'>to</span> <span class='kw'>&lt;-</span> <span class='fu'>sanitizeNA</span>(<span class='no'>from</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>to</span>)</div><div class='output co'>#&gt; DataFrame with 2 rows and 2 columns
+#&gt;             a           b
+#&gt;   &lt;character&gt; &lt;character&gt;
+#&gt; c         foo          NA
+#&gt; d          NA         bar</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -174,10 +177,6 @@ names using non-standard evaluation.</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
-
-      <li><a href="#note">Note</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
