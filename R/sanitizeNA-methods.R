@@ -29,9 +29,9 @@ bioverbs::sanitizeNA
 
 
 
+# Return unmodified.
 sanitizeNA.atomic <-  # nolint
     function(object) {
-        # Return unmodified.
         object
     }
 
@@ -58,7 +58,7 @@ sanitizeNA.character <-  # nolint
         )
         gsub(
             pattern = paste(patterns, collapse = "|"),
-            replacement = NA,
+            replacement = NA_character_,
             x = object
         )
     }
@@ -95,6 +95,15 @@ setMethod(
 
 
 
+# nolint start
+#
+# Alternate dplyr method:
+# object <- mutate_if(object, is.character, funs(sanitizeNA))
+#
+# This requires use to import dplyr, which can be otherwise avoided.
+#
+# nolint end
+
 sanitizeNA.data.frame <-  # nolint
     function(object) {
         if (hasRownames(object)) {
@@ -102,9 +111,17 @@ sanitizeNA.data.frame <-  # nolint
         } else {
             rownames <- NULL
         }
-        object <- mutate_if(object, is.character, funs(sanitizeNA))
-        rownames(object) <- rownames
-        object
+        list <- lapply(
+            X = object,
+            FUN = function(col) {
+                if (is.character(col)) {
+                    sanitizeNA(col)
+                } else {
+                    I(col)
+                }
+            }
+        )
+        data.frame(list, row.names = rownames)
     }
 
 
@@ -130,7 +147,8 @@ sanitizeNA.DataFrame <-  # nolint
                 } else {
                     I(col)
                 }
-            })
+            }
+        )
         DataFrame(list, row.names = rownames)
     }
 

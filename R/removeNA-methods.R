@@ -53,13 +53,17 @@ setMethod(
 
 
 
+.allNonNA <- function(x) {
+    !all(is.na(x))
+}
+
+
+
 removeNA.matrix <-  # nolint
     function(object) {
-        object %>%
-            # Drop rows that are all `NA`.
-            .[apply(., 1L, function(a) !all(is.na(a))), , drop = FALSE] %>%
-            # Drop columns that are all `NA`.
-            .[, apply(., 2L, function(a) !all(is.na(a))), drop = FALSE]
+        keepRows <- apply(X = object, MARGIN = 1L, FUN = .allNonNA)
+        keepCols <- apply(X = object, MARGIN = 2L, FUN = .allNonNA)
+        object[keepRows, keepCols, drop = FALSE]
     }
 
 
