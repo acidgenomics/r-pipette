@@ -4,13 +4,13 @@ globalVariables(".")
 
 packageVersion <- packageVersion("brio")
 
-#' brio package cache URL
+#' brio test data URL
 #' @keywords internal
 #' @export
 #' @examples
-#' brioCacheURL
-brioCacheURL <- paste0(
-    "http://brio.seq.cloud/",
+#' brioTestsURL
+brioTestsURL <- paste0(
+    "http://tests.acidgenomics.com/brio/",
     "v", packageVersion$major, ".", packageVersion$minor  # nolint
 )
 

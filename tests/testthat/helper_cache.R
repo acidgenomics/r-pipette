@@ -23,17 +23,17 @@ files <- c(
     "single_cell_counts.mtx.gz.rownames"
 )
 mapply(
-    FUN = function(cacheURL, file, envir) {
+    FUN = function(remoteDir, file, envir) {
         if (!file.exists(file)) {
             utils::download.file(
-                url = paste(cacheURL, file, sep = "/"),
+                url = paste(remoteDir, file, sep = "/"),
                 destfile = file
             )
         }
     },
     file = files,
     MoreArgs = list(
-        cacheURL = brioCacheURL,
+        remoteDir = brioTestsURL,
         envir = environment()
     )
 )
