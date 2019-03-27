@@ -1,7 +1,7 @@
 context("File downloads")
 
 test_that("localOrRemoteFile : Vectorized", {
-    urls <- paste(brioCacheURL, c("example.csv", "example.rda"), sep = "/")
+    urls <- paste(brioTestsURL, c("example.csv", "example.rda"), sep = "/")
     files <- localOrRemoteFile(urls)
     expect_is(files, "character")
     expect_identical(basename(urls), basename(files))
@@ -19,7 +19,7 @@ test_that("localOrRemoteFile : Missing file", {
 
 
 
-context("Transmit (FTP file matching)")
+context("Transmit")
 
 # Note that only FTP is currently supported.
 remoteDir <- paste(
