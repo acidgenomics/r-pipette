@@ -1,3 +1,14 @@
+## brio 0.1.16 (2019-03-28)
+
+### Major changes
+
+- Switched to using "acid" prefix instead of "basejump" for global `options`.
+  This applies in particular to the `loadData` and `saveData` functions, where
+  the `dir` argument can be set globally for an interactive session using this
+  parameter.
+
+
+
 ## brio 0.1.15 (2019-03-27)
 
 ### New functions
