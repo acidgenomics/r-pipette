@@ -24,7 +24,7 @@ The Rle class is a general container for storing an atomic vector
   \code{\link[base]{rle}} function from the base package.
 }
 \examples{
-load(system.file("extdata", "rse.rda", package = "transformer"))
+data(rse, package = "acidtest")
 mcols <- S4Vectors::mcols(rse)
 lapply(mcols, class)
 x <- decode(mcols)
