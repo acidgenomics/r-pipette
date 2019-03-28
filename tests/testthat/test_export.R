@@ -1,7 +1,7 @@
 context("Export")
 
-load(system.file("extdata", "rse.rda", package = "brio"))
-load(system.file("extdata", "sce.rda", package = "brio"))
+data(rse, sce, package = "acidtest", envir = environment())
+
 mat <- SummarizedExperiment::assay(rse)
 sparse <- SummarizedExperiment::assay(sce)
 
@@ -27,11 +27,7 @@ test_that("assignAndSaveData", {
 # saveData =====================================================================
 test_that("saveData", {
     dir <- "example"
-    paths <- file.path(
-        getwd(),
-        "example",
-        c("rse.rda", "sce.rda")
-    )
+    paths <- file.path(getwd(), "example", c("rse.rda", "sce.rda"))
     names(paths) <- c("rse", "sce")
 
     # R data.

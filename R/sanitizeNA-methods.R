@@ -121,7 +121,12 @@ sanitizeNA.data.frame <-  # nolint
                 }
             }
         )
-        data.frame(list, row.names = rownames)
+        out <- data.frame(list, row.names = rownames, stringsAsFactors = FALSE)
+        # This step ensures we keep `tbl_df`, `data.table` class, if necessary.
+        if (!identical(class(object), "data.frame")) {
+            out <- as(out, class(object)[[1L]])
+        }
+        out
     }
 
 
