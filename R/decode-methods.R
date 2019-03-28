@@ -10,7 +10,7 @@
 #' @seealso `S4Vectors::decode()`.
 #'
 #' @examples
-#' load(system.file("extdata", "rse.rda", package = "transformer"))
+#' data(rse, package = "acidtest")
 #' mcols <- S4Vectors::mcols(rse)
 #' lapply(mcols, class)
 #' x <- decode(mcols)

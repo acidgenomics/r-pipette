@@ -1,7 +1,6 @@
 context("Import")
 
-load(system.file("extdata", "rse.rda", package = "brio"))
-load(system.file("extdata", "sce.rda", package = "brio"))
+data(rse, sce, package = "acidtest", envir = environment())
 
 assay <- SummarizedExperiment::assay
 mcols <- S4Vectors::mcols
