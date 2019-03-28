@@ -52,19 +52,19 @@ dir <- system.file("extdata", package = "brio")
 
 ## Interactive mode ====
 ## Note that this method uses non-standard evaluation.
-loadData(rse, sce, dir = dir)
+loadData(example, dir = dir)
 
 ## Clean up.
-rm(rse, sce, inherits = TRUE)
+rm(example, inherits = TRUE)
 
 ## List mode ====
 ## Note that this method uses standard evaluation.
 ## Use this approach inside of functions.
-list <- c("rse", "sce")
+list <- "example"
 loadData(list = list, dir = dir)
 
 ## Clean up.
-rm(rse, sce, inherits = TRUE)
+rm(example, inherits = TRUE)
 }
 \seealso{
 \itemize{
