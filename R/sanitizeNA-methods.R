@@ -121,7 +121,11 @@ sanitizeNA.data.frame <-  # nolint
                 }
             }
         )
-        data.frame(list, row.names = rownames)
+        data.frame(
+            list,
+            row.names = rownames,
+            stringsAsFactors = FALSE
+        )
     }
 
 
