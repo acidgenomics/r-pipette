@@ -4,7 +4,7 @@
 \alias{loadData}
 \title{Load data}
 \usage{
-loadData(..., dir = getOption("basejump.load.dir", default = "."),
+loadData(..., dir = getOption("acid.load.dir", default = "."),
   envir = globalenv(), list = NULL)
 }
 \arguments{
