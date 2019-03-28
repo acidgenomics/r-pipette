@@ -290,7 +290,7 @@ import <- function(
 
     if (is.data.frame(object)) {
         # Coerce data frame to desired global output, if necessary.
-        pref <- getOption("basejump.data.frame")
+        pref <- getOption("acid.data.frame")
         if (isString(pref)) {
             object <- switch(
                 data.frame = object,
@@ -385,13 +385,13 @@ import <- function(
 # Recommended:
 # > formals(import)[["naStrings"]] <-
 # >     parse(text = paste0(
-# >         "getOption(\"basejump.na.strings\", ",
+# >         "getOption(\"acid.na.strings\", ",
 # >         deparse(naStrings),
 # >         ")"
 # >     ))[[1L]]
 #
 # Alternative:
-# > quote(getOption("basejump.na.strings", naStrings))
+# > quote(getOption("acid.na.strings", naStrings))
 #
 # nolint end
 
