@@ -1,33 +1,25 @@
 context("Run-length encoding")
 
+data(df, gr, package = "acidtest")
 
+test_that("encode : DataFrame", {
+    x <- encode(df)
+    expect_s4_class(x[[1L]], "Rle")
+})
 
-# encode DataFrame
-# encode GRanges
+test_that("encode : GRanges", {
+    x <- encode(gr)
+    expect_s4_class(mcols(x)[[1L]], "Rle")
+})
 
+test_that("decode : DataFrame", {
+    x <- encode(df)
+    y <- decode(x)
+    expect_is(y[[1L]], "integer")
+})
 
-
-# decode DataFrame
-# decode GRanges
-
-skip_if_not_installed(pkg = "pzfx")
-
-file <- system.file("extdata", "exponential_decay.pzfx", package = "pzfx")
-stopifnot(file.exists(file))
-
-test_that("PZFX", {
-    x <- import(file, sheet = 1L)
-    colnames(x)
-    expect_identical(
-        colnames(x),
-        c(
-            "Minutes",
-            "Control_1",
-            "Control_2",
-            "Control_3",
-            "Treated_1",
-            "Treated_2",
-            "Treated_3"
-        )
-    )
+test_that("decode : GRanges", {
+    x <- encode(gr)
+    y <- decode(x)
+    expect_is(mcols(y)[[1L]], "character")
 })
