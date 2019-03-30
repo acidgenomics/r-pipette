@@ -62,7 +62,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">brio</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.15</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.16</span>
       </span>
     </div>
 
@@ -105,12 +105,30 @@
       <small>Source: <a href='https://github.com/acidgenomics/brio/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="brio-0-1-15-2019-03-27" class="section level2">
+    <div id="brio-0-1-16-2019-03-30" class="section level2">
 <h2 class="hasAnchor">
-<a href="#brio-0-1-15-2019-03-27" class="anchor"></a>brio 0.1.15 (2019-03-27)</h2>
+<a href="#brio-0-1-16-2019-03-30" class="anchor"></a>brio 0.1.16 (2019-03-30)</h2>
 <div id="new-functions" class="section level3">
 <h3 class="hasAnchor">
 <a href="#new-functions" class="anchor"></a>New functions</h3>
+<ul>
+<li>Migrated <code>sanitizePercent</code> here from <a href="https://basejump.steinbaugh.com/">basejump</a> package.</li>
+</ul>
+</div>
+<div id="major-changes" class="section level3">
+<h3 class="hasAnchor">
+<a href="#major-changes" class="anchor"></a>Major changes</h3>
+<ul>
+<li>Switched to using “acid” prefix instead of “basejump” for global <code>options</code>. This applies in particular to the <code>loadData</code> and <code>saveData</code> functions, where the <code>dir</code> argument can be set globally for an interactive session using this parameter.</li>
+</ul>
+</div>
+</div>
+    <div id="brio-0-1-15-2019-03-27" class="section level2">
+<h2 class="hasAnchor">
+<a href="#brio-0-1-15-2019-03-27" class="anchor"></a>brio 0.1.15 (2019-03-27)</h2>
+<div id="new-functions-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#new-functions-1" class="anchor"></a>New functions</h3>
 <ul>
 <li>Migrated <code>removeNA</code> and <code>sanitizeNA</code> from <a href="https://basejump.steinbaugh.com/">basejump</a> here, so these functions can be imported in <a href="https://freeranges.acidgenomics.com/">freeranges</a> package.</li>
 </ul>
@@ -181,9 +199,9 @@
     <div id="brio-0-1-9-2019-03-08" class="section level2">
 <h2 class="hasAnchor">
 <a href="#brio-0-1-9-2019-03-08" class="anchor"></a>brio 0.1.9 (2019-03-08)</h2>
-<div id="major-changes" class="section level3">
+<div id="major-changes-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#major-changes" class="anchor"></a>Major changes</h3>
+<a href="#major-changes-1" class="anchor"></a>Major changes</h3>
 <ul>
 <li>
 <code>loadData</code> and <code>saveData</code> now support <code>list</code> argument, supporting a character vector of object names. This allows for programmatic use of the functions with standard evaluation. For reference, this approach is inspired by the method defined in <code>save</code>.</li>
@@ -213,9 +231,9 @@
     <div id="brio-0-1-7-2019-02-15" class="section level2">
 <h2 class="hasAnchor">
 <a href="#brio-0-1-7-2019-02-15" class="anchor"></a>brio 0.1.7 (2019-02-15)</h2>
-<div id="new-functions-1" class="section level3">
+<div id="new-functions-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#new-functions-1" class="anchor"></a>New functions</h3>
+<a href="#new-functions-2" class="anchor"></a>New functions</h3>
 <ul>
 <li>
 <code>fileExt</code>: An improved variation on <code><a href="https://www.rdocumentation.org/packages/tools/topics/fileutils">tools::file_ext</a></code>.</li>
@@ -259,9 +277,9 @@
     <div id="brio-0-1-4-2019-01-21" class="section level2">
 <h2 class="hasAnchor">
 <a href="#brio-0-1-4-2019-01-21" class="anchor"></a>brio 0.1.4 (2019-01-21)</h2>
-<div id="new-functions-2" class="section level3">
+<div id="new-functions-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#new-functions-2" class="anchor"></a>New functions</h3>
+<a href="#new-functions-3" class="anchor"></a>New functions</h3>
 <p>These functions have been migrated from <a href="https://basejump.steinbaugh.com/">basejump</a> here to brio, since they deal specifically with file input/output:</p>
 <ul>
 <li>
@@ -344,6 +362,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#brio-0-1-16-2019-03-30">0.1.16</a></li>
         <li><a href="#brio-0-1-15-2019-03-27">0.1.15</a></li>
         <li><a href="#brio-0-1-14-2019-03-22">0.1.14</a></li>
         <li><a href="#brio-0-1-13-2019-03-20">0.1.13</a></li>
