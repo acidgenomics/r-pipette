@@ -4,10 +4,10 @@
 \alias{saveData}
 \title{Save data}
 \usage{
-saveData(..., dir = getOption("basejump.save.dir", default = "."),
-  ext = getOption("basejump.save.ext", default = "rds"),
-  overwrite = getOption("basejump.save.overwrite", default = TRUE),
-  compress = getOption("basejump.save.compress", default = TRUE),
+saveData(..., dir = getOption("acid.save.dir", default = "."),
+  ext = getOption("acid.save.ext", default = "rds"),
+  overwrite = getOption("acid.save.overwrite", default = TRUE),
+  compress = getOption("acid.save.compress", default = TRUE),
   list = NULL, envir = parent.frame())
 }
 \arguments{
