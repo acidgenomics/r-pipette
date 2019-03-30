@@ -1,4 +1,14 @@
-context("GraphPad Prism")
+context("Run-length encoding")
+
+
+
+# encode DataFrame
+# encode GRanges
+
+
+
+# decode DataFrame
+# decode GRanges
 
 skip_if_not_installed(pkg = "pzfx")
 
