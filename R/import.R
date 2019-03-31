@@ -372,33 +372,6 @@ import <- function(
 
 
 
-# nolint start
-#
-# Let user set `naStrings` in call.
-#
-# Use `parse()` to generate expression from string.
-# Then pull call from first element of expression.
-#
-# See also:
-# - https://stackoverflow.com/questions/1743698
-# - https://stackoverflow.com/a/40164111
-# - http://adv-r.had.co.nz/Expressions.html
-#
-# Recommended:
-# > formals(import)[["naStrings"]] <-
-# >     parse(text = paste0(
-# >         "getOption(\"acid.na.strings\", ",
-# >         deparse(naStrings),
-# >         ")"
-# >     ))[[1L]]
-#
-# Alternative:
-# > quote(getOption("acid.na.strings", naStrings))
-#
-# nolint end
-
-
-
 .rioImport <- function(file) {
     file <- localOrRemoteFile(file)
     message(paste("Importing", basename(file), "using rio::import()."))
