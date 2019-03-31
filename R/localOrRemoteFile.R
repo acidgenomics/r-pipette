@@ -27,7 +27,7 @@
 #' basename(x)
 #'
 #' ## Remote
-#' file <- "http://basejump.seq.cloud/v0.9/hgnc.txt.gz"
+#' file <- paste(brioTestsURL, "hgnc.txt.gz", sep = "/")
 #' x <- localOrRemoteFile(file)
 #' basename(x)
 localOrRemoteFile <- function(file) {
