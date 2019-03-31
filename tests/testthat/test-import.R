@@ -4,7 +4,7 @@ context("import")
 with_parameters_test_that(
     "data frame", {
         if (ext == "xlsx") skip_on_appveyor()
-        file <- paste0("example.", ext)
+        file <- file.path(file = "cache", paste0("example.", ext))
         object <- import(file)
         expect_is(object, "data.frame")
         expect_identical(
@@ -16,7 +16,7 @@ with_parameters_test_that(
 )
 
 test_that("GFF3", {
-    object <- import("example.gff3")
+    object <- import(file = file.path("cache", "example.gff3"))
     expect_s4_class(object, "GRanges")
     expect_identical(
         object = levels(seqnames(object)),
@@ -61,7 +61,7 @@ test_that("GFF3", {
 })
 
 test_that("GTF", {
-    object <- import("example.gtf")
+    object <- import(file = file.path("cache", "example.gtf"))
     expect_s4_class(object, "GRanges")
     expect_identical(
         object = levels(seqnames(object)),
@@ -101,7 +101,7 @@ test_that("GTF", {
 })
 
 test_that("MTX", {
-    object <- import("single_cell_counts.mtx.gz")
+    object <- import(file = file.path("cache", "single_cell_counts.mtx.gz"))
     expect_s4_class(object, "sparseMatrix")
     expect_identical(
         object = lapply(dimnames(object), head, n = 2L),
@@ -118,7 +118,7 @@ test_that("MTX", {
 })
 
 test_that("bcbio counts", {
-    object <- import("example.counts")
+    object <- import(file = file.path("cache", "example.counts"))
     expect_is(object, "matrix")
     expect_identical(
         object = head(rownames(object), n = 5L),
@@ -138,7 +138,7 @@ test_that("bcbio counts", {
 
 test_that("R script", {
     expect_is(
-        object = import(file = "example.R"),
+        object = import(file = file.path("cache", "example.R")),
         class = "character"
     )
 })
@@ -148,25 +148,18 @@ test_that("R script", {
 # need R 256.2.3 or newer
 test_that("R data", {
     skip_on_appveyor()
-
-    # R data.
-    object <- import("example.rda")
+    object <- import(file = file.path("cache", "example.rda"))
     expect_s4_class(object, "DataFrame")
+})
 
-    # R data serialized.
-    object <- import("example.rds")
+test_that("R data serialized", {
+    object <- import(file = file.path("cache", "example.rds"))
     expect_s4_class(object, "DataFrame")
-
-    # Error on object containing multiple data.
-    expect_error(
-        object = import("multi.rda"),
-        regexp = "File does not contain a single object"
-    )
 })
 
 with_parameters_test_that(
     "JSON/YAML", {
-        object <- import(paste0("example.", ext))
+        object <- import(file = file.path("cache", paste0("example.", ext)))
         expect_is(object, "list")
     },
     ext = c("json", "yml")
@@ -179,4 +172,11 @@ test_that("No extension", {
         regexp = "missing value where TRUE/FALSE needed"
     )
     unlink("example")
+})
+
+test_that("Error on RDA containing multiple objects.", {
+    expect_error(
+        object = import(file = file.path("cache", "multi.rda")),
+        regexp = "File does not contain a single object"
+    )
 })
