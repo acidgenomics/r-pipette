@@ -92,7 +92,9 @@ export.data.frame <-  # nolint
         # Juggle the file and format arguments, like rio package.
         # Specify one but not both.
         if (missing(file) && missing(format)) {
-            stop("Must specify `file` and/or `format`.", call. = FALSE)
+            stop("Specify `file` or `format` argument.")
+        } else if (!missing(file) && !missing(format)) {
+            stop("Specify `file` or `format` but not both.")
         } else if (missing(file)) {
             call <- standardizeCall()
             sym <- call[["x"]]
@@ -173,7 +175,9 @@ export.sparseMatrix <-  # nolint
         choices <- c("mtx", "mtx.gz")
 
         if (missing(file) && missing(format)) {
-            stop("Must specify `file` and/or `format`.", call. = FALSE)
+            stop("Specify `file` or `format` argument.")
+        } else if (!missing(file) && !missing(format)) {
+            stop("Specify `file` or `format` but not both.")
         } else if (missing(file)) {
             call <- standardizeCall()
             sym <- call[["x"]]
@@ -419,7 +423,7 @@ export.SingleCellExperiment <-  # nolint
         print(files)
 
         reducedDimNames <- reducedDimNames(x)
-        if (length(reducedDimNames) == 0L) {
+        if (hasLength(reducedDimNames)) {
             message(paste("Exporting reducedDims:", toString(reducedDimNames)))
             files[["reducedDims"]] <- lapply(
                 X = reducedDimNames,

@@ -1,3 +1,4 @@
+dir.create("cache", showWarnings = FALSE)
 files <- c(
     "example.counts",
     "example.csv",
@@ -13,7 +14,12 @@ files <- c(
     "example.txt",
     "example.xlsx",
     "example.yml",
+    "geneset.gmt",
+    "geneset.gmx",
+    "geneset.grp",
     "gr.rda",
+    "h.all.v6.2.entrez.gmt",
+    "h.all.v6.2.symbols.gmt",
     "multi.rda",
     "renamed.rda",
     "rnaseq_counts.csv.gz",
@@ -24,10 +30,11 @@ files <- c(
 )
 mapply(
     FUN = function(remoteDir, file, envir) {
-        if (!file.exists(file)) {
+        destfile <- file.path("cache", file)
+        if (!file.exists(destfile)) {
             utils::download.file(
                 url = paste(remoteDir, file, sep = "/"),
-                destfile = file
+                destfile = destfile
             )
         }
     },

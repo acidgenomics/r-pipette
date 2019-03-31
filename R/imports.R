@@ -10,7 +10,7 @@
 #' @importFrom RCurl getURL url.exists
 #' @importFrom R.utils gzip
 #' @importFrom S4Vectors DataFrame Rle mcols mcols<- metadata metadata<-
-#' @importFrom SingleCellExperiment reducedDims
+#' @importFrom SingleCellExperiment reducedDimNames reducedDims
 #' @importFrom SummarizedExperiment assayNames assayNames<- assays colData
 #'   rowData rowRanges
 #' @importFrom data.table as.data.table fread

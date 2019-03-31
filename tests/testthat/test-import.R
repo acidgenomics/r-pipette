@@ -1,23 +1,10 @@
-context("Import")
+context("import")
 
-data(rse, sce, package = "acidtest", envir = environment())
-
-assay <- SummarizedExperiment::assay
-mcols <- S4Vectors::mcols
-metadata <- S4Vectors::metadata
-seqnames <- GenomicRanges::seqnames
-
-mat <- assay(rse)
-sparse <- assay(sce)
-
-
-
-# import =======================================================================
-# AppVeyor chokes on XLSX file.
+# AppVeyor chokes on Excel files.
 with_parameters_test_that(
-    "import : data frame", {
-        if (ext == "xlsx") skip_on_appveyor()
-        file <- paste0("example.", ext)
+    "data frame", {
+        if (ext %in% c("xls", "xlsx")) skip_on_appveyor()
+        file <- file.path(file = "cache", paste0("example.", ext))
         object <- import(file)
         expect_is(object, "data.frame")
         expect_identical(
@@ -25,11 +12,36 @@ with_parameters_test_that(
             expected = realpath(file)
         )
     },
-    ext = c("csv", "csv.gz", "tsv", "xlsx")
+    ext = c("csv", "csv.gz", "tsv", "xls", "xlsx")
 )
 
-test_that("import : GFF3", {
-    object <- import("example.gff3")
+test_that("Google Sheet", {
+    # This requires OAuth, so skip for CI checks.
+    skip_if_not(interactive())
+    file <- pasteURL(
+        "docs.google.com",
+        "spreadsheets",
+        "d",
+        "1IxM6wsbdE47SOEKXDw7DjHdi8m8BuTu-KB6aa8jypNU",
+        protocol = "https"
+    )
+    x <- import(file)
+    expect_is(x, "data.frame")
+    expect_identical(
+        colnames(x),
+        c(
+            "organism",
+            "nickname",
+            "id_grep",
+            "ensembl_grep",
+            "ucsc_grep",
+            "notes"
+        )
+    )
+})
+
+test_that("GFF3", {
+    object <- import(file = file.path("cache", "example.gff3"))
     expect_s4_class(object, "GRanges")
     expect_identical(
         object = levels(seqnames(object)),
@@ -73,8 +85,8 @@ test_that("import : GFF3", {
     )
 })
 
-test_that("import : GTF", {
-    object <- import("example.gtf")
+test_that("GTF", {
+    object <- import(file = file.path("cache", "example.gtf"))
     expect_s4_class(object, "GRanges")
     expect_identical(
         object = levels(seqnames(object)),
@@ -113,8 +125,8 @@ test_that("import : GTF", {
     )
 })
 
-test_that("import : MatrixMarket file (.mtx)", {
-    object <- import("single_cell_counts.mtx.gz")
+test_that("MTX", {
+    object <- import(file = file.path("cache", "single_cell_counts.mtx.gz"))
     expect_s4_class(object, "sparseMatrix")
     expect_identical(
         object = lapply(dimnames(object), head, n = 2L),
@@ -130,8 +142,8 @@ test_that("import : MatrixMarket file (.mtx)", {
     )
 })
 
-test_that("import : Counts file (.counts)", {
-    object <- import("example.counts")
+test_that("bcbio counts", {
+    object <- import(file = file.path("cache", "example.counts"))
     expect_is(object, "matrix")
     expect_identical(
         object = head(rownames(object), n = 5L),
@@ -149,9 +161,9 @@ test_that("import : Counts file (.counts)", {
     )
 })
 
-test_that("import : R script", {
+test_that("R script", {
     expect_is(
-        object = import(file = "example.R"),
+        object = import(file = file.path("cache", "example.R")),
         class = "character"
     )
 })
@@ -159,38 +171,48 @@ test_that("import : R script", {
 # AppVeyor has a cryptic failure here.
 # cannot read workspace version 167772160 written by R 512.3.5;
 # need R 256.2.3 or newer
-test_that("import : R Data", {
+test_that("R data", {
     skip_on_appveyor()
-
-    # R data.
-    object <- import("example.rda")
+    object <- import(file = file.path("cache", "example.rda"))
     expect_s4_class(object, "DataFrame")
+})
 
-    # R data serialized.
-    object <- import("example.rds")
+test_that("R data serialized", {
+    object <- import(file = file.path("cache", "example.rds"))
     expect_s4_class(object, "DataFrame")
-
-    # Error on object containing multiple data.
-    expect_error(
-        object = import("multi.rda"),
-        regexp = "File does not contain a single object"
-    )
 })
 
 with_parameters_test_that(
-    "import : list", {
-        object <- import(paste0("example.", ext))
+    "JSON/YAML", {
+        object <- import(file = file.path("cache", paste0("example.", ext)))
         expect_is(object, "list")
     },
     ext = c("json", "yml")
 )
 
-test_that("import : No extension", {
-    # Missing extension.
+test_that("No extension", {
     file.create("example")
     expect_error(
         object = import("example"),
         regexp = "missing value where TRUE/FALSE needed"
     )
     unlink("example")
+})
+
+test_that("Error on RDA containing multiple objects.", {
+    expect_error(
+        object = import(file = file.path("cache", "multi.rda")),
+        regexp = "File does not contain a single object"
+    )
+})
+
+test_that("rio::import(), e.g. Stata DTA file", {
+    skip_if_not_installed("haven")
+    file <- system.file("examples/iris.dta", package = "haven")
+    x <- import(file)
+    expect_is(x, "data.frame")
+    expect_identical(
+        colnames(x),
+        c("sepallength", "sepalwidth", "petallength", "petalwidth", "species")
+    )
 })

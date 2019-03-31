@@ -17,7 +17,6 @@ importXLSX <- function(file, sheet = 1L, colnames = TRUE) {
         .name_repair = "minimal"
     )
     # Always return as data.frame instead of tibble at this step.
-    # Refer to S3 method for class `matrix` for supported params.
     object <- as.data.frame(
         x = object,
         make.names = FALSE,
