@@ -1,36 +1,33 @@
 context("loadData")
 
-test_that("loadData", {
+dir <- "cache"
+
+test_that("R data", {
     envir <- new.env()
-
-    # R data.
-    expect_identical(
-        object = loadData(gr, dir = ".", envir = envir),
-        expected = c(gr = realpath("gr.rda"))
-    )
-    # Note that we're defaulting to global environment.
+    x <- loadData(gr, dir = dir, envir = envir)
+    expect_identical(x, c(gr = realpath(file.path(dir, "gr.rda"))))
     expect_true(exists("gr", envir = envir, inherits = FALSE))
+})
 
-    # R data serialized.
+test_that("R data serialized", {
+    envir <- new.env()
+    x <- loadData(serialized, dir = dir, envir = envir)
     expect_identical(
-        object = loadData(serialized, dir = ".", envir = envir),
-        expected = c(
-            serialized = realpath("serialized.rds")
-        )
+        object = x,
+        expected = c(serialized = realpath(file.path(dir, "serialized.rds")))
     )
 })
 
-# Don't allow RDS/RDA soup.
-test_that("Mixed extensions", {
+test_that("Error on mixed extensions (no RDS/RDA soup).", {
     expect_error(
-        object = basename(loadData(gr, serialized, dir = ".")),
+        object = basename(loadData(gr, serialized, dir = dir)),
         regexp = "RDS/RDA/RDATA"
     )
 })
 
 test_that("Standard evaluation", {
     expect_error(
-        object = loadData("gr.rda", dir = "."),
+        object = loadData("gr.rda", dir = dir),
         regexp = "non-standard evaluation"
     )
 })
@@ -40,28 +37,28 @@ test_that("Object already exists", {
     envir <- new.env()
     envir[["gr"]] <- TRUE
     expect_error(
-        object = loadData(gr, dir = ".", envir = envir),
+        object = loadData(gr, dir = dir, envir = envir),
         regexp = "reassignment"
     )
 })
 
 test_that("Multiple objects in single file", {
     expect_error(
-        object = loadData(multi, dir = "."),
+        object = loadData(multi, dir = dir),
         regexp = "multi.rda contains multiple objects: x, y"
     )
 })
 
 test_that("Renamed file", {
     expect_error(
-        object = loadData(renamed, dir = "."),
+        object = loadData(renamed, dir = dir),
         regexp = "renamed.rda has been renamed."
     )
 })
 
 test_that("Duplicate RDA and RDS files", {
     expect_error(
-        object = loadData(example, dir = "."),
+        object = loadData(example, dir = dir),
         regexp = "example is not unique on disk."
     )
 })
@@ -72,7 +69,7 @@ test_that("Invalid arguments", {
         regexp = "path\\[1\\]"
     )
     expect_error(
-        object = loadData(gr, dir = ".", envir = "XXX"),
+        object = loadData(gr, dir = dir, envir = "XXX"),
         regexp = "is.environment"
     )
 })
