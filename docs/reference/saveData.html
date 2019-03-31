@@ -66,7 +66,7 @@ object names passed as symbols." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">brio</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.17</span>
       </span>
     </div>
 
@@ -205,7 +205,7 @@ on disk, following the same conventions as <code><a href='https://www.rdocumenta
 <span class='co'>## Note that this method uses non-standard evaluation.</span>
 <span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>
 <span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fl'>2</span>
-<span class='fu'>saveData</span>(<span class='no'>a</span>, <span class='no'>b</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='no'>dir</span>)</div><div class='output co'>#&gt; <span class='message'>Saving a.rds, b.rds to /data00/home/michael.steinbaugh/git/packages/brio/docs/reference/example</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>list.files</a></span>(<span class='no'>dir</span>)</div><div class='output co'>#&gt; [1] "a.rds" "b.rds"</div><div class='input'>
+<span class='fu'>saveData</span>(<span class='no'>a</span>, <span class='no'>b</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='no'>dir</span>)</div><div class='output co'>#&gt; <span class='message'>Saving a.rds, b.rds to /Users/mike/git/packages/brio/docs/reference/example</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>list.files</a></span>(<span class='no'>dir</span>)</div><div class='output co'>#&gt; [1] "a.rds" "b.rds"</div><div class='input'>
 <span class='co'>## Clean up.</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/unlink'>unlink</a></span>(<span class='no'>dir</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
@@ -215,7 +215,7 @@ on disk, following the same conventions as <code><a href='https://www.rdocumenta
 <span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>
 <span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fl'>2</span>
 <span class='no'>list</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"a"</span>, <span class='st'>"b"</span>)
-<span class='fu'>saveData</span>(<span class='kw'>list</span> <span class='kw'>=</span> <span class='no'>list</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='no'>dir</span>)</div><div class='output co'>#&gt; <span class='message'>Saving a.rds, b.rds to /data00/home/michael.steinbaugh/git/packages/brio/docs/reference/example</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>list.files</a></span>(<span class='no'>dir</span>)</div><div class='output co'>#&gt; [1] "a.rds" "b.rds"</div><div class='input'>
+<span class='fu'>saveData</span>(<span class='kw'>list</span> <span class='kw'>=</span> <span class='no'>list</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='no'>dir</span>)</div><div class='output co'>#&gt; <span class='message'>Saving a.rds, b.rds to /Users/mike/git/packages/brio/docs/reference/example</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>list.files</a></span>(<span class='no'>dir</span>)</div><div class='output co'>#&gt; [1] "a.rds" "b.rds"</div><div class='input'>
 <span class='co'>## Clean up.</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/unlink'>unlink</a></span>(<span class='no'>dir</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div></pre>
   </div>

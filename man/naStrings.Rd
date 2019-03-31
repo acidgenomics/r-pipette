@@ -3,13 +3,13 @@
 \docType{data}
 \name{naStrings}
 \alias{naStrings}
-\title{\code{NA} strings}
+\title{NA strings}
 \format{An object of class \code{character} of length 5.}
 \usage{
 naStrings
 }
 \description{
-\code{NA} strings
+NA strings
 }
 \examples{
 naStrings
