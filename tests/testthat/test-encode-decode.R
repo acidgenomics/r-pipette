@@ -1,7 +1,3 @@
-data(df, gr, package = "acidtest")
-
-
-
 context("encode")
 
 test_that("DataFrame", {

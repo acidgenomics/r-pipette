@@ -1,15 +1,5 @@
 context("import")
 
-data(rse, sce, package = "acidtest", envir = environment())
-
-assay <- SummarizedExperiment::assay
-mcols <- S4Vectors::mcols
-metadata <- S4Vectors::metadata
-seqnames <- GenomicRanges::seqnames
-
-mat <- assay(rse)
-sparse <- assay(sce)
-
 # AppVeyor chokes on XLSX file.
 with_parameters_test_that(
     "data frame", {
