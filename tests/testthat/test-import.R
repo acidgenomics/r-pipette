@@ -1,4 +1,4 @@
-context("Import")
+context("import")
 
 data(rse, sce, package = "acidtest", envir = environment())
 
@@ -10,12 +10,9 @@ seqnames <- GenomicRanges::seqnames
 mat <- assay(rse)
 sparse <- assay(sce)
 
-
-
-# import =======================================================================
 # AppVeyor chokes on XLSX file.
 with_parameters_test_that(
-    "import : data frame", {
+    "data frame", {
         if (ext == "xlsx") skip_on_appveyor()
         file <- paste0("example.", ext)
         object <- import(file)
@@ -28,7 +25,7 @@ with_parameters_test_that(
     ext = c("csv", "csv.gz", "tsv", "xlsx")
 )
 
-test_that("import : GFF3", {
+test_that("GFF3", {
     object <- import("example.gff3")
     expect_s4_class(object, "GRanges")
     expect_identical(
@@ -73,7 +70,7 @@ test_that("import : GFF3", {
     )
 })
 
-test_that("import : GTF", {
+test_that("GTF", {
     object <- import("example.gtf")
     expect_s4_class(object, "GRanges")
     expect_identical(
@@ -113,7 +110,7 @@ test_that("import : GTF", {
     )
 })
 
-test_that("import : MatrixMarket file (.mtx)", {
+test_that("MTX", {
     object <- import("single_cell_counts.mtx.gz")
     expect_s4_class(object, "sparseMatrix")
     expect_identical(
@@ -130,7 +127,7 @@ test_that("import : MatrixMarket file (.mtx)", {
     )
 })
 
-test_that("import : Counts file (.counts)", {
+test_that("bcbio counts", {
     object <- import("example.counts")
     expect_is(object, "matrix")
     expect_identical(
@@ -149,7 +146,7 @@ test_that("import : Counts file (.counts)", {
     )
 })
 
-test_that("import : R script", {
+test_that("R script", {
     expect_is(
         object = import(file = "example.R"),
         class = "character"
@@ -159,7 +156,7 @@ test_that("import : R script", {
 # AppVeyor has a cryptic failure here.
 # cannot read workspace version 167772160 written by R 512.3.5;
 # need R 256.2.3 or newer
-test_that("import : R Data", {
+test_that("R data", {
     skip_on_appveyor()
 
     # R data.
@@ -178,15 +175,14 @@ test_that("import : R Data", {
 })
 
 with_parameters_test_that(
-    "import : list", {
+    "JSON/YAML", {
         object <- import(paste0("example.", ext))
         expect_is(object, "list")
     },
     ext = c("json", "yml")
 )
 
-test_that("import : No extension", {
-    # Missing extension.
+test_that("No extension", {
     file.create("example")
     expect_error(
         object = import("example"),

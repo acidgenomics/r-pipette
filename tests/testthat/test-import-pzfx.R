@@ -1,4 +1,4 @@
-context("Import : GraphPad Prism")
+context("import : PZFX")
 
 skip_if_not_installed(pkg = "pzfx")
 
@@ -12,12 +12,8 @@ test_that("PZFX", {
         colnames(x),
         c(
             "Minutes",
-            "Control_1",
-            "Control_2",
-            "Control_3",
-            "Treated_1",
-            "Treated_2",
-            "Treated_3"
+            "Control_1", "Control_2", "Control_3",
+            "Treated_1", "Treated_2", "Treated_3"
         )
     )
 })
