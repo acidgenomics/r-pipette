@@ -1,23 +1,40 @@
 context("import")
 
-# AppVeyor chokes on Excel files.
-with_parameters_test_that(
-    "data frame", {
-        if (ext %in% c("xls", "xlsx")) skip_on_appveyor()
-        file <- file.path("cache", paste0("example.", ext))
+test_that("CSV/TSV", {
+    # CSV
+    file <- file.path("cache", "example.csv")
+    object <- import(file)
+    expect_is(object, "data.frame")
+    expect_identical(
+        object = attr(object, "brio")[["file"]],
+        expected = realpath(file)
+    )
 
-        # FIXME Remove this
-        print(file)
+    # CSV.GZ
+    file <- file.path("cache", "example.csv.gz")
+    object <- import(file)
+    expect_is(object, "data.frame")
 
-        object <- import(file)
-        expect_is(object, "data.frame")
-        expect_identical(
-            object = attr(object, "brio")[["file"]],
-            expected = realpath(file)
-        )
-    },
-    ext = c("csv", "csv.gz", "tsv", "xls", "xlsx")
-)
+    # TSV
+    file <- file.path("cache", "example.tsv")
+    object <- import(file)
+    expect_is(object, "data.frame")
+})
+
+test_that("Microsoft Excel", {
+    # AppVeyor chokes on Excel files.
+    skip_on_appveyor()
+
+    # XLS
+    file <- file.path("cache", "example.xls")
+    object <- import(file)
+    expect_is(object, "data.frame")
+
+    # XLSX
+    file <- file.path("cache", "example.xlsx")
+    object <- import(file)
+    expect_is(object, "data.frame")
+})
 
 test_that("Google Sheet", {
     # This requires OAuth, so skip for CI checks.
