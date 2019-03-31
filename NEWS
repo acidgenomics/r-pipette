@@ -1,4 +1,13 @@
-## brio 0.1.16 (2019-03-30)
+## brio 0.1.17 (2019-03-31)
+
+### Minor changes
+
+- `import`: Added GRP file support.
+- Improved code coverage, getting closer to 100%.
+
+
+
+## brio 0.1.16 (2019-03-28)
 
 ### New functions
 

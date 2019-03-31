@@ -43,7 +43,7 @@ reference:
     - factorize
     - naStrings
     - removeNA
-    - sanitizeNA
+    - starts_with("sanitize")
   - title: Miscellaneous
     contents:
     - dots

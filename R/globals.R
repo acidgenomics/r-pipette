@@ -63,7 +63,7 @@ formalsList <- list(
 
 
 
-#' `NA` strings
+#' NA strings
 #' @export
 #' @examples
 #' naStrings
