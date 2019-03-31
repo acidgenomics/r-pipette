@@ -176,6 +176,8 @@ export.sparseMatrix <-  # nolint
 
         if (missing(file) && missing(format)) {
             stop("Must specify `file` and/or `format`.", call. = FALSE)
+        } else if (!missing(file) && !missing(format)) {
+            stop("Specify `file` or `format` but not both.")
         } else if (missing(file)) {
             call <- standardizeCall()
             sym <- call[["x"]]
