@@ -205,3 +205,14 @@ test_that("Error on RDA containing multiple objects.", {
         regexp = "File does not contain a single object"
     )
 })
+
+test_that("rio::import(), e.g. Stata DTA file", {
+    skip_if_not_installed("haven")
+    file <- system.file("examples/iris.dta", package = "haven")
+    x <- import(file)
+    expect_is(x, "data.frame")
+    expect_identical(
+        colnames(x),
+        c("sepallength", "sepalwidth", "petallength", "petalwidth", "species")
+    )
+})
