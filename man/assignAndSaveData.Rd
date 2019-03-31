@@ -8,8 +8,7 @@ assignAndSaveData(name, object, envir = parent.frame(),
   dir = getOption("acid.save.dir", default = "."),
   ext = getOption("acid.save.ext", default = "rds"),
   overwrite = getOption("acid.save.overwrite", default = TRUE),
-  compress = getOption("acid.save.compress", default = TRUE),
-  envir = parent.frame())
+  compress = getOption("acid.save.compress", default = TRUE))
 }
 \arguments{
 \item{name}{\code{character(1)}.
