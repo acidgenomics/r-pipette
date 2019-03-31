@@ -69,7 +69,7 @@ test_that("Both `name` and `dir` declared", {
 
 
 
-export("export : SingleCellExperiment")
+context("export : SingleCellExperiment")
 
 test_that("`dir` argument, no `name`", {
     out <- export(sce, name = NULL, dir = "XXX")
