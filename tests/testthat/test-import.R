@@ -1,9 +1,9 @@
 context("import")
 
-# AppVeyor chokes on XLSX file.
+# AppVeyor chokes on Excel files.
 with_parameters_test_that(
     "data frame", {
-        if (ext == "xlsx") skip_on_appveyor()
+        if (ext %in% c("xls", "xlsx")) skip_on_appveyor()
         file <- file.path(file = "cache", paste0("example.", ext))
         object <- import(file)
         expect_is(object, "data.frame")
@@ -12,7 +12,7 @@ with_parameters_test_that(
             expected = realpath(file)
         )
     },
-    ext = c("csv", "csv.gz", "tsv", "xlsx")
+    ext = c("csv", "csv.gz", "tsv", "xls", "xlsx")
 )
 
 test_that("GFF3", {

@@ -50,8 +50,3 @@ with_parameters_test_that(
         )
     )
 )
-
-
-
-# FIXME Add this
-context("sanitizePercent")
