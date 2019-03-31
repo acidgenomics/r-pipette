@@ -2,7 +2,9 @@
 
 ### Minor changes
 
-- `import`: Added GRP file support.
+- `import`: Added GRP file support for GSEA.
+- `import`: Improved Google Sheet import support, using new googlesheets4
+  package from tidyverse.
 - Improved code coverage, getting closer to 100%.
 
 
