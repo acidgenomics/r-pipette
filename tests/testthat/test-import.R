@@ -15,6 +15,31 @@ with_parameters_test_that(
     ext = c("csv", "csv.gz", "tsv", "xls", "xlsx")
 )
 
+test_that("Google Sheet", {
+    # This requires OAuth, so skip for CI checks.
+    skip_if_not(interactive())
+    file <- pasteURL(
+        "docs.google.com",
+        "spreadsheets",
+        "d",
+        "1IxM6wsbdE47SOEKXDw7DjHdi8m8BuTu-KB6aa8jypNU",
+        protocol = "https"
+    )
+    x <- import(file)
+    expect_is(x, "data.frame")
+    expect_identical(
+        colnames(x),
+        c(
+            "organism",
+            "nickname",
+            "id_grep",
+            "ensembl_grep",
+            "ucsc_grep",
+            "notes"
+        )
+    )
+})
+
 test_that("GFF3", {
     object <- import(file = file.path("cache", "example.gff3"))
     expect_s4_class(object, "GRanges")

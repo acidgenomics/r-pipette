@@ -233,7 +233,7 @@ import <- function(
         # Google Sheet, matched by URL (see above).
         # Assuming Google Sheet contains column names. Consider reworking
         # this passthrough in a future update, if we need to disable.
-        object <- .rioImport(file, sheet = sheet)
+        object <- importGoogleSheet(file, sheet = sheet, colnames = colnames)
     } else if (ext == "PZFX") {
         # GraphPad Prism project.
         # Note that Prism files always contain column names.
@@ -399,13 +399,11 @@ import <- function(
 
 
 
-# Note that we're keeping `...` to allow passthrough of `sheet` argument to
-# easily load Google Sheet (see above).
-.rioImport <- function(file, ...) {
+.rioImport <- function(file) {
     file <- localOrRemoteFile(file)
     message(paste("Importing", basename(file), "using rio::import()."))
     requireNamespace("rio", quietly = TRUE)
-    object <- rio::import(file, ...)
+    object <- rio::import(file)
     object <- .slotMetadata(object, pkg = "rio", fun = "import")
     object
 }
