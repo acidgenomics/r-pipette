@@ -63,6 +63,6 @@ assignAndSaveData <- function(name, object, envir = parent.frame()) {
 
 f1 <- formals(assignAndSaveData)
 f2 <- formals(saveData)
-f2 <- f2[setdiff(names(f2), c("list", "..."))]
+f2 <- f2[setdiff(names(f2), c(names(f1), "list", "..."))]
 f <- c(f1, f2)
 formals(assignAndSaveData) <- f
