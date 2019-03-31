@@ -27,7 +27,7 @@
 #' basename(x)
 #'
 #' ## Remote
-#' file <- "http://basejump.seq.cloud/v0.9/hgnc.txt.gz"
+#' file <- paste(brioTestsURL, "hgnc.txt.gz", sep = "/")
 #' x <- localOrRemoteFile(file)
 #' basename(x)
 localOrRemoteFile <- function(file) {
@@ -110,12 +110,14 @@ localOrRemoteFile <- function(file) {
             # Windows, which can error out on some machines. Fail with a clear
             # error message if and when this occurs.
             if (identical(.Platform[["OS.type"]], "windows")) {
+                # nocov start
                 decompressedFile <- sub(
                     pattern = compressExtPattern,
                     replacement = "",
                     x = basename(file)
                 )
                 .removeTempFile(decompressedFile)
+                # nocov end
             }
 
             if (compressExt %in% c("BZ2", "GZ", "XZ")) {
@@ -158,7 +160,7 @@ localOrRemoteFile <- function(file) {
 # Fix attempt for Windows R erroring out on failure to overwrite tempfile.
 # This can happen for some non-admin user accounts, which is annoying.
 # https://support.rstudio.com/hc/en-us/community/posts/115007456107
-# TMPDIR
+# nocov start
 .removeTempFile <- function(file) {
     file <- file.path(tempdir(), file)
     if (file.exists(file)) {
@@ -181,3 +183,4 @@ localOrRemoteFile <- function(file) {
     }
     invisible()
 }
+# nocov end
