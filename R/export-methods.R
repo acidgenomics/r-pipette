@@ -175,7 +175,7 @@ export.sparseMatrix <-  # nolint
         choices <- c("mtx", "mtx.gz")
 
         if (missing(file) && missing(format)) {
-            stop("Must specify `file` and/or `format`.", call. = FALSE)
+            stop("Specify `file` or `format` argument.")
         } else if (!missing(file) && !missing(format)) {
             stop("Specify `file` or `format` but not both.")
         } else if (missing(file)) {
