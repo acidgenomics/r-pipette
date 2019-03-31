@@ -1,37 +1,31 @@
 context("import")
 
-test_that("CSV/TSV", {
-    # CSV
-    file <- file.path("cache", "example.csv")
-    object <- import(file)
-    expect_is(object, "data.frame")
-    expect_identical(
-        object = attr(object, "brio")[["file"]],
-        expected = realpath(file)
-    )
+with_parameters_test_that(
+    "Delimited", {
+        file <- file.path(file = "cache", paste0("example.", ext))
+        object <- import(file)
+        expect_is(object, "data.frame")
+        expect_identical(
+            object = attr(object, "brio")[["file"]],
+            expected = realpath(file)
+        )
+    },
+    ext = c("csv", "csv.gz", "tsv")
+)
 
-    # CSV.GZ
-    file <- file.path("cache", "example.csv.gz")
-    object <- import(file)
-    expect_is(object, "data.frame")
-
-    # TSV
-    file <- file.path("cache", "example.tsv")
+# AppVeyor chokes on XLSX.
+test_that("XLSX", {
+    skip_on_appveyor()
+    file <- file.path("cache", "example.xlsx")
     object <- import(file)
     expect_is(object, "data.frame")
 })
 
-test_that("Microsoft Excel", {
-    # AppVeyor chokes on Excel files.
+# Both Travis and AppVeyor choke on XLS.
+test_that("XLS", {
     skip_on_appveyor()
-
-    # XLS
+    skip_on_travis()
     file <- file.path("cache", "example.xls")
-    object <- import(file)
-    expect_is(object, "data.frame")
-
-    # XLSX
-    file <- file.path("cache", "example.xlsx")
     object <- import(file)
     expect_is(object, "data.frame")
 })
