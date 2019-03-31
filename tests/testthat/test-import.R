@@ -4,7 +4,7 @@ context("import")
 with_parameters_test_that(
     "data frame", {
         if (ext %in% c("xls", "xlsx")) skip_on_appveyor()
-        file <- file.path(file = "cache", paste0("example.", ext))
+        file <- file.path("cache", paste0("example.", ext))
         object <- import(file)
         expect_is(object, "data.frame")
         expect_identical(
