@@ -1,13 +1,11 @@
 context("loadDataAsName")
 
+dir <- "cache"
+
 test_that("Non-standard evaluation", {
     envir <- new.env()
-    object <- loadDataAsName(
-        new = serialized,
-        dir = ".",
-        envir = envir
-    )
-    expect_identical(names(object), "new")
+    x <- loadDataAsName(new = serialized, dir = dir, envir = envir)
+    expect_identical(names(x), "new")
     # We're defaulting to global environment.
     expect_true(exists("new", envir = envir, inherits = FALSE))
     # Now that the objects are loaded, let's check to make sure we can't
@@ -15,7 +13,7 @@ test_that("Non-standard evaluation", {
     expect_error(
         object = loadDataAsName(
             new = serialized,
-            dir = ".",
+            dir = dir,
             envir = envir
         ),
         regexp = "reassignment"
@@ -24,21 +22,21 @@ test_that("Non-standard evaluation", {
 
 test_that("Standard evaluation", {
     expect_error(
-        object = loadDataAsName(data = "gr.rda", dir = "."),
+        object = loadDataAsName(data = "gr.rda", dir = dir),
         regexp = "non-standard evaluation"
     )
 })
 
 test_that("Missing files", {
     expect_error(
-        object = loadDataAsName(data = XXX, dir = "."),
+        object = loadDataAsName(data = XXX, dir = dir),
         regexp = rdataLoadError
     )
 })
 
 test_that("Multiple objects in single file", {
     expect_error(
-        object = loadDataAsName(data = multi, dir = "."),
+        object = loadDataAsName(data = multi, dir = dir),
         regexp = "multi.rda contains multiple objects: x, y"
     )
 })
@@ -49,7 +47,7 @@ test_that("Invalid arguments", {
         regexp = "path\\[1\\]"
     )
     expect_error(
-        object = loadDataAsName(data = gr, dir = ".", envir = "XXX"),
+        object = loadDataAsName(data = gr, dir = dir, envir = "XXX"),
         regexp = "is.environment"
     )
 })
