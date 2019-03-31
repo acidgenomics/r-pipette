@@ -2,7 +2,7 @@ context("assignAndSaveData")
 
 test_that("assignAndSaveData", {
     envir <- new.env()
-    x <- 1
+    x <- 1L
     out <- assignAndSaveData(
         name = "example",
         object = x,

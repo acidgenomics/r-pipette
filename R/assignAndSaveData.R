@@ -20,7 +20,7 @@
 #' @note This function attempts to follow the same order as `assign`.
 #'
 #' @examples
-#' x <- 1
+#' x <- 1L
 #' assignAndSaveData(
 #'     name = "example",
 #'     object = x,
