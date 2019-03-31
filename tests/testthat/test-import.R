@@ -1,9 +1,7 @@
 context("import")
 
-# AppVeyor chokes on Excel files.
 with_parameters_test_that(
-    "data frame", {
-        if (ext %in% c("xls", "xlsx")) skip_on_appveyor()
+    "Delimited", {
         file <- file.path(file = "cache", paste0("example.", ext))
         object <- import(file)
         expect_is(object, "data.frame")
@@ -12,8 +10,25 @@ with_parameters_test_that(
             expected = realpath(file)
         )
     },
-    ext = c("csv", "csv.gz", "tsv", "xls", "xlsx")
+    ext = c("csv", "csv.gz", "tsv")
 )
+
+# AppVeyor chokes on XLSX.
+test_that("XLSX", {
+    skip_on_appveyor()
+    file <- file.path("cache", "example.xlsx")
+    object <- import(file)
+    expect_is(object, "data.frame")
+})
+
+# Both Travis and AppVeyor choke on XLS.
+test_that("XLS", {
+    skip_on_appveyor()
+    skip_on_travis()
+    file <- file.path("cache", "example.xls")
+    object <- import(file)
+    expect_is(object, "data.frame")
+})
 
 test_that("Google Sheet", {
     # This requires OAuth, so skip for CI checks.
