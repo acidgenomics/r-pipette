@@ -5,6 +5,10 @@ with_parameters_test_that(
     "data frame", {
         if (ext %in% c("xls", "xlsx")) skip_on_appveyor()
         file <- file.path("cache", paste0("example.", ext))
+
+        # FIXME Remove this
+        print(file)
+
         object <- import(file)
         expect_is(object, "data.frame")
         expect_identical(
