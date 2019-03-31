@@ -50,7 +50,7 @@ the newly assigned object, specified by the "\code{dir}" argument.
 This function attempts to follow the same order as \code{assign}.
 }
 \examples{
-x <- 1
+x <- 1L
 assignAndSaveData(
     name = "example",
     object = x,
