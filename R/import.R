@@ -246,6 +246,8 @@ import <- function(
         object <- importGMT(file)
     } else if (ext == "GMX") {
         object <- importGMX(file)
+    } else if (ext == "GRP") {
+        object <- importGRP(file)
     } else if (ext == "JSON") {
         object <- importJSON(file)
     } else if (ext %in% c("YAML", "YML")) {
