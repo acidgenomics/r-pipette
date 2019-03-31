@@ -5,7 +5,10 @@ with_parameters_test_that(
         file <- file.path("cache", file)
         object <- import(file)
         expect_identical(length(object), 50L)
-        expect_identical(names(object)[[1L]], "HALLMARK_TNFA_SIGNALING_VIA_NFKB")
+        expect_identical(
+            object = names(object)[[1L]],
+            expected = "HALLMARK_TNFA_SIGNALING_VIA_NFKB"
+        )
         expect_identical(length(object[[1L]]), 200L)
         expect_identical(head(object[[1L]]), ids)
     },
