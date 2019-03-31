@@ -14,6 +14,13 @@ test_that("`format` argument", {
     file.remove("df.csv")
 })
 
+test_that("No `file` or `format`", {
+    expect_error(
+        export(df),
+        "Specify `file` or `format` argument."
+    )
+})
+
 test_that("Check for error on both `file` and `format` argument.", {
     expect_error(
         object = export(df, file = "df.csv", format = "csv"),
@@ -51,6 +58,13 @@ test_that("`format` argument, using gzip compression", {
     )
     expect_true(all(file.exists(x)))
     file.remove(x)
+})
+
+test_that("No `file` or `format`", {
+    expect_error(
+        export(sparse),
+        "Specify `file` or `format` argument."
+    )
 })
 
 test_that("Check for error on both `file` and `format` argument.", {
