@@ -1,8 +1,3 @@
-# NAMESPACE conflicts
-# import: rio, rtracklayer
-
-
-
 #' @importMethodsFrom transformer coerce
 #'
 #' @importFrom GenomicRanges GRanges
@@ -22,6 +17,7 @@
 #'   isString isSubset matchArgsToDoCall standardizeCall
 #' @importFrom methods as is slotNames validObject
 #' @importFrom readr read_lines read_tsv write_lines
+#' @importFrom rtracklayer import
 #' @importFrom stats na.omit
 #' @importFrom stringr str_extract str_match str_subset
 #' @importFrom tibble as_tibble column_to_rownames
