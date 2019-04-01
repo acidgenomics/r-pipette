@@ -7,11 +7,6 @@ init:
 install:
   ps: Bootstrap
 
-platform: x64
-
-cache:
-  - C:\RLibrary
-
 branches:
   only:
     - master
@@ -19,10 +14,15 @@ branches:
 environment:
   global:
     R_ARCH: x64
+    GCC_PATH: mingw_64
     USE_RTOOLS: true
   matrix:
-    - R_VERSION: 3.6.0  # devel
-      GCC_PATH: mingw_64
+    - R_VERSION: patched
+    - R_VERSION: devel
+    # - R_VERSION: 3.5.2
+    # - R_VERSION: 3.6.0
+  allow_failures:
+    - R_VERSION: devel
 
 build_script:
   - travis-tool.sh install_bioc_deps
@@ -37,24 +37,24 @@ on_failure:
 artifacts:
   - path: '*.Rcheck\**\*.log'
     name: Logs
-
   - path: '*.Rcheck\**\*.out'
     name: Logs
-
   - path: '*.Rcheck\**\*.fail'
     name: Logs
-
   - path: '*.Rcheck\**\*.Rout'
     name: Logs
-
   - path: '\*_*.tar.gz'
     name: Bits
-
   - path: '\*_*.zip'
     name: Bits
+  - path: all-Rout.zip
+    name: AllRout
 
 notifications:
   - provider: Email
     to:
       - mike@steinbaugh.com
     on_build_status_changed: true
+
+cache:
+  - C:\RLibrary -> appveyor.yml
