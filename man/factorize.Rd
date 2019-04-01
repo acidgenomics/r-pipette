@@ -19,7 +19,7 @@ All columns will be coerced to \code{factor}.
 Coerce all columns in the object to \code{factor} (i.e. \code{stringsAsFactors}).
 }
 \examples{
-df <- S4Vectors::DataFrame(a = letters[seq_len(5)], b = seq_len(5))
+df <- S4Vectors::DataFrame(a = letters[seq_len(5L)], b = seq_len(5L))
 x <- factorize(df)
 }
 \seealso{
