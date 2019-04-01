@@ -11,18 +11,16 @@ branches:
   only:
     - master
 
-configuration:
-  - patched
-  - devel
-
 environment:
   global:
     R_ARCH: x64
     GCC_PATH: mingw_64
     USE_RTOOLS: true
   matrix:
-    - R_VERSION: patched
-    - R_VERSION: devel
+    - configuration: patched
+      R_VERSION: patched
+    - configuration: devel
+      R_VERSION: devel
 
 build_script:
   - travis-tool.sh install_bioc_deps
