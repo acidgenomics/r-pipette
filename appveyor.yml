@@ -23,8 +23,6 @@ environment:
   matrix:
     - R_VERSION: patched
     - R_VERSION: devel
-  allow_failures:
-    - configuration: devel
 
 build_script:
   - travis-tool.sh install_bioc_deps
