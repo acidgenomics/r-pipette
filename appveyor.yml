@@ -9,8 +9,8 @@ install:
 
 platform: x64
 
-# cache:
-#   - C:\RLibrary
+cache:
+  - C:\RLibrary
 
 branches:
   only:
@@ -21,7 +21,7 @@ environment:
     R_ARCH: x64
     USE_RTOOLS: true
   matrix:
-    - R_VERSION: devel
+    - R_VERSION: 3.6.0  # devel
       GCC_PATH: mingw_64
 
 build_script:
