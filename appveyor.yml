@@ -17,14 +17,13 @@ environment:
     GCC_PATH: mingw_64
     USE_RTOOLS: true
   matrix:
-    - R_VERSION: devel
-    - R_VERSION: patched
-    - R_VERSION: 3.6.0
+    # - R_VERSION: devel
+    # - R_VERSION: patched
+    - R_VERSION: 3.6.0alpha
 
-matrix:
-  allow_failures:
-    - R_VERSION: patched
-    - R_VERSION: 3.6.0
+# matrix:
+#   allow_failures:
+#     - R_VERSION: devel
 
 build_script:
   - travis-tool.sh install_bioc_deps
