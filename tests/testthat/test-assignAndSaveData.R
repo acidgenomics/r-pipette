@@ -12,6 +12,5 @@ test_that("assignAndSaveData", {
     )
     exists("example", envir = envir, inherits = FALSE)
     file.exists("example.rds")
-    rm(example)
     unlink("example.rds")
 })
