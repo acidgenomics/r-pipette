@@ -7,23 +7,30 @@ init:
 install:
   ps: Bootstrap
 
+platform: x64
+
+cache:
+  - C:\RLibrary -> appveyor.yml
+
 branches:
   only:
     - master
 
 environment:
   global:
-    R_ARCH: x64
     GCC_PATH: mingw_64
+    R_ARCH: x64
     USE_RTOOLS: true
   matrix:
-    # - R_VERSION: 3.6.0
-    # - R_VERSION: patched
-    - R_VERSION: devel
+    - R_VERSION: patched
+      BIOC_USE_DEVEL: "FALSE"
+    # - R_VERSION: devel
+    #   BIOC_USE_DEVEL: "TRUE"
 
-# matrix:
-#   allow_failures:
-#     - R_VERSION: patched
+matrix:
+  allow_failures:
+    - R_VERSION: devel
+  fast_finish: true
 
 build_script:
   - travis-tool.sh install_bioc_deps
@@ -56,6 +63,3 @@ notifications:
     to:
       - mike@steinbaugh.com
     on_build_status_changed: true
-
-cache:
-  - C:\RLibrary -> appveyor.yml
