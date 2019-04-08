@@ -312,11 +312,7 @@ setMethod(
 # ranges coordinates. That's why we're coercing from `rowRanges` for RSE.
 .export.rowData <-  # nolint
     function(x, ext, dir) {
-        if (is(x, "RangedSummarizedExperiment")) {
-            data <- rowRanges(x)
-        } else {
-            data <- rowData(x)
-        }
+        data <- rowData(x)
         data <- atomize(data)
         # Coerce the GRanges to a standard data.frame.
         data <- as.data.frame(data)
