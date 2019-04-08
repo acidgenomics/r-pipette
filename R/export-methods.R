@@ -314,7 +314,6 @@ setMethod(
     function(x, ext, dir) {
         data <- rowData(x)
         data <- atomize(data)
-        # Coerce the GRanges to a standard data.frame.
         data <- as.data.frame(data)
         assert(identical(rownames(data), rownames(x)))
         export(x = data, file = file.path(dir, paste0("rowData", ext)))
