@@ -4,6 +4,8 @@
 ^\.lintr$
 ^\.travis\.yml$
 ^_pkgdown\.yml$
+^_pkgdown\.yml$
 ^appveyor\.yml$
 ^docs$
 ^pkgdown$
+^travis-docker\.R$
