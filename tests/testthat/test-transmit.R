@@ -1,5 +1,11 @@
 context("transmit")
 
+skip_if_not(interactive())
+# nolint start
+# skip_on_appveyor()
+# skip_on_travis()
+# nolint end
+
 # Note that only FTP is currently supported.
 remoteDir <- paste(
     "ftp://ftp.pantherdb.org",
@@ -9,8 +15,6 @@ remoteDir <- paste(
 )
 
 test_that("PANTHER README file", {
-    skip_on_travis()
-
     object <- transmit(
         remoteDir = remoteDir,
         pattern = "README",
@@ -34,8 +38,6 @@ test_that("PANTHER README file", {
 })
 
 test_that("Rename and compress", {
-    skip_on_travis()
-
     object <- transmit(
         remoteDir = remoteDir,
         pattern = "README",
@@ -50,7 +52,6 @@ test_that("Rename and compress", {
 })
 
 test_that("Invalid parameters", {
-    skip_on_travis()
     expect_error(
         object = transmit(
             remoteDir = "http://steinbaugh.com",
