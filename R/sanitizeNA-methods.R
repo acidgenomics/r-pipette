@@ -146,11 +146,13 @@ sanitizeNA.DataFrame <-  # nolint
         rownames <- rownames(object)
         list <- lapply(
             X = object,
-            FUN = function(col) {
-                if (is.character(col)) {
-                    sanitizeNA(col)
+            FUN = function(x) {
+                if (is.character(x)) {
+                    sanitizeNA(x)
+                } else if (isS4(x) || is(x, "AsIs") || !is.atomic(x))  {
+                    I(x)
                 } else {
-                    I(col)
+                    x
                 }
             }
         )
