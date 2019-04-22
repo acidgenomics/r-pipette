@@ -12,6 +12,7 @@ files <- c(
     "example.rds",
     "example.tsv",
     "example.txt",
+    "example.xls",
     "example.xlsx",
     "example.yml",
     "geneset.gmt",
