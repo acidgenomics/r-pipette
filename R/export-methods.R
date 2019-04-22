@@ -308,17 +308,17 @@ setMethod(
 
 
 
-# NOTE: The standard `rowData` output is okay but doesn't include genomic
-# ranges coordinates. That's why we're coercing from `rowRanges` for RSE.
+# NOTE: The standard `rowData()` output is okay but doesn't include genomic
+# ranges coordinates. That's why we're coercing from `rowRanges()` for RSE.
 .export.rowData <-  # nolint
     function(x, ext, dir) {
-        if (is(x, "RangedSummarizedExperiment")) {
-            data <- rowRanges(x)
-        } else {
-            data <- rowData(x)
+        data <- rowData(x)
+        # Note that SummarizedExperiment in BioC 3.6/R 3.4 release doesn't
+        # set row names properly, so keep this step here for compatibility.
+        if (!hasRownames(data)) {
+            rownames(data) <- rownames(x)
         }
         data <- atomize(data)
-        # Coerce the GRanges to a standard data.frame.
         data <- as.data.frame(data)
         assert(identical(rownames(data), rownames(x)))
         export(x = data, file = file.path(dir, paste0("rowData", ext)))
