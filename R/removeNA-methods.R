@@ -1,6 +1,9 @@
 #' @name removeNA
 #' @inherit bioverbs::removeNA
+#'
 #' @inheritParams params
+#' @param ... Additional arguments.
+#'
 #' @examples
 #' ## atomic ====
 #' removeNA(c("hello", "world", NA))
@@ -29,10 +32,12 @@ NULL
 
 
 
+#' @rdname removeNA
+#' @name removeNA
 #' @importFrom bioverbs removeNA
-#' @aliases NULL
+#' @usage removeNA(object, ...)
 #' @export
-bioverbs::removeNA
+NULL
 
 
 

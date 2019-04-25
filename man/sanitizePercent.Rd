@@ -7,12 +7,16 @@
 \alias{sanitizePercent,character-method}
 \title{Sanitize percentage}
 \usage{
+sanitizePercent(object, ...)
+
 \S4method{sanitizePercent}{atomic}(object)
 
 \S4method{sanitizePercent}{character}(object)
 }
 \arguments{
 \item{object}{Object.}
+
+\item{...}{Additional arguments.}
 }
 \value{
 Modified object.

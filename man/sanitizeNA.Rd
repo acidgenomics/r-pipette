@@ -10,6 +10,8 @@
 \alias{sanitizeNA,DataFrame-method}
 \title{Sanitize NA values}
 \usage{
+sanitizeNA(object, ...)
+
 \S4method{sanitizeNA}{atomic}(object)
 
 \S4method{sanitizeNA}{character}(object)
@@ -22,6 +24,8 @@
 }
 \arguments{
 \item{object}{Object.}
+
+\item{...}{Additional arguments.}
 }
 \value{
 Modified object.
