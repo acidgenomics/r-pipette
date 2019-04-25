@@ -1,6 +1,9 @@
 #' @name atomize
 #' @inherit bioverbs::atomize
+#'
 #' @inheritParams params
+#' @param ... Additional arguments.
+#'
 #' @examples
 #' df <- S4Vectors::DataFrame(a = "a", b = list(a = seq_len(3)))
 #' lapply(df, is.atomic)
@@ -9,8 +12,10 @@ NULL
 
 
 
+#' @rdname
 #' @name atomize
 #' @importFrom bioverbs atomize
+#' @usage atomize(object, ...)
 #' @export
 NULL
 

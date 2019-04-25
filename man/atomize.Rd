@@ -8,6 +8,8 @@
 \alias{atomize,GRanges-method}
 \title{Atomize}
 \usage{
+atomize(object, ...)
+
 \S4method{atomize}{data.frame}(object)
 
 \S4method{atomize}{DataFrame}(object)
@@ -16,6 +18,8 @@
 }
 \arguments{
 \item{object}{Object.}
+
+\item{...}{Additional arguments.}
 }
 \value{
 Modified object.
