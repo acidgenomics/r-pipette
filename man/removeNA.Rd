@@ -10,6 +10,8 @@
 \alias{removeNA,DataFrame-method}
 \title{Remove rows and columns containing only NA values}
 \usage{
+removeNA(object, ...)
+
 \S4method{removeNA}{atomic}(object)
 
 \S4method{removeNA}{matrix}(object)
@@ -22,6 +24,8 @@
 }
 \arguments{
 \item{object}{Object.}
+
+\item{...}{Additional arguments.}
 }
 \value{
 Sanitized object.
