@@ -1,7 +1,9 @@
 #' @name sanitizeNA
 #' @inherit bioverbs::sanitizeNA
-#' @export
+#'
 #' @inheritParams params
+#' @param ... Additional arguments.
+#'
 #' @examples
 #' ## character ====
 #' from <- as.character(c(1L, "x", "", "NA", "NULL"))
@@ -22,10 +24,12 @@ NULL
 
 
 
+#' @rdname sanitizeNA
+#' @name sanitizeNA
 #' @importFrom bioverbs sanitizeNA
-#' @aliases NULL
+#' @usage sanitizeNA(object, ...)
 #' @export
-bioverbs::sanitizeNA
+NULL
 
 
 

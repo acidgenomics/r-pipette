@@ -6,10 +6,14 @@
 \alias{factorize,ANY-method}
 \title{Factorize}
 \usage{
+factorize(object, ...)
+
 \S4method{factorize}{ANY}(object)
 }
 \arguments{
 \item{object}{Object.}
+
+\item{...}{Additional arguments.}
 }
 \value{
 Modified object.
