@@ -1,6 +1,9 @@
 #' @name factorize
 #' @inherit bioverbs::factorize
+#'
 #' @inheritParams params
+#' @param ... Additional arguments.
+#'
 #' @examples
 #' df <- S4Vectors::DataFrame(a = letters[seq_len(5L)], b = seq_len(5L))
 #' x <- factorize(df)
@@ -8,8 +11,10 @@ NULL
 
 
 
+#' @rdname factorize
 #' @name factorize
 #' @importFrom bioverbs factorize
+#' @usage factorize(object, ...)
 #' @export
 NULL
 

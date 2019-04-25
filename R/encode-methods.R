@@ -1,8 +1,10 @@
 #' @name encode
 #' @inherit bioverbs::encode
-#' @inheritParams params
 #'
-#' @seealso `S4Vectors::Rle()`.
+#' @inheritParams params
+#' @param ... Additional arguments.
+#'
+#' @seealso [S4Vectors::Rle()].
 #'
 #' @return Modified object.
 #' All `atomic` columns will be encoded to `Rle` S4 class.
@@ -20,8 +22,10 @@ NULL
 
 
 
+#' @rdname encode
 #' @name encode
 #' @importFrom bioverbs encode
+#' @usage encode(x, ...)
 #' @export
 NULL
 

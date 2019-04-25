@@ -1,6 +1,9 @@
 #' @name sanitizePercent
 #' @inherit bioverbs::sanitizePercent
+#'
 #' @inheritParams params
+#' @param ... Additional arguments.
+#'
 #' @examples
 #' object <- c("100%", "10.0%", "1%", "0.1%", "0.01%")
 #' class(object)
@@ -12,10 +15,12 @@ NULL
 
 
 
+#' @rdname sanitizePercent
+#' @name sanitizePercent
 #' @importFrom bioverbs sanitizePercent
-#' @aliases NULL
+#' @usage sanitizePercent(object, ...)
 #' @export
-bioverbs::sanitizePercent
+NULL
 
 
 

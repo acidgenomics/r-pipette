@@ -7,12 +7,16 @@
 \alias{encode,GRanges-method}
 \title{Encode using run-length encoding}
 \usage{
+encode(x, ...)
+
 \S4method{encode}{DataFrame}(x)
 
 \S4method{encode}{GRanges}(x)
 }
 \arguments{
 \item{x}{Object.}
+
+\item{...}{Additional arguments.}
 }
 \value{
 Modified object.
@@ -32,5 +36,5 @@ x <- encode(df)
 lapply(x, class)
 }
 \seealso{
-\code{S4Vectors::Rle()}.
+\code{\link[S4Vectors:Rle]{S4Vectors::Rle()}}.
 }

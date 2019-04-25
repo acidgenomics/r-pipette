@@ -11,6 +11,8 @@
 \alias{export,SingleCellExperiment-method}
 \title{Export}
 \usage{
+export(x, ...)
+
 \S4method{export}{data.frame}(x, file, format)
 
 \S4method{export}{DataFrame}(x, file, format)
@@ -51,6 +53,8 @@ Apply gzip compression to all files.}
 
 \item{slotNames}{\code{character}.
 Names of slots to include when writing to disk.}
+
+\item{...}{Additional arguments.}
 }
 \value{
 Invisible \code{character}.

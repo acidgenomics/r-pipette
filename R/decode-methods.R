@@ -2,12 +2,14 @@
 #'
 #' @name decode
 #' @inherit S4Vectors::decode description return
+#'
 #' @inheritParams params
+#' @param ... Additional arguments.
 #'
 #' @return Modified object.
 #' Columns will be decoded and no longer `Rle` class.
 #'
-#' @seealso `S4Vectors::decode()`.
+#' @seealso [S4Vectors::decode()].
 #'
 #' @examples
 #' data(rse, package = "acidtest")
@@ -19,9 +21,10 @@ NULL
 
 
 
+#' @rdname decode
 #' @name decode
 #' @importFrom S4Vectors decode
-#' @aliases NULL
+#' @usage decode(x, ...)
 #' @export
 NULL
 

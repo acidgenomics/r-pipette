@@ -7,12 +7,16 @@
 \alias{decode,GRanges-method}
 \title{Decode column data that uses run-length encoding}
 \usage{
+decode(x, ...)
+
 \S4method{decode}{DataFrame}(x)
 
 \S4method{decode}{GRanges}(x)
 }
 \arguments{
 \item{x}{Object.}
+
+\item{...}{Additional arguments.}
 }
 \value{
 Modified object.
@@ -31,5 +35,5 @@ x <- decode(mcols)
 lapply(x, class)
 }
 \seealso{
-\code{S4Vectors::decode()}.
+\code{\link[S4Vectors:decode]{S4Vectors::decode()}}.
 }
