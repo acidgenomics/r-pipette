@@ -1,6 +1,5 @@
 #' @name export
 #' @inherit bioverbs::export
-#' @inheritParams params
 #'
 #' @section Row names:
 #'
@@ -19,6 +18,7 @@
 #' to disk. An S4 character method may be defined in a future update, but it is
 #' intentionally unsupported in the current release.
 #'
+#' @inheritParams params
 #' @param x Object.
 #'   An object supporting [`dim()`][base::dim], or a supported class capable
 #'   of being coerced to `data.frame`, to be written to disk.
@@ -34,6 +34,7 @@
 #'   Name to use on disk. If `NULL`, will use the name of the object instead.
 #' @param slotNames `character`.
 #'   Names of slots to include when writing to disk.
+#' @param ... Additional arguments.
 #'
 #' @return Invisible `character`.
 #' File path(s).
@@ -50,8 +51,10 @@ NULL
 
 
 
+#' @rdname export
 #' @name export
 #' @importFrom bioverbs export
+#' @usage export(x, ...)
 #' @export
 NULL
 
