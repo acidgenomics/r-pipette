@@ -2,8 +2,8 @@ Package: brio
 Title: Biological R input/output
 Description: Extension of the rio and rtracklayer packages with improved support
     for biological data structures.
-Version: 0.1.19
-Date: 2019-04-22
+Version: 0.1.20
+Date: 2019-04-25
 Authors@R: c(
     person(
         "Michael", "Steinbaugh",
