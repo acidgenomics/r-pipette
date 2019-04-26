@@ -12,7 +12,7 @@ NULL
 
 
 
-#' @rdname
+#' @rdname atomize
 #' @name atomize
 #' @importFrom bioverbs atomize
 #' @usage atomize(object, ...)

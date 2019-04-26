@@ -15,9 +15,9 @@
 #' @importFrom data.table as.data.table fread
 #' @importFrom goalie assert allAreExisting allAreFiles allAreNonExisting
 #'   allAreURLs allHaveAccess areDisjointSets areSameLength areSetEqual bapply
-#'   formalCompress hasColnames hasCols hasInternet hasLength hasNames
-#'   hasNoDuplicates hasRownames hasRows hasValidNames hasValidDimnames isAFile
-#'   isAURL isAny isCharacter isFlag isMatchingRegex isNonEmpty isScalar
+#'   formalCompress hasColnames hasCols hasDimnames hasInternet hasLength
+#'   hasNames hasNoDuplicates hasRownames hasRows hasValidNames hasValidDimnames
+#'   isAFile isAURL isAny isCharacter isFlag isMatchingRegex isNonEmpty isScalar
 #'   isString isSubset matchArgsToDoCall standardizeCall
 #' @importFrom methods as is slotNames validObject
 #' @importFrom readr read_lines read_tsv write_lines
