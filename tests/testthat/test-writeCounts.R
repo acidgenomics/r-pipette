@@ -7,7 +7,7 @@ test_that("writeCounts", {
         regexp = "Writing mat, sparse"
     )
     expect_identical(
-        object = list.files(dir),
+        object = sort(list.files(dir)),
         expected = c(
             "mat.csv.gz",
             "sparse.mtx.gz",
