@@ -42,7 +42,7 @@
 #' a <- 1
 #' b <- 2
 #' saveData(a, b, dir = dir)
-#' list.files(dir)
+#' sort(list.files(dir))
 #'
 #' ## Clean up.
 #' unlink(dir, recursive = TRUE)
@@ -54,7 +54,7 @@
 #' b <- 2
 #' list <- c("a", "b")
 #' saveData(list = list, dir = dir)
-#' list.files(dir)
+#' sort(list.files(dir))
 #'
 #' ## Clean up.
 #' unlink(dir, recursive = TRUE)

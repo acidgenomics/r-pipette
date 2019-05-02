@@ -116,12 +116,12 @@ formals(loadData)[["dir"]] <- formalsList[["load.dir"]]
     files <- vapply(
         X = names,
         FUN = function(name) {
-            files <- list.files(
+            files <- sort(list.files(
                 path = dir,
                 pattern = paste0("^", name, rdataExtPattern),
                 full.names = TRUE,
                 ignore.case = TRUE
-            )
+            ))
             # Add error checking here.
             if (length(files) == 0L) {
                 stop(paste0(
