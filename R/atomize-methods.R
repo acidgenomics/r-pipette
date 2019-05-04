@@ -12,7 +12,7 @@ NULL
 
 
 
-#' @rdname
+#' @rdname atomize
 #' @name atomize
 #' @importFrom bioverbs atomize
 #' @usage atomize(object, ...)
@@ -36,8 +36,7 @@ atomize.data.frame <-  # nolint
         if (hasLength(drop)) {
             message(paste(
                 "Dropping non-atomic columns:",
-                toString(drop),
-                sep = "\n"
+                toString(drop, width = 200L)
             ))
         }
 
