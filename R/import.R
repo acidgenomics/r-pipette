@@ -345,7 +345,10 @@ import <- function(
     }
 
     # Check for syntactically valid names and inform the user, if necessary.
-    if (!hasValidNames(object)) {
+    if (
+        (hasNames(object) && !hasValidNames(object)) ||
+        (hasDimnames(object) && !hasValidDimnames(object))
+    ) {
         message(paste(
             basename(file),
             "does not return syntactically valid names."
