@@ -21,7 +21,7 @@ URL:
 BugReports: https://github.com/acidgenomics/brio/issues/
 License: MIT + file LICENSE
 Encoding: UTF-8
-Depends: R (>= 3.4)
+Depends: R (>= 3.5)
 Imports:
     bioverbs (>= 0.1.10), goalie (>= 0.2.12), transformer (>= 0.1.8),
     GenomicRanges, S4Vectors, SingleCellExperiment, SummarizedExperiment,
