@@ -67,6 +67,11 @@ saveData <- function(
     list = NULL,
     envir = parent.frame()
 ) {
+    assert(
+        isFlag(overwrite),
+        formalCompress(compress)
+    )
+
     if (!is.null(list)) {
         # Character vector list mode (similar to `save()`).
         assert(
@@ -83,11 +88,7 @@ saveData <- function(
     }
 
     dir <- initDir(dir)
-    ext <- match.arg(arg = ext, choices = c("rds", "rda", "RData"))
-    assert(
-        isFlag(overwrite),
-        formalCompress(compress)
-    )
+    ext <- match.arg(arg = ext, choices = c("rds", "rda"))
 
     files <- file.path(dir, paste(names(objects), ext, sep = "."))
     names(files) <- names(objects)

@@ -1,3 +1,13 @@
+## brio 0.2.0 (2019-05-06)
+
+Introducing breaking changes to `export` method. Now using `object` instead of
+`x` as the primary argument, and defaulting to the use of `ext` and `dir`
+instead of recommending the use of `file`, as is the convention in the brio
+package. This makes interactive file export quicker and more intuitive,
+involving less repetitive variable declarations.
+
+
+
 ## brio 0.1.20 (2019-04-25)
 
 ### Minor changes
