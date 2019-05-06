@@ -15,6 +15,9 @@ File path.}
 
 \item{object}{Object.}
 
+\item{overwrite}{\code{logical(1)}.
+Overwrite existing file on disk.}
+
 \item{x}{Object.}
 }
 \description{

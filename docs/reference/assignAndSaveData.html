@@ -66,7 +66,7 @@ the newly assigned object, specified by the &quot;dir&quot; argument." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">brio</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.20</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -119,7 +119,7 @@ the newly assigned object, specified by the "<code>dir</code>" argument.</p>
 
     <pre class="usage"><span class='fu'>assignAndSaveData</span>(<span class='no'>name</span>, <span class='no'>object</span>, <span class='kw'>envir</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sys.parent'>parent.frame</a></span>(),
   <span class='kw'>dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"acid.save.dir"</span>, <span class='kw'>default</span> <span class='kw'>=</span> <span class='st'>"."</span>),
-  <span class='kw'>ext</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"acid.save.ext"</span>, <span class='kw'>default</span> <span class='kw'>=</span> <span class='st'>"rds"</span>),
+  <span class='kw'>ext</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"acid.save.ext"</span>, <span class='kw'>default</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"rds"</span>, <span class='st'>"rda"</span>)),
   <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"acid.save.overwrite"</span>, <span class='kw'>default</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
   <span class='kw'>compress</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"acid.save.compress"</span>, <span class='kw'>default</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</pre>
     
@@ -156,7 +156,7 @@ convention of <code><a href='saveData.html'>saveData()</a></code>, regardless of
     <tr>
       <th>overwrite</th>
       <td><p><code><a href='https://www.rdocumentation.org/packages/base/topics/logical'>logical(1)</a></code>.
-Overwrite existing file.</p></td>
+Overwrite existing file on disk.</p></td>
     </tr>
     <tr>
       <th>compress</th>
@@ -186,7 +186,7 @@ File path.</p>
     <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>x</span>,
     <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>"."</span>,
     <span class='kw'>ext</span> <span class='kw'>=</span> <span class='st'>"rds"</span>
-)</div><div class='output co'>#&gt; <span class='message'>Saving example.rds to /data00/packages/brio/docs/reference</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/exists'>exists</a></span>(<span class='st'>"example"</span>, <span class='kw'>inherits</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/files'>file.exists</a></span>(<span class='st'>"example.rds"</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+)</div><div class='output co'>#&gt; <span class='message'>Saving example.rds to /home/mike/acidbase/packages/brio/docs/reference</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/exists'>exists</a></span>(<span class='st'>"example"</span>, <span class='kw'>inherits</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/files'>file.exists</a></span>(<span class='st'>"example.rds"</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='co'>## Clean up.</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rm'>rm</a></span>(<span class='no'>example</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/unlink'>unlink</a></span>(<span class='st'>"example.rds"</span>)</div></pre>
