@@ -1,8 +1,3 @@
-# FIXME export.DataFrameList
-# FIXME export.GRangesList
-
-
-
 #' @name export
 #' @inherit bioverbs::export
 #'
