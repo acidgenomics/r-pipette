@@ -12,11 +12,10 @@
 #'
 #' @export
 #' @include globals.R
+#'
 #' @inheritParams loadData
 #' @inheritParams base::save
-#'
-#' @param overwrite `logical(1)`.
-#'   Overwrite existing file.
+#' @inheritParams params
 #' @param ext `character(1)`.
 #'   R data serialized (`RDS`) or R data (`RDA`, `RDATA`). RDS is
 #'   preferred when saving single objects per file, which is always the

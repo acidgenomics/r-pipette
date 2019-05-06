@@ -66,6 +66,9 @@ Directory path.}
 File path. When left unset (default), the \code{ext} and \code{dir} arguments will
 be used instead.}
 
+\item{overwrite}{\code{logical(1)}.
+Overwrite existing file on disk.}
+
 \item{name}{\code{character(1)}.
 Name to use on disk. If \code{NULL}, will use the name of the object instead.}
 
