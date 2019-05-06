@@ -370,6 +370,9 @@ setMethod(
 
 
 
+# Require at least 1 of the slotNames to be defined for export.
+# `rowData` is a supported slot but is actually defined in `rowRanges`.
+# Note that we're not using `match.arg()` here for `slotNames`.
 export.SummarizedExperiment <-  # nolint
     function(
         object,
@@ -380,18 +383,22 @@ export.SummarizedExperiment <-  # nolint
     ) {
         validObject(object)
         call <- standardizeCall()
-        assert(isString(name, nullOK = TRUE))
+        assert(
+            isString(name, nullOK = TRUE),
+            isString(dir),
+            isFlag(compress),
+            isCharacter(slotNames),
+            isSubset(
+                x = slotNames,
+                y = c(slotNames(object), "rowData")
+            )
+        )
+
+        # Get the name and create directory substructure.
         if (is.null(name)) {
             name <- as.character(call[["object"]])
         }
         dir <- initDir(file.path(dir, name))
-        assert(
-            isFlag(compress),
-            isCharacter(slotNames),
-            # Require at least 1 of the slotNames to be defined for export.
-            # Note that we're not using `match.arg` here.
-            isSubset(x = slotNames, y = eval(formals()[["slotNames"]]))
-        )
 
         # Return the file paths back to the user as a named list.
         files <- list()
@@ -426,13 +433,21 @@ export.SummarizedExperiment <-  # nolint
         # Column annotations.
         if ("colData" %in% slotNames) {
             files[["colData"]] <-
-                .export.colData(object = object, ext = ext, dir = dir)
+                .export.colData(
+                    object = object,
+                    ext = ext,
+                    dir = dir
+                )
         }
 
         # Row annotations.
         if ("rowData" %in% slotNames) {
             files[["rowData"]] <-
-                .export.rowData(object = object, ext = ext, dir = dir)
+                .export.rowData(
+                    object = object,
+                    ext = ext,
+                    dir = dir
+                )
         }
 
         message(paste0("Exported ", name, " to ", dir, "."))
@@ -471,10 +486,11 @@ export.SingleCellExperiment <-  # nolint
 
         # Primarily use SE method to export.
         se <- as(object, "RangedSummarizedExperiment")
-
         assign(x = name, value = se)
         args <- matchArgsToDoCall()
         args[["object"]] <- as.name(name)
+        # We're handling `reducedDims` specially below.
+        args[["slotNames"]] <- setdiff(args[["slotNames"]], "reducedDims")
         files <- do.call(what = export, args = args)
         print(files)
 
