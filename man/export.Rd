@@ -3,50 +3,71 @@
 \docType{methods}
 \name{export}
 \alias{export}
+\alias{export,matrix-method}
 \alias{export,data.frame-method}
 \alias{export,DataFrame-method}
-\alias{export,matrix-method}
 \alias{export,sparseMatrix-method}
+\alias{export,GRanges-method}
 \alias{export,SummarizedExperiment-method}
 \alias{export,SingleCellExperiment-method}
 \title{Export}
 \usage{
-export(x, ...)
+export(object, ...)
 
-\S4method{export}{data.frame}(x, file, format)
+\S4method{export}{matrix}(object, ext = getOption("acid.export.ext",
+  default = c("csv", "csv.gz", "tsv", "tsv.gz")),
+  dir = getOption("acid.export.dir", default = "."), file = NULL,
+  overwrite = getOption("acid.export.overwrite", default = TRUE))
 
-\S4method{export}{DataFrame}(x, file, format)
+\S4method{export}{data.frame}(object, ext = getOption("acid.export.ext",
+  default = c("csv", "csv.gz", "tsv", "tsv.gz")),
+  dir = getOption("acid.export.dir", default = "."), file = NULL,
+  overwrite = getOption("acid.export.overwrite", default = TRUE))
 
-\S4method{export}{matrix}(x, file, format)
+\S4method{export}{DataFrame}(object, ext = getOption("acid.export.ext",
+  default = c("csv", "csv.gz", "tsv", "tsv.gz")),
+  dir = getOption("acid.export.dir", default = "."), file = NULL,
+  overwrite = getOption("acid.export.overwrite", default = TRUE))
 
-\S4method{export}{sparseMatrix}(x, file, format)
+\S4method{export}{sparseMatrix}(object,
+  ext = getOption("acid.export.sparse.ext", default = c("mtx",
+  "mtx.gz")), dir = getOption("acid.export.dir", default = "."),
+  file = NULL, overwrite = getOption("acid.export.overwrite", default =
+  TRUE))
 
-\S4method{export}{matrix}(x, file, format)
+\S4method{export}{GRanges}(object, ext = getOption("acid.export.ext",
+  default = c("csv", "csv.gz", "tsv", "tsv.gz")),
+  dir = getOption("acid.export.dir", default = "."), file = NULL,
+  overwrite = getOption("acid.export.overwrite", default = TRUE))
 
-\S4method{export}{SummarizedExperiment}(x, name = NULL, dir = ".",
-  compress = FALSE, slotNames = c("assays", "colData", "rowData"))
+\S4method{export}{SummarizedExperiment}(object, name = NULL,
+  dir = getOption("acid.export.dir", default = "."),
+  compress = getOption("acid.export.compress", default = FALSE),
+  slotNames = c("assays", "colData", "rowData"))
 
-\S4method{export}{SingleCellExperiment}(x, name = NULL, dir = ".",
-  compress = FALSE, slotNames = c("assays", "colData", "rowData"))
+\S4method{export}{SingleCellExperiment}(object, name = NULL,
+  dir = getOption("acid.export.dir", default = "."),
+  compress = getOption("acid.export.compress", default = FALSE),
+  slotNames = c("assays", "colData", "rowData", "reducedDims"))
 }
 \arguments{
-\item{x}{Object.
+\item{object}{Object.
 An object supporting \code{\link[base:dim]{dim()}}, or a supported class capable
 of being coerced to \code{data.frame}, to be written to disk.}
 
-\item{file}{\code{character(1)}.
-File path. Specify \code{file} or \code{format} but not both.}
-
-\item{format}{\code{character(1)}.
-An optional character string containing the
-file format, which can be used to override the format inferred from \code{file},
-or in lieu of specifying \code{file}.}
-
-\item{name}{\code{character(1)}.
-Name to use on disk. If \code{NULL}, will use the name of the object instead.}
+\item{ext}{\code{character(1)}.
+Output file format extension.
+Uses \code{\link[base:match.arg]{match.arg()}}, where applicable.}
 
 \item{dir}{\code{character(1)}.
 Directory path.}
+
+\item{file}{\code{character(1)}.
+File path. When left unset (default), the \code{ext} and \code{dir} arguments will
+be used instead.}
+
+\item{name}{\code{character(1)}.
+Name to use on disk. If \code{NULL}, will use the name of the object instead.}
 
 \item{compress}{\code{logical(1)}.
 Apply gzip compression to all files.}
@@ -84,11 +105,14 @@ intentionally unsupported in the current release.
 
 \examples{
 counts <- matrix(data = seq_len(100L), nrow = 10)
-export(counts, format = "csv")
+export(counts, ext = "csv")
 
 ## Clean up.
 file.remove("counts.csv")
 }
 \seealso{
-\code{\link[rio:export]{rio::export()}}.
+\itemize{
+\item \code{\link[rtracklayer:export]{rtracklayer::export()}}.
+\item \code{\link[rio:export]{rio::export()}}.
+}
 }
