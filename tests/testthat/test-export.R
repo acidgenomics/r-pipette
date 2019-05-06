@@ -1,5 +1,17 @@
 context("export : DataFrame")
 
+ext <- eval(formals(export.matrix)[["ext"]])
+with_parameters_test_that(
+    "`ext` argument", {
+        file <- paste0("df.", ext)
+        x <- export(df, ext = ext)
+        expect_identical(x, realpath(file))
+        expect_true(file.exists(file))
+        file.remove(file)
+    },
+    ext = ext
+)
+
 test_that("`file` argument", {
     x <- export(df, file = "df.csv")
     expect_identical(x, realpath("df.csv"))
@@ -7,30 +19,23 @@ test_that("`file` argument", {
     file.remove("df.csv")
 })
 
-test_that("`format` argument", {
-    x <- export(df, format = "csv")
-    expect_identical(x, realpath("df.csv"))
-    expect_true(file.exists("df.csv"))
-    file.remove("df.csv")
-})
-
-test_that("No `file` or `format`", {
-    expect_error(
-        export(df),
-        "Specify `file` or `format` argument."
-    )
-})
-
-test_that("Check for error on both `file` and `format` argument.", {
-    expect_error(
-        object = export(df, file = "df.csv", format = "csv"),
-        regexp = "Specify `file` or `format` but not both."
-    )
-})
-
 
 
 context("export : sparseMatrix")
+
+test_that("`ext` argument, using gzip compression", {
+    x <- export(sparse, ext = "mtx.gz")
+    expect_identical(
+        x,
+        c(
+            matrix = realpath("sparse.mtx.gz"),
+            barcodes = realpath("sparse.mtx.gz.colnames"),
+            genes = realpath("sparse.mtx.gz.rownames")
+        )
+    )
+    expect_true(all(file.exists(x)))
+    file.remove(x)
+})
 
 test_that("`file` argument", {
     x <- export(sparse, file = "sparse.mtx")
@@ -46,53 +51,25 @@ test_that("`file` argument", {
     file.remove(x)
 })
 
-test_that("`format` argument, using gzip compression", {
-    x <- export(sparse, format = "mtx.gz")
-    expect_identical(
-        x,
-        c(
-            matrix = realpath("sparse.mtx.gz"),
-            barcodes = realpath("sparse.mtx.gz.colnames"),
-            genes = realpath("sparse.mtx.gz.rownames")
-        )
-    )
-    expect_true(all(file.exists(x)))
-    file.remove(x)
-})
-
-test_that("No `file` or `format`", {
-    expect_error(
-        export(sparse),
-        "Specify `file` or `format` argument."
-    )
-})
-
-test_that("Check for error on both `file` and `format` argument.", {
-    expect_error(
-        object = export(sparse, file = "sparse", format = "mtx"),
-        regexp = "Specify `file` or `format` but not both."
-    )
-})
-
 
 
 context("export : SummarizedExperiment")
 
 test_that("`dir` argument, no `name`", {
-    out <- export(rse, name = NULL, dir = "XXX")
+    out <- export(rse, name = NULL, dir = "XXX", compress = TRUE)
     expect_identical(
         out,
         list(
             assays = list(
                 counts = realpath(
-                    file.path("XXX", "rse", "assays", "counts.csv")
+                    file.path("XXX", "rse", "assays", "counts.csv.gz")
                 )
             ),
             colData = realpath(
-                file.path("XXX", "rse", "colData.csv")
+                file.path("XXX", "rse", "colData.csv.gz")
             ),
             rowData = realpath(
-                file.path("XXX", "rse", "rowData.csv")
+                file.path("XXX", "rse", "rowData.csv.gz")
             )
         )
     )
@@ -100,7 +77,7 @@ test_that("`dir` argument, no `name`", {
 })
 
 test_that("Both `name` and `dir` declared", {
-    out <- export(rse, name = "test", dir = "XXX")
+    out <- export(rse, name = "test", dir = "XXX", compress = FALSE)
     expect_identical(
         out,
         list(
@@ -125,7 +102,7 @@ test_that("Both `name` and `dir` declared", {
 context("export : SingleCellExperiment")
 
 test_that("`dir` argument, no `name`", {
-    out <- export(sce, name = NULL, dir = "XXX")
+    out <- export(sce, name = NULL, dir = "XXX", compress = FALSE)
     expect_identical(
         out,
         list(
@@ -185,3 +162,5 @@ test_that("Both `name` and `dir` declared", {
     )
     unlink("XXX", recursive = TRUE)
 })
+
+# FIXME compress support.

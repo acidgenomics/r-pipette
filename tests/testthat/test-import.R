@@ -35,7 +35,11 @@ test_that("XLS", {
 
 test_that("Google Sheet", {
     # This requires OAuth, so skip for CI checks.
-    skip_if_not(interactive())
+    # Currently testing this on macOS.
+    skip_if_not(
+        interactive() &&
+        grepl("darwin", Sys.getenv("R_PLATFORM"))
+    )
     file <- pasteURL(
         "docs.google.com",
         "spreadsheets",
