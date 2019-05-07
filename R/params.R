@@ -10,6 +10,8 @@
 #' @param file `character(1)`.
 #'   File path.
 #' @param object Object.
+#' @param overwrite `logical(1)`.
+#'   Overwrite existing file on disk.
 #' @param x Object.
 
 NULL

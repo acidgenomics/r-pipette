@@ -5,7 +5,7 @@
 \title{Save data}
 \usage{
 saveData(..., dir = getOption("acid.save.dir", default = "."),
-  ext = getOption("acid.save.ext", default = "rds"),
+  ext = getOption("acid.save.ext", default = c("rds", "rda")),
   overwrite = getOption("acid.save.overwrite", default = TRUE),
   compress = getOption("acid.save.compress", default = TRUE),
   list = NULL, envir = parent.frame())
@@ -25,7 +25,7 @@ preferred when saving single objects per file, which is always the
 convention of \code{\link[=saveData]{saveData()}}, regardless of the extension used.}
 
 \item{overwrite}{\code{logical(1)}.
-Overwrite existing file.}
+Overwrite existing file on disk.}
 
 \item{compress}{logical or character string specifying whether saving
     to a named file is to use compression.  \code{TRUE} corresponds to

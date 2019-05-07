@@ -185,8 +185,8 @@
 #'
 #' Importer functions:
 #'
-#' - `rio::import()`.
 #' - `rtracklayer::import()`.
+#' - `rio::import()`.
 #' - `data.table::fread()`.
 #' - `readr::read_csv()`.
 #' - `utils::read.table()`.
