@@ -226,8 +226,8 @@ Packages:
 
 Importer functions:
 \itemize{
-\item \code{rio::import()}.
 \item \code{rtracklayer::import()}.
+\item \code{rio::import()}.
 \item \code{data.table::fread()}.
 \item \code{readr::read_csv()}.
 \item \code{utils::read.table()}.

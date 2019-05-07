@@ -36,33 +36,33 @@
 #'
 #' ## Clean up.
 #' unlink("example", recursive = TRUE)
-writeCounts <- function(..., dir = ".", compress = FALSE) {
+writeCounts <- function(..., dir, compress) {
     # Catch legacy arguments.
     call <- match.call()
     if ("gzip" %in% names(call)) {
         stop("Use `compress` instead of `gzip`.")
     }
 
+    names <- dots(..., character = TRUE)
     data <- list(...)
-    dots <- dots(..., character = TRUE)
     dir <- initDir(dir)
     assert(isFlag(compress))
 
     # Iterate across the dot objects and write to disk.
-    message(paste0("Writing ", toString(dots), " to ", dir, "."))
+    message(paste0("Writing ", toString(names), " to ", dir, "."))
 
     # Put the names first in the call here.
     files <- mapply(
-        name = dots,
-        x =  data,
-        FUN = function(name, x) {
-            if (is.matrix(x)) {
+        name = names,
+        object = data,
+        FUN = function(name, object) {
+            if (is.matrix(object)) {
                 if (isTRUE(compress)) {
                     format <- "csv.gz"
                 } else {
                     format <- "csv"
                 }
-            } else if (is(x, "sparseMatrix")) {
+            } else if (is(object, "sparseMatrix")) {
                 if (isTRUE(compress)) {
                     format <- "mtx.gz"
                 } else {
@@ -72,7 +72,7 @@ writeCounts <- function(..., dir = ".", compress = FALSE) {
                 stop(paste(name, "is not a matrix."))
             }
             file <- file.path(dir, paste0(name, ".", format))
-            export(x = x, file = file)
+            export(object = object, file = file)
         },
         SIMPLIFY = FALSE,
         USE.NAMES = TRUE
@@ -80,3 +80,6 @@ writeCounts <- function(..., dir = ".", compress = FALSE) {
 
     invisible(files)
 }
+
+formals(writeCounts)[["compress"]] <- formalsList[["export.compress"]]
+formals(writeCounts)[["dir"]] <- formalsList[["export.dir"]]

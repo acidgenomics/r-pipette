@@ -4,7 +4,8 @@
 \alias{writeCounts}
 \title{Write counts}
 \usage{
-writeCounts(..., dir = ".", compress = FALSE)
+writeCounts(..., dir = getOption("acid.export.dir", default = "."),
+  compress = getOption("acid.export.compress", default = FALSE))
 }
 \arguments{
 \item{...}{Symbols.

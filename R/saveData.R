@@ -12,11 +12,10 @@
 #'
 #' @export
 #' @include globals.R
+#'
 #' @inheritParams loadData
 #' @inheritParams base::save
-#'
-#' @param overwrite `logical(1)`.
-#'   Overwrite existing file.
+#' @inheritParams params
 #' @param ext `character(1)`.
 #'   R data serialized (`RDS`) or R data (`RDA`, `RDATA`). RDS is
 #'   preferred when saving single objects per file, which is always the
@@ -67,6 +66,11 @@ saveData <- function(
     list = NULL,
     envir = parent.frame()
 ) {
+    assert(
+        isFlag(overwrite),
+        formalCompress(compress)
+    )
+
     if (!is.null(list)) {
         # Character vector list mode (similar to `save()`).
         assert(
@@ -83,11 +87,7 @@ saveData <- function(
     }
 
     dir <- initDir(dir)
-    ext <- match.arg(arg = ext, choices = c("rds", "rda", "RData"))
-    assert(
-        isFlag(overwrite),
-        formalCompress(compress)
-    )
+    ext <- match.arg(arg = ext, choices = c("rds", "rda"))
 
     files <- file.path(dir, paste(names(objects), ext, sep = "."))
     names(files) <- names(objects)
