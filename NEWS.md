@@ -1,3 +1,13 @@
+## brio 0.2.1 (2019-05-08)
+
+### Major changes
+
+- `import`: Removed Google Sheets support. The `googlesheets` R package is
+  currently too buggy, and the replacement `googlesheets4` package isn't stable.
+  This functionality may be added back in a future update.
+
+
+
 ## brio 0.2.0 (2019-05-06)
 
 Introducing breaking changes to `export` method. Now using `object` instead of
