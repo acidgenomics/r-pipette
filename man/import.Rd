@@ -146,14 +146,6 @@ Supported return types:
 Note that \code{stringsAsFactors} is always disabled for import.
 }
 
-\section{Google Sheets}{
-
-
-Public Google Sheets are supported. Simply paste in the URL. Private sheets
-are not supported. For that more advanced use case, refer to the
-\href{https://googledrive.tidyverse.org/}{googledrive} package for usage details.
-}
-
 \section{Matrix Market Exchange (MTX)}{
 
 
@@ -219,7 +211,6 @@ Packages:
 \item \href{https://cran.r-project.org/package=rio}{rio}.
 \item \href{http://bioconductor.org/packages/rtracklayer/}{rtracklayer}.
 \item \href{http://r-datatable.com/}{data.table}.
-\item \href{https://googledrive.tidyverse.org/}{googledrive}
 \item \href{http://readr.tidyverse.org}{readr}.
 \item \href{http://readxl.tidyverse.org}{readxl}.
 }
