@@ -62,7 +62,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">brio</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
       </span>
     </div>
 
@@ -105,6 +105,18 @@
       <small>Source: <a href='https://github.com/acidgenomics/brio/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="brio-0-2-1-2019-05-08" class="section level2">
+<h2 class="hasAnchor">
+<a href="#brio-0-2-1-2019-05-08" class="anchor"></a>brio 0.2.1 (2019-05-08)</h2>
+<div id="major-changes" class="section level3">
+<h3 class="hasAnchor">
+<a href="#major-changes" class="anchor"></a>Major changes</h3>
+<ul>
+<li>
+<code>import</code>: Removed Google Sheets support. The <code>googlesheets</code> R package is currently too buggy, and the replacement <code>googlesheets4</code> package isn’t stable. This functionality may be added back in a future update.</li>
+</ul>
+</div>
+</div>
     <div id="brio-0-2-0-2019-05-06" class="section level2">
 <h2 class="hasAnchor">
 <a href="#brio-0-2-0-2019-05-06" class="anchor"></a>brio 0.2.0 (2019-05-06)</h2>
@@ -168,9 +180,9 @@
 <li>Migrated <code>sanitizePercent</code> here from <a href="https://basejump.steinbaugh.com/">basejump</a> package.</li>
 </ul>
 </div>
-<div id="major-changes" class="section level3">
+<div id="major-changes-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#major-changes" class="anchor"></a>Major changes</h3>
+<a href="#major-changes-1" class="anchor"></a>Major changes</h3>
 <ul>
 <li>Switched to using “acid” prefix instead of “basejump” for global <code>options</code>. This applies in particular to the <code>loadData</code> and <code>saveData</code> functions, where the <code>dir</code> argument can be set globally for an interactive session using this parameter.</li>
 </ul>
@@ -252,9 +264,9 @@
     <div id="brio-0-1-9-2019-03-08" class="section level2">
 <h2 class="hasAnchor">
 <a href="#brio-0-1-9-2019-03-08" class="anchor"></a>brio 0.1.9 (2019-03-08)</h2>
-<div id="major-changes-1" class="section level3">
+<div id="major-changes-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#major-changes-1" class="anchor"></a>Major changes</h3>
+<a href="#major-changes-2" class="anchor"></a>Major changes</h3>
 <ul>
 <li>
 <code>loadData</code> and <code>saveData</code> now support <code>list</code> argument, supporting a character vector of object names. This allows for programmatic use of the functions with standard evaluation. For reference, this approach is inspired by the method defined in <code>save</code>.</li>
@@ -415,6 +427,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#brio-0-2-1-2019-05-08">0.2.1</a></li>
         <li><a href="#brio-0-2-0-2019-05-06">0.2.0</a></li>
         <li><a href="#brio-0-1-20-2019-04-25">0.1.20</a></li>
         <li><a href="#brio-0-1-19-2019-04-22">0.1.19</a></li>

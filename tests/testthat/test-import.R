@@ -33,35 +33,6 @@ test_that("XLS", {
     expect_is(object, "data.frame")
 })
 
-test_that("Google Sheet", {
-    # This requires OAuth, so skip for CI checks.
-    # Currently testing this on macOS.
-    skip_if_not(
-        interactive() &&
-        grepl("darwin", Sys.getenv("R_PLATFORM"))
-    )
-    file <- pasteURL(
-        "docs.google.com",
-        "spreadsheets",
-        "d",
-        "1IxM6wsbdE47SOEKXDw7DjHdi8m8BuTu-KB6aa8jypNU",
-        protocol = "https"
-    )
-    x <- import(file)
-    expect_is(x, "data.frame")
-    expect_identical(
-        colnames(x),
-        c(
-            "organism",
-            "nickname",
-            "id_grep",
-            "ensembl_grep",
-            "ucsc_grep",
-            "notes"
-        )
-    )
-})
-
 test_that("GFF3", {
     object <- import(file = file.path("cache", "example.gff3"))
     expect_s4_class(object, "GRanges")
