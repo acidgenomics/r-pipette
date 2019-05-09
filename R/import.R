@@ -121,14 +121,6 @@
 #'
 #' Note that `stringsAsFactors` is always disabled for import.
 #'
-#' @section Google Sheets:
-#'
-#' Public Google Sheets are supported. Simply paste in the URL. Private sheets
-#' are not supported. For that more advanced use case, refer to the
-#' [googledrive][] package for usage details.
-#'
-#' [googledrive]: https://googledrive.tidyverse.org/
-#'
 #' @section Matrix Market Exchange (MTX):
 #'
 #' Reading a Matrix Market Exchange file requires `ROWNAMES` and `COLNAMES`
@@ -179,7 +171,6 @@
 #' - [rio](https://cran.r-project.org/package=rio).
 #' - [rtracklayer](http://bioconductor.org/packages/rtracklayer/).
 #' - [data.table](http://r-datatable.com/).
-#' - [googledrive](https://googledrive.tidyverse.org/)
 #' - [readr](http://readr.tidyverse.org).
 #' - [readxl](http://readxl.tidyverse.org).
 #'
@@ -217,11 +208,7 @@ import <- function(
 
     # Allow Google Sheets import using rio, by matching the URL.
     # Otherwise, coerce the file extension to uppercase, for easy matching.
-    if (grepl("docs\\.google\\.com/spreadsheets/", file)) {
-        ext <- "GSHEET"
-    } else {
-        ext <- toupper(str_match(basename(file), extPattern)[1L, 2L])
-    }
+    ext <- toupper(str_match(basename(file), extPattern)[1L, 2L])
 
     if (ext %in% c("CSV", "FWF", "PSV", "TSV", "TXT")) {
         object <- importDelim(file, colnames = colnames)
@@ -229,11 +216,6 @@ import <- function(
         object <- importXLS(file, sheet = sheet, colnames = colnames)
     } else if (ext %in% c("XLSB", "XLSX")) {
         object <- importXLSX(file, sheet = sheet, colnames = colnames)
-    } else if (ext == "GSHEET") {
-        # Google Sheet, matched by URL (see above).
-        # Assuming Google Sheet contains column names. Consider reworking
-        # this passthrough in a future update, if we need to disable.
-        object <- importGoogleSheet(file, sheet = sheet, colnames = colnames)
     } else if (ext == "PZFX") {
         # GraphPad Prism project.
         # Note that Prism files always contain column names.
