@@ -32,7 +32,7 @@ export(object, ...)
 \S4method{export}{sparseMatrix}(object,
   ext = getOption("acid.export.sparse.ext", default = c("mtx",
   "mtx.gz")), dir = getOption("acid.export.dir", default = "."),
-  file = NULL)
+  file = NULL, overwrite = getOption("acid.overwrite", default = TRUE))
 
 \S4method{export}{GRanges}(object, ext = getOption("acid.export.ext",
   default = c("csv", "csv.gz", "tsv", "tsv.gz")),
