@@ -63,7 +63,11 @@ loadDataAsName <- function(
         invisible(mapply(
             FUN = .loadRDA,
             file = files,
-            MoreArgs = list(envir = safe)
+            MoreArgs = list(
+                envir = safe,
+                # Note that we're checking for overwrite above already.
+                overwrite = FALSE
+            )
         ))
         assert(areSetEqual(dots, ls(safe)))
 
