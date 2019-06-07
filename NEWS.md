@@ -1,3 +1,18 @@
+## brio 0.2.2 (2019-06-08)
+
+### Major changes
+
+- `loadData`, `loadDataAsName`, and `loadRemoteData` now support overwrite
+  argument. The default behavior of these functions has changed to allow
+  overwriting into the environment by default, matching the base `load` function
+  conventions. If this behavior is undesired, set
+  `options(acid.overwrite = FALSE)` and this will be inherited in all calls.
+- Renamed `acid.export.overwrite` and `acid.save.overwrite` to simply use
+  `acid.overwrite` global for IO functions. This was modified now that
+  `loadData` also supports the `overwrite` argument.
+
+
+
 ## brio 0.2.1 (2019-05-08)
 
 ### Major changes

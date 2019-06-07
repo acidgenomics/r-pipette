@@ -10,7 +10,7 @@ importMTX <- function(file) {
             warning(paste0(
                 basename(rownamesFile), " does not exist.\n",
                 "  Row names will not be added to sparse matrix."
-            ), call. = FALSE)
+            ))
             NULL
         }
     )
@@ -22,7 +22,7 @@ importMTX <- function(file) {
             warning(paste0(
                 basename(colnamesFile), " does not exist.\n",
                 "  Column names will not be added to sparse matrix."
-            ), call. = FALSE)
+            ))
             NULL
         }
     )

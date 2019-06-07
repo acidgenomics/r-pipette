@@ -64,9 +64,6 @@ formalsList <- list(
             default = c("csv", "csv.gz", "tsv", "tsv.gz")
         )
     ),
-    export.overwrite = quote(
-        getOption("acid.export.overwrite", default = TRUE)
-    ),
     export.sparse.ext = quote(
         getOption(
             "acid.export.sparse.ext",
@@ -76,6 +73,9 @@ formalsList <- list(
     load.dir = quote(
         getOption("acid.load.dir", default = ".")
     ),
+    overwrite = quote(
+        getOption("acid.overwrite", default = TRUE)
+    ),
     save.compress = quote(
         getOption("acid.save.compress", default = TRUE)
     ),
@@ -84,9 +84,6 @@ formalsList <- list(
     ),
     save.ext = quote(
         getOption("acid.save.ext", default = c("rds", "rda"))
-    ),
-    save.overwrite = quote(
-        getOption("acid.save.overwrite", default = TRUE)
     )
 )
 
