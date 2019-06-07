@@ -162,5 +162,3 @@ test_that("Both `name` and `dir` declared", {
     )
     unlink("XXX", recursive = TRUE)
 })
-
-# FIXME compress support.
