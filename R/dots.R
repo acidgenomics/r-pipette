@@ -44,7 +44,7 @@ dots <- function(..., character = FALSE) {
             "- https://dplyr.tidyverse.org/articles/programming.html",
             "- http://adv-r.had.co.nz/Computing-on-the-language.html",
             sep = "\n"
-        ), call. = FALSE)
+        ))
     }
 
     # Convert names (symbols) to character.

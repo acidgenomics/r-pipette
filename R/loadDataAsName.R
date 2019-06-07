@@ -17,17 +17,31 @@
 #' dir <- system.file("extdata", package = "brio")
 #' loadDataAsName(renamed = example, dir = dir)
 #' class(renamed)
-loadDataAsName <- function(..., dir, envir = globalenv()) {
+# Last modified 2019-06-07.
+loadDataAsName <- function(
+    ...,
+    dir,
+    envir = globalenv(),
+    overwrite
+) {
+    assert(
+        is.environment(envir),
+        isFlag(overwrite)
+    )
+
+    # Map the dot input to files.
     dots <- dots(..., character = TRUE)
     assert(hasNames(dots))
     files <- .listData(names = dots, dir = dir)
     names(files) <- names(dots)
-    assert(is.environment(envir))
 
     # Check to see if any of the new names already exist in environment.
     names <- names(dots)
-    if (!isTRUE(allAreNonExisting(names, envir = envir, inherits = FALSE))) {
-        .safeLoadExistsError(names)
+    if (
+        !isTRUE(overwrite) &&
+        !isTRUE(allAreNonExisting(names, envir = envir, inherits = FALSE))
+    ) {
+        .loadExistsError(names)
     }
 
     # Note that we can skip safe loading here because we have already checked
@@ -47,7 +61,7 @@ loadDataAsName <- function(..., dir, envir = globalenv()) {
         # R data: use safe loading.
         safe <- new.env()
         invisible(mapply(
-            FUN = .safeLoadRDA,
+            FUN = .loadRDA,
             file = files,
             MoreArgs = list(envir = safe)
         ))
@@ -74,3 +88,4 @@ loadDataAsName <- function(..., dir, envir = globalenv()) {
 }
 
 formals(loadDataAsName)[["dir"]] <- formalsList[["load.dir"]]
+formals(loadDataAsName)[["overwrite"]] <- formalsList[["overwrite"]]
