@@ -145,7 +145,7 @@ export.matrix <-  # nolint
 
 formals(export.matrix)[["dir"]] <- formalsList[["export.dir"]]
 formals(export.matrix)[["ext"]] <- formalsList[["export.ext"]]
-formals(export.matrix)[["overwrite"]] <- formalsList[["export.overwrite"]]
+formals(export.matrix)[["overwrite"]] <- formalsList[["overwrite"]]
 
 
 

@@ -53,15 +53,18 @@
 #'
 #' ## Clean up.
 #' rm(example, inherits = TRUE)
+# Last modified 2019-06-07.
 loadData <- function(
     ...,
     dir,
     envir = globalenv(),
-    list = NULL
+    list = NULL,
+    overwrite
 ) {
     assert(
         is.environment(envir),
-        isCharacter(list, nullOK = TRUE)
+        isCharacter(list, nullOK = TRUE),
+        isFlag(overwrite)
     )
 
     if (isCharacter(list)) {
@@ -86,27 +89,34 @@ loadData <- function(
         x = files,
         ignore.case = TRUE
     ))) {
-        fun <- .safeLoadRDS
+        fun <- .loadRDS
     } else if (all(grepl(
         pattern = "\\.rd[a|ata]$",
         x = files,
         ignore.case = TRUE
     ))) {
-        fun <- .safeLoadRDA
+        fun <- .loadRDA
     } else {
         stop(paste0(
             "File extension error: ",
             toString(basename(files)), "\n",
-            "Don't mix RDS/RDA/RDATA files in a single directory."
+            "Don't mix RDS, RDA, and/or RDATA files in a single directory."
         ))
     }
 
-    lapply(X = files, FUN = fun, envir = envir)
+    lapply(
+        X = files,
+        FUN = fun,
+        envir = envir,
+        overwrite = overwrite
+    )
+
     assert(allAreExisting(names, envir = envir, inherits = FALSE))
     invisible(files)
 }
 
 formals(loadData)[["dir"]] <- formalsList[["load.dir"]]
+formals(loadData)[["overwrite"]] <- formalsList[["overwrite"]]
 
 
 
@@ -127,12 +137,12 @@ formals(loadData)[["dir"]] <- formalsList[["load.dir"]]
                 stop(paste0(
                     name, " is missing.\n",
                     rdataLoadError
-                ), call. = FALSE)
+                ))
             } else if (length(files) > 1L) {
                 stop(paste0(
                     name, " is not unique on disk.\n",
                     rdataLoadError
-                ), call. = FALSE)
+                ))
             }
             files
         },
@@ -145,29 +155,33 @@ formals(loadData)[["dir"]] <- formalsList[["load.dir"]]
 
 
 
-.safeLoadExistsError <- function(name) {
+.loadExistsError <- function(name) {
     stop(paste0(
         deparse(name), " exists in environment.\n",
-        "The basejump load functions do not allow reassignment.\n",
-        "We recommending either adding a rm() step or using readRDS()."
-    ), call. = FALSE)
+        "Set `overwrite = TRUE` to disable this check."
+    ))
 }
 
 
 
-.safeLoadRDS <- function(file, envir) {
+# Last modified 2019-06-07.
+.loadRDS <- function(file, envir, overwrite) {
     file <- realpath(file)
     assert(
         isAFile(file),
         # Allowing RDS only here.
         grepl("\\.rds$", file, ignore.case = TRUE),
-        is.environment(envir)
+        is.environment(envir),
+        isFlag(overwrite)
     )
     name <- basenameSansExt(file)
     data <- readRDS(file)
-    # Always error if the object is already assigned in environment.
-    if (exists(x = name, envir = envir, inherits = FALSE)) {
-        .safeLoadExistsError(name)
+    # Error if the object is already assigned in environment.
+    if (
+        !isTRUE(overwrite) &&
+        exists(x = name, envir = envir, inherits = FALSE)
+    ) {
+        .loadExistsError(name)
     }
     assign(x = name, value = data, envir = envir)
     assert(exists(x = name, envir = envir, inherits = FALSE))
@@ -176,21 +190,26 @@ formals(loadData)[["dir"]] <- formalsList[["load.dir"]]
 
 
 
-.safeLoadRDA <- function(file, name = NULL, envir) {
+# Last modified 2019-06-07.
+.loadRDA <- function(file, name = NULL, envir, overwrite) {
     file <- realpath(file)
     assert(
         isAFile(file),
         # Allowing RDA or RDATA here.
         grepl("\\.rd[a|ata]$", file, ignore.case = TRUE),
         isString(name, nullOK = TRUE),
-        is.environment(envir)
+        is.environment(envir),
+        isFlag(overwrite)
     )
     if (is.null(name)) {
         name <- basenameSansExt(file)
     }
-    # Always error if the object is already assigned in environment.
-    if (exists(x = name, envir = envir, inherits = FALSE)) {
-        .safeLoadExistsError(name)
+    # Error if the object is already assigned in environment.
+    if (
+        !isTRUE(overwrite) &&
+        exists(x = name, envir = envir, inherits = FALSE)
+    ) {
+        .loadExistsError(name)
     }
 
     # Loading into a temporary environment, so we can evaluate the integrity
