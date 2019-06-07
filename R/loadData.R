@@ -135,7 +135,8 @@ formals(loadData)[["overwrite"]] <- formalsList[["overwrite"]]
             # Add error checking here.
             if (length(files) == 0L) {
                 stop(paste0(
-                    name, " is missing.\n",
+                    deparse(name), " is missing.\n",
+                    "dir: ", dir, "\n",
                     rdataLoadError
                 ))
             } else if (length(files) > 1L) {
