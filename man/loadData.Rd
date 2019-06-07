@@ -5,7 +5,8 @@
 \title{Load data}
 \usage{
 loadData(..., dir = getOption("acid.load.dir", default = "."),
-  envir = globalenv(), list = NULL)
+  envir = globalenv(), list = NULL,
+  overwrite = getOption("acid.overwrite", default = TRUE))
 }
 \arguments{
 \item{...}{Object names.
@@ -21,6 +22,9 @@ Environment.}
 
 \item{list}{\code{character}.
 A character vector containing the names of objects to be loaded.}
+
+\item{overwrite}{\code{logical(1)}.
+Overwrite existing file on disk.}
 }
 \value{
 Invisible \code{character}.

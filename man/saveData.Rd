@@ -6,7 +6,7 @@
 \usage{
 saveData(..., dir = getOption("acid.save.dir", default = "."),
   ext = getOption("acid.save.ext", default = c("rds", "rda")),
-  overwrite = getOption("acid.save.overwrite", default = TRUE),
+  overwrite = getOption("acid.overwrite", default = TRUE),
   compress = getOption("acid.save.compress", default = TRUE),
   list = NULL, envir = parent.frame())
 }
