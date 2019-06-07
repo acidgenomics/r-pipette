@@ -94,12 +94,10 @@ saveData <- function(
 
     message(paste("Saving", toString(basename(files)), "to", dir))
 
-    # If `overwrite = FALSE`, inform the user which files were skipped
+    # If `overwrite = FALSE`, inform the user which files were skipped.
     if (identical(overwrite, FALSE) && any(file.exists(files))) {
         skip <- files[file.exists(files)]
-        warning(paste0(
-            "Skipped ", toString(basename(skip)), "."
-        ), call. = FALSE)
+        warning(paste0("Skipped ", toString(basename(skip)), "."))
         files <- files[!file.exists(files)]
         if (length(files) == 0L) {
             warning("No files were saved.")
@@ -134,4 +132,4 @@ saveData <- function(
 formals(saveData)[["compress"]] <- formalsList[["save.compress"]]
 formals(saveData)[["dir"]] <- formalsList[["save.dir"]]
 formals(saveData)[["ext"]] <- formalsList[["save.ext"]]
-formals(saveData)[["overwrite"]] <- formalsList[["save.overwrite"]]
+formals(saveData)[["overwrite"]] <- formalsList[["overwrite"]]

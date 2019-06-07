@@ -5,7 +5,8 @@
 \title{Load data as name}
 \usage{
 loadDataAsName(..., dir = getOption("acid.load.dir", default = "."),
-  envir = globalenv())
+  envir = globalenv(), overwrite = getOption("acid.overwrite", default
+  = TRUE))
 }
 \arguments{
 \item{...}{Key value pairs, defining the name mappings. For example,
@@ -18,6 +19,9 @@ Directory path.}
 
 \item{envir}{\code{environment}.
 Environment.}
+
+\item{overwrite}{\code{logical(1)}.
+Overwrite existing file on disk.}
 }
 \value{
 Invisible named \code{character}. File paths.

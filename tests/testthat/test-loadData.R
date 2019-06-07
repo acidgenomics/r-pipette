@@ -21,7 +21,7 @@ test_that("R data serialized", {
 test_that("Error on mixed extensions (no RDS/RDA soup).", {
     expect_error(
         object = basename(loadData(gr, serialized, dir = dir)),
-        regexp = "RDS/RDA/RDATA"
+        regexp = "RDS, RDA, and/or RDATA"
     )
 })
 
@@ -33,12 +33,16 @@ test_that("Standard evaluation", {
 })
 
 # Avoid accidental reassignment in the current environment.
-test_that("Object already exists", {
+test_that("Overwrite mode", {
     envir <- new.env()
     envir[["gr"]] <- TRUE
     expect_error(
-        object = loadData(gr, dir = dir, envir = envir),
-        regexp = "reassignment"
+        object = loadData(gr, dir = dir, envir = envir, overwrite = FALSE),
+        regexp = "overwrite"
+    )
+    expect_type(
+        object = loadData(gr, dir = dir, envir = envir, overwrite = TRUE),
+        type = "character"
     )
 })
 
@@ -59,14 +63,14 @@ test_that("Renamed file", {
 test_that("Duplicate RDA and RDS files", {
     expect_error(
         object = loadData(example, dir = dir),
-        regexp = "example is not unique on disk."
+        regexp = "\"example\" is not unique on disk."
     )
 })
 
 test_that("Invalid arguments", {
     expect_error(
         object = loadData(gr, dir = "XXX"),
-        regexp = "path\\[1\\]"
+        regexp = "directory"
     )
     expect_error(
         object = loadData(gr, dir = dir, envir = "XXX"),

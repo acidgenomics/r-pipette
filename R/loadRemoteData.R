@@ -17,11 +17,17 @@
 #' print(url)
 #' x <- loadRemoteData(url)
 #' print(x)
-loadRemoteData <- function(url, envir = globalenv()) {
+# Last modified 2019-06-07.
+loadRemoteData <- function(
+    url,
+    envir = globalenv(),
+    overwrite
+) {
     assert(
         hasInternet(),
         allAreURLs(url),
-        is.environment(envir)
+        is.environment(envir),
+        isFlag(overwrite)
     )
     if (!all(bapply(
         X = url,
@@ -29,7 +35,7 @@ loadRemoteData <- function(url, envir = globalenv()) {
             grepl(pattern = rdataExtPattern, x = x, ignore.case = TRUE)
         }
     ))) {
-        stop(rdataLoadError, call. = FALSE)
+        stop(rdataLoadError)
     }
     names <- gsub(
         pattern = rdataExtPattern,
@@ -40,8 +46,11 @@ loadRemoteData <- function(url, envir = globalenv()) {
     names(url) <- names
 
     # Check to make sure the objects don't already exist.
-    if (!isTRUE(allAreNonExisting(names, envir = envir, inherits = FALSE))) {
-        .safeLoadExistsError(names)
+    if (
+        !isTRUE(overwrite) &&
+        !isTRUE(allAreNonExisting(names, envir = envir, inherits = FALSE))
+    ) {
+        .loadExistsError(names)
     }
 
     # Download the files to tempdir and return a character matrix of mappings.
@@ -58,3 +67,5 @@ loadRemoteData <- function(url, envir = globalenv()) {
     assert(allAreExisting(names, envir = envir, inherits = FALSE))
     invisible(url)
 }
+
+formals(loadRemoteData)[["overwrite"]] <- formalsList[["overwrite"]]

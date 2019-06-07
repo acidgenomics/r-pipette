@@ -17,28 +17,27 @@ export(object, ...)
 \S4method{export}{matrix}(object, ext = getOption("acid.export.ext",
   default = c("csv", "csv.gz", "tsv", "tsv.gz")),
   dir = getOption("acid.export.dir", default = "."), file = NULL,
-  overwrite = getOption("acid.export.overwrite", default = TRUE))
+  overwrite = getOption("acid.overwrite", default = TRUE))
 
 \S4method{export}{data.frame}(object, ext = getOption("acid.export.ext",
   default = c("csv", "csv.gz", "tsv", "tsv.gz")),
   dir = getOption("acid.export.dir", default = "."), file = NULL,
-  overwrite = getOption("acid.export.overwrite", default = TRUE))
+  overwrite = getOption("acid.overwrite", default = TRUE))
 
 \S4method{export}{DataFrame}(object, ext = getOption("acid.export.ext",
   default = c("csv", "csv.gz", "tsv", "tsv.gz")),
   dir = getOption("acid.export.dir", default = "."), file = NULL,
-  overwrite = getOption("acid.export.overwrite", default = TRUE))
+  overwrite = getOption("acid.overwrite", default = TRUE))
 
 \S4method{export}{sparseMatrix}(object,
   ext = getOption("acid.export.sparse.ext", default = c("mtx",
   "mtx.gz")), dir = getOption("acid.export.dir", default = "."),
-  file = NULL, overwrite = getOption("acid.export.overwrite", default =
-  TRUE))
+  file = NULL, overwrite = getOption("acid.overwrite", default = TRUE))
 
 \S4method{export}{GRanges}(object, ext = getOption("acid.export.ext",
   default = c("csv", "csv.gz", "tsv", "tsv.gz")),
   dir = getOption("acid.export.dir", default = "."), file = NULL,
-  overwrite = getOption("acid.export.overwrite", default = TRUE))
+  overwrite = getOption("acid.overwrite", default = TRUE))
 
 \S4method{export}{SummarizedExperiment}(object, name = NULL,
   dir = getOption("acid.export.dir", default = "."),

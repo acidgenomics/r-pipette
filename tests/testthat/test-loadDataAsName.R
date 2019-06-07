@@ -2,21 +2,27 @@ context("loadDataAsName")
 
 dir <- "cache"
 
-test_that("Non-standard evaluation", {
+test_that("Overwrite mode", {
     envir <- new.env()
-    x <- loadDataAsName(new = serialized, dir = dir, envir = envir)
+
+    x <- loadDataAsName(
+        new = serialized,
+        dir = dir,
+        envir = envir,
+        overwrite = TRUE
+    )
     expect_identical(names(x), "new")
     # We're defaulting to global environment.
     expect_true(exists("new", envir = envir, inherits = FALSE))
-    # Now that the objects are loaded, let's check to make sure we can't
-    # accidentally overwrite in the current environment.
+
     expect_error(
         object = loadDataAsName(
             new = serialized,
             dir = dir,
-            envir = envir
+            envir = envir,
+            overwrite = FALSE
         ),
-        regexp = "reassignment"
+        regexp = "overwrite"
     )
 })
 
@@ -44,7 +50,7 @@ test_that("Multiple objects in single file", {
 test_that("Invalid arguments", {
     expect_error(
         object = loadDataAsName(data = gr, dir = "XXX"),
-        regexp = "path\\[1\\]"
+        regexp = "directory"
     )
     expect_error(
         object = loadDataAsName(data = gr, dir = dir, envir = "XXX"),
