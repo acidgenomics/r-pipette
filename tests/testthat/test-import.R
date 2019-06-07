@@ -186,6 +186,7 @@ with_parameters_test_that(
 )
 
 test_that("No extension", {
+    unlink("example", recursive = TRUE)
     file.create("example")
     expect_error(
         object = import("example"),
