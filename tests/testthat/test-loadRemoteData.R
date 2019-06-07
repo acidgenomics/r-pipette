@@ -11,15 +11,24 @@ test_that("loadRemoteData", {
     expect_is(envir[["example"]], "DataFrame")
 })
 
-test_that("Already loaded", {
+test_that("Overwrite mode", {
     envir <- new.env()
     envir[["example"]] <- TRUE
     expect_error(
         object = loadRemoteData(
             url = paste(brioTestsURL, "example.rda", sep = "/"),
-            envir = envir
+            envir = envir,
+            overwrite = FALSE
         ),
-        regexp = "reassignment"
+        regexp = "overwrite"
+    )
+    expect_type(
+        loadRemoteData(
+            url = paste(brioTestsURL, "example.rda", sep = "/"),
+            envir = envir,
+            overwrite = TRUE
+        ),
+        type = "character"
     )
 })
 
