@@ -141,7 +141,8 @@ formals(loadData)[["overwrite"]] <- formalsList[["overwrite"]]
                 ))
             } else if (length(files) > 1L) {
                 stop(paste0(
-                    name, " is not unique on disk.\n",
+                    deparse(name), " is not unique on disk.\n",
+                    "dir: ", dir, "\n",
                     rdataLoadError
                 ))
             }
