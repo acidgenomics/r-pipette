@@ -280,7 +280,7 @@ formals(export.sparseMatrix)[["dir"]] <-
 formals(export.sparseMatrix)[["ext"]] <-
     formalsList[["export.sparse.ext"]]
 formals(export.sparseMatrix)[["overwrite"]] <-
-    formalsList[["export.overwrite"]]
+    formalsList[["overwrite"]]
 
 
 
