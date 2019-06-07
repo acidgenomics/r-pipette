@@ -20,7 +20,8 @@
 # Last modified 2019-06-07.
 loadRemoteData <- function(
     url,
-    envir = globalenv()
+    envir = globalenv(),
+    overwrite
 ) {
     assert(
         hasInternet(),
