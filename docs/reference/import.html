@@ -51,6 +51,7 @@
 <![endif]-->
 
 
+
   </head>
 
   <body>
@@ -67,7 +68,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">brio</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.3</span>
       </span>
     </div>
 
@@ -101,6 +102,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -166,7 +168,7 @@ Note that import of files in this format is slow.<br />
 Imported by <code><a href='https://rdrr.io/pkg/gdata/man/read.xls.html'>gdata::read.xls()</a></code>.</p></li>
 <li><p><strong>GraphPad Prism project</strong> (<code>PZFX</code>): <code>data.frame</code>.<br />
 Experimental. Consider resaving in CSV format instead.<br />
-Imported by <code>pzfx::read_pzfx()</code>.</p></li>
+Imported by <code><a href='https://rdrr.io/pkg/pzfx/man/read_pzfx.html'>pzfx::read_pzfx()</a></code>.</p></li>
 <li><p><strong>General feature format</strong> (<code>GFF</code>, <code>GFF1</code>, <code>GFF2</code>, <code>GFF3</code>, <code>GTF</code>):
 <code>GRanges</code>.<br />
 Imported by <code><a href='https://rdrr.io/pkg/rtracklayer/man/export.html'>rtracklayer::import()</a></code>.</p></li>
@@ -212,7 +214,9 @@ complex import settings, just call the wrapped importer directly instead.</p>
     <h2 class="hasAnchor" id="row-and-column-names"><a class="anchor" href="#row-and-column-names"></a>Row and column names</h2>
 
     
-    <p><strong>Row names.</strong> Row name handling has become an inconsistent mess in R because
+
+
+<p><strong>Row names.</strong> Row name handling has become an inconsistent mess in R because
 of differential support in base R, tidyverse, data.table, and Bioconductor.
 To maintain sanity, <code>import()</code> attempts to handle row names automatically.
 The function checks for a <code>rowname</code> column in delimited data, and moves these
@@ -233,7 +237,9 @@ a supported file type.</p>
     <h2 class="hasAnchor" id="data-frame-return"><a class="anchor" href="#data-frame-return"></a>Data frame return</h2>
 
     
-    <p>By default, <code>import()</code> returns a standard <code>data.frame</code> for delimited/column
+
+
+<p>By default, <code>import()</code> returns a standard <code>data.frame</code> for delimited/column
 formatted data. However, any of these desired output formats can be set
 globally using <code><a href='https://rdrr.io/r/base/options.html'>options(brio.data.frame = "data.frame")</a></code>.</p>
 <p>Supported return types:</p><ul>
@@ -258,19 +264,24 @@ globally using <code><a href='https://rdrr.io/r/base/options.html'>options(brio.
 <li><p>See <code><a href='https://rdrr.io/r/utils/help.html'>help(topic = "data.table", package = "data.table")</a></code> for details.</p></li>
 </ul></li>
 </ul>
-    <p>Note that <code>stringsAsFactors</code> is always disabled for import.</p>
+
+<p>Note that <code>stringsAsFactors</code> is always disabled for import.</p>
     
     <h2 class="hasAnchor" id="matrix-market-exchange-mtx-"><a class="anchor" href="#matrix-market-exchange-mtx-"></a>Matrix Market Exchange (MTX)</h2>
 
     
-    <p>Reading a Matrix Market Exchange file requires <code>ROWNAMES</code> and <code>COLNAMES</code>
+
+
+<p>Reading a Matrix Market Exchange file requires <code>ROWNAMES</code> and <code>COLNAMES</code>
 sidecar files containing the corresponding row and column names of the sparse
 matrix.</p>
     
     <h2 class="hasAnchor" id="general-feature-format-gff-gtf-"><a class="anchor" href="#general-feature-format-gff-gtf-"></a>General feature format (GFF, GTF)</h2>
 
     
-    <p>The GFF (General Feature Format) format consists of one line per feature,
+
+
+<p>The GFF (General Feature Format) format consists of one line per feature,
 each containing 9 columns of data, plus optional track definition lines. The
 GTF (General Transfer Format) is identical to GFF version 2.</p>
 <p><a href='https://steinbaugh.com/basejump/'>basejump</a> exports the specialized <code>makeGRangesFromGFF()</code> function that
@@ -279,25 +290,33 @@ See also:</p><ul>
 <li><p><a href='http://www.ensembl.org/info/website/upload/gff.html'>Ensembl spec</a></p></li>
 <li><p><a href='http://www.gencodegenes.org/gencodeformat.html'>GENCODE spec</a></p></li>
 </ul>
+
     
     <h2 class="hasAnchor" id="gene-sets-gmt-gmx-"><a class="anchor" href="#gene-sets-gmt-gmx-"></a>Gene sets (GMT, GMX)</h2>
 
     
-    <p>Refer to the Broad Institute <a href='https://goo.gl/3ZkDPb'>GSEA wiki</a> for details.</p>
+
+
+<p>Refer to the Broad Institute <a href='https://goo.gl/3ZkDPb'>GSEA wiki</a> for details.</p>
     
     <h2 class="hasAnchor" id="bcbio-count-matrix"><a class="anchor" href="#bcbio-count-matrix"></a>bcbio count matrix</h2>
 
     
-    <p><a href='https://bcbio-nextgen.readthedocs.io/'>bcbio</a> count matrix and related sidecar files are natively supported.</p><ul>
+
+
+<p><a href='https://bcbio-nextgen.readthedocs.io/'>bcbio</a> count matrix and related sidecar files are natively supported.</p><ul>
 <li><p><code>COUNTS</code>: Counts table (e.g. RNA-seq aligned counts).</p></li>
 <li><p><code>COLNAMES</code>: Sidecar file containing column names.</p></li>
 <li><p><code>ROWNAMES</code>: Sidecar file containing row names.</p></li>
 </ul>
+
     
     <h2 class="hasAnchor" id="blacklisted-extensions"><a class="anchor" href="#blacklisted-extensions"></a>Blacklisted extensions</h2>
 
     
-    <p>These file formats are blacklisted, and intentionally not supported:
+
+
+<p>These file formats are blacklisted, and intentionally not supported:
 <code>DOC</code>, <code>DOCX</code>, <code>PDF</code>, <code>PPT</code>, <code>PPTX</code>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -308,14 +327,16 @@ See also:</p><ul>
 <li><p><a href='http://r-datatable.com/'>data.table</a>.</p></li>
 <li><p><a href='http://readr.tidyverse.org'>readr</a>.</p></li>
 <li><p><a href='http://readxl.tidyverse.org'>readxl</a>.</p></li>
-</ul></div>
-    <div class='dont-index'><p>Importer functions:</p><ul>
+</ul>
+
+<p>Importer functions:</p><ul>
 <li><p><code><a href='https://rdrr.io/pkg/rtracklayer/man/export.html'>rtracklayer::import()</a></code>.</p></li>
 <li><p><code><a href='https://rdrr.io/pkg/rio/man/import.html'>rio::import()</a></code>.</p></li>
 <li><p><code><a href='https://rdrr.io/pkg/data.table/man/fread.html'>data.table::fread()</a></code>.</p></li>
 <li><p><code><a href='https://readr.tidyverse.org/reference/read_delim.html'>readr::read_csv()</a></code>.</p></li>
 <li><p><code><a href='https://rdrr.io/r/utils/read.table.html'>utils::read.table()</a></code>.</p></li>
-</ul></div>
+</ul>
+</div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -369,6 +390,7 @@ See also:</p><ul>
   </div>
 </div>
 
+
       <footer>
       <div class="copyright">
   <p>Developed by <a href='https://steinbaugh.com/'>Michael Steinbaugh</a>, <a href='https://acidgenomics.com/'>Acid Genomics</a>.</p>
@@ -377,11 +399,14 @@ See also:</p><ul>
 <div class="pkgdown">
   <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9100.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 
