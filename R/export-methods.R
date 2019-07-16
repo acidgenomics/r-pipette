@@ -375,7 +375,7 @@ setMethod(
         # Note that SummarizedExperiment in BioC 3.6/R 3.4 release doesn't
         # set row names properly, so keep this step here for compatibility.
         if (!hasRownames(data)) {
-            rownames(data) <- rownames(object)
+            rownames(data) <- rownames(object)  # nocov
         }
         data <- atomize(data)
         data <- as.data.frame(data)
