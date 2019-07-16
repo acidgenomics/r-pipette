@@ -9,6 +9,8 @@ set -Eeuxo pipefail
 # - Travis CI recipe
 #   https://github.com/travis-ci/travis-build/blob/master/lib/travis/build/script/r.rb
 
+export _R_CHECK_FORCE_SUGGESTS_=false
+
 # Bug fix for `Sys.timezone()` when `timedatectl` is installed.
 # https://github.com/rocker-org/rocker-versioned/issues/89
 export TZ="America/New_York"
