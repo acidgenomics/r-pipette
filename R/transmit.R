@@ -3,9 +3,10 @@
 #' Utility function that supports easy file matching and download from a remote
 #' FTP server. Also enables on-the-fly file renaming and compression.
 #'
+#' @export
+#'
 #' @inheritParams params
 #' @inheritParams saveData
-#' @export
 #'
 #' @param remoteDir `character(1)`.
 #'   Remote FTP directory path.
@@ -41,6 +42,8 @@
 #'
 #' ## Clean up.
 #' ## unlink(readme)
+
+# Updated 2019-07-16.
 transmit <- function(
     remoteDir,
     localDir = ".",
@@ -73,7 +76,7 @@ transmit <- function(
 
     # Error and inform the user if the FTP connection fails.
     if (!isTRUE(url.exists(remoteDir))) {
-        stop(paste("Connection to", server, "failed."))
+        stop(paste("Connection to", server, "failed."))  # nocov
     } else {
         message(paste0("Transmitting files from ", server, "."))
     }
@@ -83,7 +86,7 @@ transmit <- function(
         is.character(remoteTxt),
         length(remoteTxt) > 0L
     )) {
-        stop("Failed to list directory contents.")
+        stop("Failed to list directory contents.")  # nocov
     }
 
     # Match the `-` at begining for file.

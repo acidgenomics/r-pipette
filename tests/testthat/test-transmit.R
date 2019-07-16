@@ -1,9 +1,9 @@
 context("transmit")
 
-skip_if_not(interactive())
 # nolint start
-# skip_on_appveyor()
-# skip_on_travis()
+# > skip_if_not(interactive())
+# > skip_on_travis()
+# > skip_on_appveyor()
 # nolint end
 
 # Note that only FTP is currently supported.
