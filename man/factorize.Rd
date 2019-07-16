@@ -3,12 +3,21 @@
 \docType{methods}
 \name{factorize}
 \alias{factorize}
-\alias{factorize,ANY-method}
+\alias{factorize,matrix-method}
+\alias{factorize,data.frame-method}
+\alias{factorize,DataFrame-method}
+\alias{factorize,sparseMatrix-method}
 \title{Factorize}
 \usage{
 factorize(object, ...)
 
-\S4method{factorize}{ANY}(object)
+\S4method{factorize}{matrix}(object)
+
+\S4method{factorize}{data.frame}(object)
+
+\S4method{factorize}{DataFrame}(object)
+
+\S4method{factorize}{sparseMatrix}(object)
 }
 \arguments{
 \item{object}{Object.}
