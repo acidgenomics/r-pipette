@@ -40,10 +40,48 @@ factorize.ANY <-  # nolint
 
 
 
+factorize.matrix <- factorize.ANY  # nolint
+
 #' @rdname factorize
 #' @export
 setMethod(
     f = "factorize",
-    signature = signature("ANY"),
-    definition = factorize.ANY
+    signature = signature("matrix"),
+    definition = factorize.matrix
+)
+
+
+
+factorize.data.frame <- factorize.ANY  # nolint
+
+#' @rdname factorize
+#' @export
+setMethod(
+    f = "factorize",
+    signature = signature("data.frame"),
+    definition = factorize.data.frame
+)
+
+
+
+factorize.DataFrame <- factorize.ANY  # nolint
+
+#' @rdname factorize
+#' @export
+setMethod(
+    f = "factorize",
+    signature = signature("DataFrame"),
+    definition = factorize.DataFrame
+)
+
+
+
+factorize.sparseMatrix <- factorize.ANY  # nolint
+
+#' @rdname factorize
+#' @export
+setMethod(
+    f = "factorize",
+    signature = signature("sparseMatrix"),
+    definition = factorize.sparseMatrix
 )
