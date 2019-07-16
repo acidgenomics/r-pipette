@@ -7,6 +7,8 @@ data(
 # nolint start
 DataFrame <- S4Vectors::DataFrame
 assay <- SummarizedExperiment::assay
+assayNames <- SummarizedExperiment::assayNames
+`assays<-` <- SummarizedExperiment::`assays<-`
 rowRanges <- SummarizedExperiment::rowRanges
 mcols <- S4Vectors::mcols
 metadata <- S4Vectors::metadata
