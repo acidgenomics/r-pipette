@@ -1,5 +1,12 @@
 context("import")
 
+test_that("Invalid extension", {
+    expect_error(
+        import(file = "file.XXX"),
+        "XXX extension is not supported."
+    )
+})
+
 with_parameters_test_that(
     "Delimited", {
         file <- file.path(file = "cache", paste0("example.", ext))
@@ -23,10 +30,10 @@ test_that("XLSX", {
 
 # Both Travis and AppVeyor choke on XLS.
 test_that("XLS", {
-    skip_if_not(interactive())
     # nolint start
-    # skip_on_appveyor()
-    # skip_on_travis()
+    # > skip_if_not(interactive())
+    # > skip_on_appveyor()
+    # > skip_on_travis()
     # nolint end
     file <- file.path("cache", "example.xls")
     object <- import(file)
@@ -211,4 +218,22 @@ test_that("rio::import(), e.g. Stata DTA file", {
         colnames(x),
         c("sepallength", "sepalwidth", "petallength", "petalwidth", "species")
     )
+})
+
+test_that("acid.data.frame global option", {
+    file <- file.path(file = "cache", "example.csv")
+
+    options("acid.data.frame" = "data.frame")
+    object <- import(file)
+    expect_s3_class(object, "data.frame")
+    expect_true(hasRownames(object))
+
+    options("acid.data.frame" = "DataFrame")
+    object <- import(file)
+    expect_s4_class(object, "DataFrame")
+    expect_true(hasRownames(object))
+
+    option("acid.data.frame") <- "data.table"
+    option("acid.data.frame") <- "tbl_df"
+    option("acid.data.frame") <- NULL
 })
