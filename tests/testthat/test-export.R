@@ -1,12 +1,56 @@
+context("export : matrix")
+
+ext <- eval(formals(export.matrix)[["ext"]])
+with_parameters_test_that(
+    "`ext` argument", {
+        file <- paste0("mat", ".", ext)
+
+        x <- export(object = mat, ext = ext)
+        expect_identical(x, realpath(file))
+        expect_true(file.exists(file))
+        # Check that row names stay intact.
+        expect_true(grepl(
+            pattern = "rowname",
+            x = head(readLines(file), n = 1L)
+        ))
+
+        # Check accidental overwrite support.
+        expect_error(
+            export(mat, overwrite = FALSE),
+            "File exists"
+        )
+
+        # Now strip the names, and confirm that export still works.
+        mat <- unname(mat)
+        x <- export(object = mat, ext = ext)
+        expect_identical(x, realpath(file))
+        expect_true(file.exists(file))
+        expect_true(grepl(
+            pattern = "V1",
+            x = head(readLines(file), n = 1L)
+        ))
+
+        file.remove(file)
+    },
+    ext = ext
+)
+
+
+
 context("export : DataFrame")
 
 ext <- eval(formals(export.matrix)[["ext"]])
 with_parameters_test_that(
     "`ext` argument", {
-        file <- paste0("df.", ext)
+        file <- paste0("df", ".", ext)
         x <- export(df, ext = ext)
         expect_identical(x, realpath(file))
         expect_true(file.exists(file))
+        # Check that row names stay intact.
+        expect_true(grepl(
+            pattern = "rowname",
+            x = head(readLines(file), n = 1L)
+        ))
         file.remove(file)
     },
     ext = ext
@@ -23,7 +67,7 @@ test_that("`file` argument", {
 
 context("export : sparseMatrix")
 
-test_that("`ext` argument, using gzip compression", {
+test_that("`ext` argument, using gzip compression (default)", {
     x <- export(sparse, ext = "mtx.gz")
     expect_identical(
         x,
@@ -34,6 +78,13 @@ test_that("`ext` argument, using gzip compression", {
         )
     )
     expect_true(all(file.exists(x)))
+
+    # Check accidental overwrite support.
+    expect_error(
+        export(sparse, ext = "mtx.gz", overwrite = FALSE),
+        "File exists"
+    )
+
     file.remove(x)
 })
 
@@ -94,6 +145,16 @@ test_that("Both `name` and `dir` declared", {
             )
         )
     )
+    unlink("XXX", recursive = TRUE)
+})
+
+test_that("Unnamed primary assay", {
+    se <- as(rse, "SummarizedExperiment")
+    # Note that `assayNames()` assignment doesn't work here.
+    names(assays(se)) <- NULL
+    expect_null(assayNames(se))
+    x <- export(se, dir = "XXX")
+    expect_identical(names(x[["assays"]]), "assay")
     unlink("XXX", recursive = TRUE)
 })
 
