@@ -1,5 +1,5 @@
 data(
-    df, gr, rse, sce,
+    df, dt, gr, rse, sce, tbl,
     package = "acidtest",
     envir = environment()
 )
