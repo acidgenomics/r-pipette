@@ -2,7 +2,7 @@ context("loadDataAsName")
 
 dir <- "cache"
 
-test_that("Overwrite mode", {
+test_that("RDS, overwrite mode", {
     envir <- new.env()
 
     x <- loadDataAsName(
@@ -24,6 +24,11 @@ test_that("Overwrite mode", {
         ),
         regexp = "overwrite"
     )
+})
+
+test_that("RDA", {
+    x <- loadDataAsName(data = gr, dir = dir)
+    expect_identical(names(x), "data")
 })
 
 test_that("Standard evaluation", {

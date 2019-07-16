@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extract dots from function — dots • brio</title>
+<title>Version 0.2 • brio</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -34,10 +34,7 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Extract dots from function — dots" />
-
-<meta property="og:description" content="Extract dots from function" />
-<meta name="twitter:card" content="summary" />
+<meta property="og:title" content="Version 0.2" />
 
 
 
@@ -55,7 +52,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-topic">
+    <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -108,87 +105,70 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Extract dots from function</h1>
-    <small class="dont-index">Source: <a href='https://github.com/acidgenomics/brio/blob/master/R/dots.R'><code>R/dots.R</code></a></small>
-    <div class="hidden name"><code>dots.Rd</code></div>
+      <h1>Changelog <small>0.2</small></h1>
+      
     </div>
 
-    <div class="ref-description">
-    
-    <p>Extract dots from function</p>
-    
-    </div>
-
-    <pre class="usage"><span class='fu'>dots</span>(<span class='no'>...</span>, <span class='kw'>character</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>...</th>
-      <td><p>Objects as dots.</p></td>
-    </tr>
-    <tr>
-      <th>character</th>
-      <td><p><code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>.
-Return dots (<code>...</code>) as <code>character</code>.</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    
+    <div id="brio-0-2-0-2019-05-06" class="section level2">
+<h2 class="hasAnchor">
+<a href="#brio-0-2-0-2019-05-06" class="anchor"></a>brio 0.2.0 (2019-05-06)</h2>
+<p>Introducing breaking changes to <code>export</code> method. Now using <code>object</code> instead of <code>x</code> as the primary argument, and defaulting to the use of <code>ext</code> and <code>dir</code> instead of recommending the use of <code>file</code>, as is the convention in the brio package. This makes interactive file export quicker and more intuitive, involving less repetitive variable declarations.</p>
+</div>
+    <div id="brio-0-2-1-2019-05-08" class="section level2">
+<h2 class="hasAnchor">
+<a href="#brio-0-2-1-2019-05-08" class="anchor"></a>brio 0.2.1 (2019-05-08)</h2>
+<div id="major-changes-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#major-changes-1" class="anchor"></a>Major changes</h3>
 <ul>
-<li><p>"<code>character = FALSE</code>": <code>list</code>. Objects as <code>name</code> class. Can return the
-object from the <code>name</code> with <code>eval</code>.</p></li>
-<li><p>"<code>character = TRUE</code>": <code>character</code>. Names of the dots.</p></li>
-</ul>
-
-    
-    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
-
-    <p>This function uses non-standard evaluation.</p>
-    
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'>
-<ul>
-<li><p><code><a href='https://rdrr.io/r/utils/help.html'>help("dotsMethods", "methods")</a></code>.</p></li>
-<li><p><a href='http://tidyverse.org'>tidyverse</a> documentation:</p><ul>
-<li><p><a href='http://rlang.tidyverse.org'>rlang</a>.</p></li>
-<li><p><a href='https://goo.gl/fhAuak'>dplyr utils</a>.</p></li>
-<li><p><a href='https://goo.gl/bM5TrP'>devtools infrastructure</a>.</p></li>
-</ul></li>
+<li>
+<code>import</code>: Removed Google Sheets support. The <code>googlesheets</code> R package is currently too buggy, and the replacement <code>googlesheets4</code> package isn’t stable. This functionality may be added back in a future update.</li>
 </ul>
 </div>
-    
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>dots</span>(<span class='no'>a</span>, <span class='no'>b</span>, <span class='no'>c</span>, <span class='kw'>character</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; [[1]]
-#&gt; a
-#&gt; 
-#&gt; [[2]]
-#&gt; b
-#&gt; 
-#&gt; [[3]]
-#&gt; c
-#&gt; </div><div class='input'><span class='fu'>dots</span>(<span class='no'>a</span>, <span class='no'>b</span>, <span class='no'>c</span>, <span class='kw'>character</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] "a" "b" "c"</div></pre>
+</div>
+    <div id="brio-0-2-2-2019-06-08" class="section level2">
+<h2 class="hasAnchor">
+<a href="#brio-0-2-2-2019-06-08" class="anchor"></a>brio 0.2.2 (2019-06-08)</h2>
+<div id="major-changes" class="section level3">
+<h3 class="hasAnchor">
+<a href="#major-changes" class="anchor"></a>Major changes</h3>
+<ul>
+<li>
+<code>loadData</code>, <code>loadDataAsName</code>, and <code>loadRemoteData</code> now support overwrite argument. The default behavior of these functions has changed to allow overwriting into the environment by default, matching the base <code>load</code> function conventions. If this behavior is undesired, set <code><a href="https://rdrr.io/r/base/options.html">options(acid.overwrite = FALSE)</a></code> and this will be inherited in all calls.</li>
+<li>Renamed <code>acid.export.overwrite</code> and <code>acid.save.overwrite</code> to simply use <code>acid.overwrite</code> global for IO functions. This was modified now that <code>loadData</code> also supports the <code>overwrite</code> argument.</li>
+</ul>
+</div>
+</div>
+    <div id="brio-0-2-3-2019-07-16" class="section level2">
+<h2 class="hasAnchor">
+<a href="#brio-0-2-3-2019-07-16" class="anchor"></a>brio 0.2.3 (2019-07-16)</h2>
+<div id="minor-changes" class="section level3">
+<h3 class="hasAnchor">
+<a href="#minor-changes" class="anchor"></a>Minor changes</h3>
+<ul>
+<li>
+<code>factorize</code>: Tightened up method support. Now exporting <code>DataFrame</code> only.</li>
+<li>Bug fix for <code>acid.data.frame</code> global option support.</li>
+<li>
+<code>sanitizeNA</code>: Improved factor return.</li>
+<li>Improved code coverage.</li>
+</ul>
+</div>
+</div>
   </div>
+
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#note">Note</a></li>
-
-      <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+    <div id="tocnav">
+      <h2>Contents</h2>
+      <ul class="nav nav-pills nav-stacked">
+        <li><a href="#brio-0-2-0-2019-05-06">0.2.0</a></li>
+        <li><a href="#brio-0-2-1-2019-05-08">0.2.1</a></li>
+        <li><a href="#brio-0-2-2-2019-06-08">0.2.2</a></li>
+        <li><a href="#brio-0-2-3-2019-07-16">0.2.3</a></li>
+      </ul>
+    </div>
   </div>
+
 </div>
 
 

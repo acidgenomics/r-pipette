@@ -70,6 +70,7 @@ NULL
 # `data.table`, `tbl_df`, and `DataFrame` classes. Note that `rio::export()`
 # does not preserve row names by default, so we're ensuring row names get
 # coerced to "rowname" column consistently here.
+# Updated 2019-07-16.
 export.matrix <-  # nolint
     function(
         object,
@@ -110,7 +111,12 @@ export.matrix <-  # nolint
         if (is.null(file)) {
             call <- standardizeCall()
             sym <- call[["object"]]
-            assert(is.symbol(sym))
+            if (!is.symbol(sym)) {
+                stop(sprintf(
+                    "`export()` object argument is not a symbol: %s",
+                    deparse(sym)
+                ))
+            }
             name <- as.character(sym)
             assert(isString(ext))
             file <- file.path(dir, paste0(name, ".", ext))
@@ -193,6 +199,7 @@ setMethod(
 # Note that "file" is referring to the matrix file.
 # The correponding column and row sidecar files are generated automatically.
 # Consider adding HDF5 support in a future update.
+# Updated 2019-07-16.
 export.sparseMatrix <-  # nolint
     function(
         object,
@@ -214,7 +221,12 @@ export.sparseMatrix <-  # nolint
         if (is.null(file)) {
             call <- standardizeCall()
             sym <- call[["object"]]
-            assert(is.symbol(sym))
+            if (!is.symbol(sym)) {
+                stop(sprintf(
+                    "`export()` object argument is not a symbol: %s",
+                    deparse(sym)
+                ))
+            }
             name <- as.character(sym)
             assert(isString(ext))
             file <- file.path(dir, paste0(name, ".", ext))
@@ -310,6 +322,7 @@ setMethod(
 
 
 # SummarizedExperiment =========================================================
+# Updated 2019-07-16.
 .export.assays <-  # nolint
     function(object, name, dir, compress) {
         assayNames <- assayNames(object)
@@ -342,6 +355,7 @@ setMethod(
 
 
 
+# Updated 2019-07-16.
 .export.colData <-  # nolint
     function(object, ext, dir) {
         export(
@@ -354,13 +368,14 @@ setMethod(
 
 # NOTE: The standard `rowData()` output is okay but doesn't include genomic
 # ranges coordinates. That's why we're coercing from `rowRanges()` for RSE.
+# Updated 2019-07-16.
 .export.rowData <-  # nolint
     function(object, ext, dir) {
         data <- rowData(object)
         # Note that SummarizedExperiment in BioC 3.6/R 3.4 release doesn't
         # set row names properly, so keep this step here for compatibility.
         if (!hasRownames(data)) {
-            rownames(data) <- rownames(object)
+            rownames(data) <- rownames(object)  # nocov
         }
         data <- atomize(data)
         data <- as.data.frame(data)
@@ -373,6 +388,7 @@ setMethod(
 # Require at least 1 of the slotNames to be defined for export.
 # `rowData` is a supported slot but is actually defined in `rowRanges`.
 # Note that we're not using `match.arg()` here for `slotNames`.
+# Updated 2019-07-16.
 export.SummarizedExperiment <-  # nolint
     function(
         object,
@@ -382,7 +398,6 @@ export.SummarizedExperiment <-  # nolint
         slotNames = c("assays", "colData", "rowData")
     ) {
         validObject(object)
-        call <- standardizeCall()
         assert(
             isString(name, nullOK = TRUE),
             isString(dir),
@@ -393,10 +408,18 @@ export.SummarizedExperiment <-  # nolint
                 y = c(slotNames(object), "rowData")
             )
         )
+        call <- standardizeCall()
 
         # Get the name and create directory substructure.
         if (is.null(name)) {
-            name <- as.character(call[["object"]])
+            sym <- call[["object"]]
+            if (!is.symbol(sym)) {
+                stop(sprintf(
+                    "`export()` object argument is not a symbol: %s",
+                    deparse(sym)
+                ))
+            }
+            name <- as.character(sym)
         }
         dir <- initDir(file.path(dir, name))
 
@@ -475,14 +498,34 @@ setMethod(
 
 
 
-# Consider exporting `reducedDims` slot here also by default.
-
+# Updated 2019-07-16.
 export.SingleCellExperiment <-  # nolint
     function(object) {
         validObject(object)
-        assert(isFlag(compress))
+        assert(
+            isString(name, nullOK = TRUE),
+            isString(dir),
+            isFlag(compress),
+            isCharacter(slotNames),
+            isSubset(
+                x = slotNames,
+                y = c(slotNames(object), "rowData")
+            )
+        )
         call <- standardizeCall()
-        name <- as.character(call[["object"]])
+
+        # Get the name and create directory substructure.
+        if (is.null(name)) {
+            sym <- call[["object"]]
+            if (!is.symbol(sym)) {
+                stop(sprintf(
+                    "`export()` object argument is not a symbol: %s",
+                    deparse(sym)
+                ))
+            }
+            name <- as.character(sym)
+        }
+        dir <- initDir(file.path(dir, name))
 
         # Primarily use SE method to export.
         se <- as(object, "RangedSummarizedExperiment")
@@ -492,7 +535,6 @@ export.SingleCellExperiment <-  # nolint
         # We're handling `reducedDims` specially below.
         args[["slotNames"]] <- setdiff(args[["slotNames"]], "reducedDims")
         files <- do.call(what = export, args = args)
-        print(files)
 
         reducedDimNames <- reducedDimNames(object)
         if (
@@ -507,8 +549,8 @@ export.SingleCellExperiment <-  # nolint
                     reducedDim <- reducedDims(object)[[name]]
                     if (is(reducedDim, "matrix")) {
                         ext <- "csv"
-                    } else if (is(reducedDim, "sparseMatrix")) {
-                        ext <- "mtx"
+                    } else if (is(reducedDim, "sparseMatrix")) {         # nocov
+                        ext <- "mtx"                                     # nocov
                     }
                     if (isTRUE(compress)) {
                         ext <- paste0(ext, ".gz")
@@ -516,7 +558,7 @@ export.SingleCellExperiment <-  # nolint
                     file <- paste0(file, ".", ext)
                     export(reducedDim, file = file)
                 },
-                dir = initDir(file.path(dir, name, "reducedDims"))
+                dir = initDir(file.path(dir, "reducedDims"))
             )
             names(files[["reducedDims"]]) <- reducedDimNames
         }

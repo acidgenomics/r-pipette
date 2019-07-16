@@ -37,12 +37,6 @@
 #' ## Clean up.
 #' unlink("example", recursive = TRUE)
 writeCounts <- function(..., dir, compress) {
-    # Catch legacy arguments.
-    call <- match.call()
-    if ("gzip" %in% names(call)) {
-        stop("Use `compress` instead of `gzip`.")
-    }
-
     names <- dots(..., character = TRUE)
     data <- list(...)
     dir <- initDir(dir)
@@ -51,7 +45,6 @@ writeCounts <- function(..., dir, compress) {
     # Iterate across the dot objects and write to disk.
     message(paste0("Writing ", toString(names), " to ", dir, "."))
 
-    # Put the names first in the call here.
     files <- mapply(
         name = names,
         object = data,

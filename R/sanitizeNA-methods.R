@@ -81,7 +81,9 @@ setMethod(
 
 sanitizeNA.factor <-  # nolint
     function(object) {
-        x <- sanitizeNA(as.character(object))
+        x <- as.character(object)
+        x <- sanitizeNA(x)
+        x <- as.factor(x)
         levels(x) <- unique(sanitizeNA(levels(object)))
         names(x) <- names(object)
         x
