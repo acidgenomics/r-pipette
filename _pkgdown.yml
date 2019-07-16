@@ -4,6 +4,9 @@ authors:
   Acid Genomics:
     href: https://acidgenomics.com/
 
+news:
+  - one_page: false
+
 reference:
   - title: Import/export of flat files
     contents:
