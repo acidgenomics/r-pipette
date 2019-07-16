@@ -75,8 +75,9 @@ test_that("`file` argument", {
 })
 
 test_that("Invalid input", {
+    # Note that `unname()` usage will result in a DataFrame error.
     expect_error(
-        export(object = unname(df)),
+        export(object = as.data.frame(df)),
         "symbol"
     )
 })
