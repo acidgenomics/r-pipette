@@ -2,8 +2,10 @@
 
 ### Minor changes
 
-- `factorize`: Tightened up method support. Now exporting support for matrix,
-  data.frame, DataFrame, and sparseMatrix, rather than using `ANY` method.
+- `factorize`: Tightened up method support. Now exporting `DataFrame` only.
+- Bug fix for `acid.data.frame` global option support.
+- `sanitizeNA`: Improved factor return.
+- Improved code coverage.
 
 ## brio 0.2.2 (2019-06-08)
 
