@@ -13,7 +13,7 @@ requireNamespace("covr", quietly = TRUE)
 cov <- covr::package_coverage()
 pct <- covr::percent_coverage(cov)
 
-if (pct < 90L) {
+if (pct < 95L) {
     print(cov)
     stop(sprintf("Coverage is %s.", round(pct, digits = 2L)))
 }
