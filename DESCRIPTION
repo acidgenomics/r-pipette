@@ -2,8 +2,8 @@ Package: brio
 Title: Biological R Input/Output
 Description: Extension of the rio and rtracklayer packages with improved support
     for biological data structures.
-Version: 0.2.2
-Date: 2019-06-07
+Version: 0.2.3
+Date: 2019-07-16
 Authors@R: c(
     person(
         "Michael", "Steinbaugh",
@@ -24,15 +24,15 @@ Encoding: UTF-8
 Depends: R (>= 3.5)
 Imports:
     bioverbs (>= 0.1.19),
-    goalie (>= 0.2.16),
-    transformer (>= 0.1.11),
+    goalie (>= 0.2.17),
+    transformer (>= 0.1.12),
     GenomicRanges,
     S4Vectors,
     SingleCellExperiment,
     SummarizedExperiment,
     rtracklayer,
     Matrix (>= 1.2),
-    R.utils (>= 2.8),
+    R.utils (>= 2.9),
     RCurl (>= 1.95),
     data.table (>= 1.12),
     jsonlite (>= 1.6),
@@ -45,7 +45,7 @@ Imports:
     stats,
     utils
 Suggests:
-    acidtest,
+    acidtest (>= 0.1.5),
     gdata (>= 2.18),
     pzfx (>= 0.2),
     readxl (>= 1.3.1),

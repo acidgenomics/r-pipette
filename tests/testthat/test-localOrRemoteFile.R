@@ -16,3 +16,19 @@ test_that("Missing file", {
         regexp = "path\\[1\\]"
     )
 })
+
+test_that("No file extension", {
+    expect_error(
+        localOrRemoteFile("file"),
+        "file extension"
+    )
+})
+
+with_parameters_test_that(
+    "Automatic decompression", {
+        file <- file.path("cache", paste0("example.txt.", ext))
+        file <- localOrRemoteFile(file)
+        expect_identical(readLines(file), "acid")
+    },
+    ext = c("bz2", "gz", "xz", "zip")
+)

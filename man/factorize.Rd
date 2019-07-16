@@ -3,12 +3,12 @@
 \docType{methods}
 \name{factorize}
 \alias{factorize}
-\alias{factorize,ANY-method}
+\alias{factorize,DataFrame-method}
 \title{Factorize}
 \usage{
 factorize(object, ...)
 
-\S4method{factorize}{ANY}(object)
+\S4method{factorize}{DataFrame}(object)
 }
 \arguments{
 \item{object}{Object.}

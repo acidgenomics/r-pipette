@@ -20,7 +20,7 @@ NULL
 
 
 
-factorize.ANY <-  # nolint
+factorize.DataFrame <-  # nolint
     function(object) {
         class <- class(object)[[1L]]
         out <- lapply(
@@ -38,12 +38,10 @@ factorize.ANY <-  # nolint
         out
     }
 
-
-
 #' @rdname factorize
 #' @export
 setMethod(
     f = "factorize",
-    signature = signature("ANY"),
-    definition = factorize.ANY
+    signature = signature("DataFrame"),
+    definition = factorize.DataFrame
 )

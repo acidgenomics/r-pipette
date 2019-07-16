@@ -277,6 +277,7 @@ import <- function(
         pref <- getOption("acid.data.frame")
         if (isString(pref)) {
             object <- switch(
+                EXPR = pref,
                 data.frame = object,
                 DataFrame = as(object, "DataFrame"),
                 tbl_df = as_tibble(
@@ -294,6 +295,7 @@ import <- function(
         # Set rownames automatically, if supported.
         if (
             isAny(object, c("data.frame", "DataFrame")) &&
+            !isAny(object, c("data.table", "tbl_df")) &&
             "rowname" %in% colnames(object) &&
             isTRUE(rownames)
         ) {
