@@ -113,7 +113,7 @@ export.matrix <-  # nolint
             sym <- call[["object"]]
             if (!is.symbol(sym)) {
                 stop(sprintf(
-                    "`export()` `object` argument is not a symbol: %s",
+                    "`export()` object argument is not a symbol: %s",
                     deparse(sym)
                 ))
             }
@@ -223,7 +223,7 @@ export.sparseMatrix <-  # nolint
             sym <- call[["object"]]
             if (!is.symbol(sym)) {
                 stop(sprintf(
-                    "`export()` `object` argument is not a symbol: %s",
+                    "`export()` object argument is not a symbol: %s",
                     deparse(sym)
                 ))
             }
@@ -415,7 +415,7 @@ export.SummarizedExperiment <-  # nolint
             sym <- call[["object"]]
             if (!is.symbol(sym)) {
                 stop(sprintf(
-                    "`export()` `object` argument is not a symbol: %s",
+                    "`export()` object argument is not a symbol: %s",
                     deparse(sym)
                 ))
             }
@@ -519,7 +519,7 @@ export.SingleCellExperiment <-  # nolint
             sym <- call[["object"]]
             if (!is.symbol(sym)) {
                 stop(sprintf(
-                    "`export()` `object` argument is not a symbol: %s",
+                    "`export()` object argument is not a symbol: %s",
                     deparse(sym)
                 ))
             }
@@ -549,8 +549,8 @@ export.SingleCellExperiment <-  # nolint
                     reducedDim <- reducedDims(object)[[name]]
                     if (is(reducedDim, "matrix")) {
                         ext <- "csv"
-                    } else if (is(reducedDim, "sparseMatrix")) {
-                        ext <- "mtx"
+                    } else if (is(reducedDim, "sparseMatrix")) {         # nocov
+                        ext <- "mtx"                                     # nocov
                     }
                     if (isTRUE(compress)) {
                         ext <- paste0(ext, ".gz")
