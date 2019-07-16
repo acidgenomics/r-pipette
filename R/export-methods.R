@@ -70,6 +70,7 @@ NULL
 # `data.table`, `tbl_df`, and `DataFrame` classes. Note that `rio::export()`
 # does not preserve row names by default, so we're ensuring row names get
 # coerced to "rowname" column consistently here.
+# Updated 2019-07-16.
 export.matrix <-  # nolint
     function(
         object,
@@ -110,7 +111,12 @@ export.matrix <-  # nolint
         if (is.null(file)) {
             call <- standardizeCall()
             sym <- call[["object"]]
-            assert(is.symbol(sym))
+            if (!is.symbol(sym)) {
+                stop(sprintf(
+                    "`export()` `object` argument is not a symbol: %s",
+                    deparse(sym)
+                ))
+            }
             name <- as.character(sym)
             assert(isString(ext))
             file <- file.path(dir, paste0(name, ".", ext))
@@ -193,6 +199,7 @@ setMethod(
 # Note that "file" is referring to the matrix file.
 # The correponding column and row sidecar files are generated automatically.
 # Consider adding HDF5 support in a future update.
+# Updated 2019-07-16.
 export.sparseMatrix <-  # nolint
     function(
         object,
@@ -214,7 +221,12 @@ export.sparseMatrix <-  # nolint
         if (is.null(file)) {
             call <- standardizeCall()
             sym <- call[["object"]]
-            assert(is.symbol(sym))
+            if (!is.symbol(sym)) {
+                stop(sprintf(
+                    "`export()` `object` argument is not a symbol: %s",
+                    deparse(sym)
+                ))
+            }
             name <- as.character(sym)
             assert(isString(ext))
             file <- file.path(dir, paste0(name, ".", ext))
@@ -310,6 +322,7 @@ setMethod(
 
 
 # SummarizedExperiment =========================================================
+# Updated 2019-07-16.
 .export.assays <-  # nolint
     function(object, name, dir, compress) {
         assayNames <- assayNames(object)
@@ -342,6 +355,7 @@ setMethod(
 
 
 
+# Updated 2019-07-16.
 .export.colData <-  # nolint
     function(object, ext, dir) {
         export(
@@ -354,6 +368,7 @@ setMethod(
 
 # NOTE: The standard `rowData()` output is okay but doesn't include genomic
 # ranges coordinates. That's why we're coercing from `rowRanges()` for RSE.
+# Updated 2019-07-16.
 .export.rowData <-  # nolint
     function(object, ext, dir) {
         data <- rowData(object)
@@ -373,6 +388,7 @@ setMethod(
 # Require at least 1 of the slotNames to be defined for export.
 # `rowData` is a supported slot but is actually defined in `rowRanges`.
 # Note that we're not using `match.arg()` here for `slotNames`.
+# Updated 2019-07-16.
 export.SummarizedExperiment <-  # nolint
     function(
         object,
@@ -396,7 +412,14 @@ export.SummarizedExperiment <-  # nolint
 
         # Get the name and create directory substructure.
         if (is.null(name)) {
-            name <- as.character(call[["object"]])
+            sym <- call[["object"]]
+            if (!is.symbol(sym)) {
+                stop(sprintf(
+                    "`export()` `object` argument is not a symbol: %s",
+                    deparse(sym)
+                ))
+            }
+            name <- as.character(sym)
         }
         dir <- initDir(file.path(dir, name))
 
@@ -475,14 +498,21 @@ setMethod(
 
 
 
-# Consider exporting `reducedDims` slot here also by default.
-
+# Updated 2019-07-16.
 export.SingleCellExperiment <-  # nolint
     function(object) {
         validObject(object)
         assert(isFlag(compress))
         call <- standardizeCall()
-        name <- as.character(call[["object"]])
+
+        sym <- call[["object"]]
+        if (!is.symbol(sym)) {
+            stop(sprintf(
+                "`export()` `object` argument is not a symbol: %s",
+                deparse(sym)
+            ))
+        }
+        name <- as.character(sym)
 
         # Primarily use SE method to export.
         se <- as(object, "RangedSummarizedExperiment")
