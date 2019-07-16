@@ -16,7 +16,7 @@ with_parameters_test_that(
 
         # Check accidental overwrite support.
         expect_error(
-            export(mat, overwrite = FALSE),
+            export(mat, ext = ext, overwrite = FALSE),
             "File exists"
         )
 
@@ -108,20 +108,15 @@ context("export : SummarizedExperiment")
 
 test_that("`dir` argument, no `name`", {
     out <- export(rse, name = NULL, dir = "XXX", compress = TRUE)
+    prefix <- realpath(file.path("XXX", "rse"))
     expect_identical(
         out,
         list(
             assays = list(
-                counts = realpath(
-                    file.path("XXX", "rse", "assays", "counts.csv.gz")
-                )
+                counts = file.path(prefix, "assays", "counts.csv.gz")
             ),
-            colData = realpath(
-                file.path("XXX", "rse", "colData.csv.gz")
-            ),
-            rowData = realpath(
-                file.path("XXX", "rse", "rowData.csv.gz")
-            )
+            colData = file.path(prefix, "colData.csv.gz"),
+            rowData = file.path(prefix, "rowData.csv.gz")
         )
     )
     unlink("XXX", recursive = TRUE)
@@ -129,20 +124,15 @@ test_that("`dir` argument, no `name`", {
 
 test_that("Both `name` and `dir` declared", {
     out <- export(rse, name = "test", dir = "XXX", compress = FALSE)
+    prefix <- realpath(file.path("XXX", "test"))
     expect_identical(
         out,
         list(
             assays = list(
-                counts = realpath(
-                    file.path("XXX", "test", "assays", "counts.csv")
-                )
+                counts = file.path(prefix, "assays", "counts.csv")
             ),
-            colData = realpath(
-                file.path("XXX", "test", "colData.csv")
-            ),
-            rowData = realpath(
-                file.path("XXX", "test", "rowData.csv")
-            )
+            colData = file.path(prefix, "colData.csv"),
+            rowData = file.path(prefix, "rowData.csv")
         )
     )
     unlink("XXX", recursive = TRUE)
@@ -163,28 +153,28 @@ test_that("Unnamed primary assay", {
 context("export : SingleCellExperiment")
 
 test_that("`dir` argument, no `name`", {
-    out <- export(sce, name = NULL, dir = "XXX", compress = FALSE)
+    x <- export(sce, name = NULL, dir = "XXX", compress = FALSE)
+    prefix <- realpath(file.path("XXX", "sce"))
+    assays <- file.path(prefix, "assays")
     expect_identical(
-        out,
+        x,
         list(
             assays = list(
                 counts = c(
-                    matrix = realpath(
-                        file.path("XXX", "sce", "assays", "counts.mtx")
-                    ),
-                    barcodes = realpath(
-                        file.path("XXX", "sce", "assays", "counts.mtx.colnames")
-                    ),
-                    genes = realpath(
-                        file.path("XXX", "sce", "assays", "counts.mtx.rownames")
-                    )
+                    matrix = file.path(assays, "counts.mtx"),
+                    barcodes = file.path(assays, "counts.mtx.colnames"),
+                    genes = file.path(assays, "counts.mtx.rownames")
+                ),
+                logcounts = c(
+                    matrix = file.path(assays, "logcounts.mtx"),
+                    barcodes = file.path(assays, "logcounts.mtx.colnames"),
+                    genes = file.path(assays, "logcounts.mtx.rownames")
                 )
             ),
-            colData = realpath(
-                file.path("XXX", "sce", "colData.csv")
-            ),
-            rowData = realpath(
-                file.path("XXX", "sce", "rowData.csv")
+            colData = file.path(prefix, "colData.csv"),
+            rowData = file.path(prefix, "rowData.csv"),
+            reducedDims = list(
+                umap = file.path(prefix, "reducedDims", "umap.csv")
             )
         )
     )
@@ -192,32 +182,28 @@ test_that("`dir` argument, no `name`", {
 })
 
 test_that("Both `name` and `dir` declared", {
-    out <- export(sce, name = "test", dir = "XXX")
+    x <- export(sce, name = "test", dir = "XXX")
+    prefix <- realpath(file.path("XXX", "test"))
+    assays <- file.path(prefix, "assays")
     expect_identical(
-        out,
+        x,
         list(
             assays = list(
                 counts = c(
-                    matrix = realpath(
-                        file.path("XXX", "test", "assays", "counts.mtx")
-                    ),
-                    barcodes = realpath(
-                        file.path(
-                            "XXX", "test", "assays", "counts.mtx.colnames"
-                        )
-                    ),
-                    genes = realpath(
-                        file.path(
-                            "XXX", "test", "assays", "counts.mtx.rownames"
-                        )
-                    )
+                    matrix = file.path(assays, "counts.mtx"),
+                    barcodes = file.path(assays, "counts.mtx.colnames"),
+                    genes = file.path(assays, "counts.mtx.rownames")
+                ),
+                logcounts = c(
+                    matrix = file.path(assays, "logcounts.mtx"),
+                    barcodes = file.path(assays, "logcounts.mtx.colnames"),
+                    genes = file.path(assays, "logcounts.mtx.rownames")
                 )
             ),
-            colData = realpath(
-                file.path("XXX", "test", "colData.csv")
-            ),
-            rowData = realpath(
-                file.path("XXX", "test", "rowData.csv")
+            colData = file.path(prefix, "colData.csv"),
+            rowData = file.path(prefix, "rowData.csv"),
+            reducedDims = list(
+                umap = file.path(prefix, "reducedDims", "umap.csv")
             )
         )
     )
