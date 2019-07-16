@@ -30,11 +30,7 @@ test_that("XLSX", {
 
 # Both Travis and AppVeyor choke on XLS.
 test_that("XLS", {
-    # nolint start
-    # > skip_if_not(interactive())
-    # > skip_on_appveyor()
-    # > skip_on_travis()
-    # nolint end
+    skip_on_appveyor()
     file <- file.path("cache", "example.xls")
     object <- import(file)
     expect_is(object, "data.frame")
