@@ -19,6 +19,10 @@ with_parameters_test_that(
             export(mat, ext = ext, overwrite = FALSE),
             "File exists"
         )
+        expect_message(
+            export(mat, ext = ext, overwrite = TRUE),
+            "Overwriting"
+        )
 
         # Now strip the names, and confirm that export still works.
         mat <- unname(mat)
@@ -34,6 +38,13 @@ with_parameters_test_that(
     },
     ext = ext
 )
+
+test_that("Invalid input", {
+    expect_error(
+        export(object = unname(mat)),
+        "symbol"
+    )
+})
 
 
 
@@ -63,6 +74,13 @@ test_that("`file` argument", {
     file.remove("df.csv")
 })
 
+test_that("Invalid input", {
+    expect_error(
+        export(object = unname(df)),
+        "symbol"
+    )
+})
+
 
 
 context("export : sparseMatrix")
@@ -84,6 +102,10 @@ test_that("`ext` argument, using gzip compression (default)", {
         export(sparse, ext = "mtx.gz", overwrite = FALSE),
         "File exists"
     )
+    expect_message(
+        export(sparse, ext = "mtx.gz", overwrite = TRUE),
+        "Overwriting"
+    )
 
     file.remove(x)
 })
@@ -100,6 +122,13 @@ test_that("`file` argument", {
     )
     expect_true(all(file.exists(x)))
     file.remove(x)
+})
+
+test_that("Invalid input", {
+    expect_error(
+        export(object = unname(sparse)),
+        "symbol"
+    )
 })
 
 
