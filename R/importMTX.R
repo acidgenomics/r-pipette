@@ -7,11 +7,13 @@ importMTX <- function(file) {
     rownamesFile <- tryCatch(
         expr = localOrRemoteFile(rownamesFile),
         error = function(e) {
+            # nocov start
             warning(paste0(
                 basename(rownamesFile), " does not exist.\n",
                 "  Row names will not be added to sparse matrix."
             ))
             NULL
+            # nocov end
         }
     )
     # Add the colnames automatically using `.colnames` sidecar file.
@@ -19,11 +21,13 @@ importMTX <- function(file) {
     colnamesFile <- tryCatch(
         expr = localOrRemoteFile(colnamesFile),
         error = function(e) {
+            # nocov start
             warning(paste0(
                 basename(colnamesFile), " does not exist.\n",
                 "  Column names will not be added to sparse matrix."
             ))
             NULL
+            # nocov end
         }
     )
     file <- localOrRemoteFile(file)
