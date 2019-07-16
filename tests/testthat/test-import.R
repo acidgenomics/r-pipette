@@ -233,7 +233,15 @@ test_that("acid.data.frame global option", {
     expect_s4_class(object, "DataFrame")
     expect_true(hasRownames(object))
 
-    option("acid.data.frame") <- "data.table"
-    option("acid.data.frame") <- "tbl_df"
-    option("acid.data.frame") <- NULL
+    options("acid.data.frame" = "data.table")
+    object <- import(file)
+    expect_s3_class(object, "data.table")
+    expect_false(hasRownames(object))
+
+    options("acid.data.frame" = "tbl_df")
+    object <- import(file)
+    expect_s3_class(object, "tbl_df")
+    expect_false(hasRownames(object))
+
+    options("acid.data.frame" = NULL)
 })
