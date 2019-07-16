@@ -398,7 +398,6 @@ export.SummarizedExperiment <-  # nolint
         slotNames = c("assays", "colData", "rowData")
     ) {
         validObject(object)
-        call <- standardizeCall()
         assert(
             isString(name, nullOK = TRUE),
             isString(dir),
@@ -409,6 +408,7 @@ export.SummarizedExperiment <-  # nolint
                 y = c(slotNames(object), "rowData")
             )
         )
+        call <- standardizeCall()
 
         # Get the name and create directory substructure.
         if (is.null(name)) {
@@ -502,17 +502,30 @@ setMethod(
 export.SingleCellExperiment <-  # nolint
     function(object) {
         validObject(object)
-        assert(isFlag(compress))
+        assert(
+            isString(name, nullOK = TRUE),
+            isString(dir),
+            isFlag(compress),
+            isCharacter(slotNames),
+            isSubset(
+                x = slotNames,
+                y = c(slotNames(object), "rowData")
+            )
+        )
         call <- standardizeCall()
 
-        sym <- call[["object"]]
-        if (!is.symbol(sym)) {
-            stop(sprintf(
-                "`export()` `object` argument is not a symbol: %s",
-                deparse(sym)
-            ))
+        # Get the name and create directory substructure.
+        if (is.null(name)) {
+            sym <- call[["object"]]
+            if (!is.symbol(sym)) {
+                stop(sprintf(
+                    "`export()` `object` argument is not a symbol: %s",
+                    deparse(sym)
+                ))
+            }
+            name <- as.character(sym)
         }
-        name <- as.character(sym)
+        dir <- initDir(file.path(dir, name))
 
         # Primarily use SE method to export.
         se <- as(object, "RangedSummarizedExperiment")
@@ -522,7 +535,6 @@ export.SingleCellExperiment <-  # nolint
         # We're handling `reducedDims` specially below.
         args[["slotNames"]] <- setdiff(args[["slotNames"]], "reducedDims")
         files <- do.call(what = export, args = args)
-        print(files)
 
         reducedDimNames <- reducedDimNames(object)
         if (
@@ -546,7 +558,7 @@ export.SingleCellExperiment <-  # nolint
                     file <- paste0(file, ".", ext)
                     export(reducedDim, file = file)
                 },
-                dir = initDir(file.path(dir, name, "reducedDims"))
+                dir = initDir(file.path(dir, "reducedDims"))
             )
             names(files[["reducedDims"]]) <- reducedDimNames
         }
