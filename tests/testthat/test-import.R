@@ -227,21 +227,25 @@ test_that("acid.data.frame global option", {
     object <- import(file)
     expect_s3_class(object, "data.frame")
     expect_true(hasRownames(object))
+    expect_false(isSubset("rowname", colnames(object)))
 
     options("acid.data.frame" = "DataFrame")
     object <- import(file)
     expect_s4_class(object, "DataFrame")
     expect_true(hasRownames(object))
+    expect_false(isSubset("rowname", colnames(object)))
 
     options("acid.data.frame" = "data.table")
     object <- import(file)
     expect_s3_class(object, "data.table")
     expect_false(hasRownames(object))
+    expect_true(isSubset("rowname", colnames(object)))
 
     options("acid.data.frame" = "tbl_df")
     object <- import(file)
     expect_s3_class(object, "tbl_df")
     expect_false(hasRownames(object))
+    expect_true(isSubset("rowname", colnames(object)))
 
     options("acid.data.frame" = NULL)
 })
