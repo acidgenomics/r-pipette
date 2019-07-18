@@ -1,3 +1,9 @@
+## brio 0.2.4 (2019-07-18)
+
+### Minor changes
+
+- Improvements to Travis Docker and AppVeyor CI checks.
+
 ## brio 0.2.3 (2019-07-16)
 
 ### Minor changes

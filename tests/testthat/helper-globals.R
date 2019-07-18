@@ -13,6 +13,7 @@ rowRanges <- SummarizedExperiment::rowRanges
 mcols <- S4Vectors::mcols
 metadata <- S4Vectors::metadata
 seqnames <- GenomicRanges::seqnames
+skip_on_docker <- goalie::skip_on_docker
 tibble <- tibble::tibble
 # nolint end
 
