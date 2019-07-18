@@ -20,7 +20,6 @@ with_parameters_test_that(
     ext = c("csv", "csv.gz", "tsv")
 )
 
-# AppVeyor chokes on XLSX.
 test_that("XLSX", {
     skip_on_appveyor()
     file <- file.path("cache", "example.xlsx")
@@ -28,8 +27,8 @@ test_that("XLSX", {
     expect_is(object, "data.frame")
 })
 
-# Both Travis and AppVeyor choke on XLS.
 test_that("XLS", {
+    skip_if_not_installed(pkg = "gdata")
     skip_on_appveyor()
     file <- file.path("cache", "example.xls")
     object <- import(file)
@@ -174,7 +173,6 @@ test_that("R data", {
 })
 
 test_that("R data serialized", {
-    # RDS file loading currently has issues on AppVeyor.
     skip_on_appveyor()
     object <- import(file = file.path("cache", "example.rds"))
     expect_s4_class(object, "DataFrame")
