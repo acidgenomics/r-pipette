@@ -3,32 +3,23 @@
 
 
 
-#' Deprecated functions
-#'
-#' @name deprecated
-#' @keywords internal
-#'
+#' @name defunct
+#' @inherit bioverbs::defunct description examples return seealso title
 #' @inheritParams params
-#'
-#' @return `.Deprecated`.
+#' @keywords internal
 NULL
 
 
 
-#' Defunct functions
-#'
-#' @name defunct
-#' @keywords internal
-#'
+#' @name deprecated
+#' @inherit bioverbs::deprecated description examples return seealso title
 #' @inheritParams params
-#'
-#' @return `.Defunct`.
+#' @keywords internal
 NULL
 
 
 
 # v0.1.4 =======================================================================
-# Deprecate these sanitization functions.
 # Still in use by bcbio R packages.
 # Consider switching to soft deprecation if too noisy.
 
