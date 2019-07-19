@@ -17,7 +17,8 @@
 #' dir <- system.file("extdata", package = "brio")
 #' loadDataAsName(renamed = example, dir = dir)
 #' class(renamed)
-# Last modified 2019-06-07.
+
+# Updated 2019-06-07.
 loadDataAsName <- function(
     ...,
     dir,

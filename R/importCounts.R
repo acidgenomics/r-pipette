@@ -1,6 +1,7 @@
 # Import bcbio count matrix file.
 # Note that we're using `readr::tsv()` here instead of `data.table::fread()`.
 # These files contain an "id" column that we need to coerce to rownames.
+# Updated 2019-07-19.
 importCounts <- function(file) {
     message(paste("Importing", basename(file), "using readr::read_tsv()."))
     object <- read_tsv(

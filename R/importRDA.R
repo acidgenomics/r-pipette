@@ -1,3 +1,4 @@
+# Updated 2019-07-19.
 importRDA <- function(file) {
     file <- localOrRemoteFile(file)
     message(paste("Importing", basename(file), "using base::load()."))

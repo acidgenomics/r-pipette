@@ -20,7 +20,8 @@ NULL
 
 
 
-factorize.DataFrame <-  # nolint
+# Updated 2019-07-19.
+`factorize,DataFrame` <-  # nolint
     function(object) {
         class <- class(object)[[1L]]
         out <- lapply(
@@ -43,5 +44,5 @@ factorize.DataFrame <-  # nolint
 setMethod(
     f = "factorize",
     signature = signature("DataFrame"),
-    definition = factorize.DataFrame
+    definition = `factorize,DataFrame`
 )
