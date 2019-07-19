@@ -1,4 +1,5 @@
 # Import a delimited file (e.g. CSV, TSV).
+# Updated 2019-07-19.
 importDelim <- function(file, colnames = TRUE) {
     file <- localOrRemoteFile(file)
     message(paste("Importing", basename(file), "using data.table::fread()."))

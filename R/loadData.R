@@ -53,7 +53,8 @@
 #'
 #' ## Clean up.
 #' rm(example, inherits = TRUE)
-# Last modified 2019-06-07.
+
+# Updated 2019-06-07.
 loadData <- function(
     ...,
     dir,

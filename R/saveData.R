@@ -57,6 +57,8 @@
 #'
 #' ## Clean up.
 #' unlink(dir, recursive = TRUE)
+
+# Updated 2019-07-19.
 saveData <- function(
     ...,
     dir,

@@ -192,6 +192,8 @@
 #' ## Row and column names disabled.
 #' x <- import(file, rownames = FALSE, colnames = FALSE)
 #' print(head(x))
+
+# Updated 2019-07-19.
 import <- function(
     file,
     sheet = 1L,
