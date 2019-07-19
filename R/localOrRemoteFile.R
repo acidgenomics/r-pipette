@@ -30,6 +30,8 @@
 #' file <- paste(brioTestsURL, "hgnc.txt.gz", sep = "/")
 #' x <- localOrRemoteFile(file)
 #' basename(x)
+
+# Updated 2019-07-19.
 localOrRemoteFile <- function(file) {
     assert(isCharacter(file))
     if (!all(grepl(pattern = extPattern, x = file))) {

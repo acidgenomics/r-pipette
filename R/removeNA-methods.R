@@ -41,7 +41,15 @@ NULL
 
 
 
-removeNA.atomic <-  # nolint
+# Updated 2019-07-19.
+.allNonNA <- function(x) {
+    !all(is.na(x))
+}
+
+
+
+# Updated 2019-07-19.
+`removeNA,atomic` <-  # nolint
     function(object) {
         na.omit(object)
     }
@@ -53,18 +61,13 @@ removeNA.atomic <-  # nolint
 setMethod(
     f = "removeNA",
     signature = signature("atomic"),
-    definition = removeNA.atomic
+    definition = `removeNA,atomic`
 )
 
 
 
-.allNonNA <- function(x) {
-    !all(is.na(x))
-}
-
-
-
-removeNA.matrix <-  # nolint
+# Updated 2019-07-19.
+`removeNA,matrix` <-  # nolint
     function(object) {
         keepRows <- apply(X = object, MARGIN = 1L, FUN = .allNonNA)
         keepCols <- apply(X = object, MARGIN = 2L, FUN = .allNonNA)
@@ -78,8 +81,13 @@ removeNA.matrix <-  # nolint
 setMethod(
     f = "removeNA",
     signature = signature("matrix"),
-    definition = removeNA.matrix
+    definition = `removeNA,matrix`
 )
+
+
+
+# Updated 2019-07-19.
+`removeNA,sparseMatrix` <- `removeNA,matrix`  # nolint
 
 
 
@@ -88,8 +96,13 @@ setMethod(
 setMethod(
     f = "removeNA",
     signature = signature("sparseMatrix"),
-    definition = removeNA.matrix
+    definition = `removeNA,sparseMatrix`
 )
+
+
+
+# Updated 2019-07-19.
+`removeNA,data.frame` <- `removeNA,matrix`  # nolint
 
 
 
@@ -98,8 +111,13 @@ setMethod(
 setMethod(
     f = "removeNA",
     signature = signature("data.frame"),
-    definition = removeNA.matrix
+    definition = `removeNA,data.frame`
 )
+
+
+
+# Updated 2019-07-19.
+`removeNA,DataFrame` <- `removeNA,data.frame`  # nolint
 
 
 
@@ -108,5 +126,5 @@ setMethod(
 setMethod(
     f = "removeNA",
     signature = signature("DataFrame"),
-    definition = removeNA.matrix
+    definition = `removeNA,DataFrame`
 )

@@ -17,7 +17,8 @@
 #' print(url)
 #' x <- loadRemoteData(url)
 #' print(x)
-# Last modified 2019-06-07.
+
+# Updated 2019-06-07.
 loadRemoteData <- function(
     url,
     envir = globalenv(),
