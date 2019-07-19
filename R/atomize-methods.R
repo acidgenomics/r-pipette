@@ -24,7 +24,8 @@ NULL
 # @seealso
 # - `base:::as.data.frame.matrix()`.
 # - `S4Vectors:::as.data.frame.DataTable()`.
-atomize.data.frame <-  # nolint
+# Updated 2019-07-19.
+`atomize,data.frame` <-  # nolint
     function(object) {
         # Keep only atomic columns. Complex columns won't write to disk as CSVs
         # or work with R Markdown functions.
@@ -50,12 +51,13 @@ atomize.data.frame <-  # nolint
 setMethod(
     f = "atomize",
     signature = signature("data.frame"),
-    definition = atomize.data.frame
+    definition = `atomize,data.frame`
 )
 
 
 
-atomize.DataFrame <-  # nolint
+# Updated 2019-07-19.
+`atomize,DataFrame` <-  # nolint
     function(object) {
         object <- decode(object)
         object <- as.data.frame(object)
@@ -71,12 +73,13 @@ atomize.DataFrame <-  # nolint
 setMethod(
     f = "atomize",
     signature = signature("DataFrame"),
-    definition = atomize.DataFrame
+    definition = `atomize,DataFrame`
 )
 
 
 
-atomize.GRanges <-  # nolint
+# Updated 2019-07-19.
+`atomize,GRanges` <-  # nolint
     function(object) {
         mcols(object) <- atomize(mcols(object))
         object
@@ -89,5 +92,5 @@ atomize.GRanges <-  # nolint
 setMethod(
     f = "atomize",
     signature = signature("GRanges"),
-    definition = atomize.GRanges
+    definition = `atomize,GRanges`
 )

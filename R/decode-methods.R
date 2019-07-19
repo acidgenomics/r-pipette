@@ -30,7 +30,8 @@ NULL
 
 
 
-decode.DataFrame <-  # nolint
+# Updated 2019-07-19.
+`decode,DataFrame` <-  # nolint
     function(x) {
         DataFrame(
             lapply(
@@ -60,12 +61,13 @@ decode.DataFrame <-  # nolint
 setMethod(
     f = "decode",
     signature = signature("DataFrame"),
-    definition = decode.DataFrame
+    definition = `decode,DataFrame`
 )
 
 
 
-decode.GRanges <-  # nolint
+# Updated 2019-07-19.
+`decode,GRanges` <-  # nolint
     function(x) {
         mcols <- mcols(x)
         assert(is(mcols, "DataFrame"))
@@ -81,5 +83,5 @@ decode.GRanges <-  # nolint
 setMethod(
     f = "decode",
     signature = signature("GRanges"),
-    definition = decode.GRanges
+    definition = `decode,GRanges`
 )
