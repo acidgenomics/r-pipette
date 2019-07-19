@@ -71,7 +71,7 @@ NULL
 # does not preserve row names by default, so we're ensuring row names get
 # coerced to "rowname" column consistently here.
 # Updated 2019-07-16.
-export.matrix <-  # nolint
+`export,matrix` <-  # nolint
     function(
         object,
         ext,
@@ -149,9 +149,9 @@ export.matrix <-  # nolint
         invisible(file)
     }
 
-formals(export.matrix)[["dir"]] <- formalsList[["export.dir"]]
-formals(export.matrix)[["ext"]] <- formalsList[["export.ext"]]
-formals(export.matrix)[["overwrite"]] <- formalsList[["overwrite"]]
+formals(`export,matrix`)[["dir"]] <- formalsList[["export.dir"]]
+formals(`export,matrix`)[["ext"]] <- formalsList[["export.ext"]]
+formals(`export,matrix`)[["overwrite"]] <- formalsList[["overwrite"]]
 
 
 
@@ -160,13 +160,13 @@ formals(export.matrix)[["overwrite"]] <- formalsList[["overwrite"]]
 setMethod(
     f = "export",
     signature = signature("matrix"),
-    definition = export.matrix
+    definition = `export,matrix`
 )
 
 
 
 # data.frame ===================================================================
-export.data.frame <- export.matrix  # nolint
+`export,data.frame` <- `export,matrix`  # nolint
 
 
 
@@ -175,13 +175,13 @@ export.data.frame <- export.matrix  # nolint
 setMethod(
     f = "export",
     signature = signature("data.frame"),
-    definition = export.data.frame
+    definition = `export,data.frame`
 )
 
 
 
 # DataFrame ====================================================================
-export.DataFrame <- export.data.frame  # nolint
+`export,DataFrame` <- `export,data.frame`  # nolint
 
 
 
@@ -190,7 +190,7 @@ export.DataFrame <- export.data.frame  # nolint
 setMethod(
     f = "export",
     signature = signature("DataFrame"),
-    definition = export.DataFrame
+    definition = `export,DataFrame`
 )
 
 
@@ -200,7 +200,7 @@ setMethod(
 # The correponding column and row sidecar files are generated automatically.
 # Consider adding HDF5 support in a future update.
 # Updated 2019-07-16.
-export.sparseMatrix <-  # nolint
+`export,sparseMatrix` <-  # nolint
     function(
         object,
         ext,
@@ -287,11 +287,11 @@ export.sparseMatrix <-  # nolint
         invisible(files)
     }
 
-formals(export.sparseMatrix)[["dir"]] <-
+formals(`export,sparseMatrix`)[["dir"]] <-
     formalsList[["export.dir"]]
-formals(export.sparseMatrix)[["ext"]] <-
+formals(`export,sparseMatrix`)[["ext"]] <-
     formalsList[["export.sparse.ext"]]
-formals(export.sparseMatrix)[["overwrite"]] <-
+formals(`export,sparseMatrix`)[["overwrite"]] <-
     formalsList[["overwrite"]]
 
 
@@ -301,13 +301,13 @@ formals(export.sparseMatrix)[["overwrite"]] <-
 setMethod(
     f = "export",
     signature = signature("sparseMatrix"),
-    definition = export.sparseMatrix
+    definition = `export,sparseMatrix`
 )
 
 
 
 # GRanges ======================================================================
-export.GRanges <- export.DataFrame  # nolint
+`export,GRanges` <- `export,DataFrame`  # nolint
 
 
 
@@ -316,14 +316,14 @@ export.GRanges <- export.DataFrame  # nolint
 setMethod(
     f = "export",
     signature = signature("GRanges"),
-    definition = export.GRanges
+    definition = `export,GRanges`
 )
 
 
 
 # SummarizedExperiment =========================================================
-# Updated 2019-07-16.
-.export.assays <-  # nolint
+# Updated 2019-07-19.
+.exportAssays <-  # nolint
     function(object, name, dir, compress) {
         assayNames <- assayNames(object)
         assert(isCharacter(assayNames))
@@ -355,8 +355,8 @@ setMethod(
 
 
 
-# Updated 2019-07-16.
-.export.colData <-  # nolint
+# Updated 2019-07-19.
+.exportColData <-  # nolint
     function(object, ext, dir) {
         export(
             object = atomize(colData(object)),
@@ -368,8 +368,8 @@ setMethod(
 
 # NOTE: The standard `rowData()` output is okay but doesn't include genomic
 # ranges coordinates. That's why we're coercing from `rowRanges()` for RSE.
-# Updated 2019-07-16.
-.export.rowData <-  # nolint
+# Updated 2019-07-19.
+.exportRowData <-  # nolint
     function(object, ext, dir) {
         data <- rowData(object)
         # Note that SummarizedExperiment in BioC 3.6/R 3.4 release doesn't
@@ -388,8 +388,8 @@ setMethod(
 # Require at least 1 of the slotNames to be defined for export.
 # `rowData` is a supported slot but is actually defined in `rowRanges`.
 # Note that we're not using `match.arg()` here for `slotNames`.
-# Updated 2019-07-16.
-export.SummarizedExperiment <-  # nolint
+# Updated 2019-07-19.
+`export,SummarizedExperiment` <-  # nolint
     function(
         object,
         name = NULL,
@@ -445,7 +445,7 @@ export.SummarizedExperiment <-  # nolint
         # Assays (count matrices).
         if ("assays" %in% slotNames) {
             files[["assays"]] <-
-                .export.assays(
+                .exportAssays(
                     object = object,
                     name = name,
                     dir = dir,
@@ -456,7 +456,7 @@ export.SummarizedExperiment <-  # nolint
         # Column annotations.
         if ("colData" %in% slotNames) {
             files[["colData"]] <-
-                .export.colData(
+                .exportColData(
                     object = object,
                     ext = ext,
                     dir = dir
@@ -466,7 +466,7 @@ export.SummarizedExperiment <-  # nolint
         # Row annotations.
         if ("rowData" %in% slotNames) {
             files[["rowData"]] <-
-                .export.rowData(
+                .exportRowData(
                     object = object,
                     ext = ext,
                     dir = dir
@@ -481,9 +481,9 @@ export.SummarizedExperiment <-  # nolint
         invisible(files)
     }
 
-formals(export.SummarizedExperiment)[["compress"]] <-
+formals(`export,SummarizedExperiment`)[["compress"]] <-
     formalsList[["export.compress"]]
-formals(export.SummarizedExperiment)[["dir"]] <-
+formals(`export,SummarizedExperiment`)[["dir"]] <-
     formalsList[["export.dir"]]
 
 
@@ -493,13 +493,13 @@ formals(export.SummarizedExperiment)[["dir"]] <-
 setMethod(
     f = "export",
     signature = signature("SummarizedExperiment"),
-    definition = export.SummarizedExperiment
+    definition = `export,SummarizedExperiment`
 )
 
 
 
-# Updated 2019-07-16.
-export.SingleCellExperiment <-  # nolint
+# Updated 2019-07-19.
+`export,SingleCellExperiment` <-  # nolint
     function(object) {
         validObject(object)
         assert(
@@ -567,9 +567,9 @@ export.SingleCellExperiment <-  # nolint
         invisible(files)
     }
 
-f <- formals(export.SummarizedExperiment)
+f <- formals(`export,SummarizedExperiment`)
 f[["slotNames"]] <- c(eval(f[["slotNames"]]), "reducedDims")
-formals(export.SingleCellExperiment) <- f
+formals(`export,SingleCellExperiment`) <- f
 
 
 
@@ -578,5 +578,5 @@ formals(export.SingleCellExperiment) <- f
 setMethod(
     f = "export",
     signature = signature("SingleCellExperiment"),
-    definition = export.SingleCellExperiment
+    definition = `export,SingleCellExperiment`
 )

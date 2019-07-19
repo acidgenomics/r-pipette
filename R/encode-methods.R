@@ -31,7 +31,8 @@ NULL
 
 
 
-encode.DataFrame <-  # nolint
+# Updated 2019-07-19.
+`encode,DataFrame` <-  # nolint
     function(x) {
         DataFrame(
             lapply(
@@ -64,12 +65,13 @@ encode.DataFrame <-  # nolint
 setMethod(
     f = "encode",
     signature = signature("DataFrame"),
-    definition = encode.DataFrame
+    definition = `encode,DataFrame`
 )
 
 
 
-encode.GRanges <-  # nolint
+# Updated 2019-07-19.
+`encode,GRanges` <-  # nolint
     function(x) {
         mcols <- mcols(x)
         assert(is(mcols, "DataFrame"))
@@ -85,5 +87,5 @@ encode.GRanges <-  # nolint
 setMethod(
     f = "encode",
     signature = signature("GRanges"),
-    definition = encode.GRanges
+    definition = `encode,GRanges`
 )
