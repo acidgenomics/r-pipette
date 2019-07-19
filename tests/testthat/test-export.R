@@ -1,6 +1,7 @@
 context("export : matrix")
 
-ext <- eval(formals(export.matrix)[["ext"]])
+ext <- eval(formals(`export,matrix`)[["ext"]])
+
 with_parameters_test_that(
     "`ext` argument", {
         file <- paste0("mat", ".", ext)
@@ -50,7 +51,8 @@ test_that("Invalid input", {
 
 context("export : DataFrame")
 
-ext <- eval(formals(export.matrix)[["ext"]])
+ext <- eval(formals(`export,DataFrame`)[["ext"]])
+
 with_parameters_test_that(
     "`ext` argument", {
         file <- paste0("df", ".", ext)
