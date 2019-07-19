@@ -23,6 +23,8 @@
 #' @examples
 #' dots(a, b, c, character = FALSE)
 #' dots(a, b, c, character = TRUE)
+
+# Updated 2019-07-19.
 dots <- function(..., character = FALSE) {
     # Alternatively, can use `rlang::eval_bare()` here.
     dots <- eval(substitute(alist(...)))
