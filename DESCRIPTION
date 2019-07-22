@@ -2,8 +2,8 @@ Package: brio
 Title: Biological R Input/Output
 Description: Extension of the rio and rtracklayer packages with improved support
     for biological data structures.
-Version: 0.2.5
-Date: 2019-07-19
+Version: 0.3.0
+Date: 2019-07-22
 Authors@R: c(
     person(
         "Michael", "Steinbaugh",
@@ -23,9 +23,9 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Depends: R (>= 3.5)
 Imports:
-    bioverbs (>= 0.1.20),
+    bioverbs (>= 0.2.0),
     goalie (>= 0.2.18),
-    transformer (>= 0.1.13),
+    transformer (>= 0.2.0),
     GenomicRanges,
     S4Vectors,
     SingleCellExperiment,
@@ -56,7 +56,9 @@ Remotes:
     acidgenomics/bioverbs,
     acidgenomics/goalie,
     acidgenomics/transformer
-biocViews: DataImport, GenomeAnnotation
+biocViews:
+    DataImport,
+    GenomeAnnotation
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
 Collate: 
