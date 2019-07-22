@@ -85,8 +85,8 @@ localOrRemoteFile <- function(file) {
 
 
 ## Auto decompress, if necessary. Note that `data.table::fread()` still doesn't
-## natively support compressed files. R on Windows can run into `tempdir()` write
-## permission issues, unless R is running as administrator. Ensure that
+## natively support compressed files. R on Windows can run into `tempdir()`
+## write permission issues, unless R is running as administrator. Ensure that
 ## decompressed is removed manually before attempting to overwrite, otherwise
 ## this step can error out.
 .autoDecompress <- function(file) {
