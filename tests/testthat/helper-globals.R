@@ -2,7 +2,7 @@ data(
     DataFrame,
     GRanges,
     RangedSummarizedExperiment,
-    SingleCellExperiment_Seurat,
+    SingleCellExperiment,
     data.table,
     tbl_df,
     package = "acidtest",
@@ -13,7 +13,7 @@ df <- DataFrame
 dt <- data.table
 gr <- GRanges
 rse <- RangedSummarizedExperiment
-sce <- SingleCellExperiment_Seurat
+sce <- SingleCellExperiment
 tbl <- tbl_df
 
 ## nolint start
