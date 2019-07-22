@@ -12,7 +12,7 @@ test_that("RDS, overwrite mode", {
         overwrite = TRUE
     )
     expect_identical(names(x), "new")
-    # We're defaulting to global environment.
+    ## We're defaulting to global environment.
     expect_true(exists("new", envir = envir, inherits = FALSE))
 
     expect_error(

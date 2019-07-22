@@ -1,6 +1,6 @@
-# NAMESPACE conflicts:
-# - `export()`: bioverbs, rio
-# - `import()`: rio, rtracklayer
+## NAMESPACE conflicts:
+## - `export()`: bioverbs, rio
+## - `import()`: rio, rtracklayer
 
 #' @importMethodsFrom transformer coerce
 #'

@@ -4,7 +4,7 @@ data(
     envir = environment()
 )
 
-# nolint start
+## nolint start
 DataFrame <- S4Vectors::DataFrame
 assay <- SummarizedExperiment::assay
 assayNames <- SummarizedExperiment::assayNames
@@ -15,7 +15,7 @@ metadata <- S4Vectors::metadata
 seqnames <- GenomicRanges::seqnames
 skip_on_docker <- goalie::skip_on_docker
 tibble <- tibble::tibble
-# nolint end
+## nolint end
 
 mat <- assay(rse)
 sparse <- assay(sce)

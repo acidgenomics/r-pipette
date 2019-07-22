@@ -1,5 +1,5 @@
-# Add query string "?" with "&" handling.
-# Consider adding "!/#" support.
+## Add query string "?" with "&" handling.
+## Consider adding "!/#" support.
 
 
 
