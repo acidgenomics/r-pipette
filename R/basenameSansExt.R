@@ -18,7 +18,7 @@
 #' @examples
 #' basenameSansExt(c("dir/foo.txt", "dir/bar.tar.gz", "dir/"))
 basenameSansExt <- function(path) {
-    # `basename()` is vectorized.
+    ## `basename()` is vectorized.
     x <- basename(path = path)
     x <- vapply(
         X = x,

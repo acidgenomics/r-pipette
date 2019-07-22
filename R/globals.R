@@ -16,8 +16,8 @@ brioTestsURL <- paste0(
 
 
 
-# Using this for `extPattern()` also.
-# Order is important here.
+## Using this for `extPattern()` also.
+## Order is important here.
 compressExtPattern <- "\\.(bz2|gz|xz|zip)"
 
 #' File extension pattern

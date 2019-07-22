@@ -21,17 +21,17 @@ NULL
 
 
 
-# @seealso
-# - `base:::as.data.frame.matrix()`.
-# - `S4Vectors:::as.data.frame.DataTable()`.
+## @seealso
+## - `base:::as.data.frame.matrix()`.
+## - `S4Vectors:::as.data.frame.DataTable()`.
 atomize.data.frame <-  # nolint
     function(object) {
-        # Keep only atomic columns. Complex columns won't write to disk as CSVs
-        # or work with R Markdown functions.
+        ## Keep only atomic columns. Complex columns won't write to disk as CSVs
+        ## or work with R Markdown functions.
         keep <- vapply(X = object, FUN = is.atomic, FUN.VALUE = logical(1L))
         assert(hasLength(keep))
 
-        # Inform the user about which columns to drop.
+        ## Inform the user about which columns to drop.
         drop <- names(keep)[!keep]
         if (hasLength(drop)) {
             message(paste(

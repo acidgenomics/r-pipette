@@ -17,7 +17,7 @@
 #' print(url)
 #' x <- loadRemoteData(url)
 #' print(x)
-# Last modified 2019-06-07.
+## Last modified 2019-06-07.
 loadRemoteData <- function(
     url,
     envir = globalenv(),
@@ -45,7 +45,7 @@ loadRemoteData <- function(
     )
     names(url) <- names
 
-    # Check to make sure the objects don't already exist.
+    ## Check to make sure the objects don't already exist.
     if (
         !isTRUE(overwrite) &&
         !isTRUE(allAreNonExisting(names, envir = envir, inherits = FALSE))
@@ -53,7 +53,7 @@ loadRemoteData <- function(
         .loadExistsError(names)
     }
 
-    # Download the files to tempdir and return a character matrix of mappings.
+    ## Download the files to tempdir and return a character matrix of mappings.
     invisible(mapply(
         name = names,
         url = url,
