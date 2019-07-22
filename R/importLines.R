@@ -1,5 +1,5 @@
-# Import source code lines.
-# Updated 2019-07-19.
+## Import source code lines.
+## Updated 2019-07-19.
 importLines <- function(file) {
     file <- localOrRemoteFile(file)
     message(paste("Importing", basename(file), "using readr::read_lines()."))

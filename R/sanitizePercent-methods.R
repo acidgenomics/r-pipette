@@ -24,7 +24,7 @@ NULL
 
 
 
-# Updated 2019-07-19.
+## Updated 2019-07-19.
 `sanitizePercent,atomic` <-  # nolint
     function(object) {
         object
@@ -42,7 +42,7 @@ setMethod(
 
 
 
-# Updated 2019-07-19.
+## Updated 2019-07-19.
 `sanitizePercent,character` <-  # nolint
     function(object) {
         if (all(grepl("%$", object))) {

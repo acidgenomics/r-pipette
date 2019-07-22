@@ -37,7 +37,7 @@
 #' ## Clean up.
 #' unlink("example", recursive = TRUE)
 
-# Updated 2019-07-19.
+## Updated 2019-07-19.
 writeCounts <- function(..., dir, compress) {
     names <- dots(..., character = TRUE)
     data <- list(...)

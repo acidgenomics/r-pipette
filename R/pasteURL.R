@@ -38,7 +38,7 @@
 #' )
 #' print(x)
 
-# Updated 2019-07-19.
+## Updated 2019-07-19.
 pasteURL <- function(..., protocol = c("https", "http", "ftp", "none")) {
     protocol <- match.arg(protocol)
     url <- paste(..., sep = "/")

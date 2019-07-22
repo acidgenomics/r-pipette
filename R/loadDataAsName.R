@@ -18,7 +18,7 @@
 #' loadDataAsName(renamed = example, dir = dir)
 #' class(renamed)
 
-# Updated 2019-06-07.
+## Updated 2019-06-07.
 loadDataAsName <- function(
     ...,
     dir,
@@ -30,13 +30,13 @@ loadDataAsName <- function(
         isFlag(overwrite)
     )
 
-    # Map the dot input to files.
+    ## Map the dot input to files.
     dots <- dots(..., character = TRUE)
     assert(hasNames(dots))
     files <- .listData(names = dots, dir = dir)
     names(files) <- names(dots)
 
-    # Check to see if any of the new names already exist in environment.
+    ## Check to see if any of the new names already exist in environment.
     names <- names(dots)
     if (
         !isTRUE(overwrite) &&
@@ -45,10 +45,10 @@ loadDataAsName <- function(
         .loadExistsError(names)
     }
 
-    # Note that we can skip safe loading here because we have already checked
-    # for existing names in environment outside of the loop call.
+    ## Note that we can skip safe loading here because we have already checked
+    ## for existing names in environment outside of the loop call.
     if (any(grepl("\\.rds$", files))) {
-        # R data serialized: assign directly.
+        ## R data serialized: assign directly.
         invisible(mapply(
             name = names(files),
             file = files,
@@ -59,20 +59,20 @@ loadDataAsName <- function(
             MoreArgs = list(envir = envir)
         ))
     } else {
-        # R data: use safe loading.
+        ## R data: use safe loading.
         safe <- new.env()
         invisible(mapply(
             FUN = .loadRDA,
             file = files,
             MoreArgs = list(
                 envir = safe,
-                # Note that we're checking for overwrite above already.
+                ## Note that we're checking for overwrite above already.
                 overwrite = FALSE
             )
         ))
         assert(areSetEqual(dots, ls(safe)))
 
-        # Now assign to the desired object names.
+        ## Now assign to the desired object names.
         invisible(mapply(
             FUN = function(from, to, safe, envir) {
                 assign(

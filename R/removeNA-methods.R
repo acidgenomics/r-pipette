@@ -41,14 +41,14 @@ NULL
 
 
 
-# Updated 2019-07-19.
+## Updated 2019-07-19.
 .allNonNA <- function(x) {
     !all(is.na(x))
 }
 
 
 
-# Updated 2019-07-19.
+## Updated 2019-07-19.
 `removeNA,atomic` <-  # nolint
     function(object) {
         na.omit(object)
@@ -66,7 +66,7 @@ setMethod(
 
 
 
-# Updated 2019-07-19.
+## Updated 2019-07-19.
 `removeNA,matrix` <-  # nolint
     function(object) {
         keepRows <- apply(X = object, MARGIN = 1L, FUN = .allNonNA)
@@ -86,7 +86,7 @@ setMethod(
 
 
 
-# Updated 2019-07-19.
+## Updated 2019-07-19.
 `removeNA,sparseMatrix` <- `removeNA,matrix`  # nolint
 
 
@@ -101,7 +101,7 @@ setMethod(
 
 
 
-# Updated 2019-07-19.
+## Updated 2019-07-19.
 `removeNA,data.frame` <- `removeNA,matrix`  # nolint
 
 
@@ -116,7 +116,7 @@ setMethod(
 
 
 
-# Updated 2019-07-19.
+## Updated 2019-07-19.
 `removeNA,DataFrame` <- `removeNA,data.frame`  # nolint
 
 

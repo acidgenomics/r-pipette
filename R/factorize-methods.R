@@ -20,7 +20,7 @@ NULL
 
 
 
-# Updated 2019-07-19.
+## Updated 2019-07-19.
 `factorize,DataFrame` <-  # nolint
     function(object) {
         class <- class(object)[[1L]]
