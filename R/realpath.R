@@ -10,8 +10,8 @@
 
 # Updated 2019-07-19.
 realpath <- function(path) {
-    # Ensure we're matching the platform conventions.
-    # For example, AppVeyor CI tests on Windows but uses "/" instead of "\\".
+    ## Ensure we're matching the platform conventions.
+    ## For example, AppVeyor CI tests on Windows but uses "/" instead of "\\".
     normalizePath(
         path = path,
         winslash = .Platform$file.sep,  # nolint

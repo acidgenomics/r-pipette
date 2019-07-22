@@ -1,5 +1,5 @@
-# Note that `read_excel()` doesn't currently support automatic blank lines
-# removal, so ensure that is fixed downstream.
+## Note that `read_excel()` doesn't currently support automatic blank lines
+## removal, so ensure that is fixed downstream.
 importXLSX <- function(file, sheet = 1L, colnames = TRUE) {
     file <- localOrRemoteFile(file)
     message(paste("Importing", basename(file), "using readxl::read_excel()."))
@@ -10,13 +10,13 @@ importXLSX <- function(file, sheet = 1L, colnames = TRUE) {
         col_names = colnames,
         na = naStrings,
         trim_ws = TRUE,
-        # Keep quiet.
+        ## Keep quiet.
         progress = FALSE,
-        # Don't attempt name repair.
-        # Refer to `tibble()` documentation for details.
+        ## Don't attempt name repair.
+        ## Refer to `tibble()` documentation for details.
         .name_repair = "minimal"
     )
-    # Always return as data.frame instead of tibble at this step.
+    ## Always return as data.frame instead of tibble at this step.
     object <- as.data.frame(
         x = object,
         make.names = FALSE,

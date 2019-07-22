@@ -43,18 +43,18 @@ localOrRemoteFile <- function(file) {
             if (!isTRUE(isAURL(file))) {
                 return(file)
             }
-            # Remote file mode.
+            ## Remote file mode.
             assert(hasInternet())
-            # Note that for `.gtf.gz` we want to return only `.gz` here.
-            # This behavor differs from matching using `extPattern` global.
+            ## Note that for `.gtf.gz` we want to return only `.gz` here.
+            ## This behavor differs from matching using `extPattern` global.
             ext <- str_match(
                 string = basename(file),
                 pattern = "\\.([a-zA-Z0-9]+)$"
             )
             ext <- na.omit(ext[1L, 2L])
             assert(hasLength(ext))
-            # Write mode for binary files. Applies to Windows.
-            # https://github.com/tidyverse/readxl/issues/374
+            ## Write mode for binary files. Applies to Windows.
+            ## https://github.com/tidyverse/readxl/issues/374
             binary <- c(
                 "bz2",
                 "gz",
@@ -66,10 +66,10 @@ localOrRemoteFile <- function(file) {
                 "zip"
             )
             if (ext %in% binary) {
-                # Write binary.
+                ## Write binary.
                 mode <- "wb"
             } else {
-                # Write (default).
+                ## Write (default).
                 mode <- "w"
             }
             destfile <- file.path(tempdir(), basename(file))
@@ -84,11 +84,11 @@ localOrRemoteFile <- function(file) {
 
 
 
-# Auto decompress, if necessary. Note that `data.table::fread()` still doesn't
-# natively support compressed files. R on Windows can run into `tempdir()` write
-# permission issues, unless R is running as administrator. Ensure that
-# decompressed is removed manually before attempting to overwrite, otherwise
-# this step can error out.
+## Auto decompress, if necessary. Note that `data.table::fread()` still doesn't
+## natively support compressed files. R on Windows can run into `tempdir()` write
+## permission issues, unless R is running as administrator. Ensure that
+## decompressed is removed manually before attempting to overwrite, otherwise
+## this step can error out.
 .autoDecompress <- function(file) {
     file <- realpath(file)
     vapply(
@@ -99,7 +99,7 @@ localOrRemoteFile <- function(file) {
             }
             message(paste("Decompressing", basename(file), "in tempdir()."))
 
-            # Get the compression extension and decompressed file basename.
+            ## Get the compression extension and decompressed file basename.
             match <- str_match(
                 string = basename(file),
                 pattern = compressExtPattern
@@ -108,22 +108,22 @@ localOrRemoteFile <- function(file) {
             match <- match[1L, , drop = TRUE]
             compressExt <- toupper(match[[2L]])
 
-            # Attempt to force removal of an existing decompressed file on
-            # Windows, which can error out on some machines. Fail with a clear
-            # error message if and when this occurs.
+            ## Attempt to force removal of an existing decompressed file on
+            ## Windows, which can error out on some machines. Fail with a clear
+            ## error message if and when this occurs.
             if (identical(.Platform[["OS.type"]], "windows")) {
-                # nocov start
+                ## nocov start
                 decompressedFile <- sub(
                     pattern = compressExtPattern,
                     replacement = "",
                     x = basename(file)
                 )
                 .removeTempFile(decompressedFile)
-                # nocov end
+                ## nocov end
             }
 
             if (compressExt %in% c("BZ2", "GZ", "XZ")) {
-                # Using the R.utils package to handle BZ2, GZ, XZ.
+                ## Using the R.utils package to handle BZ2, GZ, XZ.
                 if (compressExt == "BZ2") {
                     fun <- bzfile
                 } else if (compressExt == "GZ") {
@@ -141,13 +141,13 @@ localOrRemoteFile <- function(file) {
                     remove = FALSE
                 )
             } else if (compressExt == "ZIP") {
-                # Using the utils package to handle ZIP.
+                ## Using the utils package to handle ZIP.
                 file <- unzip(
                     zipfile = file,
                     overwrite = TRUE,
                     exdir = tempdir()
                 )
-                # Ensure we're returning a string.
+                ## Ensure we're returning a string.
                 file <- file[[1L]]
             }
             file
@@ -159,10 +159,10 @@ localOrRemoteFile <- function(file) {
 
 
 
-# Fix attempt for Windows R erroring out on failure to overwrite tempfile.
-# This can happen for some non-admin user accounts, which is annoying.
-# https://support.rstudio.com/hc/en-us/community/posts/115007456107
-# nocov start
+## Fix attempt for Windows R erroring out on failure to overwrite tempfile.
+## This can happen for some non-admin user accounts, which is annoying.
+## https://support.rstudio.com/hc/en-us/community/posts/115007456107
+## nocov start
 .removeTempFile <- function(file) {
     file <- file.path(tempdir(), file)
     if (file.exists(file)) {
@@ -185,4 +185,4 @@ localOrRemoteFile <- function(file) {
     }
     invisible()
 }
-# nocov end
+## nocov end

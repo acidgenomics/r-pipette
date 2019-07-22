@@ -135,8 +135,7 @@
 #'
 #' [basejump][] exports the specialized `makeGRangesFromGFF()` function that
 #' makes GFF loading simple.
-#
-#' See also:
+## #' See also:
 #'
 #' - [Ensembl spec](http://www.ensembl.org/info/website/upload/gff.html)
 #' - [GENCODE spec](http://www.gencodegenes.org/gencodeformat.html)
@@ -200,7 +199,7 @@ import <- function(
     rownames = TRUE,
     colnames = TRUE
 ) {
-    # We're supporting remote files, so don't check using `isAFile()` here.
+    ## We're supporting remote files, so don't check using `isAFile()` here.
     assert(
         isString(file),
         isScalar(sheet),
@@ -208,8 +207,8 @@ import <- function(
         isFlag(colnames)
     )
 
-    # Allow Google Sheets import using rio, by matching the URL.
-    # Otherwise, coerce the file extension to uppercase, for easy matching.
+    ## Allow Google Sheets import using rio, by matching the URL.
+    ## Otherwise, coerce the file extension to uppercase, for easy matching.
     ext <- toupper(str_match(basename(file), extPattern)[1L, 2L])
 
     if (ext %in% c("CSV", "FWF", "PSV", "TSV", "TXT")) {
@@ -219,8 +218,8 @@ import <- function(
     } else if (ext %in% c("XLSB", "XLSX")) {
         object <- importXLSX(file, sheet = sheet, colnames = colnames)
     } else if (ext == "PZFX") {
-        # GraphPad Prism project.
-        # Note that Prism files always contain column names.
+        ## GraphPad Prism project.
+        ## Note that Prism files always contain column names.
         object <- importPZFX(file, sheet = sheet)
     } else if (ext == "RDS") {
         object <- importRDS(file)
@@ -237,10 +236,10 @@ import <- function(
     } else if (ext %in% c("YAML", "YML")) {
         object <- importYAML(file)
     } else if (ext == "MTX") {
-        # We're always requiring row and column sidecar files for MTX.
+        ## We're always requiring row and column sidecar files for MTX.
         object <- importMTX(file)
     } else if (ext == "COUNTS") {
-        # bcbio counts format always contains row and column names.
+        ## bcbio counts format always contains row and column names.
         object <- importCounts(file)
     } else if (ext %in% c("LOG", "MD", "PY", "R", "RMD", "SH")) {
         object <- importLines(file)
@@ -275,7 +274,7 @@ import <- function(
     }
 
     if (is.data.frame(object)) {
-        # Coerce data frame to desired global output, if necessary.
+        ## Coerce data frame to desired global output, if necessary.
         pref <- getOption("acid.data.frame")
         if (isString(pref)) {
             object <- switch(
@@ -294,7 +293,7 @@ import <- function(
             )
         }
 
-        # Set rownames automatically, if supported.
+        ## Set rownames automatically, if supported.
         if (
             isAny(object, c("data.frame", "DataFrame")) &&
             !isAny(object, c("data.table", "tbl_df")) &&
@@ -307,7 +306,7 @@ import <- function(
         }
     }
 
-    # Slot data provenance metadata into object.
+    ## Slot data provenance metadata into object.
     newMeta <- list(
         brio = packageVersion("brio"),
         file = if (isAFile(file)) {
@@ -330,7 +329,7 @@ import <- function(
         attr(object, "brio") <- meta
     }
 
-    # Check for syntactically valid names and inform the user, if necessary.
+    ## Check for syntactically valid names and inform the user, if necessary.
     if (
         (hasNames(object) && !hasValidNames(object)) ||
         (hasDimnames(object) && !hasValidDimnames(object))
@@ -341,7 +340,7 @@ import <- function(
         ))
     }
 
-    # Inform the user when encountering duplicate names.
+    ## Inform the user when encountering duplicate names.
     names <- try(names(object))
     if (isCharacter(names)) {
         dupes <- duplicated(names)
@@ -354,7 +353,7 @@ import <- function(
         }
     }
 
-    # Don't run object validity check with `validObject()` here.
+    ## Don't run object validity check with `validObject()` here.
 
     object
 }
@@ -372,7 +371,7 @@ import <- function(
 
 
 
-# Using `tryCatch()` here to error if there are any warnings.
+## Using `tryCatch()` here to error if there are any warnings.
 .rtracklayerImport <- function(file) {
     file <- localOrRemoteFile(file)
     message(paste("Importing", basename(file), "using rtracklayer::import()."))
@@ -392,7 +391,7 @@ import <- function(
 
 
 
-# Slot data provenance metadata.
+## Slot data provenance metadata.
 .slotMetadata <- function(object, pkg, fun) {
     assert(isString(pkg), isString(fun))
     importer <- paste0(pkg, "::", fun)
@@ -401,8 +400,8 @@ import <- function(
         metadata(object)[["brio"]][["importer"]] <- importer
         metadata(object)[["brio"]][[pkg]] <- version
     } else {
-        # Use `attr()` instead of `attributes()` here. It doesn't error on
-        # assignment when the object doesn't already have attributes.
+        ## Use `attr()` instead of `attributes()` here. It doesn't error on
+        ## assignment when the object doesn't already have attributes.
         attr(object, "brio")[["importer"]] <- importer
         attr(object, "brio")[[pkg]] <- version
     }
