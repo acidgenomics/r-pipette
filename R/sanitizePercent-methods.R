@@ -24,7 +24,7 @@ NULL
 
 
 
-# Return unmodified.
+## Return unmodified.
 sanitizePercent.atomic <-  # nolint
     function(object) {
         object

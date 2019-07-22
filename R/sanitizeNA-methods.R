@@ -33,7 +33,7 @@ NULL
 
 
 
-# Return unmodified.
+## Return unmodified.
 sanitizeNA.atomic <-  # nolint
     function(object) {
         object
@@ -50,7 +50,7 @@ setMethod(
 
 
 
-# Note that names will be kept here after the gsub call.
+## Note that names will be kept here after the gsub call.
 sanitizeNA.character <-  # nolint
     function(object) {
         patterns <- c(
@@ -101,14 +101,11 @@ setMethod(
 
 
 
-# nolint start
-#
-# Alternate dplyr method:
-# object <- mutate_if(object, is.character, sanitizeNA)
-#
-# This requires use to import dplyr, which can be otherwise avoided.
-#
-# nolint end
+## nolint start
+## ## Alternate dplyr method:
+## object <- mutate_if(object, is.character, sanitizeNA)
+## ## This requires use to import dplyr, which can be otherwise avoided.
+## ## nolint end
 
 sanitizeNA.data.frame <-  # nolint
     function(object) {
@@ -128,7 +125,7 @@ sanitizeNA.data.frame <-  # nolint
             }
         )
         out <- data.frame(list, row.names = rownames, stringsAsFactors = FALSE)
-        # This step ensures we keep `tbl_df`, `data.table` class, if necessary.
+        ## This step ensures we keep `tbl_df`, `data.table` class, if necessary.
         if (!identical(class(object), "data.frame")) {
             out <- as(out, class(object)[[1L]])
         }

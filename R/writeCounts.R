@@ -42,7 +42,7 @@ writeCounts <- function(..., dir, compress) {
     dir <- initDir(dir)
     assert(isFlag(compress))
 
-    # Iterate across the dot objects and write to disk.
+    ## Iterate across the dot objects and write to disk.
     message(paste0("Writing ", toString(names), " to ", dir, "."))
 
     files <- mapply(

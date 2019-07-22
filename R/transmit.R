@@ -43,7 +43,7 @@
 #' ## Clean up.
 #' ## unlink(readme)
 
-# Updated 2019-07-16.
+## Updated 2019-07-16.
 transmit <- function(
     remoteDir,
     localDir = ".",
@@ -54,12 +54,12 @@ transmit <- function(
     assert(
         hasInternet(),
         isString(remoteDir),
-        # Check for public FTP protocol. Note that we're wrapping with `all()`
-        # here because the check is parameterized, and includes name, which
-        # causes the check to fail on R 3.4.
+        ## Check for public FTP protocol. Note that we're wrapping with `all()`
+        ## here because the check is parameterized, and includes name, which
+        ## causes the check to fail on R 3.4.
         all(isMatchingRegex(remoteDir, "^ftp\\://"))
     )
-    # `RCurl::getURL` requires a trailing slash.
+    ## `RCurl::getURL` requires a trailing slash.
     if (!grepl("/$", remoteDir)) {
         remoteDir <- paste0(remoteDir, "/")
     }
@@ -70,11 +70,11 @@ transmit <- function(
         isFlag(compress)
     )
 
-    # Get the name of the server.
+    ## Get the name of the server.
     server <- str_match(remoteDir, "^.*//([^/]+)/.*$")[1L, 2L]
     assert(isString(server))
 
-    # Error and inform the user if the FTP connection fails.
+    ## Error and inform the user if the FTP connection fails.
     if (!isTRUE(url.exists(remoteDir))) {
         stop(paste("Connection to", server, "failed."))  # nocov
     } else {
@@ -89,25 +89,25 @@ transmit <- function(
         stop("Failed to list directory contents.")  # nocov
     }
 
-    # Match the `-` at begining for file.
-    # `-rwxrwxr-x`: File
-    # `drwxrwxr-x`: Directory
+    ## Match the `-` at begining for file.
+    ## `-rwxrwxr-x`: File
+    ## `drwxrwxr-x`: Directory
     remoteFiles <- read_lines(remoteTxt)
     remoteFiles <- remoteFiles[grepl("^-", remoteFiles)]
-    # File name is at the end, not including a space.
+    ## File name is at the end, not including a space.
     remoteFiles <- str_extract(remoteFiles, "[^\\s]+$")
     assert(hasLength(remoteFiles))
 
-    # Apply pattern matching.
+    ## Apply pattern matching.
     match <- str_subset(remoteFiles, pattern)
     assert(hasLength(match))
 
     message(sprintf("Files matching pattern:\n%s", toString(match)))
 
-    # Concatenate using paste but strip the trailing slash (see above).
+    ## Concatenate using paste but strip the trailing slash (see above).
     remotePaths <- paste(gsub("/$", "", remoteDir), match, sep = "/")
 
-    # Rename files, if desired.
+    ## Rename files, if desired.
     if (is.character(rename)) {
         assert(areSameLength(x = match, y = rename))
         name <- rename
@@ -123,7 +123,7 @@ transmit <- function(
         files <- localPaths
     }
 
-    # Check for existing files and skip, if necessary.
+    ## Check for existing files and skip, if necessary.
     if (any(file.exists(files))) {
         exists <- which(file.exists(files))
         skip <- files[exists]
@@ -131,7 +131,7 @@ transmit <- function(
         localPaths <- localPaths[!exists]
     }
 
-    # Early return if all files exist.
+    ## Early return if all files exist.
     if (length(localPaths) == 0L) {
         message("All files are already downloaded.")
         files <- realpath(files)
