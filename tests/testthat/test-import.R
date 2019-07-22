@@ -1,5 +1,7 @@
 context("import")
 
+skip_if_not(hasInternet())
+
 test_that("Invalid extension", {
     expect_error(
         import(file = "file.XXX"),

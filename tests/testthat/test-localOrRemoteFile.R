@@ -1,5 +1,7 @@
 context("localOrRemoteFile")
 
+skip_if_not(hasInternet())
+
 test_that("localOrRemoteFile", {
     urls <- paste(brioTestsURL, c("example.csv", "example.rda"), sep = "/")
     files <- localOrRemoteFile(urls)

@@ -1,6 +1,7 @@
 context("import : PZFX")
 
 skip_if_not_installed(pkg = "pzfx")
+skip_if_not(hasInternet())
 
 file <- system.file("extdata", "exponential_decay.pzfx", package = "pzfx")
 stopifnot(file.exists(file))
