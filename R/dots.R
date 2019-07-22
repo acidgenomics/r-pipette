@@ -26,7 +26,7 @@
 
 # Updated 2019-07-19.
 dots <- function(..., character = FALSE) {
-    # Alternatively, can use `rlang::eval_bare()` here.
+    ## Alternatively, can use `rlang::eval_bare()` here.
     dots <- eval(substitute(alist(...)))
     assert(
         is.list(dots),
@@ -34,8 +34,8 @@ dots <- function(..., character = FALSE) {
         hasNoDuplicates(dots)
     )
 
-    # Provide an informative error message when a user attempts to accidentally
-    # use standard evaluation with quotation.
+    ## Provide an informative error message when a user attempts to accidentally
+    ## use standard evaluation with quotation.
     if (!all(bapply(dots, is.symbol))) {
         stop(paste(
             "This function uses non-standard evaluation (NSE).",
@@ -49,7 +49,7 @@ dots <- function(..., character = FALSE) {
         ))
     }
 
-    # Convert names (symbols) to character.
+    ## Convert names (symbols) to character.
     names <- vapply(dots, as.character, character(1L))
     assert(hasNoDuplicates(names))
     if (isTRUE(character)) {

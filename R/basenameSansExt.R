@@ -20,7 +20,7 @@
 
 # Updated 2019-07-19.
 basenameSansExt <- function(path) {
-    # `basename()` is vectorized.
+    ## `basename()` is vectorized.
     x <- basename(path = path)
     x <- vapply(
         X = x,
