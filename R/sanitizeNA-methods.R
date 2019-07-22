@@ -33,7 +33,7 @@ NULL
 
 
 
-# Updated 2019-07-19.
+## Updated 2019-07-19.
 `sanitizeNA,atomic` <-  # nolint
     function(object) {
         object
@@ -50,8 +50,8 @@ setMethod(
 
 
 
-# Note that names will be kept here after the gsub call.
-# Updated 2019-07-19.
+## Note that names will be kept here after the gsub call.
+## Updated 2019-07-19.
 `sanitizeNA,character` <-  # nolint
     function(object) {
         patterns <- c(
@@ -80,7 +80,7 @@ setMethod(
 
 
 
-# Updated 2019-07-19.
+## Updated 2019-07-19.
 `sanitizeNA,factor` <-  # nolint
     function(object) {
         x <- as.character(object)
@@ -103,16 +103,13 @@ setMethod(
 
 
 
-# nolint start
-#
-# Alternate dplyr method:
-# object <- mutate_if(object, is.character, sanitizeNA)
-#
-# This requires use to import dplyr, which can be otherwise avoided.
-#
-# nolint end
+## nolint start
+## ## Alternate dplyr method:
+## object <- mutate_if(object, is.character, sanitizeNA)
+## ## This requires use to import dplyr, which can be otherwise avoided.
+## ## nolint end
 
-# Updated 2019-07-19.
+## Updated 2019-07-19.
 `sanitizeNA,data.frame` <-  # nolint
     function(object) {
         if (hasRownames(object)) {
@@ -131,7 +128,7 @@ setMethod(
             }
         )
         out <- data.frame(list, row.names = rownames, stringsAsFactors = FALSE)
-        # This step ensures we keep `tbl_df`, `data.table` class, if necessary.
+        ## This step ensures we keep `tbl_df`, `data.table` class, if necessary.
         if (!identical(class(object), "data.frame")) {
             out <- as(out, class(object)[[1L]])
         }
@@ -150,7 +147,7 @@ setMethod(
 
 
 
-# Updated 2019-07-19.
+## Updated 2019-07-19.
 `sanitizeNA,DataFrame` <-  # nolint
     function(object) {
         rownames <- rownames(object)
