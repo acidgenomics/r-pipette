@@ -1,8 +1,20 @@
 data(
-    df, dt, gr, rse, sce, tbl,
+    DataFrame,
+    GRanges,
+    RangedSummarizedExperiment,
+    SingleCellExperiment_Seurat,
+    data.table,
+    tbl_df,
     package = "acidtest",
     envir = environment()
 )
+
+df <- DataFrame
+dt <- data.table
+gr <- GRanges
+rse <- RangedSummarizedExperiment
+sce <- SingleCellExperiment_Seurat
+tbl <- tbl_df
 
 ## nolint start
 DataFrame <- S4Vectors::DataFrame

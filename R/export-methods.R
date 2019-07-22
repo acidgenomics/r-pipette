@@ -65,7 +65,7 @@ NULL
 
 
 
-## matrix =======================================================================
+## matrix ======================================================================
 ## This method covers standard `matrix` but is also intended to work for
 ## `data.table`, `tbl_df`, and `DataFrame` classes. Note that `rio::export()`
 ## does not preserve row names by default, so we're ensuring row names get
@@ -165,7 +165,7 @@ setMethod(
 
 
 
-## data.frame ===================================================================
+## data.frame ==================================================================
 `export,data.frame` <- `export,matrix`  # nolint
 
 
@@ -180,7 +180,7 @@ setMethod(
 
 
 
-## DataFrame ====================================================================
+## DataFrame ===================================================================
 `export,DataFrame` <- `export,data.frame`  # nolint
 
 
@@ -195,7 +195,7 @@ setMethod(
 
 
 
-## sparseMatrix =================================================================
+## sparseMatrix ================================================================
 ## Note that "file" is referring to the matrix file.
 ## The correponding column and row sidecar files are generated automatically.
 ## Consider adding HDF5 support in a future update.
@@ -306,7 +306,7 @@ setMethod(
 
 
 
-## GRanges ======================================================================
+## GRanges =====================================================================
 `export,GRanges` <- `export,DataFrame`  # nolint
 
 
@@ -321,7 +321,7 @@ setMethod(
 
 
 
-## SummarizedExperiment =========================================================
+## SummarizedExperiment ========================================================
 ## Updated 2019-07-19.
 .exportAssays <-  # nolint
     function(object, name, dir, compress) {
@@ -435,9 +435,9 @@ setMethod(
         ext <- paste0(".", ext)
 
         ## Ensure the assays list is always named. Note that valid SE objects
-        ## don't have to contain named assays (e.g. DESeqTransform). In the event
-        ## that an SE object contains a single, unnamed assay, we make sure to
-        ## rename it internally to "assay" before exporting.
+        ## don't have to contain named assays (e.g. DESeqTransform). In the
+        ## event that an SE object contains a single, unnamed assay, we make
+        ## sure to rename it internally to "assay" before exporting.
         if (is.null(assayNames(object))) {
             assayNames(object) <- "assay"
         }
