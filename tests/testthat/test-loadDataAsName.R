@@ -1,5 +1,7 @@
 context("loadDataAsName")
 
+skip_if_not(hasInternet())
+
 dir <- "cache"
 
 test_that("RDS, overwrite mode", {

@@ -1,9 +1,8 @@
 context("transmit")
 
-## nolint start
+skip_if_not(hasInternet())
 skip_on_appveyor()
 skip_on_docker()
-## nolint end
 
 ## Note that only FTP is currently supported.
 remoteDir <- paste(
