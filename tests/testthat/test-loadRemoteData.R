@@ -1,5 +1,7 @@
 context("loadRemoteData")
 
+skip_if_not(hasInternet())
+
 test_that("loadRemoteData", {
     envir <- new.env()
     url <- paste(brioTestsURL, "example.rds", sep = "/")
