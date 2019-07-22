@@ -18,7 +18,7 @@
 #' @examples
 #' fileExt(c("dir/foo.txt", "dir/bar.tar.gz", "dir/"))
 
-# Updated 2019-07-19.
+## Updated 2019-07-19.
 fileExt <- function(path) {
     ## Note that `regexpr()` returns `-1L` on match failure.
     pos <- regexpr(pattern = extPattern, text = path)

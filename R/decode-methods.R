@@ -30,7 +30,7 @@ NULL
 
 
 
-# Updated 2019-07-19.
+## Updated 2019-07-19.
 `decode,DataFrame` <-  # nolint
     function(x) {
         DataFrame(
@@ -66,7 +66,7 @@ setMethod(
 
 
 
-# Updated 2019-07-19.
+## Updated 2019-07-19.
 `decode,GRanges` <-  # nolint
     function(x) {
         mcols <- mcols(x)

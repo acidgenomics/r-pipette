@@ -34,7 +34,7 @@
 #' rm(example)
 #' unlink("example.rds")
 
-# Update 2019-07-19.
+## Update 2019-07-19.
 assignAndSaveData <- function(name, object, envir = parent.frame()) {
     assert(
         isString(name),

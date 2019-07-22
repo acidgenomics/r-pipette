@@ -21,18 +21,18 @@ NULL
 
 
 
-# @seealso
-# - `base:::as.data.frame.matrix()`.
-# - `S4Vectors:::as.data.frame.DataTable()`.
-# Updated 2019-07-19.
+## @seealso
+## - `base:::as.data.frame.matrix()`.
+## - `S4Vectors:::as.data.frame.DataTable()`.
+## Updated 2019-07-19.
 `atomize,data.frame` <-  # nolint
     function(object) {
-        # Keep only atomic columns. Complex columns won't write to disk as CSVs
-        # or work with R Markdown functions.
+        ## Keep only atomic columns. Complex columns won't write to disk as CSVs
+        ## or work with R Markdown functions.
         keep <- vapply(X = object, FUN = is.atomic, FUN.VALUE = logical(1L))
         assert(hasLength(keep))
 
-        # Inform the user about which columns to drop.
+        ## Inform the user about which columns to drop.
         drop <- names(keep)[!keep]
         if (hasLength(drop)) {
             message(paste(
@@ -56,7 +56,7 @@ setMethod(
 
 
 
-# Updated 2019-07-19.
+## Updated 2019-07-19.
 `atomize,DataFrame` <-  # nolint
     function(object) {
         object <- decode(object)
@@ -78,7 +78,7 @@ setMethod(
 
 
 
-# Updated 2019-07-19.
+## Updated 2019-07-19.
 `atomize,GRanges` <-  # nolint
     function(object) {
         mcols(object) <- atomize(mcols(object))

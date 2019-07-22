@@ -31,7 +31,7 @@ NULL
 
 
 
-# Updated 2019-07-19.
+## Updated 2019-07-19.
 `encode,DataFrame` <-  # nolint
     function(x) {
         DataFrame(
@@ -70,7 +70,7 @@ setMethod(
 
 
 
-# Updated 2019-07-19.
+## Updated 2019-07-19.
 `encode,GRanges` <-  # nolint
     function(x) {
         mcols <- mcols(x)
