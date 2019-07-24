@@ -185,6 +185,7 @@ test_that("Unnamed primary assay", {
 context("export : SingleCellExperiment")
 
 test_that("`dir` argument, no `name`", {
+    skip_on_appveyor()
     x <- export(sce, name = NULL, dir = "XXX", compress = FALSE)
     prefix <- realpath(file.path("XXX", "sce"))
     assays <- file.path(prefix, "assays")
@@ -214,6 +215,7 @@ test_that("`dir` argument, no `name`", {
 })
 
 test_that("Both `name` and `dir` declared", {
+    skip_on_appveyor()
     x <- export(sce, name = "test", dir = "XXX")
     prefix <- realpath(file.path("XXX", "test"))
     assays <- file.path(prefix, "assays")
