@@ -5,9 +5,9 @@
 #'
 #' @export
 #' @include saveData.R
+#'
 #' @inheritParams params
 #' @inheritParams saveData
-
 #' @param name `character(1)`.
 #'   Desired variable name.
 #' @param envir `environment`.
@@ -33,6 +33,8 @@
 #' ## Clean up.
 #' rm(example)
 #' unlink("example.rds")
+
+## Update 2019-07-19.
 assignAndSaveData <- function(name, object, envir = parent.frame()) {
     assert(
         isString(name),
@@ -41,14 +43,14 @@ assignAndSaveData <- function(name, object, envir = parent.frame()) {
         is.environment(envir)
     )
 
-    # Create destination directory automatically.
+    ## Create destination directory automatically.
     dir <- initDir(dir)
 
-    # Assign data.
+    ## Assign data.
     assign(x = name, value = object, envir = envir)
     assign(x = name, value = object)
 
-    # Save data.
+    ## Save data.
     args <- list(
         as.name(name),
         dir = dir,

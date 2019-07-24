@@ -1,7 +1,7 @@
 context("removeNA")
 
-# Support for vectors (using `stats::na.omit`).
-# This will return structure attributes about original size, with class omit.
+## Support for vectors (using `stats::na.omit`).
+## This will return structure attributes about original size, with class omit.
 with_parameters_test_that(
     "removeNA", {
         expect_identical(

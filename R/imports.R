@@ -1,6 +1,6 @@
-# NAMESPACE conflicts:
-# - `export()`: bioverbs, rio
-# - `import()`: rio, rtracklayer
+## NAMESPACE conflicts:
+## - `export()`: bioverbs, rio
+## - `import()`: rio, rtracklayer
 
 #' @importMethodsFrom transformer coerce
 #'
@@ -25,6 +25,7 @@
 #' @importFrom stats na.omit
 #' @importFrom stringr str_extract str_match str_subset
 #' @importFrom tibble as_tibble column_to_rownames
-#' @importFrom transformer as.data.frame as_tibble
+#' @importFrom transformer as.data.frame as_tibble atomize decode encode
+#'   factorize
 #' @importFrom utils download.file head packageVersion tail
 NULL

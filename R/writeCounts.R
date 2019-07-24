@@ -36,13 +36,15 @@
 #'
 #' ## Clean up.
 #' unlink("example", recursive = TRUE)
+
+## Updated 2019-07-19.
 writeCounts <- function(..., dir, compress) {
     names <- dots(..., character = TRUE)
     data <- list(...)
     dir <- initDir(dir)
     assert(isFlag(compress))
 
-    # Iterate across the dot objects and write to disk.
+    ## Iterate across the dot objects and write to disk.
     message(paste0("Writing ", toString(names), " to ", dir, "."))
 
     files <- mapply(

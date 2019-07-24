@@ -1,5 +1,5 @@
-# Add query string "?" with "&" handling.
-# Consider adding "!/#" support.
+## Add query string "?" with "&" handling.
+## Consider adding "!/#" support.
 
 
 
@@ -37,6 +37,8 @@
 #'     protocol = "ftp"
 #' )
 #' print(x)
+
+## Updated 2019-07-19.
 pasteURL <- function(..., protocol = c("https", "http", "ftp", "none")) {
     protocol <- match.arg(protocol)
     url <- paste(..., sep = "/")

@@ -53,7 +53,8 @@
 #'
 #' ## Clean up.
 #' rm(example, inherits = TRUE)
-# Last modified 2019-06-07.
+
+## Updated 2019-06-07.
 loadData <- function(
     ...,
     dir,
@@ -70,8 +71,8 @@ loadData <- function(
     if (isCharacter(list)) {
         names <- list
         rm(list)
-        # By default, assume user has passed in actual file paths.
-        # Otherwise, behave like NSE method, and attempt to add `dir`.
+        ## By default, assume user has passed in actual file paths.
+        ## Otherwise, behave like NSE method, and attempt to add `dir`.
         if (isTRUE(allAreFiles(names))) {
             files <- realpath(names)
         } else {
@@ -132,7 +133,7 @@ formals(loadData)[["overwrite"]] <- formalsList[["overwrite"]]
                 full.names = TRUE,
                 ignore.case = TRUE
             ))
-            # Add error checking here.
+            ## Add error checking here.
             if (length(files) == 0L) {
                 stop(paste0(
                     deparse(name), " is missing.\n",
@@ -166,19 +167,19 @@ formals(loadData)[["overwrite"]] <- formalsList[["overwrite"]]
 
 
 
-# Last modified 2019-06-07.
+## Last modified 2019-06-07.
 .loadRDS <- function(file, envir, overwrite) {
     file <- realpath(file)
     assert(
         isAFile(file),
-        # Allowing RDS only here.
+        ## Allowing RDS only here.
         grepl("\\.rds$", file, ignore.case = TRUE),
         is.environment(envir),
         isFlag(overwrite)
     )
     name <- basenameSansExt(file)
     data <- readRDS(file)
-    # Error if the object is already assigned in environment.
+    ## Error if the object is already assigned in environment.
     if (
         !isTRUE(overwrite) &&
         exists(x = name, envir = envir, inherits = FALSE)
@@ -192,12 +193,12 @@ formals(loadData)[["overwrite"]] <- formalsList[["overwrite"]]
 
 
 
-# Last modified 2019-06-07.
+## Last modified 2019-06-07.
 .loadRDA <- function(file, name = NULL, envir, overwrite) {
     file <- realpath(file)
     assert(
         isAFile(file),
-        # Allowing RDA or RDATA here.
+        ## Allowing RDA or RDATA here.
         grepl("\\.rd[a|ata]$", file, ignore.case = TRUE),
         isString(name, nullOK = TRUE),
         is.environment(envir),
@@ -206,7 +207,7 @@ formals(loadData)[["overwrite"]] <- formalsList[["overwrite"]]
     if (is.null(name)) {
         name <- basenameSansExt(file)
     }
-    # Error if the object is already assigned in environment.
+    ## Error if the object is already assigned in environment.
     if (
         !isTRUE(overwrite) &&
         exists(x = name, envir = envir, inherits = FALSE)
@@ -214,12 +215,12 @@ formals(loadData)[["overwrite"]] <- formalsList[["overwrite"]]
         .loadExistsError(name)
     }
 
-    # Loading into a temporary environment, so we can evaluate the integrity
-    # of the objects before assigning into the destination environment.
+    ## Loading into a temporary environment, so we can evaluate the integrity
+    ## of the objects before assigning into the destination environment.
     tmpEnvir <- new.env()
     loaded <- load(file, envir = tmpEnvir)
 
-    # Ensure that the loaded name is identical to the file name.
+    ## Ensure that the loaded name is identical to the file name.
     if (!isString(loaded)) {
         stop(paste0(
             basename(file),
@@ -239,14 +240,14 @@ formals(loadData)[["overwrite"]] <- formalsList[["overwrite"]]
     }
     assert(identical(name, loaded))
 
-    # Now we're ready to assign into the target environment.
+    ## Now we're ready to assign into the target environment.
     assign(
         x = name,
         value = get(name, envir = tmpEnvir, inherits = FALSE),
         envir = envir
     )
 
-    # Ensure that assignment worked.
+    ## Ensure that assignment worked.
     assert(exists(x = name, envir = envir, inherits = FALSE))
 
     file

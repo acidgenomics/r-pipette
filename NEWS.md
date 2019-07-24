@@ -1,3 +1,12 @@
+## brio 0.3.0 (2019-07-22)
+
+Bumped version number to reflect changes in basejump dependencies.
+
+### Minor changes
+
+- Improved naming consistency of internal functions.
+- Updated package dependency versions.
+
 ## brio 0.2.4 (2019-07-18)
 
 ### Minor changes

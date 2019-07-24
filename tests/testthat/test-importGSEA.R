@@ -1,5 +1,7 @@
 context("import : GSEA")
 
+skip_if_not(hasInternet())
+
 with_parameters_test_that(
     "MSigDB hallmark", {
         file <- file.path("cache", file)

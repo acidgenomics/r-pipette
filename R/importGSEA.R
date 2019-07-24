@@ -2,6 +2,7 @@
 #' Import a GMT file, for GSEA.
 #' @seealso `fgsea::gmtPathways()`.
 #' @noRd
+## Updated 2019-07-19.
 importGMT <- function(file) {
     message(paste("Importing", basename(file)))
     file <- localOrRemoteFile(file)
@@ -22,6 +23,7 @@ importGMT <- function(file) {
 #' Gene MatriX file format
 #' Import a GMX file, for GSEA.
 #' @noRd
+## Updated 2019-07-19.
 importGMX <- function(file) {
     message(paste("Importing", basename(file)))
     file <- localOrRemoteFile(file)
@@ -36,4 +38,5 @@ importGMX <- function(file) {
 #' Gene set file format
 #' Import a GRP file, for GSEA.
 #' @noRd
+## Updated 2019-07-19.
 importGRP <- importGMX

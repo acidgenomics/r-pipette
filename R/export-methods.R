@@ -65,13 +65,13 @@ NULL
 
 
 
-# matrix =======================================================================
-# This method covers standard `matrix` but is also intended to work for
-# `data.table`, `tbl_df`, and `DataFrame` classes. Note that `rio::export()`
-# does not preserve row names by default, so we're ensuring row names get
-# coerced to "rowname" column consistently here.
-# Updated 2019-07-16.
-export.matrix <-  # nolint
+## matrix ======================================================================
+## This method covers standard `matrix` but is also intended to work for
+## `data.table`, `tbl_df`, and `DataFrame` classes. Note that `rio::export()`
+## does not preserve row names by default, so we're ensuring row names get
+## coerced to "rowname" column consistently here.
+## Updated 2019-07-16.
+`export,matrix` <-  # nolint
     function(
         object,
         ext,
@@ -91,23 +91,23 @@ export.matrix <-  # nolint
             choices = c("csv", "csv.gz", "tsv", "tsv.gz")
         )
 
-        # Keep the `as.data.frame()` call here, so we can inherit the
-        # `data.frame` method in other S4 methods.
+        ## Keep the `as.data.frame()` call here, so we can inherit the
+        ## `data.frame` method in other S4 methods.
         object <- as.data.frame(object)
 
-        # Ensure row names are automatically moved to `rowname` column.
+        ## Ensure row names are automatically moved to `rowname` column.
         if (hasRownames(object)) {
             rownames <- "rowname"
         } else {
             rownames <- NULL
         }
 
-        # Now we're ready to coerce to tibble internally, which helps us
-        # move the row names into a column.
+        ## Now we're ready to coerce to tibble internally, which helps us
+        ## move the row names into a column.
         object <- as_tibble(object, rownames = rownames)
         assert(hasRows(object), hasCols(object))
 
-        # Define the file name using the object name by default.
+        ## Define the file name using the object name by default.
         if (is.null(file)) {
             call <- standardizeCall()
             sym <- call[["object"]]
@@ -123,7 +123,7 @@ export.matrix <-  # nolint
         }
         assert(isString(file))
 
-        # Inform the user regarding overwrite.
+        ## Inform the user regarding overwrite.
         if (isAFile(file)) {
             if (isTRUE(overwrite)) {
                 message(paste0("Overwriting ", basename(file), "."))
@@ -132,10 +132,10 @@ export.matrix <-  # nolint
             }
         }
 
-        # Ensure directory is created automatically.
+        ## Ensure directory is created automatically.
         initDir(dir = dirname(file))
 
-        # Now attach rio package and call `export()` on our data frame.
+        ## Now attach rio package and call `export()` on our data frame.
         requireNamespace("rio", quietly = TRUE)
         suppressMessages(
             file <- do.call(
@@ -149,9 +149,9 @@ export.matrix <-  # nolint
         invisible(file)
     }
 
-formals(export.matrix)[["dir"]] <- formalsList[["export.dir"]]
-formals(export.matrix)[["ext"]] <- formalsList[["export.ext"]]
-formals(export.matrix)[["overwrite"]] <- formalsList[["overwrite"]]
+formals(`export,matrix`)[["dir"]] <- formalsList[["export.dir"]]
+formals(`export,matrix`)[["ext"]] <- formalsList[["export.ext"]]
+formals(`export,matrix`)[["overwrite"]] <- formalsList[["overwrite"]]
 
 
 
@@ -160,13 +160,13 @@ formals(export.matrix)[["overwrite"]] <- formalsList[["overwrite"]]
 setMethod(
     f = "export",
     signature = signature("matrix"),
-    definition = export.matrix
+    definition = `export,matrix`
 )
 
 
 
-# data.frame ===================================================================
-export.data.frame <- export.matrix  # nolint
+## data.frame ==================================================================
+`export,data.frame` <- `export,matrix`  # nolint
 
 
 
@@ -175,13 +175,13 @@ export.data.frame <- export.matrix  # nolint
 setMethod(
     f = "export",
     signature = signature("data.frame"),
-    definition = export.data.frame
+    definition = `export,data.frame`
 )
 
 
 
-# DataFrame ====================================================================
-export.DataFrame <- export.data.frame  # nolint
+## DataFrame ===================================================================
+`export,DataFrame` <- `export,data.frame`  # nolint
 
 
 
@@ -190,17 +190,17 @@ export.DataFrame <- export.data.frame  # nolint
 setMethod(
     f = "export",
     signature = signature("DataFrame"),
-    definition = export.DataFrame
+    definition = `export,DataFrame`
 )
 
 
 
-# sparseMatrix =================================================================
-# Note that "file" is referring to the matrix file.
-# The correponding column and row sidecar files are generated automatically.
-# Consider adding HDF5 support in a future update.
-# Updated 2019-07-16.
-export.sparseMatrix <-  # nolint
+## sparseMatrix ================================================================
+## Note that "file" is referring to the matrix file.
+## The correponding column and row sidecar files are generated automatically.
+## Consider adding HDF5 support in a future update.
+## Updated 2019-07-16.
+`export,sparseMatrix` <-  # nolint
     function(
         object,
         ext,
@@ -217,7 +217,7 @@ export.sparseMatrix <-  # nolint
         )
         ext <- match.arg(arg = ext, choices = c("mtx", "mtx.gz"))
 
-        # Define the file name using the object name by default.
+        ## Define the file name using the object name by default.
         if (is.null(file)) {
             call <- standardizeCall()
             sym <- call[["object"]]
@@ -233,7 +233,7 @@ export.sparseMatrix <-  # nolint
         }
         assert(isString(file))
 
-        # Inform the user regarding overwrite.
+        ## Inform the user regarding overwrite.
         if (isAFile(file)) {
             if (isTRUE(overwrite)) {
                 message(paste0("Overwriting ", basename(file), "."))
@@ -242,31 +242,31 @@ export.sparseMatrix <-  # nolint
             }
         }
 
-        # Determine whether we want to gzip compress.
+        ## Determine whether we want to gzip compress.
         gzip <- grepl(pattern = "\\.gz$", x = file)
 
-        # Now ensure ".gz" is stripped from the working file variable.
+        ## Now ensure ".gz" is stripped from the working file variable.
         file <- sub(pattern = "\\.gz", replacement = "", x = file)
 
-        # Create the recursive directory structure, if necessary.
+        ## Create the recursive directory structure, if necessary.
         initDir(dirname(file))
 
-        # MatrixMarket file.
+        ## MatrixMarket file.
         writeMM(obj = object, file = file)
 
         if (isTRUE(gzip)) {
             file <- gzip(file, overwrite = TRUE)
         }
 
-        # Normalize the path.
+        ## Normalize the path.
         file <- realpath(file)
 
-        # Write barcodes (colnames).
+        ## Write barcodes (colnames).
         barcodes <- colnames(object)
         barcodesFile <- paste0(file, ".colnames")
         write_lines(x = barcodes, path = barcodesFile)
 
-        # Write gene names (rownames).
+        ## Write gene names (rownames).
         genes <- rownames(object)
         genesFile <- paste0(file, ".rownames")
         write_lines(x = genes, path = genesFile)
@@ -283,15 +283,15 @@ export.sparseMatrix <-  # nolint
             " and sidecar files to ", dirname(file), "."
         ))
 
-        # Return named character of file paths.
+        ## Return named character of file paths.
         invisible(files)
     }
 
-formals(export.sparseMatrix)[["dir"]] <-
+formals(`export,sparseMatrix`)[["dir"]] <-
     formalsList[["export.dir"]]
-formals(export.sparseMatrix)[["ext"]] <-
+formals(`export,sparseMatrix`)[["ext"]] <-
     formalsList[["export.sparse.ext"]]
-formals(export.sparseMatrix)[["overwrite"]] <-
+formals(`export,sparseMatrix`)[["overwrite"]] <-
     formalsList[["overwrite"]]
 
 
@@ -301,13 +301,13 @@ formals(export.sparseMatrix)[["overwrite"]] <-
 setMethod(
     f = "export",
     signature = signature("sparseMatrix"),
-    definition = export.sparseMatrix
+    definition = `export,sparseMatrix`
 )
 
 
 
-# GRanges ======================================================================
-export.GRanges <- export.DataFrame  # nolint
+## GRanges =====================================================================
+`export,GRanges` <- `export,DataFrame`  # nolint
 
 
 
@@ -316,14 +316,14 @@ export.GRanges <- export.DataFrame  # nolint
 setMethod(
     f = "export",
     signature = signature("GRanges"),
-    definition = export.GRanges
+    definition = `export,GRanges`
 )
 
 
 
-# SummarizedExperiment =========================================================
-# Updated 2019-07-16.
-.export.assays <-  # nolint
+## SummarizedExperiment ========================================================
+## Updated 2019-07-19.
+.exportAssays <-  # nolint
     function(object, name, dir, compress) {
         assayNames <- assayNames(object)
         assert(isCharacter(assayNames))
@@ -334,7 +334,7 @@ setMethod(
                 file <- file.path(dir, name)
                 assay <- assays(object)[[name]]
 
-                # Dynamically set the file name based on the assay type.
+                ## Dynamically set the file name based on the assay type.
                 if (is(assay, "sparseMatrix")) {
                     ext <- "mtx"
                 } else {
@@ -355,8 +355,8 @@ setMethod(
 
 
 
-# Updated 2019-07-16.
-.export.colData <-  # nolint
+## Updated 2019-07-19.
+.exportColData <-  # nolint
     function(object, ext, dir) {
         export(
             object = atomize(colData(object)),
@@ -366,14 +366,14 @@ setMethod(
 
 
 
-# NOTE: The standard `rowData()` output is okay but doesn't include genomic
-# ranges coordinates. That's why we're coercing from `rowRanges()` for RSE.
-# Updated 2019-07-16.
-.export.rowData <-  # nolint
+## NOTE: The standard `rowData()` output is okay but doesn't include genomic
+## ranges coordinates. That's why we're coercing from `rowRanges()` for RSE.
+## Updated 2019-07-19.
+.exportRowData <-  # nolint
     function(object, ext, dir) {
         data <- rowData(object)
-        # Note that SummarizedExperiment in BioC 3.6/R 3.4 release doesn't
-        # set row names properly, so keep this step here for compatibility.
+        ## Note that SummarizedExperiment in BioC 3.6/R 3.4 release doesn't
+        ## set row names properly, so keep this step here for compatibility.
         if (!hasRownames(data)) {
             rownames(data) <- rownames(object)  # nocov
         }
@@ -385,11 +385,11 @@ setMethod(
 
 
 
-# Require at least 1 of the slotNames to be defined for export.
-# `rowData` is a supported slot but is actually defined in `rowRanges`.
-# Note that we're not using `match.arg()` here for `slotNames`.
-# Updated 2019-07-16.
-export.SummarizedExperiment <-  # nolint
+## Require at least 1 of the slotNames to be defined for export.
+## `rowData` is a supported slot but is actually defined in `rowRanges`.
+## Note that we're not using `match.arg()` here for `slotNames`.
+## Updated 2019-07-19.
+`export,SummarizedExperiment` <-  # nolint
     function(
         object,
         name = NULL,
@@ -410,7 +410,7 @@ export.SummarizedExperiment <-  # nolint
         )
         call <- standardizeCall()
 
-        # Get the name and create directory substructure.
+        ## Get the name and create directory substructure.
         if (is.null(name)) {
             sym <- call[["object"]]
             if (!is.symbol(sym)) {
@@ -423,29 +423,29 @@ export.SummarizedExperiment <-  # nolint
         }
         dir <- initDir(file.path(dir, name))
 
-        # Return the file paths back to the user as a named list.
+        ## Return the file paths back to the user as a named list.
         files <- list()
 
-        # Set the desired output extension, depending on whether we need to
-        # enable compression. Always output consistently in CSV format.
+        ## Set the desired output extension, depending on whether we need to
+        ## enable compression. Always output consistently in CSV format.
         ext <- "csv"
         if (isTRUE(compress)) {
             ext <- paste0(ext, ".gz")
         }
         ext <- paste0(".", ext)
 
-        # Ensure the assays list is always named. Note that valid SE objects
-        # don't have to contain named assays (e.g. DESeqTransform). In the event
-        # that an SE object contains a single, unnamed assay, we make sure to
-        # rename it internally to "assay" before exporting.
+        ## Ensure the assays list is always named. Note that valid SE objects
+        ## don't have to contain named assays (e.g. DESeqTransform). In the
+        ## event that an SE object contains a single, unnamed assay, we make
+        ## sure to rename it internally to "assay" before exporting.
         if (is.null(assayNames(object))) {
             assayNames(object) <- "assay"
         }
 
-        # Assays (count matrices).
+        ## Assays (count matrices).
         if ("assays" %in% slotNames) {
             files[["assays"]] <-
-                .export.assays(
+                .exportAssays(
                     object = object,
                     name = name,
                     dir = dir,
@@ -453,20 +453,20 @@ export.SummarizedExperiment <-  # nolint
                 )
         }
 
-        # Column annotations.
+        ## Column annotations.
         if ("colData" %in% slotNames) {
             files[["colData"]] <-
-                .export.colData(
+                .exportColData(
                     object = object,
                     ext = ext,
                     dir = dir
                 )
         }
 
-        # Row annotations.
+        ## Row annotations.
         if ("rowData" %in% slotNames) {
             files[["rowData"]] <-
-                .export.rowData(
+                .exportRowData(
                     object = object,
                     ext = ext,
                     dir = dir
@@ -475,15 +475,15 @@ export.SummarizedExperiment <-  # nolint
 
         message(paste0("Exported ", name, " to ", dir, "."))
 
-        # Return named character of file paths.
+        ## Return named character of file paths.
         files <- Filter(Negate(is.null), files)
         assert(hasNames(files))
         invisible(files)
     }
 
-formals(export.SummarizedExperiment)[["compress"]] <-
+formals(`export,SummarizedExperiment`)[["compress"]] <-
     formalsList[["export.compress"]]
-formals(export.SummarizedExperiment)[["dir"]] <-
+formals(`export,SummarizedExperiment`)[["dir"]] <-
     formalsList[["export.dir"]]
 
 
@@ -493,13 +493,13 @@ formals(export.SummarizedExperiment)[["dir"]] <-
 setMethod(
     f = "export",
     signature = signature("SummarizedExperiment"),
-    definition = export.SummarizedExperiment
+    definition = `export,SummarizedExperiment`
 )
 
 
 
-# Updated 2019-07-16.
-export.SingleCellExperiment <-  # nolint
+## Updated 2019-07-19.
+`export,SingleCellExperiment` <-  # nolint
     function(object) {
         validObject(object)
         assert(
@@ -514,7 +514,7 @@ export.SingleCellExperiment <-  # nolint
         )
         call <- standardizeCall()
 
-        # Get the name and create directory substructure.
+        ## Get the name and create directory substructure.
         if (is.null(name)) {
             sym <- call[["object"]]
             if (!is.symbol(sym)) {
@@ -527,12 +527,12 @@ export.SingleCellExperiment <-  # nolint
         }
         dir <- initDir(file.path(dir, name))
 
-        # Primarily use SE method to export.
+        ## Primarily use SE method to export.
         se <- as(object, "RangedSummarizedExperiment")
         assign(x = name, value = se)
         args <- matchArgsToDoCall()
         args[["object"]] <- as.name(name)
-        # We're handling `reducedDims` specially below.
+        ## We're handling `reducedDims` specially below.
         args[["slotNames"]] <- setdiff(args[["slotNames"]], "reducedDims")
         files <- do.call(what = export, args = args)
 
@@ -567,9 +567,9 @@ export.SingleCellExperiment <-  # nolint
         invisible(files)
     }
 
-f <- formals(export.SummarizedExperiment)
+f <- formals(`export,SummarizedExperiment`)
 f[["slotNames"]] <- c(eval(f[["slotNames"]]), "reducedDims")
-formals(export.SingleCellExperiment) <- f
+formals(`export,SingleCellExperiment`) <- f
 
 
 
@@ -578,5 +578,5 @@ formals(export.SingleCellExperiment) <- f
 setMethod(
     f = "export",
     signature = signature("SingleCellExperiment"),
-    definition = export.SingleCellExperiment
+    definition = `export,SingleCellExperiment`
 )

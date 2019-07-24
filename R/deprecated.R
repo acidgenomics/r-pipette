@@ -1,36 +1,27 @@
-# nocov start
-# nolint start
+## nocov start
+## nolint start
 
 
 
-#' Deprecated functions
-#'
-#' @name deprecated
-#' @keywords internal
-#'
-#' @inheritParams params
-#'
-#' @return `.Deprecated`.
-NULL
-
-
-
-#' Defunct functions
-#'
 #' @name defunct
-#' @keywords internal
-#'
+#' @inherit bioverbs::defunct description examples return seealso title
 #' @inheritParams params
-#'
-#' @return `.Defunct`.
+#' @keywords internal
 NULL
 
 
 
-# v0.1.4 =======================================================================
-# Deprecate these sanitization functions.
-# Still in use by bcbio R packages.
-# Consider switching to soft deprecation if too noisy.
+#' @name deprecated
+#' @inherit bioverbs::deprecated description examples return seealso title
+#' @inheritParams params
+#' @keywords internal
+NULL
+
+
+
+## v0.1.4 =======================================================================
+## Still in use by bcbio R packages.
+## Consider switching to soft deprecation if too noisy.
 
 #' @rdname deprecated
 #' @export
@@ -55,5 +46,5 @@ sanitizeRowRanges <- function(...) {
 
 
 
-# nolint end
-# nocov end
+## nolint end
+## nocov end
