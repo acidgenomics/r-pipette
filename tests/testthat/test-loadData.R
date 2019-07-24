@@ -1,5 +1,7 @@
 context("loadData")
 
+skip_if_not(hasInternet())
+
 dir <- "cache"
 
 test_that("R data", {
@@ -32,7 +34,7 @@ test_that("Standard evaluation", {
     )
 })
 
-# Avoid accidental reassignment in the current environment.
+## Avoid accidental reassignment in the current environment.
 test_that("Overwrite mode", {
     envir <- new.env()
     envir[["gr"]] <- TRUE

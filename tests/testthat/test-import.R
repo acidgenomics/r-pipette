@@ -1,5 +1,7 @@
 context("import")
 
+skip_if_not(hasInternet())
+
 test_that("Invalid extension", {
     expect_error(
         import(file = "file.XXX"),
@@ -130,7 +132,7 @@ test_that("MTX", {
             c("cell001", "cell002")
         )
     )
-    # Note that sparseMatrix S4 class doesn't support `metadata()`.
+    ## Note that sparseMatrix S4 class doesn't support `metadata()`.
     expect_identical(
         object = attr(object, "brio")[["importer"]],
         expected = "Matrix::readMM"
@@ -163,9 +165,9 @@ test_that("R script", {
     )
 })
 
-# AppVeyor has a cryptic failure here.
-# cannot read workspace version 167772160 written by R 512.3.5;
-# need R 256.2.3 or newer
+## AppVeyor has a cryptic failure here.
+## cannot read workspace version 167772160 written by R 512.3.5;
+## need R 256.2.3 or newer
 test_that("R data", {
     skip_on_appveyor()
     object <- import(file = file.path("cache", "example.rda"))
