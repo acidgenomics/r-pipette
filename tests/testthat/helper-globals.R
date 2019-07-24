@@ -3,6 +3,7 @@ data(
     GRanges,
     RangedSummarizedExperiment,
     SingleCellExperiment,
+    SingleCellExperiment_Seurat,
     data.table,
     tbl_df,
     package = "acidtest",
@@ -14,6 +15,7 @@ dt <- data.table
 gr <- GRanges
 rse <- RangedSummarizedExperiment
 sce <- SingleCellExperiment
+sce_seurat <- SingleCellExperiment_Seurat  # nolint
 tbl <- tbl_df
 
 ## nolint start
