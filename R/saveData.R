@@ -57,6 +57,8 @@
 #'
 #' ## Clean up.
 #' unlink(dir, recursive = TRUE)
+
+## Updated 2019-07-19.
 saveData <- function(
     ...,
     dir,
@@ -72,7 +74,7 @@ saveData <- function(
     )
 
     if (!is.null(list)) {
-        # Character vector list mode (similar to `save()`).
+        ## Character vector list mode (similar to `save()`).
         assert(
             isCharacter(list),
             is.environment(envir)
@@ -81,7 +83,7 @@ saveData <- function(
         names(objects) <- list
         rm(list)
     } else {
-        # Non-standard evaluation mode (default).
+        ## Non-standard evaluation mode (default).
         objects <- list(...)
         names(objects) <- dots(..., character = TRUE)
     }
@@ -94,7 +96,7 @@ saveData <- function(
 
     message(paste("Saving", toString(basename(files)), "to", dir))
 
-    # If `overwrite = FALSE`, inform the user which files were skipped.
+    ## If `overwrite = FALSE`, inform the user which files were skipped.
     if (identical(overwrite, FALSE) && any(file.exists(files))) {
         skip <- files[file.exists(files)]
         warning(paste0("Skipped ", toString(basename(skip)), "."))
@@ -106,7 +108,7 @@ saveData <- function(
         objects <- objects[!file.exists(files)]  # nocov
     }
 
-    # Determine which save function to use.
+    ## Determine which save function to use.
     if (ext == "rds") {
         mapply(
             FUN = saveRDS,

@@ -1,11 +1,10 @@
 context("transmit")
 
-# nolint start
+skip_if_not(hasInternet())
 skip_on_appveyor()
 skip_on_docker()
-# nolint end
 
-# Note that only FTP is currently supported.
+## Note that only FTP is currently supported.
 remoteDir <- paste(
     "ftp://ftp.pantherdb.org",
     "sequence_classifications",
@@ -23,7 +22,7 @@ test_that("PANTHER README file", {
     names(expected) <- "README"
     expect_identical(object, expected)
 
-    # Check that function skips on existing.
+    ## Check that function skips on existing.
     expect_message(
         object = transmit(
             remoteDir = remoteDir,

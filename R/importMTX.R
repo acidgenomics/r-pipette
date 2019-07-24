@@ -1,33 +1,34 @@
-# Sparse matrix. Note that we're warning the user if row and column
-# name sidecar files don't exist.
+## Sparse matrix. Note that we're warning the user if row and column
+## name sidecar files don't exist.
+## Updated 2019-07-19.
 importMTX <- function(file) {
     assert(isString(file))
-    # Add the rownames automatically using `.rownames` sidecar file.
+    ## Add the rownames automatically using `.rownames` sidecar file.
     rownamesFile <- paste(file, "rownames", sep = ".")
     rownamesFile <- tryCatch(
         expr = localOrRemoteFile(rownamesFile),
         error = function(e) {
-            # nocov start
+            ## nocov start
             warning(paste0(
                 basename(rownamesFile), " does not exist.\n",
                 "  Row names will not be added to sparse matrix."
             ))
             NULL
-            # nocov end
+            ## nocov end
         }
     )
-    # Add the colnames automatically using `.colnames` sidecar file.
+    ## Add the colnames automatically using `.colnames` sidecar file.
     colnamesFile <- paste(file, "colnames", sep = ".")
     colnamesFile <- tryCatch(
         expr = localOrRemoteFile(colnamesFile),
         error = function(e) {
-            # nocov start
+            ## nocov start
             warning(paste0(
                 basename(colnamesFile), " does not exist.\n",
                 "  Column names will not be added to sparse matrix."
             ))
             NULL
-            # nocov end
+            ## nocov end
         }
     )
     file <- localOrRemoteFile(file)
@@ -45,7 +46,8 @@ importMTX <- function(file) {
 
 
 
-# Sparse matrix sidecar files (.rownames, .colnames)
+## Sparse matrix sidecar files (.rownames, .colnames)
+## Updated 2019-07-19.
 .importSidecar <- function(file) {
     message(paste(
         "Importing sidecar", basename(file),

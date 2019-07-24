@@ -1,5 +1,6 @@
-# Import GraphPad Prism files directly into R.
-# Note that this function doesn't support optional column names.
+## Import GraphPad Prism files directly into R.
+## Note that this function doesn't support optional column names.
+## Updated 2019-07-19.
 importPZFX <- function(file, sheet = 1L) {
     message(paste(
         "GraphPad Prism support is experimental.",

@@ -1,6 +1,7 @@
 context("export : matrix")
 
-ext <- eval(formals(export.matrix)[["ext"]])
+ext <- eval(formals(`export,matrix`)[["ext"]])
+
 with_parameters_test_that(
     "`ext` argument", {
         file <- paste0("mat", ".", ext)
@@ -8,13 +9,13 @@ with_parameters_test_that(
         x <- export(object = mat, ext = ext)
         expect_identical(x, realpath(file))
         expect_true(file.exists(file))
-        # Check that row names stay intact.
+        ## Check that row names stay intact.
         expect_true(grepl(
             pattern = "rowname",
             x = head(readLines(file), n = 1L)
         ))
 
-        # Check accidental overwrite support.
+        ## Check accidental overwrite support.
         expect_error(
             export(mat, ext = ext, overwrite = FALSE),
             "File exists"
@@ -24,7 +25,7 @@ with_parameters_test_that(
             "Overwriting"
         )
 
-        # Now strip the names, and confirm that export still works.
+        ## Now strip the names, and confirm that export still works.
         mat <- unname(mat)
         x <- export(object = mat, ext = ext)
         expect_identical(x, realpath(file))
@@ -50,14 +51,15 @@ test_that("Invalid input", {
 
 context("export : DataFrame")
 
-ext <- eval(formals(export.matrix)[["ext"]])
+ext <- eval(formals(`export,DataFrame`)[["ext"]])
+
 with_parameters_test_that(
     "`ext` argument", {
         file <- paste0("df", ".", ext)
         x <- export(df, ext = ext)
         expect_identical(x, realpath(file))
         expect_true(file.exists(file))
-        # Check that row names stay intact.
+        ## Check that row names stay intact.
         expect_true(grepl(
             pattern = "rowname",
             x = head(readLines(file), n = 1L)
@@ -75,7 +77,7 @@ test_that("`file` argument", {
 })
 
 test_that("Invalid input", {
-    # Note that `unname()` usage will result in a DataFrame error.
+    ## Note that `unname()` usage will result in a DataFrame error.
     expect_error(
         export(object = as.data.frame(df)),
         "symbol"
@@ -98,7 +100,7 @@ test_that("`ext` argument, using gzip compression (default)", {
     )
     expect_true(all(file.exists(x)))
 
-    # Check accidental overwrite support.
+    ## Check accidental overwrite support.
     expect_error(
         export(sparse, ext = "mtx.gz", overwrite = FALSE),
         "File exists"
@@ -170,7 +172,7 @@ test_that("Both `name` and `dir` declared", {
 
 test_that("Unnamed primary assay", {
     se <- as(rse, "SummarizedExperiment")
-    # Note that `assayNames()` assignment doesn't work here.
+    ## Note that `assayNames()` assignment doesn't work here.
     names(assays(se)) <- NULL
     expect_null(assayNames(se))
     x <- export(se, dir = "XXX")

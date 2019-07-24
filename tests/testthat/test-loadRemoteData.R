@@ -1,13 +1,15 @@
 context("loadRemoteData")
 
+skip_if_not(hasInternet())
+
 test_that("loadRemoteData", {
     envir <- new.env()
     url <- paste(brioTestsURL, "example.rds", sep = "/")
     object <- loadRemoteData(url, envir = envir)
-    # Character matrix of loaded files.
+    ## Character matrix of loaded files.
     expect_is(object, "character")
     expect_identical(object, c(example = url))
-    # Check that the object loaded correctly.
+    ## Check that the object loaded correctly.
     expect_is(envir[["example"]], "DataFrame")
 })
 
