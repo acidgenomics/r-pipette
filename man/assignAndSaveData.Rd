@@ -48,6 +48,8 @@ the newly assigned object, specified by the "\code{dir}" argument.
 }
 \note{
 This function attempts to follow the same order as \code{assign}.
+
+Updated 2019-07-19.
 }
 \examples{
 x <- 1L

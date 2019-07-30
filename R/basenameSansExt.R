@@ -1,8 +1,9 @@
 #' Base name without the file extension
 #'
 #' @note This function intentionally doesn't check whether a file exists.
-#'
+#' @note Updated 2019-07-19.
 #' @export
+#'
 #' @param path `character`.
 #'   File path(s).
 #'   This function is vectorized and supports multiple files.
@@ -17,8 +18,6 @@
 #'
 #' @examples
 #' basenameSansExt(c("dir/foo.txt", "dir/bar.tar.gz", "dir/"))
-
-## Updated 2019-07-19.
 basenameSansExt <- function(path) {
     ## `basename()` is vectorized.
     x <- basename(path = path)

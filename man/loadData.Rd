@@ -50,6 +50,8 @@ an object with the same name already exists in the destination \code{environment
 \note{
 This function is desired for interactive use and interprets object
 names using non-standard evaluation.
+
+Updated 2019-07-30.
 }
 \examples{
 dir <- system.file("extdata", package = "brio")

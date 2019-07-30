@@ -1,7 +1,7 @@
 #' Extract dots from function
 #'
 #' @note This function uses non-standard evaluation.
-#'
+#' @note Updated 2019-07-19.
 #' @export
 #'
 #' @param ... Objects as dots.
@@ -23,8 +23,6 @@
 #' @examples
 #' dots(a, b, c, character = FALSE)
 #' dots(a, b, c, character = TRUE)
-
-## Updated 2019-07-19.
 dots <- function(..., character = FALSE) {
     ## Alternatively, can use `rlang::eval_bare()` here.
     dots <- eval(substitute(alist(...)))

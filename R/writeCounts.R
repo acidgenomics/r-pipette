@@ -13,10 +13,11 @@
 #' [readr]: http://readr.tidyverse.org/
 #' [RStudio]: https://www.rstudio.com/
 #'
+#' @note Updated 2019-07-19.
 #' @export
+#'
 #' @inheritParams dots
 #' @inheritParams saveData
-#'
 #' @param ... Symbols.
 #'   Unquoted object names containing count matrices.
 #' @param dir `character(1)`.
@@ -36,8 +37,6 @@
 #'
 #' ## Clean up.
 #' unlink("example", recursive = TRUE)
-
-## Updated 2019-07-19.
 writeCounts <- function(..., dir, compress) {
     names <- dots(..., character = TRUE)
     data <- list(...)
@@ -55,13 +54,13 @@ writeCounts <- function(..., dir, compress) {
                 if (isTRUE(compress)) {
                     format <- "csv.gz"
                 } else {
-                    format <- "csv"
+                    format <- "csv"  # nocov
                 }
             } else if (is(object, "sparseMatrix")) {
                 if (isTRUE(compress)) {
                     format <- "mtx.gz"
                 } else {
-                    format <- "mtx"
+                    format <- "mtx"  # nocov
                 }
             } else {
                 stop(paste(name, "is not a matrix."))

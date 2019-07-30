@@ -65,7 +65,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">brio</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
       </span>
     </div>
 
@@ -113,12 +113,26 @@
 <h2 class="hasAnchor">
 <a href="#brio-0-3-0-2019-07-22" class="anchor"></a>brio 0.3.0 (2019-07-22)</h2>
 <p>Bumped version number to reflect changes in basejump dependencies.</p>
+<div id="minor-changes-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#minor-changes-1" class="anchor"></a>Minor changes</h3>
+<ul>
+<li>Improved naming consistency of internal functions.</li>
+<li>Updated package dependency versions.</li>
+</ul>
+</div>
+</div>
+    <div id="brio-0-3-1-2019-07-30" class="section level2">
+<h2 class="hasAnchor">
+<a href="#brio-0-3-1-2019-07-30" class="anchor"></a>brio 0.3.1 (2019-07-30)</h2>
 <div id="minor-changes" class="section level3">
 <h3 class="hasAnchor">
 <a href="#minor-changes" class="anchor"></a>Minor changes</h3>
 <ul>
-<li>Improved naming consistency of internal functions.</li>
-<li>Updated package dependency versions.</li>
+<li>
+<code>import</code>: Bug fix for invalid objects (e.g. S4 objects that inherit <code>SummarizedExperiment</code>) not returning silently. Had to convert the <code>try</code> call to a <code>tryCatch</code> call to avoid errors popping up during name checks.</li>
+<li>
+<code>import</code>: Now suppressing <code>partial match of 'OS' to 'OS.type'</code> warning for import of XLS files, which is a bug in gdata package.</li>
 </ul>
 </div>
 </div>
@@ -129,6 +143,7 @@
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
         <li><a href="#brio-0-3-0-2019-07-22">0.3.0</a></li>
+        <li><a href="#brio-0-3-1-2019-07-30">0.3.1</a></li>
       </ul>
     </div>
   </div>

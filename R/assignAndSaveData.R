@@ -3,8 +3,10 @@
 #' Assigns a new object by name to the current working environment then saves
 #' the newly assigned object, specified by the "`dir`" argument.
 #'
-#' @export
+#' @note This function attempts to follow the same order as `assign`.
+#' @note Updated 2019-07-19.
 #' @include saveData.R
+#' @export
 #'
 #' @inheritParams params
 #' @inheritParams saveData
@@ -16,8 +18,6 @@
 #'
 #' @return Invisible named `character(1)`.
 #' File path.
-#'
-#' @note This function attempts to follow the same order as `assign`.
 #'
 #' @examples
 #' x <- 1L
@@ -33,8 +33,6 @@
 #' ## Clean up.
 #' rm(example)
 #' unlink("example.rds")
-
-## Update 2019-07-19.
 assignAndSaveData <- function(name, object, envir = parent.frame()) {
     assert(
         isString(name),

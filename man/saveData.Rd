@@ -38,7 +38,8 @@ Overwrite existing file on disk.}
 A character vector containing the names of objects to be saved.
 Note that this approach differs from \code{\link[base:save]{save()}} in that the
 objects are saved individually to disk, instead of inside a single R data
-file. Requires objects to be defined in \code{\link[base:globalenv]{globalenv()}}.}
+file. Requires objects to be defined in environment specified by \code{envir}.
+argument.}
 
 \item{envir}{\code{environment}.
 Environment.}
@@ -59,6 +60,8 @@ combining multiple objects into a single file.
 This function is desired for interactive use and interprets object
 names using non-standard evaluation. It will \strong{overwrite} existing files
 on disk, following the same conventions as \code{\link[base:save]{save()}}.
+
+Updated 2019-07-19.
 }
 \examples{
 dir <- "example"

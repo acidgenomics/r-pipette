@@ -3,6 +3,7 @@
 #' Load a remote R binary file. This function is vectorized and supports
 #' multiple URLs in a single call.
 #'
+#' @note Updated 2019-07-30.
 #' @export
 #'
 #' @inheritParams params
@@ -17,8 +18,6 @@
 #' print(url)
 #' x <- loadRemoteData(url)
 #' print(x)
-
-## Updated 2019-06-07.
 loadRemoteData <- function(
     url,
     envir = globalenv(),

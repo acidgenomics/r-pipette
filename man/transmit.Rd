@@ -31,24 +31,27 @@ Local file paths.
 Utility function that supports easy file matching and download from a remote
 FTP server. Also enables on-the-fly file renaming and compression.
 }
+\note{
+Updated 2019-07-30.
+}
 \examples{
 ## This doesn't work reliably on Travis CI.
 
-## remoteDir <- paste(
-##     "ftp://ftp.pantherdb.org",
-##     "sequence_classifications",
-##     "current_release",
-##     sep = "/"
-## )
-## readme <- transmit(
-##     remoteDir = remoteDir,
-##     pattern = "README",
-##     rename = "panther_readme.txt",
-##     compress = TRUE
-## )
-## basename(readme)
-## file.exists(readme)
+## > remoteDir <- paste(
+## >     "ftp://ftp.pantherdb.org",
+## >     "sequence_classifications",
+## >     "current_release",
+## >     sep = "/"
+## > )
+## > readme <- transmit(
+## >     remoteDir = remoteDir,
+## >     pattern = "README",
+## >     rename = "panther_readme.txt",
+## >     compress = TRUE
+## > )
+## > basename(readme)
+## > file.exists(readme)
 
 ## Clean up.
-## unlink(readme)
+## > unlink(readme)
 }

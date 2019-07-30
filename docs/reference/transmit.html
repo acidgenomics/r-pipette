@@ -69,7 +69,7 @@ FTP server. Also enables on-the-fly file renaming and compression." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">brio</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
       </span>
     </div>
 
@@ -159,27 +159,31 @@ gzip compress the files after download.</p></td>
     <p>Invisible <code>character</code>.
 Local file paths.</p>
     
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>Updated 2019-07-30.</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>## This doesn't work reliably on Travis CI.
 
-## remoteDir <- paste(
-##     "ftp://ftp.pantherdb.org",
-##     "sequence_classifications",
-##     "current_release",
-##     sep = "/"
-## )
-## readme <- transmit(
-##     remoteDir = remoteDir,
-##     pattern = "README",
-##     rename = "panther_readme.txt",
-##     compress = TRUE
-## )
-## basename(readme)
-## file.exists(readme)
+## > remoteDir <- paste(
+## >     "ftp://ftp.pantherdb.org",
+## >     "sequence_classifications",
+## >     "current_release",
+## >     sep = "/"
+## > )
+## > readme <- transmit(
+## >     remoteDir = remoteDir,
+## >     pattern = "README",
+## >     rename = "panther_readme.txt",
+## >     compress = TRUE
+## > )
+## > basename(readme)
+## > file.exists(readme)
 
 ## Clean up.
-## unlink(readme)
+## > unlink(readme)
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -188,6 +192,8 @@ Local file paths.</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#note">Note</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
