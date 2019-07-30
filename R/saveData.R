@@ -10,8 +10,9 @@
 #'   names using non-standard evaluation. It will **overwrite** existing files
 #'   on disk, following the same conventions as [`save()`][base::save].
 #'
-#' @export
+#' @note Updated 2019-07-19.
 #' @include globals.R
+#' @export
 #'
 #' @inheritParams loadData
 #' @inheritParams base::save
@@ -57,8 +58,6 @@
 #'
 #' ## Clean up.
 #' unlink(dir, recursive = TRUE)
-
-## Updated 2019-07-19.
 saveData <- function(
     ...,
     dir,

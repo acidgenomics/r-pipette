@@ -33,6 +33,9 @@ Sanitized object.
 \description{
 Remove rows and columns containing only NA values
 }
+\note{
+Updated 2019-07-19.
+}
 \examples{
 ## atomic ====
 removeNA(c("hello", "world", NA))
