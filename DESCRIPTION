@@ -23,9 +23,9 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Depends: R (>= 3.5)
 Imports:
-    bioverbs (>= 0.2.0),
-    goalie (>= 0.2.18),
-    transformer (>= 0.2.0),
+    bioverbs (>= 0.2),
+    goalie (>= 0.3),
+    transformer (>= 0.2),
     GenomicRanges,
     S4Vectors,
     SingleCellExperiment,
@@ -45,7 +45,7 @@ Imports:
     stats,
     utils
 Suggests:
-    acidtest (>= 0.1.5),
+    acidtest (>= 0.2),
     gdata (>= 2.18),
     pzfx (>= 0.2),
     readxl (>= 1.3.1),
