@@ -40,10 +40,6 @@ reference:
     - rdataExtPattern
   - title: Data sanitization
     contents:
-    - atomize
-    - decode
-    - encode
-    - factorize
     - naStrings
     - removeNA
     - starts_with("sanitize")
