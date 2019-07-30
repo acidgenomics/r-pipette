@@ -23,6 +23,7 @@ importXLS <- function(file, sheet = 1L, colnames = TRUE) {
             header = colnames
         ),
         warning = function(w) {
+            ## nocov start
             if (isTRUE(grepl(
                 pattern = "partial match of 'OS' to 'OS.type'",
                 x = as.character(w)
@@ -31,6 +32,7 @@ importXLS <- function(file, sheet = 1L, colnames = TRUE) {
             } else {
                 w
             }
+            ## nocov end
         }
     )
     object <- .slotMetadata(object, pkg = "gdata", fun = "read.xls")
