@@ -18,9 +18,10 @@
 #' @note This function is desired for interactive use and interprets object
 #'   names using non-standard evaluation.
 #'
+#' @note Updated 2019-07-30.
 #' @export
+#'
 #' @inheritParams params
-
 #' @param ... Object names.
 #'   Note that these arguments are interpreted as symbols using non-standard
 #'   evaluation for convenience during interactive use, and *must not be
@@ -53,8 +54,6 @@
 #'
 #' ## Clean up.
 #' rm(example, inherits = TRUE)
-
-## Updated 2019-06-07.
 loadData <- function(
     ...,
     dir,
