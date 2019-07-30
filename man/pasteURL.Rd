@@ -21,6 +21,9 @@ URL path, containing forward slashes (\code{/}).
 \description{
 Concatenate strings to form a URL
 }
+\note{
+Updated 2019-07-19.
+}
 \examples{
 ## HTTPS
 x <- pasteURL(

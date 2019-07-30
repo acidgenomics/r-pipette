@@ -86,6 +86,9 @@ File path(s).
 \description{
 Export data out of R and write to disk.
 }
+\note{
+Updated 2019-07-30.
+}
 \section{Row names}{
 
 

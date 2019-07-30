@@ -21,6 +21,9 @@ Checks and creates a directory recursively automatically.
 Useful for setting up functions that require writes to a user-specified
 directory.
 }
+\note{
+Updated 2019-07-19.
+}
 \examples{
 initDir("testdir")
 dir.exists("testdir")

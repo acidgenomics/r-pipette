@@ -1,5 +1,6 @@
 #' @name export
 #' @inherit bioverbs::export
+#' @note Updated 2019-07-30.
 #'
 #' @section Row names:
 #'

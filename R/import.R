@@ -7,9 +7,10 @@
 #' simple. Remote URLs and compressed files are supported. If you need more
 #' complex import settings, just call the wrapped importer directly instead.
 #'
+#' @note Updated 2019-07-30.
 #' @export
-#' @inheritParams params
 #'
+#' @inheritParams params
 #' @param sheet
 #'   *Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.*\cr
 #'   `character(1)` or `integer(1)`.
@@ -135,7 +136,8 @@
 #'
 #' [basejump][] exports the specialized `makeGRangesFromGFF()` function that
 #' makes GFF loading simple.
-## #' See also:
+#'
+#' See also:
 #'
 #' - [Ensembl spec](http://www.ensembl.org/info/website/upload/gff.html)
 #' - [GENCODE spec](http://www.gencodegenes.org/gencodeformat.html)
@@ -191,8 +193,6 @@
 #' ## Row and column names disabled.
 #' x <- import(file, rownames = FALSE, colnames = FALSE)
 #' print(head(x))
-
-## Updated 2019-07-19.
 import <- function(
     file,
     sheet = 1L,
@@ -340,8 +340,13 @@ import <- function(
         ))
     }
 
-    ## Inform the user when encountering duplicate names.
-    names <- try(names(object))
+    ## Inform the user when encountering duplicate names. This `tryCatch()` step
+    ## here helps suppress `validObject()` error for invalid
+    ## SummarizedExperiment objects.
+    names <- tryCatch(
+        expr = names(object),
+        error = function(e) e
+    )
     if (isCharacter(names)) {
         dupes <- duplicated(names)
         if (any(dupes)) {
@@ -354,7 +359,6 @@ import <- function(
     }
 
     ## Don't run object validity check with `validObject()` here.
-
     object
 }
 

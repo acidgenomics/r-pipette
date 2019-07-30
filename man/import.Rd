@@ -85,6 +85,9 @@ popular importer functions. The function is intentionally designed to be
 simple. Remote URLs and compressed files are supported. If you need more
 complex import settings, just call the wrapped importer directly instead.
 }
+\note{
+Updated 2019-07-30.
+}
 \section{Row and column names}{
 
 
@@ -163,6 +166,8 @@ GTF (General Transfer Format) is identical to GFF version 2.
 
 \href{https://steinbaugh.com/basejump/}{basejump} exports the specialized \code{makeGRangesFromGFF()} function that
 makes GFF loading simple.
+
+See also:
 \itemize{
 \item \href{http://www.ensembl.org/info/website/upload/gff.html}{Ensembl spec}
 \item \href{http://www.gencodegenes.org/gencodeformat.html}{GENCODE spec}

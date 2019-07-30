@@ -5,9 +5,10 @@
 
 #' Concatenate strings to form a URL
 #'
+#' @note Updated 2019-07-19.
 #' @export
-#' @inheritParams base::paste
 #'
+#' @inheritParams base::paste
 #' @param protocol `character(1)`.
 #'   Desired protocol to use. Defaults to HTTPS but HTTP and FTP are also
 #'   supported. Use `"none"` if you want to prepare a URL that already contains
@@ -37,8 +38,6 @@
 #'     protocol = "ftp"
 #' )
 #' print(x)
-
-## Updated 2019-07-19.
 pasteURL <- function(..., protocol = c("https", "http", "ftp", "none")) {
     protocol <- match.arg(protocol)
     url <- paste(..., sep = "/")

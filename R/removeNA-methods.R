@@ -1,5 +1,6 @@
 #' @name removeNA
 #' @inherit bioverbs::removeNA
+#' @note Updated 2019-07-19.
 #'
 #' @inheritParams params
 #' @param ... Additional arguments.

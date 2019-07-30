@@ -34,6 +34,8 @@ is enabled by default to save disk space. Note that the \href{http://readr.tidyv
 built into \href{https://www.rstudio.com/}{RStudio}, now natively supports compressed files.
 }
 \note{
+Updated 2019-07-19.
+
 This function is desired for interactive use and interprets object
 names using non-standard evaluation.
 }

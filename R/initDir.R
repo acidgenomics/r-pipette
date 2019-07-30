@@ -5,6 +5,7 @@
 #' Useful for setting up functions that require writes to a user-specified
 #' directory.
 #'
+#' @note Updated 2019-07-19.
 #' @export
 #'
 #' @param dir `character(1)`.
@@ -19,8 +20,6 @@
 #'
 #' ## Clean up.
 #' unlink("testdir", recursive = TRUE)
-
-## Updated 2019-07-19.
 initDir <- function(dir) {
     assert(isString(dir))
     if (!dir.exists(dir)) {

@@ -59,6 +59,8 @@ combining multiple objects into a single file.
 This function is desired for interactive use and interprets object
 names using non-standard evaluation. It will \strong{overwrite} existing files
 on disk, following the same conventions as \code{\link[base:save]{save()}}.
+
+Updated 2019-07-19.
 }
 \examples{
 dir <- "example"
