@@ -334,10 +334,12 @@ import <- function(
         (hasNames(object) && !hasValidNames(object)) ||
         (hasDimnames(object) && !hasValidDimnames(object))
     ) {
+        ## nocov start
         message(paste(
             basename(file),
             "does not return syntactically valid names."
         ))
+        ## nocov end
     }
 
     ## Inform the user when encountering duplicate names. This `tryCatch()` step
@@ -350,11 +352,13 @@ import <- function(
     if (isCharacter(names)) {
         dupes <- duplicated(names)
         if (any(dupes)) {
+            ## nocov start
             dupes <- sort(unique(names[dupes]))
             warning(paste(
                 length(dupes), "duplicate names:",
                 toString(dupes, width = 200L)
             ))
+            ## nocov end
         }
     }
 
