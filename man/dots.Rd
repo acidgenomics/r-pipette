@@ -24,6 +24,8 @@ Extract dots from function
 }
 \note{
 This function uses non-standard evaluation.
+
+Updated 2019-07-19.
 }
 \examples{
 dots(a, b, c, character = FALSE)

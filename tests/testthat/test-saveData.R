@@ -38,6 +38,18 @@ test_that("overwrite = FALSE", {
     unlink(dir, recursive = TRUE)
 })
 
+test_that("List mode", {
+    x <- TRUE
+    y <- FALSE
+    object <- saveData(list = c("x", "y"), dir = "XXX")
+    expect_identical(
+        object = basename(object),
+        expected = c("x.rds", "y.rds")
+    )
+    expect_true(all(file.exists(file.path("XXX", paste0(c("x", "y"), ".rds")))))
+    unlink("XXX", recursive = TRUE)
+})
+
 test_that("Invalid parameters", {
     expect_error(
         object = saveData(XXX),

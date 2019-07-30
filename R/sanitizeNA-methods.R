@@ -1,5 +1,6 @@
 #' @name sanitizeNA
 #' @inherit bioverbs::sanitizeNA
+#' @note Updated 2019-07-19.
 #'
 #' @inheritParams params
 #' @param ... Additional arguments.
@@ -104,10 +105,13 @@ setMethod(
 
 
 ## nolint start
-## ## Alternate dplyr method:
+##
+## Alternate dplyr method:
 ## object <- mutate_if(object, is.character, sanitizeNA)
-## ## This requires use to import dplyr, which can be otherwise avoided.
-## ## nolint end
+##
+## This requires use to import dplyr, which can be otherwise avoided.
+##
+## nolint end
 
 ## Updated 2019-07-19.
 `sanitizeNA,data.frame` <-  # nolint

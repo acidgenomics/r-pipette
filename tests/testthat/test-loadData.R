@@ -34,10 +34,38 @@ test_that("Standard evaluation", {
     )
 })
 
+test_that("List mode", {
+    object <- loadData(list = "serialized", dir = "cache")
+    expect_identical(basename(object), "serialized.rds")
+})
+
 ## Avoid accidental reassignment in the current environment.
 test_that("Overwrite mode", {
     envir <- new.env()
     envir[["gr"]] <- TRUE
+    envir[["serialized"]] <- TRUE
+
+    ## RDS
+    expect_error(
+        object = loadData(
+            serialized,
+            dir = dir,
+            envir = envir,
+            overwrite = FALSE
+        ),
+        regexp = "overwrite"
+    )
+    expect_type(
+        object = loadData(
+            serialized,
+            dir = dir,
+            envir = envir,
+            overwrite = TRUE
+        ),
+        type = "character"
+    )
+
+    ## RDA
     expect_error(
         object = loadData(gr, dir = dir, envir = envir, overwrite = FALSE),
         regexp = "overwrite"

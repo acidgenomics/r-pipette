@@ -3,6 +3,7 @@
 #' @note This function is intended for interactive use and interprets object
 #'   names using non-standard evaluation.
 #'
+#' @note Updated 2019-07-30.
 #' @export
 #'
 #' @inheritParams loadData
@@ -17,8 +18,6 @@
 #' dir <- system.file("extdata", package = "brio")
 #' loadDataAsName(renamed = example, dir = dir)
 #' class(renamed)
-
-## Updated 2019-06-07.
 loadDataAsName <- function(
     ...,
     dir,

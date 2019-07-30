@@ -58,6 +58,9 @@ Tilde-expansion (see \code{\link{path.expand}}) is first done on
   \code{mustWork = FALSE} is useful for expressing paths for use in
   messages.
 }
+\note{
+Updated 2019-07-19.
+}
 \examples{
 realpath(".")
 normalizePath(".")

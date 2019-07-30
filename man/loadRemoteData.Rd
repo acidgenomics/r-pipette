@@ -25,6 +25,9 @@ Local object name as the name, and the remote URL as the value.
 Load a remote R binary file. This function is vectorized and supports
 multiple URLs in a single call.
 }
+\note{
+Updated 2019-07-30.
+}
 \examples{
 url <- paste(brioTestsURL, "rnaseq_counts.rds", sep = "/")
 print(url)
