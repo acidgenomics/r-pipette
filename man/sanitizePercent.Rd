@@ -27,6 +27,9 @@ numeric proportions (e.g. \code{0.5}).
 Take a \code{character} vector of percentages (e.g. \code{"50\%"}) and convert it to a
 \code{numeric} vector (e.g. \code{0.5}).
 }
+\note{
+Updated 2019-07-19.
+}
 \section{Intended usage}{
 
 

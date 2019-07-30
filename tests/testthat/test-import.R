@@ -1,6 +1,4 @@
-context("import")
-
-skip_if_not(hasInternet())
+context("import : invalid input")
 
 test_that("Invalid extension", {
     expect_error(
@@ -9,8 +7,24 @@ test_that("Invalid extension", {
     )
 })
 
+test_that("No extension", {
+    unlink("example", recursive = TRUE)
+    file.create("example")
+    expect_error(
+        object = import("example"),
+        regexp = "missing value where TRUE/FALSE needed"
+    )
+    unlink("example")
+})
+
+
+
+context("import : data frame")
+
+skip_if_not(hasInternet())
+
 with_parameters_test_that(
-    "Delimited", {
+    "Delimited files", {
         file <- file.path(file = "cache", paste0("example.", ext))
         object <- import(file)
         expect_is(object, "data.frame")
@@ -22,20 +36,41 @@ with_parameters_test_that(
     ext = c("csv", "csv.gz", "tsv")
 )
 
-test_that("XLSX", {
-    skip_on_appveyor()
-    file <- file.path("cache", "example.xlsx")
+test_that("acid.data.frame global option", {
+    file <- file.path(file = "cache", "example.csv")
+
+    options("acid.data.frame" = "data.frame")
     object <- import(file)
-    expect_is(object, "data.frame")
+    expect_s3_class(object, "data.frame")
+    expect_true(hasRownames(object))
+    expect_false(isSubset("rowname", colnames(object)))
+
+    options("acid.data.frame" = "DataFrame")
+    object <- import(file)
+    expect_s4_class(object, "DataFrame")
+    expect_true(hasRownames(object))
+    expect_false(isSubset("rowname", colnames(object)))
+
+    options("acid.data.frame" = "data.table")
+    object <- import(file)
+    expect_s3_class(object, "data.table")
+    expect_false(hasRownames(object))
+    expect_true(isSubset("rowname", colnames(object)))
+
+    options("acid.data.frame" = "tbl_df")
+    object <- import(file)
+    expect_s3_class(object, "tbl_df")
+    expect_false(hasRownames(object))
+    expect_true(isSubset("rowname", colnames(object)))
+
+    options("acid.data.frame" = NULL)
 })
 
-test_that("XLS", {
-    skip_if_not_installed(pkg = "gdata")
-    skip_on_appveyor()
-    file <- file.path("cache", "example.xls")
-    object <- import(file)
-    expect_is(object, "data.frame")
-})
+
+
+context("import : rtracklayer (GFF/GTF)")
+
+skip_if_not(hasInternet())
 
 test_that("GFF3", {
     object <- import(file = file.path("cache", "example.gff3"))
@@ -122,6 +157,12 @@ test_that("GTF", {
     )
 })
 
+
+
+context("import : MTX")
+
+skip_if_not(hasInternet())
+
 test_that("MTX", {
     object <- import(file = file.path("cache", "single_cell_counts.mtx.gz"))
     expect_s4_class(object, "sparseMatrix")
@@ -138,6 +179,175 @@ test_that("MTX", {
         expected = "Matrix::readMM"
     )
 })
+
+
+
+context("import : R script")
+
+skip_if_not(hasInternet())
+
+test_that("R script", {
+    expect_is(
+        object = import(file = file.path("cache", "example.R")),
+        class = "character"
+    )
+})
+
+
+
+context("import : R data")
+
+skip_if_not(hasInternet())
+
+## AppVeyor has a cryptic failure here.
+## cannot read workspace version 167772160 written by R 512.3.5;
+## need R 256.2.3 or newer
+
+test_that("R data", {
+    skip_on_appveyor()
+    object <- import(file = file.path("cache", "example.rda"))
+    expect_s4_class(object, "DataFrame")
+})
+
+test_that("R data serialized", {
+    skip_on_appveyor()
+    object <- import(file = file.path("cache", "example.rds"))
+    expect_s4_class(object, "DataFrame")
+})
+
+test_that("Error on RDA containing multiple objects.", {
+    expect_error(
+        object = import(file = file.path("cache", "multi.rda")),
+        regexp = "File does not contain a single object"
+    )
+})
+
+
+
+context("import : GSEA")
+
+skip_if_not(hasInternet())
+
+with_parameters_test_that(
+    "MSigDB hallmark", {
+        file <- file.path("cache", file)
+        object <- import(file)
+        expect_identical(length(object), 50L)
+        expect_identical(
+            object = names(object)[[1L]],
+            expected = "HALLMARK_TNFA_SIGNALING_VIA_NFKB"
+        )
+        expect_identical(length(object[[1L]]), 200L)
+        expect_identical(head(object[[1L]]), ids)
+    },
+    file = c(
+        symbols = "h.all.v6.2.symbols.gmt",
+        entrez = "h.all.v6.2.entrez.gmt"
+    ),
+    ids = list(
+        symbols = c("JUNB", "CXCL2", "ATF3", "NFKBIA", "TNFAIP3", "PTGS2"),
+        entrez = c("3726", "2920", "467", "4792", "7128", "5743")
+    )
+)
+
+with_parameters_test_that(
+    "T_CELL_ACTIVATION", {
+        file <- file.path("cache", file)
+        object <- import(file)
+        expect_identical(names(object), "T_CELL_ACTIVATION")
+        expect_identical(length(object[[1L]]), 44L)
+        expect_identical(
+            head(object[[1L]]),
+            c("CADM1", "CD1D", "CD2", "CD24", "CD276", "CD28")
+        )
+    },
+    file = c(
+        gmt = "geneset.gmt",
+        gmx = "geneset.gmx",
+        grp = "geneset.grp"
+    )
+)
+
+
+
+context("import : JSON/YAML")
+
+skip_if_not(hasInternet())
+
+with_parameters_test_that(
+    "JSON/YAML", {
+        object <- import(file = file.path("cache", paste0("example.", ext)))
+        expect_is(object, "list")
+    },
+    ext = c("json", "yml")
+)
+
+test_that("rio::import(), e.g. Stata DTA file", {
+    skip_if_not_installed("haven")
+    file <- system.file("examples/iris.dta", package = "haven")
+    x <- import(file)
+    expect_is(x, "data.frame")
+    expect_identical(
+        colnames(x),
+        c("sepallength", "sepalwidth", "petallength", "petalwidth", "species")
+    )
+})
+
+
+
+context("import : PZFX")
+
+skip_if_not_installed(pkg = "pzfx")
+skip_if_not(hasInternet())
+
+file <- system.file("extdata", "exponential_decay.pzfx", package = "pzfx")
+stopifnot(file.exists(file))
+
+test_that("PZFX", {
+    x <- import(file, sheet = 1L)
+    colnames(x)
+    expect_identical(
+        colnames(x),
+        c(
+            "Minutes",
+            "Control_1", "Control_2", "Control_3",
+            "Treated_1", "Treated_2", "Treated_3"
+        )
+    )
+})
+
+
+
+context("import : XLS")
+
+skip_if_not(hasInternet())
+
+test_that("XLS", {
+    skip_if_not_installed(pkg = "gdata")
+    skip_on_appveyor()
+    file <- file.path("cache", "example.xls")
+    object <- import(file)
+    expect_is(object, "data.frame")
+})
+
+
+
+context("import : XLSX")
+
+skip_if_not(hasInternet())
+
+test_that("XLSX", {
+    skip_on_appveyor()
+    file <- file.path("cache", "example.xlsx")
+    object <- import(file)
+    expect_is(object, "data.frame")
+})
+
+
+
+context("import : bcbio files")
+
+skip_if_not(hasInternet())
 
 test_that("bcbio counts", {
     object <- import(file = file.path("cache", "example.counts"))
@@ -156,92 +366,4 @@ test_that("bcbio counts", {
         object = attr(object, "brio")[["importer"]],
         expected = "readr::read_tsv"
     )
-})
-
-test_that("R script", {
-    expect_is(
-        object = import(file = file.path("cache", "example.R")),
-        class = "character"
-    )
-})
-
-## AppVeyor has a cryptic failure here.
-## cannot read workspace version 167772160 written by R 512.3.5;
-## need R 256.2.3 or newer
-test_that("R data", {
-    skip_on_appveyor()
-    object <- import(file = file.path("cache", "example.rda"))
-    expect_s4_class(object, "DataFrame")
-})
-
-test_that("R data serialized", {
-    skip_on_appveyor()
-    object <- import(file = file.path("cache", "example.rds"))
-    expect_s4_class(object, "DataFrame")
-})
-
-with_parameters_test_that(
-    "JSON/YAML", {
-        object <- import(file = file.path("cache", paste0("example.", ext)))
-        expect_is(object, "list")
-    },
-    ext = c("json", "yml")
-)
-
-test_that("No extension", {
-    unlink("example", recursive = TRUE)
-    file.create("example")
-    expect_error(
-        object = import("example"),
-        regexp = "missing value where TRUE/FALSE needed"
-    )
-    unlink("example")
-})
-
-test_that("Error on RDA containing multiple objects.", {
-    expect_error(
-        object = import(file = file.path("cache", "multi.rda")),
-        regexp = "File does not contain a single object"
-    )
-})
-
-test_that("rio::import(), e.g. Stata DTA file", {
-    skip_if_not_installed("haven")
-    file <- system.file("examples/iris.dta", package = "haven")
-    x <- import(file)
-    expect_is(x, "data.frame")
-    expect_identical(
-        colnames(x),
-        c("sepallength", "sepalwidth", "petallength", "petalwidth", "species")
-    )
-})
-
-test_that("acid.data.frame global option", {
-    file <- file.path(file = "cache", "example.csv")
-
-    options("acid.data.frame" = "data.frame")
-    object <- import(file)
-    expect_s3_class(object, "data.frame")
-    expect_true(hasRownames(object))
-    expect_false(isSubset("rowname", colnames(object)))
-
-    options("acid.data.frame" = "DataFrame")
-    object <- import(file)
-    expect_s4_class(object, "DataFrame")
-    expect_true(hasRownames(object))
-    expect_false(isSubset("rowname", colnames(object)))
-
-    options("acid.data.frame" = "data.table")
-    object <- import(file)
-    expect_s3_class(object, "data.table")
-    expect_false(hasRownames(object))
-    expect_true(isSubset("rowname", colnames(object)))
-
-    options("acid.data.frame" = "tbl_df")
-    object <- import(file)
-    expect_s3_class(object, "tbl_df")
-    expect_false(hasRownames(object))
-    expect_true(isSubset("rowname", colnames(object)))
-
-    options("acid.data.frame" = NULL)
 })

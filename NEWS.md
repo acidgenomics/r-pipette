@@ -1,3 +1,13 @@
+## brio 0.3.1 (2019-07-30)
+
+### Minor changes
+
+- `import`: Bug fix for invalid objects (e.g. S4 objects that inherit
+  `SummarizedExperiment`) not returning silently. Had to convert the `try`
+  call to a `tryCatch` call to avoid errors popping up during name checks.
+- `import`: Now suppressing `partial match of 'OS' to 'OS.type'` warning for
+  import of XLS files, which is a bug in gdata package.
+
 ## brio 0.3.0 (2019-07-22)
 
 Bumped version number to reflect changes in basejump dependencies.

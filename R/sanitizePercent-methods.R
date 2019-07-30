@@ -1,5 +1,6 @@
 #' @name sanitizePercent
 #' @inherit bioverbs::sanitizePercent
+#' @note Updated 2019-07-19.
 #'
 #' @inheritParams params
 #' @param ... Additional arguments.
