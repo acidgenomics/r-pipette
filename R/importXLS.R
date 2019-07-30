@@ -12,13 +12,26 @@ importXLS <- function(file, sheet = 1L, colnames = TRUE) {
     file <- localOrRemoteFile(file)
     message(paste("Importing", basename(file), "using gdata::read.xls()."))
     requireNamespace("gdata", quietly = TRUE)
-    object <- gdata::read.xls(
-        xls = file,
-        sheet = sheet,
-        verbose = FALSE,
-        na.strings = naStrings,
-        ## This function passes `...` to `utils::read.table()`.
-        header = colnames
+    ## gdata currently has an OS.type partial match issue.
+    ## `read.xls()` passes `...` to `utils::read.table()`.
+    object <- withCallingHandlers(
+        expr = gdata::read.xls(
+            xls = file,
+            sheet = sheet,
+            verbose = FALSE,
+            na.strings = naStrings,
+            header = colnames
+        ),
+        warning = function(w) {
+            if (isTRUE(grepl(
+                pattern = "partial match of 'OS' to 'OS.type'",
+                x = as.character(w)
+            ))) {
+                invokeRestart("muffleWarning")
+            } else {
+                w
+            }
+        }
     )
     object <- .slotMetadata(object, pkg = "gdata", fun = "read.xls")
     object
