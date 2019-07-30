@@ -113,10 +113,12 @@ NULL
             call <- standardizeCall()
             sym <- call[["object"]]
             if (!is.symbol(sym)) {
+                ## nocov start
                 stop(sprintf(
                     "`export()` object argument is not a symbol: %s",
                     deparse(sym)
                 ))
+                ## nocov end
             }
             name <- as.character(sym)
             assert(isString(ext))
@@ -223,10 +225,12 @@ setMethod(
             call <- standardizeCall()
             sym <- call[["object"]]
             if (!is.symbol(sym)) {
+                ## nocov start
                 stop(sprintf(
                     "`export()` object argument is not a symbol: %s",
                     deparse(sym)
                 ))
+                ## nocov end
             }
             name <- as.character(sym)
             assert(isString(ext))

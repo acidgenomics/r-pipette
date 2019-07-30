@@ -7,3 +7,12 @@ test_that("sanitizePercent", {
         c(1e+00, 1e-01, 1e-02, 1e-03, 1e-04)  # nolint
     )
 })
+
+test_that("Don't modify character if no grep match", {
+    object <- c("a", "b")
+    expect_identical(sanitizePercent(object), object)
+})
+
+test_that("Don't modify atomic", {
+    expect_identical(sanitizePercent(NA), NA)
+})

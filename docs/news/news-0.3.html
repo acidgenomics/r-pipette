@@ -131,6 +131,8 @@
 <ul>
 <li>
 <code>import</code>: Bug fix for invalid objects (e.g. S4 objects that inherit <code>SummarizedExperiment</code>) not returning silently. Had to convert the <code>try</code> call to a <code>tryCatch</code> call to avoid errors popping up during name checks.</li>
+<li>
+<code>import</code>: Now suppressing <code>partial match of 'OS' to 'OS.type'</code> warning for import of XLS files, which is a bug in gdata package.</li>
 </ul>
 </div>
 </div>

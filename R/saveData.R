@@ -10,7 +10,7 @@
 #'   names using non-standard evaluation. It will **overwrite** existing files
 #'   on disk, following the same conventions as [`save()`][base::save].
 #'
-#' @note Updated 2019-07-19.
+#' @note Updated 2019-07-30.
 #' @include globals.R
 #' @export
 #'
@@ -25,7 +25,8 @@
 #'   A character vector containing the names of objects to be saved.
 #'   Note that this approach differs from [`save()`][base::save] in that the
 #'   objects are saved individually to disk, instead of inside a single R data
-#'   file. Requires objects to be defined in [`globalenv()`][base::globalenv].
+#'   file. Requires objects to be defined in environment specified by `envir`.
+#'   argument.
 #'
 #' @seealso
 #' - [`save()`][base::save]

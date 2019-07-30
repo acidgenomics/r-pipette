@@ -54,13 +54,13 @@ writeCounts <- function(..., dir, compress) {
                 if (isTRUE(compress)) {
                     format <- "csv.gz"
                 } else {
-                    format <- "csv"
+                    format <- "csv"  # nocov
                 }
             } else if (is(object, "sparseMatrix")) {
                 if (isTRUE(compress)) {
                     format <- "mtx.gz"
                 } else {
-                    format <- "mtx"
+                    format <- "mtx"  # nocov
                 }
             } else {
                 stop(paste(name, "is not a matrix."))
