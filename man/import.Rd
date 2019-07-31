@@ -116,7 +116,7 @@ a supported file type.
 
 By default, \code{\link[=import]{import()}} returns a standard \code{data.frame} for delimited/column
 formatted data. However, any of these desired output formats can be set
-globally using \code{options(brio.data.frame = "data.frame")}.
+globally using \code{options(acid.data.frame = "data.frame")}.
 
 Supported return types:
 \itemize{
