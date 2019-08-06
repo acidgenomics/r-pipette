@@ -10,7 +10,7 @@
 #' @note Updated 2019-07-30.
 #' @export
 #'
-#' @inheritParams params
+#' @inheritParams acidroxygen::params
 #' @param sheet
 #'   *Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.*\cr
 #'   `character(1)` or `integer(1)`.
@@ -99,7 +99,7 @@
 #'
 #' By default, [import()] returns a standard `data.frame` for delimited/column
 #' formatted data. However, any of these desired output formats can be set
-#' globally using `options(brio.data.frame = "data.frame")`.
+#' globally using `options(acid.data.frame = "data.frame")`.
 #'
 #' Supported return types:
 #'
