@@ -21,7 +21,7 @@
 #' @note Updated 2019-07-30.
 #' @export
 #'
-#' @inheritParams params
+#' @inheritParams acidroxygen::params
 #' @param ... Object names.
 #'   Note that these arguments are interpreted as symbols using non-standard
 #'   evaluation for convenience during interactive use, and *must not be

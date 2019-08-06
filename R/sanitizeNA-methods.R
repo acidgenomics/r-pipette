@@ -2,7 +2,7 @@
 #' @inherit bioverbs::sanitizeNA
 #' @note Updated 2019-07-19.
 #'
-#' @inheritParams params
+#' @inheritParams acidroxygen::params
 #' @param ... Additional arguments.
 #'
 #' @examples

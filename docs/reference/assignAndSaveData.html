@@ -69,7 +69,7 @@ the newly assigned object, specified by the &quot;dir&quot; argument." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">brio</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
       </span>
     </div>
 
@@ -164,12 +164,9 @@ Overwrite existing file on disk.</p></td>
     </tr>
     <tr>
       <th>compress</th>
-      <td><p>logical or character string specifying whether saving
-    to a named file is to use compression.  <code>TRUE</code> corresponds to
-    <code class='command'>gzip</code> compression, and character strings <code>"gzip"</code>,
-    <code>"bzip2"</code> or <code>"xz"</code> specify the type of
-    compression.  Ignored when <code>file</code> is a connection and
-    for workspace format version 1.</p></td>
+      <td><p><code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code> or <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>.
+These character strings are currently allowed for <code><a href='https://rdrr.io/r/base/save.html'>save()</a></code>:
+<code>"gzip"</code>, <code>"bzip2"</code>, or <code>"xz"</code>.</p></td>
     </tr>
     </table>
     
