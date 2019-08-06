@@ -13,6 +13,9 @@ sanitizeRowData(...)
 
 sanitizeRowRanges(...)
 }
+\arguments{
+\item{...}{Additional arguments.}
+}
 \value{
 \code{.Deprecated}.
 }

@@ -6,7 +6,7 @@
 #' @note Updated 2019-07-30.
 #' @export
 #'
-#' @inheritParams params
+#' @inheritParams acidroxygen::params
 #' @param url `character`.
 #'   Remote URL file path(s) to R data.
 #'

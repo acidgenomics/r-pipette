@@ -69,7 +69,7 @@ object names passed as symbols." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">brio</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
       </span>
     </div>
 
@@ -169,7 +169,8 @@ Overwrite existing file on disk.</p></td>
 A character vector containing the names of objects to be saved.
 Note that this approach differs from <code><a href='https://rdrr.io/r/base/save.html'>save()</a></code> in that the
 objects are saved individually to disk, instead of inside a single R data
-file. Requires objects to be defined in <code><a href='https://rdrr.io/r/base/environment.html'>globalenv()</a></code>.</p></td>
+file. Requires objects to be defined in environment specified by <code>envir</code>.
+argument.</p></td>
     </tr>
     <tr>
       <th>envir</th>
@@ -193,7 +194,7 @@ combining multiple objects into a single file.</p>
     <p>This function is desired for interactive use and interprets object
 names using non-standard evaluation. It will <strong>overwrite</strong> existing files
 on disk, following the same conventions as <code><a href='https://rdrr.io/r/base/save.html'>save()</a></code>.</p>
-<p>Updated 2019-07-19.</p>
+<p>Updated 2019-07-30.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 

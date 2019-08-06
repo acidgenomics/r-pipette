@@ -16,7 +16,7 @@
 #'
 #' @inheritParams loadData
 #' @inheritParams base::save
-#' @inheritParams params
+#' @inheritParams acidroxygen::params
 #' @param ext `character(1)`.
 #'   R data serialized (`RDS`) or R data (`RDA`, `RDATA`). RDS is
 #'   preferred when saving single objects per file, which is always the
