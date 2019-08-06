@@ -6,7 +6,7 @@
 #' @note Updated 2019-07-30.
 #' @export
 #'
-#' @inheritParams params
+#' @inheritParams acidroxygen::params
 #' @inheritParams saveData
 #' @param remoteDir `character(1)`.
 #'   Remote FTP directory path.

@@ -1,3 +1,9 @@
+## brio 0.3.2 (2019-08-06)
+
+### Minor changes
+
+- Now using acidroxygen package to manage shared roxygen documentation params.
+
 ## brio 0.3.1 (2019-07-30)
 
 ### Minor changes

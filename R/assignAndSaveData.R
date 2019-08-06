@@ -8,7 +8,7 @@
 #' @include saveData.R
 #' @export
 #'
-#' @inheritParams params
+#' @inheritParams acidroxygen::params
 #' @inheritParams saveData
 #' @param name `character(1)`.
 #'   Desired variable name.
