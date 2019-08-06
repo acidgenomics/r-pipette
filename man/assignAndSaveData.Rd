@@ -31,12 +31,9 @@ convention of \code{\link[=saveData]{saveData()}}, regardless of the extension u
 \item{overwrite}{\code{logical(1)}.
 Overwrite existing file on disk.}
 
-\item{compress}{logical or character string specifying whether saving
-    to a named file is to use compression.  \code{TRUE} corresponds to
-    \command{gzip} compression, and character strings \code{"gzip"},
-    \code{"bzip2"} or \code{"xz"} specify the type of
-    compression.  Ignored when \code{file} is a connection and
-    for workspace format version 1.}
+\item{compress}{\code{logical(1)} or \code{character(1)}.
+These character strings are currently allowed for \code{\link[base:save]{save()}}:
+\code{"gzip"}, \code{"bzip2"}, or \code{"xz"}.}
 }
 \value{
 Invisible named \code{character(1)}.
