@@ -19,7 +19,7 @@
 #' to disk. An S4 character method may be defined in a future update, but it is
 #' intentionally unsupported in the current release.
 #'
-#' @inheritParams params
+#' @inheritParams acidroxygen::params
 #' @param object Object.
 #'   An object supporting [`dim()`][base::dim], or a supported class capable
 #'   of being coerced to `data.frame`, to be written to disk.

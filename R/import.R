@@ -10,7 +10,7 @@
 #' @note Updated 2019-07-30.
 #' @export
 #'
-#' @inheritParams params
+#' @inheritParams acidroxygen::params
 #' @param sheet
 #'   *Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.*\cr
 #'   `character(1)` or `integer(1)`.
