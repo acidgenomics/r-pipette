@@ -41,10 +41,11 @@ File path.
 }
 \description{
 Assigns a new object by name to the current working environment then saves
-the newly assigned object, specified by the "\code{dir}" argument.
+the newly assigned object, specified by the \code{"dir"} argument.
 }
 \note{
-This function attempts to follow the same order as \code{assign}.
+This function attempts to follow the same order as
+\code{\link[base:assign]{assign()}}.
 
 Updated 2019-07-19.
 }
