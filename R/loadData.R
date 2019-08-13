@@ -144,9 +144,7 @@ formals(loadData)[["overwrite"]] <- formalsList[["overwrite"]]
                         "%s",
                         sep = "\n"
                     ),
-                    deparse(name),
-                    dir,
-                    rdataLoadError
+                    name, dir, rdataLoadError
                 ))
             } else if (length(files) > 1L) {
                 stop(sprintf(
@@ -156,9 +154,7 @@ formals(loadData)[["overwrite"]] <- formalsList[["overwrite"]]
                         "%s",
                         sep = "\n"
                     ),
-                    deparse(name),
-                    dir,
-                    rdataLoadError
+                    name, dir, rdataLoadError
                 ))
             }
             files
@@ -184,7 +180,7 @@ formals(loadData)[["overwrite"]] <- formalsList[["overwrite"]]
             "Set 'overwrite = TRUE' to disable this check.",
             sep = "\n"
         ),
-        deparse(name)
+        name
     ))
 }
 
@@ -246,7 +242,7 @@ formals(loadData)[["overwrite"]] <- formalsList[["overwrite"]]
     ## Ensure that the loaded name is identical to the file name.
     if (!isString(loaded)) {
         stop(sprintf(
-            "'%s' contains multiple objects: %s",
+            "'%s' contains multiple objects: %s.",
             basename(file),
             toString(loaded, width = 200L)
         ))
@@ -256,8 +252,8 @@ formals(loadData)[["overwrite"]] <- formalsList[["overwrite"]]
             fmt = paste(
                 "'%s' file has been renamed.",
                 "The object name inside the file doesn't match.",
-                "  expected: %s",
-                "    actual: %s",
+                "  - expected: '%s'",
+                "  - actual:   '%s'",
                 "Avoid renaming R data files.",
                 "This can lead to accidental object replacement.",
                 sep = "\n"
