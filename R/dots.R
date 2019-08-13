@@ -37,16 +37,14 @@ dots <- function(..., character = FALSE) {
     ## Provide an informative error message when a user attempts to accidentally
     ## use standard evaluation with quotation.
     if (!all(bapply(dots, is.symbol))) {
-        stop(paste(
-            "This function uses non-standard evaluation (NSE).",
-            "Dot objects must be unquoted.",
-            "",
-            "More details on NSE:",
-            "- https://cran.r-project.org/package=lazyeval",
-            "- https://dplyr.tidyverse.org/articles/programming.html",
-            "- http://adv-r.had.co.nz/Computing-on-the-language.html",
-            sep = "\n"
-        ))
+        stop(
+            "This function uses non-standard evaluation (NSE).\n",
+            "Dot objects must be unquoted.\n\n",
+            "More details on NSE:\n",
+            "- https://cran.r-project.org/package=lazyeval\n",
+            "- https://dplyr.tidyverse.org/articles/programming.html\n",
+            "- http://adv-r.had.co.nz/Computing-on-the-language.html"
+        )
     }
 
     ## Convert names (symbols) to character.

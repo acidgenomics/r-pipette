@@ -129,9 +129,9 @@ NULL
         ## Inform the user regarding overwrite.
         if (isAFile(file)) {
             if (isTRUE(overwrite)) {
-                message(paste0("Overwriting ", basename(file), "."))
+                message(sprintf("Overwriting '%s'.", basename(file)))
             } else {
-                stop(paste("File exists:", realpath(file)))
+                stop(sprintf("File exists: %s", realpath(file)))
             }
         }
 
@@ -148,7 +148,7 @@ NULL
         )
 
         file <- realpath(file)
-        message(paste0("Exported ", basename(file), "."))
+        message(sprintf("Exported '%s'.", basename(file)))
         invisible(file)
     }
 
@@ -241,9 +241,9 @@ setMethod(
         ## Inform the user regarding overwrite.
         if (isAFile(file)) {
             if (isTRUE(overwrite)) {
-                message(paste0("Overwriting ", basename(file), "."))
+                message(sprintf("Overwriting '%s'.", basename(file)))
             } else {
-                stop(paste("File exists:", realpath(file)))
+                stop(sprintf("File exists: %s", realpath(file)))
             }
         }
 
@@ -283,9 +283,9 @@ setMethod(
         )
         assert(allAreFiles(files))
 
-        message(paste0(
-            "Exported ", basename(file),
-            " and sidecar files to ", dirname(file), "."
+        message(sprintf(
+            "Exported '%s' and sidecar files to '%s'.",
+            basename(file), dirname(file)
         ))
 
         ## Return named character of file paths.
@@ -332,7 +332,7 @@ setMethod(
     function(object, name, dir, compress) {
         assayNames <- assayNames(object)
         assert(isCharacter(assayNames))
-        message(paste("Exporting assays:", toString(assayNames)))
+        message(sprintf("Exporting assays: %s.", toString(assayNames)))
         out <- lapply(
             X = assayNames,
             FUN = function(name, dir) {
@@ -478,7 +478,7 @@ setMethod(
                 )
         }
 
-        message(paste0("Exported ", name, " to ", dir, "."))
+        message(sprintf("Exported '%s' to '%s'.", name, dir))
 
         ## Return named character of file paths.
         files <- Filter(Negate(is.null), files)
@@ -546,7 +546,10 @@ setMethod(
             isSubset("reducedDims", slotNames) &&
             hasLength(reducedDimNames)
         ) {
-            message(paste("Exporting reducedDims:", toString(reducedDimNames)))
+            message(sprintf(
+                "Exporting reducedDims: %s",
+                toString(reducedDimNames)
+            ))
             files[["reducedDims"]] <- lapply(
                 X = reducedDimNames,
                 FUN = function(name, dir) {
