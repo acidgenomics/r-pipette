@@ -10,7 +10,10 @@
 ## Updated 2019-07-30.
 importXLS <- function(file, sheet = 1L, colnames = TRUE) {
     file <- localOrRemoteFile(file)
-    message(paste("Importing", basename(file), "using gdata::read.xls()."))
+    message(sprintf(
+        "Importing '%s' using '%s()'.",
+        basename(file), "gdata::read.xls"
+    ))
     requireNamespace("gdata", quietly = TRUE)
     ## gdata currently has an OS.type partial match issue.
     ## `read.xls()` passes `...` to `utils::read.table()`.

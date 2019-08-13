@@ -166,7 +166,11 @@ formals(loadData)[["overwrite"]] <- formalsList[["overwrite"]]
         FUN.VALUE = character(1L),
         USE.NAMES = TRUE
     )
-    message(paste("Loading", toString(basename(files)), "from", dir))
+    message(sprintf(
+        "Loading %s from %s.",
+        toString(basename(files), width = 200L),
+        dir
+    ))
     files
 }
 

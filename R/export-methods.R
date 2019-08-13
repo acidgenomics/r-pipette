@@ -131,7 +131,7 @@ NULL
             if (isTRUE(overwrite)) {
                 message(sprintf("Overwriting '%s'.", basename(file)))
             } else {
-                stop(sprintf("File exists: %s.", realpath(file)))
+                stop(sprintf("File exists: %s", realpath(file)))
             }
         }
 
@@ -332,7 +332,7 @@ setMethod(
     function(object, name, dir, compress) {
         assayNames <- assayNames(object)
         assert(isCharacter(assayNames))
-        message(paste("Exporting assays:", toString(assayNames)))
+        message(sprintf("Exporting assays: %s.", toString(assayNames)))
         out <- lapply(
             X = assayNames,
             FUN = function(name, dir) {
@@ -546,7 +546,10 @@ setMethod(
             isSubset("reducedDims", slotNames) &&
             hasLength(reducedDimNames)
         ) {
-            message(paste("Exporting reducedDims:", toString(reducedDimNames)))
+            message(sprintf(
+                "Exporting reducedDims: %s",
+                toString(reducedDimNames)
+            ))
             files[["reducedDims"]] <- lapply(
                 X = reducedDimNames,
                 FUN = function(name, dir) {
