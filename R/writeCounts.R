@@ -13,7 +13,7 @@
 #' [readr]: http://readr.tidyverse.org/
 #' [RStudio]: https://www.rstudio.com/
 #'
-#' @note Updated 2019-07-19.
+#' @note Updated 2019-08-12.
 #' @export
 #'
 #' @inheritParams dots
@@ -44,7 +44,7 @@ writeCounts <- function(..., dir, compress) {
     assert(isFlag(compress))
 
     ## Iterate across the dot objects and write to disk.
-    message(paste0("Writing ", toString(names), " to ", dir, "."))
+    message(sprintf("Writing %s to '%s'.", toString(names), dir))
 
     files <- mapply(
         name = names,
@@ -63,7 +63,7 @@ writeCounts <- function(..., dir, compress) {
                     format <- "mtx"  # nocov
                 }
             } else {
-                stop(paste(name, "is not a matrix."))
+                stop(sprintf("'%s' is not a matrix.", name))
             }
             file <- file.path(dir, paste0(name, ".", format))
             export(object = object, file = file)
