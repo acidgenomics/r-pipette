@@ -335,9 +335,9 @@ import <- function(
         (hasDimnames(object) && !hasValidDimnames(object))
     ) {
         ## nocov start
-        message(paste(
-            basename(file),
-            "does not return syntactically valid names."
+        message(sprintf(
+            "'%s' does not contain syntactically valid names.",
+            basename(file)
         ))
         ## nocov end
     }
@@ -354,8 +354,9 @@ import <- function(
         if (any(dupes)) {
             ## nocov start
             dupes <- sort(unique(names[dupes]))
-            warning(paste(
-                length(dupes), "duplicate names:",
+            warning(sprintf(
+                "%d duplicate names: %s",
+                length(dupes),
                 toString(dupes, width = 200L)
             ))
             ## nocov end
@@ -370,7 +371,9 @@ import <- function(
 
 .rioImport <- function(file) {
     file <- localOrRemoteFile(file)
-    message(paste("Importing", basename(file), "using rio::import()."))
+    message(sprintf("Importing '%s' using '%s()'.",
+        basename(file), "rio::import"
+    ))
     requireNamespace("rio", quietly = TRUE)
     object <- rio::import(file)
     object <- .slotMetadata(object, pkg = "rio", fun = "import")
@@ -382,7 +385,10 @@ import <- function(
 ## Using `tryCatch()` here to error if there are any warnings.
 .rtracklayerImport <- function(file) {
     file <- localOrRemoteFile(file)
-    message(paste("Importing", basename(file), "using rtracklayer::import()."))
+    message(sprintf(
+        "Importing '%s' using '%s()'.",
+        basename(file), "rtracklayer::import"
+    ))
     requireNamespace("rtracklayer", quietly = TRUE)
     object <- tryCatch(
         expr = rtracklayer::import(file),

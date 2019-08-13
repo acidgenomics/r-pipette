@@ -63,7 +63,7 @@ writeCounts <- function(..., dir, compress) {
                     format <- "mtx"  # nocov
                 }
             } else {
-                stop(paste(name, "is not a matrix."))
+                stop(sprintf("'%s' is not a matrix.", name))
             }
             file <- file.path(dir, paste0(name, ".", format))
             export(object = object, file = file)

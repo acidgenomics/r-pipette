@@ -69,7 +69,7 @@ with_parameters_test_that(
     ext = ext
 )
 
-test_that("`file` argument", {
+test_that("'file' argument", {
     x <- export(df, file = "df.csv")
     expect_identical(x, realpath("df.csv"))
     expect_true(file.exists("df.csv"))
@@ -88,7 +88,7 @@ test_that("Invalid input", {
 
 context("export : sparseMatrix")
 
-test_that("`ext` argument, using gzip compression (default)", {
+test_that("'ext' argument, using gzip compression (default)", {
     x <- export(sparse, ext = "mtx.gz")
     expect_identical(
         x,
@@ -113,7 +113,7 @@ test_that("`ext` argument, using gzip compression (default)", {
     file.remove(x)
 })
 
-test_that("`file` argument", {
+test_that("'file' argument", {
     x <- export(sparse, file = "sparse.mtx")
     expect_identical(
         x,
@@ -138,7 +138,7 @@ test_that("Invalid input", {
 
 context("export : SummarizedExperiment")
 
-test_that("`dir` argument, no `name`", {
+test_that("'dir' argument, no 'name'", {
     out <- export(rse, name = NULL, dir = "XXX", compress = TRUE)
     prefix <- realpath(file.path("XXX", "rse"))
     expect_identical(
@@ -154,7 +154,7 @@ test_that("`dir` argument, no `name`", {
     unlink("XXX", recursive = TRUE)
 })
 
-test_that("Both `name` and `dir` declared", {
+test_that("Both 'name' and 'dir' declared", {
     out <- export(rse, name = "test", dir = "XXX", compress = FALSE)
     prefix <- realpath(file.path("XXX", "test"))
     expect_identical(
@@ -187,7 +187,7 @@ context("export : SingleCellExperiment")
 ## Note that the SingleCellExperiment_Seurat object has reducedDims slotted,
 ## whereas the SingleCellExperiment (splatter) example doesn't.
 
-test_that("`dir` argument, no `name`", {
+test_that("'dir' argument, no 'name'", {
     x <- export(sce_seurat, name = NULL, dir = "XXX", compress = TRUE)
     prefix <- realpath(file.path("XXX", "sce_seurat"))
     assays <- file.path(prefix, "assays")
@@ -216,7 +216,7 @@ test_that("`dir` argument, no `name`", {
     unlink("XXX", recursive = TRUE)
 })
 
-test_that("Both `name` and `dir` declared", {
+test_that("Both 'name' and 'dir' declared", {
     x <- export(sce_seurat, name = "test", dir = "XXX")
     prefix <- realpath(file.path("XXX", "test"))
     assays <- file.path(prefix, "assays")
