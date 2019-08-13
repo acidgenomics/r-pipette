@@ -38,7 +38,10 @@ importMTX <- function(file) {
         }
     )
     file <- localOrRemoteFile(file)
-    message(paste("Importing", basename(file), "using Matrix::readMM()."))
+    message(sprintf(
+        "Importing '%s' using '%s()'.",
+        basename(file), "Matrix::readMM"
+    ))
     object <- readMM(file = file)
     if (!is.null(rownamesFile)) {
         rownames(object) <- .importSidecar(rownamesFile)
@@ -55,9 +58,9 @@ importMTX <- function(file) {
 ## Sparse matrix sidecar files (.rownames, .colnames)
 ## Updated 2019-07-19.
 .importSidecar <- function(file) {
-    message(paste(
-        "Importing sidecar", basename(file),
-        "using readr::read_lines()."
+    message(sprintf(
+        "Importing sidecar '%s' using '%s()'.",
+        basename(file), "readr::read_lines"
     ))
     read_lines(file = file, na = naStrings)
 }

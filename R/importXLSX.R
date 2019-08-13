@@ -3,7 +3,10 @@
 ## Updated 2019-07-30.
 importXLSX <- function(file, sheet = 1L, colnames = TRUE) {
     file <- localOrRemoteFile(file)
-    message(paste("Importing", basename(file), "using readxl::read_excel()."))
+    message(sprintf(
+        "Importing '%s' using '%s()'.",
+        basename(file), "readxl::read_excel"
+    ))
     requireNamespace("readxl", quietly = TRUE)
     object <- readxl::read_excel(
         path = file,

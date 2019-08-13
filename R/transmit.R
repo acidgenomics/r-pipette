@@ -74,7 +74,7 @@ transmit <- function(
 
     ## Error and inform the user if the FTP connection fails.
     if (!isTRUE(url.exists(remoteDir))) {
-        stop(paste("Connection to", server, "failed."))  # nocov
+        stop(sprintf("Connection to '%s' failed.", server))  # nocov
     } else {
         message(sprintf("Transmitting files from '%s'.", server))
     }
