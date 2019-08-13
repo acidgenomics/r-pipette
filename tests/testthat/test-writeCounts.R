@@ -21,7 +21,7 @@ test_that("writeCounts", {
 test_that("Require a matrix, and don't allow data frames.", {
     expect_error(
         object = writeCounts(mtcars),
-        regexp = "mtcars is not a matrix"
+        regexp = "'mtcars' is not a matrix"
     )
 })
 

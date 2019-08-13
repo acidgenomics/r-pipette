@@ -3,7 +3,7 @@
 importDelim <- function(file, colnames = TRUE) {
     file <- localOrRemoteFile(file)
     message(sprintf(
-        "Importing '%' using '%s()'.",
+        "Importing '%s' using '%s()'.",
         basename(file), "data.table::fread"
     ))
     object <- fread(

@@ -50,7 +50,7 @@ test_that("Missing files", {
 test_that("Multiple objects in single file", {
     expect_error(
         object = loadDataAsName(data = multi, dir = dir),
-        regexp = "multi.rda contains multiple objects: x, y"
+        regexp = "'multi.rda' contains multiple objects: x, y"
     )
 })
 

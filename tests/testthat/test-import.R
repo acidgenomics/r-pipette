@@ -2,8 +2,8 @@ context("import : invalid input")
 
 test_that("Invalid extension", {
     expect_error(
-        import(file = "file.XXX"),
-        "XXX extension is not supported."
+        object = import(file = "file.XXX"),
+        regexp = "XXX"
     )
 })
 
