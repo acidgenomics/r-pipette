@@ -267,9 +267,9 @@ import <- function(
     )) {
         object <- .rioImport(file)
     } else {
-        stop(paste0(
-            "Import of ", basename(file), " failed.\n",
-            ext, " extension is not supported."
+        stop(sprintf(
+            "Import of '%s' failed. '%s' extension is not supported.",
+            basename(file), ext
         ))
     }
 
