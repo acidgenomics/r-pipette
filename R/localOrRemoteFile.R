@@ -1,3 +1,7 @@
+## FIXME Add support for `url()` wrapper.
+
+
+
 #' Dynamically handle a local or remote file path
 #'
 #' @section Vectorization:
