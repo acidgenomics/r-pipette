@@ -9,7 +9,7 @@
 #' write row names by design. This is a *really poor* default setting for
 #' handling genomic data, which often contain gene identifiers in the row names.
 #' Here we're performing any internal tibble coercion step to ensure row names
-#' are always moved to a "`rowname`" column in the CSV export.
+#' are always moved to a `"rowname"` column in the CSV export.
 #'
 #' [readr]: https://readr.tidyverse.org/
 #'
@@ -115,7 +115,7 @@ NULL
             if (!is.symbol(sym)) {
                 ## nocov start
                 stop(sprintf(
-                    "`export()` object argument is not a symbol: %s",
+                    "'export()' object argument is not a symbol: %s.",
                     deparse(sym)
                 ))
                 ## nocov end
@@ -227,7 +227,7 @@ setMethod(
             if (!is.symbol(sym)) {
                 ## nocov start
                 stop(sprintf(
-                    "`export()` object argument is not a symbol: %s",
+                    "'export()' object argument is not a symbol: %s.",
                     deparse(sym)
                 ))
                 ## nocov end
@@ -420,7 +420,7 @@ setMethod(
             sym <- call[["object"]]
             if (!is.symbol(sym)) {
                 stop(sprintf(
-                    "`export()` object argument is not a symbol: %s",
+                    "'export()' object argument is not a symbol: %s.",
                     deparse(sym)
                 ))
             }
@@ -524,7 +524,7 @@ setMethod(
             sym <- call[["object"]]
             if (!is.symbol(sym)) {
                 stop(sprintf(
-                    "`export()` object argument is not a symbol: %s",
+                    "'export()' object argument is not a symbol: %s.",
                     deparse(sym)
                 ))
             }

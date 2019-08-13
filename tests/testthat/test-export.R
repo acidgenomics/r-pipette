@@ -3,7 +3,7 @@ context("export : matrix")
 ext <- eval(formals(`export,matrix`)[["ext"]])
 
 with_parameters_test_that(
-    "`ext` argument", {
+    "'ext' argument", {
         file <- paste0("mat", ".", ext)
 
         x <- export(object = mat, ext = ext)
@@ -54,7 +54,7 @@ context("export : DataFrame")
 ext <- eval(formals(`export,DataFrame`)[["ext"]])
 
 with_parameters_test_that(
-    "`ext` argument", {
+    "'ext' argument", {
         file <- paste0("df", ".", ext)
         x <- export(df, ext = ext)
         expect_identical(x, realpath(file))
