@@ -97,10 +97,13 @@ loadData <- function(
     ))) {
         fun <- .loadRDA
     } else {
-        stop(paste0(
-            "File extension error: ",
-            toString(basename(files)), "\n",
-            "Don't mix RDS, RDA, and/or RDATA files in a single directory."
+        stop(sprintf(
+            fmt = paste(
+                "File extension error: %s.",
+                "Don't mix RDS, RDA, and/or RDATA files in a directory.",
+                sep = "\n"
+            ),
+            toString(basename(files), width = 100L)
         ))
     }
 
@@ -134,15 +137,27 @@ formals(loadData)[["overwrite"]] <- formalsList[["overwrite"]]
             ))
             ## Add error checking here.
             if (length(files) == 0L) {
-                stop(paste0(
-                    deparse(name), " is missing.\n",
-                    "dir: ", dir, "\n",
+                stop(sprintf(
+                    fmt = paste(
+                        "'%s' is missing.",
+                        "dir: %s",
+                        "%s",
+                        sep = "\n"
+                    ),
+                    deparse(name),
+                    dir,
                     rdataLoadError
                 ))
             } else if (length(files) > 1L) {
-                stop(paste0(
-                    deparse(name), " is not unique on disk.\n",
-                    "dir: ", dir, "\n",
+                stop(sprintf(
+                    fmt = paste(
+                        "'%s' is not unique on disk.",
+                        "dir: %s",
+                        "%s",
+                        sep = "\n"
+                    ),
+                    deparse(name),
+                    dir,
                     rdataLoadError
                 ))
             }
@@ -157,16 +172,21 @@ formals(loadData)[["overwrite"]] <- formalsList[["overwrite"]]
 
 
 
+## Updated 2019-08-13.
 .loadExistsError <- function(name) {
-    stop(paste0(
-        deparse(name), " exists in environment.\n",
-        "Set `overwrite = TRUE` to disable this check."
+    stop(sprintf(
+        fmt = paste(
+            "'%s' exists in environment.",
+            "Set 'overwrite = TRUE' to disable this check.",
+            sep = "\n"
+        ),
+        deparse(name)
     ))
 }
 
 
 
-## Last modified 2019-06-07.
+## Updated 2019-06-07.
 .loadRDS <- function(file, envir, overwrite) {
     file <- realpath(file)
     assert(
@@ -221,20 +241,26 @@ formals(loadData)[["overwrite"]] <- formalsList[["overwrite"]]
 
     ## Ensure that the loaded name is identical to the file name.
     if (!isString(loaded)) {
-        stop(paste0(
+        stop(sprintf(
+            "'%s' contains multiple objects: %s",
             basename(file),
-            " contains multiple objects: ",
-            toString(loaded)
+            toString(loaded, width = 200L)
         ))
     }
     if (!identical(name, loaded)) {
-        stop(paste0(
-            basename(file), " has been renamed.\n",
-            "The object name inside the file doesn't match.\n",
-            "  expected: ", name, "\n",
-            "    actual: ", loaded, "\n",
-            "Avoid renaming R data files. ",
-            "This can lead to accidental replacement."
+        stop(sprintf(
+            fmt = paste(
+                "'%s' file has been renamed.",
+                "The object name inside the file doesn't match.",
+                "  expected: %s",
+                "    actual: %s",
+                "Avoid renaming R data files.",
+                "This can lead to accidental object replacement.",
+                sep = "\n"
+            ),
+            basename(file),
+            name,
+            loaded
         ))
     }
     assert(identical(name, loaded))

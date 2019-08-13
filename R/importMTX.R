@@ -9,9 +9,12 @@ importMTX <- function(file) {
         expr = localOrRemoteFile(rownamesFile),
         error = function(e) {
             ## nocov start
-            warning(paste0(
-                basename(rownamesFile), " does not exist.\n",
-                "  Row names will not be added to sparse matrix."
+            warning(sprintf(
+                fmt = paste0(
+                    "'%s' does not exist.\n",
+                    "  Row names will not be added to sparse matrix."
+                ),
+                basename(rownamesFile)
             ))
             NULL
             ## nocov end
@@ -23,9 +26,12 @@ importMTX <- function(file) {
         expr = localOrRemoteFile(colnamesFile),
         error = function(e) {
             ## nocov start
-            warning(paste0(
-                basename(colnamesFile), " does not exist.\n",
-                "  Column names will not be added to sparse matrix."
+            warning(sprintf(
+                fmt = paste0(
+                    "'%s' does not exist.\n",
+                    "  Column names will not be added to sparse matrix."
+                ),
+                basename(colnamesFile)
             ))
             NULL
             ## nocov end
