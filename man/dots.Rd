@@ -14,9 +14,11 @@ Return dots (\code{...}) as \code{character}.}
 }
 \value{
 \itemize{
-\item "\code{character = FALSE}": \code{list}. Objects as \code{name} class. Can return the
-object from the \code{name} with \code{eval}.
-\item "\code{character = TRUE}": \code{character}. Names of the dots.
+\item \code{character = FALSE}: \code{list}.
+Objects as \code{name} class.
+Can return the object from the \code{name} with \code{eval}.
+\item \code{character = TRUE}: \code{character}.
+Names of the dots.
 }
 }
 \description{
