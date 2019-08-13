@@ -117,7 +117,7 @@ the newly assigned object, specified by the &quot;dir&quot; argument." />
     <div class="ref-description">
     
     <p>Assigns a new object by name to the current working environment then saves
-the newly assigned object, specified by the "<code>dir</code>" argument.</p>
+the newly assigned object, specified by the <code>"dir"</code> argument.</p>
     
     </div>
 
@@ -177,7 +177,8 @@ File path.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>This function attempts to follow the same order as <code>assign</code>.</p>
+    <p>This function attempts to follow the same order as
+<code><a href='https://rdrr.io/r/base/assign.html'>assign()</a></code>.</p>
 <p>Updated 2019-07-19.</p>
     
 
@@ -188,7 +189,7 @@ File path.</p>
     <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>x</span>,
     <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>"."</span>,
     <span class='kw'>ext</span> <span class='kw'>=</span> <span class='st'>"rds"</span>
-)</div><div class='output co'>#&gt; <span class='message'>Saving example.rds to /data00/draco/acidbase/packages/brio/docs/reference</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/exists.html'>exists</a></span>(<span class='st'>"example"</span>, <span class='kw'>inherits</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/files.html'>file.exists</a></span>(<span class='st'>"example.rds"</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+)</div><div class='output co'>#&gt; <span class='message'>Saving example.rds to /Users/mike/git/packages/brio/docs/reference</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/exists.html'>exists</a></span>(<span class='st'>"example"</span>, <span class='kw'>inherits</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/files.html'>file.exists</a></span>(<span class='st'>"example.rds"</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='co'>## Clean up.</span>
 <span class='fu'><a href='https://rdrr.io/r/base/rm.html'>rm</a></span>(<span class='no'>example</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span>(<span class='st'>"example.rds"</span>)</div></pre>
