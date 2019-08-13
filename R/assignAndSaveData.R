@@ -1,9 +1,10 @@
 #' Assign and save data
 #'
 #' Assigns a new object by name to the current working environment then saves
-#' the newly assigned object, specified by the "`dir`" argument.
+#' the newly assigned object, specified by the `"dir"` argument.
 #'
-#' @note This function attempts to follow the same order as `assign`.
+#' @note This function attempts to follow the same order as
+#'   [`assign()`][base::assign].
 #' @note Updated 2019-07-19.
 #' @include saveData.R
 #' @export

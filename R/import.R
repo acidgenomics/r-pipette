@@ -300,7 +300,7 @@ import <- function(
             "rowname" %in% colnames(object) &&
             isTRUE(rownames)
         ) {
-            message("Setting rownames from `rowname` column.")
+            message("Setting row names from 'rowname' column.")
             rownames(object) <- object[["rowname"]]
             object[["rowname"]] <- NULL
         }

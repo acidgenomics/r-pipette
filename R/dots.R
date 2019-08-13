@@ -9,9 +9,11 @@
 #'   Return dots (`...`) as `character`.
 #'
 #' @return
-#' - "`character = FALSE`": `list`. Objects as `name` class. Can return the
-#'   object from the `name` with `eval`.
-#' - "`character = TRUE`": `character`. Names of the dots.
+#' - `character = FALSE`: `list`.
+#'   Objects as `name` class.
+#'   Can return the object from the `name` with `eval`.
+#' - `character = TRUE`: `character`.
+#'   Names of the dots.
 #'
 #' @seealso
 #' - `help("dotsMethods", "methods")`.
