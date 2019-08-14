@@ -1,10 +1,12 @@
 context("import : invalid input")
 
 test_that("Invalid extension", {
+    file.create("file.XXX")
     expect_error(
         object = import(file = "file.XXX"),
         regexp = "XXX"
     )
+    unlink("file.XXX")
 })
 
 test_that("No extension", {

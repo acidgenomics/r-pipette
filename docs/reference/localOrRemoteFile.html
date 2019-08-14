@@ -168,7 +168,7 @@ extensions are natively supported: <code>BZ2</code>, <code>GZ</code>, <code>XZ</
 <span class='fu'><a href='https://rdrr.io/r/base/basename.html'>basename</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] "example.csv"</div><div class='input'>
 <span class='co'>## Remote</span>
 <span class='no'>file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pasteURL.html'>pasteURL</a></span>(<span class='no'>brioTestsURL</span>, <span class='st'>"hgnc.txt.gz"</span>, <span class='kw'>protocol</span> <span class='kw'>=</span> <span class='st'>"none"</span>)
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>localOrRemoteFile</span>(<span class='no'>file</span>)</div><div class='output co'>#&gt; <span class='message'>Decompressing hgnc.txt.gz in tempdir().</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/basename.html'>basename</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] "hgnc.txt"</div></pre>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>localOrRemoteFile</span>(<span class='no'>file</span>)</div><div class='output co'>#&gt; <span class='message'>Decompressing 'hgnc.txt.gz' in 'tempdir()'</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/basename.html'>basename</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] "hgnc.txt"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
