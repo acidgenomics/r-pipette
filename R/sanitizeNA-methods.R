@@ -107,7 +107,7 @@ setMethod(
 ## nolint start
 ##
 ## Alternate dplyr method:
-## object <- mutate_if(object, is.character, sanitizeNA)
+## > object <- mutate_if(object, is.character, sanitizeNA)
 ##
 ## This requires use to import dplyr, which can be otherwise avoided.
 ##
