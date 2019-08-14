@@ -4,7 +4,7 @@
 #' @noRd
 ## Updated 2019-07-19.
 importGMT <- function(file) {
-    message(paste("Importing", basename(file)))
+    message(sprintf("Importing '%s'.", basename(file)))
     file <- localOrRemoteFile(file)
     lines <- read_lines(file)
     lines <- strsplit(lines, split = "\t")
@@ -25,7 +25,7 @@ importGMT <- function(file) {
 #' @noRd
 ## Updated 2019-07-19.
 importGMX <- function(file) {
-    message(paste("Importing", basename(file)))
+    message(sprintf("Importing '%s'.", basename(file)))
     file <- localOrRemoteFile(file)
     lines <- read_lines(file)
     pathways <- list(tail(lines, n = -2L))

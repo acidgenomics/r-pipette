@@ -1,7 +1,10 @@
 ## Updated 2019-07-19.
 importRDA <- function(file) {
     file <- localOrRemoteFile(file)
-    message(paste("Importing", basename(file), "using base::load()."))
+    message(sprintf(
+        "Importing '%s' using '%s()'.",
+        basename(file), "base::load"
+    ))
     safe <- new.env()
     object <- load(file, envir = safe)
     if (length(safe) != 1L) {
