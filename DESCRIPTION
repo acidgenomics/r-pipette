@@ -24,7 +24,7 @@ Encoding: UTF-8
 Depends: R (>= 3.5)
 Imports:
     bioverbs (>= 0.2.5),
-    goalie (>= 0.3.4),
+    goalie (>= 0.3.5),
     transformer (>= 0.2.3),
     GenomicRanges,
     S4Vectors,

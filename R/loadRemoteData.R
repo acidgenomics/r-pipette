@@ -1,7 +1,3 @@
-## FIXME Add support for url.
-
-
-
 #' Load remote data
 #'
 #' Load a remote R binary file. This function is vectorized and supports
