@@ -28,13 +28,13 @@
 #' basename(x)
 #'
 #' ## Remote
-#' file <- paste(brioTestsURL, "hgnc.txt.gz", sep = "/")
+#' file <- pasteURL(brioTestsURL, "hgnc.txt.gz", protocol = "none")
 #' x <- localOrRemoteFile(file)
 #' basename(x)
 localOrRemoteFile <- function(file) {
     assert(isCharacter(file))
     if (!all(grepl(pattern = extPattern, x = file))) {
-        stop(paste(deparse(file), "does not end with file extension."))
+        stop(sprintf("'%s' does not end with file extension.", deparse(file)))
     }
     file <- mapply(
         file = file,
@@ -96,7 +96,10 @@ localOrRemoteFile <- function(file) {
             if (!grepl(compressExtPattern, file)) {
                 return(file)
             }
-            message(paste("Decompressing", basename(file), "in tempdir()."))
+            message(sprintf(
+                "Decompressing '%s' in '%s'",
+                basename(file), "tempdir()"
+            ))
 
             ## Get the compression extension and decompressed file basename.
             match <- str_match(
@@ -171,16 +174,14 @@ localOrRemoteFile <- function(file) {
         unlink(file, force = TRUE)
     }
     if (file.exists(file)) {
-        stop(paste(
-            "Failed to remove temporary file:",
-            file,
-            "This is a known issue with R on Windows.",
-            "Consider these alternatives:",
-            "  1. Set TMPDIR to an alternate location in `.Renviron` file.",
-            "  2. Run R as Administrator.",
-            "  3. Switch to macOS or Linux.",
-            sep = "\n"
-        ))
+        stop(
+            "Failed to remove temporary file.\n",
+            "This is a known issue with R on Windows.\n",
+            "Consider these alternatives:\n",
+            "  - Set TMPDIR to an alternate location in '.Renviron' file.\n",
+            "  - Run R as Administrator.\n",
+            "  - Switch to macOS or Linux."
+        )
     }
     invisible()
 }
