@@ -1,7 +1,3 @@
-## FIXME Add support for `url()` wrapper.
-
-
-
 #' Dynamically handle a local or remote file path
 #'
 #' @section Vectorization:
@@ -32,11 +28,11 @@
 #' basename(x)
 #'
 #' ## Remote
-#' file <- paste(brioTestsURL, "hgnc.txt.gz", sep = "/")
+#' file <- pasteURL(brioTestsURL, "hgnc.txt.gz", protocol = "none")
 #' x <- localOrRemoteFile(file)
 #' basename(x)
 localOrRemoteFile <- function(file) {
-    assert(isCharacter(file))
+    assert(isAFile(file) || isAURL(file))
     if (!all(grepl(pattern = extPattern, x = file))) {
         stop(sprintf("'%s' does not end with file extension.", deparse(file)))
     }

@@ -1,7 +1,3 @@
-## FIXME Add support for `url()` wrapper.
-
-
-
 #' Import
 #'
 #' Read file by extension into R.
@@ -11,7 +7,7 @@
 #' simple. Remote URLs and compressed files are supported. If you need more
 #' complex import settings, just call the wrapped importer directly instead.
 #'
-#' @note Updated 2019-07-30.
+#' @note Updated 2019-08-13.
 #' @export
 #'
 #' @inheritParams acidroxygen::params
@@ -205,7 +201,7 @@ import <- function(
 ) {
     ## We're supporting remote files, so don't check using `isAFile()` here.
     assert(
-        isString(file),
+        isAFile(file) || isAURL(file),
         isScalar(sheet),
         isFlag(rownames),
         isFlag(colnames)
