@@ -41,7 +41,7 @@ x <- localOrRemoteFile(file)
 basename(x)
 
 ## Remote
-file <- paste(brioTestsURL, "hgnc.txt.gz", sep = "/")
+file <- pasteURL(brioTestsURL, "hgnc.txt.gz", protocol = "none")
 x <- localOrRemoteFile(file)
 basename(x)
 }

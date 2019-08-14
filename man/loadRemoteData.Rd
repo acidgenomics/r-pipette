@@ -29,7 +29,7 @@ multiple URLs in a single call.
 Updated 2019-07-30.
 }
 \examples{
-url <- paste(brioTestsURL, "rnaseq_counts.rds", sep = "/")
+url <- pasteURL(brioTestsURL, "rnaseq_counts.rds", protocol = "none")
 print(url)
 x <- loadRemoteData(url)
 print(x)
