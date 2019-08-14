@@ -32,7 +32,7 @@
 #' x <- localOrRemoteFile(file)
 #' basename(x)
 localOrRemoteFile <- function(file) {
-    assert(isAFile(file) || isAURL(file))
+    assert(isCharacter(file))
     if (!all(grepl(pattern = extPattern, x = file))) {
         stop(sprintf("'%s' does not end with file extension.", deparse(file)))
     }
