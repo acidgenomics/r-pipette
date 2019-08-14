@@ -86,7 +86,7 @@ simple. Remote URLs and compressed files are supported. If you need more
 complex import settings, just call the wrapped importer directly instead.
 }
 \note{
-Updated 2019-07-30.
+Updated 2019-08-13.
 }
 \section{Row and column names}{
 

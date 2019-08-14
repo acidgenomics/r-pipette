@@ -1,3 +1,12 @@
+## brio 0.3.3 (2019-08-13)
+
+### Minor changes
+
+- Added support for `url` calls to `import`, `localOrRemoteFile`, and
+  `loadRemoteData`..
+- Improved message consistency.
+- Updated basejump dependency versions.
+
 ## brio 0.3.2 (2019-08-06)
 
 ### Minor changes

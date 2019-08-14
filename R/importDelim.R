@@ -2,7 +2,10 @@
 ## Updated 2019-07-19.
 importDelim <- function(file, colnames = TRUE) {
     file <- localOrRemoteFile(file)
-    message(paste("Importing", basename(file), "using data.table::fread()."))
+    message(sprintf(
+        "Importing '%s' using '%s()'.",
+        basename(file), "data.table::fread"
+    ))
     object <- fread(
         file = file,
         header = colnames,

@@ -2,13 +2,15 @@
 ## Note that this function doesn't support optional column names.
 ## Updated 2019-07-19.
 importPZFX <- function(file, sheet = 1L) {
-    message(paste(
-        "GraphPad Prism support is experimental.",
-        "Consider exporting results to CSV format instead.",
-        sep = "\n"
-    ))
+    message(
+        "GraphPad Prism support is experimental.\n",
+        "Consider exporting results to CSV format instead."
+    )
     file <- localOrRemoteFile(file)
-    message(paste("Importing", basename(file), "using pzfx::read_pzfx()."))
+    message(sprintf(
+        "Importing '%s' using '%s()'.",
+        basename(file), "pzfx::read_pzfx"
+    ))
     requireNamespace("pzfx", quietly = TRUE)
     object <- pzfx::read_pzfx(
         path = file,

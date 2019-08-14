@@ -74,9 +74,9 @@ transmit <- function(
 
     ## Error and inform the user if the FTP connection fails.
     if (!isTRUE(url.exists(remoteDir))) {
-        stop(paste("Connection to", server, "failed."))  # nocov
+        stop(sprintf("Connection to '%s' failed.", server))  # nocov
     } else {
-        message(paste0("Transmitting files from ", server, "."))
+        message(sprintf("Transmitting files from '%s'.", server))
     }
 
     remoteTxt <- getURL(remoteDir)
@@ -125,7 +125,7 @@ transmit <- function(
     if (any(file.exists(files))) {
         exists <- which(file.exists(files))
         skip <- files[exists]
-        message(paste0("Skipped ", toString(basename(skip)), "."))
+        message(sprintf("Skipped: %s.", toString(basename(skip))))
         localPaths <- localPaths[!exists]
     }
 
@@ -137,7 +137,7 @@ transmit <- function(
         return(invisible(files))
     }
 
-    message(paste0("Downloading ", toString(basename(files)), "."))
+    message(sprintf("Downloading %s.", toString(basename(files))))
     files <- mapply(
         FUN = function(url, destfile, compress = FALSE) {
             download.file(url = url, destfile = destfile)

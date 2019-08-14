@@ -79,21 +79,21 @@ test_that("Overwrite mode", {
 test_that("Multiple objects in single file", {
     expect_error(
         object = loadData(multi, dir = dir),
-        regexp = "multi.rda contains multiple objects: x, y"
+        regexp = "'multi.rda' contains multiple objects: x, y"
     )
 })
 
 test_that("Renamed file", {
     expect_error(
         object = loadData(renamed, dir = dir),
-        regexp = "renamed.rda has been renamed."
+        regexp = "'renamed.rda' file has been renamed."
     )
 })
 
 test_that("Duplicate RDA and RDS files", {
     expect_error(
         object = loadData(example, dir = dir),
-        regexp = "\"example\" is not unique on disk."
+        regexp = "'example' is not unique on disk."
     )
 })
 
