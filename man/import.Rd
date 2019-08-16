@@ -4,30 +4,31 @@
 \alias{import}
 \title{Import}
 \usage{
-import(file, sheet = 1L, rownames = TRUE, colnames = TRUE,
-  format = "none", setclass = getOption("acid.data.frame", default =
+import(file, rownames = TRUE, colnames = TRUE, format = "none",
+  sheet = 1L, setclass = getOption("acid.data.frame", default =
   "data.frame"))
 }
 \arguments{
 \item{file}{\code{character(1)}.
 File path.}
 
-\item{sheet}{\emph{Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.}\cr
-\code{character(1)} or \code{integer(1)}.
-Sheet to read. Either a string (the name of a sheet), or an integer (the
-position of the sheet). Defaults to the first sheet.}
-
 \item{rownames}{\code{logical(1)}.
 Automatically assign row names, if \code{rowname} column is defined.
 Applies to file types that return \code{data.frame} only.}
 
-\item{colnames}{\code{logical(1)}.
+\item{colnames}{\code{logical(1)} or \code{character}.
 Automatically assign column names, using the first header row.
-Applies to file types that return \code{data.frame} only.}
+Applies to file types that return \code{data.frame} only.
+Pass in a \code{character} vector to define the column names manually.}
 
 \item{format}{\code{character(1)}.
 An optional file format code, which can be used to override the format
 inferred from \code{file}. \emph{Not recommended by default.}}
+
+\item{sheet}{\code{character(1)} or \code{integer(1)}.
+\emph{Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.}
+Sheet to read. Either a string (the name of a sheet), or an integer (the
+position of the sheet). Defaults to the first sheet.}
 
 \item{setclass}{\code{character(1)}.
 Class to set on data frame return.
@@ -114,10 +115,10 @@ a \code{rowname} column, similar to the default syntax recommended in
 \code{rownames = FALSE}, and no attempt will be made to set the row names.
 
 \strong{Column names.} \code{\link[=import]{import()}} assumes that delimited files always contain
-column names. If you are working with a file that doens't contain column
-names, either set \code{colnames = FALSE} or call the wrapped importer function
-directly instead. It's strongly recommended to always define column names in
-a supported file type.
+column names. If you are working with a file that doesn't contain column
+names, either set \code{colnames = FALSE} or pass the names in as a \code{character}
+vector. It's strongly recommended to always define column names in a
+supported file type.
 }
 
 \section{Data frame return}{

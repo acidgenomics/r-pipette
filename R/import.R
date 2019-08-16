@@ -102,11 +102,6 @@
 #' `DOC`, `DOCX`, `PDF`, `PPT`, `PPTX`.
 #'
 #' @inheritParams acidroxygen::params
-#' @param sheet
-#'   *Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.*\cr
-#'   `character(1)` or `integer(1)`.
-#'   Sheet to read. Either a string (the name of a sheet), or an integer (the
-#'   position of the sheet). Defaults to the first sheet.
 #' @param rownames `logical(1)`.
 #'   Automatically assign row names, if `rowname` column is defined.
 #'   Applies to file types that return `data.frame` only.
@@ -117,6 +112,10 @@
 #' @param format `character(1)`.
 #'   An optional file format code, which can be used to override the format
 #'   inferred from `file`. *Not recommended by default.*
+#' @param sheet `character(1)` or `integer(1)`.
+#'   *Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.*
+#'   Sheet to read. Either a string (the name of a sheet), or an integer (the
+#'   position of the sheet). Defaults to the first sheet.
 #' @param setclass `character(1)`.
 #'   Class to set on data frame return.
 #'   Options: `data.frame` (default), `DataFrame`, `tbl_df`, `data.table`.
@@ -200,10 +199,10 @@
 #' print(head(x))
 import <- function(
     file,
-    sheet = 1L,
     rownames = TRUE,
     colnames = TRUE,
     format = "none",
+    sheet = 1L,
     setclass = getOption("acid.data.frame", default = "data.frame")
 ) {
     ## We're supporting remote files, so don't check using `isAFile()` here.
