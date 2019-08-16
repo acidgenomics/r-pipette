@@ -415,8 +415,8 @@ import <- function(
 
 
 ## Basic =======================================================================
-#' @describeIn import Internal importer for a delimited file (e.g. `.csv`,
-#'   `.tsv`). Calls [data.table::fread()] internally.
+## Internal importer for a delimited file (e.g. `.csv`, `.tsv`).
+## Calls [data.table::fread()] internally.
 .importDelim <- function(file, colnames = TRUE) {
     file <- localOrRemoteFile(file)
     message(sprintf(
@@ -451,7 +451,7 @@ import <- function(
 
 
 
-#' @describeIn import Internal importer for (source code) lines.
+## Internal importer for (source code) lines.
 .importLines <- function(file) {
     file <- localOrRemoteFile(file)
     message(sprintf(
@@ -467,7 +467,7 @@ import <- function(
 
 
 ## R data ======================================================================
-#' @describeIn import Internal importer for an R data serialized file (`.rds`).
+## Internal importer for an R data serialized file (`.rds`).
 .importRDS <- function(file) {
     file <- localOrRemoteFile(file)
     message(sprintf(
@@ -481,7 +481,7 @@ import <- function(
 
 
 
-#' @describeIn import Internal importer for an R data file (`.rda`).
+## Internal importer for an R data file (`.rda`).
 .importRDA <- function(file) {
     file <- localOrRemoteFile(file)
     message(sprintf(
@@ -500,7 +500,7 @@ import <- function(
 
 
 ## Sparse matrix ===============================================================
-#' @describeIn import Internal importer for a sparse matrix file (`.mtx`).
+## Internal importer for a sparse matrix file (`.mtx`).
 .importMTX <- function(file) {
     assert(isString(file))
     ## Add the rownames automatically using `.rownames` sidecar file.
@@ -555,8 +555,7 @@ import <- function(
 
 
 
-#' @describeIn import Internal importer for a sparse matrix sidecar file
-#'   (`.mtx.colnames`, `.mtx.rownames`).
+## Internal importer for a sparse matrix sidecar file (e.g. `.rownames`).
 .importMTXSidecar <- function(file) {
     message(sprintf("Importing sidecar '%s'.", basename(file)))
     .importLines(file)
@@ -565,7 +564,7 @@ import <- function(
 
 
 ## List ========================================================================
-#' @describeIn import Internal importer for a JSON file (`.json`).
+## Internal importer for a JSON file (`.json`).
 .importJSON <- function(file) {
     file <- localOrRemoteFile(file)
     message(sprintf(
@@ -580,7 +579,7 @@ import <- function(
 
 
 
-#' @describeIn import Internal importer for a YAML file (`.yaml`, `.yml`).
+## Internal importer for a YAML file (`.yaml`, `.yml`).
 .importYAML <- function(file) {
     file <- localOrRemoteFile(file)
     message(sprintf(
@@ -596,8 +595,8 @@ import <- function(
 
 
 ## GSEA ========================================================================
-#' @describeIn import Internal importer for a gene matrix transposed file
-#'   (`.gmt`). See also `fgsea::gmtPathways()`.
+## Internal importer for a gene matrix transposed file (`.gmt`).
+## See also `fgsea::gmtPathways()`.
 .importGMT <- function(file) {
     message(sprintf("Importing '%s'.", basename(file)))
     lines <- .importLines(file)
@@ -614,7 +613,7 @@ import <- function(
 
 
 
-#' @describeIn import Internal importer for a gene matrix file (`.gmx`).
+## Internal importer for a gene matrix file (`.gmx`).
 .importGMX <- function(file) {
     message(sprintf("Importing '%s'.", basename(file)))
     lines <- .importLines(file)
@@ -625,7 +624,7 @@ import <- function(
 
 
 
-#' @describeIn import Internal importer for a gene set file (`.grp`).
+## Internal importer for a gene set file (`.grp`).
 .importGRP <- .importGMX
 
 
@@ -634,8 +633,7 @@ import <- function(
 ## Note that `readxl::read_excel()` doesn't currently support automatic blank
 ## lines removal, so ensure that is fixed downstream.
 
-#' @describeIn import Internal importer for a Microsoft Excel worksheet
-#'   (`.xlsx`).
+## Internal importer for a Microsoft Excel worksheet (`.xlsx`).
 .importXLSX <- function(file, sheet = 1L, colnames = TRUE) {
     file <- localOrRemoteFile(file)
     message(sprintf(
@@ -676,8 +674,7 @@ import <- function(
 ##
 ## In the meantime, load using gdata, which is slower but does work.
 
-#' @describeIn import Internal importer for a legacy Microsoft Excel worksheet
-#'   (`.xls`).
+## Internal importer for a legacy Microsoft Excel worksheet (`.xls`).
 .importXLS <- function(file, sheet = 1L, colnames = TRUE) {
     file <- localOrRemoteFile(file)
     message(sprintf(
@@ -715,8 +712,8 @@ import <- function(
 
 
 ## GraphPad Prism ==============================================================
-#' @describeIn import Internal importer for a GraphPad Prism file (`.pzfx`).
-#' Note that this function doesn't support optional column names.
+## Internal importer for a GraphPad Prism file (`.pzfx`).
+## Note that this function doesn't support optional column names.
 .importPZFX <- function(file, sheet = 1L) {
     file <- localOrRemoteFile(file)
     message(sprintf(
@@ -735,9 +732,8 @@ import <- function(
 
 
 ## bcbio =======================================================================
-#' @describeIn import Internal importer for a bcbio count matrix file
-#'   (`.counts`). These files contain an `"id"` column that we need to coerce to
-#'   row names.
+## Internal importer for a bcbio count matrix file (`.counts`).
+## These files contain an `"id"` column that we need to coerce to row names.
 .importBCBCounts <- function(file) {
     message(sprintf(
         "Importing '%s' using '%s()'.",

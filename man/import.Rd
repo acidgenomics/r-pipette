@@ -2,47 +2,11 @@
 % Please edit documentation in R/import.R
 \name{import}
 \alias{import}
-\alias{.importDelim}
-\alias{.importLines}
-\alias{.importRDS}
-\alias{.importRDA}
-\alias{.importMTX}
-\alias{.importMTXSidecar}
-\alias{.importGMT}
-\alias{.importGMX}
-\alias{.importGRP}
-\alias{.importJSON}
-\alias{.importPZFX}
-\alias{.importBCBCounts}
 \title{Import}
 \usage{
 import(file, sheet = 1L, rownames = TRUE, colnames = TRUE,
   format = "none", setclass = getOption("acid.data.frame", default =
   "data.frame"))
-
-.importDelim(file, colnames = TRUE)
-
-.importLines(file)
-
-.importRDS(file)
-
-.importRDA(file)
-
-.importMTX(file)
-
-.importMTXSidecar(file)
-
-.importGMT(file)
-
-.importGMX(file)
-
-.importGRP(file)
-
-.importJSON(file)
-
-.importPZFX(file, sheet = 1L)
-
-.importBCBCounts(file)
 }
 \arguments{
 \item{file}{\code{character(1)}.
@@ -130,39 +94,6 @@ popular importer functions. The function is intentionally designed to be
 simple. Remote URLs and compressed files are supported. If you need more
 complex import settings, just call the wrapped importer directly instead.
 }
-\section{Functions}{
-\itemize{
-\item \code{.importDelim}: Internal importer for a delimited file (e.g. \code{.csv},
-\code{.tsv}). Calls \code{\link[data.table:fread]{data.table::fread()}} internally.
-
-\item \code{.importLines}: Internal importer for (source code) lines.
-
-\item \code{.importRDS}: Internal importer for an R data serialized file (\code{.rds}).
-
-\item \code{.importRDA}: Internal importer for an R data file (\code{.rda}).
-
-\item \code{.importMTX}: Internal importer for a sparse matrix file (\code{.mtx}).
-
-\item \code{.importMTXSidecar}: Internal importer for a sparse matrix sidecar file
-(\code{.mtx.colnames}, \code{.mtx.rownames}).
-
-\item \code{.importGMT}: Internal importer for a gene matrix transposed file
-(\code{.gmt}). See also \code{fgsea::gmtPathways()}.
-
-\item \code{.importGMX}: Internal importer for a gene matrix file (\code{.gmx}).
-
-\item \code{.importGRP}: Internal importer for a gene set file (\code{.grp}).
-
-\item \code{.importJSON}: Internal importer for a JSON file (\code{.json}).
-
-\item \code{.importPZFX}: Internal importer for a GraphPad Prism file (\code{.pzfx}).
-Note that this function doesn't support optional column names.
-
-\item \code{.importBCBCounts}: Internal importer for a bcbio count matrix file
-(\code{.counts}). These files contain an \code{"id"} column that we need to coerce to
-row names.
-}}
-
 \note{
 Updated 2019-08-16.
 }
