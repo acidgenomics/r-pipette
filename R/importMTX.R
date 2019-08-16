@@ -59,7 +59,7 @@ importMTX <- function(file) {
 .importSidecar <- function(file) {
     message(sprintf(
         "Importing sidecar '%s' using '%s()'.",
-        basename(file), "base::readLines"
+        basename(file), "brio::importLines"
     ))
-    readLines(con = file)
+    importLines(file)
 }
