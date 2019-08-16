@@ -1,5 +1,5 @@
-## Import a delimited file (e.g. CSV, TSV).
-## Updated 2019-07-19.
+#' @describeIn import Import a delimited file (e.g. CSV, TSV).
+#' @export
 importDelim <- function(file, colnames = TRUE) {
     file <- localOrRemoteFile(file)
     message(sprintf(

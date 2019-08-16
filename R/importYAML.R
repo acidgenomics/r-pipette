@@ -1,4 +1,4 @@
-## Updated 2019-07-30.
+#' @describeIn import Import YAML file.
 importYAML <- function(file) {
     file <- localOrRemoteFile(file)
     message(sprintf(

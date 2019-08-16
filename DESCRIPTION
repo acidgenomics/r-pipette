@@ -73,7 +73,7 @@ Collate:
     'export-methods.R'
     'fileExt.R'
     'import.R'
-    'importCounts.R'
+    'importBCBCounts.R'
     'importDelim.R'
     'importGSEA.R'
     'importJSON.R'

@@ -240,7 +240,7 @@ import <- function(
         object <- importMTX(file)
     } else if (ext == "COUNTS") {
         ## bcbio counts format always contains row and column names.
-        object <- importCounts(file)
+        object <- importBCBCounts(file)
     } else if (ext %in% c("LOG", "MD", "PY", "R", "RMD", "SH")) {
         object <- importLines(file)
     } else if (ext %in% c(
