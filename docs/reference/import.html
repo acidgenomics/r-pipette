@@ -121,31 +121,7 @@
 
     <pre class="usage"><span class='fu'>import</span>(<span class='no'>file</span>, <span class='kw'>sheet</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>rownames</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>colnames</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"none"</span>, <span class='kw'>setclass</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"acid.data.frame"</span>, <span class='kw'>default</span> <span class='kw'>=</span>
-  <span class='st'>"data.frame"</span>))
-
-<span class='fu'>.importDelim</span>(<span class='no'>file</span>, <span class='kw'>colnames</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
-<span class='fu'>.importLines</span>(<span class='no'>file</span>)
-
-<span class='fu'>.importRDS</span>(<span class='no'>file</span>)
-
-<span class='fu'>.importRDA</span>(<span class='no'>file</span>)
-
-<span class='fu'>.importMTX</span>(<span class='no'>file</span>)
-
-<span class='fu'>.importMTXSidecar</span>(<span class='no'>file</span>)
-
-<span class='fu'>.importGMT</span>(<span class='no'>file</span>)
-
-<span class='fu'>.importGMX</span>(<span class='no'>file</span>)
-
-<span class='fu'>.importGRP</span>(<span class='no'>file</span>)
-
-<span class='fu'>.importJSON</span>(<span class='no'>file</span>)
-
-<span class='fu'>.importPZFX</span>(<span class='no'>file</span>, <span class='kw'>sheet</span> <span class='kw'>=</span> <span class='fl'>1L</span>)
-
-<span class='fu'>.importBCBCounts</span>(<span class='no'>file</span>)</pre>
+  <span class='st'>"data.frame"</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -247,30 +223,6 @@ Imported by <code><a href='https://rdrr.io/pkg/rio/man/import.html'>rio::import(
 popular importer functions. The function is intentionally designed to be
 simple. Remote URLs and compressed files are supported. If you need more
 complex import settings, just call the wrapped importer directly instead.</p>
-    
-    <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
-
-    
-<ul>
-<li><p><code>.importDelim</code>: Internal importer for a delimited file (e.g. <code>.csv</code>,
-<code>.tsv</code>). Calls <code><a href='https://rdrr.io/pkg/data.table/man/fread.html'>data.table::fread()</a></code> internally.</p></li>
-<li><p><code>.importLines</code>: Internal importer for (source code) lines.</p></li>
-<li><p><code>.importRDS</code>: Internal importer for an R data serialized file (<code>.rds</code>).</p></li>
-<li><p><code>.importRDA</code>: Internal importer for an R data file (<code>.rda</code>).</p></li>
-<li><p><code>.importMTX</code>: Internal importer for a sparse matrix file (<code>.mtx</code>).</p></li>
-<li><p><code>.importMTXSidecar</code>: Internal importer for a sparse matrix sidecar file
-(<code>.mtx.colnames</code>, <code>.mtx.rownames</code>).</p></li>
-<li><p><code>.importGMT</code>: Internal importer for a gene matrix transposed file
-(<code>.gmt</code>). See also <code><a href='https://rdrr.io/pkg/fgsea/man/gmtPathways.html'>fgsea::gmtPathways()</a></code>.</p></li>
-<li><p><code>.importGMX</code>: Internal importer for a gene matrix file (<code>.gmx</code>).</p></li>
-<li><p><code>.importGRP</code>: Internal importer for a gene set file (<code>.grp</code>).</p></li>
-<li><p><code>.importJSON</code>: Internal importer for a JSON file (<code>.json</code>).</p></li>
-<li><p><code>.importPZFX</code>: Internal importer for a GraphPad Prism file (<code>.pzfx</code>).
-Note that this function doesn't support optional column names.</p></li>
-<li><p><code>.importBCBCounts</code>: Internal importer for a bcbio count matrix file
-(<code>.counts</code>). These files contain an <code>"id"</code> column that we need to coerce to
-row names.</p></li>
-</ul>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
@@ -432,8 +384,6 @@ makes GFF loading simple.</p>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#details">Details</a></li>
-
-      <li><a href="#functions">Functions</a></li>
 
       <li><a href="#note">Note</a></li>
 
