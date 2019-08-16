@@ -1,3 +1,8 @@
+## FIXME Allow the user to set the column names.
+## delim, xls, xlsx
+
+
+
 #' Import
 #'
 #' Read file by extension into R.
@@ -26,10 +31,10 @@
 #' `rownames = FALSE`, and no attempt will be made to set the row names.
 #'
 #' **Column names.** [import()] assumes that delimited files always contain
-#' column names. If you are working with a file that doens't contain column
-#' names, either set `colnames = FALSE` or call the wrapped importer function
-#' directly instead. It's strongly recommended to always define column names in
-#' a supported file type.
+#' column names. If you are working with a file that doesn't contain column
+#' names, either set `colnames = FALSE` or pass the names in as a `character`
+#' vector. It's strongly recommended to always define column names in a
+#' supported file type.
 #'
 #' @section Data frame return:
 #'
@@ -110,9 +115,10 @@
 #' @param rownames `logical(1)`.
 #'   Automatically assign row names, if `rowname` column is defined.
 #'   Applies to file types that return `data.frame` only.
-#' @param colnames `logical(1)`.
+#' @param colnames `logical(1)` or `character`.
 #'   Automatically assign column names, using the first header row.
 #'   Applies to file types that return `data.frame` only.
+#'   Pass in a `character` vector to define the column names manually.
 #' @param format `character(1)`.
 #'   An optional file format code, which can be used to override the format
 #'   inferred from `file`. *Not recommended by default.*
@@ -210,7 +216,7 @@ import <- function(
         isAFile(file) || isAURL(file),
         isScalar(sheet),
         isFlag(rownames),
-        isFlag(colnames)
+        isFlag(colnames) || isCharacter(colnames)
     )
     format <- match.arg(
         arg = format,
@@ -418,14 +424,14 @@ import <- function(
 ## Internal importer for a delimited file (e.g. `.csv`, `.tsv`).
 ## Calls [data.table::fread()] internally.
 .importDelim <- function(file, colnames = TRUE) {
+    assert(isFlag(colnames) || isCharacter(colnames))
     file <- localOrRemoteFile(file)
     message(sprintf(
         "Importing '%s' using '%s()'.",
         basename(file), "data.table::fread"
     ))
-    object <- fread(
+    args <- list(
         file = file,
-        header = colnames,
         ## Sanitize NA columns, with our improved defaults.
         na.strings = naStrings,
         ## Never set factors on import automatically.
@@ -444,6 +450,13 @@ import <- function(
         ## Return as `data.frame` instead of `data.table`.
         data.table = FALSE
     )
+    if (isCharacter(colnames)) {
+        args[["header"]] <- FALSE
+        args[["col.names"]] <- colnames
+    } else {
+        args[["header"]] <- colnames
+    }
+    object <- do.call(what = fread, args = args)
     assert(is.data.frame(object))
     object <- .slotMetadata(object, pkg = "data.table", fun = "fread")
     object
