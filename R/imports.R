@@ -14,7 +14,7 @@
 #' @importFrom SingleCellExperiment reducedDimNames reducedDims
 #' @importFrom SummarizedExperiment assayNames assayNames<- assays colData
 #'   rowData rowRanges
-#' @importFrom data.table as.data.table fread
+#' @importFrom data.table fread
 #' @importFrom goalie assert allAreExisting allAreFiles allAreNonExisting
 #'   allAreURLs allHaveAccess areDisjointSets areSameLength areSetEqual bapply
 #'   formalCompress hasColnames hasCols hasDimnames hasInternet hasLength
@@ -22,12 +22,10 @@
 #'   isAFile isAURL isAny isCharacter isFlag isMatchingRegex isNonEmpty isScalar
 #'   isString isSubset matchArgsToDoCall standardizeCall
 #' @importFrom methods as is slotNames validObject
-#' @importFrom readr read_lines read_tsv write_lines
 #' @importFrom rtracklayer import
 #' @importFrom stats na.omit
 #' @importFrom stringr str_extract str_match str_subset
-#' @importFrom tibble as_tibble column_to_rownames
-#' @importFrom transformer as.data.frame as_tibble atomize decode encode
-#'   factorize
+#' @importFrom transformer as.data.frame as.data.table as_tibble atomize decode
+#'   encode factorize
 #' @importFrom utils download.file head packageVersion tail
 NULL
