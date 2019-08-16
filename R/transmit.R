@@ -3,7 +3,7 @@
 #' Utility function that supports easy file matching and download from a remote
 #' FTP server. Also enables on-the-fly file renaming and compression.
 #'
-#' @note Updated 2019-07-30.
+#' @note Updated 2019-08-15.
 #' @export
 #'
 #' @inheritParams acidroxygen::params
@@ -90,7 +90,7 @@ transmit <- function(
     ## Match the `-` at begining for file.
     ## `-rwxrwxr-x`: File
     ## `drwxrwxr-x`: Directory
-    remoteFiles <- read_lines(remoteTxt)
+    remoteFiles <- readLines(con = remoteTxt)
     remoteFiles <- remoteFiles[grepl("^-", remoteFiles)]
     ## File name is at the end, not including a space.
     remoteFiles <- str_extract(remoteFiles, "[^\\s]+$")

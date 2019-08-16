@@ -46,8 +46,7 @@
 #'   Imported by [rtracklayer::import()].
 #' - **MatrixMarket exchange sparse matrix** (`MTX`): `sparseMatrix`.\cr
 #'   Imported by [Matrix::readMM()].
-#' - **Gene sets (for GSEA)** (`GMT`, `GMX`): `character`.\cr
-#'   Imported by [readr::read_lines()], with additional processing.
+#' - **Gene sets (for GSEA)** (`GMT`, `GMX`): `character`.
 #' - **Browser extensible data** (`BED`, `BED15`, `BEDGRAPH`, `BEDPE`):
 #'   `GRanges`.\cr
 #'   Imported by [rtracklayer::import()].
@@ -61,7 +60,7 @@
 #'   Imported by [yaml::yaml.load_file()].
 #' - **Lines** (`LOG`, `MD`, `PY`, `R`, `RMD`, `SH`): `character`.
 #'   Source code or log files.\cr
-#'   Imported by [readr::read_lines()].
+#'   Imported by [`readLines()`][base::readLines].
 #' - **R data serialized** (`RDS`): *variable*.\cr
 #'   Currently recommend over RDA, if possible.\cr
 #'   Imported by [`readRDS()`][base::readRDS].
