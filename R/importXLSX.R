@@ -1,6 +1,8 @@
 ## Note that `read_excel()` doesn't currently support automatic blank lines
 ## removal, so ensure that is fixed downstream.
-## Updated 2019-07-30.
+
+#' @describeIn import Import a Microsoft Excel worksheet.
+#' @export
 importXLSX <- function(file, sheet = 1L, colnames = TRUE) {
     file <- localOrRemoteFile(file)
     message(sprintf(
