@@ -3,7 +3,7 @@
 #' Utility function that supports easy file matching and download from a remote
 #' FTP server. Also enables on-the-fly file renaming and compression.
 #'
-#' @note Updated 2019-07-30.
+#' @note Updated 2019-08-15.
 #' @export
 #'
 #' @inheritParams acidroxygen::params
@@ -23,8 +23,7 @@
 #' Local file paths.
 #'
 #' @examples
-#' ## This doesn't work reliably on Travis CI.
-#'
+#' ## This doesn't work reliably on CI.
 #' ## > remoteDir <- paste(
 #' ## >     "ftp://ftp.pantherdb.org",
 #' ## >     "sequence_classifications",
@@ -39,8 +38,6 @@
 #' ## > )
 #' ## > basename(readme)
 #' ## > file.exists(readme)
-#'
-#' ## Clean up.
 #' ## > unlink(readme)
 transmit <- function(
     remoteDir,
@@ -57,7 +54,7 @@ transmit <- function(
         ## causes the check to fail on R 3.4.
         all(isMatchingRegex(remoteDir, "^ftp\\://"))
     )
-    ## `RCurl::getURL` requires a trailing slash.
+    ## `RCurl::getURL()` requires a trailing slash.
     if (!grepl("/$", remoteDir)) {
         remoteDir <- paste0(remoteDir, "/")
     }
@@ -90,7 +87,15 @@ transmit <- function(
     ## Match the `-` at begining for file.
     ## `-rwxrwxr-x`: File
     ## `drwxrwxr-x`: Directory
-    remoteFiles <- read_lines(remoteTxt)
+    remoteFiles <- unlist(
+        x = strsplit(
+            x = remoteTxt,
+            split = "\n",
+            fixed = TRUE
+        ),
+        recursive = FALSE,
+        use.names = FALSE
+    )
     remoteFiles <- remoteFiles[grepl("^-", remoteFiles)]
     ## File name is at the end, not including a space.
     remoteFiles <- str_extract(remoteFiles, "[^\\s]+$")
