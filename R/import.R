@@ -395,6 +395,26 @@ import <- function(
 
 
 
+## Slot data provenance metadata.
+.slotMetadata <- function(object, pkg, fun) {
+    assert(isString(pkg), isString(fun))
+    importer <- paste0(pkg, "::", fun)
+    version <- packageVersion(pkg)
+    if (isS4(object) && "metadata" %in% slotNames(object)) {
+        metadata(object)[["brio"]][["importer"]] <- importer
+        metadata(object)[["brio"]][[pkg]] <- version
+    } else {
+        ## Use `attr()` instead of `attributes()` here. It doesn't error on
+        ## assignment when the object doesn't already have attributes.
+        attr(object, "brio")[["importer"]] <- importer
+        attr(object, "brio")[[pkg]] <- version
+    }
+    object
+}
+
+
+
+## Basic =======================================================================
 #' @describeIn import Internal importer for a delimited file (e.g. `.csv`,
 #'   `.tsv`). Calls [data.table::fread()] internally.
 .importDelim <- function(file, colnames = TRUE) {
@@ -446,6 +466,7 @@ import <- function(
 
 
 
+## R data ======================================================================
 #' @describeIn import Internal importer for an R data serialized file (`.rds`).
 .importRDS <- function(file) {
     file <- localOrRemoteFile(file)
@@ -478,6 +499,7 @@ import <- function(
 
 
 
+## Sparse matrix ===============================================================
 #' @describeIn import Internal importer for a sparse matrix file (`.mtx`).
 .importMTX <- function(file) {
     assert(isString(file))
@@ -542,6 +564,38 @@ import <- function(
 
 
 
+## List ========================================================================
+#' @describeIn import Internal importer for a JSON file (`.json`).
+.importJSON <- function(file) {
+    file <- localOrRemoteFile(file)
+    message(sprintf(
+        "Importing '%s' using '%s()'.",
+        basename(file), "jsonlite::read_json"
+    ))
+    requireNamespace("jsonlite", quietly = TRUE)
+    object <- jsonlite::read_json(path = file)
+    object <- .slotMetadata(object, pkg = "jsonlite", fun = "read_json")
+    object
+}
+
+
+
+#' @describeIn import Internal importer for a YAML file (`.yaml`, `.yml`).
+.importYAML <- function(file) {
+    file <- localOrRemoteFile(file)
+    message(sprintf(
+        "Importing '%s' using '%s()'.",
+        basename(file), "yaml::yaml.load_file"
+    ))
+    requireNamespace("yaml", quietly = TRUE)
+    object <- yaml::yaml.load_file(input = file)
+    object <- .slotMetadata(object, pkg = "yaml", fun = "yaml.load_file")
+    object
+}
+
+
+
+## GSEA ========================================================================
 #' @describeIn import Internal importer for a gene matrix transposed file
 #'   (`.gmt`). See also `fgsea::gmtPathways()`.
 .importGMT <- function(file) {
@@ -576,21 +630,91 @@ import <- function(
 
 
 
-#' @describeIn import Internal importer for a JSON file (`.json`).
-.importJSON <- function(file) {
+## Microsoft Excel =============================================================
+## Note that `readxl::read_excel()` doesn't currently support automatic blank
+## lines removal, so ensure that is fixed downstream.
+
+#' @describeIn import Internal importer for a Microsoft Excel worksheet
+#'   (`.xlsx`).
+.importXLSX <- function(file, sheet = 1L, colnames = TRUE) {
     file <- localOrRemoteFile(file)
     message(sprintf(
         "Importing '%s' using '%s()'.",
-        basename(file), "jsonlite::read_json"
+        basename(file), "readxl::read_excel"
     ))
-    requireNamespace("jsonlite", quietly = TRUE)
-    object <- jsonlite::read_json(path = file)
-    object <- .slotMetadata(object, pkg = "jsonlite", fun = "read_json")
+    requireNamespace("readxl", quietly = TRUE)
+    object <- readxl::read_excel(
+        path = file,
+        sheet = sheet,
+        col_names = colnames,
+        na = naStrings,
+        trim_ws = TRUE,
+        ## Keep quiet.
+        progress = FALSE,
+        ## Don't attempt name repair.
+        ## Refer to `tibble()` documentation for details.
+        .name_repair = "minimal"
+    )
+    ## Always return as data.frame instead of tibble at this step.
+    object <- as.data.frame(
+        x = object,
+        make.names = FALSE,
+        stringsAsFactors = FALSE
+    )
+    object <- .slotMetadata(object, pkg = "readxl", fun = "read_excel")
     object
 }
 
 
 
+## readxl does support XLS format also but it's buggy for many files.
+## Make some minimal repex examples and file issue on GitHub.
+##
+## See also:
+## - https://github.com/tidyverse/readxl/issues/466
+## - https://github.com/tidyverse/readxl/issues/472
+##
+## In the meantime, load using gdata, which is slower but does work.
+
+#' @describeIn import Internal importer for a legacy Microsoft Excel worksheet
+#'   (`.xls`).
+.importXLS <- function(file, sheet = 1L, colnames = TRUE) {
+    file <- localOrRemoteFile(file)
+    message(sprintf(
+        "Importing '%s' using '%s()'.",
+        basename(file), "gdata::read.xls"
+    ))
+    requireNamespace("gdata", quietly = TRUE)
+    ## gdata currently has an OS.type partial match issue.
+    ## `read.xls()` passes `...` to `utils::read.table()`.
+    object <- withCallingHandlers(
+        expr = gdata::read.xls(
+            xls = file,
+            sheet = sheet,
+            verbose = FALSE,
+            na.strings = naStrings,
+            header = colnames
+        ),
+        warning = function(w) {
+            ## nocov start
+            if (isTRUE(grepl(
+                pattern = "partial match of 'OS' to 'OS.type'",
+                x = as.character(w)
+            ))) {
+                invokeRestart("muffleWarning")
+            } else {
+                w
+            }
+            ## nocov end
+        }
+    )
+    object <- .slotMetadata(object, pkg = "gdata", fun = "read.xls")
+    object
+}
+
+
+
+## GraphPad Prism ==============================================================
 #' @describeIn import Internal importer for a GraphPad Prism file (`.pzfx`).
 #' Note that this function doesn't support optional column names.
 .importPZFX <- function(file, sheet = 1L) {
@@ -610,6 +734,7 @@ import <- function(
 
 
 
+## bcbio =======================================================================
 #' @describeIn import Internal importer for a bcbio count matrix file
 #'   (`.counts`). These files contain an `"id"` column that we need to coerce to
 #'   row names.
@@ -638,6 +763,7 @@ import <- function(
 
 
 
+## Handoff =====================================================================
 .rioImport <- function(file) {
     file <- localOrRemoteFile(file)
     message(sprintf("Importing '%s' using '%s()'.",
@@ -669,24 +795,5 @@ import <- function(
         }
     )
     object <- .slotMetadata(object, pkg = "rtracklayer", fun = "import")
-    object
-}
-
-
-
-## Slot data provenance metadata.
-.slotMetadata <- function(object, pkg, fun) {
-    assert(isString(pkg), isString(fun))
-    importer <- paste0(pkg, "::", fun)
-    version <- packageVersion(pkg)
-    if (isS4(object) && "metadata" %in% slotNames(object)) {
-        metadata(object)[["brio"]][["importer"]] <- importer
-        metadata(object)[["brio"]][[pkg]] <- version
-    } else {
-        ## Use `attr()` instead of `attributes()` here. It doesn't error on
-        ## assignment when the object doesn't already have attributes.
-        attr(object, "brio")[["importer"]] <- importer
-        attr(object, "brio")[[pkg]] <- version
-    }
     object
 }
