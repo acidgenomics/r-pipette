@@ -6,7 +6,9 @@ importLines <- function(file) {
         "Importing '%s' using '%s()'.",
         basename(file), "base::readLines"
     ))
-    object <- readLines(con = file)
+    con <- file(file)
+    object <- readLines(con = con)
+    close(con)
     object <- .slotMetadata(object, pkg = "base", fun = "readLines")
     object
 }
