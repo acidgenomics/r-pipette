@@ -7,71 +7,8 @@
 #' simple. Remote URLs and compressed files are supported. If you need more
 #' complex import settings, just call the wrapped importer directly instead.
 #'
-#' @note Updated 2019-08-13.
+#' @note Updated 2019-08-16.
 #' @export
-#'
-#' @inheritParams acidroxygen::params
-#' @param sheet
-#'   *Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.*\cr
-#'   `character(1)` or `integer(1)`.
-#'   Sheet to read. Either a string (the name of a sheet), or an integer (the
-#'   position of the sheet). Defaults to the first sheet.
-#' @param rownames `logical(1)`.
-#'   Automatically assign row names, if `rowname` column is defined.
-#'   Applies to file types that return `data.frame` only.
-#' @param colnames `logical(1)`.
-#'   Automatically assign column names, using the first header row.
-#'   Applies to file types that return `data.frame` only.
-#'
-#' @return Varies, depending on the file type.
-#'
-#' - **Plain text delimited** (`CSV`, `TSV`, `TXT`): `data.frame`.\cr
-#'   Data separated by commas, tabs, or visual spaces.\cr
-#'   Note that TXT structure is amgibuous and actively discouraged.\cr
-#'   Refer to `Data frame return` section for details on how to change the
-#'   default return type to `DataFrame`, `tbl_df` or `data.table`.\cr
-#'   Imported by [data.table::fread()].
-#' - **Excel workbook** (`XLSB`, `XLSX`): `data.frame`.\cr
-#'   Resave in plain text delimited format instead, if possible.\cr
-#'   Imported by [readxl::read_excel()].
-#' - **Legacy Excel workbook (pre-2007)** (`XLS`): `data.frame`.\cr
-#'   Resave in plain text delimited format instead, if possible.\cr
-#'   Note that import of files in this format is slow.\cr
-#'   Imported by [gdata::read.xls()].
-#' - **GraphPad Prism project** (`PZFX`): `data.frame`.\cr
-#'   Experimental. Consider resaving in CSV format instead.\cr
-#'   Imported by [pzfx::read_pzfx()].
-#' - **General feature format** (`GFF`, `GFF1`, `GFF2`, `GFF3`, `GTF`):
-#'   `GRanges`.\cr
-#'   Imported by [rtracklayer::import()].
-#' - **MatrixMarket exchange sparse matrix** (`MTX`): `sparseMatrix`.\cr
-#'   Imported by [Matrix::readMM()].
-#' - **Gene sets (for GSEA)** (`GMT`, `GMX`): `character`.
-#' - **Browser extensible data** (`BED`, `BED15`, `BEDGRAPH`, `BEDPE`):
-#'   `GRanges`.\cr
-#'   Imported by [rtracklayer::import()].
-#' - **ChIP-seq peaks** (`BROADPEAK`, `NARROWPEAK`): `GRanges`.\cr
-#'   Imported by [rtracklayer::import()].
-#' - **Wiggle track format** (`BIGWIG`, `BW`, `WIG`): `GRanges`.\cr
-#'   Imported by [rtracklayer::import()].
-#' - **JSON serialization data** (`JSON`): `list`.\cr
-#'   Imported by [jsonlite::read_json()].
-#' - **YAML serialization data** (`YAML`, `YML`): `list`.\cr
-#'   Imported by [yaml::yaml.load_file()].
-#' - **Lines** (`LOG`, `MD`, `PY`, `R`, `RMD`, `SH`): `character`.
-#'   Source code or log files.\cr
-#'   Imported by [`readLines()`][base::readLines].
-#' - **R data serialized** (`RDS`): *variable*.\cr
-#'   Currently recommend over RDA, if possible.\cr
-#'   Imported by [`readRDS()`][base::readRDS].
-#' - **R data** (`RDA`, `RDATA`): *variable*.\cr
-#'   Must contain a single object.
-#'   Doesn't require internal object name to match, unlike [loadData()].\cr
-#'   Imported by [`load()`][base::load].
-#' - **Infrequently used rio-compatible formats** (`ARFF`, `DBF`, `DIF`, `DTA`,
-#'   `MAT`, `MTP`, `ODS`, `POR`, `SAS7BDAT`, `SAV`, `SYD`, `REC`, `XPT`):
-#'   *variable*.\cr
-#'   Imported by [rio::import()].
 #'
 #' @section Row and column names:
 #'
@@ -164,8 +101,76 @@
 #' These file formats are blacklisted, and intentionally not supported:
 #' `DOC`, `DOCX`, `PDF`, `PPT`, `PPTX`.
 #'
-#' @seealso
+#' @inheritParams acidroxygen::params
+#' @param sheet
+#'   *Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.*\cr
+#'   `character(1)` or `integer(1)`.
+#'   Sheet to read. Either a string (the name of a sheet), or an integer (the
+#'   position of the sheet). Defaults to the first sheet.
+#' @param rownames `logical(1)`.
+#'   Automatically assign row names, if `rowname` column is defined.
+#'   Applies to file types that return `data.frame` only.
+#' @param colnames `logical(1)`.
+#'   Automatically assign column names, using the first header row.
+#'   Applies to file types that return `data.frame` only.
+#' @param format `character(1)`.
+#'   An optional file format code, which can be used to override the format
+#'   inferred from `file`. *Not recommended by default.*
+#' @param setclass `character(1)`.
+#'   Class to set on data frame return.
+#'   Options: `data.frame` (default), `DataFrame`, `tbl_df`, `data.table`.
 #'
+#' @return Varies, depending on the file type.
+#'
+#' - **Plain text delimited** (`CSV`, `TSV`, `TXT`): `data.frame`.\cr
+#'   Data separated by commas, tabs, or visual spaces.\cr
+#'   Note that TXT structure is amgibuous and actively discouraged.\cr
+#'   Refer to `Data frame return` section for details on how to change the
+#'   default return type to `DataFrame`, `tbl_df` or `data.table`.\cr
+#'   Imported by [data.table::fread()].
+#' - **Excel workbook** (`XLSB`, `XLSX`): `data.frame`.\cr
+#'   Resave in plain text delimited format instead, if possible.\cr
+#'   Imported by [readxl::read_excel()].
+#' - **Legacy Excel workbook (pre-2007)** (`XLS`): `data.frame`.\cr
+#'   Resave in plain text delimited format instead, if possible.\cr
+#'   Note that import of files in this format is slow.\cr
+#'   Imported by [gdata::read.xls()].
+#' - **GraphPad Prism project** (`PZFX`): `data.frame`.\cr
+#'   Experimental. Consider resaving in CSV format instead.\cr
+#'   Imported by [pzfx::read_pzfx()].
+#' - **General feature format** (`GFF`, `GFF1`, `GFF2`, `GFF3`, `GTF`):
+#'   `GRanges`.\cr
+#'   Imported by [rtracklayer::import()].
+#' - **MatrixMarket exchange sparse matrix** (`MTX`): `sparseMatrix`.\cr
+#'   Imported by [Matrix::readMM()].
+#' - **Gene sets (for GSEA)** (`GMT`, `GMX`): `character`.
+#' - **Browser extensible data** (`BED`, `BED15`, `BEDGRAPH`, `BEDPE`):
+#'   `GRanges`.\cr
+#'   Imported by [rtracklayer::import()].
+#' - **ChIP-seq peaks** (`BROADPEAK`, `NARROWPEAK`): `GRanges`.\cr
+#'   Imported by [rtracklayer::import()].
+#' - **Wiggle track format** (`BIGWIG`, `BW`, `WIG`): `GRanges`.\cr
+#'   Imported by [rtracklayer::import()].
+#' - **JSON serialization data** (`JSON`): `list`.\cr
+#'   Imported by [jsonlite::read_json()].
+#' - **YAML serialization data** (`YAML`, `YML`): `list`.\cr
+#'   Imported by [yaml::yaml.load_file()].
+#' - **Lines** (`LOG`, `MD`, `PY`, `R`, `RMD`, `SH`): `character`.
+#'   Source code or log files.\cr
+#'   Imported by [`readLines()`][base::readLines].
+#' - **R data serialized** (`RDS`): *variable*.\cr
+#'   Currently recommend over RDA, if possible.\cr
+#'   Imported by [`readRDS()`][base::readRDS].
+#' - **R data** (`RDA`, `RDATA`): *variable*.\cr
+#'   Must contain a single object.
+#'   Doesn't require internal object name to match, unlike [loadData()].\cr
+#'   Imported by [`load()`][base::load].
+#' - **Infrequently used rio-compatible formats** (`ARFF`, `DBF`, `DIF`, `DTA`,
+#'   `MAT`, `MTP`, `ODS`, `POR`, `SAS7BDAT`, `SAV`, `SYD`, `REC`, `XPT`):
+#'   *variable*.\cr
+#'   Imported by [rio::import()].
+#'
+#' @seealso
 #' Packages:
 #'
 #' - [rio](https://cran.r-project.org/package=rio).
@@ -196,7 +201,9 @@ import <- function(
     file,
     sheet = 1L,
     rownames = TRUE,
-    colnames = TRUE
+    colnames = TRUE,
+    format = "none",
+    setclass = getOption("acid.data.frame", default = "data.frame")
 ) {
     ## We're supporting remote files, so don't check using `isAFile()` here.
     assert(
@@ -205,43 +212,61 @@ import <- function(
         isFlag(rownames),
         isFlag(colnames)
     )
+    format <- match.arg(
+        arg = format,
+        choices = c("none", "csv", "tsv", "txt", "lines")
+    )
+    setclass <- match.arg(
+        arg = setclass,
+        choices = c(
+            "DataFrame",
+            "data.frame",
+            "data.table",
+            "tbl_df"
+        )
+    )
 
     ## Allow Google Sheets import using rio, by matching the URL.
     ## Otherwise, coerce the file extension to uppercase, for easy matching.
-    ext <- toupper(str_match(basename(file), extPattern)[1L, 2L])
+    if (identical(format, "none")) {
+        ext <- str_match(basename(file), extPattern)[1L, 2L]
+    } else {
+        ext <- format
+    }
+    ext <- toupper(ext)
 
     if (ext %in% c("CSV", "FWF", "PSV", "TSV", "TXT")) {
-        object <- importDelim(file, colnames = colnames)
+        object <- .importDelim(file, colnames = colnames)
     } else if (ext == "XLS") {
-        object <- importXLS(file, sheet = sheet, colnames = colnames)
+        object <- .importXLS(file, sheet = sheet, colnames = colnames)
     } else if (ext %in% c("XLSB", "XLSX")) {
-        object <- importXLSX(file, sheet = sheet, colnames = colnames)
+        object <- .importXLSX(file, sheet = sheet, colnames = colnames)
     } else if (ext == "PZFX") {
         ## GraphPad Prism project.
         ## Note that Prism files always contain column names.
-        object <- importPZFX(file, sheet = sheet)
+        object <- .importPZFX(file, sheet = sheet)
     } else if (ext == "RDS") {
-        object <- importRDS(file)
+        object <- .importRDS(file)
     } else if (ext %in% c("RDA", "RDATA")) {
-        object <- importRDA(file)
+        object <- .importRDA(file)
     } else if (ext == "GMT") {
-        object <- importGMT(file)
+        object <- .importGMT(file)
     } else if (ext == "GMX") {
-        object <- importGMX(file)
+        object <- .importGMX(file)
     } else if (ext == "GRP") {
-        object <- importGRP(file)
+        object <- .importGRP(file)
     } else if (ext == "JSON") {
-        object <- importJSON(file)
+        object <- .importJSON(file)
     } else if (ext %in% c("YAML", "YML")) {
-        object <- importYAML(file)
+        object <- .importYAML(file)
     } else if (ext == "MTX") {
         ## We're always requiring row and column sidecar files for MTX.
-        object <- importMTX(file)
+        object <- .importMTX(file)
     } else if (ext == "COUNTS") {
         ## bcbio counts format always contains row and column names.
-        object <- importBCBCounts(file)
-    } else if (ext %in% c("LOG", "MD", "PY", "R", "RMD", "SH")) {
-        object <- importLines(file)
+        object <- .importBCBCounts(file)
+    } else if (ext %in% c("LINES", "LOG", "MD", "PY", "R", "RMD", "SH")) {
+        object <- .importLines(file)
     } else if (ext %in% c(
         "BED", "BED15", "BEDGRAPH", "BEDPE",
         "BROADPEAK", "NARROWPEAK",
@@ -274,25 +299,22 @@ import <- function(
 
     if (is.data.frame(object)) {
         ## Coerce data frame to desired global output, if necessary.
-        pref <- getOption("acid.data.frame")
-        if (isString(pref)) {
-            object <- switch(
-                EXPR = pref,
-                data.frame = object,
-                DataFrame = as(object, "DataFrame"),
-                tbl_df = as_tibble(
-                    x = object,
-                    .name_repair = "minimal",
-                    rownames = NULL
-                ),
-                data.table = as.data.table(
-                    x = object,
-                    keep.rownames = FALSE
-                )
+        object <- switch(
+            EXPR = setclass,
+            "data.frame" = object,
+            "DataFrame" = as(object, "DataFrame"),
+            "tbl_df" = as_tibble(
+                x = object,
+                .name_repair = "minimal",
+                rownames = NULL
+            ),
+            "data.table" = as.data.table(
+                x = object,
+                keep.rownames = FALSE
             )
-        }
+        )
 
-        ## Set rownames automatically, if supported.
+        ## Set row names automatically, if supported.
         if (
             isAny(object, c("data.frame", "DataFrame")) &&
             !isAny(object, c("data.table", "tbl_df")) &&
@@ -354,8 +376,13 @@ import <- function(
             ## nocov start
             dupes <- sort(unique(names[dupes]))
             warning(sprintf(
-                "%d duplicate names: %s",
+                "%d duplicate %s: %s",
                 length(dupes),
+                ngettext(
+                    n = length(dupes),
+                    msg1 = "name",
+                    msg2 = "names"
+                ),
                 toString(dupes, width = 200L)
             ))
             ## nocov end
@@ -363,6 +390,249 @@ import <- function(
     }
 
     ## Don't run object validity check with `validObject()` here.
+    object
+}
+
+
+
+#' @describeIn import Internal importer for a delimited file (e.g. `.csv`,
+#'   `.tsv`). Calls [data.table::fread()] internally.
+.importDelim <- function(file, colnames = TRUE) {
+    file <- localOrRemoteFile(file)
+    message(sprintf(
+        "Importing '%s' using '%s()'.",
+        basename(file), "data.table::fread"
+    ))
+    object <- fread(
+        file = file,
+        header = colnames,
+        ## Sanitize NA columns, with our improved defaults.
+        na.strings = naStrings,
+        ## Never set factors on import automatically.
+        stringsAsFactors = FALSE,
+        ## Keep quiet.
+        verbose = FALSE,
+        ## Always import starting from first line.
+        skip = 0L,
+        ## Don't attempt to adjust names using `make.names()`.
+        check.names = FALSE,
+        strip.white = TRUE,
+        ## This matches the conventions in the tidyverse readers.
+        blank.lines.skip = TRUE,
+        ## Keep quiet.
+        showProgress = FALSE,
+        ## Return as `data.frame` instead of `data.table`.
+        data.table = FALSE
+    )
+    assert(is.data.frame(object))
+    object <- .slotMetadata(object, pkg = "data.table", fun = "fread")
+    object
+}
+
+
+
+#' @describeIn import Internal importer for (source code) lines.
+.importLines <- function(file) {
+    file <- localOrRemoteFile(file)
+    message(sprintf(
+        "Importing '%s' using '%s()'.",
+        basename(file), "base::readLines"
+    ))
+    con <- file(file)
+    object <- readLines(con = con)
+    close(con)
+    object
+}
+
+
+
+#' @describeIn import Internal importer for an R data serialized file (`.rds`).
+.importRDS <- function(file) {
+    file <- localOrRemoteFile(file)
+    message(sprintf(
+        "Importing '%s' using '%s()'.",
+        basename(file),
+        "base::readRDS"
+    ))
+    object <- readRDS(file)
+    object
+}
+
+
+
+#' @describeIn import Internal importer for an R data file (`.rda`).
+.importRDA <- function(file) {
+    file <- localOrRemoteFile(file)
+    message(sprintf(
+        "Importing '%s' using '%s()'.",
+        basename(file), "base::load"
+    ))
+    safe <- new.env()
+    object <- load(file, envir = safe)
+    if (length(safe) != 1L) {
+        stop("File does not contain a single object.")
+    }
+    object <- get(object, envir = safe, inherits = FALSE)
+    object
+}
+
+
+
+#' @describeIn import Internal importer for a sparse matrix file (`.mtx`).
+.importMTX <- function(file) {
+    assert(isString(file))
+    ## Add the rownames automatically using `.rownames` sidecar file.
+    rownamesFile <- paste(file, "rownames", sep = ".")
+    rownamesFile <- tryCatch(
+        expr = localOrRemoteFile(rownamesFile),
+        error = function(e) {
+            ## nocov start
+            warning(sprintf(
+                fmt = paste0(
+                    "'%s' does not exist.\n",
+                    "  Row names will not be added to sparse matrix."
+                ),
+                basename(rownamesFile)
+            ))
+            NULL
+            ## nocov end
+        }
+    )
+    ## Add the colnames automatically using `.colnames` sidecar file.
+    colnamesFile <- paste(file, "colnames", sep = ".")
+    colnamesFile <- tryCatch(
+        expr = localOrRemoteFile(colnamesFile),
+        error = function(e) {
+            ## nocov start
+            warning(sprintf(
+                fmt = paste0(
+                    "'%s' does not exist.\n",
+                    "  Column names will not be added to sparse matrix."
+                ),
+                basename(colnamesFile)
+            ))
+            NULL
+            ## nocov end
+        }
+    )
+    file <- localOrRemoteFile(file)
+    message(sprintf(
+        "Importing '%s' using '%s()'.",
+        basename(file), "Matrix::readMM"
+    ))
+    object <- readMM(file = file)
+    if (!is.null(rownamesFile)) {
+        rownames(object) <- .importMTXSidecar(rownamesFile)
+    }
+    if (!is.null(colnamesFile)) {
+        colnames(object) <- .importMTXSidecar(colnamesFile)
+    }
+    object <- .slotMetadata(object, pkg = "Matrix", fun = "readMM")
+    object
+}
+
+
+
+#' @describeIn import Internal importer for a sparse matrix sidecar file
+#'   (`.mtx.colnames`, `.mtx.rownames`).
+.importMTXSidecar <- function(file) {
+    message(sprintf("Importing sidecar '%s'.", basename(file)))
+    .importLines(file)
+}
+
+
+
+#' @describeIn import Internal importer for a gene matrix transposed file
+#'   (`.gmt`). See also `fgsea::gmtPathways()`.
+.importGMT <- function(file) {
+    message(sprintf("Importing '%s'.", basename(file)))
+    lines <- .importLines(file)
+    lines <- strsplit(lines, split = "\t")
+    pathways <- lapply(lines, tail, n = -2L)
+    names(pathways) <- vapply(
+        X = lines,
+        FUN = head,
+        FUN.VALUE = character(1L),
+        n = 1L
+    )
+    pathways
+}
+
+
+
+#' @describeIn import Internal importer for a gene matrix file (`.gmx`).
+.importGMX <- function(file) {
+    message(sprintf("Importing '%s'.", basename(file)))
+    lines <- .importLines(file)
+    pathways <- list(tail(lines, n = -2L))
+    names(pathways) <- lines[[1L]]
+    pathways
+}
+
+
+
+#' @describeIn import Internal importer for a gene set file (`.grp`).
+.importGRP <- .importGMX
+
+
+
+#' @describeIn import Internal importer for a JSON file (`.json`).
+.importJSON <- function(file) {
+    file <- localOrRemoteFile(file)
+    message(sprintf(
+        "Importing '%s' using '%s()'.",
+        basename(file), "jsonlite::read_json"
+    ))
+    requireNamespace("jsonlite", quietly = TRUE)
+    object <- jsonlite::read_json(path = file)
+    object <- .slotMetadata(object, pkg = "jsonlite", fun = "read_json")
+    object
+}
+
+
+
+#' @describeIn import Internal importer for a GraphPad Prism file (`.pzfx`).
+#' Note that this function doesn't support optional column names.
+.importPZFX <- function(file, sheet = 1L) {
+    file <- localOrRemoteFile(file)
+    message(sprintf(
+        "Importing '%s' using '%s()'.",
+        basename(file), "pzfx::read_pzfx"
+    ))
+    requireNamespace("pzfx", quietly = TRUE)
+    object <- pzfx::read_pzfx(
+        path = file,
+        table = sheet
+    )
+    object <- .slotMetadata(object, pkg = "pzfx", fun = "read_pzfx")
+    object
+}
+
+
+
+#' @describeIn import Internal importer for a bcbio count matrix file
+#'   (`.counts`). These files contain an `"id"` column that we need to coerce to
+#'   row names.
+.importBCBCounts <- function(file) {
+    message(sprintf(
+        "Importing '%s' using '%s()'.",
+        basename(file), "data.table::fread"
+    ))
+    file <- localOrRemoteFile(file)
+    object <- fread(
+        file = file,
+        na.strings = naStrings
+    )
+    assert(
+        isSubset("id", colnames(object)),
+        hasNoDuplicates(object[["id"]])
+    )
+    object <- as.data.frame(object)
+    rownames(object) <- object[["id"]]
+    object[["id"]] <- NULL
+    object <- as.matrix(object)
+    mode(object) <- "integer"
+    object <- .slotMetadata(object, pkg = "data.table", fun = "fread")
     object
 }
 
