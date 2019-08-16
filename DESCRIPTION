@@ -38,7 +38,6 @@ Imports:
     jsonlite (>= 1.6),
     rio (>= 0.5),
     stringr (>= 1.4),
-    tibble (>= 2.1),
     yaml (>= 2.2),
     methods,
     stats,
@@ -72,18 +71,6 @@ Collate:
     'export-methods.R'
     'fileExt.R'
     'import.R'
-    'importBCBCounts.R'
-    'importDelim.R'
-    'importGSEA.R'
-    'importJSON.R'
-    'importLines.R'
-    'importMTX.R'
-    'importPZFX.R'
-    'importRDA.R'
-    'importRDS.R'
-    'importXLS.R'
-    'importXLSX.R'
-    'importYAML.R'
     'imports.R'
     'initDir.R'
     'loadData.R'
