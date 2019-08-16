@@ -202,7 +202,7 @@ setMethod(
 ## Note that "file" is referring to the matrix file.
 ## The correponding column and row sidecar files are generated automatically.
 ## Consider adding HDF5 support in a future update.
-## Updated 2019-07-16.
+## Updated 2019-08-15.
 `export,sparseMatrix` <-  # nolint
     function(
         object,
@@ -269,12 +269,12 @@ setMethod(
         ## Write barcodes (colnames).
         barcodes <- colnames(object)
         barcodesFile <- paste0(file, ".colnames")
-        write_lines(x = barcodes, path = barcodesFile)
+        writeLines(text = barcodes, con = barcodesFile)
 
-        ## Write gene names (rownames).
-        genes <- rownames(object)
-        genesFile <- paste0(file, ".rownames")
-        write_lines(x = genes, path = genesFile)
+        ## Write features (rownames).
+        features <- rownames(object)
+        featuresFile <- paste0(file, ".rownames")
+        writeLines(text = features, con = featuresFile)
 
         files <- c(
             matrix = file,
