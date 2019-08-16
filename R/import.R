@@ -1,8 +1,3 @@
-## FIXME Allow the user to set the column names.
-## delim, xls, xlsx
-
-
-
 #' Import
 #'
 #' Read file by extension into R.
@@ -648,6 +643,7 @@ import <- function(
 
 ## Internal importer for a Microsoft Excel worksheet (`.xlsx`).
 .importXLSX <- function(file, sheet = 1L, colnames = TRUE) {
+    assert(isFlag(colnames) || isCharacter(colnames))
     file <- localOrRemoteFile(file)
     message(sprintf(
         "Importing '%s' using '%s()'.",
@@ -660,10 +656,7 @@ import <- function(
         col_names = colnames,
         na = naStrings,
         trim_ws = TRUE,
-        ## Keep quiet.
         progress = FALSE,
-        ## Don't attempt name repair.
-        ## Refer to `tibble()` documentation for details.
         .name_repair = "minimal"
     )
     ## Always return as data.frame instead of tibble at this step.
@@ -689,12 +682,18 @@ import <- function(
 
 ## Internal importer for a legacy Microsoft Excel worksheet (`.xls`).
 .importXLS <- function(file, sheet = 1L, colnames = TRUE) {
+    assert(isFlag(colnames) || isCharacter(colnames))
     file <- localOrRemoteFile(file)
     message(sprintf(
         "Importing '%s' using '%s()'.",
         basename(file), "gdata::read.xls"
     ))
     requireNamespace("gdata", quietly = TRUE)
+    if (isCharacter(colnames)) {
+        header <- FALSE
+    } else {
+        header <- colnames
+    }
     ## gdata currently has an OS.type partial match issue.
     ## `read.xls()` passes `...` to `utils::read.table()`.
     object <- withCallingHandlers(
@@ -703,7 +702,7 @@ import <- function(
             sheet = sheet,
             verbose = FALSE,
             na.strings = naStrings,
-            header = colnames
+            header = header
         ),
         warning = function(w) {
             ## nocov start
@@ -718,6 +717,10 @@ import <- function(
             ## nocov end
         }
     )
+    if (isCharacter(colnames)) {
+        assert(hasLength(colnames, n = ncol(object)))
+        colnames(object) <- colnames
+    }
     object <- .slotMetadata(object, pkg = "gdata", fun = "read.xls")
     object
 }
