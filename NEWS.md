@@ -1,9 +1,21 @@
+## brio 0.3.4 (2019-08-16)
+
+### Minor changes
+
+- Reworked organization and naming of internal importer functions. Now including
+  these in the `import` documentation, for clarity.
+- `import`: Added `format` and `setclass` arguments.
+- Switched to `data.table::fread` for import of bcbio count matrix. Previously,
+  was using `readr::read_tsv`.
+- Import of lines no longer stores brio attributes.
+- Reduced number of package dependencies, no longer requiring readr.
+
 ## brio 0.3.3 (2019-08-13)
 
 ### Minor changes
 
 - Added support for `url` calls to `import`, `localOrRemoteFile`, and
-  `loadRemoteData`..
+  `loadRemoteData`.
 - Improved message consistency.
 - Updated basejump dependency versions.
 
