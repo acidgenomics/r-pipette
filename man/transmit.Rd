@@ -35,8 +35,7 @@ FTP server. Also enables on-the-fly file renaming and compression.
 Updated 2019-08-15.
 }
 \examples{
-## This doesn't work reliably on Travis CI.
-
+## This doesn't work reliably on CI.
 ## > remoteDir <- paste(
 ## >     "ftp://ftp.pantherdb.org",
 ## >     "sequence_classifications",
@@ -51,7 +50,5 @@ Updated 2019-08-15.
 ## > )
 ## > basename(readme)
 ## > file.exists(readme)
-
-## Clean up.
 ## > unlink(readme)
 }
