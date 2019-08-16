@@ -6,8 +6,9 @@
 ## - https://github.com/tidyverse/readxl/issues/472
 ##
 ## In the meantime, load using gdata, which is slow but does work.
-##
-## Updated 2019-07-30.
+
+#' @describeIn import Import a legacy Microsoft Excel worksheet.
+#' @export
 importXLS <- function(file, sheet = 1L, colnames = TRUE) {
     file <- localOrRemoteFile(file)
     message(sprintf(

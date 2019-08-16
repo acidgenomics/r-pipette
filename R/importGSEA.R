@@ -1,12 +1,9 @@
-#' Gene Matrix Transposed file format
-#' Import a GMT file, for GSEA.
-#' @seealso `fgsea::gmtPathways()`.
-#' @noRd
-## Updated 2019-07-19.
+#' @describeIn import Import a gene matrix transposed file.
+#' See also `fgsea::gmtPathways()`.
+#' @export
 importGMT <- function(file) {
     message(sprintf("Importing '%s'.", basename(file)))
-    file <- localOrRemoteFile(file)
-    lines <- read_lines(file)
+    lines <- importLines(file)
     lines <- strsplit(lines, split = "\t")
     pathways <- lapply(lines, tail, n = -2L)
     names(pathways) <- vapply(
@@ -20,14 +17,11 @@ importGMT <- function(file) {
 
 
 
-#' Gene MatriX file format
-#' Import a GMX file, for GSEA.
-#' @noRd
-## Updated 2019-07-19.
+#' @describeIn import Import a gene matrix file.
+#' @export
 importGMX <- function(file) {
     message(sprintf("Importing '%s'.", basename(file)))
-    file <- localOrRemoteFile(file)
-    lines <- read_lines(file)
+    lines <- importLines(file)
     pathways <- list(tail(lines, n = -2L))
     names(pathways) <- lines[[1L]]
     pathways
@@ -35,8 +29,6 @@ importGMX <- function(file) {
 
 
 
-#' Gene set file format
-#' Import a GRP file, for GSEA.
-#' @noRd
-## Updated 2019-07-19.
+#' @describeIn import Import a gene set file.
+#' @export
 importGRP <- importGMX

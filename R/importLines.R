@@ -1,5 +1,5 @@
-## Import source code lines.
-## Updated 2019-07-19.
+#' @describeIn import Import source code lines.
+#' @export
 importLines <- function(file) {
     file <- localOrRemoteFile(file)
     message(sprintf(

@@ -1,4 +1,5 @@
-## Updated 2019-07-19.
+#' @describeIn import Import a JSON file.
+#' @export
 importJSON <- function(file) {
     file <- localOrRemoteFile(file)
     message(sprintf(

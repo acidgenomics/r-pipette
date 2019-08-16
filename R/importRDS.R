@@ -1,4 +1,5 @@
-## Updated 2019-07-19.
+#' @describeIn import Import an R data serialized file.
+#' @export
 importRDS <- function(file) {
     file <- localOrRemoteFile(file)
     message(sprintf(
