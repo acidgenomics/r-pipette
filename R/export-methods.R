@@ -279,7 +279,7 @@ setMethod(
         files <- c(
             matrix = file,
             barcodes = barcodesFile,
-            genes = genesFile
+            genes = featuresFile
         )
         assert(allAreFiles(files))
 
