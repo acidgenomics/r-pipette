@@ -3,26 +3,21 @@
 importBCBCounts <- function(file) {
     message(sprintf(
         "Importing '%s' using '%s()'.",
-        basename(file), "readr::read_tsv"
+        basename(file), "data.table::fread"
     ))
-    object <- read_tsv(
+    file <- localOrRemoteFile(file)
+    object <- fread(
         file = file,
-        col_names = TRUE,
-        na = naStrings,
-        ## Keep quiet.
-        progress = FALSE,
-        skip_empty_rows = TRUE
+        na.strings = naStrings
     )
     assert(
         isSubset("id", colnames(object)),
         hasNoDuplicates(object[["id"]])
     )
-    ## Coerce tibble to data frame.
     object <- as.data.frame(object)
-    ## Need to move the "id" column to rownames.
     object <- column_to_rownames(object, var = "id")
-    ## Coerce data frame to matrix.
     object <- as.matrix(object)
-    object <- .slotMetadata(object, pkg = "readr", fun = "read_tsv")
+    mode(object) <- "integer"
+    object <- .slotMetadata(object, pkg = "data.table", fun = "fread")
     object
 }
