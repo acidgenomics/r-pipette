@@ -1,6 +1,6 @@
 #' @name export
 #' @inherit bioverbs::export
-#' @note Updated 2019-07-30.
+#' @note Updated 2019-08-16.
 #'
 #' @section Row names:
 #'
@@ -60,9 +60,6 @@ NULL
 #' @usage export(object, ...)
 #' @export
 NULL
-
-
-
 
 
 
