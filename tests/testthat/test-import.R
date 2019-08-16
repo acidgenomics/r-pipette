@@ -354,6 +354,7 @@ skip_if_not(hasInternet())
 test_that("bcbio counts", {
     object <- import(file = file.path("cache", "example.counts"))
     expect_is(object, "matrix")
+    expect_true(is.integer(object))
     expect_identical(
         object = head(rownames(object), n = 5L),
         expected = c(
@@ -365,7 +366,16 @@ test_that("bcbio counts", {
         )
     )
     expect_identical(
-        object = attr(object, "brio")[["importer"]],
-        expected = "readr::read_tsv"
+        head(colSums(object)),
+        c(
+            ## nolint start
+            sample01 = 262,
+            sample02 = 502,
+            sample03 = 299,
+            sample04 = 318,
+            sample05 = 123,
+            sample06 = 620
+            ## nolint end
+        )
     )
 })
