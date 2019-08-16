@@ -22,7 +22,6 @@
 #'   isAFile isAURL isAny isCharacter isFlag isMatchingRegex isNonEmpty isScalar
 #'   isString isSubset matchArgsToDoCall standardizeCall
 #' @importFrom methods as is slotNames validObject
-#' @importFrom readr read_lines read_tsv write_lines
 #' @importFrom rtracklayer import
 #' @importFrom stats na.omit
 #' @importFrom stringr str_extract str_match str_subset

@@ -55,11 +55,11 @@ importMTX <- function(file) {
 
 
 ## Sparse matrix sidecar files (.rownames, .colnames)
-## Updated 2019-07-19.
+## Updated 2019-08-15.
 .importSidecar <- function(file) {
     message(sprintf(
         "Importing sidecar '%s' using '%s()'.",
-        basename(file), "readr::read_lines"
+        basename(file), "base::readLines"
     ))
-    read_lines(file = file, na = naStrings)
+    readLines(con = file)
 }

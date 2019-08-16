@@ -92,8 +92,7 @@ Imported by \code{\link[pzfx:read_pzfx]{pzfx::read_pzfx()}}.
 Imported by \code{\link[rtracklayer:import]{rtracklayer::import()}}.
 \item \strong{MatrixMarket exchange sparse matrix} (\code{MTX}): \code{sparseMatrix}.\cr
 Imported by \code{\link[Matrix:readMM]{Matrix::readMM()}}.
-\item \strong{Gene sets (for GSEA)} (\code{GMT}, \code{GMX}): \code{character}.\cr
-Imported by \code{\link[readr:read_lines]{readr::read_lines()}}, with additional processing.
+\item \strong{Gene sets (for GSEA)} (\code{GMT}, \code{GMX}): \code{character}.
 \item \strong{Browser extensible data} (\code{BED}, \code{BED15}, \code{BEDGRAPH}, \code{BEDPE}):
 \code{GRanges}.\cr
 Imported by \code{\link[rtracklayer:import]{rtracklayer::import()}}.
@@ -107,7 +106,7 @@ Imported by \code{\link[jsonlite:read_json]{jsonlite::read_json()}}.
 Imported by \code{\link[yaml:yaml.load_file]{yaml::yaml.load_file()}}.
 \item \strong{Lines} (\code{LOG}, \code{MD}, \code{PY}, \code{R}, \code{RMD}, \code{SH}): \code{character}.
 Source code or log files.\cr
-Imported by \code{\link[readr:read_lines]{readr::read_lines()}}.
+Imported by \code{\link[base:readLines]{readLines()}}.
 \item \strong{R data serialized} (\code{RDS}): \emph{variable}.\cr
 Currently recommend over RDA, if possible.\cr
 Imported by \code{\link[base:readRDS]{readRDS()}}.

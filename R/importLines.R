@@ -4,9 +4,9 @@ importLines <- function(file) {
     file <- localOrRemoteFile(file)
     message(sprintf(
         "Importing '%s' using '%s()'.",
-        basename(file), "readr::read_lines"
+        basename(file), "base::readLines"
     ))
-    object <- read_lines(file = file)
-    object <- .slotMetadata(object, pkg = "readr", fun = "read_lines")
+    object <- readLines(con = file)
+    object <- .slotMetadata(object, pkg = "base", fun = "readLines")
     object
 }
