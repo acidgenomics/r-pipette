@@ -3,7 +3,7 @@
 #' Utility function that supports easy file matching and download from a remote
 #' FTP server. Also enables on-the-fly file renaming and compression.
 #'
-#' @note Updated 2019-08-15.
+#' @note Updated 2019-08-16.
 #' @export
 #'
 #' @inheritParams acidroxygen::params
@@ -64,18 +64,16 @@ transmit <- function(
         isAny(rename, classes = c("character", "NULL")),
         isFlag(compress)
     )
-
     ## Get the name of the server.
     server <- str_match(remoteDir, "^.*//([^/]+)/.*$")[1L, 2L]
     assert(isString(server))
-
     ## Error and inform the user if the FTP connection fails.
     if (!isTRUE(url.exists(remoteDir))) {
         stop(sprintf("Connection to '%s' failed.", server))  # nocov
     } else {
         message(sprintf("Transmitting files from '%s'.", server))
     }
-
+    ## Get a list of the files in the remote directory.
     remoteTxt <- getURL(remoteDir)
     if (!all(
         is.character(remoteTxt),
@@ -83,7 +81,6 @@ transmit <- function(
     )) {
         stop("Failed to list directory contents.")  # nocov
     }
-
     ## Match the `-` at begining for file.
     ## `-rwxrwxr-x`: File
     ## `drwxrwxr-x`: Directory
@@ -100,16 +97,12 @@ transmit <- function(
     ## File name is at the end, not including a space.
     remoteFiles <- str_extract(remoteFiles, "[^\\s]+$")
     assert(hasLength(remoteFiles))
-
     ## Apply pattern matching.
     match <- str_subset(remoteFiles, pattern)
     assert(hasLength(match))
-
     message(sprintf("Files matching pattern:\n%s", toString(match)))
-
     ## Concatenate using paste but strip the trailing slash (see above).
     remotePaths <- paste(gsub("/$", "", remoteDir), match, sep = "/")
-
     ## Rename files, if desired.
     if (is.character(rename)) {
         assert(areSameLength(x = match, y = rename))
@@ -117,15 +110,12 @@ transmit <- function(
     } else {
         name <- match
     }
-
     localPaths <- file.path(localDir, name)
-
     if (isTRUE(compress)) {
         files <- paste(localPaths, "gz", sep = ".")
     } else {
         files <- localPaths
     }
-
     ## Check for existing files and skip, if necessary.
     if (any(file.exists(files))) {
         exists <- which(file.exists(files))
@@ -133,7 +123,6 @@ transmit <- function(
         message(sprintf("Skipped: %s.", toString(basename(skip))))
         localPaths <- localPaths[!exists]
     }
-
     ## Early return if all files exist.
     if (length(localPaths) == 0L) {
         message("All files are already downloaded.")
@@ -141,7 +130,7 @@ transmit <- function(
         names(files) <- match
         return(invisible(files))
     }
-
+    ## Download and return file paths.
     message(sprintf("Downloading %s.", toString(basename(files))))
     files <- mapply(
         FUN = function(url, destfile, compress = FALSE) {
