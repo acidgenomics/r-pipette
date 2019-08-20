@@ -136,7 +136,7 @@ NULL
         initDir(dir = dirname(file))
 
         ## Now attach rio package and call `export()` on our data frame.
-        requireNamespace("rio", quietly = TRUE)
+        assert(requireNamespace("rio", quietly = TRUE))
         suppressMessages(
             file <- do.call(
                 what = rio::export,

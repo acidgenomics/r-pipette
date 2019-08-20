@@ -578,7 +578,7 @@ import <- function(
         "Importing '%s' using '%s()'.",
         basename(file), "jsonlite::read_json"
     ))
-    requireNamespace("jsonlite", quietly = TRUE)
+    assert(requireNamespace("jsonlite", quietly = TRUE))
     object <- jsonlite::read_json(path = file)
     object <- .slotMetadata(object, pkg = "jsonlite", fun = "read_json")
     object
@@ -593,7 +593,7 @@ import <- function(
         "Importing '%s' using '%s()'.",
         basename(file), "yaml::yaml.load_file"
     ))
-    requireNamespace("yaml", quietly = TRUE)
+    assert(requireNamespace("yaml", quietly = TRUE))
     object <- yaml::yaml.load_file(input = file)
     object <- .slotMetadata(object, pkg = "yaml", fun = "yaml.load_file")
     object
@@ -648,7 +648,7 @@ import <- function(
         "Importing '%s' using '%s()'.",
         basename(file), "readxl::read_excel"
     ))
-    requireNamespace("readxl", quietly = TRUE)
+    assert(requireNamespace("readxl", quietly = TRUE))
     object <- readxl::read_excel(
         path = file,
         sheet = sheet,
@@ -687,7 +687,7 @@ import <- function(
         "Importing '%s' using '%s()'.",
         basename(file), "gdata::read.xls"
     ))
-    requireNamespace("gdata", quietly = TRUE)
+    assert(requireNamespace("gdata", quietly = TRUE))
     if (isCharacter(colnames)) {
         header <- FALSE
     } else {
@@ -735,7 +735,7 @@ import <- function(
         "Importing '%s' using '%s()'.",
         basename(file), "pzfx::read_pzfx"
     ))
-    requireNamespace("pzfx", quietly = TRUE)
+    assert(requireNamespace("pzfx", quietly = TRUE))
     object <- pzfx::read_pzfx(
         path = file,
         table = sheet
@@ -780,7 +780,7 @@ import <- function(
     message(sprintf("Importing '%s' using '%s()'.",
         basename(file), "rio::import"
     ))
-    requireNamespace("rio", quietly = TRUE)
+    assert(requireNamespace("rio", quietly = TRUE))
     object <- rio::import(file)
     object <- .slotMetadata(object, pkg = "rio", fun = "import")
     object
@@ -795,7 +795,7 @@ import <- function(
         "Importing '%s' using '%s()'.",
         basename(file), "rtracklayer::import"
     ))
-    requireNamespace("rtracklayer", quietly = TRUE)
+    assert(requireNamespace("rtracklayer", quietly = TRUE))
     object <- tryCatch(
         expr = rtracklayer::import(file),
         error = function(e) {
