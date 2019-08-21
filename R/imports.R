@@ -10,7 +10,8 @@
 #' @importFrom Matrix readMM writeMM
 #' @importFrom RCurl getURL url.exists
 #' @importFrom R.utils gzip
-#' @importFrom S4Vectors DataFrame Rle mcols mcols<- metadata metadata<-
+#' @importFrom S4Vectors DataFrame Rle head mcols mcols<- metadata metadata<-
+#'   tail
 #' @importFrom SingleCellExperiment reducedDimNames reducedDims
 #' @importFrom SummarizedExperiment assayNames assayNames<- assays colData
 #'   rowData rowRanges
@@ -27,5 +28,5 @@
 #' @importFrom stringr str_extract str_match str_subset
 #' @importFrom transformer as.data.frame as.data.table as_tibble atomize decode
 #'   encode factorize
-#' @importFrom utils download.file head packageVersion tail
+#' @importFrom utils download.file packageVersion
 NULL
