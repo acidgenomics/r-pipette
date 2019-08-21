@@ -1,3 +1,9 @@
+## brio 0.3.5 (2019-08-21)
+
+### Minor changes
+
+- No longer warn on MTX import without sidecar rownames and colnames files.
+
 ## brio 0.3.4 (2019-08-16)
 
 ### Minor changes
