@@ -515,16 +515,7 @@ import <- function(
     rownamesFile <- tryCatch(
         expr = localOrRemoteFile(rownamesFile),
         error = function(e) {
-            ## nocov start
-            warning(sprintf(
-                fmt = paste0(
-                    "'%s' does not exist.\n",
-                    "  Row names will not be added to sparse matrix."
-                ),
-                basename(rownamesFile)
-            ))
-            NULL
-            ## nocov end
+            NULL  # nocov
         }
     )
     ## Add the colnames automatically using `.colnames` sidecar file.
@@ -532,16 +523,7 @@ import <- function(
     colnamesFile <- tryCatch(
         expr = localOrRemoteFile(colnamesFile),
         error = function(e) {
-            ## nocov start
-            warning(sprintf(
-                fmt = paste0(
-                    "'%s' does not exist.\n",
-                    "  Column names will not be added to sparse matrix."
-                ),
-                basename(colnamesFile)
-            ))
-            NULL
-            ## nocov end
+            NULL  # nocov
         }
     )
     file <- localOrRemoteFile(file)
