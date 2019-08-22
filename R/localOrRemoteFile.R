@@ -97,7 +97,7 @@ localOrRemoteFile <- function(file) {
                 return(file)
             }
             message(sprintf(
-                "Decompressing '%s' in '%s'",
+                "Decompressing '%s' in '%s'.",
                 basename(file), "tempdir()"
             ))
 
