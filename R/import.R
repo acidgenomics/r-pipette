@@ -7,7 +7,7 @@
 #' simple. Remote URLs and compressed files are supported. If you need more
 #' complex import settings, just call the wrapped importer directly instead.
 #'
-#' @note Updated 2019-08-16.
+#' @note Updated 2019-08-22.
 #' @export
 #'
 #' @section Row and column names:
@@ -225,7 +225,6 @@ import <- function(
             "tbl_df"
         )
     )
-
     ## Allow Google Sheets import using rio, by matching the URL.
     ## Otherwise, coerce the file extension to uppercase, for easy matching.
     if (identical(format, "none")) {
@@ -234,7 +233,6 @@ import <- function(
         ext <- format
     }
     ext <- toupper(ext)
-
     if (ext %in% c("CSV", "FWF", "PSV", "TSV", "TXT")) {
         object <- .importDelim(file, colnames = colnames)
     } else if (ext == "XLS") {
@@ -296,7 +294,6 @@ import <- function(
             basename(file), ext
         ))
     }
-
     if (is.data.frame(object)) {
         ## Coerce data frame to desired global output, if necessary.
         object <- switch(
@@ -313,7 +310,6 @@ import <- function(
                 keep.rownames = FALSE
             )
         )
-
         ## Set row names automatically, if supported.
         if (
             isAny(object, c("data.frame", "DataFrame")) &&
@@ -326,30 +322,31 @@ import <- function(
             object[["rowname"]] <- NULL
         }
     }
-
     ## Slot data provenance metadata into object.
-    newMeta <- list(
-        brio = packageVersion("brio"),
-        file = if (isAFile(file)) {
-            realpath(file)
+    ## Skipping this step for vectors (i.e. source code lines).
+    if (!is.atomic(object)) {
+        newMeta <- list(
+            brio = packageVersion("brio"),
+            file = if (isAFile(file)) {
+                realpath(file)
+            } else {
+                file
+            },
+            date = Sys.Date(),
+            call = standardizeCall()
+        )
+        if (isS4(object) && "metadata" %in% slotNames(object)) {
+            meta <- metadata(object)[["brio"]]
+            meta <- c(meta, newMeta)
+            meta <- meta[sort(names(meta))]
+            metadata(object)[["brio"]] <- meta
         } else {
-            file
-        },
-        date = Sys.Date(),
-        call = match.call()
-    )
-    if (isS4(object) && "metadata" %in% slotNames(object)) {
-        meta <- metadata(object)[["brio"]]
-        meta <- c(meta, newMeta)
-        meta <- meta[sort(names(meta))]
-        metadata(object)[["brio"]] <- meta
-    } else {
-        meta <- attr(object, "brio")
-        meta <- c(meta, newMeta)
-        meta <- meta[sort(names(meta))]
-        attr(object, "brio") <- meta
+            meta <- attr(object, "brio")
+            meta <- c(meta, newMeta)
+            meta <- meta[sort(names(meta))]
+            attr(object, "brio") <- meta
+        }
     }
-
     ## Check for syntactically valid names and inform the user, if necessary.
     if (
         (hasNames(object) && !hasValidNames(object)) ||
@@ -362,7 +359,6 @@ import <- function(
         ))
         ## nocov end
     }
-
     ## Inform the user when encountering duplicate names. This `tryCatch()` step
     ## here helps suppress `validObject()` error for invalid
     ## SummarizedExperiment objects.
@@ -388,8 +384,6 @@ import <- function(
             ## nocov end
         }
     }
-
-    ## Don't run object validity check with `validObject()` here.
     object
 }
 
