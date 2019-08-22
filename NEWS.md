@@ -1,8 +1,12 @@
-## brio 0.3.5 (2019-08-21)
+## brio 0.3.5 (2019-08-22)
 
 ### Minor changes
 
 - No longer warn on MTX import without sidecar rownames and colnames files.
+- `import`: Don't attempt to slot attributes for atomic vector return. This
+  applies to source code lines and helps avoid valid name issues when assigning
+  these values to colnames or rownames. I came across this issue while updating
+  the Chromium package to assign names from 10X Genomics sidecar files.
 
 ## brio 0.3.4 (2019-08-16)
 
