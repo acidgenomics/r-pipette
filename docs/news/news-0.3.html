@@ -176,14 +176,16 @@
 </ul>
 </div>
 </div>
-    <div id="brio-0-3-5-2019-08-21" class="section level2">
+    <div id="brio-0-3-5-2019-08-22" class="section level2">
 <h2 class="hasAnchor">
-<a href="#brio-0-3-5-2019-08-21" class="anchor"></a>brio 0.3.5 (2019-08-21)</h2>
+<a href="#brio-0-3-5-2019-08-22" class="anchor"></a>brio 0.3.5 (2019-08-22)</h2>
 <div id="minor-changes" class="section level3">
 <h3 class="hasAnchor">
 <a href="#minor-changes" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>No longer warn on MTX import without sidecar rownames and colnames files.</li>
+<li>
+<code>import</code>: Don’t attempt to slot attributes for atomic vector return. This applies to source code lines and helps avoid valid name issues when assigning these values to colnames or rownames. I came across this issue while updating the Chromium package to assign names from 10X Genomics sidecar files.</li>
 </ul>
 </div>
 </div>
@@ -198,7 +200,7 @@
         <li><a href="#brio-0-3-2-2019-08-06">0.3.2</a></li>
         <li><a href="#brio-0-3-3-2019-08-13">0.3.3</a></li>
         <li><a href="#brio-0-3-4-2019-08-16">0.3.4</a></li>
-        <li><a href="#brio-0-3-5-2019-08-21">0.3.5</a></li>
+        <li><a href="#brio-0-3-5-2019-08-22">0.3.5</a></li>
       </ul>
     </div>
   </div>
