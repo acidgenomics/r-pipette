@@ -87,7 +87,7 @@ File path(s).
 Export data out of R and write to disk.
 }
 \note{
-Updated 2019-08-16.
+Updated 2019-08-27.
 }
 \section{Row names}{
 
@@ -117,7 +117,12 @@ file.remove("counts.csv")
 }
 \seealso{
 \itemize{
+\item \code{\link[data.table:fwrite]{data.table::fwrite()}}.
 \item \code{\link[rtracklayer:export]{rtracklayer::export()}}.
 \item \code{\link[rio:export]{rio::export()}}.
+}\preformatted{rio::export
+rio:::find_compress
+.S3methods(".export", envir = asNamespace("rio"))
+rio:::export_delim
 }
 }

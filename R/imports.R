@@ -15,7 +15,7 @@
 #' @importFrom SingleCellExperiment reducedDimNames reducedDims
 #' @importFrom SummarizedExperiment assayNames assayNames<- assays colData
 #'   rowData rowRanges
-#' @importFrom data.table fread
+#' @importFrom data.table fread fwrite
 #' @importFrom goalie assert allAreExisting allAreFiles allAreNonExisting
 #'   allAreURLs allHaveAccess areDisjointSets areSameLength areSetEqual bapply
 #'   formalCompress hasColnames hasCols hasDimnames hasInternet hasLength
