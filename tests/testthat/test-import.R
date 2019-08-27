@@ -14,7 +14,7 @@ test_that("No extension", {
     file.create("example")
     expect_error(
         object = import("example"),
-        regexp = "missing value where TRUE/FALSE needed"
+        regexp = "extension"
     )
     unlink("example")
 })
