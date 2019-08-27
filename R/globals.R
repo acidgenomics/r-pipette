@@ -2,7 +2,7 @@ globalVariables(".")
 
 
 
-packageVersion <- packageVersion("brio")
+.version <- packageVersion("brio")
 
 #' brio test data URL
 #' @keywords internal
@@ -11,7 +11,7 @@ packageVersion <- packageVersion("brio")
 #' brioTestsURL
 brioTestsURL <- paste0(
     "http://tests.acidgenomics.com/brio/",
-    "v", packageVersion$major, ".", packageVersion$minor  # nolint
+    "v", .version$major, ".", .version$minor  # nolint
 )
 
 
