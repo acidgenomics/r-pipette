@@ -118,11 +118,7 @@ file.remove("counts.csv")
 \seealso{
 \itemize{
 \item \code{\link[data.table:fwrite]{data.table::fwrite()}}.
-\item \code{\link[rtracklayer:export]{rtracklayer::export()}}.
 \item \code{\link[rio:export]{rio::export()}}.
-}\preformatted{rio::export
-rio:::find_compress
-.S3methods(".export", envir = asNamespace("rio"))
-rio:::export_delim
+\item \code{\link[rtracklayer:export]{rtracklayer::export()}}.
 }
 }
