@@ -158,6 +158,7 @@ NULL
             "tsv" = "\t"
         )
         do.call(what = fwrite, args = args)
+        ## Compress file, if necessary.
         if (!is.na(compress)) {
             compressFun <- switch(
                 EXPR = compress,
@@ -235,9 +236,7 @@ setMethod(
             isString(file, nullOK = TRUE),
             isFlag(overwrite)
         )
-        ## FIXME Improve the ext check here.
-        ext <- match.arg(arg = ext, choices = c("mtx", "mtx.gz"))
-        ## Define the file name using the object name by default.
+        ## Match the file extension and compression.
         if (is.null(file)) {
             call <- standardizeCall()
             sym <- call[["object"]]
@@ -252,8 +251,17 @@ setMethod(
             name <- as.character(sym)
             assert(isString(ext))
             file <- file.path(dir, paste0(name, ".", ext))
+            string <- paste0(".", ext)
+        } else {
+            string <- basename(file)
         }
-        assert(isString(file))
+        match <- str_match(string = string, pattern = extPattern)
+        ext <- match[1L, 2L]
+        ext <- match.arg(arg = ext, choices = "mtx")
+        compress <- match[1L, 4L]
+        if (!is.na(compress)) {
+            compress <- match.arg(arg = compress, choices = c("gz", "bz2"))
+        }
         ## Inform the user regarding overwrite.
         if (isAFile(file)) {
             if (isTRUE(overwrite)) {
@@ -262,24 +270,35 @@ setMethod(
                 stop(sprintf("File exists: %s", realpath(file)))
             }
         }
-        ## Determine whether we want to gzip compress.
-        gzip <- grepl(pattern = "\\.gz$", x = file)
-        ## Now ensure ".gz" is stripped from the working file variable.
-        file <- sub(pattern = "\\.gz", replacement = "", x = file)
-        ## Create the recursive directory structure, if necessary.
-        initDir(dirname(file))
-        ## MatrixMarket file.
+        ## Ensure directory is created automatically.
+        initDir(dir = dirname(file))
+        ## Remove compression extension from output file.
+        if (!is.na(compress)) {
+            file <- sub(
+                pattern = paste0("\\.", compress, "$"),
+                replacement = "",
+                x = file
+            )
+        }
+        ## Export MatrixMarket file.
         writeMM(obj = object, file = file)
-        if (isTRUE(gzip)) {
-            file <- gzip(file, overwrite = TRUE)
+        ## Compress file, if necessary.
+        if (!is.na(compress)) {
+            compressFun <- switch(
+                EXPR = compress,
+                "gz" = gzip,
+                "bz2" = bzip2
+            )
+            assert(is.function(compressFun))
+            file <- compressFun(file, overwrite = TRUE)
         }
         ## Normalize the path.
         file <- realpath(file)
-        ## Write barcodes (colnames).
+        ## Write barcodes (column names).
         barcodes <- colnames(object)
         barcodesFile <- paste0(file, ".colnames")
         writeLines(text = barcodes, con = barcodesFile)
-        ## Write features (rownames).
+        ## Write features (row names).
         features <- rownames(object)
         featuresFile <- paste0(file, ".rownames")
         writeLines(text = features, con = featuresFile)
