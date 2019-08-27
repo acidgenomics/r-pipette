@@ -42,15 +42,8 @@
 #'
 #' @seealso
 #' - [data.table::fwrite()].
-#' - [rtracklayer::export()].
 #' - [rio::export()].
-#'
-#' ```r
-#' rio::export
-#' rio:::find_compress
-#' .S3methods(".export", envir = asNamespace("rio"))
-#' rio:::export_delim
-#' ```
+#' - [rtracklayer::export()].
 #'
 #' @examples
 #' counts <- matrix(data = seq_len(100L), nrow = 10)
