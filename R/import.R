@@ -239,7 +239,7 @@ import <- function(
         object <- .importXLS(file, sheet = sheet, colnames = colnames)
     } else if (isSubset(ext, c("XLSB", "XLSX"))) {
         object <- .importXLSX(file, sheet = sheet, colnames = colnames)
-    } else if (identical(ext == "PZFX")) {
+    } else if (identical(ext, "PZFX")) {
         ## GraphPad Prism project.
         ## Note that Prism files always contain column names.
         object <- .importPZFX(file, sheet = sheet)
