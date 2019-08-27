@@ -1,3 +1,7 @@
+## brio 0.3.6 (2019-08-27)
+
+- Updated R dependency to 3.6.
+
 ## brio 0.3.5 (2019-08-22)
 
 ### Minor changes
