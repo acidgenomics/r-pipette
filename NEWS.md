@@ -2,6 +2,12 @@
 
 - Updated R dependency to 3.6.
 
+### Major changes
+
+- `export`: Reworked internal code to call `data.table::fwrite` directly, rather
+  than having to pass to `brio::export`. Added support for `bz2` output for
+  `matrix` and `sparseMatrix` classes.
+
 ## brio 0.3.5 (2019-08-22)
 
 ### Minor changes
