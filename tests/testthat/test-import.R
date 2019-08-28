@@ -284,8 +284,9 @@ with_parameters_test_that(
     ext = c("json", "yml")
 )
 
-test_that("rio::import(), e.g. Stata DTA file", {
+test_that("'rio::import()', e.g. Stata DTA file", {
     skip_if_not_installed("haven")
+    skip_if_not_installed("rio")
     file <- system.file("examples/iris.dta", package = "haven")
     x <- import(file)
     expect_is(x, "data.frame")
