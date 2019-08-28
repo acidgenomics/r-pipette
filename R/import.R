@@ -233,46 +233,46 @@ import <- function(
         ext <- format
     }
     ext <- toupper(ext)
-    if (ext %in% c("CSV", "FWF", "PSV", "TSV", "TXT")) {
+    if (isSubset(ext, c("CSV", "FWF", "PSV", "TSV", "TXT"))) {
         object <- .importDelim(file, colnames = colnames)
-    } else if (ext == "XLS") {
+    } else if (identical(ext, "XLS")) {
         object <- .importXLS(file, sheet = sheet, colnames = colnames)
-    } else if (ext %in% c("XLSB", "XLSX")) {
+    } else if (isSubset(ext, c("XLSB", "XLSX"))) {
         object <- .importXLSX(file, sheet = sheet, colnames = colnames)
-    } else if (ext == "PZFX") {
+    } else if (identical(ext, "PZFX")) {
         ## GraphPad Prism project.
         ## Note that Prism files always contain column names.
         object <- .importPZFX(file, sheet = sheet)
-    } else if (ext == "RDS") {
+    } else if (identical(ext, "RDS")) {
         object <- .importRDS(file)
-    } else if (ext %in% c("RDA", "RDATA")) {
+    } else if (isSubset(ext, c("RDA", "RDATA"))) {
         object <- .importRDA(file)
-    } else if (ext == "GMT") {
+    } else if (identical(ext, "GMT")) {
         object <- .importGMT(file)
-    } else if (ext == "GMX") {
+    } else if (identical(ext, "GMX")) {
         object <- .importGMX(file)
-    } else if (ext == "GRP") {
+    } else if (identical(ext, "GRP")) {
         object <- .importGRP(file)
-    } else if (ext == "JSON") {
+    } else if (identical(ext, "JSON")) {
         object <- .importJSON(file)
-    } else if (ext %in% c("YAML", "YML")) {
+    } else if (isSubset(ext, c("YAML", "YML"))) {
         object <- .importYAML(file)
-    } else if (ext == "MTX") {
+    } else if (identical(ext, "MTX")) {
         ## We're always requiring row and column sidecar files for MTX.
         object <- .importMTX(file)
-    } else if (ext == "COUNTS") {
+    } else if (identical(ext, "COUNTS")) {
         ## bcbio counts format always contains row and column names.
         object <- .importBCBCounts(file)
-    } else if (ext %in% c("LINES", "LOG", "MD", "PY", "R", "RMD", "SH")) {
+    } else if (isSubset(ext, c("LINES", "LOG", "MD", "PY", "R", "RMD", "SH"))) {
         object <- .importLines(file)
-    } else if (ext %in% c(
+    } else if (isSubset(ext, c(
         "BED", "BED15", "BEDGRAPH", "BEDPE",
         "BROADPEAK", "NARROWPEAK",
         "GFF", "GFF1", "GFF2", "GFF3", "GTF",
         "BIGWIG", "BW", "WIG"
-    )) {
+    ))) {
         object <- .rtracklayerImport(file)
-    } else if (ext %in% c(
+    } else if (isSubset(ext, c(
         "ARFF",      # Weka Attribute-Relation File Format
         "DBF",       # dBase Database File
         "DIF",       # Data Interchange Format
@@ -286,7 +286,7 @@ import <- function(
         "SYD",       # Systat
         "REC",       # Epi Info
         "XPT"        # SASS
-    )) {
+    ))) {
         object <- .rioImport(file)
     } else {
         stop(sprintf(
@@ -314,7 +314,7 @@ import <- function(
         if (
             isAny(object, c("data.frame", "DataFrame")) &&
             !isAny(object, c("data.table", "tbl_df")) &&
-            "rowname" %in% colnames(object) &&
+            isSubset("rowname", colnames(object)) &&
             isTRUE(rownames)
         ) {
             message("Setting row names from 'rowname' column.")
@@ -335,7 +335,7 @@ import <- function(
             date = Sys.Date(),
             call = standardizeCall()
         )
-        if (isS4(object) && "metadata" %in% slotNames(object)) {
+        if (isS4(object) && isSubset("metadata", slotNames(object))) {
             meta <- metadata(object)[["brio"]]
             meta <- c(meta, newMeta)
             meta <- meta[sort(names(meta))]

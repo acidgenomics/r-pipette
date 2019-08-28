@@ -41,13 +41,11 @@ export(object, ...)
 
 \S4method{export}{SummarizedExperiment}(object, name = NULL,
   dir = getOption("acid.export.dir", default = "."),
-  compress = getOption("acid.export.compress", default = FALSE),
-  slotNames = c("assays", "colData", "rowData"))
+  compress = getOption("acid.export.compress", default = FALSE))
 
 \S4method{export}{SingleCellExperiment}(object, name = NULL,
   dir = getOption("acid.export.dir", default = "."),
-  compress = getOption("acid.export.compress", default = FALSE),
-  slotNames = c("assays", "colData", "rowData", "reducedDims"))
+  compress = getOption("acid.export.compress", default = FALSE))
 }
 \arguments{
 \item{object}{Object.
@@ -74,9 +72,6 @@ Name to use on disk. If \code{NULL}, will use the name of the object instead.}
 \item{compress}{\code{logical(1)}.
 Apply gzip compression to all files.}
 
-\item{slotNames}{\code{character}.
-Names of slots to include when writing to disk.}
-
 \item{...}{Additional arguments.}
 }
 \value{
@@ -87,7 +82,7 @@ File path(s).
 Export data out of R and write to disk.
 }
 \note{
-Updated 2019-08-16.
+Updated 2019-08-27.
 }
 \section{Row names}{
 
@@ -117,7 +112,8 @@ file.remove("counts.csv")
 }
 \seealso{
 \itemize{
-\item \code{\link[rtracklayer:export]{rtracklayer::export()}}.
+\item \code{\link[data.table:fwrite]{data.table::fwrite()}}.
 \item \code{\link[rio:export]{rio::export()}}.
+\item \code{\link[rtracklayer:export]{rtracklayer::export()}}.
 }
 }
