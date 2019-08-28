@@ -53,3 +53,4 @@ mapply(
         envir = environment()
     )
 )
+rm(files)

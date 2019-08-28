@@ -1,9 +1,3 @@
-## NAMESPACE conflicts:
-## - `export()`: bioverbs, rio
-## - `import()`: rio, rtracklayer
-
-
-
 #' @importMethodsFrom transformer coerce
 #'
 #' @importFrom GenomicRanges GRanges
@@ -12,10 +6,10 @@
 #' @importFrom R.utils gzip
 #' @importFrom S4Vectors DataFrame Rle head mcols mcols<- metadata metadata<-
 #'   tail
-#' @importFrom SingleCellExperiment reducedDimNames reducedDims
+#' @importFrom SingleCellExperiment reducedDimNames reducedDim
 #' @importFrom SummarizedExperiment assayNames assayNames<- assays colData
 #'   rowData rowRanges
-#' @importFrom data.table fread
+#' @importFrom data.table fread fwrite
 #' @importFrom goalie assert allAreExisting allAreFiles allAreNonExisting
 #'   allAreURLs allHaveAccess areDisjointSets areSameLength areSetEqual bapply
 #'   formalCompress hasColnames hasCols hasDimnames hasInternet hasLength
