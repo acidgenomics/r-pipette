@@ -421,20 +421,12 @@ import <- function(
     args <- list(
         file = file,
         blank.lines.skip = TRUE,
-        ## Don't attempt to adjust names using `make.names()`.
-        ## We check for this later downstream.
         check.names = FALSE,
-        ## Return as `data.frame`.
         data.table = FALSE,
-        ## This handles mismatched columns more gracefully.
-        ## Example: c_elegans.PRJNA13758.WS269.pcr_product2gene.txt.gz
-        fill = TRUE,
-        ## Sanitize NA columns, with our improved defaults.
+        fill = FALSE,
         na.strings = naStrings,
-        ## Always import starting from first line.
         skip = 0L,
         showProgress = FALSE,
-        ## Never set factors on import automatically.
         stringsAsFactors = FALSE,
         strip.white = TRUE,
         verbose = FALSE
