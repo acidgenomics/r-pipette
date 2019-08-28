@@ -517,7 +517,7 @@ setMethod(
             name <- as.character(sym)
         }
         ## Export SummarizedExperiment-compatible slots.
-        export(
+        files <- export(
             object = as(object, "RangedSummarizedExperiment"),
             name = name,
             dir = dir,
