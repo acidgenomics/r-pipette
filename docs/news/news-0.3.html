@@ -65,7 +65,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">brio</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.6</span>
       </span>
     </div>
 
@@ -189,6 +189,21 @@
 </ul>
 </div>
 </div>
+    <div id="brio-0-3-6-2019-08-27" class="section level2">
+<h2 class="hasAnchor">
+<a href="#brio-0-3-6-2019-08-27" class="anchor"></a>brio 0.3.6 (2019-08-27)</h2>
+<ul>
+<li>Updated R dependency to 3.6.</li>
+</ul>
+<div id="major-changes" class="section level3">
+<h3 class="hasAnchor">
+<a href="#major-changes" class="anchor"></a>Major changes</h3>
+<ul>
+<li>
+<code>export</code>: Reworked internal code to call <code><a href="https://rdrr.io/pkg/data.table/man/fwrite.html">data.table::fwrite</a></code> directly, rather than having to pass to <code><a href="../reference/export.html">brio::export</a></code>. Added support for <code>bz2</code> output for <code>matrix</code> and <code>sparseMatrix</code> classes.</li>
+</ul>
+</div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -201,6 +216,7 @@
         <li><a href="#brio-0-3-3-2019-08-13">0.3.3</a></li>
         <li><a href="#brio-0-3-4-2019-08-16">0.3.4</a></li>
         <li><a href="#brio-0-3-5-2019-08-22">0.3.5</a></li>
+        <li><a href="#brio-0-3-6-2019-08-27">0.3.6</a></li>
       </ul>
     </div>
   </div>
