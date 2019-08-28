@@ -33,8 +33,6 @@
 #'   Apply gzip compression to all files.
 #' @param name `character(1)`.
 #'   Name to use on disk. If `NULL`, will use the name of the object instead.
-#' @param slotNames `character`.
-#'   Names of slots to include when writing to disk.
 #' @param ... Additional arguments.
 #'
 #' @return Invisible `character`.
@@ -403,28 +401,19 @@ setMethod(
 
 
 
-## Require at least 1 of the slotNames to be defined for export.
-## `rowData` is a supported slot but is actually defined in `rowRanges`.
-## Note that we're not using `match.arg()` here for `slotNames`.
-## Updated 2019-07-19.
+## Updated 2019-08-27.
 `export,SummarizedExperiment` <-  # nolint
     function(
         object,
         name = NULL,
         dir,
-        compress,
-        slotNames = c("assays", "colData", "rowData")
+        compress
     ) {
         validObject(object)
         assert(
             isString(name, nullOK = TRUE),
             isString(dir),
-            isFlag(compress),
-            isCharacter(slotNames),
-            isSubset(
-                x = slotNames,
-                y = c(slotNames(object), "rowData")
-            )
+            isFlag(compress)
         )
         call <- standardizeCall()
         ## Get the name and create directory substructure.
@@ -455,34 +444,28 @@ setMethod(
         if (is.null(assayNames(object))) {
             assayNames(object) <- "assay"
         }
-        ## Assays (count matrices).
-        if ("assays" %in% slotNames) {
-            files[["assays"]] <-
-                .exportAssays(
-                    object = object,
-                    name = name,
-                    dir = dir,
-                    compress = compress
-                )
-        }
-        ## Column annotations.
-        if ("colData" %in% slotNames) {
-            files[["colData"]] <-
-                .exportColData(
-                    object = object,
-                    ext = ext,
-                    dir = dir
-                )
-        }
-        ## Row annotations.
-        if ("rowData" %in% slotNames) {
-            files[["rowData"]] <-
-                .exportRowData(
-                    object = object,
-                    ext = ext,
-                    dir = dir
-                )
-        }
+        ## Assays.
+        files[["assays"]] <-
+            .exportAssays(
+                object = object,
+                name = name,
+                dir = dir,
+                compress = compress
+            )
+        ## Column data.
+        files[["colData"]] <-
+            .exportColData(
+                object = object,
+                ext = ext,
+                dir = dir
+            )
+        ## Row data.
+        files[["rowData"]] <-
+            .exportRowData(
+                object = object,
+                ext = ext,
+                dir = dir
+            )
         message(sprintf("Exported '%s' to '%s'.", name, dir))
         ## Return named character of file paths.
         files <- Filter(Negate(is.null), files)
@@ -507,19 +490,19 @@ setMethod(
 
 
 
-## Updated 2019-07-19.
+## Updated 2019-08-27.
 `export,SingleCellExperiment` <-  # nolint
-    function(object) {
+    function(
+        object,
+        name = NULL,
+        dir,
+        compress
+    ) {
         validObject(object)
         assert(
             isString(name, nullOK = TRUE),
             isString(dir),
-            isFlag(compress),
-            isCharacter(slotNames),
-            isSubset(
-                x = slotNames,
-                y = c(slotNames(object), "rowData")
-            )
+            isFlag(compress)
         )
         call <- standardizeCall()
         ## Get the name and create directory substructure.
@@ -533,20 +516,17 @@ setMethod(
             }
             name <- as.character(sym)
         }
+        ## Export SummarizedExperiment-compatible slots.
+        export(
+            object = as(object, "RangedSummarizedExperiment"),
+            name = name,
+            dir = dir,
+            compress = compress
+        )
         dir <- initDir(file.path(dir, name))
-        ## Primarily use SE method to export.
-        se <- as(object, "RangedSummarizedExperiment")
-        assign(x = name, value = se)
-        args <- matchArgsToDoCall()
-        args[["object"]] <- as.name(name)
-        ## We're handling `reducedDims` specially below.
-        args[["slotNames"]] <- setdiff(args[["slotNames"]], "reducedDims")
-        files <- do.call(what = export, args = args)
+        ## Export dimensionality reduction data.
         reducedDimNames <- reducedDimNames(object)
-        if (
-            isSubset("reducedDims", slotNames) &&
-            hasLength(reducedDimNames)
-        ) {
+        if (hasLength(reducedDimNames)) {
             message(sprintf(
                 "Exporting reducedDims: %s",
                 toString(reducedDimNames)
@@ -555,11 +535,15 @@ setMethod(
                 X = reducedDimNames,
                 FUN = function(name, dir) {
                     file <- file.path(dir, name)
-                    reducedDim <- reducedDims(object)[[name]]
+                    reducedDim <- reducedDim(
+                        x = object,
+                        type = name,
+                        withDimnames = TRUE
+                    )
                     if (is(reducedDim, "matrix")) {
                         ext <- "csv"
-                    } else if (is(reducedDim, "sparseMatrix")) {         # nocov
-                        ext <- "mtx"                                     # nocov
+                    } else if (is(reducedDim, "sparseMatrix")) {
+                        ext <- "mtx"
                     }
                     if (isTRUE(compress)) {
                         ext <- paste0(ext, ".gz")
@@ -575,9 +559,10 @@ setMethod(
         invisible(files)
     }
 
-f <- formals(`export,SummarizedExperiment`)
-f[["slotNames"]] <- c(eval(f[["slotNames"]]), "reducedDims")
-formals(`export,SingleCellExperiment`) <- f
+formals(`export,SingleCellExperiment`)[["compress"]] <-
+    formalsList[["export.compress"]]
+formals(`export,SingleCellExperiment`)[["dir"]] <-
+    formalsList[["export.dir"]]
 
 
 
