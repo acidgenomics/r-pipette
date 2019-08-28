@@ -217,7 +217,6 @@ test_that("'dir' argument, no 'name'", {
 })
 
 test_that("Both 'name' and 'dir' declared", {
-    ## FIXME This is erroring on bioc-devel.
     x <- export(sce_seurat, name = "test", dir = "XXX")
     prefix <- realpath(file.path("XXX", "test"))
     assays <- file.path(prefix, "assays")
