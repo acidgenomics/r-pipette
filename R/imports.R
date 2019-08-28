@@ -6,7 +6,7 @@
 #' @importFrom R.utils gzip
 #' @importFrom S4Vectors DataFrame Rle head mcols mcols<- metadata metadata<-
 #'   tail
-#' @importFrom SingleCellExperiment reducedDimNames reducedDims
+#' @importFrom SingleCellExperiment reducedDimNames reducedDim
 #' @importFrom SummarizedExperiment assayNames assayNames<- assays colData
 #'   rowData rowRanges
 #' @importFrom data.table fread fwrite
