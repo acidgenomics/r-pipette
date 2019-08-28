@@ -420,23 +420,24 @@ import <- function(
     ))
     args <- list(
         file = file,
+        blank.lines.skip = TRUE,
+        ## Don't attempt to adjust names using `make.names()`.
+        ## We check for this later downstream.
+        check.names = FALSE,
+        ## Return as `data.frame`.
+        data.table = FALSE,
+        ## This handles mismatched columns more gracefully.
+        ## Example: c_elegans.PRJNA13758.WS269.pcr_product2gene.txt.gz
+        fill = TRUE,
         ## Sanitize NA columns, with our improved defaults.
         na.strings = naStrings,
-        ## Never set factors on import automatically.
-        stringsAsFactors = FALSE,
-        ## Keep quiet.
-        verbose = FALSE,
         ## Always import starting from first line.
         skip = 0L,
-        ## Don't attempt to adjust names using `make.names()`.
-        check.names = FALSE,
-        strip.white = TRUE,
-        ## This matches the conventions in the tidyverse readers.
-        blank.lines.skip = TRUE,
-        ## Keep quiet.
         showProgress = FALSE,
-        ## Return as `data.frame` instead of `data.table`.
-        data.table = FALSE
+        ## Never set factors on import automatically.
+        stringsAsFactors = FALSE,
+        strip.white = TRUE,
+        verbose = FALSE
     )
     if (isCharacter(colnames)) {
         args[["header"]] <- FALSE
