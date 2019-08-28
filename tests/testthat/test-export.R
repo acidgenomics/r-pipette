@@ -188,6 +188,7 @@ context("export : SingleCellExperiment")
 ## whereas the SingleCellExperiment (splatter) example doesn't.
 
 test_that("'dir' argument, no 'name'", {
+    ## FIXME This is erroring on bioc-devel.
     x <- export(sce_seurat, name = NULL, dir = "XXX", compress = TRUE)
     prefix <- realpath(file.path("XXX", "sce_seurat"))
     assays <- file.path(prefix, "assays")
@@ -217,6 +218,7 @@ test_that("'dir' argument, no 'name'", {
 })
 
 test_that("Both 'name' and 'dir' declared", {
+    ## FIXME This is erroring on bioc-devel.
     x <- export(sce_seurat, name = "test", dir = "XXX")
     prefix <- realpath(file.path("XXX", "test"))
     assays <- file.path(prefix, "assays")
