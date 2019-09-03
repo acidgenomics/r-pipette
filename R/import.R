@@ -420,23 +420,16 @@ import <- function(
     ))
     args <- list(
         file = file,
-        ## Sanitize NA columns, with our improved defaults.
-        na.strings = naStrings,
-        ## Never set factors on import automatically.
-        stringsAsFactors = FALSE,
-        ## Keep quiet.
-        verbose = FALSE,
-        ## Always import starting from first line.
-        skip = 0L,
-        ## Don't attempt to adjust names using `make.names()`.
-        check.names = FALSE,
-        strip.white = TRUE,
-        ## This matches the conventions in the tidyverse readers.
         blank.lines.skip = TRUE,
-        ## Keep quiet.
+        check.names = FALSE,
+        data.table = FALSE,
+        fill = FALSE,
+        na.strings = naStrings,
+        skip = 0L,
         showProgress = FALSE,
-        ## Return as `data.frame` instead of `data.table`.
-        data.table = FALSE
+        stringsAsFactors = FALSE,
+        strip.white = TRUE,
+        verbose = FALSE
     )
     if (isCharacter(colnames)) {
         args[["header"]] <- FALSE
