@@ -1,3 +1,9 @@
+## brio 0.3.7 (2019-09-03)
+
+### Minor changes
+
+- `import`: Improved internal arguments passed to `data.table::fread`.
+
 ## brio 0.3.6 (2019-08-27)
 
 - Updated R dependency to 3.6.
