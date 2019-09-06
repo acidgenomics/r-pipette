@@ -13,7 +13,7 @@
 #' [readr]: http://readr.tidyverse.org/
 #' [RStudio]: https://www.rstudio.com/
 #'
-#' @note Updated 2019-08-12.
+#' @note Updated 2019-09-06.
 #' @export
 #'
 #' @inheritParams dots
@@ -42,10 +42,8 @@ writeCounts <- function(..., dir, compress) {
     data <- list(...)
     dir <- initDir(dir)
     assert(isFlag(compress))
-
     ## Iterate across the dot objects and write to disk.
     message(sprintf("Writing %s to '%s'.", toString(names), dir))
-
     files <- mapply(
         name = names,
         object = data,
@@ -71,7 +69,7 @@ writeCounts <- function(..., dir, compress) {
         SIMPLIFY = FALSE,
         USE.NAMES = TRUE
     )
-
+    ## Return file paths.
     invisible(files)
 }
 
