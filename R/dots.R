@@ -1,7 +1,7 @@
 #' Extract dots from function
 #'
 #' @note This function uses non-standard evaluation.
-#' @note Updated 2019-07-19.
+#' @note Updated 2019-09-06.
 #' @export
 #'
 #' @param ... Objects as dots.
@@ -33,7 +33,6 @@ dots <- function(..., character = FALSE) {
         hasLength(dots),
         hasNoDuplicates(dots)
     )
-
     ## Provide an informative error message when a user attempts to accidentally
     ## use standard evaluation with quotation.
     if (!all(bapply(dots, is.symbol))) {
@@ -46,7 +45,6 @@ dots <- function(..., character = FALSE) {
             "- http://adv-r.had.co.nz/Computing-on-the-language.html"
         )
     }
-
     ## Convert names (symbols) to character.
     names <- vapply(dots, as.character, character(1L))
     assert(hasNoDuplicates(names))
