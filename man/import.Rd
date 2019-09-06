@@ -174,7 +174,7 @@ The GFF (General Feature Format) format consists of one line per feature,
 each containing 9 columns of data, plus optional track definition lines. The
 GTF (General Transfer Format) is identical to GFF version 2.
 
-\href{https://steinbaugh.com/basejump/}{basejump} exports the specialized \code{makeGRangesFromGFF()} function that
+\href{https://basejump.acidgenomics.com/}{basejump} exports the specialized \code{makeGRangesFromGFF()} function that
 makes GFF loading simple.
 
 See also:
