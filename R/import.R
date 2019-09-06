@@ -78,7 +78,7 @@
 #' - [Ensembl spec](http://www.ensembl.org/info/website/upload/gff.html)
 #' - [GENCODE spec](http://www.gencodegenes.org/gencodeformat.html)
 #'
-#' [basejump]: https://steinbaugh.com/basejump/
+#' [basejump]: https://basejump.acidgenomics.com/
 #'
 #' @section Gene sets (GMT, GMX):
 #'
