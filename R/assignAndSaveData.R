@@ -5,7 +5,7 @@
 #'
 #' @note This function attempts to follow the same order as
 #'   [`assign()`][base::assign].
-#' @note Updated 2019-07-19.
+#' @note Updated 2019-09-06.
 #' @include saveData.R
 #' @export
 #'
@@ -41,14 +41,11 @@ assignAndSaveData <- function(name, object, envir = parent.frame()) {
         formalCompress(compress),
         is.environment(envir)
     )
-
     ## Create destination directory automatically.
     dir <- initDir(dir)
-
     ## Assign data.
     assign(x = name, value = object, envir = envir)
     assign(x = name, value = object)
-
     ## Save data.
     args <- list(
         as.name(name),
@@ -57,8 +54,8 @@ assignAndSaveData <- function(name, object, envir = parent.frame()) {
         overwrite = overwrite,
         compress = compress
     )
+    ## Return file path.
     file <- do.call(what = saveData, args = args)
-
     invisible(file)
 }
 
