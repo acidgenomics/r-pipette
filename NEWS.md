@@ -1,5 +1,14 @@
 ## brio 0.3.8 (2019-09-11)
 
+### Major changes
+
+- `import`: Improved metadata stash approach inside S4 (`metadata`) and S3
+  (`attributes`) return objects. Previously, import metadata was stashed inside
+  "brio", but this has been renamed to "import". Metadata is no longer stashed
+  inside R data objects loaded via `import`. Simplified the internal code inside
+  `import` to only stash the `call`, whereas importer metadata is now handled
+  by an internal `.defineImportMetadata` function.
+
 ### Minor changes
 
 - `export`: Improved default extension documentation and internal argument
