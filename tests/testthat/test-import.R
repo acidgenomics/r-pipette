@@ -31,8 +31,12 @@ with_parameters_test_that(
         object <- import(file)
         expect_is(object, "data.frame")
         expect_identical(
-            object = attr(object, "brio")[["file"]],
+            object = attributes(object)[["import"]][["file"]],
             expected = realpath(file)
+        )
+        expect_identical(
+            object = attributes(object)[["import"]][["importer"]],
+            expected = "data.table::fread"
         )
     },
     ext = c("csv", "csv.gz", "tsv")
@@ -84,8 +88,8 @@ test_that("GFF3", {
         )
     )
     expect_identical(
-        object = metadata(object)[["brio"]][["rtracklayer"]],
-        expected = packageVersion("rtracklayer")
+        object = metadata(object)[["import"]][["importer"]],
+        expected = "rtracklayer::import"
     )
 })
 
@@ -124,8 +128,8 @@ test_that("GTF", {
         )
     )
     expect_identical(
-        object = metadata(object)[["brio"]][["rtracklayer"]],
-        expected = packageVersion("rtracklayer")
+        object = metadata(object)[["import"]][["importer"]],
+        expected = "rtracklayer::import"
     )
 })
 
@@ -147,7 +151,7 @@ test_that("MTX", {
     )
     ## Note that sparseMatrix S4 class doesn't support `metadata()`.
     expect_identical(
-        object = attr(object, "brio")[["importer"]],
+        object = attributes(object)[["import"]][["importer"]],
         expected = "Matrix::readMM"
     )
 })
@@ -179,18 +183,22 @@ test_that("R data", {
     skip_on_appveyor()
     object <- import(file = file.path("cache", "example.rda"))
     expect_s4_class(object, "DataFrame")
+    expect_null(metadata(object)[["import"]])
+    expect_null(attr(object, which = "import"))
 })
 
 test_that("R data serialized", {
     skip_on_appveyor()
     object <- import(file = file.path("cache", "example.rds"))
     expect_s4_class(object, "DataFrame")
+    expect_null(metadata(object)[["import"]])
+    expect_null(attr(object, which = "import"))
 })
 
 test_that("Error on RDA containing multiple objects.", {
     expect_error(
         object = import(file = file.path("cache", "multi.rda")),
-        regexp = "File does not contain a single object"
+        regexp = "'multi.rda' does not contain a single object"
     )
 })
 
