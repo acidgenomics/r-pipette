@@ -41,17 +41,6 @@ compressExtPattern <- paste0(compressExtPattern, "$")
 
 
 formalsList <- list(
-    data.frame = quote(
-        getOption(
-            "acid.data.frame",
-            default = c(
-                "data.frame",
-                "DataFrame",
-                "tbl_df",
-                "data.table"
-            )
-        )
-    ),
     export.compress = quote(
         getOption("acid.export.compress", default = FALSE)
     ),
@@ -61,13 +50,16 @@ formalsList <- list(
     export.ext = quote(
         getOption(
             "acid.export.ext",
-            default = c("csv", "csv.gz", "tsv", "tsv.gz")
+            default = c(
+                "csv", "csv.gz", "csv.bz2",
+                "tsv", "tsv.gz", "tsv.bz2"
+            )
         )
     ),
     export.sparse.ext = quote(
         getOption(
             "acid.export.sparse.ext",
-            default = c("mtx", "mtx.gz")
+            default = c("mtx", "mtx.gz", "mtx.bz2")
         )
     ),
     load.dir = quote(

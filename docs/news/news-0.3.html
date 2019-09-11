@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">brio</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.8</span>
       </span>
     </div>
 
@@ -116,9 +116,9 @@
 <h2 class="hasAnchor">
 <a href="#brio-0-3-0-2019-07-22" class="anchor"></a>brio 0.3.0 (2019-07-22)</h2>
 <p>Bumped version number to reflect changes in basejump dependencies.</p>
-<div id="minor-changes-6" class="section level3">
+<div id="minor-changes-7" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-6" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-7" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Improved naming consistency of internal functions.</li>
 <li>Updated package dependency versions.</li>
@@ -128,9 +128,9 @@
     <div id="brio-0-3-1-2019-07-30" class="section level2">
 <h2 class="hasAnchor">
 <a href="#brio-0-3-1-2019-07-30" class="anchor"></a>brio 0.3.1 (2019-07-30)</h2>
-<div id="minor-changes-5" class="section level3">
+<div id="minor-changes-6" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-5" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-6" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>
 <code>import</code>: Bug fix for invalid objects (e.g. S4 objects that inherit <code>SummarizedExperiment</code>) not returning silently. Had to convert the <code>try</code> call to a <code>tryCatch</code> call to avoid errors popping up during name checks.</li>
@@ -142,9 +142,9 @@
     <div id="brio-0-3-2-2019-08-06" class="section level2">
 <h2 class="hasAnchor">
 <a href="#brio-0-3-2-2019-08-06" class="anchor"></a>brio 0.3.2 (2019-08-06)</h2>
-<div id="minor-changes-4" class="section level3">
+<div id="minor-changes-5" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-4" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-5" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Now using acidroxygen package to manage shared roxygen documentation params.</li>
 </ul>
@@ -153,9 +153,9 @@
     <div id="brio-0-3-3-2019-08-13" class="section level2">
 <h2 class="hasAnchor">
 <a href="#brio-0-3-3-2019-08-13" class="anchor"></a>brio 0.3.3 (2019-08-13)</h2>
-<div id="minor-changes-3" class="section level3">
+<div id="minor-changes-4" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-3" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-4" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Added support for <code>url</code> calls to <code>import</code>, <code>localOrRemoteFile</code>, and <code>loadRemoteData</code>.</li>
 <li>Improved message consistency.</li>
@@ -166,9 +166,9 @@
     <div id="brio-0-3-4-2019-08-16" class="section level2">
 <h2 class="hasAnchor">
 <a href="#brio-0-3-4-2019-08-16" class="anchor"></a>brio 0.3.4 (2019-08-16)</h2>
-<div id="minor-changes-2" class="section level3">
+<div id="minor-changes-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-2" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-3" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Reworked organization and naming of internal importer functions. Now including these in the <code>import</code> documentation, for clarity.</li>
 <li>
@@ -182,9 +182,9 @@
     <div id="brio-0-3-5-2019-08-22" class="section level2">
 <h2 class="hasAnchor">
 <a href="#brio-0-3-5-2019-08-22" class="anchor"></a>brio 0.3.5 (2019-08-22)</h2>
-<div id="minor-changes-1" class="section level3">
+<div id="minor-changes-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-1" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-2" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>No longer warn on MTX import without sidecar rownames and colnames files.</li>
 <li>
@@ -210,12 +210,24 @@
     <div id="brio-0-3-7-2019-09-03" class="section level2">
 <h2 class="hasAnchor">
 <a href="#brio-0-3-7-2019-09-03" class="anchor"></a>brio 0.3.7 (2019-09-03)</h2>
+<div id="minor-changes-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#minor-changes-1" class="anchor"></a>Minor changes</h3>
+<ul>
+<li>
+<code>import</code>: Improved internal arguments passed to <code><a href="https://rdrr.io/pkg/data.table/man/fread.html">data.table::fread</a></code>.</li>
+</ul>
+</div>
+</div>
+    <div id="brio-0-3-8-2019-09-11" class="section level2">
+<h2 class="hasAnchor">
+<a href="#brio-0-3-8-2019-09-11" class="anchor"></a>brio 0.3.8 (2019-09-11)</h2>
 <div id="minor-changes" class="section level3">
 <h3 class="hasAnchor">
 <a href="#minor-changes" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>
-<code>import</code>: Improved internal arguments passed to <code><a href="https://rdrr.io/pkg/data.table/man/fread.html">data.table::fread</a></code>.</li>
+<code>export</code>: Improved default extension documentation and internal argument matching via <code>match.arg</code>. For <code>matrix</code> files exported simply with <code>dir</code> argument, this will default to CSV format. For sparse <code>Matrix</code> files exported simply with <code>dir</code> argument, this will default to MTX format.</li>
 </ul>
 </div>
 </div>
@@ -233,6 +245,7 @@
         <li><a href="#brio-0-3-5-2019-08-22">0.3.5</a></li>
         <li><a href="#brio-0-3-6-2019-08-27">0.3.6</a></li>
         <li><a href="#brio-0-3-7-2019-09-03">0.3.7</a></li>
+        <li><a href="#brio-0-3-8-2019-09-11">0.3.8</a></li>
       </ul>
     </div>
   </div>
@@ -246,7 +259,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9100.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
 
       </footer>
