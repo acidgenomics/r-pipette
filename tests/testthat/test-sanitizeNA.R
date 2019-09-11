@@ -22,10 +22,6 @@ with_parameters_test_that(
         DataFrame2 = DataFrame(
             a = c("foo", ""),
             b = c(NA, "bar")
-        ),
-        tbl_df = tibble(
-            a = c("foo", ""),
-            b = c(NA, "bar")
         )
     ),
     expected = list(
@@ -41,10 +37,6 @@ with_parameters_test_that(
             row.names = c("c", "d")
         ),
         DataFrame2 = DataFrame(
-            a = c("foo", NA),
-            b = c(NA, "bar")
-        ),
-        tbl_df = tibble(
             a = c("foo", NA),
             b = c(NA, "bar")
         )
