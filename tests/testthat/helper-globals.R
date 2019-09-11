@@ -29,7 +29,6 @@ metadata <- S4Vectors::metadata
 rowRanges <- SummarizedExperiment::rowRanges
 seqnames <- GenomicRanges::seqnames
 skip_on_docker <- goalie::skip_on_docker
-tibble <- tibble::tibble
 ## nolint end
 
 mat <- assay(rse)
