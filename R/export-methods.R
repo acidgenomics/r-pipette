@@ -1,6 +1,6 @@
 #' @name export
 #' @inherit bioverbs::export
-#' @note Updated 2019-08-27.
+#' @note Updated 2019-09-11.
 #'
 #' @section Row names:
 #'
@@ -81,6 +81,13 @@ NULL
             isString(dir),
             isString(file, nullOK = TRUE),
             isFlag(overwrite)
+        )
+        ext <- match.arg(
+            arg = ext,
+            choices = c(
+                "csv", "csv.gz", "csv.bz2",
+                "tsv", "tsv.gz", "tsv.bz2"
+            )
         )
         ## Match the file extension and compression.
         if (is.null(file)) {
@@ -226,6 +233,10 @@ setMethod(
             isString(dir),
             isString(file, nullOK = TRUE),
             isFlag(overwrite)
+        )
+        ext <- match.arg(
+            arg = ext,
+            choices = c("mtx", "mtx.gz", "mtx.bz2")
         )
         ## Match the file extension and compression.
         if (is.null(file)) {
