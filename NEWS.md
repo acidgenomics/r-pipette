@@ -1,3 +1,12 @@
+## brio 0.3.8 (2019-09-11)
+
+### Minor changes
+
+- `export`: Improved default extension documentation and internal argument
+  matching via `match.arg`. For `matrix` files exported simply with `dir`
+  argument, this will default to CSV format. For sparse `Matrix` files exported
+  simply with `dir` argument, this will default to MTX format.
+
 ## brio 0.3.7 (2019-09-03)
 
 ### Minor changes
@@ -160,7 +169,7 @@ involving less repetitive variable declarations.
 ### New functions
 
 - Migrated `removeNA` and `sanitizeNA` from [basejump][] here, so these
-  functions can be imported in [freeranges][] package.
+  functions can be imported in [freerange][] package.
 
 ## brio 0.1.14 (2019-03-22)
 
@@ -317,7 +326,7 @@ Initial release. Migrated input-output (IO) functions from [basejump][].
 [Acid Genomics]: https://acidgenomics.com/
 [AppVeyor CI]: https://www.appveyor.com/
 [basejump]: https://basejump.acidgenomics.com/
-[freeranges]: https://freeranges.acidgenomics.com/
+[freerange]: https://freerange.acidgenomics.com/
 [testthat]: http://testthat.r-lib.org/
 [transformer]: https://transformer.acidgenomics.com/
 [Travis CI]: https://travis-ci.com/
