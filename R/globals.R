@@ -47,7 +47,6 @@ formalsList <- list(
     export.dir = quote(
         getOption("acid.export.dir", default = ".")
     ),
-    ## FIXME Need to save default exts here as a global to use for match.arg
     export.ext = quote(
         getOption(
             "acid.export.ext",
@@ -57,7 +56,6 @@ formalsList <- list(
             )
         )
     ),
-    ## FIXME Need to save default exts here as a global to use for match.arg
     export.sparse.ext = quote(
         getOption(
             "acid.export.sparse.ext",
@@ -76,7 +74,6 @@ formalsList <- list(
     save.dir = quote(
         getOption("acid.save.dir", default = ".")
     ),
-    ## FIXME Need to save default exts here as a global to use for match.arg
     save.ext = quote(
         getOption("acid.save.ext", default = c("rds", "rda"))
     )
