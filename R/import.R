@@ -7,7 +7,7 @@
 #' simple. Remote URLs and compressed files are supported. If you need more
 #' complex import settings, just call the wrapped importer directly instead.
 #'
-#' @note Updated 2019-09-06.
+#' @note Updated 2019-09-11.
 #' @export
 #'
 #' @section Row and column names:
@@ -212,6 +212,8 @@ import <- function(
         arg = format,
         choices = c("none", "csv", "tsv", "txt", "lines")
     )
+    ## Set metadata flag.
+    meta <- TRUE
     ## Allow Google Sheets import using rio, by matching the URL.
     ## Otherwise, coerce the file extension to uppercase, for easy matching.
     if (identical(format, "none")) {
@@ -232,8 +234,10 @@ import <- function(
         object <- .importPZFX(file, sheet = sheet)
     } else if (identical(ext, "RDS")) {
         object <- .importRDS(file)
+        meta <- FALSE
     } else if (isSubset(ext, c("RDA", "RDATA"))) {
         object <- .importRDA(file)
+        meta <- FALSE
     } else if (identical(ext, "GMT")) {
         object <- .importGMT(file)
     } else if (identical(ext, "GMX")) {
@@ -252,6 +256,7 @@ import <- function(
         object <- .importBCBCounts(file)
     } else if (isSubset(ext, c("LINES", "LOG", "MD", "PY", "R", "RMD", "SH"))) {
         object <- .importLines(file)
+        meta <- FALSE
     } else if (isSubset(ext, c(
         "BED", "BED15", "BEDGRAPH", "BEDPE",
         "BROADPEAK", "NARROWPEAK",
@@ -288,8 +293,8 @@ import <- function(
         object[["rowname"]] <- NULL
     }
     ## Slot data provenance metadata into object.
-    ## Skipping this step for vectors (i.e. source code lines).
-    if (!is.atomic(object)) {
+    ## Skipping this step for R data and vectors (i.e. source code lines).
+    if (isTRUE(meta) && !is.atomic(object)) {
         newMeta <- list(
             brio = packageVersion("brio"),
             file = if (isAFile(file)) {
