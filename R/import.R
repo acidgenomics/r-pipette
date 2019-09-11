@@ -7,7 +7,7 @@
 #' simple. Remote URLs and compressed files are supported. If you need more
 #' complex import settings, just call the wrapped importer directly instead.
 #'
-#' @note Updated 2019-09-06.
+#' @note Updated 2019-09-11.
 #' @export
 #'
 #' @section Row and column names:
@@ -287,31 +287,6 @@ import <- function(
         rownames(object) <- object[["rowname"]]
         object[["rowname"]] <- NULL
     }
-    ## Slot data provenance metadata into object.
-    ## Skipping this step for vectors (i.e. source code lines).
-    if (!is.atomic(object)) {
-        newMeta <- list(
-            brio = packageVersion("brio"),
-            file = if (isAFile(file)) {
-                realpath(file)
-            } else {
-                file
-            },
-            date = Sys.Date(),
-            call = standardizeCall()
-        )
-        if (isS4(object) && isSubset("metadata", slotNames(object))) {
-            meta <- metadata(object)[["brio"]]
-            meta <- c(meta, newMeta)
-            meta <- meta[sort(names(meta))]
-            metadata(object)[["brio"]] <- meta
-        } else {
-            meta <- attr(object, "brio")
-            meta <- c(meta, newMeta)
-            meta <- meta[sort(names(meta))]
-            attr(object, "brio") <- meta
-        }
-    }
     ## Check for syntactically valid names and inform the user, if necessary.
     if (
         (hasNames(object) && !hasValidNames(object)) ||
@@ -349,24 +324,62 @@ import <- function(
             ## nocov end
         }
     }
+    ## Note that this will skip for file types that don't define the importer.
+    .slotImportMetadata(object, which = "call") <- standardizeCall()
     object
 }
 
 
 
-## Slot data provenance metadata.
-.slotMetadata <- function(object, pkg, fun) {
-    assert(isString(pkg), isString(fun))
-    importer <- paste0(pkg, "::", fun)
-    version <- packageVersion(pkg)
+## Add data provenance metadata.
+## Updated 2019-09-11.
+.defineImportMetadata <- function(object, file, pkg, fun) {
+    assert(
+        isString(file),
+        isString(pkg),
+        isString(fun)
+    )
+    ## Previously, this was defined as "brio", until v0.3.8.
+    slot <- "import"
+    list <- list(
+        package = "brio",
+        packageVersion = packageVersion("brio"),
+        importer = paste0(pkg, "::", fun),
+        importerVersion = packageVersion(pkg),
+        file = if (isAFile(file)) {
+            realpath(file)
+        } else {
+            file
+        },
+        date = Sys.Date()
+    )
     if (isS4(object) && "metadata" %in% slotNames(object)) {
-        metadata(object)[["brio"]][["importer"]] <- importer
-        metadata(object)[["brio"]][[pkg]] <- version
+        metadata(object)[[slot]] <- list
     } else {
         ## Use `attr()` instead of `attributes()` here. It doesn't error on
         ## assignment when the object doesn't already have attributes.
-        attr(object, "brio")[["importer"]] <- importer
-        attr(object, "brio")[[pkg]] <- version
+        attr(object, which = slot) <- list
+    }
+    object
+}
+
+
+
+## Slot additional information into brio metadata.
+## This is currently in use to define in the `import()` call.
+## Updated 2019-09-11.
+`.slotImportMetadata<-` <- function(object, which, value) {
+    slot <- "import"
+    if (isS4(object) && "metadata" %in% slotNames(object)) {
+        if (!isSubset(slot, names(metadata(object)))) {
+            return(object)
+        }
+        metadata(object)[[slot]][[which]] <- value
+    } else {
+        if (!isSubset(slot, names(attributes(object)))) {
+            return(object)
+        }
+        attributes(object)[[slot]][[which]] <- value
     }
     object
 }
@@ -378,13 +391,13 @@ import <- function(
 ## Calls [data.table::fread()] internally.
 .importDelim <- function(file, colnames = TRUE) {
     assert(isFlag(colnames) || isCharacter(colnames))
-    file <- localOrRemoteFile(file)
+    tmpfile <- localOrRemoteFile(file)
     message(sprintf(
         "Importing '%s' using '%s()'.",
         basename(file), "data.table::fread"
     ))
     args <- list(
-        file = file,
+        file = tmpfile,
         blank.lines.skip = TRUE,
         check.names = FALSE,
         data.table = FALSE,
@@ -404,7 +417,12 @@ import <- function(
     }
     object <- do.call(what = fread, args = args)
     assert(is.data.frame(object))
-    object <- .slotMetadata(object, pkg = "data.table", fun = "fread")
+    object <- .defineImportMetadata(
+        object = object,
+        file = file,
+        pkg = "data.table",
+        fun = "fread"
+    )
     object
 }
 
@@ -412,12 +430,12 @@ import <- function(
 
 ## Internal importer for (source code) lines.
 .importLines <- function(file) {
-    file <- localOrRemoteFile(file)
+    tmpfile <- localOrRemoteFile(file)
     message(sprintf(
         "Importing '%s' using '%s()'.",
         basename(file), "base::readLines"
     ))
-    con <- file(file)
+    con <- file(tmpfile)
     object <- readLines(con = con)
     close(con)
     object
@@ -428,13 +446,13 @@ import <- function(
 ## R data ======================================================================
 ## Internal importer for an R data serialized file (`.rds`).
 .importRDS <- function(file) {
-    file <- localOrRemoteFile(file)
+    tmpfile <- localOrRemoteFile(file)
     message(sprintf(
         "Importing '%s' using '%s()'.",
         basename(file),
         "base::readRDS"
     ))
-    object <- readRDS(file)
+    object <- readRDS(file = tmpfile)
     object
 }
 
@@ -442,15 +460,15 @@ import <- function(
 
 ## Internal importer for an R data file (`.rda`).
 .importRDA <- function(file) {
-    file <- localOrRemoteFile(file)
+    tmpfile <- localOrRemoteFile(file)
     message(sprintf(
         "Importing '%s' using '%s()'.",
         basename(file), "base::load"
     ))
     safe <- new.env()
-    object <- load(file, envir = safe)
+    object <- load(file = tmpfile, envir = safe)
     if (length(safe) != 1L) {
-        stop("File does not contain a single object.")
+        stop(sprintf("'%s' does not contain a single object.", basename(file)))
     }
     object <- get(object, envir = safe, inherits = FALSE)
     object
@@ -462,6 +480,12 @@ import <- function(
 ## Internal importer for a sparse matrix file (`.mtx`).
 .importMTX <- function(file) {
     assert(isString(file))
+    tmpfile <- localOrRemoteFile(file)
+    message(sprintf(
+        "Importing '%s' using '%s()'.",
+        basename(file), "Matrix::readMM"
+    ))
+    object <- readMM(file = tmpfile)
     ## Add the rownames automatically using `.rownames` sidecar file.
     rownamesFile <- paste(file, "rownames", sep = ".")
     rownamesFile <- tryCatch(
@@ -470,6 +494,9 @@ import <- function(
             NULL  # nocov
         }
     )
+    if (!is.null(rownamesFile)) {
+        rownames(object) <- .importMTXSidecar(rownamesFile)
+    }
     ## Add the colnames automatically using `.colnames` sidecar file.
     colnamesFile <- paste(file, "colnames", sep = ".")
     colnamesFile <- tryCatch(
@@ -478,19 +505,15 @@ import <- function(
             NULL  # nocov
         }
     )
-    file <- localOrRemoteFile(file)
-    message(sprintf(
-        "Importing '%s' using '%s()'.",
-        basename(file), "Matrix::readMM"
-    ))
-    object <- readMM(file = file)
-    if (!is.null(rownamesFile)) {
-        rownames(object) <- .importMTXSidecar(rownamesFile)
-    }
     if (!is.null(colnamesFile)) {
         colnames(object) <- .importMTXSidecar(colnamesFile)
     }
-    object <- .slotMetadata(object, pkg = "Matrix", fun = "readMM")
+    object <- .defineImportMetadata(
+        object = object,
+        file = file,
+        pkg = "Matrix",
+        fun = "readMM"
+    )
     object
 }
 
@@ -507,14 +530,19 @@ import <- function(
 ## List ========================================================================
 ## Internal importer for a JSON file (`.json`).
 .importJSON <- function(file) {
-    file <- localOrRemoteFile(file)
+    tmpfile <- localOrRemoteFile(file)
     message(sprintf(
         "Importing '%s' using '%s()'.",
         basename(file), "jsonlite::read_json"
     ))
     assert(requireNamespace("jsonlite", quietly = TRUE))
-    object <- jsonlite::read_json(path = file)
-    object <- .slotMetadata(object, pkg = "jsonlite", fun = "read_json")
+    object <- jsonlite::read_json(path = tmpfile)
+    object <- .defineImportMetadata(
+        object = object,
+        file = file,
+        pkg = "jsonlite",
+        fun = "read_json"
+    )
     object
 }
 
@@ -522,14 +550,19 @@ import <- function(
 
 ## Internal importer for a YAML file (`.yaml`, `.yml`).
 .importYAML <- function(file) {
-    file <- localOrRemoteFile(file)
+    tmpfile <- localOrRemoteFile(file)
     message(sprintf(
         "Importing '%s' using '%s()'.",
         basename(file), "yaml::yaml.load_file"
     ))
     assert(requireNamespace("yaml", quietly = TRUE))
-    object <- yaml::yaml.load_file(input = file)
-    object <- .slotMetadata(object, pkg = "yaml", fun = "yaml.load_file")
+    object <- yaml::yaml.load_file(input = tmpfile)
+    object <- .defineImportMetadata(
+        object = object,
+        file = file,
+        pkg = "yaml",
+        fun = "yaml.load_file"
+    )
     object
 }
 
@@ -577,14 +610,14 @@ import <- function(
 ## Internal importer for a Microsoft Excel worksheet (`.xlsx`).
 .importXLSX <- function(file, sheet = 1L, colnames = TRUE) {
     assert(isFlag(colnames) || isCharacter(colnames))
-    file <- localOrRemoteFile(file)
+    tmpfile <- localOrRemoteFile(file)
     message(sprintf(
         "Importing '%s' using '%s()'.",
         basename(file), "readxl::read_excel"
     ))
     assert(requireNamespace("readxl", quietly = TRUE))
     object <- readxl::read_excel(
-        path = file,
+        path = tmpfile,
         sheet = sheet,
         col_names = colnames,
         na = naStrings,
@@ -598,7 +631,12 @@ import <- function(
         make.names = FALSE,
         stringsAsFactors = FALSE
     )
-    object <- .slotMetadata(object, pkg = "readxl", fun = "read_excel")
+    object <- .defineImportMetadata(
+        object = object,
+        file = file,
+        pkg = "readxl",
+        fun = "read_excel"
+    )
     object
 }
 
@@ -616,7 +654,7 @@ import <- function(
 ## Internal importer for a legacy Microsoft Excel worksheet (`.xls`).
 .importXLS <- function(file, sheet = 1L, colnames = TRUE) {
     assert(isFlag(colnames) || isCharacter(colnames))
-    file <- localOrRemoteFile(file)
+    tmpfile <- localOrRemoteFile(file)
     message(sprintf(
         "Importing '%s' using '%s()'.",
         basename(file), "gdata::read.xls"
@@ -631,7 +669,7 @@ import <- function(
     ## `read.xls()` passes `...` to `utils::read.table()`.
     object <- withCallingHandlers(
         expr = gdata::read.xls(
-            xls = file,
+            xls = tmpfile,
             sheet = sheet,
             verbose = FALSE,
             na.strings = naStrings,
@@ -654,7 +692,12 @@ import <- function(
         assert(hasLength(colnames, n = ncol(object)))
         colnames(object) <- colnames
     }
-    object <- .slotMetadata(object, pkg = "gdata", fun = "read.xls")
+    object <- .defineImportMetadata(
+        object = object,
+        file = file,
+        pkg = "gdata",
+        fun = "read.xls"
+    )
     object
 }
 
@@ -664,17 +707,22 @@ import <- function(
 ## Internal importer for a GraphPad Prism file (`.pzfx`).
 ## Note that this function doesn't support optional column names.
 .importPZFX <- function(file, sheet = 1L) {
-    file <- localOrRemoteFile(file)
+    tmpfile <- localOrRemoteFile(file)
     message(sprintf(
         "Importing '%s' using '%s()'.",
         basename(file), "pzfx::read_pzfx"
     ))
     assert(requireNamespace("pzfx", quietly = TRUE))
     object <- pzfx::read_pzfx(
-        path = file,
+        path = tmpfile,
         table = sheet
     )
-    object <- .slotMetadata(object, pkg = "pzfx", fun = "read_pzfx")
+    object <- .defineImportMetadata(
+        object = object,
+        file = file,
+        pkg = "pzfx",
+        fun = "read_pzfx"
+    )
     object
 }
 
@@ -688,9 +736,9 @@ import <- function(
         "Importing '%s' using '%s()'.",
         basename(file), "data.table::fread"
     ))
-    file <- localOrRemoteFile(file)
+    tmpfile <- localOrRemoteFile(file)
     object <- fread(
-        file = file,
+        file = tmpfile,
         na.strings = naStrings
     )
     assert(
@@ -702,36 +750,46 @@ import <- function(
     object[["id"]] <- NULL
     object <- as.matrix(object)
     mode(object) <- "integer"
-    object <- .slotMetadata(object, pkg = "data.table", fun = "fread")
+    object <- .defineImportMetadata(
+        object = object,
+        file = file,
+        pkg = "data.table",
+        fun = "fread"
+    )
     object
 }
 
 
 
 ## Handoff =====================================================================
-.rioImport <- function(file) {
-    file <- localOrRemoteFile(file)
+.rioImport <- function(file, ...) {
+    tmpfile <- localOrRemoteFile(file)
     message(sprintf("Importing '%s' using '%s()'.",
         basename(file), "rio::import"
     ))
     assert(requireNamespace("rio", quietly = TRUE))
-    object <- rio::import(file)
-    object <- .slotMetadata(object, pkg = "rio", fun = "import")
+    object <- rio::import(file = tmpfile, ...)
+    object <- .defineImportMetadata(
+        object = object,
+        file = file,
+        pkg = "rio",
+        fun = "import"
+    )
     object
 }
 
 
 
 ## Using `tryCatch()` here to error if there are any warnings.
-.rtracklayerImport <- function(file) {
-    file <- localOrRemoteFile(file)
+.rtracklayerImport <- function(file, ...) {
+    tmpfile <- localOrRemoteFile(file)
     message(sprintf(
         "Importing '%s' using '%s()'.",
         basename(file), "rtracklayer::import"
     ))
     assert(requireNamespace("rtracklayer", quietly = TRUE))
     object <- tryCatch(
-        expr = rtracklayer::import(file),
+        expr = rtracklayer::import(con = tmpfile, ...),
         error = function(e) {
             stop("File failed to load.")  # nocov
         },
@@ -739,6 +797,11 @@ import <- function(
             stop("File failed to load.")  # nocov
         }
     )
-    object <- .slotMetadata(object, pkg = "rtracklayer", fun = "import")
+    object <- .defineImportMetadata(
+        object = object,
+        file = file,
+        pkg = "rtracklayer",
+        fun = "import"
+    )
     object
 }
