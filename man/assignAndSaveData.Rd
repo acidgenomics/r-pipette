@@ -47,7 +47,7 @@ the newly assigned object, specified by the \code{"dir"} argument.
 This function attempts to follow the same order as
 \code{\link[base:assign]{assign()}}.
 
-Updated 2019-07-19.
+Updated 2019-09-06.
 }
 \examples{
 x <- 1L

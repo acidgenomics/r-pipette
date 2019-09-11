@@ -7,7 +7,7 @@
 #' simple. Remote URLs and compressed files are supported. If you need more
 #' complex import settings, just call the wrapped importer directly instead.
 #'
-#' @note Updated 2019-08-22.
+#' @note Updated 2019-09-06.
 #' @export
 #'
 #' @section Row and column names:
@@ -78,7 +78,7 @@
 #' - [Ensembl spec](http://www.ensembl.org/info/website/upload/gff.html)
 #' - [GENCODE spec](http://www.gencodegenes.org/gencodeformat.html)
 #'
-#' [basejump]: https://steinbaugh.com/basejump/
+#' [basejump]: https://basejump.acidgenomics.com/
 #'
 #' @section Gene sets (GMT, GMX):
 #'
@@ -116,9 +116,6 @@
 #'   *Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.*
 #'   Sheet to read. Either a string (the name of a sheet), or an integer (the
 #'   position of the sheet). Defaults to the first sheet.
-#' @param setclass `character(1)`.
-#'   Class to set on data frame return.
-#'   Options: `data.frame` (default), `DataFrame`, `tbl_df`, `data.table`.
 #'
 #' @return Varies, depending on the file type.
 #'
@@ -202,8 +199,7 @@ import <- function(
     rownames = TRUE,
     colnames = TRUE,
     format = "none",
-    sheet = 1L,
-    setclass = getOption("acid.data.frame", default = "data.frame")
+    sheet = 1L
 ) {
     ## We're supporting remote files, so don't check using `isAFile()` here.
     assert(
@@ -215,15 +211,6 @@ import <- function(
     format <- match.arg(
         arg = format,
         choices = c("none", "csv", "tsv", "txt", "lines")
-    )
-    setclass <- match.arg(
-        arg = setclass,
-        choices = c(
-            "DataFrame",
-            "data.frame",
-            "data.table",
-            "tbl_df"
-        )
     )
     ## Allow Google Sheets import using rio, by matching the URL.
     ## Otherwise, coerce the file extension to uppercase, for easy matching.
@@ -295,32 +282,10 @@ import <- function(
         ))
     }
     if (is.data.frame(object)) {
-        ## Coerce data frame to desired global output, if necessary.
-        object <- switch(
-            EXPR = setclass,
-            "data.frame" = object,
-            "DataFrame" = as(object, "DataFrame"),
-            "tbl_df" = as_tibble(
-                x = object,
-                .name_repair = "minimal",
-                rownames = NULL
-            ),
-            "data.table" = as.data.table(
-                x = object,
-                keep.rownames = FALSE
-            )
-        )
-        ## Set row names automatically, if supported.
-        if (
-            isAny(object, c("data.frame", "DataFrame")) &&
-            !isAny(object, c("data.table", "tbl_df")) &&
-            isSubset("rowname", colnames(object)) &&
-            isTRUE(rownames)
-        ) {
-            message("Setting row names from 'rowname' column.")
-            rownames(object) <- object[["rowname"]]
-            object[["rowname"]] <- NULL
-        }
+        ## Set row names automatically.
+        message("Setting row names from 'rowname' column.")
+        rownames(object) <- object[["rowname"]]
+        object[["rowname"]] <- NULL
     }
     ## Slot data provenance metadata into object.
     ## Skipping this step for vectors (i.e. source code lines).

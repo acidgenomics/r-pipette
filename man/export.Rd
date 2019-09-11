@@ -15,27 +15,27 @@
 export(object, ...)
 
 \S4method{export}{matrix}(object, ext = getOption("acid.export.ext",
-  default = c("csv", "csv.gz", "tsv", "tsv.gz")),
+  default = c("csv", "csv.gz", "csv.bz2", "tsv", "tsv.gz", "tsv.bz2")),
   dir = getOption("acid.export.dir", default = "."), file = NULL,
   overwrite = getOption("acid.overwrite", default = TRUE))
 
 \S4method{export}{data.frame}(object, ext = getOption("acid.export.ext",
-  default = c("csv", "csv.gz", "tsv", "tsv.gz")),
+  default = c("csv", "csv.gz", "csv.bz2", "tsv", "tsv.gz", "tsv.bz2")),
   dir = getOption("acid.export.dir", default = "."), file = NULL,
   overwrite = getOption("acid.overwrite", default = TRUE))
 
 \S4method{export}{DataFrame}(object, ext = getOption("acid.export.ext",
-  default = c("csv", "csv.gz", "tsv", "tsv.gz")),
+  default = c("csv", "csv.gz", "csv.bz2", "tsv", "tsv.gz", "tsv.bz2")),
   dir = getOption("acid.export.dir", default = "."), file = NULL,
   overwrite = getOption("acid.overwrite", default = TRUE))
 
 \S4method{export}{sparseMatrix}(object,
-  ext = getOption("acid.export.sparse.ext", default = c("mtx",
-  "mtx.gz")), dir = getOption("acid.export.dir", default = "."),
+  ext = getOption("acid.export.sparse.ext", default = c("mtx", "mtx.gz",
+  "mtx.bz2")), dir = getOption("acid.export.dir", default = "."),
   file = NULL, overwrite = getOption("acid.overwrite", default = TRUE))
 
 \S4method{export}{GRanges}(object, ext = getOption("acid.export.ext",
-  default = c("csv", "csv.gz", "tsv", "tsv.gz")),
+  default = c("csv", "csv.gz", "csv.bz2", "tsv", "tsv.gz", "tsv.bz2")),
   dir = getOption("acid.export.dir", default = "."), file = NULL,
   overwrite = getOption("acid.overwrite", default = TRUE))
 
@@ -82,7 +82,7 @@ File path(s).
 Export data out of R and write to disk.
 }
 \note{
-Updated 2019-08-27.
+Updated 2019-09-11.
 }
 \section{Row names}{
 

@@ -5,8 +5,7 @@
 \title{Import}
 \usage{
 import(file, rownames = TRUE, colnames = TRUE, format = "none",
-  sheet = 1L, setclass = getOption("acid.data.frame", default =
-  "data.frame"))
+  sheet = 1L)
 }
 \arguments{
 \item{file}{\code{character(1)}.
@@ -29,10 +28,6 @@ inferred from \code{file}. \emph{Not recommended by default.}}
 \emph{Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.}
 Sheet to read. Either a string (the name of a sheet), or an integer (the
 position of the sheet). Defaults to the first sheet.}
-
-\item{setclass}{\code{character(1)}.
-Class to set on data frame return.
-Options: \code{data.frame} (default), \code{DataFrame}, \code{tbl_df}, \code{data.table}.}
 }
 \value{
 Varies, depending on the file type.
@@ -96,7 +91,7 @@ simple. Remote URLs and compressed files are supported. If you need more
 complex import settings, just call the wrapped importer directly instead.
 }
 \note{
-Updated 2019-08-22.
+Updated 2019-09-06.
 }
 \section{Row and column names}{
 
@@ -174,7 +169,7 @@ The GFF (General Feature Format) format consists of one line per feature,
 each containing 9 columns of data, plus optional track definition lines. The
 GTF (General Transfer Format) is identical to GFF version 2.
 
-\href{https://steinbaugh.com/basejump/}{basejump} exports the specialized \code{makeGRangesFromGFF()} function that
+\href{https://basejump.acidgenomics.com/}{basejump} exports the specialized \code{makeGRangesFromGFF()} function that
 makes GFF loading simple.
 
 See also:
