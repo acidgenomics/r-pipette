@@ -368,21 +368,22 @@ import <- function(
 ## Slot additional information into brio metadata.
 ## This is currently in use to define in the `import()` call.
 ## Updated 2019-09-11.
-`.slotImportMetadata<-` <- function(object, which, value) {
-    slot <- "import"
-    if (isS4(object) && "metadata" %in% slotNames(object)) {
-        if (!isSubset(slot, names(metadata(object)))) {
-            return(object)
+`.slotImportMetadata<-` <-  # nolint
+    function(object, which, value) {
+        slot <- "import"
+        if (isS4(object) && "metadata" %in% slotNames(object)) {
+            if (!isSubset(slot, names(metadata(object)))) {
+                return(object)
+            }
+            metadata(object)[[slot]][[which]] <- value
+        } else {
+            if (!isSubset(slot, names(attributes(object)))) {
+                return(object)
+            }
+            attributes(object)[[slot]][[which]] <- value
         }
-        metadata(object)[[slot]][[which]] <- value
-    } else {
-        if (!isSubset(slot, names(attributes(object)))) {
-            return(object)
-        }
-        attributes(object)[[slot]][[which]] <- value
+        object
     }
-    object
-}
 
 
 
