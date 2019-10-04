@@ -30,7 +30,7 @@ Imports:
     S4Vectors (>= 0.22),
     SingleCellExperiment (>= 1.6),
     SummarizedExperiment (>= 1.14),
-    rtracklayer (>= 1.44.4),
+    rtracklayer (>= 1.44.2),
     Matrix (>= 1.2),
     R.utils (>= 2.9),
     RCurl (>= 1.95),
