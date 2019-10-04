@@ -1,8 +1,3 @@
-## FIXME rownames and colnames need work here.
-## FIXME Setting row names from 'rowname' column showing up when not appropriate.
-
-
-
 #' Import
 #'
 #' Read file by extension into R.
