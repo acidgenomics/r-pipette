@@ -7,28 +7,9 @@
 
 Biological R input/output.
 
-This package is part of the [basejump][] toolkit.
-
 ## Installation
 
-### [R][] method
-
-```r
-if (!requireNamespace("remotes", quietly = TRUE)) {
-    install.packages("remotes")
-}
-Sys.setenv(R_REMOTES_UPGRADE = "always")
-# Set `GITHUB_PAT` in `~/.Renviron` if you get a rate limit error.
-remotes::install_github("acidgenomics/brio")
-```
-
-### [conda][] method
-
-Configure [conda][] to use the [bioconda][] channels.
-
-```bash
-conda install -c bioconda r-brio
-```
+This package is part of the [basejump][] toolkit. Refer to its website for installation instructions.
 
 [R]: https://www.r-project.org/
 [basejump]: https://basejump.acidgenomics.com/
