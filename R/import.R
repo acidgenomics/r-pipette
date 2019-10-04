@@ -7,7 +7,7 @@
 #' simple. Remote URLs and compressed files are supported. If you need more
 #' complex import settings, just call the wrapped importer directly instead.
 #'
-#' @note Updated 2019-09-11.
+#' @note Updated 2019-10-04.
 #' @export
 #'
 #' @section Row and column names:
@@ -281,11 +281,14 @@ import <- function(
             basename(file), ext
         ))
     }
+    ## Data frame-specific operations.
     if (is.data.frame(object)) {
         ## Set row names automatically.
-        message("Setting row names from 'rowname' column.")
-        rownames(object) <- object[["rowname"]]
-        object[["rowname"]] <- NULL
+        if (isSubset("rowname", colnames(object))) {
+            message("Setting row names from 'rowname' column.")
+            rownames(object) <- object[["rowname"]]
+            object[["rowname"]] <- NULL
+        }
     }
     ## Check for syntactically valid names and inform the user, if necessary.
     if (
@@ -368,21 +371,22 @@ import <- function(
 ## Slot additional information into brio metadata.
 ## This is currently in use to define in the `import()` call.
 ## Updated 2019-09-11.
-`.slotImportMetadata<-` <- function(object, which, value) {
-    slot <- "import"
-    if (isS4(object) && "metadata" %in% slotNames(object)) {
-        if (!isSubset(slot, names(metadata(object)))) {
-            return(object)
+`.slotImportMetadata<-` <-  # nolint
+    function(object, which, value) {
+        slot <- "import"
+        if (isS4(object) && "metadata" %in% slotNames(object)) {
+            if (!isSubset(slot, names(metadata(object)))) {
+                return(object)
+            }
+            metadata(object)[[slot]][[which]] <- value
+        } else {
+            if (!isSubset(slot, names(attributes(object)))) {
+                return(object)
+            }
+            attributes(object)[[slot]][[which]] <- value
         }
-        metadata(object)[[slot]][[which]] <- value
-    } else {
-        if (!isSubset(slot, names(attributes(object)))) {
-            return(object)
-        }
-        attributes(object)[[slot]][[which]] <- value
+        object
     }
-    object
-}
 
 
 

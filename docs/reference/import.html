@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">brio</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.9</span>
       </span>
     </div>
 
@@ -166,7 +166,7 @@ Data separated by commas, tabs, or visual spaces.<br />
 Note that TXT structure is amgibuous and actively discouraged.<br />
 Refer to <code>Data frame return</code> section for details on how to change the
 default return type to <code>DataFrame</code>, <code>tbl_df</code> or <code>data.table</code>.<br />
-Imported by <code><a href='https://rdrr.io/pkg/data.table/man/fread.html'>data.table::fread()</a></code>.</p></li>
+Imported by <code><a href='https://Rdatatable.gitlab.io/data.table/reference/fread.html'>data.table::fread()</a></code>.</p></li>
 <li><p><strong>Excel workbook</strong> (<code>XLSB</code>, <code>XLSX</code>): <code>data.frame</code>.<br />
 Resave in plain text delimited format instead, if possible.<br />
 Imported by <code><a href='https://readxl.tidyverse.org/reference/read_excel.html'>readxl::read_excel()</a></code>.</p></li>
@@ -218,7 +218,7 @@ simple. Remote URLs and compressed files are supported. If you need more
 complex import settings, just call the wrapped importer directly instead.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>Updated 2019-09-11.</p>
+    <p>Updated 2019-10-04.</p>
     <h2 class="hasAnchor" id="row-and-column-names"><a class="anchor" href="#row-and-column-names"></a>Row and column names</h2>
 
     
@@ -333,7 +333,7 @@ makes GFF loading simple.</p>
 <p>Importer functions:</p><ul>
 <li><p><code><a href='https://rdrr.io/pkg/rtracklayer/man/export.html'>rtracklayer::import()</a></code>.</p></li>
 <li><p><code><a href='https://rdrr.io/pkg/rio/man/import.html'>rio::import()</a></code>.</p></li>
-<li><p><code><a href='https://rdrr.io/pkg/data.table/man/fread.html'>data.table::fread()</a></code>.</p></li>
+<li><p><code><a href='https://Rdatatable.gitlab.io/data.table/reference/fread.html'>data.table::fread()</a></code>.</p></li>
 <li><p><code><a href='https://readr.tidyverse.org/reference/read_delim.html'>readr::read_csv()</a></code>.</p></li>
 <li><p><code><a href='https://rdrr.io/r/utils/read.table.html'>utils::read.table()</a></code>.</p></li>
 </ul>
@@ -351,7 +351,7 @@ makes GFF loading simple.</p>
 #&gt; gene5       1       1       2       2
 #&gt; gene6      10      17      18      11</div><div class='input'>
 <span class='co'>## Row and column names disabled.</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>import</span>(<span class='no'>file</span>, <span class='kw'>rownames</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>colnames</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='message'>Importing 'example.csv' using 'data.table::fread()'.</span></div><div class='output co'>#&gt; <span class='message'>Setting row names from 'rowname' column.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>x</span>))</div><div class='output co'>#&gt;        V1      V2      V3      V4      V5
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>import</span>(<span class='no'>file</span>, <span class='kw'>rownames</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>colnames</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='message'>Importing 'example.csv' using 'data.table::fread()'.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>x</span>))</div><div class='output co'>#&gt;        V1      V2      V3      V4      V5
 #&gt; 1 rowname sample1 sample2 sample3 sample4
 #&gt; 2   gene1      16      20      13      16
 #&gt; 3   gene2      29      22      43      50
@@ -387,7 +387,7 @@ makes GFF loading simple.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>
