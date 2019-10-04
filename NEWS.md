@@ -1,3 +1,12 @@
+## brio 0.3.9 (2019-10-04)
+
+### Minor changes
+
+- Updated data.table and rio dependencies, based on recent data.table 1.12.4
+  update, which has a lot of changes.
+- Fixed internal code to no longer show rownames message, even when
+  `rownames = FALSE`.
+
 ## brio 0.3.8 (2019-09-11)
 
 ### Major changes
