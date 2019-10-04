@@ -1,3 +1,8 @@
+## FIXME rownames and colnames need work here.
+## FIXME Setting row names from 'rowname' column showing up when not appropriate.
+
+
+
 #' Import
 #'
 #' Read file by extension into R.
@@ -7,7 +12,7 @@
 #' simple. Remote URLs and compressed files are supported. If you need more
 #' complex import settings, just call the wrapped importer directly instead.
 #'
-#' @note Updated 2019-09-11.
+#' @note Updated 2019-10-04.
 #' @export
 #'
 #' @section Row and column names:
@@ -281,11 +286,14 @@ import <- function(
             basename(file), ext
         ))
     }
+    ## Data frame-specific operations.
     if (is.data.frame(object)) {
         ## Set row names automatically.
-        message("Setting row names from 'rowname' column.")
-        rownames(object) <- object[["rowname"]]
-        object[["rowname"]] <- NULL
+        if (isSubset("rowname", colnames(object))) {
+            message("Setting row names from 'rowname' column.")
+            rownames(object) <- object[["rowname"]]
+            object[["rowname"]] <- NULL
+        }
     }
     ## Check for syntactically valid names and inform the user, if necessary.
     if (
