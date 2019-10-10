@@ -90,6 +90,7 @@ NULL
             arg = getOption("acid.export.engine", default = "data.table"),
             choices = c("data.table", "readr")
         )
+        whatPkg <- engine
         verbose <- getOption("acid.verbose", default = FALSE)
         assert(
             hasLength(object),
@@ -164,6 +165,7 @@ NULL
         if (identical(engine, "data.table")) {
             ## data.table ------------------------------------------------------
             ## Current default in rio package.
+            whatName <- "fwrite"
             what <- fwrite
             args <- list(
                 x = as.data.table(object),
@@ -176,13 +178,9 @@ NULL
                 "csv" = ",",
                 "tsv" = "\t"
             )
-            message(sprintf(
-                "Exporting '%s' using '%s::%s()'.",
-                basename(file), "data.table", "fread"
-            ))
         } else if (identical(engine, "readr")) {
             ## readr -----------------------------------------------------------
-            assert(requireNamespace("readr", quietly = TRUE))
+            assert(requireNamespace(whatPkg, quietly = TRUE))
             whatName <- switch(
                 EXPR = ext,
                 "csv" = "write_csv",
@@ -191,17 +189,18 @@ NULL
             what <- get(
                 x = whatName,
                 envir = asNamespace("readr"),
-                inherits = FALSE
+                inherits = TRUE
             )
+            assert(is.function(what))
             args <- list(
                 x = as_tibble(object),
                 path = file
             )
-            message(sprintf(
-                "Exporting '%s' using '%s::%s()'.",
-                basename(file), "readr", whatName
-            ))
         }
+        message(sprintf(
+            "Exporting '%s' using '%s::%s()'.",
+            basename(file), whatPkg, whatFun
+        ))
         do.call(what = what, args = args)
         ## Compress file, if necessary.
         if (!is.na(compress)) {
