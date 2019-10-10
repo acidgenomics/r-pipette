@@ -395,17 +395,17 @@ import <- function(
 ## Calls [data.table::fread()] internally.
 .importDelim <- function(
     file,
-    colnames = TRUE,
-    verbose = getOption("acid.verbose", default = FALSE)
+    colnames = TRUE
 ) {
+    verbose <- getOption("acid.verbose", default = FALSE)
     assert(
         isFlag(colnames) || isCharacter(colnames),
         isFlag(verbose)
     )
     tmpfile <- localOrRemoteFile(file)
     message(sprintf(
-        "Importing '%s' using '%s()'.",
-        basename(file), "data.table::fread"
+        "Importing '%s' using '%s::%s()'.",
+        basename(file), "data.table", "fread"
     ))
     args <- list(
         file = tmpfile,
@@ -443,8 +443,8 @@ import <- function(
 .importLines <- function(file) {
     tmpfile <- localOrRemoteFile(file)
     message(sprintf(
-        "Importing '%s' using '%s()'.",
-        basename(file), "base::readLines"
+        "Importing '%s' using '%s::%s()'.",
+        basename(file), "base", "readLines"
     ))
     con <- file(tmpfile)
     object <- readLines(con = con)
@@ -459,9 +459,8 @@ import <- function(
 .importRDS <- function(file) {
     tmpfile <- localOrRemoteFile(file)
     message(sprintf(
-        "Importing '%s' using '%s()'.",
-        basename(file),
-        "base::readRDS"
+        "Importing '%s' using '%s::%s()'.",
+        basename(file), "base", "readRDS"
     ))
     object <- readRDS(file = tmpfile)
     object
@@ -473,8 +472,8 @@ import <- function(
 .importRDA <- function(file) {
     tmpfile <- localOrRemoteFile(file)
     message(sprintf(
-        "Importing '%s' using '%s()'.",
-        basename(file), "base::load"
+        "Importing '%s' using '%s::%s()'.",
+        basename(file), "base", "load"
     ))
     safe <- new.env()
     object <- load(file = tmpfile, envir = safe)
@@ -493,8 +492,8 @@ import <- function(
     assert(isString(file))
     tmpfile <- localOrRemoteFile(file)
     message(sprintf(
-        "Importing '%s' using '%s()'.",
-        basename(file), "Matrix::readMM"
+        "Importing '%s' using '%s::%s()'.",
+        basename(file), "Matrix", "readMM"
     ))
     object <- readMM(file = tmpfile)
     ## Add the rownames automatically using `.rownames` sidecar file.
@@ -543,8 +542,8 @@ import <- function(
 .importJSON <- function(file) {
     tmpfile <- localOrRemoteFile(file)
     message(sprintf(
-        "Importing '%s' using '%s()'.",
-        basename(file), "jsonlite::read_json"
+        "Importing '%s' using '%s::%s()'.",
+        basename(file), "jsonlite", "read_json"
     ))
     assert(requireNamespace("jsonlite", quietly = TRUE))
     object <- jsonlite::read_json(path = tmpfile)
@@ -563,8 +562,8 @@ import <- function(
 .importYAML <- function(file) {
     tmpfile <- localOrRemoteFile(file)
     message(sprintf(
-        "Importing '%s' using '%s()'.",
-        basename(file), "yaml::yaml.load_file"
+        "Importing '%s' using '%s::%s()'.",
+        basename(file), "yaml", "yaml.load_file"
     ))
     assert(requireNamespace("yaml", quietly = TRUE))
     object <- yaml::yaml.load_file(input = tmpfile)
@@ -623,8 +622,8 @@ import <- function(
     assert(isFlag(colnames) || isCharacter(colnames))
     tmpfile <- localOrRemoteFile(file)
     message(sprintf(
-        "Importing '%s' using '%s()'.",
-        basename(file), "readxl::read_excel"
+        "Importing '%s' using '%s::%s()'.",
+        basename(file), "readxl", "read_excel"
     ))
     assert(requireNamespace("readxl", quietly = TRUE))
     object <- readxl::read_excel(
@@ -667,8 +666,8 @@ import <- function(
     assert(isFlag(colnames) || isCharacter(colnames))
     tmpfile <- localOrRemoteFile(file)
     message(sprintf(
-        "Importing '%s' using '%s()'.",
-        basename(file), "gdata::read.xls"
+        "Importing '%s' using '%s::%s()'.",
+        basename(file), "gdata", "read.xls"
     ))
     assert(requireNamespace("gdata", quietly = TRUE))
     if (isCharacter(colnames)) {
@@ -720,8 +719,8 @@ import <- function(
 .importPZFX <- function(file, sheet = 1L) {
     tmpfile <- localOrRemoteFile(file)
     message(sprintf(
-        "Importing '%s' using '%s()'.",
-        basename(file), "pzfx::read_pzfx"
+        "Importing '%s' using '%s::%s()'.",
+        basename(file), "pzfx", "read_pzfx"
     ))
     assert(requireNamespace("pzfx", quietly = TRUE))
     object <- pzfx::read_pzfx(
@@ -744,8 +743,8 @@ import <- function(
 ## These files contain an `"id"` column that we need to coerce to row names.
 .importBCBCounts <- function(file) {
     message(sprintf(
-        "Importing '%s' using '%s()'.",
-        basename(file), "data.table::fread"
+        "Importing '%s' using '%s::%s()'.",
+        basename(file), "data.table", "fread"
     ))
     tmpfile <- localOrRemoteFile(file)
     object <- fread(
@@ -775,8 +774,8 @@ import <- function(
 ## Handoff =====================================================================
 .rioImport <- function(file, ...) {
     tmpfile <- localOrRemoteFile(file)
-    message(sprintf("Importing '%s' using '%s()'.",
-        basename(file), "rio::import"
+    message(sprintf("Importing '%s' using '%s::%s()'.",
+        basename(file), "rio", "import"
     ))
     assert(requireNamespace("rio", quietly = TRUE))
     object <- rio::import(file = tmpfile, ...)
@@ -795,8 +794,8 @@ import <- function(
 .rtracklayerImport <- function(file, ...) {
     tmpfile <- localOrRemoteFile(file)
     message(sprintf(
-        "Importing '%s' using '%s()'.",
-        basename(file), "rtracklayer::import"
+        "Importing '%s' using '%s::%s()'.",
+        basename(file), "rtracklayer", "import"
     ))
     assert(requireNamespace("rtracklayer", quietly = TRUE))
     object <- tryCatch(
