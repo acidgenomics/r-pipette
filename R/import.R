@@ -7,7 +7,7 @@
 #' simple. Remote URLs and compressed files are supported. If you need more
 #' complex import settings, just call the wrapped importer directly instead.
 #'
-#' @note Updated 2019-10-04.
+#' @note Updated 2019-10-10.
 #' @export
 #'
 #' @section Row and column names:
