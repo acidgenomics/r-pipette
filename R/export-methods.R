@@ -165,7 +165,7 @@ NULL
         if (identical(engine, "data.table")) {
             ## data.table ------------------------------------------------------
             ## Current default in rio package.
-            whatName <- "fwrite"
+            whatFun <- "fwrite"
             what <- fwrite
             args <- list(
                 x = as.data.table(object),
@@ -181,14 +181,14 @@ NULL
         } else if (identical(engine, "readr")) {
             ## readr -----------------------------------------------------------
             assert(requireNamespace(whatPkg, quietly = TRUE))
-            whatName <- switch(
+            whatFun <- switch(
                 EXPR = ext,
                 "csv" = "write_csv",
                 "tsv" = "write_tsv"
             )
             what <- get(
-                x = whatName,
-                envir = asNamespace("readr"),
+                x = whatFun,
+                envir = asNamespace(whatPkg),
                 inherits = TRUE
             )
             assert(is.function(what))
