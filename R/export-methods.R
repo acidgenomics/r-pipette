@@ -25,9 +25,6 @@
 #' If you encounter any stack imbalance or segfault warnings during export,
 #' these are errors from data.table.
 #'
-#' See related:
-#' - https://github.com/Rdatatable/data.table/issues/2457
-#'
 #' @inheritParams acidroxygen::params
 #' @param object Object.
 #'   An object supporting [`dim()`][base::dim], or a supported class capable
