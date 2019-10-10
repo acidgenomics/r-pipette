@@ -176,19 +176,31 @@ NULL
                 "csv" = ",",
                 "tsv" = "\t"
             )
+            message(sprintf(
+                "Exporting '%s' using '%s::%s()'.",
+                basename(file), "data.table", "fread"
+            ))
         } else if (identical(engine, "readr")) {
             ## readr -----------------------------------------------------------
             assert(requireNamespace("readr", quietly = TRUE))
-            what <- switch(
+            whatName <- switch(
                 EXPR = ext,
                 "csv" = "write_csv",
                 "tsv" = "write_tsv"
             )
-            what <- get(what, envir = asNamespace("readr"), inherits = FALSE)
+            what <- get(
+                x = whatName,
+                envir = asNamespace("readr"),
+                inherits = FALSE
+            )
             args <- list(
                 x = as_tibble(object),
                 path = file
             )
+            message(sprintf(
+                "Exporting '%s' using '%s::%s()'.",
+                basename(file), "readr", whatName
+            ))
         }
         do.call(what = what, args = args)
         ## Compress file, if necessary.
