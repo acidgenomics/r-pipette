@@ -17,20 +17,17 @@ export(object, ...)
 \S4method{export}{matrix}(object, ext = getOption("acid.export.ext",
   default = c("csv", "csv.gz", "csv.bz2", "tsv", "tsv.gz", "tsv.bz2")),
   dir = getOption("acid.export.dir", default = "."), file = NULL,
-  overwrite = getOption("acid.overwrite", default = TRUE),
-  verbose = getOption("acid.verbose", default = FALSE))
+  overwrite = getOption("acid.overwrite", default = TRUE))
 
 \S4method{export}{data.frame}(object, ext = getOption("acid.export.ext",
   default = c("csv", "csv.gz", "csv.bz2", "tsv", "tsv.gz", "tsv.bz2")),
   dir = getOption("acid.export.dir", default = "."), file = NULL,
-  overwrite = getOption("acid.overwrite", default = TRUE),
-  verbose = getOption("acid.verbose", default = FALSE))
+  overwrite = getOption("acid.overwrite", default = TRUE))
 
 \S4method{export}{DataFrame}(object, ext = getOption("acid.export.ext",
   default = c("csv", "csv.gz", "csv.bz2", "tsv", "tsv.gz", "tsv.bz2")),
   dir = getOption("acid.export.dir", default = "."), file = NULL,
-  overwrite = getOption("acid.overwrite", default = TRUE),
-  verbose = getOption("acid.verbose", default = FALSE))
+  overwrite = getOption("acid.overwrite", default = TRUE))
 
 \S4method{export}{sparseMatrix}(object,
   ext = getOption("acid.export.sparse.ext", default = c("mtx", "mtx.gz",
@@ -40,8 +37,7 @@ export(object, ...)
 \S4method{export}{GRanges}(object, ext = getOption("acid.export.ext",
   default = c("csv", "csv.gz", "csv.bz2", "tsv", "tsv.gz", "tsv.bz2")),
   dir = getOption("acid.export.dir", default = "."), file = NULL,
-  overwrite = getOption("acid.overwrite", default = TRUE),
-  verbose = getOption("acid.verbose", default = FALSE))
+  overwrite = getOption("acid.overwrite", default = TRUE))
 
 \S4method{export}{SummarizedExperiment}(object, name = NULL,
   dir = getOption("acid.export.dir", default = "."),
@@ -69,9 +65,6 @@ be used instead.}
 
 \item{overwrite}{\code{logical(1)}.
 Overwrite existing file on disk.}
-
-\item{verbose}{\code{logical(1)}.
-Run the function with verbose output.}
 
 \item{name}{\code{character(1)}.
 Name to use on disk. If \code{NULL}, will use the name of the object instead.}
@@ -113,9 +106,9 @@ intentionally unsupported in the current release.
 \section{Debugging}{
 
 
-Note that this function currently wraps \code{\link[data.table:fwrite]{data.table::fwrite()}}. If you
-encounter any stack imbalance or segfault warnings during export, these are
-errors from data.table.
+Note that this function currently wraps \code{\link[data.table:fwrite]{data.table::fwrite()}} by default.
+If you encounter any stack imbalance or segfault warnings during export,
+these are errors from data.table.
 
 See related:
 \itemize{
@@ -132,8 +125,9 @@ file.remove("counts.csv")
 }
 \seealso{
 \itemize{
-\item \code{\link[data.table:fwrite]{data.table::fwrite()}}.
 \item \code{\link[rio:export]{rio::export()}}.
 \item \code{\link[rtracklayer:export]{rtracklayer::export()}}.
+\item \code{\link[data.table:fwrite]{data.table::fwrite()}}.
+\item \code{\link[readr:write_csv]{readr::write_csv()}}.
 }
 }
