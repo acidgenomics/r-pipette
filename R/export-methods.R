@@ -213,7 +213,6 @@ NULL
             file <- compressFun(file, overwrite = TRUE)
         }
         file <- realpath(file)
-        message(sprintf("Exported '%s'.", basename(file)))
         invisible(file)
     }
 
