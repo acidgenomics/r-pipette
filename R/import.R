@@ -393,8 +393,15 @@ import <- function(
 ## Basic =======================================================================
 ## Internal importer for a delimited file (e.g. `.csv`, `.tsv`).
 ## Calls [data.table::fread()] internally.
-.importDelim <- function(file, colnames = TRUE) {
-    assert(isFlag(colnames) || isCharacter(colnames))
+.importDelim <- function(
+    file,
+    colnames = TRUE,
+    verbose = getOption("acid.verbose", default = FALSE)
+) {
+    assert(
+        isFlag(colnames) || isCharacter(colnames),
+        isFlag(verbose)
+    )
     tmpfile <- localOrRemoteFile(file)
     message(sprintf(
         "Importing '%s' using '%s()'.",
@@ -411,7 +418,7 @@ import <- function(
         showProgress = FALSE,
         stringsAsFactors = FALSE,
         strip.white = TRUE,
-        verbose = FALSE
+        verbose = verbose
     )
     if (isCharacter(colnames)) {
         args[["header"]] <- FALSE
