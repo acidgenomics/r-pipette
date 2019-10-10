@@ -1,6 +1,6 @@
 #' @name export
 #' @inherit bioverbs::export
-#' @note Updated 2019-09-11.
+#' @note Updated 2019-10-10.
 #'
 #' @section Row names:
 #'
@@ -18,6 +18,15 @@
 #' Use [`writeLines()`][base::writeLines] instead of [export()] to write vectors
 #' to disk. An S4 character method may be defined in a future update, but it is
 #' intentionally unsupported in the current release.
+#'
+#' @section Debugging:
+#'
+#' Note that this function currently wraps [data.table::fwrite()]. If you
+#' encounter any stack imbalance or segfault warnings during export, these are
+#' errors from data.table.
+#'
+#' See related:
+#' - https://github.com/Rdatatable/data.table/issues/2457
 #'
 #' @inheritParams acidroxygen::params
 #' @param object Object.
@@ -66,21 +75,23 @@ NULL
 ## `data.table`, `tbl_df`, and `DataFrame` classes. Note that `rio::export()`
 ## does not preserve row names by default, so we're ensuring row names get
 ## coerced to "rowname" column consistently here.
-## Updated 2019-08-28.
+## Updated 2019-10-10.
 `export,matrix` <-  # nolint
     function(
         object,
         ext,
         dir,
         file = NULL,
-        overwrite
+        overwrite,
+        verbose = getOption("acid.verbose", default = FALSE)
     ) {
         validObject(object)
         assert(
             hasLength(object),
             isString(dir),
             isString(file, nullOK = TRUE),
-            isFlag(overwrite)
+            isFlag(overwrite),
+            isFlag(verbose)
         )
         ext <- match.arg(
             arg = ext,
@@ -127,6 +138,8 @@ NULL
         ## the row names into a column.
         object <- as_tibble(object, rownames = rownames)
         assert(hasRows(object), hasCols(object))
+        ## Coerce back to standard data frame before passing to `fwrite()`.
+        object <- as.data.frame(object)
         ## Inform the user regarding overwrite.
         if (isAFile(file)) {
             if (isTRUE(overwrite)) {
@@ -148,7 +161,8 @@ NULL
         args <- list(
             x = object,
             file = file,
-            row.names = FALSE
+            row.names = FALSE,
+            verbose = verbose
         )
         args[["sep"]] <- switch(
             EXPR = ext,
