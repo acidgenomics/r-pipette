@@ -402,6 +402,7 @@ import <- function(
         arg = getOption("acid.import.engine", default = "data.table"),
         choices = c("data.table", "readr")
     )
+    whatPkg <- engine
     verbose <- getOption("acid.verbose", default = FALSE)
     assert(
         isFlag(colnames) || isCharacter(colnames),
@@ -410,10 +411,7 @@ import <- function(
     tmpfile <- localOrRemoteFile(file)
     if (identical(engine, "data.table")) {
         ## data.table ----------------------------------------------------------
-        message(sprintf(
-            "Importing '%s' using '%s::%s()'.",
-            basename(file), "data.table", "fread"
-        ))
+        whatFun <- "fread"
         what <- fread
         args <- list(
             file = tmpfile,
@@ -436,31 +434,35 @@ import <- function(
         }
     } else if (identical(engine, "readr")) {
         ## readr ---------------------------------------------------------------
-        assert(requireNamespace("readr", quietly = TRUE))
-        whatName <- switch(
+        whatFun <- switch(
             EXPR = ext,
-            "csv" = "read_csv",
-            "tsv" = "read_tsv",
-            "txt" = "read_delim"
+            "CSV" = "read_csv",
+            "TSV" = "read_tsv",
+            "TXT" = "read_delim"
         )
+        assert(requireNamespace(whatPkg, quietly = TRUE))
         what <- get(
-            x = whatName,
-            envir = asNamespace("readr"),
-            inherits = FALSE
+            x = whatFun,
+            envir = asNamespace(whatPkg),
+            inherits = TRUE
         )
+        assert(is.function(what))
         args <- list(file = tmpfile)
-        message(sprintf(
-            "Exporting '%s' using '%s::%s()'.",
-            basename(file), "readr", whatName
-        ))
     }
+    message(sprintf(
+        "Importing '%s' using '%s::%s()'.",
+        basename(file), whatPkg, whatFun
+    ))
     object <- do.call(what = what, args = args)
     assert(is.data.frame(object))
+    if (!identical(class(object), "data.frame")) {
+        object <- as.data.frame(object, stringsAsFactors = FALSE)
+    }
     object <- .defineImportMetadata(
         object = object,
         file = file,
-        pkg = "data.table",
-        fun = "fread"
+        pkg = whatPkg,
+        fun = whatFun
     )
     object
 }
