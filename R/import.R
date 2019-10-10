@@ -221,7 +221,7 @@ import <- function(
     }
     ext <- toupper(ext)
     if (isSubset(ext, c("CSV", "FWF", "PSV", "TSV", "TXT"))) {
-        object <- .importDelim(file, colnames = colnames)
+        object <- .importDelim(file, colnames = colnames, ext = ext)
     } else if (identical(ext, "XLS")) {
         object <- .importXLS(file, sheet = sheet, colnames = colnames)
     } else if (isSubset(ext, c("XLSB", "XLSX"))) {
@@ -395,38 +395,66 @@ import <- function(
 ## Calls [data.table::fread()] internally.
 .importDelim <- function(
     file,
-    colnames = TRUE
+    colnames = TRUE,
+    ext
 ) {
+    engine <- match.arg(
+        arg = getOption("acid.import.engine", default = "data.table"),
+        choices = c("data.table", "readr")
+    )
     verbose <- getOption("acid.verbose", default = FALSE)
     assert(
         isFlag(colnames) || isCharacter(colnames),
         isFlag(verbose)
     )
     tmpfile <- localOrRemoteFile(file)
-    message(sprintf(
-        "Importing '%s' using '%s::%s()'.",
-        basename(file), "data.table", "fread"
-    ))
-    args <- list(
-        file = tmpfile,
-        blank.lines.skip = TRUE,
-        check.names = FALSE,
-        data.table = FALSE,
-        fill = FALSE,
-        na.strings = naStrings,
-        skip = 0L,
-        showProgress = FALSE,
-        stringsAsFactors = FALSE,
-        strip.white = TRUE,
-        verbose = verbose
-    )
-    if (isCharacter(colnames)) {
-        args[["header"]] <- FALSE
-        args[["col.names"]] <- colnames
-    } else {
-        args[["header"]] <- colnames
+    if (identical(engine, "data.table")) {
+        ## data.table ----------------------------------------------------------
+        message(sprintf(
+            "Importing '%s' using '%s::%s()'.",
+            basename(file), "data.table", "fread"
+        ))
+        what <- fread
+        args <- list(
+            file = tmpfile,
+            blank.lines.skip = TRUE,
+            check.names = FALSE,
+            data.table = FALSE,
+            fill = FALSE,
+            na.strings = naStrings,
+            skip = 0L,
+            showProgress = FALSE,
+            stringsAsFactors = FALSE,
+            strip.white = TRUE,
+            verbose = verbose
+        )
+        if (isCharacter(colnames)) {
+            args[["header"]] <- FALSE
+            args[["col.names"]] <- colnames
+        } else {
+            args[["header"]] <- colnames
+        }
+    } else if (identical(engine, "readr")) {
+        ## readr ---------------------------------------------------------------
+        assert(requireNamespace("readr", quietly = TRUE))
+        whatName <- switch(
+            EXPR = ext,
+            "csv" = "read_csv",
+            "tsv" = "read_tsv",
+            "txt" = "read_delim"
+        )
+        what <- get(
+            x = whatName,
+            envir = asNamespace("readr"),
+            inherits = FALSE
+        )
+        args <- list(file = tmpfile)
+        message(sprintf(
+            "Exporting '%s' using '%s::%s()'.",
+            basename(file), "readr", whatName
+        ))
     }
-    object <- do.call(what = fread, args = args)
+    object <- do.call(what = what, args = args)
     assert(is.data.frame(object))
     object <- .defineImportMetadata(
         object = object,
