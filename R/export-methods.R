@@ -21,9 +21,9 @@
 #'
 #' @section Debugging:
 #'
-#' Note that this function currently wraps [data.table::fwrite()]. If you
-#' encounter any stack imbalance or segfault warnings during export, these are
-#' errors from data.table.
+#' Note that this function currently wraps [data.table::fwrite()] by default.
+#' If you encounter any stack imbalance or segfault warnings during export,
+#' these are errors from data.table.
 #'
 #' See related:
 #' - https://github.com/Rdatatable/data.table/issues/2457
@@ -48,9 +48,10 @@
 #' File path(s).
 #'
 #' @seealso
-#' - [data.table::fwrite()].
 #' - [rio::export()].
 #' - [rtracklayer::export()].
+#' - [data.table::fwrite()].
+#' - [readr::write_csv()].
 #'
 #' @examples
 #' counts <- matrix(data = seq_len(100L), nrow = 10)
@@ -82,10 +83,14 @@ NULL
         ext,
         dir,
         file = NULL,
-        overwrite,
-        verbose = getOption("acid.verbose", default = FALSE)
+        overwrite
     ) {
         validObject(object)
+        engine <- match.arg(
+            arg = getOption("acid.export.engine", default = "data.table"),
+            choices = c("data.table", "readr")
+        )
+        verbose <- getOption("acid.verbose", default = FALSE)
         assert(
             hasLength(object),
             isString(dir),
@@ -138,8 +143,6 @@ NULL
         ## the row names into a column.
         object <- as_tibble(object, rownames = rownames)
         assert(hasRows(object), hasCols(object))
-        ## Coerce back to standard data frame before passing to `fwrite()`.
-        object <- as.data.frame(object)
         ## Inform the user regarding overwrite.
         if (isAFile(file)) {
             if (isTRUE(overwrite)) {
@@ -158,18 +161,36 @@ NULL
                 x = file
             )
         }
-        args <- list(
-            x = object,
-            file = file,
-            row.names = FALSE,
-            verbose = verbose
-        )
-        args[["sep"]] <- switch(
-            EXPR = ext,
-            "csv" = ",",
-            "tsv" = "\t"
-        )
-        do.call(what = fwrite, args = args)
+        if (identical(engine, "data.table")) {
+            ## data.table ------------------------------------------------------
+            ## Current default in rio package.
+            what <- fwrite
+            args <- list(
+                x = as.data.table(object),
+                file = file,
+                row.names = FALSE,
+                verbose = verbose
+            )
+            args[["sep"]] <- switch(
+                EXPR = ext,
+                "csv" = ",",
+                "tsv" = "\t"
+            )
+        } else if (identical(engine, "readr")) {
+            ## readr -----------------------------------------------------------
+            assert(requireNamespace("readr", quietly = TRUE))
+            what <- switch(
+                EXPR = ext,
+                "csv" = "write_csv",
+                "tsv" = "write_tsv"
+            )
+            what <- get(what, envir = asNamespace("readr"), inherits = FALSE)
+            args <- list(
+                x = as_tibble(object),
+                path = file
+            )
+        }
+        do.call(what = what, args = args)
         ## Compress file, if necessary.
         if (!is.na(compress)) {
             compressFun <- switch(
