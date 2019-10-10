@@ -330,6 +330,10 @@ setMethod(
             )
         }
         ## Export MatrixMarket file.
+        message(sprintf(
+            "Exporting '%s' using '%s::%s()'.",
+            basename(file), "Matrix", "writeMM"
+        ))
         writeMM(obj = object, file = file)
         ## Compress file, if necessary.
         if (!is.na(compress)) {
