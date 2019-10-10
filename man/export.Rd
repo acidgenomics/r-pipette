@@ -109,11 +109,6 @@ intentionally unsupported in the current release.
 Note that this function currently wraps \code{\link[data.table:fwrite]{data.table::fwrite()}} by default.
 If you encounter any stack imbalance or segfault warnings during export,
 these are errors from data.table.
-
-See related:
-\itemize{
-\item https://github.com/Rdatatable/data.table/issues/2457
-}
 }
 
 \examples{
