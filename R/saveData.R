@@ -72,7 +72,6 @@ saveData <- function(
         isFlag(overwrite),
         formalCompress(compress)
     )
-
     if (!is.null(list)) {
         ## Character vector list mode (similar to `save()`).
         assert(
@@ -87,19 +86,18 @@ saveData <- function(
         objects <- list(...)
         names(objects) <- dots(..., character = TRUE)
     }
-
     dir <- initDir(dir)
     ext <- match.arg(arg = ext, choices = c("rds", "rda"))
-
     files <- file.path(dir, paste(names(objects), ext, sep = "."))
     names(files) <- names(objects)
-
     message(sprintf(
-        "Saving %s to %s.",
-        toString(basename(files), width = 200L),
+        "Saving %s to '%s'.",
+        toString(
+            paste0("'", basename(files), "'"),
+            width = 200L
+        ),
         dir
     ))
-
     ## If `overwrite = FALSE`, inform the user which files were skipped.
     if (identical(overwrite, FALSE) && any(file.exists(files))) {
         skip <- files[file.exists(files)]
@@ -111,7 +109,6 @@ saveData <- function(
         }
         objects <- objects[!file.exists(files)]  # nocov
     }
-
     ## Determine which save function to use.
     if (ext == "rds") {
         mapply(
@@ -131,7 +128,6 @@ saveData <- function(
             )
         )
     }
-
     invisible(files)
 }
 
