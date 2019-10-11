@@ -1,6 +1,6 @@
 #' @name export
 #' @inherit bioverbs::export
-#' @note Updated 2019-10-10.
+#' @note Updated 2019-10-11.
 #'
 #' @section Row names:
 #'
@@ -91,6 +91,7 @@ NULL
         verbose <- getOption("acid.verbose", default = FALSE)
         assert(
             hasLength(object),
+            allAreAtomic(object),
             isString(dir),
             isString(file, nullOK = TRUE),
             isFlag(overwrite),
