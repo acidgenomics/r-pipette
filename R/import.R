@@ -392,7 +392,8 @@ import <- function(
 
 ## Basic =======================================================================
 ## Internal importer for a delimited file (e.g. `.csv`, `.tsv`).
-## Calls [data.table::fread()] internally.
+## Calls `data.table::fread()` internally by default.
+## Can override using `acid.import.engine` option, which also supports readr.
 .importDelim <- function(
     file,
     colnames = TRUE,
