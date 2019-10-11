@@ -33,7 +33,7 @@ Load data as name
 This function is intended for interactive use and interprets object
 names using non-standard evaluation.
 
-Updated 2019-07-30.
+Updated 2019-10-11.
 }
 \examples{
 dir <- system.file("extdata", package = "brio")

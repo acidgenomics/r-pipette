@@ -10,7 +10,7 @@
 #'   names using non-standard evaluation. It will **overwrite** existing files
 #'   on disk, following the same conventions as [`save()`][base::save].
 #'
-#' @note Updated 2019-07-30.
+#' @note Updated 2019-10-11.
 #' @include globals.R
 #' @export
 #'
