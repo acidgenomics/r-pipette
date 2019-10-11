@@ -447,7 +447,15 @@ import <- function(
             inherits = TRUE
         )
         assert(is.function(what))
-        args <- list(file = tmpfile)
+        args <- list(
+            file = tmpfile,
+            col_names = colnames,
+            na = naStrings,
+            trim_ws = TRUE,
+            skip = 0L,
+            progress = FALSE,
+            skip_empty_rows = TRUE
+        )
     }
     message(sprintf(
         "Importing '%s' using '%s::%s()'.",
