@@ -3,7 +3,7 @@
 #' Load a remote R binary file. This function is vectorized and supports
 #' multiple URLs in a single call.
 #'
-#' @note Updated 2019-07-30.
+#' @note Updated 2019-10-11.
 #' @export
 #'
 #' @inheritParams acidroxygen::params
@@ -44,7 +44,6 @@ loadRemoteData <- function(
         ignore.case = TRUE
     )
     names(url) <- names
-
     ## Check to make sure the objects don't already exist.
     if (
         !isTRUE(overwrite) &&
@@ -52,7 +51,6 @@ loadRemoteData <- function(
     ) {
         .loadExistsError(names)
     }
-
     ## Download the files to tempdir and return a character matrix of mappings.
     invisible(mapply(
         name = names,
@@ -63,7 +61,6 @@ loadRemoteData <- function(
             assign(x = name, value = data, envir = envir)
         }
     ))
-
     assert(allAreExisting(names, envir = envir, inherits = FALSE))
     invisible(url)
 }
