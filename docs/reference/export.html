@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">brio</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.10</span>
       </span>
     </div>
 
@@ -214,7 +214,7 @@ Apply gzip compression to all files.</p></td>
 File path(s).</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>Updated 2019-09-11.</p>
+    <p>Updated 2019-10-11.</p>
     <h2 class="hasAnchor" id="row-names"><a class="anchor" href="#row-names"></a>Row names</h2>
 
     
@@ -234,19 +234,29 @@ are always moved to a <code>"rowname"</code> column in the CSV export.</p>
 <p>Use <code><a href='https://rdrr.io/r/base/writeLines.html'>writeLines()</a></code> instead of <code>export()</code> to write vectors
 to disk. An S4 character method may be defined in a future update, but it is
 intentionally unsupported in the current release.</p>
+    <h2 class="hasAnchor" id="debugging"><a class="anchor" href="#debugging"></a>Debugging</h2>
+
+    
+
+
+<p>Note that this function currently wraps <code><a href='https://Rdatatable.gitlab.io/data.table/reference/fwrite.html'>data.table::fwrite()</a></code> by default
+for exporting <code>data.frame</code> and <code>matrix</code> class objects. If you encounter any
+stack imbalance or segfault warnings during export, these are errors from
+data.table.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'>
 <ul>
-<li><p><code><a href='https://Rdatatable.gitlab.io/data.table/reference/fwrite.html'>data.table::fwrite()</a></code>.</p></li>
 <li><p><code><a href='https://rdrr.io/pkg/rio/man/export.html'>rio::export()</a></code>.</p></li>
 <li><p><code><a href='https://rdrr.io/pkg/rtracklayer/man/export.html'>rtracklayer::export()</a></code>.</p></li>
+<li><p><code><a href='https://Rdatatable.gitlab.io/data.table/reference/fwrite.html'>data.table::fwrite()</a></code>.</p></li>
+<li><p><code><a href='https://readr.tidyverse.org/reference/write_delim.html'>readr::write_csv()</a></code>.</p></li>
 </ul>
 </div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>counts</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span>(<span class='fl'>100L</span>), <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>10</span>)
-<span class='fu'>export</span>(<span class='no'>counts</span>, <span class='kw'>ext</span> <span class='kw'>=</span> <span class='st'>"csv"</span>)</div><div class='output co'>#&gt; <span class='message'>Exported 'counts.csv'.</span></div><div class='input'>
+<span class='fu'>export</span>(<span class='no'>counts</span>, <span class='kw'>ext</span> <span class='kw'>=</span> <span class='st'>"csv"</span>)</div><div class='output co'>#&gt; <span class='message'>Exporting 'counts.csv' using 'data.table::fwrite()'.</span></div><div class='input'>
 <span class='co'>## Clean up.</span>
 <span class='fu'><a href='https://rdrr.io/r/base/files.html'>file.remove</a></span>(<span class='st'>"counts.csv"</span>)</div><div class='output co'>#&gt; [1] TRUE</div></pre>
   </div>
@@ -258,6 +268,7 @@ intentionally unsupported in the current release.</p>
       <li><a href="#note">Note</a></li>
       <li><a href="#row-names">Row names</a></li>
       <li><a href="#exporting-vectors">Exporting vectors</a></li>
+      <li><a href="#debugging">Debugging</a></li>
       <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>

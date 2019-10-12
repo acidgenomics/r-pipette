@@ -63,7 +63,7 @@ biocViews:
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
 Collate: 
-    'globals.R'
+    'AllGlobals.R'
     'saveData.R'
     'assignAndSaveData.R'
     'basenameSansExt.R'
