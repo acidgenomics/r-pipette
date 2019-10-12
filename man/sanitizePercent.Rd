@@ -28,7 +28,7 @@ Take a \code{character} vector of percentages (e.g. \code{"50\%"}) and convert i
 \code{numeric} vector (e.g. \code{0.5}).
 }
 \note{
-Updated 2019-07-19.
+Updated 2019-10-12.
 }
 \section{Intended usage}{
 

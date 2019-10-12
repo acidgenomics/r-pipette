@@ -1,10 +1,9 @@
 #' Load data as name
 #'
+#' @export
 #' @note This function is intended for interactive use and interprets object
 #'   names using non-standard evaluation.
-#'
-#' @note Updated 2019-07-30.
-#' @export
+#' @note Updated 2019-10-12.
 #'
 #' @inheritParams loadData
 #' @param ... Key value pairs, defining the name mappings. For example,
@@ -91,5 +90,5 @@ loadDataAsName <- function(
     invisible(files)
 }
 
-formals(loadDataAsName)[["dir"]] <- formalsList[["load.dir"]]
-formals(loadDataAsName)[["overwrite"]] <- formalsList[["overwrite"]]
+formals(loadDataAsName)[["dir"]] <- .formalsList[["load.dir"]]
+formals(loadDataAsName)[["overwrite"]] <- .formalsList[["overwrite"]]

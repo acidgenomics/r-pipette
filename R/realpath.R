@@ -1,8 +1,8 @@
 #' Express file paths in canonical form
 #'
-#' @inherit base::normalizePath
-#' @note Updated 2019-07-19.
 #' @export
+#' @inherit base::normalizePath
+#' @note Updated 2019-10-12.
 #'
 #' @seealso
 #' - [file.path()].

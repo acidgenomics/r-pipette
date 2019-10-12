@@ -43,7 +43,7 @@ test_that("Standard evaluation", {
 test_that("Missing files", {
     expect_error(
         object = loadDataAsName(data = XXX, dir = dir),
-        regexp = rdataLoadError
+        regexp = .rdataLoadError
     )
 })
 
