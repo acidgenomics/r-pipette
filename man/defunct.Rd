@@ -2,7 +2,20 @@
 % Please edit documentation in R/deprecated.R
 \name{defunct}
 \alias{defunct}
+\alias{sanitizeColData}
+\alias{sanitizeRowData}
+\alias{sanitizeRowRanges}
 \title{Defunct functions}
+\usage{
+sanitizeColData(...)
+
+sanitizeRowData(...)
+
+sanitizeRowRanges(...)
+}
+\arguments{
+\item{...}{Additional arguments.}
+}
 \value{
 \code{.Defunct}.
 }

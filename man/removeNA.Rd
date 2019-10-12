@@ -34,7 +34,7 @@ Sanitized object.
 Remove rows and columns containing only NA values
 }
 \note{
-Updated 2019-07-19.
+Updated 2019-10-12.
 }
 \examples{
 ## atomic ====

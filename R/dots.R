@@ -1,8 +1,9 @@
 #' Extract dots from function
 #'
-#' @note This function uses non-standard evaluation.
-#' @note Updated 2019-09-06.
 #' @export
+#' @keywords internal
+#' @note This function uses non-standard evaluation.
+#' @note Updated 2019-10-12.
 #'
 #' @param ... Objects as dots.
 #' @param character `logical(1)`.

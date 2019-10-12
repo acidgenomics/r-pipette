@@ -33,17 +33,8 @@ reference:
     - fileExt
     - pasteURL
     - realpath
-  - title: File pattern matching
-    contents:
-    - compressExtPattern
-    - extPattern
-    - rdataExtPattern
   - title: Data sanitization
     contents:
     - naStrings
     - removeNA
     - starts_with("sanitize")
-  - title: Miscellaneous
-    contents:
-    - dots
-    - rdataLoadError

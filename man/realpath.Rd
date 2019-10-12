@@ -59,7 +59,7 @@ Tilde-expansion (see \code{\link{path.expand}}) is first done on
   messages.
 }
 \note{
-Updated 2019-07-19.
+Updated 2019-10-12.
 }
 \examples{
 realpath(".")

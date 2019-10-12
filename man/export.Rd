@@ -82,7 +82,7 @@ File path(s).
 Export data out of R and write to disk.
 }
 \note{
-Updated 2019-09-11.
+Updated 2019-10-12.
 }
 \section{Row names}{
 
@@ -103,6 +103,15 @@ to disk. An S4 character method may be defined in a future update, but it is
 intentionally unsupported in the current release.
 }
 
+\section{Debugging}{
+
+
+Note that this function currently wraps \code{\link[data.table:fwrite]{data.table::fwrite()}} by default
+for exporting \code{data.frame} and \code{matrix} class objects. If you encounter any
+stack imbalance or segfault warnings during export, these are errors from
+data.table.
+}
+
 \examples{
 counts <- matrix(data = seq_len(100L), nrow = 10)
 export(counts, ext = "csv")
@@ -112,8 +121,9 @@ file.remove("counts.csv")
 }
 \seealso{
 \itemize{
-\item \code{\link[data.table:fwrite]{data.table::fwrite()}}.
 \item \code{\link[rio:export]{rio::export()}}.
 \item \code{\link[rtracklayer:export]{rtracklayer::export()}}.
+\item \code{\link[data.table:fwrite]{data.table::fwrite()}}.
+\item \code{\link[readr:write_csv]{readr::write_csv()}}.
 }
 }

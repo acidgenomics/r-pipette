@@ -1,8 +1,8 @@
 #' File extension
 #'
-#' @note This function intentionally doesn't check whether a file exists.
-#' @note Updated 2019-07-30.
 #' @export
+#' @note This function intentionally doesn't check whether a file exists.
+#' @note Updated 2019-10-12.
 #'
 #' @param path `character`.
 #'   File path(s).
@@ -20,7 +20,7 @@
 #' fileExt(c("dir/foo.txt", "dir/bar.tar.gz", "dir/"))
 fileExt <- function(path) {
     ## Note that `regexpr()` returns `-1L` on match failure.
-    pos <- regexpr(pattern = extPattern, text = path)
+    pos <- regexpr(pattern = .extPattern, text = path)
     ifelse(
         test = pos > -1L,
         yes = substring(path, pos + 1L),
