@@ -1,6 +1,6 @@
 #' @name export
 #' @inherit bioverbs::export
-#' @note Updated 2019-10-11.
+#' @note Updated 2019-10-12.
 #'
 #' @section Row names:
 #'
@@ -74,7 +74,7 @@ NULL
 ## `data.table`, `tbl_df`, and `DataFrame` classes. Note that `rio::export()`
 ## does not preserve row names by default, so we're ensuring row names get
 ## coerced to "rowname" column consistently here.
-## Updated 2019-10-11.
+## Updated 2019-10-12.
 `export,matrix` <-  # nolint
     function(
         object,

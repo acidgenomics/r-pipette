@@ -3,11 +3,11 @@
 #' Assigns a new object by name to the current working environment then saves
 #' the newly assigned object, specified by the `"dir"` argument.
 #'
+#' @export
+#' @include saveData.R
 #' @note This function attempts to follow the same order as
 #'   [`assign()`][base::assign].
-#' @note Updated 2019-09-06.
-#' @include saveData.R
-#' @export
+#' @note Updated 2019-10-12.
 #'
 #' @inheritParams acidroxygen::params
 #' @inheritParams saveData

@@ -26,7 +26,7 @@ Load a remote R binary file. This function is vectorized and supports
 multiple URLs in a single call.
 }
 \note{
-Updated 2019-07-30.
+Updated 2019-10-12.
 }
 \examples{
 url <- pasteURL(brioTestsURL, "rnaseq_counts.rds", protocol = "none")

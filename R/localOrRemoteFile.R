@@ -10,8 +10,8 @@
 #' Compressed files will automatically be decompressed. Currently, these file
 #' extensions are natively supported: `BZ2`, `GZ`, `XZ`, `ZIP`.
 #'
-#' @note Updated 2019-07-19.
 #' @export
+#' @note Updated 2019-10-12.
 #'
 #' @param file `character(1)`.
 #'   Local file paths or remote URLs.

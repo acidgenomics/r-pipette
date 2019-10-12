@@ -61,8 +61,8 @@ globalVariables(".")
 
 
 #' brio test data URL
-#' @keywords internal
 #' @export
+#' @keywords internal
 #' @examples
 #' brioTestsURL
 brioTestsURL <- paste0(

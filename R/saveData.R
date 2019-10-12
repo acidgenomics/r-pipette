@@ -11,7 +11,7 @@
 #'   on disk, following the same conventions as [`save()`][base::save].
 #'
 #' @export
-#' @note Updated 2019-11-10.
+#' @note Updated 2019-10-12.
 #'
 #' @inheritParams loadData
 #' @inheritParams base::save

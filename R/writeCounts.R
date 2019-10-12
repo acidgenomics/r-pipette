@@ -13,7 +13,7 @@
 #' [readr]: http://readr.tidyverse.org/
 #' [RStudio]: https://www.rstudio.com/
 #'
-#' @note Updated 2019-09-06.
+#' @note Updated 2019-10-12.
 #' @export
 #'
 #' @inheritParams dots
