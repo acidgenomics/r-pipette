@@ -106,9 +106,10 @@ intentionally unsupported in the current release.
 \section{Debugging}{
 
 
-Note that this function currently wraps \code{\link[data.table:fwrite]{data.table::fwrite()}} by default.
-If you encounter any stack imbalance or segfault warnings during export,
-these are errors from data.table.
+Note that this function currently wraps \code{\link[data.table:fwrite]{data.table::fwrite()}} by default
+for exporting \code{data.frame} and \code{matrix} class objects. If you encounter any
+stack imbalance or segfault warnings during export, these are errors from
+data.table.
 }
 
 \examples{
