@@ -85,7 +85,17 @@ formalsList <- list(
 #' @export
 #' @examples
 #' naStrings
-naStrings <- c("", "NA", "#N/A", "NULL", "null")
+naStrings <- c(
+    "",
+    " ",
+    "  ",
+    "   ",
+    "    ",
+    "NA",
+    "#N/A",
+    "NULL",
+    "null"
+)
 
 
 
