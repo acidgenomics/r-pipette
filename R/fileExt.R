@@ -20,7 +20,7 @@
 #' fileExt(c("dir/foo.txt", "dir/bar.tar.gz", "dir/"))
 fileExt <- function(path) {
     ## Note that `regexpr()` returns `-1L` on match failure.
-    pos <- regexpr(pattern = extPattern, text = path)
+    pos <- regexpr(pattern = .extPattern, text = path)
     ifelse(
         test = pos > -1L,
         yes = substring(path, pos + 1L),

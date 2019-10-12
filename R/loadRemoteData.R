@@ -32,13 +32,13 @@ loadRemoteData <- function(
     if (!all(bapply(
         X = url,
         FUN = function(x) {
-            grepl(pattern = rdataExtPattern, x = x, ignore.case = TRUE)
+            grepl(pattern = .rdataExtPattern, x = x, ignore.case = TRUE)
         }
     ))) {
-        stop(rdataLoadError)
+        stop(.rdataLoadError)
     }
     names <- gsub(
-        pattern = rdataExtPattern,
+        pattern = .rdataExtPattern,
         replacement = "",
         x = basename(url),
         ignore.case = TRUE
@@ -68,4 +68,4 @@ loadRemoteData <- function(
     invisible(url)
 }
 
-formals(loadRemoteData)[["overwrite"]] <- formalsList[["overwrite"]]
+formals(loadRemoteData)[["overwrite"]] <- .formalsList[["overwrite"]]

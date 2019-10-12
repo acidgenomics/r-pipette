@@ -2,45 +2,14 @@ globalVariables(".")
 
 
 
-.version <- packageVersion("brio")
-
-#' brio test data URL
-#' @keywords internal
-#' @export
-#' @examples
-#' brioTestsURL
-brioTestsURL <- paste0(
-    "http://tests.acidgenomics.com/brio/",
-    "v", .version$major, ".", .version$minor  # nolint
-)
-
-
-
-## Using this for `extPattern()` also.
-## Order is important here.
-compressExtPattern <- "\\.(bz2|gz|xz|zip)"
-
-#' File extension pattern
-#'
-#' Note the optional matching of compression formats here.
-#'
-#' @export
-#' @examples
-#' extPattern
-extPattern <- paste0(
+.compressExtPattern <- "\\.(bz2|gz|xz|zip)"
+.extPattern <- paste0(
     "\\.([a-zA-Z0-9]+)",
-    "(", compressExtPattern, ")?$"
+    "(", .compressExtPattern, ")?$"
 )
+.compressExtPattern <- paste0(.compressExtPattern, "$")
 
-#' Compression extension pattern
-#' @export
-#' @examples
-#' compressExtPattern
-compressExtPattern <- paste0(compressExtPattern, "$")
-
-
-
-formalsList <- list(
+.formalsList <- list(
     export.compress = quote(
         getOption("acid.export.compress", default = FALSE)
     ),
@@ -79,6 +48,28 @@ formalsList <- list(
     )
 )
 
+.rdataExtPattern <- "\\.(rd[a|ata|s])$"
+
+.rdataLoadError <- paste(
+    "Failed to load data.",
+    "R data files must contain '.rda', '.rds', or '.RData' extension.",
+    sep = "\n"
+)
+
+.version <- packageVersion("brio")
+
+
+
+#' brio test data URL
+#' @keywords internal
+#' @export
+#' @examples
+#' brioTestsURL
+brioTestsURL <- paste0(
+    "http://tests.acidgenomics.com/brio/",
+    "v", .version$major, ".", .version$minor  # nolint
+)
+
 
 
 #' NA strings
@@ -90,23 +81,3 @@ naStrings <- c(
     "NULL", "null",
     "", " ", "  ", "   ", "    "
 )
-
-
-
-#' R data load error
-#' @export
-#' @examples
-#' message(rdataLoadError)
-rdataLoadError <- paste(
-    "Failed to load data.",
-    "R data files must contain '.rda', '.rds', or '.RData' extension.",
-    sep = "\n"
-)
-
-
-
-#' R data extension pattern
-#' @export
-#' @examples
-#' rdataExtPattern
-rdataExtPattern <- "\\.(rd[a|ata|s])$"

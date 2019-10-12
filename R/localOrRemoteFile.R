@@ -33,7 +33,7 @@
 #' basename(x)
 localOrRemoteFile <- function(file) {
     assert(isCharacter(file))
-    if (!all(grepl(pattern = extPattern, x = file))) {
+    if (!all(grepl(pattern = .extPattern, x = file))) {
         stop(sprintf("'%s' does not end with file extension.", deparse(file)))
     }
     file <- mapply(
@@ -45,7 +45,7 @@ localOrRemoteFile <- function(file) {
             ## Remote file mode.
             assert(hasInternet())
             ## Note that for `.gtf.gz` we want to return only `.gz` here.
-            ## This behavor differs from matching using `extPattern` global.
+            ## This behavor differs from matching using `.extPattern` global.
             ext <- str_match(
                 string = basename(file),
                 pattern = "\\.([a-zA-Z0-9]+)$"
@@ -93,7 +93,7 @@ localOrRemoteFile <- function(file) {
     vapply(
         X = file,
         FUN = function(file) {
-            if (!grepl(compressExtPattern, file)) {
+            if (!grepl(.compressExtPattern, file)) {
                 return(file)
             }
             message(sprintf(
@@ -104,7 +104,7 @@ localOrRemoteFile <- function(file) {
             ## Get the compression extension and decompressed file basename.
             match <- str_match(
                 string = basename(file),
-                pattern = compressExtPattern
+                pattern = .compressExtPattern
             )
             assert(is.matrix(match), nrow(match) == 1L)
             match <- match[1L, , drop = TRUE]
@@ -116,7 +116,7 @@ localOrRemoteFile <- function(file) {
             if (identical(.Platform[["OS.type"]], "windows")) {
                 ## nocov start
                 decompressedFile <- sub(
-                    pattern = compressExtPattern,
+                    pattern = .compressExtPattern,
                     replacement = "",
                     x = basename(file)
                 )

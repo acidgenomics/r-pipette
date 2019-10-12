@@ -25,9 +25,9 @@ basenameSansExt <- function(path) {
         X = x,
         FUN = function(x) {
             if (isTRUE(
-                grepl(pattern = extPattern, x = x, ignore.case = TRUE)
+                grepl(pattern = .extPattern, x = x, ignore.case = TRUE)
             )) {
-                sub(pattern = extPattern, replacement = "", x = x)
+                sub(pattern = .extPattern, replacement = "", x = x)
             } else {
                 NA_character_
             }
