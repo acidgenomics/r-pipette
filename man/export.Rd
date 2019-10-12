@@ -82,7 +82,7 @@ File path(s).
 Export data out of R and write to disk.
 }
 \note{
-Updated 2019-10-10.
+Updated 2019-10-11.
 }
 \section{Row names}{
 
