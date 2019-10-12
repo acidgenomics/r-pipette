@@ -99,7 +99,7 @@
 #' `DOC`, `DOCX`, `PDF`, `PPT`, `PPTX`.
 #'
 #' @export
-#' @note Updated 2019-10-11.
+#' @note Updated 2019-10-12.
 #'
 #' @inheritParams acidroxygen::params
 #' @param rownames `logical(1)`.

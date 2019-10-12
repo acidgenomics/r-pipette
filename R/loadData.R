@@ -15,11 +15,10 @@
 #' the file name exactly. Additionally, [loadData()] will intentionally error if
 #' an object with the same name already exists in the destination `environment`.
 #'
+#' @export
 #' @note This function is desired for interactive use and interprets object
 #'   names using non-standard evaluation.
-#'
-#' @note Updated 2019-07-30.
-#' @export
+#' @note Updated 2019-10-12.
 #'
 #' @inheritParams acidroxygen::params
 #' @param ... Object names.

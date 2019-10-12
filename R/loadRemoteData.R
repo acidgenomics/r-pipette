@@ -3,8 +3,8 @@
 #' Load a remote R binary file. This function is vectorized and supports
 #' multiple URLs in a single call.
 #'
-#' @note Updated 2019-07-30.
 #' @export
+#' @note Updated 2019-10-12.
 #'
 #' @inheritParams acidroxygen::params
 #' @param url `character`.
