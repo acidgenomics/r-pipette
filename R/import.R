@@ -215,7 +215,7 @@ import <- function(
     ## Allow Google Sheets import using rio, by matching the URL.
     ## Otherwise, coerce the file extension to uppercase, for easy matching.
     if (identical(format, "none")) {
-        ext <- str_match(basename(file), extPattern)[1L, 2L]
+        ext <- str_match(basename(file), .extPattern)[1L, 2L]
     } else {
         ext <- format
     }

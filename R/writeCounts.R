@@ -73,5 +73,5 @@ writeCounts <- function(..., dir, compress) {
     invisible(files)
 }
 
-formals(writeCounts)[["compress"]] <- formalsList[["export.compress"]]
-formals(writeCounts)[["dir"]] <- formalsList[["export.dir"]]
+formals(writeCounts)[["compress"]] <- .formalsList[["export.compress"]]
+formals(writeCounts)[["dir"]] <- .formalsList[["export.dir"]]

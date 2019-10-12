@@ -124,7 +124,7 @@ NULL
         } else {
             string <- basename(file)
         }
-        match <- str_match(string = string, pattern = extPattern)
+        match <- str_match(string = string, pattern = .extPattern)
         ext <- match[1L, 2L]
         ext <- match.arg(arg = ext, choices = c("csv", "tsv"))
         compress <- match[1L, 4L]
@@ -215,9 +215,9 @@ NULL
         invisible(file)
     }
 
-formals(`export,matrix`)[["dir"]] <- formalsList[["export.dir"]]
-formals(`export,matrix`)[["ext"]] <- formalsList[["export.ext"]]
-formals(`export,matrix`)[["overwrite"]] <- formalsList[["overwrite"]]
+formals(`export,matrix`)[["dir"]] <- .formalsList[["export.dir"]]
+formals(`export,matrix`)[["ext"]] <- .formalsList[["export.ext"]]
+formals(`export,matrix`)[["overwrite"]] <- .formalsList[["overwrite"]]
 
 
 
@@ -301,7 +301,7 @@ setMethod(
         } else {
             string <- basename(file)
         }
-        match <- str_match(string = string, pattern = extPattern)
+        match <- str_match(string = string, pattern = .extPattern)
         ext <- match[1L, 2L]
         ext <- match.arg(arg = ext, choices = "mtx")
         compress <- match[1L, 4L]
@@ -367,11 +367,11 @@ setMethod(
     }
 
 formals(`export,sparseMatrix`)[["dir"]] <-
-    formalsList[["export.dir"]]
+    .formalsList[["export.dir"]]
 formals(`export,sparseMatrix`)[["ext"]] <-
-    formalsList[["export.sparse.ext"]]
+    .formalsList[["export.sparse.ext"]]
 formals(`export,sparseMatrix`)[["overwrite"]] <-
-    formalsList[["overwrite"]]
+    .formalsList[["overwrite"]]
 
 
 
@@ -533,9 +533,9 @@ setMethod(
     }
 
 formals(`export,SummarizedExperiment`)[["compress"]] <-
-    formalsList[["export.compress"]]
+    .formalsList[["export.compress"]]
 formals(`export,SummarizedExperiment`)[["dir"]] <-
-    formalsList[["export.dir"]]
+    .formalsList[["export.dir"]]
 
 
 
@@ -619,9 +619,9 @@ setMethod(
     }
 
 formals(`export,SingleCellExperiment`)[["compress"]] <-
-    formalsList[["export.compress"]]
+    .formalsList[["export.compress"]]
 formals(`export,SingleCellExperiment`)[["dir"]] <-
-    formalsList[["export.dir"]]
+    .formalsList[["export.dir"]]
 
 
 

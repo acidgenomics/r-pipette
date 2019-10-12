@@ -91,5 +91,5 @@ loadDataAsName <- function(
     invisible(files)
 }
 
-formals(loadDataAsName)[["dir"]] <- formalsList[["load.dir"]]
-formals(loadDataAsName)[["overwrite"]] <- formalsList[["overwrite"]]
+formals(loadDataAsName)[["dir"]] <- .formalsList[["load.dir"]]
+formals(loadDataAsName)[["overwrite"]] <- .formalsList[["overwrite"]]
