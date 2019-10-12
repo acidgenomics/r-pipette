@@ -3,12 +3,9 @@
 #' Read file by extension into R.
 #'
 #' [import()] supports automatic loading of common file types, by wrapping
-#' popular importer functions. The function is intentionally designed to be
-#' simple. Remote URLs and compressed files are supported. If you need more
+#' popular importer functions. It intentionally designed to be simple, with few
+#' arguments. Remote URLs and compressed files are supported. If you need more
 #' complex import settings, just call the wrapped importer directly instead.
-#'
-#' @note Updated 2019-10-10.
-#' @export
 #'
 #' @section Row and column names:
 #'
@@ -100,6 +97,9 @@
 #'
 #' These file formats are blacklisted, and intentionally not supported:
 #' `DOC`, `DOCX`, `PDF`, `PPT`, `PPTX`.
+#'
+#' @export
+#' @note Updated 2019-10-11.
 #'
 #' @inheritParams acidroxygen::params
 #' @param rownames `logical(1)`.
