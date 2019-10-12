@@ -21,9 +21,10 @@
 #'
 #' @section Debugging:
 #'
-#' Note that this function currently wraps [data.table::fwrite()] by default.
-#' If you encounter any stack imbalance or segfault warnings during export,
-#' these are errors from data.table.
+#' Note that this function currently wraps [data.table::fwrite()] by default
+#' for exporting `data.frame` and `matrix` class objects. If you encounter any
+#' stack imbalance or segfault warnings during export, these are errors from
+#' data.table.
 #'
 #' @inheritParams acidroxygen::params
 #' @param object Object.
@@ -73,7 +74,7 @@ NULL
 ## `data.table`, `tbl_df`, and `DataFrame` classes. Note that `rio::export()`
 ## does not preserve row names by default, so we're ensuring row names get
 ## coerced to "rowname" column consistently here.
-## Updated 2019-10-10.
+## Updated 2019-10-11.
 `export,matrix` <-  # nolint
     function(
         object,
