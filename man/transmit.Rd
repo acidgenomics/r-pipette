@@ -32,7 +32,7 @@ Utility function that supports easy file matching and download from a remote
 FTP server. Also enables on-the-fly file renaming and compression.
 }
 \note{
-Updated 2019-08-16.
+Updated 2019-10-12.
 }
 \examples{
 ## This doesn't work reliably on CI.

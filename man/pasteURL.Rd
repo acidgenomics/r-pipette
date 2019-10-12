@@ -22,7 +22,7 @@ URL path, containing forward slashes (\code{/}).
 Concatenate strings to form a URL
 }
 \note{
-Updated 2019-07-19.
+Updated 2019-10-12.
 }
 \examples{
 ## HTTPS

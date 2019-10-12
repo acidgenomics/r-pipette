@@ -20,28 +20,22 @@ NULL
 
 
 ## v0.1.4 =======================================================================
-## Still in use by bcbio R packages.
-## Consider switching to soft deprecation if too noisy.
-
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 sanitizeColData <- function(...) {
-    .Deprecated("atomize")
-    atomize(...)
+    .Defunct()
 }
 
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 sanitizeRowData <- function(...) {
-    .Deprecated("atomize")
-    atomize(...)
+    .Defunct()
 }
 
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 sanitizeRowRanges <- function(...) {
-    .Deprecated("atomize")
-    atomize(...)
+    .Defunct()
 }
 
 
