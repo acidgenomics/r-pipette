@@ -72,7 +72,7 @@ object names passed as symbols." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">brio</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.10</span>
       </span>
     </div>
 
@@ -192,7 +192,7 @@ combining multiple objects into a single file.</p>
     <p>This function is desired for interactive use and interprets object
 names using non-standard evaluation. It will <strong>overwrite</strong> existing files
 on disk, following the same conventions as <code><a href='https://rdrr.io/r/base/save.html'>save()</a></code>.</p>
-<p>Updated 2019-07-30.</p>
+<p>Updated 2019-11-10.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'>
@@ -209,7 +209,7 @@ on disk, following the same conventions as <code><a href='https://rdrr.io/r/base
 <span class='co'>## Note that this method uses non-standard evaluation.</span>
 <span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>
 <span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fl'>2</span>
-<span class='fu'>saveData</span>(<span class='no'>a</span>, <span class='no'>b</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='no'>dir</span>)</div><div class='output co'>#&gt; <span class='message'>Saving a.rds, b.rds to /data00/draco/acidbase/packages/brio/docs/reference/example.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/sort.html'>sort</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.files</a></span>(<span class='no'>dir</span>))</div><div class='output co'>#&gt; [1] "a.rds" "b.rds"</div><div class='input'>
+<span class='fu'>saveData</span>(<span class='no'>a</span>, <span class='no'>b</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='no'>dir</span>)</div><div class='output co'>#&gt; <span class='message'>Saving a.rds, b.rds to /Users/mike/git/packages/brio/docs/reference/example.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/sort.html'>sort</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.files</a></span>(<span class='no'>dir</span>))</div><div class='output co'>#&gt; [1] "a.rds" "b.rds"</div><div class='input'>
 <span class='co'>## Clean up.</span>
 <span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span>(<span class='no'>dir</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
@@ -219,7 +219,7 @@ on disk, following the same conventions as <code><a href='https://rdrr.io/r/base
 <span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>
 <span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fl'>2</span>
 <span class='no'>list</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"a"</span>, <span class='st'>"b"</span>)
-<span class='fu'>saveData</span>(<span class='kw'>list</span> <span class='kw'>=</span> <span class='no'>list</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='no'>dir</span>)</div><div class='output co'>#&gt; <span class='message'>Saving a.rds, b.rds to /data00/draco/acidbase/packages/brio/docs/reference/example.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/sort.html'>sort</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.files</a></span>(<span class='no'>dir</span>))</div><div class='output co'>#&gt; [1] "a.rds" "b.rds"</div><div class='input'>
+<span class='fu'>saveData</span>(<span class='kw'>list</span> <span class='kw'>=</span> <span class='no'>list</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='no'>dir</span>)</div><div class='output co'>#&gt; <span class='message'>Saving a.rds, b.rds to /Users/mike/git/packages/brio/docs/reference/example.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/sort.html'>sort</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.files</a></span>(<span class='no'>dir</span>))</div><div class='output co'>#&gt; [1] "a.rds" "b.rds"</div><div class='input'>
 <span class='co'>## Clean up.</span>
 <span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span>(<span class='no'>dir</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div></pre>
   </div>
