@@ -5,8 +5,8 @@
 #' Useful for setting up functions that require writes to a user-specified
 #' directory.
 #'
-#' @note Updated 2019-07-19.
 #' @export
+#' @note Updated 2019-10-12.
 #'
 #' @param dir `character(1)`.
 #'   Directory path.

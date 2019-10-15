@@ -15,11 +15,10 @@
 #' the file name exactly. Additionally, [loadData()] will intentionally error if
 #' an object with the same name already exists in the destination `environment`.
 #'
+#' @export
 #' @note This function is desired for interactive use and interprets object
 #'   names using non-standard evaluation.
-#'
-#' @note Updated 2019-10-11.
-#' @export
+#' @note Updated 2019-10-12.
 #'
 #' @inheritParams acidroxygen::params
 #' @param ... Object names.
@@ -113,8 +112,8 @@ loadData <- function(
     invisible(files)
 }
 
-formals(loadData)[["dir"]] <- formalsList[["load.dir"]]
-formals(loadData)[["overwrite"]] <- formalsList[["overwrite"]]
+formals(loadData)[["dir"]] <- .formalsList[["load.dir"]]
+formals(loadData)[["overwrite"]] <- .formalsList[["overwrite"]]
 
 
 
@@ -126,7 +125,7 @@ formals(loadData)[["overwrite"]] <- formalsList[["overwrite"]]
         FUN = function(name) {
             files <- sort(list.files(
                 path = dir,
-                pattern = paste0("^", name, rdataExtPattern),
+                pattern = paste0("^", name, .rdataExtPattern),
                 full.names = TRUE,
                 ignore.case = TRUE
             ))
@@ -139,7 +138,7 @@ formals(loadData)[["overwrite"]] <- formalsList[["overwrite"]]
                         "%s",
                         sep = "\n"
                     ),
-                    name, dir, rdataLoadError
+                    name, dir, .rdataLoadError
                 ))
             } else if (length(files) > 1L) {
                 stop(sprintf(
@@ -149,7 +148,7 @@ formals(loadData)[["overwrite"]] <- formalsList[["overwrite"]]
                         "%s",
                         sep = "\n"
                     ),
-                    name, dir, rdataLoadError
+                    name, dir, .rdataLoadError
                 ))
             }
             files
