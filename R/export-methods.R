@@ -1,6 +1,6 @@
 #' @name export
 #' @inherit bioverbs::export
-#' @note Updated 2019-10-11.
+#' @note Updated 2019-10-12.
 #'
 #' @section Row names:
 #'
@@ -21,9 +21,10 @@
 #'
 #' @section Debugging:
 #'
-#' Note that this function currently wraps [data.table::fwrite()] by default.
-#' If you encounter any stack imbalance or segfault warnings during export,
-#' these are errors from data.table.
+#' Note that this function currently wraps [data.table::fwrite()] by default
+#' for exporting `data.frame` and `matrix` class objects. If you encounter any
+#' stack imbalance or segfault warnings during export, these are errors from
+#' data.table.
 #'
 #' @inheritParams acidroxygen::params
 #' @param object Object.
@@ -73,7 +74,7 @@ NULL
 ## `data.table`, `tbl_df`, and `DataFrame` classes. Note that `rio::export()`
 ## does not preserve row names by default, so we're ensuring row names get
 ## coerced to "rowname" column consistently here.
-## Updated 2019-10-10.
+## Updated 2019-10-12.
 `export,matrix` <-  # nolint
     function(
         object,
@@ -123,7 +124,7 @@ NULL
         } else {
             string <- basename(file)
         }
-        match <- str_match(string = string, pattern = extPattern)
+        match <- str_match(string = string, pattern = .extPattern)
         ext <- match[1L, 2L]
         ext <- match.arg(arg = ext, choices = c("csv", "tsv"))
         compress <- match[1L, 4L]
@@ -214,9 +215,9 @@ NULL
         invisible(file)
     }
 
-formals(`export,matrix`)[["dir"]] <- formalsList[["export.dir"]]
-formals(`export,matrix`)[["ext"]] <- formalsList[["export.ext"]]
-formals(`export,matrix`)[["overwrite"]] <- formalsList[["overwrite"]]
+formals(`export,matrix`)[["dir"]] <- .formalsList[["export.dir"]]
+formals(`export,matrix`)[["ext"]] <- .formalsList[["export.ext"]]
+formals(`export,matrix`)[["overwrite"]] <- .formalsList[["overwrite"]]
 
 
 
@@ -300,7 +301,7 @@ setMethod(
         } else {
             string <- basename(file)
         }
-        match <- str_match(string = string, pattern = extPattern)
+        match <- str_match(string = string, pattern = .extPattern)
         ext <- match[1L, 2L]
         ext <- match.arg(arg = ext, choices = "mtx")
         compress <- match[1L, 4L]
@@ -366,11 +367,11 @@ setMethod(
     }
 
 formals(`export,sparseMatrix`)[["dir"]] <-
-    formalsList[["export.dir"]]
+    .formalsList[["export.dir"]]
 formals(`export,sparseMatrix`)[["ext"]] <-
-    formalsList[["export.sparse.ext"]]
+    .formalsList[["export.sparse.ext"]]
 formals(`export,sparseMatrix`)[["overwrite"]] <-
-    formalsList[["overwrite"]]
+    .formalsList[["overwrite"]]
 
 
 
@@ -532,9 +533,9 @@ setMethod(
     }
 
 formals(`export,SummarizedExperiment`)[["compress"]] <-
-    formalsList[["export.compress"]]
+    .formalsList[["export.compress"]]
 formals(`export,SummarizedExperiment`)[["dir"]] <-
-    formalsList[["export.dir"]]
+    .formalsList[["export.dir"]]
 
 
 
@@ -618,9 +619,9 @@ setMethod(
     }
 
 formals(`export,SingleCellExperiment`)[["compress"]] <-
-    formalsList[["export.compress"]]
+    .formalsList[["export.compress"]]
 formals(`export,SingleCellExperiment`)[["dir"]] <-
-    formalsList[["export.dir"]]
+    .formalsList[["export.dir"]]
 
 
 
