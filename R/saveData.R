@@ -10,9 +10,8 @@
 #'   names using non-standard evaluation. It will **overwrite** existing files
 #'   on disk, following the same conventions as [`save()`][base::save].
 #'
-#' @note Updated 2019-10-11.
-#' @include globals.R
 #' @export
+#' @note Updated 2019-10-12.
 #'
 #' @inheritParams loadData
 #' @inheritParams base::save
@@ -131,7 +130,7 @@ saveData <- function(
     invisible(files)
 }
 
-formals(saveData)[["compress"]] <- formalsList[["save.compress"]]
-formals(saveData)[["dir"]] <- formalsList[["save.dir"]]
-formals(saveData)[["ext"]] <- formalsList[["save.ext"]]
-formals(saveData)[["overwrite"]] <- formalsList[["overwrite"]]
+formals(saveData)[["compress"]] <- .formalsList[["save.compress"]]
+formals(saveData)[["dir"]] <- .formalsList[["save.dir"]]
+formals(saveData)[["ext"]] <- .formalsList[["save.ext"]]
+formals(saveData)[["overwrite"]] <- .formalsList[["overwrite"]]

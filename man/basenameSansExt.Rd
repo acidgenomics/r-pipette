@@ -22,7 +22,7 @@ Base name without the file extension
 \note{
 This function intentionally doesn't check whether a file exists.
 
-Updated 2019-07-19.
+Updated 2019-10-12.
 }
 \examples{
 basenameSansExt(c("dir/foo.txt", "dir/bar.tar.gz", "dir/"))
