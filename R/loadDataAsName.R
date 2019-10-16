@@ -27,13 +27,11 @@ loadDataAsName <- function(
         is.environment(envir),
         isFlag(overwrite)
     )
-
     ## Map the dot input to files.
     dots <- dots(..., character = TRUE)
     assert(hasNames(dots))
     files <- .listData(names = dots, dir = dir)
     names(files) <- names(dots)
-
     ## Check to see if any of the new names already exist in environment.
     names <- names(dots)
     if (
@@ -42,7 +40,6 @@ loadDataAsName <- function(
     ) {
         .loadExistsError(names)
     }
-
     ## Note that we can skip safe loading here because we have already checked
     ## for existing names in environment outside of the loop call.
     if (any(grepl("\\.rds$", files))) {
@@ -69,7 +66,6 @@ loadDataAsName <- function(
             )
         ))
         assert(areSetEqual(dots, ls(safe)))
-
         ## Now assign to the desired object names.
         invisible(mapply(
             FUN = function(from, to, safe, envir) {
@@ -86,7 +82,6 @@ loadDataAsName <- function(
             USE.NAMES = FALSE
         ))
     }
-
     invisible(files)
 }
 
