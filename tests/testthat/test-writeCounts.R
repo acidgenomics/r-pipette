@@ -4,7 +4,7 @@ test_that("writeCounts", {
     dir <- "example"
     expect_message(
         object = writeCounts(mat, sparse, dir = dir, compress = TRUE),
-        regexp = "Writing mat, sparse"
+        regexp = "Writing 'mat', 'sparse'"
     )
     expect_identical(
         object = sort(list.files(dir)),
