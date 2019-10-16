@@ -44,7 +44,6 @@ loadRemoteData <- function(
         ignore.case = TRUE
     )
     names(url) <- names
-
     ## Check to make sure the objects don't already exist.
     if (
         !isTRUE(overwrite) &&
@@ -52,7 +51,6 @@ loadRemoteData <- function(
     ) {
         .loadExistsError(names)
     }
-
     ## Download the files to tempdir and return a character matrix of mappings.
     invisible(mapply(
         name = names,
@@ -63,7 +61,6 @@ loadRemoteData <- function(
             assign(x = name, value = data, envir = envir)
         }
     ))
-
     assert(allAreExisting(names, envir = envir, inherits = FALSE))
     invisible(url)
 }
