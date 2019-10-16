@@ -100,7 +100,6 @@ localOrRemoteFile <- function(file) {
                 "Decompressing '%s' in '%s'.",
                 basename(file), "tempdir()"
             ))
-
             ## Get the compression extension and decompressed file basename.
             match <- str_match(
                 string = basename(file),
@@ -109,7 +108,6 @@ localOrRemoteFile <- function(file) {
             assert(is.matrix(match), nrow(match) == 1L)
             match <- match[1L, , drop = TRUE]
             compressExt <- toupper(match[[2L]])
-
             ## Attempt to force removal of an existing decompressed file on
             ## Windows, which can error out on some machines. Fail with a clear
             ## error message if and when this occurs.
@@ -123,7 +121,6 @@ localOrRemoteFile <- function(file) {
                 .removeTempFile(decompressedFile)
                 ## nocov end
             }
-
             if (compressExt %in% c("BZ2", "GZ", "XZ")) {
                 ## Using the R.utils package to handle BZ2, GZ, XZ.
                 if (compressExt == "BZ2") {
