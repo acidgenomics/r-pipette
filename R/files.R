@@ -3,6 +3,9 @@
 #' @name files
 #' @note Updated 2019-10-17.
 #'
+#' @return Functions return normalized file paths, instead of `logical`, with
+#'   the exception of [fileExists()], which returns an unnamed `logical`.
+#'
 #' @seealso
 #' `help("files")`
 #'

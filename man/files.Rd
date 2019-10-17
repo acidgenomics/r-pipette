@@ -22,6 +22,10 @@ fileCopy(from, to, overwrite = FALSE)
 
 fileSymlink(from, to, overwrite = FALSE)
 }
+\value{
+Functions return normalized file paths, instead of \code{logical}, with
+the exception of \code{\link[=fileExists]{fileExists()}}, which returns an unnamed \code{logical}.
+}
 \description{
 File manipulation
 }
