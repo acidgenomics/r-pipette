@@ -6,7 +6,7 @@
 #' directory.
 #'
 #' @export
-#' @note Updated 2019-10-12.
+#' @note Updated 2019-10-17.
 #'
 #' @param dir `character(1)`.
 #'   Directory path.
@@ -25,5 +25,5 @@ initDir <- function(dir) {
     if (!dir.exists(dir)) {
         dir.create(dir, recursive = TRUE, showWarnings = FALSE)
     }
-    realpath(dir)
+    invisible(realpath(dir))
 }
