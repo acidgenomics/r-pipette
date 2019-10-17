@@ -1,6 +1,6 @@
 #' @name export
 #' @inherit bioverbs::export
-#' @note Updated 2019-09-11.
+#' @note Updated 2019-10-12.
 #'
 #' @section Row names:
 #'
@@ -18,6 +18,13 @@
 #' Use [`writeLines()`][base::writeLines] instead of [export()] to write vectors
 #' to disk. An S4 character method may be defined in a future update, but it is
 #' intentionally unsupported in the current release.
+#'
+#' @section Debugging:
+#'
+#' Note that this function currently wraps [data.table::fwrite()] by default
+#' for exporting `data.frame` and `matrix` class objects. If you encounter any
+#' stack imbalance or segfault warnings during export, these are errors from
+#' data.table.
 #'
 #' @inheritParams acidroxygen::params
 #' @param object Object.
@@ -39,9 +46,10 @@
 #' File path(s).
 #'
 #' @seealso
-#' - [data.table::fwrite()].
 #' - [rio::export()].
 #' - [rtracklayer::export()].
+#' - [data.table::fwrite()].
+#' - [readr::write_csv()].
 #'
 #' @examples
 #' counts <- matrix(data = seq_len(100L), nrow = 10)
@@ -66,7 +74,7 @@ NULL
 ## `data.table`, `tbl_df`, and `DataFrame` classes. Note that `rio::export()`
 ## does not preserve row names by default, so we're ensuring row names get
 ## coerced to "rowname" column consistently here.
-## Updated 2019-08-28.
+## Updated 2019-10-12.
 `export,matrix` <-  # nolint
     function(
         object,
@@ -76,11 +84,19 @@ NULL
         overwrite
     ) {
         validObject(object)
+        engine <- match.arg(
+            arg = getOption("acid.export.engine", default = "data.table"),
+            choices = c("data.table", "readr")
+        )
+        whatPkg <- engine
+        verbose <- getOption("acid.verbose", default = FALSE)
         assert(
             hasLength(object),
+            allAreAtomic(object),
             isString(dir),
             isString(file, nullOK = TRUE),
-            isFlag(overwrite)
+            isFlag(overwrite),
+            isFlag(verbose)
         )
         ext <- match.arg(
             arg = ext,
@@ -108,7 +124,7 @@ NULL
         } else {
             string <- basename(file)
         }
-        match <- str_match(string = string, pattern = extPattern)
+        match <- str_match(string = string, pattern = .extPattern)
         ext <- match[1L, 2L]
         ext <- match.arg(arg = ext, choices = c("csv", "tsv"))
         compress <- match[1L, 4L]
@@ -145,17 +161,46 @@ NULL
                 x = file
             )
         }
-        args <- list(
-            x = object,
-            file = file,
-            row.names = FALSE
-        )
-        args[["sep"]] <- switch(
-            EXPR = ext,
-            "csv" = ",",
-            "tsv" = "\t"
-        )
-        do.call(what = fwrite, args = args)
+        if (identical(engine, "data.table")) {
+            ## data.table ------------------------------------------------------
+            ## Current default in rio package.
+            whatFun <- "fwrite"
+            what <- fwrite
+            args <- list(
+                x = as.data.table(object),
+                file = file,
+                row.names = FALSE,
+                verbose = verbose
+            )
+            args[["sep"]] <- switch(
+                EXPR = ext,
+                "csv" = ",",
+                "tsv" = "\t"
+            )
+        } else if (identical(engine, "readr")) {
+            ## readr -----------------------------------------------------------
+            assert(requireNamespace(whatPkg, quietly = TRUE))
+            whatFun <- switch(
+                EXPR = ext,
+                "csv" = "write_csv",
+                "tsv" = "write_tsv"
+            )
+            what <- get(
+                x = whatFun,
+                envir = asNamespace(whatPkg),
+                inherits = TRUE
+            )
+            assert(is.function(what))
+            args <- list(
+                x = as_tibble(object),
+                path = file
+            )
+        }
+        message(sprintf(
+            "Exporting '%s' using '%s::%s()'.",
+            basename(file), whatPkg, whatFun
+        ))
+        do.call(what = what, args = args)
         ## Compress file, if necessary.
         if (!is.na(compress)) {
             compressFun <- switch(
@@ -167,13 +212,12 @@ NULL
             file <- compressFun(file, overwrite = TRUE)
         }
         file <- realpath(file)
-        message(sprintf("Exported '%s'.", basename(file)))
         invisible(file)
     }
 
-formals(`export,matrix`)[["dir"]] <- formalsList[["export.dir"]]
-formals(`export,matrix`)[["ext"]] <- formalsList[["export.ext"]]
-formals(`export,matrix`)[["overwrite"]] <- formalsList[["overwrite"]]
+formals(`export,matrix`)[["dir"]] <- .formalsList[["export.dir"]]
+formals(`export,matrix`)[["ext"]] <- .formalsList[["export.ext"]]
+formals(`export,matrix`)[["overwrite"]] <- .formalsList[["overwrite"]]
 
 
 
@@ -257,7 +301,7 @@ setMethod(
         } else {
             string <- basename(file)
         }
-        match <- str_match(string = string, pattern = extPattern)
+        match <- str_match(string = string, pattern = .extPattern)
         ext <- match[1L, 2L]
         ext <- match.arg(arg = ext, choices = "mtx")
         compress <- match[1L, 4L]
@@ -283,6 +327,10 @@ setMethod(
             )
         }
         ## Export MatrixMarket file.
+        message(sprintf(
+            "Exporting '%s' using '%s::%s()'.",
+            basename(file), "Matrix", "writeMM"
+        ))
         writeMM(obj = object, file = file)
         ## Compress file, if necessary.
         if (!is.na(compress)) {
@@ -319,11 +367,11 @@ setMethod(
     }
 
 formals(`export,sparseMatrix`)[["dir"]] <-
-    formalsList[["export.dir"]]
+    .formalsList[["export.dir"]]
 formals(`export,sparseMatrix`)[["ext"]] <-
-    formalsList[["export.sparse.ext"]]
+    .formalsList[["export.sparse.ext"]]
 formals(`export,sparseMatrix`)[["overwrite"]] <-
-    formalsList[["overwrite"]]
+    .formalsList[["overwrite"]]
 
 
 
@@ -485,9 +533,9 @@ setMethod(
     }
 
 formals(`export,SummarizedExperiment`)[["compress"]] <-
-    formalsList[["export.compress"]]
+    .formalsList[["export.compress"]]
 formals(`export,SummarizedExperiment`)[["dir"]] <-
-    formalsList[["export.dir"]]
+    .formalsList[["export.dir"]]
 
 
 
@@ -571,9 +619,9 @@ setMethod(
     }
 
 formals(`export,SingleCellExperiment`)[["compress"]] <-
-    formalsList[["export.compress"]]
+    .formalsList[["export.compress"]]
 formals(`export,SingleCellExperiment`)[["dir"]] <-
-    formalsList[["export.dir"]]
+    .formalsList[["export.dir"]]
 
 
 

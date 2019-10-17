@@ -37,7 +37,7 @@ test_that("Overwrite mode", {
 test_that("Invalid arguments", {
     expect_error(
         loadRemoteData(paste(brioTestsURL, "mmusculus.gtf", sep = "/")),
-        rdataLoadError
+        .rdataLoadError
     )
     expect_error(
         object = loadRemoteData("foobar.rda"),

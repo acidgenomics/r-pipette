@@ -3,8 +3,8 @@
 #' Load a remote R binary file. This function is vectorized and supports
 #' multiple URLs in a single call.
 #'
-#' @note Updated 2019-07-30.
 #' @export
+#' @note Updated 2019-10-12.
 #'
 #' @inheritParams acidroxygen::params
 #' @param url `character`.
@@ -32,19 +32,18 @@ loadRemoteData <- function(
     if (!all(bapply(
         X = url,
         FUN = function(x) {
-            grepl(pattern = rdataExtPattern, x = x, ignore.case = TRUE)
+            grepl(pattern = .rdataExtPattern, x = x, ignore.case = TRUE)
         }
     ))) {
-        stop(rdataLoadError)
+        stop(.rdataLoadError)
     }
     names <- gsub(
-        pattern = rdataExtPattern,
+        pattern = .rdataExtPattern,
         replacement = "",
         x = basename(url),
         ignore.case = TRUE
     )
     names(url) <- names
-
     ## Check to make sure the objects don't already exist.
     if (
         !isTRUE(overwrite) &&
@@ -52,7 +51,6 @@ loadRemoteData <- function(
     ) {
         .loadExistsError(names)
     }
-
     ## Download the files to tempdir and return a character matrix of mappings.
     invisible(mapply(
         name = names,
@@ -63,9 +61,8 @@ loadRemoteData <- function(
             assign(x = name, value = data, envir = envir)
         }
     ))
-
     assert(allAreExisting(names, envir = envir, inherits = FALSE))
     invisible(url)
 }
 
-formals(loadRemoteData)[["overwrite"]] <- formalsList[["overwrite"]]
+formals(loadRemoteData)[["overwrite"]] <- .formalsList[["overwrite"]]

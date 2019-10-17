@@ -15,11 +15,10 @@
 #' the file name exactly. Additionally, [loadData()] will intentionally error if
 #' an object with the same name already exists in the destination `environment`.
 #'
+#' @export
 #' @note This function is desired for interactive use and interprets object
 #'   names using non-standard evaluation.
-#'
-#' @note Updated 2019-07-30.
-#' @export
+#' @note Updated 2019-10-12.
 #'
 #' @inheritParams acidroxygen::params
 #' @param ... Object names.
@@ -66,7 +65,6 @@ loadData <- function(
         isCharacter(list, nullOK = TRUE),
         isFlag(overwrite)
     )
-
     if (isCharacter(list)) {
         names <- list
         rm(list)
@@ -81,9 +79,7 @@ loadData <- function(
         names <- dots(..., character = TRUE)
         files <- .listData(names = names, dir = dir)
     }
-
     assert(allAreFiles(files))
-
     if (all(grepl(
         pattern = "\\.rds$",
         x = files,
@@ -106,20 +102,18 @@ loadData <- function(
             toString(basename(files), width = 100L)
         ))
     }
-
     lapply(
         X = files,
         FUN = fun,
         envir = envir,
         overwrite = overwrite
     )
-
     assert(allAreExisting(names, envir = envir, inherits = FALSE))
     invisible(files)
 }
 
-formals(loadData)[["dir"]] <- formalsList[["load.dir"]]
-formals(loadData)[["overwrite"]] <- formalsList[["overwrite"]]
+formals(loadData)[["dir"]] <- .formalsList[["load.dir"]]
+formals(loadData)[["overwrite"]] <- .formalsList[["overwrite"]]
 
 
 
@@ -131,7 +125,7 @@ formals(loadData)[["overwrite"]] <- formalsList[["overwrite"]]
         FUN = function(name) {
             files <- sort(list.files(
                 path = dir,
-                pattern = paste0("^", name, rdataExtPattern),
+                pattern = paste0("^", name, .rdataExtPattern),
                 full.names = TRUE,
                 ignore.case = TRUE
             ))
@@ -140,21 +134,21 @@ formals(loadData)[["overwrite"]] <- formalsList[["overwrite"]]
                 stop(sprintf(
                     fmt = paste(
                         "'%s' is missing.",
-                        "dir: %s",
+                        "dir: '%s'",
                         "%s",
                         sep = "\n"
                     ),
-                    name, dir, rdataLoadError
+                    name, dir, .rdataLoadError
                 ))
             } else if (length(files) > 1L) {
                 stop(sprintf(
                     fmt = paste(
                         "'%s' is not unique on disk.",
-                        "dir: %s",
+                        "dir: '%s'",
                         "%s",
                         sep = "\n"
                     ),
-                    name, dir, rdataLoadError
+                    name, dir, .rdataLoadError
                 ))
             }
             files
@@ -163,8 +157,11 @@ formals(loadData)[["overwrite"]] <- formalsList[["overwrite"]]
         USE.NAMES = TRUE
     )
     message(sprintf(
-        "Loading %s from %s.",
-        toString(basename(files), width = 200L),
+        "Loading %s from '%s'.",
+        toString(
+            paste0("'", basename(files), "'"),
+            width = 200L
+        ),
         dir
     ))
     files
@@ -233,12 +230,10 @@ formals(loadData)[["overwrite"]] <- formalsList[["overwrite"]]
     ) {
         .loadExistsError(name)
     }
-
     ## Loading into a temporary environment, so we can evaluate the integrity
     ## of the objects before assigning into the destination environment.
     tmpEnvir <- new.env()
     loaded <- load(file, envir = tmpEnvir)
-
     ## Ensure that the loaded name is identical to the file name.
     if (!isString(loaded)) {
         stop(sprintf(
@@ -264,16 +259,13 @@ formals(loadData)[["overwrite"]] <- formalsList[["overwrite"]]
         ))
     }
     assert(identical(name, loaded))
-
     ## Now we're ready to assign into the target environment.
     assign(
         x = name,
         value = get(name, envir = tmpEnvir, inherits = FALSE),
         envir = envir
     )
-
     ## Ensure that assignment worked.
     assert(exists(x = name, envir = envir, inherits = FALSE))
-
     file
 }

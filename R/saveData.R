@@ -10,9 +10,8 @@
 #'   names using non-standard evaluation. It will **overwrite** existing files
 #'   on disk, following the same conventions as [`save()`][base::save].
 #'
-#' @note Updated 2019-07-30.
-#' @include globals.R
 #' @export
+#' @note Updated 2019-10-12.
 #'
 #' @inheritParams loadData
 #' @inheritParams base::save
@@ -72,7 +71,6 @@ saveData <- function(
         isFlag(overwrite),
         formalCompress(compress)
     )
-
     if (!is.null(list)) {
         ## Character vector list mode (similar to `save()`).
         assert(
@@ -87,19 +85,18 @@ saveData <- function(
         objects <- list(...)
         names(objects) <- dots(..., character = TRUE)
     }
-
     dir <- initDir(dir)
     ext <- match.arg(arg = ext, choices = c("rds", "rda"))
-
     files <- file.path(dir, paste(names(objects), ext, sep = "."))
     names(files) <- names(objects)
-
     message(sprintf(
-        "Saving %s to %s.",
-        toString(basename(files), width = 200L),
+        "Saving %s to '%s'.",
+        toString(
+            paste0("'", basename(files), "'"),
+            width = 200L
+        ),
         dir
     ))
-
     ## If `overwrite = FALSE`, inform the user which files were skipped.
     if (identical(overwrite, FALSE) && any(file.exists(files))) {
         skip <- files[file.exists(files)]
@@ -111,7 +108,6 @@ saveData <- function(
         }
         objects <- objects[!file.exists(files)]  # nocov
     }
-
     ## Determine which save function to use.
     if (ext == "rds") {
         mapply(
@@ -131,11 +127,10 @@ saveData <- function(
             )
         )
     }
-
     invisible(files)
 }
 
-formals(saveData)[["compress"]] <- formalsList[["save.compress"]]
-formals(saveData)[["dir"]] <- formalsList[["save.dir"]]
-formals(saveData)[["ext"]] <- formalsList[["save.ext"]]
-formals(saveData)[["overwrite"]] <- formalsList[["overwrite"]]
+formals(saveData)[["compress"]] <- .formalsList[["save.compress"]]
+formals(saveData)[["dir"]] <- .formalsList[["save.dir"]]
+formals(saveData)[["ext"]] <- .formalsList[["save.ext"]]
+formals(saveData)[["overwrite"]] <- .formalsList[["overwrite"]]

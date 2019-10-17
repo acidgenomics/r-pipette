@@ -1,3 +1,33 @@
+## brio 0.3.11 (2019-10-13)
+
+- `naStrings`: Reverted back to including only "NA" and "NULL", instead of
+  including empty space strings. This results in unwanted messages regarding
+  strip whitespace from data.table `fread` function.
+
+## brio 0.3.10 (2019-10-12)
+
+### Major changes
+
+- Added back internal support for readr package instead of data.table for
+  `import` and `export` functions. We have observed stack imbalance and segfault
+  memory dump issues with the latest data.table release (v1.12.4) on multi-core
+  Azure VMs. The engine can now be changed using global options:
+  
+  - import: `acid.import.engine` ("data.table" or "readr").
+  - export: `acid.export.engine` ("data.table" or "readr").
+  
+  This new addition is experimental and may be dropped in a future release. We
+  find that readr currently works more reliably for export in some cases for
+  large CSV files, but data.table is generally faster and more robust for data
+  import of CSV and TSV files. We're intentionally keeping this functions simple
+  and not providing a user-facing argument for selecting the internal engine.
+
+### Minor changes
+
+- Converted unnecessary exported global variables into internal globals:
+  `compressExtPattern`, `extPattern`, `rdataExtPattern`, `rdataLoadError`.
+- Updated `naStrings` to include empty whitespace.
+
 ## brio 0.3.9 (2019-10-04)
 
 ### Minor changes

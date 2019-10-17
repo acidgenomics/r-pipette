@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">brio</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.11</span>
       </span>
     </div>
 
@@ -116,9 +116,9 @@
 <h2 class="hasAnchor">
 <a href="#brio-0-3-0-2019-07-22" class="anchor"></a>brio 0.3.0 (2019-07-22)</h2>
 <p>Bumped version number to reflect changes in basejump dependencies.</p>
-<div id="minor-changes-8" class="section level3">
+<div id="minor-changes-9" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-8" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-9" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Improved naming consistency of internal functions.</li>
 <li>Updated package dependency versions.</li>
@@ -128,9 +128,9 @@
     <div id="brio-0-3-1-2019-07-30" class="section level2">
 <h2 class="hasAnchor">
 <a href="#brio-0-3-1-2019-07-30" class="anchor"></a>brio 0.3.1 (2019-07-30)</h2>
-<div id="minor-changes-7" class="section level3">
+<div id="minor-changes-8" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-7" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-8" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>
 <code>import</code>: Bug fix for invalid objects (e.g. S4 objects that inherit <code>SummarizedExperiment</code>) not returning silently. Had to convert the <code>try</code> call to a <code>tryCatch</code> call to avoid errors popping up during name checks.</li>
@@ -142,9 +142,9 @@
     <div id="brio-0-3-2-2019-08-06" class="section level2">
 <h2 class="hasAnchor">
 <a href="#brio-0-3-2-2019-08-06" class="anchor"></a>brio 0.3.2 (2019-08-06)</h2>
-<div id="minor-changes-6" class="section level3">
+<div id="minor-changes-7" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-6" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-7" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Now using acidroxygen package to manage shared roxygen documentation params.</li>
 </ul>
@@ -153,9 +153,9 @@
     <div id="brio-0-3-3-2019-08-13" class="section level2">
 <h2 class="hasAnchor">
 <a href="#brio-0-3-3-2019-08-13" class="anchor"></a>brio 0.3.3 (2019-08-13)</h2>
-<div id="minor-changes-5" class="section level3">
+<div id="minor-changes-6" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-5" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-6" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Added support for <code>url</code> calls to <code>import</code>, <code>localOrRemoteFile</code>, and <code>loadRemoteData</code>.</li>
 <li>Improved message consistency.</li>
@@ -166,9 +166,9 @@
     <div id="brio-0-3-4-2019-08-16" class="section level2">
 <h2 class="hasAnchor">
 <a href="#brio-0-3-4-2019-08-16" class="anchor"></a>brio 0.3.4 (2019-08-16)</h2>
-<div id="minor-changes-4" class="section level3">
+<div id="minor-changes-5" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-4" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-5" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Reworked organization and naming of internal importer functions. Now including these in the <code>import</code> documentation, for clarity.</li>
 <li>
@@ -182,9 +182,9 @@
     <div id="brio-0-3-5-2019-08-22" class="section level2">
 <h2 class="hasAnchor">
 <a href="#brio-0-3-5-2019-08-22" class="anchor"></a>brio 0.3.5 (2019-08-22)</h2>
-<div id="minor-changes-3" class="section level3">
+<div id="minor-changes-4" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-3" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-4" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>No longer warn on MTX import without sidecar rownames and colnames files.</li>
 <li>
@@ -198,9 +198,9 @@
 <ul>
 <li>Updated R dependency to 3.6.</li>
 </ul>
-<div id="major-changes-1" class="section level3">
+<div id="major-changes-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#major-changes-1" class="anchor"></a>Major changes</h3>
+<a href="#major-changes-2" class="anchor"></a>Major changes</h3>
 <ul>
 <li>
 <code>export</code>: Reworked internal code to call <code><a href="https://Rdatatable.gitlab.io/data.table/reference/fwrite.html">data.table::fwrite</a></code> directly, rather than having to pass to <code><a href="../reference/export.html">brio::export</a></code>. Added support for <code>bz2</code> output for <code>matrix</code> and <code>sparseMatrix</code> classes.</li>
@@ -210,9 +210,9 @@
     <div id="brio-0-3-7-2019-09-03" class="section level2">
 <h2 class="hasAnchor">
 <a href="#brio-0-3-7-2019-09-03" class="anchor"></a>brio 0.3.7 (2019-09-03)</h2>
-<div id="minor-changes-2" class="section level3">
+<div id="minor-changes-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-2" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-3" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>
 <code>import</code>: Improved internal arguments passed to <code><a href="https://Rdatatable.gitlab.io/data.table/reference/fread.html">data.table::fread</a></code>.</li>
@@ -222,17 +222,17 @@
     <div id="brio-0-3-8-2019-09-11" class="section level2">
 <h2 class="hasAnchor">
 <a href="#brio-0-3-8-2019-09-11" class="anchor"></a>brio 0.3.8 (2019-09-11)</h2>
-<div id="major-changes" class="section level3">
+<div id="major-changes-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#major-changes" class="anchor"></a>Major changes</h3>
+<a href="#major-changes-1" class="anchor"></a>Major changes</h3>
 <ul>
 <li>
 <code>import</code>: Improved metadata stash approach inside S4 (<code>metadata</code>) and S3 (<code>attributes</code>) return objects. Previously, import metadata was stashed inside “brio”, but this has been renamed to “import”. Metadata is no longer stashed inside R data objects loaded via <code>import</code>. Simplified the internal code inside <code>import</code> to only stash the <code>call</code>, whereas importer metadata is now handled by an internal <code>.defineImportMetadata</code> function.</li>
 </ul>
 </div>
-<div id="minor-changes-1" class="section level3">
+<div id="minor-changes-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-1" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-2" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>
 <code>export</code>: Improved default extension documentation and internal argument matching via <code>match.arg</code>. For <code>matrix</code> files exported simply with <code>dir</code> argument, this will default to CSV format. For sparse <code>Matrix</code> files exported simply with <code>dir</code> argument, this will default to MTX format.</li>
@@ -242,14 +242,48 @@
     <div id="brio-0-3-9-2019-10-04" class="section level2">
 <h2 class="hasAnchor">
 <a href="#brio-0-3-9-2019-10-04" class="anchor"></a>brio 0.3.9 (2019-10-04)</h2>
-<div id="minor-changes" class="section level3">
+<div id="minor-changes-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-1" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Updated data.table and rio dependencies, based on recent data.table 1.12.4 update, which has a lot of changes.</li>
 <li>Fixed internal code to no longer show rownames message, even when <code>rownames = FALSE</code>.</li>
 </ul>
 </div>
+</div>
+    <div id="brio-0-3-10-2019-10-12" class="section level2">
+<h2 class="hasAnchor">
+<a href="#brio-0-3-10-2019-10-12" class="anchor"></a>brio 0.3.10 (2019-10-12)</h2>
+<div id="major-changes" class="section level3">
+<h3 class="hasAnchor">
+<a href="#major-changes" class="anchor"></a>Major changes</h3>
+<ul>
+<li>
+<p>Added back internal support for readr package instead of data.table for <code>import</code> and <code>export</code> functions. We have observed stack imbalance and segfault memory dump issues with the latest data.table release (v1.12.4) on multi-core Azure VMs. The engine can now be changed using global options:</p>
+<ul>
+<li>import: <code>acid.import.engine</code> (“data.table” or “readr”).</li>
+<li>export: <code>acid.export.engine</code> (“data.table” or “readr”).</li>
+</ul>
+<p>This new addition is experimental and may be dropped in a future release. We find that readr currently works more reliably for export in some cases for large CSV files, but data.table is generally faster and more robust for data import of CSV and TSV files. We’re intentionally keeping this functions simple and not providing a user-facing argument for selecting the internal engine.</p>
+</li>
+</ul>
+</div>
+<div id="minor-changes" class="section level3">
+<h3 class="hasAnchor">
+<a href="#minor-changes" class="anchor"></a>Minor changes</h3>
+<ul>
+<li>Converted unnecessary exported global variables into internal globals: <code>compressExtPattern</code>, <code>extPattern</code>, <code>rdataExtPattern</code>, <code>rdataLoadError</code>.</li>
+<li>Updated <code>naStrings</code> to include empty whitespace.</li>
+</ul>
+</div>
+</div>
+    <div id="brio-0-3-11-2019-10-13" class="section level2">
+<h2 class="hasAnchor">
+<a href="#brio-0-3-11-2019-10-13" class="anchor"></a>brio 0.3.11 (2019-10-13)</h2>
+<ul>
+<li>
+<code>naStrings</code>: Reverted back to including only “NA” and “NULL”, instead of including empty space strings. This results in unwanted messages regarding strip whitespace from data.table <code>fread</code> function.</li>
+</ul>
 </div>
   </div>
 
@@ -267,6 +301,8 @@
         <li><a href="#brio-0-3-7-2019-09-03">0.3.7</a></li>
         <li><a href="#brio-0-3-8-2019-09-11">0.3.8</a></li>
         <li><a href="#brio-0-3-9-2019-10-04">0.3.9</a></li>
+        <li><a href="#brio-0-3-10-2019-10-12">0.3.10</a></li>
+        <li><a href="#brio-0-3-11-2019-10-13">0.3.11</a></li>
       </ul>
     </div>
   </div>
