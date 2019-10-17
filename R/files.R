@@ -38,7 +38,9 @@ NULL
 
 
 .dotsToFiles <- function(...) {
-    unlist(eval(substitute(alist(...))))
+    x <- unlist(list(...))
+    assert(isCharacter(x))
+    x
 }
 
 
