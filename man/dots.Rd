@@ -27,7 +27,7 @@ Extract dots from function
 \note{
 This function uses non-standard evaluation.
 
-Updated 2019-09-06.
+Updated 2019-10-12.
 }
 \examples{
 dots(a, b, c, character = FALSE)
@@ -44,3 +44,4 @@ dots(a, b, c, character = TRUE)
 }
 }
 }
+\keyword{internal}

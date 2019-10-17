@@ -1,10 +1,9 @@
 #' Load data as name
 #'
+#' @export
 #' @note This function is intended for interactive use and interprets object
 #'   names using non-standard evaluation.
-#'
-#' @note Updated 2019-07-30.
-#' @export
+#' @note Updated 2019-10-12.
 #'
 #' @inheritParams loadData
 #' @param ... Key value pairs, defining the name mappings. For example,
@@ -28,13 +27,11 @@ loadDataAsName <- function(
         is.environment(envir),
         isFlag(overwrite)
     )
-
     ## Map the dot input to files.
     dots <- dots(..., character = TRUE)
     assert(hasNames(dots))
     files <- .listData(names = dots, dir = dir)
     names(files) <- names(dots)
-
     ## Check to see if any of the new names already exist in environment.
     names <- names(dots)
     if (
@@ -43,7 +40,6 @@ loadDataAsName <- function(
     ) {
         .loadExistsError(names)
     }
-
     ## Note that we can skip safe loading here because we have already checked
     ## for existing names in environment outside of the loop call.
     if (any(grepl("\\.rds$", files))) {
@@ -70,7 +66,6 @@ loadDataAsName <- function(
             )
         ))
         assert(areSetEqual(dots, ls(safe)))
-
         ## Now assign to the desired object names.
         invisible(mapply(
             FUN = function(from, to, safe, envir) {
@@ -87,9 +82,8 @@ loadDataAsName <- function(
             USE.NAMES = FALSE
         ))
     }
-
     invisible(files)
 }
 
-formals(loadDataAsName)[["dir"]] <- formalsList[["load.dir"]]
-formals(loadDataAsName)[["overwrite"]] <- formalsList[["overwrite"]]
+formals(loadDataAsName)[["dir"]] <- .formalsList[["load.dir"]]
+formals(loadDataAsName)[["overwrite"]] <- .formalsList[["overwrite"]]
