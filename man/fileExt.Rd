@@ -22,7 +22,7 @@ File extension
 \note{
 This function intentionally doesn't check whether a file exists.
 
-Updated 2019-07-30.
+Updated 2019-10-12.
 }
 \examples{
 fileExt(c("dir/foo.txt", "dir/bar.tar.gz", "dir/"))

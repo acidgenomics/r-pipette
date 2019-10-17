@@ -1,6 +1,6 @@
 #' @name sanitizeNA
 #' @inherit bioverbs::sanitizeNA
-#' @note Updated 2019-07-19.
+#' @note Updated 2019-10-12.
 #'
 #' @inheritParams acidroxygen::params
 #' @param ... Additional arguments.

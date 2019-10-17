@@ -37,7 +37,7 @@ inside a character vector to \code{NA_character_}. Other \code{atomic} data type
 returned unmodified.
 }
 \note{
-Updated 2019-07-19.
+Updated 2019-10-12.
 }
 \examples{
 ## character ====

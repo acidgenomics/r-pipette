@@ -1,8 +1,8 @@
 #' Base name without the file extension
 #'
-#' @note This function intentionally doesn't check whether a file exists.
-#' @note Updated 2019-07-19.
 #' @export
+#' @note This function intentionally doesn't check whether a file exists.
+#' @note Updated 2019-10-12.
 #'
 #' @param path `character`.
 #'   File path(s).
@@ -25,9 +25,9 @@ basenameSansExt <- function(path) {
         X = x,
         FUN = function(x) {
             if (isTRUE(
-                grepl(pattern = extPattern, x = x, ignore.case = TRUE)
+                grepl(pattern = .extPattern, x = x, ignore.case = TRUE)
             )) {
-                sub(pattern = extPattern, replacement = "", x = x)
+                sub(pattern = .extPattern, replacement = "", x = x)
             } else {
                 NA_character_
             }
