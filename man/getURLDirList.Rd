@@ -26,7 +26,10 @@ Best served using FTP instead of HTTP.
 Updated 2019-10-18.
 }
 \examples{
-if (hasInternet()) {
+if (
+    hasInternet() &&
+    !isTRUE(nzchar(Sys.getenv("CI")))
+) {
     url <- "ftp://ftp.ensembl.org/pub/"
     x <- getURLDirList(url, pattern = "^release-")
     tail(x)
