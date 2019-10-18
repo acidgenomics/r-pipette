@@ -10,7 +10,10 @@
 #'   Simple directory contents return, including both files and subdirectories.
 #'
 #' @examples
-#' if (hasInternet()) {
+#' if (
+#'     hasInternet() &&
+#'     !isTRUE(nzchar(Sys.getenv("CI")))
+#' ) {
 #'     url <- "ftp://ftp.ensembl.org/pub/"
 #'     x <- getURLDirList(url, pattern = "^release-")
 #'     tail(x)
