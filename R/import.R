@@ -208,13 +208,14 @@ import <- function(
         isFlag(rownames),
         isFlag(colnames) || isCharacter(colnames)
     )
+    ## 2019-10-18: Default renamed from "none" to "auto".
     format <- match.arg(
         arg = format,
-        choices = c("auto", "csv", "tsv", "txt", "lines")
+        choices = c("auto", "csv", "tsv", "txt", "lines", "none")
     )
     ## Allow Google Sheets import using rio, by matching the URL.
     ## Otherwise, coerce the file extension to uppercase, for easy matching.
-    if (identical(format, "auto")) {
+    if (identical(format, "auto") || identical(format, "none")) {
         ext <- str_match(basename(file), .extPattern)[1L, 2L]
         if (is.na(ext)) {
             message("No file extension detected. Importing as lines.")
