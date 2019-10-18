@@ -12,10 +12,8 @@ test_that("Invalid extension", {
 test_that("No extension", {
     unlink("example", recursive = TRUE)
     file.create("example")
-    expect_error(
-        object = import("example"),
-        regexp = "extension"
-    )
+    x <- import("example")
+    expect_identical(x, character())
     unlink("example")
 })
 
