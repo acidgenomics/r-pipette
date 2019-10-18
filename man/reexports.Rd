@@ -3,19 +3,20 @@
 \docType{import}
 \name{reexports}
 \alias{reexports}
+\alias{bunzip2}
+\alias{bzip2}
 \alias{compressFile}
 \alias{decompressFile}
-\alias{bzip2}
-\alias{bunzip2}
-\alias{gzip}
 \alias{gunzip}
-\alias{tar}
-\alias{untar}
-\alias{zip}
-\alias{unzip}
+\alias{gzip}
 \alias{isCompressedFile}
 \alias{isBzipped}
 \alias{isGzipped}
+\alias{getURL}
+\alias{tar}
+\alias{untar}
+\alias{unzip}
+\alias{zip}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -23,8 +24,10 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{R.utils}{\code{\link[R.utils]{compressFile}}, \code{\link[R.utils]{decompressFile}}, \code{\link[R.utils]{bzip2}}, \code{\link[R.utils]{bunzip2}}, \code{\link[R.utils]{gzip}}, \code{\link[R.utils]{gunzip}}, \code{\link[R.utils]{isCompressedFile}}, \code{\link[R.utils]{isBzipped}}, \code{\link[R.utils]{isGzipped}}}
+  \item{R.utils}{\code{\link[R.utils]{bunzip2}}, \code{\link[R.utils]{bzip2}}, \code{\link[R.utils]{compressFile}}, \code{\link[R.utils]{decompressFile}}, \code{\link[R.utils]{gunzip}}, \code{\link[R.utils]{gzip}}, \code{\link[R.utils]{isCompressedFile}}, \code{\link[R.utils]{isBzipped}}, \code{\link[R.utils]{isGzipped}}}
 
-  \item{utils}{\code{\link[utils]{tar}}, \code{\link[utils]{untar}}, \code{\link[utils]{zip}}, \code{\link[utils]{unzip}}}
+  \item{RCurl}{\code{\link[RCurl]{getURL}}}
+
+  \item{utils}{\code{\link[utils]{tar}}, \code{\link[utils]{untar}}, \code{\link[utils]{unzip}}, \code{\link[utils]{zip}}}
 }}
 

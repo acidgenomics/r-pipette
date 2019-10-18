@@ -1,3 +1,18 @@
+## brio 0.3.12 (2019-10-18)
+
+### New functions
+
+- `getURLDirList`: Return a simple character vector of files and subdirectories
+  in a remote directory. Intended for use with FTP servers.
+- Also now reexporting the `getURL` function from RCurl.
+
+### Minor changes
+
+- `import`: Default `format` argument has been renamed from "none" to "auto".
+- `localOrRemoteFile`: Improved handling for remote URLs without a file
+  extension.
+- `pasteURL`: Now smartly strips trailing slashes prior to internal paste call.
+
 ## brio 0.3.11 (2019-10-13)
 
 - `naStrings`: Reverted back to including only "NA" and "NULL", instead of
