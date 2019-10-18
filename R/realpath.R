@@ -5,15 +5,21 @@
 #' @note Updated 2019-10-12.
 #'
 #' @seealso
-#' - [file.path()].
+#' Standard path modifiers:
 #' - [normalizePath()].
+#' - [file.path()].
+#'
+#' Checking for existence, access:
+#' - [file.access()].
+#' - [file.exists()].
+#' - [goalie::hasAccess()]
+#' - [goalie::allHaveAccess()].
 #'
 #' @examples
 #' realpath(".")
 #' normalizePath(".")
 realpath <- function(path) {
-    ## Ensure we're matching the platform conventions.
-    ## For example, AppVeyor CI tests on Windows but uses "/" instead of "\\".
+    assert(allHaveAccess(path))
     normalizePath(
         path = path,
         winslash = .Platform$file.sep,  # nolint
