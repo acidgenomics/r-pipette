@@ -69,7 +69,13 @@ localOrRemoteFile <- function(file) {
                 mode <- "w"
             }
             destfile <- file.path(tempdir(), basename(file))
-            download.file(url = file, destfile = destfile, mode = mode)
+            download.file(
+                url = file,
+                destfile = destfile,
+                quiet = TRUE,
+                mode = mode,
+                cacheOK = TRUE
+            )
             destfile
         },
         SIMPLIFY = TRUE,
