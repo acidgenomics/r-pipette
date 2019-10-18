@@ -66,8 +66,17 @@ realpath(".")
 normalizePath(".")
 }
 \seealso{
+Standard path modifiers:
 \itemize{
-\item \code{\link[=file.path]{file.path()}}.
 \item \code{\link[=normalizePath]{normalizePath()}}.
+\item \code{\link[=file.path]{file.path()}}.
+}
+
+Checking for existence, access:
+\itemize{
+\item \code{\link[=file.access]{file.access()}}.
+\item \code{\link[=file.exists]{file.exists()}}.
+\item \code{\link[goalie:hasAccess]{goalie::hasAccess()}}
+\item \code{\link[goalie:allHaveAccess]{goalie::allHaveAccess()}}.
 }
 }
