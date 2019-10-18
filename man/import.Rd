@@ -4,7 +4,7 @@
 \alias{import}
 \title{Import}
 \usage{
-import(file, rownames = TRUE, colnames = TRUE, format = "none",
+import(file, rownames = TRUE, colnames = TRUE, format = "auto",
   sheet = 1L)
 }
 \arguments{
