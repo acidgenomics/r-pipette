@@ -61,7 +61,7 @@ localOrRemoteFile <- function(file) {
                 "xz",
                 "zip"
             )
-            if (isTRUE(ext %in% binary)) {
+            if (isSubset(ext, binary)) {
                 ## Write binary.
                 mode <- "wb"
             } else {
