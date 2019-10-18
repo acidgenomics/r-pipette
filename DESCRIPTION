@@ -71,6 +71,7 @@ Collate:
     'dots.R'
     'export-methods.R'
     'fileExt.R'
+    'getURLDirList.R'
     'import.R'
     'imports.R'
     'initDir.R'
