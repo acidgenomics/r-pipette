@@ -11,6 +11,7 @@
 - `import`: Default `format` argument has been renamed from "none" to "auto".
 - `localOrRemoteFile`: Improved handling for remote URLs without a file
   extension.
+- `pasteURL`: Now smartly strips trailing slashes prior to internal paste call.
 
 ## brio 0.3.11 (2019-10-13)
 
