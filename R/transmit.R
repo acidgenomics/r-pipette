@@ -23,7 +23,7 @@
 #' @examples
 #' if (
 #'     hasInternet() &&
-#'     isTRUE(nzchar(Sys.getenv("CI")))
+#'     !isTRUE(nzchar(Sys.getenv("CI")))
 #' ) {
 #'     remoteDir <- paste(
 #'         "ftp://ftp.pantherdb.org",
