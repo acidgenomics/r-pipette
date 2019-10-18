@@ -24,6 +24,7 @@ reference:
     - writeCounts
   - title: File transfers
     contents:
+    - getURLDirList
     - initDir
     - localOrRemoteFile
     - transmit
