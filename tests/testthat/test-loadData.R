@@ -100,7 +100,7 @@ test_that("Duplicate RDA and RDS files", {
 test_that("Invalid arguments", {
     expect_error(
         object = loadData(gr, dir = "XXX"),
-        regexp = "XXX"
+        regexp = "allHaveAccess"
     )
     expect_error(
         object = loadData(gr, dir = dir, envir = "XXX"),
