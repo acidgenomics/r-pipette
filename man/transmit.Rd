@@ -15,7 +15,7 @@ Remote FTP directory path.}
 Directory where to save files locally.}
 
 \item{pattern}{\code{character(1)}.
-Pattern to match against remote file names.}
+Pattern to use for matching.}
 
 \item{rename}{\code{character(1)} or \code{NULL}.
 Rename the local files (including suffix), if desired.}

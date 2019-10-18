@@ -12,8 +12,6 @@
 #'   Remote FTP directory path.
 #' @param localDir `character(1)`.
 #'   Directory where to save files locally.
-#' @param pattern `character(1)`.
-#'   Pattern to match against remote file names.
 #' @param rename `character(1)` or `NULL`.
 #'   Rename the local files (including suffix), if desired.
 #' @param compress `logical(1)`.
