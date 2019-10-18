@@ -99,7 +99,7 @@
 #' `DOC`, `DOCX`, `PDF`, `PPT`, `PPTX`.
 #'
 #' @export
-#' @note Updated 2019-10-12.
+#' @note Updated 2019-10-18.
 #'
 #' @inheritParams acidroxygen::params
 #' @param rownames `logical(1)`.
@@ -216,6 +216,10 @@ import <- function(
     ## Otherwise, coerce the file extension to uppercase, for easy matching.
     if (identical(format, "none")) {
         ext <- str_match(basename(file), .extPattern)[1L, 2L]
+        if (is.na(ext)) {
+            message("No file extension detected. Importing as lines.")
+            ext <- "lines"
+        }
     } else {
         ext <- format
     }
