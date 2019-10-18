@@ -36,7 +36,7 @@ Updated 2019-10-12.
 }
 \examples{
 if (
-    hasInternet() &&
+    goalie::hasInternet() &&
     !isTRUE(nzchar(Sys.getenv("CI")))
 ) {
     remoteDir <- paste(

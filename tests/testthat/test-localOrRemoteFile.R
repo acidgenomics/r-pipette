@@ -15,14 +15,14 @@ test_that("localOrRemoteFile", {
 test_that("Missing file", {
     expect_error(
         object = localOrRemoteFile("XXX.csv"),
-        regexp = "path\\[1\\]"
+        regexp = "No such file"
     )
 })
 
 test_that("No file extension", {
     expect_error(
-        localOrRemoteFile("file"),
-        "file extension"
+        object = localOrRemoteFile("file"),
+        regexp = "No such file"
     )
 })
 
