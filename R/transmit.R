@@ -21,22 +21,26 @@
 #' Local file paths.
 #'
 #' @examples
-#' ## This doesn't work reliably on CI.
-#' ## > remoteDir <- paste(
-#' ## >     "ftp://ftp.pantherdb.org",
-#' ## >     "sequence_classifications",
-#' ## >     "current_release",
-#' ## >     sep = "/"
-#' ## > )
-#' ## > readme <- transmit(
-#' ## >     remoteDir = remoteDir,
-#' ## >     pattern = "README",
-#' ## >     rename = "panther_readme.txt",
-#' ## >     compress = TRUE
-#' ## > )
-#' ## > basename(readme)
-#' ## > file.exists(readme)
-#' ## > unlink(readme)
+#' if (
+#'     hasInternet() &&
+#'     isTRUE(nzchar(Sys.getenv("CI")))
+#' ) {
+#'     remoteDir <- paste(
+#'         "ftp://ftp.pantherdb.org",
+#'         "sequence_classifications",
+#'         "current_release",
+#'         sep = "/"
+#'     )
+#'     readme <- transmit(
+#'         remoteDir = remoteDir,
+#'         pattern = "README",
+#'         rename = "panther_readme.txt",
+#'         compress = TRUE
+#'     )
+#'     basename(readme)
+#'     file.exists(readme)
+#'     unlink(readme)
+#' }
 transmit <- function(
     remoteDir,
     localDir = ".",
