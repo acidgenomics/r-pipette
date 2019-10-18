@@ -73,8 +73,7 @@ localOrRemoteFile <- function(file) {
                 url = file,
                 destfile = destfile,
                 quiet = TRUE,
-                mode = mode,
-                cacheOK = TRUE
+                mode = mode
             )
             destfile
         },
