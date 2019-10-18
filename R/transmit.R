@@ -22,7 +22,7 @@
 #'
 #' @examples
 #' if (
-#'     hasInternet() &&
+#'     goalie::hasInternet() &&
 #'     !isTRUE(nzchar(Sys.getenv("CI")))
 #' ) {
 #'     remoteDir <- paste(

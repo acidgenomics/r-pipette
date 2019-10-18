@@ -11,7 +11,7 @@
 #'
 #' @examples
 #' if (
-#'     hasInternet() &&
+#'     goalie::hasInternet() &&
 #'     !isTRUE(nzchar(Sys.getenv("CI")))
 #' ) {
 #'     url <- "ftp://ftp.ensembl.org/pub/"
