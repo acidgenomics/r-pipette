@@ -4,7 +4,7 @@
 \alias{import}
 \title{Import}
 \usage{
-import(file, rownames = TRUE, colnames = TRUE, format = "none",
+import(file, rownames = TRUE, colnames = TRUE, format = "auto",
   sheet = 1L)
 }
 \arguments{
@@ -91,7 +91,7 @@ arguments. Remote URLs and compressed files are supported. If you need more
 complex import settings, just call the wrapped importer directly instead.
 }
 \note{
-Updated 2019-10-12.
+Updated 2019-10-18.
 }
 \section{Row and column names}{
 

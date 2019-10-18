@@ -99,7 +99,7 @@
 #' `DOC`, `DOCX`, `PDF`, `PPT`, `PPTX`.
 #'
 #' @export
-#' @note Updated 2019-10-12.
+#' @note Updated 2019-10-18.
 #'
 #' @inheritParams acidroxygen::params
 #' @param rownames `logical(1)`.
@@ -198,7 +198,7 @@ import <- function(
     file,
     rownames = TRUE,
     colnames = TRUE,
-    format = "none",
+    format = "auto",
     sheet = 1L
 ) {
     ## We're supporting remote files, so don't check using `isAFile()` here.
@@ -208,14 +208,19 @@ import <- function(
         isFlag(rownames),
         isFlag(colnames) || isCharacter(colnames)
     )
+    ## 2019-10-18: Default renamed from "none" to "auto".
     format <- match.arg(
         arg = format,
-        choices = c("none", "csv", "tsv", "txt", "lines")
+        choices = c("auto", "csv", "tsv", "txt", "lines", "none")
     )
     ## Allow Google Sheets import using rio, by matching the URL.
     ## Otherwise, coerce the file extension to uppercase, for easy matching.
-    if (identical(format, "none")) {
+    if (identical(format, "auto") || identical(format, "none")) {
         ext <- str_match(basename(file), .extPattern)[1L, 2L]
+        if (is.na(ext)) {
+            message("No file extension detected. Importing as lines.")
+            ext <- "lines"
+        }
     } else {
         ext <- format
     }

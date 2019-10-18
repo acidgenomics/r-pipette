@@ -1,12 +1,7 @@
-## Add query string "?" with "&" handling.
-## Consider adding "!/#" support.
-
-
-
 #' Concatenate strings to form a URL
 #'
 #' @export
-#' @note Updated 2019-10-12.
+#' @note Updated 2019-10-18.
 #'
 #' @inheritParams base::paste
 #' @param protocol `character(1)`.
@@ -39,8 +34,11 @@
 #' )
 #' print(x)
 pasteURL <- function(..., protocol = c("https", "http", "ftp", "none")) {
+    dots <- unlist(list(...))
+    assert(isCharacter(dots))
     protocol <- match.arg(protocol)
-    url <- paste(..., sep = "/")
+    dots <- gsub(pattern = "/$", replacement = "", x = dots)
+    url <- paste(dots, collapse = "/")
     assert(isString(url))
     if (protocol != "none") {
         url <- paste0(protocol, "://", url)

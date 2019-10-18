@@ -72,7 +72,7 @@ FTP server. Also enables on-the-fly file renaming and compression." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">brio</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.12</span>
       </span>
     </div>
 
@@ -140,7 +140,7 @@ Directory where to save files locally.</p></td>
     <tr>
       <th>pattern</th>
       <td><p><code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>.
-Pattern to match against remote file names.</p></td>
+Pattern to use for matching.</p></td>
     </tr>
     <tr>
       <th>rename</th>
@@ -163,23 +163,26 @@ Local file paths.</p>
     <p>Updated 2019-10-12.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>## This doesn't work reliably on CI.
-## > remoteDir <- paste(
-## >     "ftp://ftp.pantherdb.org",
-## >     "sequence_classifications",
-## >     "current_release",
-## >     sep = "/"
-## > )
-## > readme <- transmit(
-## >     remoteDir = remoteDir,
-## >     pattern = "README",
-## >     rename = "panther_readme.txt",
-## >     compress = TRUE
-## > )
-## > basename(readme)
-## > file.exists(readme)
-## > unlink(readme)
-</div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (
+    <span class='fu'>hasInternet</span>() <span class='kw'>&amp;&amp;</span>
+    !<span class='fu'><a href='https://rdrr.io/r/base/Logic.html'>isTRUE</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nchar.html'>nzchar</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span>(<span class='st'>"CI"</span>)))
+) {
+    <span class='no'>remoteDir</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(
+        <span class='st'>"ftp://ftp.pantherdb.org"</span>,
+        <span class='st'>"sequence_classifications"</span>,
+        <span class='st'>"current_release"</span>,
+        <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"/"</span>
+    )
+    <span class='no'>readme</span> <span class='kw'>&lt;-</span> <span class='fu'>transmit</span>(
+        <span class='kw'>remoteDir</span> <span class='kw'>=</span> <span class='no'>remoteDir</span>,
+        <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='st'>"README"</span>,
+        <span class='kw'>rename</span> <span class='kw'>=</span> <span class='st'>"panther_readme.txt"</span>,
+        <span class='kw'>compress</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+    )
+    <span class='fu'><a href='https://rdrr.io/r/base/basename.html'>basename</a></span>(<span class='no'>readme</span>)
+    <span class='fu'><a href='https://rdrr.io/r/base/files.html'>file.exists</a></span>(<span class='no'>readme</span>)
+    <span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span>(<span class='no'>readme</span>)
+}</div><div class='output co'>#&gt; <span class='error'>Error in hasInternet(): could not find function "hasInternet"</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

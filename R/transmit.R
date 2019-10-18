@@ -12,8 +12,6 @@
 #'   Remote FTP directory path.
 #' @param localDir `character(1)`.
 #'   Directory where to save files locally.
-#' @param pattern `character(1)`.
-#'   Pattern to match against remote file names.
 #' @param rename `character(1)` or `NULL`.
 #'   Rename the local files (including suffix), if desired.
 #' @param compress `logical(1)`.
@@ -23,22 +21,26 @@
 #' Local file paths.
 #'
 #' @examples
-#' ## This doesn't work reliably on CI.
-#' ## > remoteDir <- paste(
-#' ## >     "ftp://ftp.pantherdb.org",
-#' ## >     "sequence_classifications",
-#' ## >     "current_release",
-#' ## >     sep = "/"
-#' ## > )
-#' ## > readme <- transmit(
-#' ## >     remoteDir = remoteDir,
-#' ## >     pattern = "README",
-#' ## >     rename = "panther_readme.txt",
-#' ## >     compress = TRUE
-#' ## > )
-#' ## > basename(readme)
-#' ## > file.exists(readme)
-#' ## > unlink(readme)
+#' if (
+#'     goalie::hasInternet() &&
+#'     !isTRUE(nzchar(Sys.getenv("CI")))
+#' ) {
+#'     remoteDir <- paste(
+#'         "ftp://ftp.pantherdb.org",
+#'         "sequence_classifications",
+#'         "current_release",
+#'         sep = "/"
+#'     )
+#'     readme <- transmit(
+#'         remoteDir = remoteDir,
+#'         pattern = "README",
+#'         rename = "panther_readme.txt",
+#'         compress = TRUE
+#'     )
+#'     basename(readme)
+#'     file.exists(readme)
+#'     unlink(readme)
+#' }
 transmit <- function(
     remoteDir,
     localDir = ".",

@@ -11,7 +11,7 @@
 #' extensions are natively supported: `BZ2`, `GZ`, `XZ`, `ZIP`.
 #'
 #' @export
-#' @note Updated 2019-10-12.
+#' @note Updated 2019-10-18.
 #'
 #' @param file `character(1)`.
 #'   Local file paths or remote URLs.
@@ -33,9 +33,6 @@
 #' basename(x)
 localOrRemoteFile <- function(file) {
     assert(isCharacter(file))
-    if (!all(grepl(pattern = .extPattern, x = file))) {
-        stop(sprintf("'%s' does not end with file extension.", deparse(file)))
-    }
     file <- mapply(
         file = file,
         FUN = function(file) {
@@ -51,8 +48,8 @@ localOrRemoteFile <- function(file) {
                 pattern = "\\.([a-zA-Z0-9]+)$"
             )
             ext <- na.omit(ext[1L, 2L])
-            assert(hasLength(ext))
-            ## Write mode for binary files. Applies to Windows.
+            ## Write mode for binary files.
+            ## Note that files without extension will use default.
             ## https://github.com/tidyverse/readxl/issues/374
             binary <- c(
                 "bz2",
@@ -64,7 +61,7 @@ localOrRemoteFile <- function(file) {
                 "xz",
                 "zip"
             )
-            if (ext %in% binary) {
+            if (isSubset(ext, binary)) {
                 ## Write binary.
                 mode <- "wb"
             } else {
@@ -72,7 +69,12 @@ localOrRemoteFile <- function(file) {
                 mode <- "w"
             }
             destfile <- file.path(tempdir(), basename(file))
-            download.file(url = file, destfile = destfile, mode = mode)
+            download.file(
+                url = file,
+                destfile = destfile,
+                quiet = TRUE,
+                mode = mode
+            )
             destfile
         },
         SIMPLIFY = TRUE,
