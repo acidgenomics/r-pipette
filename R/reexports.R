@@ -38,6 +38,22 @@ R.utils::isGzipped
 #' @export
 RCurl::getURL
 
+#' @importFrom goalie basenameSansExt
+#' @export
+goalie::basenameSansExt
+
+#' @importFrom goalie compressExtPattern
+#' @export
+goalie::compressExtPattern
+
+#' @importFrom goalie extPattern
+#' @export
+goalie::extPattern
+
+#' @importFrom goalie fileExt
+#' @export
+goalie::fileExt
+
 #' @importFrom utils tar
 #' @export
 utils::tar
