@@ -12,11 +12,11 @@
 #' @importFrom data.table fread fwrite
 #' @importFrom goalie assert allAreAtomic allAreExisting allAreFiles
 #'   allAreNonExisting allAreURLs allHaveAccess areDisjointSets areSameLength
-#'   areSetEqual bapply formalCompress hasColnames hasCols hasDimnames
-#'   hasInternet hasLength hasNames hasNoDuplicates hasRownames hasRows
-#'   hasValidNames hasValidDimnames isAFile isAURL isAny isCharacter isFlag
-#'   isMatchingRegex isScalar isString isSubset matchArgsToDoCall
-#'   standardizeCall
+#'   areSetEqual bapply compressExtPattern extPattern formalCompress hasColnames
+#'   hasCols hasDimnames hasInternet hasLength hasNames hasNoDuplicates
+#'   hasRownames hasRows hasValidNames hasValidDimnames isAFile isAURL isAny
+#'   isCharacter isFlag isMatchingRegex isScalar isString isSubset
+#'   matchArgsToDoCall standardizeCall
 #' @importFrom methods as is slotNames validObject
 #' @importFrom rtracklayer import
 #' @importFrom stats na.omit
