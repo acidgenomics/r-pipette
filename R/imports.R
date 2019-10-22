@@ -1,5 +1,8 @@
 #' @importMethodsFrom transformer coerce
-#'
+NULL
+
+
+
 #' @importFrom GenomicRanges GRanges
 #' @importFrom Matrix readMM writeMM
 #' @importFrom RCurl getURL url.exists
@@ -10,7 +13,7 @@
 #' @importFrom SummarizedExperiment assayNames assayNames<- assays colData
 #'   rowData rowRanges
 #' @importFrom acidbase basenameSansExt bapply compressExtPattern extPattern
-#'   matchArgsToDoCall standardizeCall
+#'   matchArgsToDoCall realpath standardizeCall
 #' @importFrom data.table fread fwrite
 #' @importFrom goalie assert allAreAtomic allAreExisting allAreFiles
 #'   allAreNonExisting allAreURLs allHaveAccess areDisjointSets areSameLength
