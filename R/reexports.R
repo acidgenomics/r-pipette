@@ -38,21 +38,21 @@ R.utils::isGzipped
 #' @export
 RCurl::getURL
 
-#' @importFrom goalie basenameSansExt
+#' @importFrom acidbase basenameSansExt
 #' @export
-goalie::basenameSansExt
+acidbase::basenameSansExt
 
-#' @importFrom goalie compressExtPattern
+#' @importFrom acidbase compressExtPattern
 #' @export
-goalie::compressExtPattern
+acidbase::compressExtPattern
 
-#' @importFrom goalie extPattern
+#' @importFrom acidbase extPattern
 #' @export
-goalie::extPattern
+acidbase::extPattern
 
-#' @importFrom goalie fileExt
+#' @importFrom acidbase fileExt
 #' @export
-goalie::fileExt
+acidbase::fileExt
 
 #' @importFrom utils tar
 #' @export
