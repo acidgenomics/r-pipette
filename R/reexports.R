@@ -54,6 +54,10 @@ acidbase::extPattern
 #' @export
 acidbase::fileExt
 
+#' @importFrom acidbase realpath
+#' @export
+acidbase::realpath
+
 #' @importFrom utils tar
 #' @export
 utils::tar

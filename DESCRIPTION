@@ -3,7 +3,7 @@ Title: Biological R Input/Output
 Description: Extension of the rio and rtracklayer packages with improved support
     for biological data structures.
 Version: 0.3.13
-Date: 2019-10-21
+Date: 2019-10-22
 Authors@R: c(
     person(
         "Michael", "Steinbaugh",
@@ -81,7 +81,6 @@ Collate:
     'localOrRemoteFile.R'
     'package.R'
     'pasteURL.R'
-    'realpath.R'
     'reexports.R'
     'removeNA-methods.R'
     'sanitizeNA-methods.R'
