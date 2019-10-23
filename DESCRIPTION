@@ -25,7 +25,7 @@ Depends: R (>= 3.6)
 Imports:
     acidbase (>= 0.1.1),
     bioverbs (>= 0.2.10),
-    goalie (>= 0.3.13),
+    goalie (>= 0.4.0),
     transformer (>= 0.2.8),
     GenomicRanges (>= 1.36),
     S4Vectors (>= 0.22),
