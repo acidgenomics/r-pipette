@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">brio</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.13</span>
       </span>
     </div>
 
@@ -147,13 +147,14 @@ Simple directory contents return, including both files and subdirectories.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (
-    <span class='fu'>hasInternet</span>() <span class='kw'>&amp;&amp;</span>
+    <span class='kw pkg'>goalie</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/goalie/man/check-scalar-hasInternet.html'>hasInternet</a></span>() <span class='kw'>&amp;&amp;</span>
     !<span class='fu'><a href='https://rdrr.io/r/base/Logic.html'>isTRUE</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nchar.html'>nzchar</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span>(<span class='st'>"CI"</span>)))
 ) {
     <span class='no'>url</span> <span class='kw'>&lt;-</span> <span class='st'>"ftp://ftp.ensembl.org/pub/"</span>
     <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>getURLDirList</span>(<span class='no'>url</span>, <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='st'>"^release-"</span>)
     <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>tail</a></span>(<span class='no'>x</span>)
-}</div><div class='output co'>#&gt; <span class='error'>Error in hasInternet(): could not find function "hasInternet"</span></div></pre>
+}</div><div class='output co'>#&gt; [1] "release-93" "release-94" "release-95" "release-96" "release-97"
+#&gt; [6] "release-98"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
