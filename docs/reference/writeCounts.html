@@ -75,7 +75,7 @@ with the sample barcodes (&quot;.COLNAMES&quot;), and gene identifiers
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">brio</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.13</span>
       </span>
     </div>
 
@@ -167,7 +167,7 @@ names using non-standard evaluation.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>counts</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span>(<span class='fl'>100L</span>), <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>10</span>)
-<span class='fu'>writeCounts</span>(<span class='no'>counts</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>"example"</span>)</div><div class='output co'>#&gt; <span class='message'>Writing 'counts' to '/data00/draco/acidbase/packages/brio/docs/reference/example'.</span></div><div class='output co'>#&gt; <span class='message'>Exporting 'counts.csv' using 'data.table::fwrite()'.</span></div><div class='input'>
+<span class='fu'>writeCounts</span>(<span class='no'>counts</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>"example"</span>)</div><div class='output co'>#&gt; <span class='message'>Writing 'counts' to '/Users/mike/git/packages/brio/docs/reference/example'.</span></div><div class='output co'>#&gt; <span class='message'>Exporting 'counts.csv' using 'data.table::fwrite()'.</span></div><div class='input'>
 <span class='co'>## Clean up.</span>
 <span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span>(<span class='st'>"example"</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div></pre>
   </div>

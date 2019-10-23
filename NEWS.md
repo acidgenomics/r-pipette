@@ -1,3 +1,8 @@
+## brio 0.3.13 (2019-10-22)
+
+NAMESPACE updates to support migration of some low-level functions to the new
+[acidbase][] package.
+
 ## brio 0.3.12 (2019-10-18)
 
 ### New functions
@@ -386,10 +391,11 @@ deal specifically with file input/output:
 
 Initial release. Migrated input-output (IO) functions from [basejump][].
 
-[Acid Genomics]: https://acidgenomics.com/
-[AppVeyor CI]: https://www.appveyor.com/
+[acidbase]: https://acidbase.acidgenomics.com/
+[acid genomics]: https://acidgenomics.com/
+[appveyor ci]: https://www.appveyor.com/
 [basejump]: https://basejump.acidgenomics.com/
 [freerange]: https://freerange.acidgenomics.com/
 [testthat]: http://testthat.r-lib.org/
 [transformer]: https://transformer.acidgenomics.com/
-[Travis CI]: https://travis-ci.com/
+[travis ci]: https://travis-ci.com/
