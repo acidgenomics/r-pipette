@@ -17,6 +17,8 @@
 \alias{compressExtPattern}
 \alias{extPattern}
 \alias{fileExt}
+\alias{initDir}
+\alias{pasteURL}
 \alias{realpath}
 \alias{tar}
 \alias{untar}
@@ -29,7 +31,7 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{acidbase}{\code{\link[acidbase]{basenameSansExt}}, \code{\link[acidbase]{compressExtPattern}}, \code{\link[acidbase]{extPattern}}, \code{\link[acidbase]{fileExt}}, \code{\link[acidbase]{realpath}}}
+  \item{acidbase}{\code{\link[acidbase]{basenameSansExt}}, \code{\link[acidbase]{compressExtPattern}}, \code{\link[acidbase]{extPattern}}, \code{\link[acidbase]{fileExt}}, \code{\link[acidbase]{initDir}}, \code{\link[acidbase]{pasteURL}}, \code{\link[acidbase]{realpath}}}
 
   \item{R.utils}{\code{\link[R.utils]{bunzip2}}, \code{\link[R.utils]{bzip2}}, \code{\link[R.utils]{compressFile}}, \code{\link[R.utils]{decompressFile}}, \code{\link[R.utils]{gunzip}}, \code{\link[R.utils]{gzip}}, \code{\link[R.utils]{isCompressedFile}}, \code{\link[R.utils]{isBzipped}}, \code{\link[R.utils]{isGzipped}}}
 

@@ -12,8 +12,8 @@ NULL
 #' @importFrom SingleCellExperiment reducedDimNames reducedDim
 #' @importFrom SummarizedExperiment assayNames assayNames<- assays colData
 #'   rowData rowRanges
-#' @importFrom acidbase basenameSansExt bapply compressExtPattern extPattern
-#'   matchArgsToDoCall realpath standardizeCall
+#' @importFrom acidbase basenameSansExt bapply compressExtPattern dots
+#'   extPattern initDir matchArgsToDoCall pasteURL realpath standardizeCall
 #' @importFrom data.table fread fwrite
 #' @importFrom goalie assert allAreAtomic allAreExisting allAreFiles
 #'   allAreNonExisting allAreURLs allHaveAccess areDisjointSets areSameLength
