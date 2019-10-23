@@ -124,7 +124,7 @@ NULL
         } else {
             string <- basename(file)
         }
-        match <- str_match(string = string, pattern = .extPattern)
+        match <- str_match(string = string, pattern = extPattern)
         ext <- match[1L, 2L]
         ext <- match.arg(arg = ext, choices = c("csv", "tsv"))
         compress <- match[1L, 4L]
@@ -301,7 +301,7 @@ setMethod(
         } else {
             string <- basename(file)
         }
-        match <- str_match(string = string, pattern = .extPattern)
+        match <- str_match(string = string, pattern = extPattern)
         ext <- match[1L, 2L]
         ext <- match.arg(arg = ext, choices = "mtx")
         compress <- match[1L, 4L]

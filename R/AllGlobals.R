@@ -2,13 +2,6 @@ globalVariables(".")
 
 
 
-.compressExtPattern <- "\\.(bz2|gz|xz|zip)"
-.extPattern <- paste0(
-    "\\.([a-zA-Z0-9]+)",
-    "(", .compressExtPattern, ")?$"
-)
-.compressExtPattern <- paste0(.compressExtPattern, "$")
-
 .formalsList <- list(
     export.compress = quote(
         getOption("acid.export.compress", default = FALSE)

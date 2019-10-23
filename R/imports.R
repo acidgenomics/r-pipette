@@ -1,5 +1,8 @@
 #' @importMethodsFrom transformer coerce
-#'
+NULL
+
+
+
 #' @importFrom GenomicRanges GRanges
 #' @importFrom Matrix readMM writeMM
 #' @importFrom RCurl getURL url.exists
@@ -9,14 +12,15 @@
 #' @importFrom SingleCellExperiment reducedDimNames reducedDim
 #' @importFrom SummarizedExperiment assayNames assayNames<- assays colData
 #'   rowData rowRanges
+#' @importFrom acidbase basenameSansExt bapply compressExtPattern dots
+#'   extPattern initDir matchArgsToDoCall pasteURL realpath standardizeCall
 #' @importFrom data.table fread fwrite
 #' @importFrom goalie assert allAreAtomic allAreExisting allAreFiles
 #'   allAreNonExisting allAreURLs allHaveAccess areDisjointSets areSameLength
-#'   areSetEqual bapply formalCompress hasColnames hasCols hasDimnames
-#'   hasInternet hasLength hasNames hasNoDuplicates hasRownames hasRows
-#'   hasValidNames hasValidDimnames isAFile isAURL isAny isCharacter isFlag
-#'   isMatchingRegex isScalar isString isSubset matchArgsToDoCall
-#'   standardizeCall
+#'   areSetEqual formalCompress hasColnames hasCols hasDimnames hasInternet
+#'   hasLength hasNames hasNoDuplicates hasRownames hasRows hasValidNames
+#'   hasValidDimnames isAFile isAURL isAny isCharacter isFlag isMatchingRegex
+#'   isScalar isString isSubset
 #' @importFrom methods as is slotNames validObject
 #' @importFrom rtracklayer import
 #' @importFrom stats na.omit

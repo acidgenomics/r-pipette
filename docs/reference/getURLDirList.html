@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Concatenate strings to form a URL — pasteURL • brio</title>
+<title>Get remote URL directory listing — getURLDirList • brio</title>
 
 
 <!-- jquery -->
@@ -37,8 +37,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Concatenate strings to form a URL — pasteURL" />
-<meta property="og:description" content="Concatenate strings to form a URL" />
+<meta property="og:title" content="Get remote URL directory listing — getURLDirList" />
+<meta property="og:description" content="Get remote URL directory listing" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">brio</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.13</span>
       </span>
     </div>
 
@@ -110,61 +110,51 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Concatenate strings to form a URL</h1>
-    <small class="dont-index">Source: <a href='https://github.com/acidgenomics/brio/blob/master/R/pasteURL.R'><code>R/pasteURL.R</code></a></small>
-    <div class="hidden name"><code>pasteURL.Rd</code></div>
+    <h1>Get remote URL directory listing</h1>
+    <small class="dont-index">Source: <a href='https://github.com/acidgenomics/brio/blob/master/R/getURLDirList.R'><code>R/getURLDirList.R</code></a></small>
+    <div class="hidden name"><code>getURLDirList.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Concatenate strings to form a URL</p>
+    <p>Get remote URL directory listing</p>
     </div>
 
-    <pre class="usage"><span class='fu'>pasteURL</span>(<span class='no'>...</span>, <span class='kw'>protocol</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"https"</span>, <span class='st'>"http"</span>, <span class='st'>"ftp"</span>, <span class='st'>"none"</span>))</pre>
+    <pre class="usage"><span class='fu'>getURLDirList</span>(<span class='no'>url</span>, <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>...</th>
-      <td><p>one or more <span style="R">R</span> objects, to be converted to character vectors.</p></td>
+      <th>url</th>
+      <td><p><code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>.
+Uniform Resource Locator (URL).</p></td>
     </tr>
     <tr>
-      <th>protocol</th>
+      <th>pattern</th>
       <td><p><code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>.
-Desired protocol to use. Defaults to HTTPS but HTTP and FTP are also
-supported. Use <code>"none"</code> if you want to prepare a URL that already contains
-a protocol in the first element of the dots.</p></td>
+Pattern to use for matching.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><code>character</code>.
-URL path, containing forward slashes (<code>/</code>).</p>
+Simple directory contents return, including both files and subdirectories.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>Updated 2019-10-12.</p>
+    <p>Best served using FTP instead of HTTP.</p>
+<p>Updated 2019-10-18.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## HTTPS</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>pasteURL</span>(
-    <span class='st'>"steinbaugh.com"</span>,
-    <span class='st'>"basejump"</span>,
-    <span class='st'>"reference"</span>,
-    <span class='kw'>protocol</span> <span class='kw'>=</span> <span class='st'>"https"</span>
-)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] "https://steinbaugh.com/basejump/reference"</div><div class='input'>
-<span class='co'>## FTP</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>pasteURL</span>(
-    <span class='st'>"ftp.ensembl.org"</span>,
-    <span class='st'>"pub"</span>,
-    <span class='st'>"release-94"</span>,
-    <span class='st'>"gtf"</span>,
-    <span class='st'>"homo_sapiens"</span>,
-    <span class='st'>"Homo_sapiens.GRCh38.94.gtf.gz"</span>,
-    <span class='kw'>protocol</span> <span class='kw'>=</span> <span class='st'>"ftp"</span>
-)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] "ftp://ftp.ensembl.org/pub/release-94/gtf/homo_sapiens/Homo_sapiens.GRCh38.94.gtf.gz"</div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (
+    <span class='kw pkg'>goalie</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/goalie/man/check-scalar-hasInternet.html'>hasInternet</a></span>() <span class='kw'>&amp;&amp;</span>
+    !<span class='fu'><a href='https://rdrr.io/r/base/Logic.html'>isTRUE</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nchar.html'>nzchar</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span>(<span class='st'>"CI"</span>)))
+) {
+    <span class='no'>url</span> <span class='kw'>&lt;-</span> <span class='st'>"ftp://ftp.ensembl.org/pub/"</span>
+    <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>getURLDirList</span>(<span class='no'>url</span>, <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='st'>"^release-"</span>)
+    <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>tail</a></span>(<span class='no'>x</span>)
+}</div><div class='output co'>#&gt; [1] "release-93" "release-94" "release-95" "release-96" "release-97"
+#&gt; [6] "release-98"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
