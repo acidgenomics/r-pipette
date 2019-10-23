@@ -34,9 +34,43 @@ R.utils::isBzipped
 #' @export
 R.utils::isGzipped
 
+
+
 #' @importFrom RCurl getURL
 #' @export
 RCurl::getURL
+
+
+
+#' @importFrom acidbase basenameSansExt
+#' @export
+acidbase::basenameSansExt
+
+#' @importFrom acidbase compressExtPattern
+#' @export
+acidbase::compressExtPattern
+
+#' @importFrom acidbase extPattern
+#' @export
+acidbase::extPattern
+
+#' @importFrom acidbase fileExt
+#' @export
+acidbase::fileExt
+
+#' @importFrom acidbase initDir
+#' @export
+acidbase::initDir
+
+#' @importFrom acidbase pasteURL
+#' @export
+acidbase::pasteURL
+
+#' @importFrom acidbase realpath
+#' @export
+acidbase::realpath
+
+
 
 #' @importFrom utils tar
 #' @export
