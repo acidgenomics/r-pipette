@@ -99,7 +99,7 @@
 #' `DOC`, `DOCX`, `PDF`, `PPT`, `PPTX`.
 #'
 #' @export
-#' @note Updated 2019-10-18.
+#' @note Updated 2019-10-24.
 #'
 #' @inheritParams acidroxygen::params
 #' @param rownames `logical(1)`.
@@ -332,24 +332,27 @@ import <- function(
             ## nocov end
         }
     }
-    ## Note that this will skip for file types that don't define the importer.
-    .slotImportMetadata(object, which = "call") <- standardizeCall()
+    ## Add the call to metadata.
+    if (!is.null(metadata2(object, which = "import"))) {
+        m <- metadata2(object, which = "import")
+        m[["call"]] <- standardizeCall()
+        metadata2(object, which = "import") <- m
+    }
     object
 }
 
 
 
 ## Add data provenance metadata.
-## Updated 2019-09-11.
-.defineImportMetadata <- function(object, file, pkg, fun) {
+## Previously, "which" was defined as "brio", until v0.3.8.
+## Updated 2019-10-24.
+.slotImportMetadata <- function(object, file, pkg, fun) {
     assert(
         isString(file),
         isString(pkg),
         isString(fun)
     )
-    ## Previously, this was defined as "brio", until v0.3.8.
-    slot <- "import"
-    list <- list(
+    metadata2(object, which = "import") <- list(
         package = "brio",
         packageVersion = packageVersion("brio"),
         importer = paste0(pkg, "::", fun),
@@ -361,37 +364,8 @@ import <- function(
         },
         date = Sys.Date()
     )
-    if (isS4(object) && "metadata" %in% slotNames(object)) {
-        metadata(object)[[slot]] <- list
-    } else {
-        ## Use `attr()` instead of `attributes()` here. It doesn't error on
-        ## assignment when the object doesn't already have attributes.
-        attr(object, which = slot) <- list
-    }
     object
 }
-
-
-
-## Slot additional information into brio metadata.
-## This is currently in use to define in the `import()` call.
-## Updated 2019-09-11.
-`.slotImportMetadata<-` <-  # nolint
-    function(object, which, value) {
-        slot <- "import"
-        if (isS4(object) && "metadata" %in% slotNames(object)) {
-            if (!isSubset(slot, names(metadata(object)))) {
-                return(object)
-            }
-            metadata(object)[[slot]][[which]] <- value
-        } else {
-            if (!isSubset(slot, names(attributes(object)))) {
-                return(object)
-            }
-            attributes(object)[[slot]][[which]] <- value
-        }
-        object
-    }
 
 
 
@@ -472,7 +446,7 @@ import <- function(
     if (!identical(class(object), "data.frame")) {
         object <- as.data.frame(object, stringsAsFactors = FALSE)
     }
-    object <- .defineImportMetadata(
+    object <- .slotImportMetadata(
         object = object,
         file = file,
         pkg = whatPkg,
@@ -562,7 +536,7 @@ import <- function(
     if (!is.null(colnamesFile)) {
         colnames(object) <- .importMTXSidecar(colnamesFile)
     }
-    object <- .defineImportMetadata(
+    object <- .slotImportMetadata(
         object = object,
         file = file,
         pkg = "Matrix",
@@ -591,7 +565,7 @@ import <- function(
     ))
     assert(requireNamespace("jsonlite", quietly = TRUE))
     object <- jsonlite::read_json(path = tmpfile)
-    object <- .defineImportMetadata(
+    object <- .slotImportMetadata(
         object = object,
         file = file,
         pkg = "jsonlite",
@@ -611,7 +585,7 @@ import <- function(
     ))
     assert(requireNamespace("yaml", quietly = TRUE))
     object <- yaml::yaml.load_file(input = tmpfile)
-    object <- .defineImportMetadata(
+    object <- .slotImportMetadata(
         object = object,
         file = file,
         pkg = "yaml",
@@ -685,7 +659,7 @@ import <- function(
         make.names = FALSE,
         stringsAsFactors = FALSE
     )
-    object <- .defineImportMetadata(
+    object <- .slotImportMetadata(
         object = object,
         file = file,
         pkg = "readxl",
@@ -746,7 +720,7 @@ import <- function(
         assert(hasLength(colnames, n = ncol(object)))
         colnames(object) <- colnames
     }
-    object <- .defineImportMetadata(
+    object <- .slotImportMetadata(
         object = object,
         file = file,
         pkg = "gdata",
@@ -771,7 +745,7 @@ import <- function(
         path = tmpfile,
         table = sheet
     )
-    object <- .defineImportMetadata(
+    object <- .slotImportMetadata(
         object = object,
         file = file,
         pkg = "pzfx",
@@ -804,7 +778,7 @@ import <- function(
     object[["id"]] <- NULL
     object <- as.matrix(object)
     mode(object) <- "integer"
-    object <- .defineImportMetadata(
+    object <- .slotImportMetadata(
         object = object,
         file = file,
         pkg = "data.table",
@@ -823,7 +797,7 @@ import <- function(
     ))
     assert(requireNamespace("rio", quietly = TRUE))
     object <- rio::import(file = tmpfile, ...)
-    object <- .defineImportMetadata(
+    object <- .slotImportMetadata(
         object = object,
         file = file,
         pkg = "rio",
@@ -851,7 +825,7 @@ import <- function(
             stop("File failed to load.")  # nocov
         }
     )
-    object <- .defineImportMetadata(
+    object <- .slotImportMetadata(
         object = object,
         file = file,
         pkg = "rtracklayer",
