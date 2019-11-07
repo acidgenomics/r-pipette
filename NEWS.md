@@ -1,7 +1,15 @@
+## brio 0.3.14 (2019-11-07)
+
+### Minor changes
+
+- Updated package dependencies to require Bioconductor 3.10 release.
+
 ## brio 0.3.13 (2019-10-22)
 
-NAMESPACE updates to support migration of some low-level functions to the new
-[acidbase][] package.
+### Minor changes
+
+- NAMESPACE updates to support migration of some low-level functions to the new
+  [acidbase][] package.
 
 ## brio 0.3.12 (2019-10-18)
 
