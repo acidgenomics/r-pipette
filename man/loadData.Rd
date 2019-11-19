@@ -4,9 +4,13 @@
 \alias{loadData}
 \title{Load data}
 \usage{
-loadData(..., dir = getOption("acid.load.dir", default = "."),
-  envir = globalenv(), list = NULL,
-  overwrite = getOption("acid.overwrite", default = TRUE))
+loadData(
+  ...,
+  dir = getOption("acid.load.dir", default = "."),
+  envir = globalenv(),
+  list = NULL,
+  overwrite = getOption("acid.overwrite", default = TRUE)
+)
 }
 \arguments{
 \item{...}{Object names.
