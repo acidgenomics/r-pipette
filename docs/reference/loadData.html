@@ -121,9 +121,13 @@ paths. Supports RDS, RDA, and RDATA file extensions." />
 paths. Supports <code>RDS</code>, <code>RDA</code>, and <code>RDATA</code> file extensions.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>loadData</span>(<span class='no'>...</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"acid.load.dir"</span>, <span class='kw'>default</span> <span class='kw'>=</span> <span class='st'>"."</span>),
-  <span class='kw'>envir</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/environment.html'>globalenv</a></span>(), <span class='kw'>list</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"acid.overwrite"</span>, <span class='kw'>default</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</pre>
+    <pre class="usage"><span class='fu'>loadData</span>(
+  <span class='no'>...</span>,
+  <span class='kw'>dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"acid.load.dir"</span>, <span class='kw'>default</span> <span class='kw'>=</span> <span class='st'>"."</span>),
+  <span class='kw'>envir</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/environment.html'>globalenv</a></span>(),
+  <span class='kw'>list</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"acid.overwrite"</span>, <span class='kw'>default</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -192,7 +196,7 @@ names using non-standard evaluation.</p>
 
 <span class='co'>## Interactive mode ====</span>
 <span class='co'>## Note that this method uses non-standard evaluation.</span>
-<span class='fu'>loadData</span>(<span class='no'>example</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='no'>dir</span>)</div><div class='output co'>#&gt; <span class='message'>Loading 'example.rds' from '/mnt/resource/Rtmpwy4kzQ/temp_libpathe0af4d82982a/brio/extdata'.</span></div><div class='input'>
+<span class='fu'>loadData</span>(<span class='no'>example</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='no'>dir</span>)</div><div class='output co'>#&gt; <span class='message'>Loading 'example.rds' from '/mnt/resource/Rtmpp42MI3/temp_libpath5df4654a9687/brio/extdata'.</span></div><div class='input'>
 <span class='co'>## Clean up.</span>
 <span class='fu'><a href='https://rdrr.io/r/base/rm.html'>rm</a></span>(<span class='no'>example</span>, <span class='kw'>inherits</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
@@ -200,7 +204,7 @@ names using non-standard evaluation.</p>
 <span class='co'>## Note that this method uses standard evaluation.</span>
 <span class='co'>## Use this approach inside of functions.</span>
 <span class='no'>list</span> <span class='kw'>&lt;-</span> <span class='st'>"example"</span>
-<span class='fu'>loadData</span>(<span class='kw'>list</span> <span class='kw'>=</span> <span class='no'>list</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='no'>dir</span>)</div><div class='output co'>#&gt; <span class='message'>Loading 'example.rds' from '/mnt/resource/Rtmpwy4kzQ/temp_libpathe0af4d82982a/brio/extdata'.</span></div><div class='input'>
+<span class='fu'>loadData</span>(<span class='kw'>list</span> <span class='kw'>=</span> <span class='no'>list</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='no'>dir</span>)</div><div class='output co'>#&gt; <span class='message'>Loading 'example.rds' from '/mnt/resource/Rtmpp42MI3/temp_libpath5df4654a9687/brio/extdata'.</span></div><div class='input'>
 <span class='co'>## Clean up.</span>
 <span class='fu'><a href='https://rdrr.io/r/base/rm.html'>rm</a></span>(<span class='no'>example</span>, <span class='kw'>inherits</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div></pre>
   </div>
