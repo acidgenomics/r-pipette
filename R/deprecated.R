@@ -11,15 +11,7 @@ NULL
 
 
 
-#' @name deprecated
-#' @inherit acidroxygen::deprecated description examples return seealso title
-#' @inheritParams acidroxygen::params
-#' @keywords internal
-NULL
-
-
-
-## v0.1.4 =======================================================================
+## v0.1.4 ======================================================================
 #' @rdname defunct
 #' @export
 sanitizeColData <- function(...) {
