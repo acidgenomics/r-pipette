@@ -63,7 +63,7 @@ biocViews:
     DataImport,
     GenomeAnnotation
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.0
 Collate: 
     'AllGlobals.R'
     'saveData.R'
