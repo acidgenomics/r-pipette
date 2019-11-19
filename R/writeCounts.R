@@ -13,11 +13,9 @@
 #' [readr]: http://readr.tidyverse.org/
 #' [RStudio]: https://www.rstudio.com/
 #'
-#' @note Updated 2019-10-12.
+#' @note Updated 2019-11-19.
 #' @export
 #'
-#' @inheritParams dots
-#' @inheritParams saveData
 #' @param ... Symbols.
 #'   Unquoted object names containing count matrices.
 #' @param dir `character(1)`.
