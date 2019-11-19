@@ -4,8 +4,7 @@
 \alias{import}
 \title{Import}
 \usage{
-import(file, rownames = TRUE, colnames = TRUE, format = "auto",
-  sheet = 1L)
+import(file, rownames = TRUE, colnames = TRUE, format = "auto", sheet = 1L)
 }
 \arguments{
 \item{file}{\code{character(1)}.
@@ -35,7 +34,7 @@ Varies, depending on the file type.
 \item \strong{Plain text delimited} (\code{CSV}, \code{TSV}, \code{TXT}): \code{data.frame}.\cr
 Data separated by commas, tabs, or visual spaces.\cr
 Note that TXT structure is amgibuous and actively discouraged.\cr
-Refer to \code{Data frame return} section for details on how to change the
+Refer to \verb{Data frame return} section for details on how to change the
 default return type to \code{DataFrame}, \code{tbl_df} or \code{data.table}.\cr
 Imported by \code{\link[data.table:fread]{data.table::fread()}}.
 \item \strong{Excel workbook} (\code{XLSB}, \code{XLSX}): \code{data.frame}.\cr

@@ -4,8 +4,11 @@
 \alias{loadRemoteData}
 \title{Load remote data}
 \usage{
-loadRemoteData(url, envir = globalenv(),
-  overwrite = getOption("acid.overwrite", default = TRUE))
+loadRemoteData(
+  url,
+  envir = globalenv(),
+  overwrite = getOption("acid.overwrite", default = TRUE)
+)
 }
 \arguments{
 \item{url}{\code{character}.

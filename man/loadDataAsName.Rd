@@ -4,9 +4,12 @@
 \alias{loadDataAsName}
 \title{Load data as name}
 \usage{
-loadDataAsName(..., dir = getOption("acid.load.dir", default = "."),
-  envir = globalenv(), overwrite = getOption("acid.overwrite", default
-  = TRUE))
+loadDataAsName(
+  ...,
+  dir = getOption("acid.load.dir", default = "."),
+  envir = globalenv(),
+  overwrite = getOption("acid.overwrite", default = TRUE)
+)
 }
 \arguments{
 \item{...}{Key value pairs, defining the name mappings. For example,

@@ -4,8 +4,11 @@
 \alias{writeCounts}
 \title{Write counts}
 \usage{
-writeCounts(..., dir = getOption("acid.export.dir", default = "."),
-  compress = getOption("acid.export.compress", default = FALSE))
+writeCounts(
+  ...,
+  dir = getOption("acid.export.dir", default = "."),
+  compress = getOption("acid.export.compress", default = FALSE)
+)
 }
 \arguments{
 \item{...}{Symbols.
@@ -34,7 +37,7 @@ is enabled by default to save disk space. Note that the \href{http://readr.tidyv
 built into \href{https://www.rstudio.com/}{RStudio}, now natively supports compressed files.
 }
 \note{
-Updated 2019-10-12.
+Updated 2019-11-19.
 
 This function is desired for interactive use and interprets object
 names using non-standard evaluation.
