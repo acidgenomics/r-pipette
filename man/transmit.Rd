@@ -4,8 +4,7 @@
 \alias{transmit}
 \title{Transmit files from a remote FTP server}
 \usage{
-transmit(remoteDir, localDir = ".", pattern, rename = NULL,
-  compress = FALSE)
+transmit(remoteDir, localDir = ".", pattern, rename = NULL, compress = FALSE)
 }
 \arguments{
 \item{remoteDir}{\code{character(1)}.
