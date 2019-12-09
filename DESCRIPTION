@@ -33,7 +33,7 @@ Imports:
     acidbase (>= 0.1.2),
     bioverbs (>= 0.2.12),
     data.table (>= 1.12.6),
-    goalie (>= 0.4.0),
+    goalie (>= 0.4.1),
     jsonlite (>= 1.6),
     rtracklayer (>= 1.46),
     stringr (>= 1.4),
