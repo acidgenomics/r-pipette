@@ -1,6 +1,6 @@
 #' @name export
 #' @inherit bioverbs::export
-#' @note Updated 2019-10-12.
+#' @note Updated 2019-12-09.
 #'
 #' @section Row names:
 #'
@@ -74,7 +74,7 @@ NULL
 ## `data.table`, `tbl_df`, and `DataFrame` classes. Note that `rio::export()`
 ## does not preserve row names by default, so we're ensuring row names get
 ## coerced to "rowname" column consistently here.
-## Updated 2019-10-12.
+## Updated 2019-12-09.
 `export,matrix` <-  # nolint
     function(
         object,
@@ -131,18 +131,24 @@ NULL
         if (!is.na(compress)) {
             compress <- match.arg(arg = compress, choices = c("gz", "bz2"))
         }
-        ## Keep the `as.data.frame()` call here, so we can inherit S4 methods.
+        assert(
+            hasRows(object),
+            hasCols(object),
+            hasNoDuplicates(colnames(object))
+        )
         object <- as.data.frame(object)
         ## Ensure row names are automatically moved to `rowname` column.
         if (hasRownames(object)) {
-            rownames <- "rowname"
-        } else {
-            rownames <- NULL
+            assert(areDisjointSets("rowname", colnames(object)))
+            object[["rowname"]] <- rownames(object)
+            rownames(object) <- NULL
+            ## Ensure the "rowname" column appears first.
+            object <- object[
+                ,
+                c("rowname", setdiff(colnames(object), "rowname")),
+                drop = FALSE
+            ]
         }
-        ## Now we're ready to coerce to tibble internally, which helps us move
-        ## the row names into a column.
-        object <- as_tibble(object, rownames = rownames)
-        assert(hasRows(object), hasCols(object))
         ## Inform the user regarding overwrite.
         if (isAFile(file)) {
             if (isTRUE(overwrite)) {
@@ -167,7 +173,7 @@ NULL
             whatFun <- "fwrite"
             what <- fwrite
             args <- list(
-                x = as.data.table(object),
+                x = object,
                 file = file,
                 row.names = FALSE,
                 verbose = verbose
@@ -192,7 +198,7 @@ NULL
             )
             assert(is.function(what))
             args <- list(
-                x = as_tibble(object),
+                x = object,
                 path = file
             )
         }
