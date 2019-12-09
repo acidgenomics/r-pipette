@@ -1,3 +1,13 @@
+## brio 0.3.15 (2019-12-09)
+
+### Minor changes
+
+- `export`: Removed internal dependencies on `as_tibble` and `as.data.table`
+  calls. The tibble package recently changed the default row name handling
+  behavior in `as_tibble`, which broke the code here. I reworked the internal
+  code to only use base R approaches, so changes in the tidyverse no longer
+  affect the package.
+
 ## brio 0.3.14 (2019-11-07)
 
 ### Minor changes
