@@ -106,7 +106,7 @@ File path(s).
 Export data out of R and write to disk.
 }
 \note{
-Updated 2019-10-12.
+Updated 2019-12-09.
 }
 \section{Row names}{
 
