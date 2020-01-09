@@ -350,7 +350,11 @@ import <- function(
         ## 1: nested(file)
         ##
         ## Standard base call matching function works though.
-        m[["call"]] <- match.call()  # standardizeCall()
+        print(match.call())
+        print(standardizeCall(verbose = TRUE))
+        stop()
+        ## FIXME Note that setting `expandDots` doesn't seem to work here.
+        m[["call"]] <- standardizeCall(expandDots = FALSE)
         metadata2(object, which = "import") <- m
     }
     object
