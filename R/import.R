@@ -335,6 +335,11 @@ import <- function(
     ## Add the call to metadata.
     if (!is.null(metadata2(object, which = "import"))) {
         m <- metadata2(object, which = "import")
+        ## FIXME This is breaking inside a nested function call.
+        ## Need to rethink this approach.
+        ## > nested <- function(...) {
+        ## > import(...)
+        ## > }
         m[["call"]] <- standardizeCall()
         metadata2(object, which = "import") <- m
     }
