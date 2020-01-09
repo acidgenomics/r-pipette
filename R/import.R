@@ -340,7 +340,16 @@ import <- function(
         ## > nested <- function(...) {
         ## > import(...)
         ## > }
-        ## FIXME Standard match.call works here however.
+        ##
+        ## > traceback()
+        ## 4: match.call(definition = definition, call = call,
+        ## expand.dots = expandDots,
+        ## envir = envir) at standardizeCall.R#110
+        ## 3: standardizeCall() at import.R#343
+        ## 2: import(...) at #2
+        ## 1: nested(file)
+        ##
+        ## Standard base call matching function works though.
         m[["call"]] <- match.call()  # standardizeCall()
         metadata2(object, which = "import") <- m
     }
