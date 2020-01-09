@@ -340,7 +340,8 @@ import <- function(
         ## > nested <- function(...) {
         ## > import(...)
         ## > }
-        m[["call"]] <- standardizeCall()
+        ## FIXME Standard match.call works here however.
+        m[["call"]] <- match.call()  # standardizeCall()
         metadata2(object, which = "import") <- m
     }
     object
