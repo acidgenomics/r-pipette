@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">brio</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.17</span>
       </span>
     </div>
 
@@ -119,7 +119,14 @@
     <p>Read file by extension into R.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>import</span>(<span class='no'>file</span>, <span class='kw'>rownames</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>colnames</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"auto"</span>, <span class='kw'>sheet</span> <span class='kw'>=</span> <span class='fl'>1L</span>)</pre>
+    <pre class="usage"><span class='fu'>import</span>(
+  <span class='no'>file</span>,
+  <span class='kw'>rownames</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>colnames</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"auto"</span>,
+  <span class='kw'>sheet</span> <span class='kw'>=</span> <span class='fl'>1L</span>,
+  <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"acid.import.metadata"</span>, <span class='kw'>default</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -154,6 +161,11 @@ inferred from <code>file</code>. <em>Not recommended by default.</em></p></td>
 <em>Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.</em>
 Sheet to read. Either a string (the name of a sheet), or an integer (the
 position of the sheet). Defaults to the first sheet.</p></td>
+    </tr>
+    <tr>
+      <th>metadata</th>
+      <td><p><code>list</code>.
+Metadata.</p></td>
     </tr>
     </table>
 
@@ -217,7 +229,7 @@ arguments. Remote URLs and compressed files are supported. If you need more
 complex import settings, just call the wrapped importer directly instead.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>Updated 2019-10-24.</p>
+    <p>Updated 2020-01-10.</p>
     <h2 class="hasAnchor" id="row-and-column-names"><a class="anchor" href="#row-and-column-names"></a>Row and column names</h2>
 
     
