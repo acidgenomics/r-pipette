@@ -1,4 +1,14 @@
-## brio 0.3.15 (2019-12-09)
+## brio 0.3.17 (2020-01-10)
+
+### Minor changes
+
+- `import`: Added `metadata` parameter option and improved internal `tryCatch`
+  handling if call capture fails. This can be the case when nesting the function
+  inside another function, which can cause `standardizeCall` to fail. Note that
+  `match.call` doesn't have this problem but doesn't consistently expand the
+  call with default formals as well.
+
+## brio 0.3.16 (2019-12-09)
 
 ### Minor changes
 
@@ -8,11 +18,17 @@
   code to only use base R approaches, so changes in the tidyverse no longer
   affect the package.
 
-## brio 0.3.14 (2019-11-07)
+## brio 0.3.15 (2019-11-07)
 
 ### Minor changes
 
 - Updated package dependencies to require Bioconductor 3.10 release.
+
+## brio 0.3.14 (2019-10-24)
+
+### Minor changes
+
+- Improved internal metadata handling using new `metadata2` function.
 
 ## brio 0.3.13 (2019-10-22)
 
