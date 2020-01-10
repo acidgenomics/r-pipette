@@ -24,6 +24,9 @@ globalVariables(".")
             default = c("mtx", "mtx.gz", "mtx.bz2")
         )
     ),
+    import.metadata = quote(
+        getOption("acid.import.metadata", default = FALSE)
+    ),
     load.dir = quote(
         getOption("acid.load.dir", default = ".")
     ),
