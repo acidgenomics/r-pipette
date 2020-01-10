@@ -1,5 +1,8 @@
 context("import : invalid input")
 
+## As of v0.3.17, file metadata is disabled by default.
+options("acid.import.metadata" = TRUE)
+
 test_that("Invalid extension", {
     file.create("file.XXX")
     expect_error(
