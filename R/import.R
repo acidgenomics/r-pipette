@@ -99,7 +99,7 @@
 #' `DOC`, `DOCX`, `PDF`, `PPT`, `PPTX`.
 #'
 #' @export
-#' @note Updated 2019-10-24.
+#' @note Updated 2020-01-10.
 #'
 #' @inheritParams acidroxygen::params
 #' @param rownames `logical(1)`.
@@ -199,14 +199,16 @@ import <- function(
     rownames = TRUE,
     colnames = TRUE,
     format = "auto",
-    sheet = 1L
+    sheet = 1L,
+    metadata
 ) {
     ## We're supporting remote files, so don't check using `isAFile()` here.
     assert(
         isAFile(file) || isAURL(file),
-        isScalar(sheet),
         isFlag(rownames),
-        isFlag(colnames) || isCharacter(colnames)
+        isFlag(colnames) || isCharacter(colnames),
+        isScalar(sheet),
+        isFlag(metadata)
     )
     ## 2019-10-18: Default renamed from "none" to "auto".
     format <- match.arg(
@@ -226,44 +228,63 @@ import <- function(
     }
     ext <- toupper(ext)
     if (isSubset(ext, c("CSV", "FWF", "PSV", "TSV", "TXT"))) {
-        object <- .importDelim(file, colnames = colnames, ext = ext)
+        object <- .importDelim(
+            file = file,
+            colnames = colnames,
+            ext = ext,
+            metadata = metadata
+        )
     } else if (identical(ext, "XLS")) {
-        object <- .importXLS(file, sheet = sheet, colnames = colnames)
+        object <- .importXLS(
+            file = file,
+            sheet = sheet,
+            colnames = colnames,
+            metadata = metadata
+        )
     } else if (isSubset(ext, c("XLSB", "XLSX"))) {
-        object <- .importXLSX(file, sheet = sheet, colnames = colnames)
+        object <- .importXLSX(
+            file = file,
+            sheet = sheet,
+            colnames = colnames,
+            metadata = metadata
+        )
     } else if (identical(ext, "PZFX")) {
         ## GraphPad Prism project.
         ## Note that Prism files always contain column names.
-        object <- .importPZFX(file, sheet = sheet)
+        object <- .importPZFX(
+            file = file,
+            sheet = sheet,
+            metadata = metadata
+        )
     } else if (identical(ext, "RDS")) {
-        object <- .importRDS(file)
+        object <- .importRDS(file = file)
     } else if (isSubset(ext, c("RDA", "RDATA"))) {
-        object <- .importRDA(file)
+        object <- .importRDA(file = file)
     } else if (identical(ext, "GMT")) {
-        object <- .importGMT(file)
+        object <- .importGMT(file = file)
     } else if (identical(ext, "GMX")) {
-        object <- .importGMX(file)
+        object <- .importGMX(file = file)
     } else if (identical(ext, "GRP")) {
-        object <- .importGRP(file)
+        object <- .importGRP(file = file)
     } else if (identical(ext, "JSON")) {
-        object <- .importJSON(file)
+        object <- .importJSON(file = file, metadata = metadata)
     } else if (isSubset(ext, c("YAML", "YML"))) {
-        object <- .importYAML(file)
+        object <- .importYAML(file = file, metadata = metadata)
     } else if (identical(ext, "MTX")) {
         ## We're always requiring row and column sidecar files for MTX.
-        object <- .importMTX(file)
+        object <- .importMTX(file = file, metadata = metadata)
     } else if (identical(ext, "COUNTS")) {
         ## bcbio counts format always contains row and column names.
-        object <- .importBCBCounts(file)
+        object <- .importBcbioCounts(file = file, metadata = metadata)
     } else if (isSubset(ext, c("LINES", "LOG", "MD", "PY", "R", "RMD", "SH"))) {
-        object <- .importLines(file)
+        object <- .importLines(file = file)
     } else if (isSubset(ext, c(
         "BED", "BED15", "BEDGRAPH", "BEDPE",
         "BROADPEAK", "NARROWPEAK",
         "GFF", "GFF1", "GFF2", "GFF3", "GTF",
         "BIGWIG", "BW", "WIG"
     ))) {
-        object <- .rtracklayerImport(file)
+        object <- .rtracklayerImport(file = file, metadata = metadata)
     } else if (isSubset(ext, c(
         "ARFF",      # Weka Attribute-Relation File Format
         "DBF",       # dBase Database File
@@ -279,7 +300,7 @@ import <- function(
         "REC",       # Epi Info
         "XPT"        # SASS
     ))) {
-        object <- .rioImport(file)
+        object <- .rioImport(file = file, metadata = metadata)
     } else {
         stop(sprintf(
             "Import of '%s' failed. '%s' extension is not supported.",
@@ -332,14 +353,22 @@ import <- function(
             ## nocov end
         }
     }
-    ## Add the call to metadata.
-    if (!is.null(metadata2(object, which = "import"))) {
-        m <- metadata2(object, which = "import")
-        m[["call"]] <- standardizeCall()
-        metadata2(object, which = "import") <- m
+    if (isTRUE(metadata)) {
+        if (!is.null(metadata2(object, which = "import"))) {
+            ## Add the call to metadata.
+            m <- metadata2(object, which = "import")
+            call <- tryCatch(
+                expr = standardizeCall(),
+                error = function(e) NULL
+            )
+            m[["call"]] <- call
+            metadata2(object, which = "import") <- m
+        }
     }
     object
 }
+
+formals(import)[["metadata"]] <- .formalsList[["import.metadata"]]
 
 
 
@@ -373,10 +402,12 @@ import <- function(
 ## Internal importer for a delimited file (e.g. `.csv`, `.tsv`).
 ## Calls `data.table::fread()` internally by default.
 ## Can override using `acid.import.engine` option, which also supports readr.
+## Updated 2020-01-10.
 .importDelim <- function(
     file,
-    colnames = TRUE,
-    ext
+    colnames,
+    ext,
+    metadata
 ) {
     engine <- match.arg(
         arg = getOption("acid.import.engine", default = "data.table"),
@@ -386,7 +417,8 @@ import <- function(
     verbose <- getOption("acid.verbose", default = FALSE)
     assert(
         isFlag(colnames) || isCharacter(colnames),
-        isFlag(verbose)
+        isFlag(verbose),
+        isFlag(metadata)
     )
     tmpfile <- localOrRemoteFile(file)
     if (identical(engine, "data.table")) {
@@ -446,12 +478,14 @@ import <- function(
     if (!identical(class(object), "data.frame")) {
         object <- as.data.frame(object, stringsAsFactors = FALSE)
     }
-    object <- .slotImportMetadata(
-        object = object,
-        file = file,
-        pkg = whatPkg,
-        fun = whatFun
-    )
+    if (isTRUE(metadata)) {
+        object <- .slotImportMetadata(
+            object = object,
+            file = file,
+            pkg = whatPkg,
+            fun = whatFun
+        )
+    }
     object
 }
 
@@ -506,8 +540,9 @@ import <- function(
 
 ## Sparse matrix ===============================================================
 ## Internal importer for a sparse matrix file (`.mtx`).
-.importMTX <- function(file) {
-    assert(isString(file))
+## Updated 2020-01-10.
+.importMTX <- function(file, metadata) {
+    assert(isFlag(metadata))
     tmpfile <- localOrRemoteFile(file)
     message(sprintf(
         "Importing '%s' using '%s::%s()'.",
@@ -536,12 +571,14 @@ import <- function(
     if (!is.null(colnamesFile)) {
         colnames(object) <- .importMTXSidecar(colnamesFile)
     }
-    object <- .slotImportMetadata(
-        object = object,
-        file = file,
-        pkg = "Matrix",
-        fun = "readMM"
-    )
+    if (isTRUE(metadata)) {
+        object <- .slotImportMetadata(
+            object = object,
+            file = file,
+            pkg = "Matrix",
+            fun = "readMM"
+        )
+    }
     object
 }
 
@@ -557,7 +594,9 @@ import <- function(
 
 ## List ========================================================================
 ## Internal importer for a JSON file (`.json`).
-.importJSON <- function(file) {
+## Updated 2020-01-10.
+.importJSON <- function(file, metadata) {
+    assert(isFlag(metadata))
     tmpfile <- localOrRemoteFile(file)
     message(sprintf(
         "Importing '%s' using '%s::%s()'.",
@@ -565,19 +604,23 @@ import <- function(
     ))
     assert(requireNamespace("jsonlite", quietly = TRUE))
     object <- jsonlite::read_json(path = tmpfile)
-    object <- .slotImportMetadata(
-        object = object,
-        file = file,
-        pkg = "jsonlite",
-        fun = "read_json"
-    )
+    if (isTRUE(metadata)) {
+        object <- .slotImportMetadata(
+            object = object,
+            file = file,
+            pkg = "jsonlite",
+            fun = "read_json"
+        )
+    }
     object
 }
 
 
 
 ## Internal importer for a YAML file (`.yaml`, `.yml`).
-.importYAML <- function(file) {
+## Updated 2020-01-10.
+.importYAML <- function(file, metadata) {
+    assert(isFlag(metadata))
     tmpfile <- localOrRemoteFile(file)
     message(sprintf(
         "Importing '%s' using '%s::%s()'.",
@@ -585,12 +628,14 @@ import <- function(
     ))
     assert(requireNamespace("yaml", quietly = TRUE))
     object <- yaml::yaml.load_file(input = tmpfile)
-    object <- .slotImportMetadata(
-        object = object,
-        file = file,
-        pkg = "yaml",
-        fun = "yaml.load_file"
-    )
+    if (isTRUE(metadata)) {
+        object <- .slotImportMetadata(
+            object = object,
+            file = file,
+            pkg = "yaml",
+            fun = "yaml.load_file"
+        )
+    }
     object
 }
 
@@ -636,8 +681,18 @@ import <- function(
 ## lines removal, so ensure that is fixed downstream.
 
 ## Internal importer for a Microsoft Excel worksheet (`.xlsx`).
-.importXLSX <- function(file, sheet = 1L, colnames = TRUE) {
-    assert(isFlag(colnames) || isCharacter(colnames))
+## Updated 2020-01-10.
+.importXLSX <- function(
+    file,
+    sheet,
+    colnames,
+    metadata
+) {
+    assert(
+        isScalar(sheet),
+        isFlag(colnames) || isCharacter(colnames),
+        isFlag(metadata)
+    )
     tmpfile <- localOrRemoteFile(file)
     message(sprintf(
         "Importing '%s' using '%s::%s()'.",
@@ -659,12 +714,14 @@ import <- function(
         make.names = FALSE,
         stringsAsFactors = FALSE
     )
-    object <- .slotImportMetadata(
-        object = object,
-        file = file,
-        pkg = "readxl",
-        fun = "read_excel"
-    )
+    if (isTRUE(metadata)) {
+        object <- .slotImportMetadata(
+            object = object,
+            file = file,
+            pkg = "readxl",
+            fun = "read_excel"
+        )
+    }
     object
 }
 
@@ -680,8 +737,18 @@ import <- function(
 ## In the meantime, load using gdata, which is slower but does work.
 
 ## Internal importer for a legacy Microsoft Excel worksheet (`.xls`).
-.importXLS <- function(file, sheet = 1L, colnames = TRUE) {
-    assert(isFlag(colnames) || isCharacter(colnames))
+## Updated 2020-01-10.
+.importXLS <- function(
+    file,
+    sheet,
+    colnames,
+    metadata
+) {
+    assert(
+        isScalar(sheet),
+        isFlag(colnames) || isCharacter(colnames),
+        isFlag(metadata)
+    )
     tmpfile <- localOrRemoteFile(file)
     message(sprintf(
         "Importing '%s' using '%s::%s()'.",
@@ -720,12 +787,14 @@ import <- function(
         assert(hasLength(colnames, n = ncol(object)))
         colnames(object) <- colnames
     }
-    object <- .slotImportMetadata(
-        object = object,
-        file = file,
-        pkg = "gdata",
-        fun = "read.xls"
-    )
+    if (isTRUE(metadata)) {
+        object <- .slotImportMetadata(
+            object = object,
+            file = file,
+            pkg = "gdata",
+            fun = "read.xls"
+        )
+    }
     object
 }
 
@@ -734,7 +803,16 @@ import <- function(
 ## GraphPad Prism ==============================================================
 ## Internal importer for a GraphPad Prism file (`.pzfx`).
 ## Note that this function doesn't support optional column names.
-.importPZFX <- function(file, sheet = 1L) {
+## Updated 2020-01-10.
+.importPZFX <- function(
+    file,
+    sheet,
+    metadata
+) {
+    assert(
+        isScalar(sheet),
+        isFlag(metadata)
+    )
     tmpfile <- localOrRemoteFile(file)
     message(sprintf(
         "Importing '%s' using '%s::%s()'.",
@@ -745,12 +823,14 @@ import <- function(
         path = tmpfile,
         table = sheet
     )
-    object <- .slotImportMetadata(
-        object = object,
-        file = file,
-        pkg = "pzfx",
-        fun = "read_pzfx"
-    )
+    if (isTRUE(metadata)) {
+        object <- .slotImportMetadata(
+            object = object,
+            file = file,
+            pkg = "pzfx",
+            fun = "read_pzfx"
+        )
+    }
     object
 }
 
@@ -759,7 +839,9 @@ import <- function(
 ## bcbio =======================================================================
 ## Internal importer for a bcbio count matrix file (`.counts`).
 ## These files contain an `"id"` column that we need to coerce to row names.
-.importBCBCounts <- function(file) {
+## Updated 2020-01-10.
+.importBcbioCounts <- function(file, metadata) {
+    assert(isFlag(metadata))
     message(sprintf(
         "Importing '%s' using '%s::%s()'.",
         basename(file), "data.table", "fread"
@@ -778,38 +860,46 @@ import <- function(
     object[["id"]] <- NULL
     object <- as.matrix(object)
     mode(object) <- "integer"
-    object <- .slotImportMetadata(
-        object = object,
-        file = file,
-        pkg = "data.table",
-        fun = "fread"
-    )
+    if (isTRUE(metadata)) {
+        object <- .slotImportMetadata(
+            object = object,
+            file = file,
+            pkg = "data.table",
+            fun = "fread"
+        )
+    }
     object
 }
 
 
 
 ## Handoff =====================================================================
-.rioImport <- function(file, ...) {
+## Updated 2020-01-10.
+.rioImport <- function(file, metadata, ...) {
+    assert(isFlag(metadata))
     tmpfile <- localOrRemoteFile(file)
     message(sprintf("Importing '%s' using '%s::%s()'.",
         basename(file), "rio", "import"
     ))
     assert(requireNamespace("rio", quietly = TRUE))
     object <- rio::import(file = tmpfile, ...)
-    object <- .slotImportMetadata(
-        object = object,
-        file = file,
-        pkg = "rio",
-        fun = "import"
-    )
+    if (isTRUE(metadata)) {
+        object <- .slotImportMetadata(
+            object = object,
+            file = file,
+            pkg = "rio",
+            fun = "import"
+        )
+    }
     object
 }
 
 
 
 ## Using `tryCatch()` here to error if there are any warnings.
-.rtracklayerImport <- function(file, ...) {
+## Updated 2020-01-10.
+.rtracklayerImport <- function(file, metadata, ...) {
+    assert(isFlag(metadata))
     tmpfile <- localOrRemoteFile(file)
     message(sprintf(
         "Importing '%s' using '%s::%s()'.",
@@ -825,11 +915,13 @@ import <- function(
             stop("File failed to load.")  # nocov
         }
     )
-    object <- .slotImportMetadata(
-        object = object,
-        file = file,
-        pkg = "rtracklayer",
-        fun = "import"
-    )
+    if (isTRUE(metadata)) {
+        object <- .slotImportMetadata(
+            object = object,
+            file = file,
+            pkg = "rtracklayer",
+            fun = "import"
+        )
+    }
     object
 }
