@@ -12,6 +12,9 @@ localOrRemoteFile(
 \arguments{
 \item{file}{\code{character(1)}.
 Local file paths or remote URLs.}
+
+\item{quiet}{\code{logical(1)}.
+Perform command quietly, suppressing messages.}
 }
 \value{
 \code{character}.
@@ -21,7 +24,7 @@ Local file path(s). Stops on a missing file.
 Dynamically handle a local or remote file path
 }
 \note{
-Updated 2019-10-18.
+Updated 2020-01-17.
 }
 \section{Vectorization}{
 
