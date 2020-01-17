@@ -41,8 +41,8 @@ writeCounts <- function(..., dir, compress) {
     dir <- initDir(dir)
     assert(isFlag(compress))
     ## Iterate across the dot objects and write to disk.
-    message(sprintf(
-        fmt = "Writing %s to '%s'.",
+    cli_text(sprintf(
+        fmt = "Writing {.envvar %s} to {.path %s}.",
         toString(
             paste0("'", names, "'"),
             width = 200L
