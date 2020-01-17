@@ -11,7 +11,7 @@
 #'   on disk, following the same conventions as [`save()`][base::save].
 #'
 #' @export
-#' @note Updated 2019-10-12.
+#' @note Updated 2020-01-17.
 #'
 #' @inheritParams loadData
 #' @inheritParams base::save
@@ -89,8 +89,8 @@ saveData <- function(
     ext <- match.arg(arg = ext, choices = c("rds", "rda"))
     files <- file.path(dir, paste(names(objects), ext, sep = "."))
     names(files) <- names(objects)
-    message(sprintf(
-        "Saving %s to '%s'.",
+    cli_text(sprintf(
+        "Saving {.file %s} to {.dir %s}.",
         toString(
             paste0("'", basename(files), "'"),
             width = 200L
