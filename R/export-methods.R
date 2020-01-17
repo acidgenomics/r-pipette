@@ -205,7 +205,7 @@ NULL
             )
         }
         cli_alert(sprintf(
-            "Exporting {.envvar %s} using {.pkg %s}::{.fun %s}.",
+            "Exporting {.file %s} using {.pkg %s}::{.fun %s}.",
             basename(file), whatPkg, whatFun
         ))
         do.call(what = what, args = args)
