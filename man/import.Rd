@@ -10,7 +10,8 @@ import(
   colnames = TRUE,
   format = "auto",
   sheet = 1L,
-  metadata = getOption("acid.import.metadata", default = FALSE)
+  metadata = getOption("acid.import.metadata", default = FALSE),
+  quiet = getOption("acid.import.quiet", default = FALSE)
 )
 }
 \arguments{
