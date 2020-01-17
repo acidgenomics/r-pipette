@@ -1,6 +1,6 @@
 #' @name export
 #' @inherit bioverbs::export
-#' @note Updated 2019-12-09.
+#' @note Updated 2020-01-17.
 #'
 #' @section Row names:
 #'
@@ -152,9 +152,11 @@ NULL
         ## Inform the user regarding overwrite.
         if (isAFile(file)) {
             if (isTRUE(overwrite)) {
-                message(sprintf("Overwriting '%s'.", basename(file)))
+                cli_alert_warning(
+                    sprintf("Overwriting {.file %s}.", basename(file))
+                )
             } else {
-                stop(sprintf("File exists: %s", realpath(file)))
+                stop(sprintf("File exists: '%s'", realpath(file)))
             }
         }
         ## Ensure directory is created automatically.
@@ -202,8 +204,8 @@ NULL
                 path = file
             )
         }
-        message(sprintf(
-            "Exporting '%s' using '%s::%s()'.",
+        cli_alert(sprintf(
+            "Exporting {.envvar %s} using {.pkg %s}::{.fun %s}.",
             basename(file), whatPkg, whatFun
         ))
         do.call(what = what, args = args)
@@ -317,7 +319,9 @@ setMethod(
         ## Inform the user regarding overwrite.
         if (isAFile(file)) {
             if (isTRUE(overwrite)) {
-                message(sprintf("Overwriting '%s'.", basename(file)))
+                cli_alert_warning(
+                    sprintf("Overwriting {.file %s}.", basename(file))
+                )
             } else {
                 stop(sprintf("File exists: %s", realpath(file)))
             }
@@ -333,8 +337,8 @@ setMethod(
             )
         }
         ## Export MatrixMarket file.
-        message(sprintf(
-            "Exporting '%s' using '%s::%s()'.",
+        cli_alert(sprintf(
+            "Exporting {.file %s} using {.pkg %s}::{.fun %s}.",
             basename(file), "Matrix", "writeMM"
         ))
         writeMM(obj = object, file = file)
@@ -364,8 +368,8 @@ setMethod(
             genes = featuresFile
         )
         assert(allAreFiles(files))
-        message(sprintf(
-            "Exported '%s' and sidecar files to '%s'.",
+        cli_alert(sprintf(
+            "Exported {.file %s} and sidecar files to {.path %s}.",
             basename(file), dirname(file)
         ))
         ## Return named character of file paths.
@@ -405,12 +409,12 @@ setMethod(
 
 
 
-## Updated 2019-07-19.
+## Updated 2020-01-17.
 .exportAssays <-  # nolint
     function(object, name, dir, compress) {
         assayNames <- assayNames(object)
         assert(isCharacter(assayNames))
-        message(sprintf("Exporting assays: %s.", toString(assayNames)))
+        cli_alert(sprintf("Exporting assays: {.var %s}.", toString(assayNames)))
         out <- lapply(
             X = assayNames,
             FUN = function(name, dir) {
@@ -531,7 +535,7 @@ setMethod(
                 ext = ext,
                 dir = dir
             )
-        message(sprintf("Exported '%s' to '%s'.", name, dir))
+        cli_alert(sprintf("Exported {.envvar %s} to {.path %s}.", name, dir))
         ## Return named character of file paths.
         files <- Filter(Negate(is.null), files)
         assert(hasNames(files))
@@ -592,8 +596,8 @@ setMethod(
         ## Export dimensionality reduction data.
         reducedDimNames <- reducedDimNames(object)
         if (hasLength(reducedDimNames)) {
-            message(sprintf(
-                "Exporting reducedDims: %s",
+            cli_alert(sprintf(
+                "Exporting {.var reducedDims}: {.var %s}",
                 toString(reducedDimNames)
             ))
             files[["reducedDims"]] <- lapply(
