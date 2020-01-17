@@ -4,7 +4,10 @@
 \alias{localOrRemoteFile}
 \title{Dynamically handle a local or remote file path}
 \usage{
-localOrRemoteFile(file)
+localOrRemoteFile(
+  file,
+  quiet = getOption("acid.import.quiet", default = FALSE)
+)
 }
 \arguments{
 \item{file}{\code{character(1)}.

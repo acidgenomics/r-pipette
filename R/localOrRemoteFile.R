@@ -31,8 +31,11 @@
 #' file <- pasteURL(brioTestsURL, "hgnc.txt.gz", protocol = "none")
 #' x <- localOrRemoteFile(file)
 #' basename(x)
-localOrRemoteFile <- function(file) {
-    assert(isCharacter(file))
+localOrRemoteFile <- function(file, quiet) {
+    assert(
+        isCharacter(file),
+        isFlag(quiet)
+    )
     file <- mapply(
         file = file,
         FUN = function(file) {
@@ -72,7 +75,7 @@ localOrRemoteFile <- function(file) {
             download.file(
                 url = file,
                 destfile = destfile,
-                quiet = TRUE,
+                quiet = quiet,
                 mode = mode
             )
             destfile
@@ -80,8 +83,10 @@ localOrRemoteFile <- function(file) {
         SIMPLIFY = TRUE,
         USE.NAMES = FALSE
     )
-    .autoDecompress(file)
+    .autoDecompress(file = file, quiet = quiet)
 }
+
+formals(localOrRemoteFile)[["quiet"]] <- .formalsList[["import.quiet"]]
 
 
 
@@ -90,7 +95,8 @@ localOrRemoteFile <- function(file) {
 ## write permission issues, unless R is running as administrator. Ensure that
 ## decompressed is removed manually before attempting to overwrite, otherwise
 ## this step can error out.
-.autoDecompress <- function(file) {
+.autoDecompress <- function(file, quiet) {
+    assert(isFlag(quiet))
     file <- realpath(file)
     vapply(
         X = file,
@@ -98,10 +104,12 @@ localOrRemoteFile <- function(file) {
             if (!grepl(compressExtPattern, file)) {
                 return(file)
             }
-            cli_alert(sprintf(
-                "Decompressing {.file %s} in {.path %s}.",
-                basename(file), "tempdir()"
-            ))
+            if (!isTRUE(quiet)) {
+                cli_alert(sprintf(
+                    "Decompressing {.file %s} in {.path %s}.",
+                    basename(file), "tempdir()"
+                ))
+            }
             ## Get the compression extension and decompressed file basename.
             match <- str_match(
                 string = basename(file),
