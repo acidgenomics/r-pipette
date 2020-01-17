@@ -14,7 +14,8 @@ NULL
 #'   rowData rowRanges
 #' @importFrom acidbase basenameSansExt bapply compressExtPattern dots
 #'   extPattern initDir matchArgsToDoCall pasteURL realpath standardizeCall
-#' @importFrom cli cli_alert cli_alert_warning cli_text
+#' @importFrom cli cli_alert cli_alert_info cli_alert_success cli_alert_warning
+#'   cli_text
 #' @importFrom data.table fread fwrite
 #' @importFrom goalie assert allAreAtomic allAreExisting allAreFiles
 #'   allAreNonExisting allAreURLs allHaveAccess areDisjointSets areSameLength
