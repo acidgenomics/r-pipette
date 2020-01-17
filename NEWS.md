@@ -1,3 +1,9 @@
+## brio 0.3.18 (2020-01-17)
+
+### Minor changes
+
+- Switched to using cli package for improved messages.
+
 ## brio 0.3.17 (2020-01-10)
 
 ### Minor changes
