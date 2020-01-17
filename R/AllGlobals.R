@@ -24,8 +24,14 @@ globalVariables(".")
             default = c("mtx", "mtx.gz", "mtx.bz2")
         )
     ),
+    export.quiet = quote(
+        getOption("acid.export.quiet", default = FALSE)
+    ),
     import.metadata = quote(
         getOption("acid.import.metadata", default = FALSE)
+    ),
+    import.quiet = quote(
+        getOption("acid.import.quiet", default = FALSE)
     ),
     load.dir = quote(
         getOption("acid.load.dir", default = ".")
