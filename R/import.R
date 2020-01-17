@@ -99,7 +99,7 @@
 #' `DOC`, `DOCX`, `PDF`, `PPT`, `PPTX`.
 #'
 #' @export
-#' @note Updated 2020-01-10.
+#' @note Updated 2020-01-17.
 #'
 #' @inheritParams acidroxygen::params
 #' @param rownames `logical(1)`.
@@ -311,7 +311,7 @@ import <- function(
     if (is.data.frame(object)) {
         ## Set row names automatically.
         if (isSubset("rowname", colnames(object))) {
-            message("Setting row names from 'rowname' column.")
+            cli_alert("Setting row names from {.var rowname} column.")
             rownames(object) <- object[["rowname"]]
             object[["rowname"]] <- NULL
         }
@@ -322,15 +322,14 @@ import <- function(
         (hasDimnames(object) && !hasValidDimnames(object))
     ) {
         ## nocov start
-        message(sprintf(
-            "'%s' does not contain syntactically valid names.",
+        cli_alert_warning(sprintf(
+            "{.file %s} does not contain syntactically valid names.",
             basename(file)
         ))
         ## nocov end
     }
     ## Inform the user when encountering duplicate names. This `tryCatch()` step
-    ## here helps suppress `validObject()` error for invalid
-    ## SummarizedExperiment objects.
+    ## here helps suppress `validObject()` error for invalid SE objects.
     names <- tryCatch(
         expr = names(object),
         error = function(e) e
