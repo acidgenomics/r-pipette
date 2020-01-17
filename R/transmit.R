@@ -73,7 +73,7 @@ transmit <- function(
     if (!isTRUE(url.exists(remoteDir))) {
         stop(sprintf("Connection to '%s' failed.", server))  # nocov
     } else {
-        message(sprintf("Transmitting files from '%s'.", server))
+        cli_text(sprintf("Transmitting files from {.url %s}.", server))
     }
     ## Get a list of the files in the remote directory.
     remoteTxt <- getURL(remoteDir)
@@ -102,7 +102,10 @@ transmit <- function(
     ## Apply pattern matching.
     match <- str_subset(remoteFiles, pattern)
     assert(hasLength(match))
-    message(sprintf("Files matching pattern:\n%s", toString(match)))
+    cli_alert_info(sprintf(
+        "Files matching pattern: {.file %s}",
+        toString(match, width = 200L)
+    ))
     ## Concatenate using paste but strip the trailing slash (see above).
     remotePaths <- paste(gsub("/$", "", remoteDir), match, sep = "/")
     ## Rename files, if desired.
@@ -122,18 +125,24 @@ transmit <- function(
     if (any(file.exists(files))) {
         exists <- which(file.exists(files))
         skip <- files[exists]
-        message(sprintf("Skipped: %s.", toString(basename(skip))))
+        cli_alert_warning(sprintf(
+            "Skipped: {.file %s}.",
+            toString(basename(skip), width = 200L)
+        ))
         localPaths <- localPaths[!exists]
     }
     ## Early return if all files exist.
     if (length(localPaths) == 0L) {
-        message("All files are already downloaded.")
+        cli_alert_success("All files are already downloaded.")
         files <- realpath(files)
         names(files) <- match
         return(invisible(files))
     }
     ## Download and return file paths.
-    message(sprintf("Downloading %s.", toString(basename(files))))
+    cli_alert(sprintf(
+        "Downloading {.file %s}.",
+        toString(basename(files), width = 200L)
+    ))
     files <- mapply(
         FUN = function(url, destfile, compress = FALSE) {
             download.file(url = url, destfile = destfile)

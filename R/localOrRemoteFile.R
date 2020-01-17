@@ -98,8 +98,8 @@ localOrRemoteFile <- function(file) {
             if (!grepl(compressExtPattern, file)) {
                 return(file)
             }
-            message(sprintf(
-                "Decompressing '%s' in '%s'.",
+            cli_alert(sprintf(
+                "Decompressing {.file %s} in {.path %s}.",
                 basename(file), "tempdir()"
             ))
             ## Get the compression extension and decompressed file basename.

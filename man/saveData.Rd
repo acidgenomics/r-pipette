@@ -65,7 +65,7 @@ This function is desired for interactive use and interprets object
 names using non-standard evaluation. It will \strong{overwrite} existing files
 on disk, following the same conventions as \code{\link[base:save]{save()}}.
 
-Updated 2019-10-12.
+Updated 2020-01-17.
 }
 \examples{
 dir <- "example"
