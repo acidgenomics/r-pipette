@@ -90,7 +90,7 @@ saveData <- function(
     files <- file.path(dir, paste(names(objects), ext, sep = "."))
     names(files) <- names(objects)
     cli_text(sprintf(
-        "Saving {.file %s} to {.dir %s}.",
+        "Saving {.file %s} to {.path %s}.",
         toString(
             paste0("'", basename(files), "'"),
             width = 200L
