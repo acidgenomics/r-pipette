@@ -220,7 +220,9 @@ import <- function(
     if (identical(format, "auto") || identical(format, "none")) {
         ext <- str_match(basename(file), extPattern)[1L, 2L]
         if (is.na(ext)) {
-            message("No file extension detected. Importing as lines.")
+            cli_alert_warning(
+                "No file extension detected. Importing as {.strong lines}."
+            )
             ext <- "lines"
         }
     } else {
@@ -468,8 +470,8 @@ formals(import)[["metadata"]] <- .formalsList[["import.metadata"]]
             skip_empty_rows = TRUE
         )
     }
-    message(sprintf(
-        "Importing '%s' using '%s::%s()'.",
+    cli_alert(sprintf(
+        "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
         basename(file), whatPkg, whatFun
     ))
     object <- do.call(what = what, args = args)
@@ -493,8 +495,8 @@ formals(import)[["metadata"]] <- .formalsList[["import.metadata"]]
 ## Internal importer for (source code) lines.
 .importLines <- function(file) {
     tmpfile <- localOrRemoteFile(file)
-    message(sprintf(
-        "Importing '%s' using '%s::%s()'.",
+    cli_alert(sprintf(
+        "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
         basename(file), "base", "readLines"
     ))
     con <- file(tmpfile)
@@ -509,8 +511,8 @@ formals(import)[["metadata"]] <- .formalsList[["import.metadata"]]
 ## Internal importer for an R data serialized file (`.rds`).
 .importRDS <- function(file) {
     tmpfile <- localOrRemoteFile(file)
-    message(sprintf(
-        "Importing '%s' using '%s::%s()'.",
+    cli_alert(sprintf(
+        "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
         basename(file), "base", "readRDS"
     ))
     object <- readRDS(file = tmpfile)
@@ -522,8 +524,8 @@ formals(import)[["metadata"]] <- .formalsList[["import.metadata"]]
 ## Internal importer for an R data file (`.rda`).
 .importRDA <- function(file) {
     tmpfile <- localOrRemoteFile(file)
-    message(sprintf(
-        "Importing '%s' using '%s::%s()'.",
+    cli_alert(sprintf(
+        "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
         basename(file), "base", "load"
     ))
     safe <- new.env()
@@ -539,12 +541,12 @@ formals(import)[["metadata"]] <- .formalsList[["import.metadata"]]
 
 ## Sparse matrix ===============================================================
 ## Internal importer for a sparse matrix file (`.mtx`).
-## Updated 2020-01-10.
+## Updated 2020-01-17.
 .importMTX <- function(file, metadata) {
     assert(isFlag(metadata))
     tmpfile <- localOrRemoteFile(file)
-    message(sprintf(
-        "Importing '%s' using '%s::%s()'.",
+    cli_alert(sprintf(
+        "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
         basename(file), "Matrix", "readMM"
     ))
     object <- readMM(file = tmpfile)
@@ -585,7 +587,7 @@ formals(import)[["metadata"]] <- .formalsList[["import.metadata"]]
 
 ## Internal importer for a sparse matrix sidecar file (e.g. `.rownames`).
 .importMTXSidecar <- function(file) {
-    message(sprintf("Importing sidecar '%s'.", basename(file)))
+    cli_alert(sprintf("Importing sidecar {.file %s}.", basename(file)))
     .importLines(file)
 }
 
@@ -593,12 +595,12 @@ formals(import)[["metadata"]] <- .formalsList[["import.metadata"]]
 
 ## List ========================================================================
 ## Internal importer for a JSON file (`.json`).
-## Updated 2020-01-10.
+## Updated 2020-01-17.
 .importJSON <- function(file, metadata) {
     assert(isFlag(metadata))
     tmpfile <- localOrRemoteFile(file)
-    message(sprintf(
-        "Importing '%s' using '%s::%s()'.",
+    cli_alert(sprintf(
+        "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
         basename(file), "jsonlite", "read_json"
     ))
     assert(requireNamespace("jsonlite", quietly = TRUE))
@@ -617,12 +619,12 @@ formals(import)[["metadata"]] <- .formalsList[["import.metadata"]]
 
 
 ## Internal importer for a YAML file (`.yaml`, `.yml`).
-## Updated 2020-01-10.
+## Updated 2020-01-17.
 .importYAML <- function(file, metadata) {
     assert(isFlag(metadata))
     tmpfile <- localOrRemoteFile(file)
-    message(sprintf(
-        "Importing '%s' using '%s::%s()'.",
+    cli_alert(sprintf(
+        "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
         basename(file), "yaml", "yaml.load_file"
     ))
     assert(requireNamespace("yaml", quietly = TRUE))
@@ -644,7 +646,7 @@ formals(import)[["metadata"]] <- .formalsList[["import.metadata"]]
 ## Internal importer for a gene matrix transposed file (`.gmt`).
 ## See also `fgsea::gmtPathways()`.
 .importGMT <- function(file) {
-    message(sprintf("Importing '%s'.", basename(file)))
+    cli_alert(sprintf("Importing {.file %s}.", basename(file)))
     lines <- .importLines(file)
     lines <- strsplit(lines, split = "\t")
     pathways <- lapply(lines, tail, n = -2L)
@@ -661,7 +663,7 @@ formals(import)[["metadata"]] <- .formalsList[["import.metadata"]]
 
 ## Internal importer for a gene matrix file (`.gmx`).
 .importGMX <- function(file) {
-    message(sprintf("Importing '%s'.", basename(file)))
+    cli_alert(sprintf("Importing {.file %s}.", basename(file)))
     lines <- .importLines(file)
     pathways <- list(tail(lines, n = -2L))
     names(pathways) <- lines[[1L]]
@@ -693,8 +695,8 @@ formals(import)[["metadata"]] <- .formalsList[["import.metadata"]]
         isFlag(metadata)
     )
     tmpfile <- localOrRemoteFile(file)
-    message(sprintf(
-        "Importing '%s' using '%s::%s()'.",
+    cli_alert(sprintf(
+        "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
         basename(file), "readxl", "read_excel"
     ))
     assert(requireNamespace("readxl", quietly = TRUE))
@@ -749,8 +751,8 @@ formals(import)[["metadata"]] <- .formalsList[["import.metadata"]]
         isFlag(metadata)
     )
     tmpfile <- localOrRemoteFile(file)
-    message(sprintf(
-        "Importing '%s' using '%s::%s()'.",
+    cli_alert(sprintf(
+        "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
         basename(file), "gdata", "read.xls"
     ))
     assert(requireNamespace("gdata", quietly = TRUE))
@@ -813,8 +815,8 @@ formals(import)[["metadata"]] <- .formalsList[["import.metadata"]]
         isFlag(metadata)
     )
     tmpfile <- localOrRemoteFile(file)
-    message(sprintf(
-        "Importing '%s' using '%s::%s()'.",
+    cli_alert(sprintf(
+        "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
         basename(file), "pzfx", "read_pzfx"
     ))
     assert(requireNamespace("pzfx", quietly = TRUE))
@@ -841,8 +843,8 @@ formals(import)[["metadata"]] <- .formalsList[["import.metadata"]]
 ## Updated 2020-01-10.
 .importBcbioCounts <- function(file, metadata) {
     assert(isFlag(metadata))
-    message(sprintf(
-        "Importing '%s' using '%s::%s()'.",
+    cli_alert(sprintf(
+        "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
         basename(file), "data.table", "fread"
     ))
     tmpfile <- localOrRemoteFile(file)
@@ -877,7 +879,8 @@ formals(import)[["metadata"]] <- .formalsList[["import.metadata"]]
 .rioImport <- function(file, metadata, ...) {
     assert(isFlag(metadata))
     tmpfile <- localOrRemoteFile(file)
-    message(sprintf("Importing '%s' using '%s::%s()'.",
+    cli_alert(sprintf(
+        "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
         basename(file), "rio", "import"
     ))
     assert(requireNamespace("rio", quietly = TRUE))
@@ -900,8 +903,8 @@ formals(import)[["metadata"]] <- .formalsList[["import.metadata"]]
 .rtracklayerImport <- function(file, metadata, ...) {
     assert(isFlag(metadata))
     tmpfile <- localOrRemoteFile(file)
-    message(sprintf(
-        "Importing '%s' using '%s::%s()'.",
+    cli_alert(sprintf(
+        "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
         basename(file), "rtracklayer", "import"
     ))
     assert(requireNamespace("rtracklayer", quietly = TRUE))
