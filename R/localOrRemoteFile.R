@@ -11,8 +11,9 @@
 #' extensions are natively supported: `BZ2`, `GZ`, `XZ`, `ZIP`.
 #'
 #' @export
-#' @note Updated 2019-10-18.
+#' @note Updated 2020-01-17.
 #'
+#' @inheritParams acidroxygen::params
 #' @param file `character(1)`.
 #'   Local file paths or remote URLs.
 #'
