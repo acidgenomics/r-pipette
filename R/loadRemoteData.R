@@ -14,7 +14,7 @@
 #' Local object name as the name, and the remote URL as the value.
 #'
 #' @examples
-#' url <- pasteURL(brioTestsURL, "rnaseq_counts.rds", protocol = "none")
+#' url <- pasteURL(pipetteTestsURL, "rnaseq_counts.rds", protocol = "none")
 #' print(url)
 #' x <- loadRemoteData(url)
 #' print(x)

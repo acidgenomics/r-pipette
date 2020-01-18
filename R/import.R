@@ -413,7 +413,7 @@ formals(import)[c("metadata", "quiet")] <-
 
 
 ## Add data provenance metadata.
-## Previously, "which" was defined as "brio", until v0.3.8.
+## Previously, "which" was defined as "pipette", until v0.3.8.
 ## Updated 2019-10-24.
 .slotImportMetadata <- function(object, file, pkg, fun) {
     assert(
@@ -422,8 +422,8 @@ formals(import)[c("metadata", "quiet")] <-
         isString(fun)
     )
     metadata2(object, which = "import") <- list(
-        package = "brio",
-        packageVersion = packageVersion("brio"),
+        package = "pipette",
+        packageVersion = packageVersion("pipette"),
         importer = paste0(pkg, "::", fun),
         importerVersion = packageVersion(pkg),
         file = if (isAFile(file)) {
