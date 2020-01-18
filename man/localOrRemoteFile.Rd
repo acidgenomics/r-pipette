@@ -4,14 +4,14 @@
 \alias{localOrRemoteFile}
 \title{Dynamically handle a local or remote file path}
 \usage{
-localOrRemoteFile(
-  file,
-  quiet = getOption("acid.import.quiet", default = FALSE)
-)
+localOrRemoteFile(file, quiet = getOption("acid.quiet", default = FALSE))
 }
 \arguments{
 \item{file}{\code{character(1)}.
 Local file paths or remote URLs.}
+
+\item{quiet}{\code{logical(1)}.
+Perform command quietly, suppressing messages.}
 }
 \value{
 \code{character}.

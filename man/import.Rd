@@ -11,7 +11,7 @@ import(
   format = "auto",
   sheet = 1L,
   metadata = getOption("acid.import.metadata", default = FALSE),
-  quiet = getOption("acid.import.quiet", default = FALSE)
+  quiet = getOption("acid.quiet", default = FALSE)
 )
 }
 \arguments{
@@ -38,6 +38,9 @@ position of the sheet). Defaults to the first sheet.}
 
 \item{metadata}{\code{list}.
 Metadata.}
+
+\item{quiet}{\code{logical(1)}.
+Perform command quietly, suppressing messages.}
 }
 \value{
 Varies, depending on the file type.

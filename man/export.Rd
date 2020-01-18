@@ -19,7 +19,8 @@ export(object, ...)
     "tsv.gz", "tsv.bz2")),
   dir = getOption("acid.export.dir", default = "."),
   file = NULL,
-  overwrite = getOption("acid.overwrite", default = TRUE)
+  overwrite = getOption("acid.overwrite", default = TRUE),
+  quiet = getOption("acid.quiet", default = FALSE)
 )
 
 \S4method{export}{data.frame}(
@@ -28,7 +29,8 @@ export(object, ...)
     "tsv.gz", "tsv.bz2")),
   dir = getOption("acid.export.dir", default = "."),
   file = NULL,
-  overwrite = getOption("acid.overwrite", default = TRUE)
+  overwrite = getOption("acid.overwrite", default = TRUE),
+  quiet = getOption("acid.quiet", default = FALSE)
 )
 
 \S4method{export}{DataFrame}(
@@ -37,7 +39,8 @@ export(object, ...)
     "tsv.gz", "tsv.bz2")),
   dir = getOption("acid.export.dir", default = "."),
   file = NULL,
-  overwrite = getOption("acid.overwrite", default = TRUE)
+  overwrite = getOption("acid.overwrite", default = TRUE),
+  quiet = getOption("acid.quiet", default = FALSE)
 )
 
 \S4method{export}{sparseMatrix}(
@@ -54,7 +57,8 @@ export(object, ...)
     "tsv.gz", "tsv.bz2")),
   dir = getOption("acid.export.dir", default = "."),
   file = NULL,
-  overwrite = getOption("acid.overwrite", default = TRUE)
+  overwrite = getOption("acid.overwrite", default = TRUE),
+  quiet = getOption("acid.quiet", default = FALSE)
 )
 
 \S4method{export}{SummarizedExperiment}(
@@ -90,6 +94,9 @@ be used instead.}
 \item{overwrite}{\code{logical(1)}.
 Overwrite existing file on disk.}
 
+\item{quiet}{\code{logical(1)}.
+Perform command quietly, suppressing messages.}
+
 \item{name}{\code{character(1)}.
 Name to use on disk. If \code{NULL}, will use the name of the object instead.}
 
@@ -106,7 +113,7 @@ File path(s).
 Export data out of R and write to disk.
 }
 \note{
-Updated 2020-01-17.
+Updated 2020-01-18.
 }
 \section{Row names}{
 
