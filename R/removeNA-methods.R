@@ -1,5 +1,5 @@
 #' @name removeNA
-#' @inherit bioverbs::removeNA
+#' @inherit acidgenerics::removeNA
 #' @note Updated 2019-10-12.
 #'
 #' @inheritParams acidroxygen::params
@@ -35,7 +35,7 @@ NULL
 
 #' @rdname removeNA
 #' @name removeNA
-#' @importFrom bioverbs removeNA
+#' @importFrom acidgenerics removeNA
 #' @usage removeNA(object, ...)
 #' @export
 NULL
