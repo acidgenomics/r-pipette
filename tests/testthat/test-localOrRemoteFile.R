@@ -3,7 +3,7 @@ context("localOrRemoteFile")
 skip_if_not(hasInternet())
 
 test_that("localOrRemoteFile", {
-    urls <- paste(brioTestsURL, c("example.csv", "example.rda"), sep = "/")
+    urls <- paste(pipetteTestsURL, c("example.csv", "example.rda"), sep = "/")
     files <- localOrRemoteFile(urls)
     expect_is(files, "character")
     expect_identical(basename(urls), basename(files))

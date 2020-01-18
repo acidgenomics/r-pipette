@@ -11,9 +11,9 @@ Input/output functions for biological data formats.
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://brio.acidgenomics.com/}
-  \item \url{https://github.com/acidgenomics/brio/}
-  \item Report bugs at \url{https://github.com/acidgenomics/brio/issues/}
+  \item \url{https://pipette.acidgenomics.com/}
+  \item \url{https://github.com/acidgenomics/pipette/}
+  \item Report bugs at \url{https://github.com/acidgenomics/pipette/issues/}
 }
 
 }

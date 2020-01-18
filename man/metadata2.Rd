@@ -9,9 +9,9 @@
 \alias{metadata2<-,Annotated,character-method}
 \title{Metadata}
 \usage{
-metadata2(x, ...)
+metadata2(x, which, ...)
 
-metadata2(x, ...) <- value
+metadata2(x, which, ...) <- value
 
 \S4method{metadata2}{ANY,character}(x, which)
 

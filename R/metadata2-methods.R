@@ -50,14 +50,14 @@ NULL
 #' @rdname metadata2
 #' @name metadata2
 #' @importFrom acidgenerics metadata2
-#' @usage metadata2(x, ...)
+#' @usage metadata2(x, which, ...)
 #' @export
 NULL
 
 #' @rdname metadata2
 #' @name metadata2<-
 #' @importFrom acidgenerics metadata2<-
-#' @usage metadata2(x, ...) <- value
+#' @usage metadata2(x, which, ...) <- value
 #' @export
 NULL
 

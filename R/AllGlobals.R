@@ -58,17 +58,17 @@ globalVariables(".")
     sep = "\n"
 )
 
-.version <- packageVersion("brio")
+.version <- packageVersion("pipette")
 
 
 
-#' brio test data URL
+#' pipette test data URL
 #' @export
 #' @keywords internal
 #' @examples
-#' brioTestsURL
-brioTestsURL <- paste0(
-    "http://tests.acidgenomics.com/brio/",
+#' pipetteTestsURL
+pipetteTestsURL <- paste0(
+    "http://tests.acidgenomics.com/pipette/",
     "v", .version$major, ".", .version$minor  # nolint
 )
 

@@ -1,5 +1,5 @@
 Package: pipette
-Title: Pipette Biological Data In and Out of R.
+Title: Pipette Biological Data In and Out of R
 Description: Input/output functions for biological data formats.
 Version: 0.4.0
 Date: 2020-01-18
@@ -15,13 +15,14 @@ Authors@R: c(
         role = c("cph", "fnd")
     ))
 URL:
-    https://brio.acidgenomics.com/,
-    https://github.com/acidgenomics/brio/
-BugReports: https://github.com/acidgenomics/brio/issues/
+    https://pipette.acidgenomics.com/,
+    https://github.com/acidgenomics/pipette/
+BugReports: https://github.com/acidgenomics/pipette/issues/
 License: MIT + file LICENSE
 Encoding: UTF-8
 Depends: R (>= 3.6)
 Imports:
+    BiocGenerics (>= 0.32),
     GenomicRanges (>= 1.38),
     Matrix (>= 1.2),
     R.utils (>= 2.9),
@@ -37,6 +38,7 @@ Imports:
     jsonlite (>= 1.6),
     rtracklayer (>= 1.46),
     stringr (>= 1.4),
+    tibble (>= 2.1),
     yaml (>= 2.2),
     methods,
     stats,

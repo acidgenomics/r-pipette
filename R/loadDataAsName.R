@@ -14,7 +14,7 @@
 #' @return Invisible named `character`. File paths.
 #'
 #' @examples
-#' dir <- system.file("extdata", package = "brio")
+#' dir <- system.file("extdata", package = "pipette")
 #' loadDataAsName(renamed = example, dir = dir)
 #' class(renamed)
 loadDataAsName <- function(
