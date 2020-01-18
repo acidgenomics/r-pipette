@@ -1,7 +1,8 @@
-## brio 0.3.18 (2020-01-17)
+## pipette 0.4.0 (2020-01-18)
 
 ### Minor changes
 
+- Renamed package from brio to pipette, in preparation of CRAN submission.
 - Switched to using cli package for improved messages.
 
 ## brio 0.3.17 (2020-01-10)
