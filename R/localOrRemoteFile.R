@@ -87,7 +87,7 @@ localOrRemoteFile <- function(file, quiet) {
     .autoDecompress(file = file, quiet = quiet)
 }
 
-formals(localOrRemoteFile)[["quiet"]] <- .formalsList[["import.quiet"]]
+formals(localOrRemoteFile)[["quiet"]] <- .formalsList[["quiet"]]
 
 
 
