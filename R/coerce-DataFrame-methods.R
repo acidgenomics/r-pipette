@@ -10,6 +10,7 @@
 #'
 #' @inheritParams acidroxygen::params
 #' @param row.names `NULL` or `character`.
+#' @param ... Additional arguments.
 #'
 #' @return `DataFrame`.
 #'

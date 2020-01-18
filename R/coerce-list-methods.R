@@ -6,6 +6,7 @@
 #' @note Updated 2020-01-18.
 #'
 #' @inheritParams acidroxygen::params
+#' @param ... Additional arguments.
 #'
 #' @seealso
 #' Refer to the S4Vectors package for details.

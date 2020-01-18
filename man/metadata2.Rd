@@ -30,6 +30,8 @@ Note that positional \code{numeric} arguments are currently not allowed.}
 
 \item{value}{\code{ANY}.
 Metadata values to assign into slot, defined by \code{which}.}
+
+\item{...}{Additional arguments.}
 }
 \value{
 \itemize{

@@ -13,6 +13,7 @@
 #'   Note that case-insensitive matching is performed against [`make.names()`]
 #'   return internally. Either dots (".") or underscores ("_") used as word
 #'   separators will match.
+#' @param ... Additional arguments.
 #'
 #' @return `character(1)` or `NULL`.
 #'

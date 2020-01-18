@@ -17,6 +17,8 @@ as.DataFrame(x, ...)
 \item{x}{Object.}
 
 \item{row.names}{\code{NULL} or \code{character}.}
+
+\item{...}{Additional arguments.}
 }
 \value{
 \code{DataFrame}.
