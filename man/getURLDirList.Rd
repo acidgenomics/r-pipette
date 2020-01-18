@@ -23,15 +23,15 @@ Get remote URL directory listing
 \note{
 Best served using FTP instead of HTTP.
 
-Updated 2019-10-18.
+Updated 2020-01-18.
 }
 \examples{
 if (
     goalie::hasInternet() &&
     !isTRUE(nzchar(Sys.getenv("CI")))
 ) {
-    url <- "ftp://ftp.ensembl.org/pub/"
-    x <- getURLDirList(url, pattern = "^release-")
+    url <- "ftp://ftp.ncbi.nlm.nih.gov/genomes/Homo_sapiens/current"
+    x <- getURLDirList(url)
     tail(x)
 }
 }
