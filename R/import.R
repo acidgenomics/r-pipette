@@ -460,11 +460,11 @@ formals(import)[c("metadata", "quiet")] <-
         arg = getOption("acid.import.engine", default = "data.table"),
         choices = c("data.table", "readr", "vroom")
     )
+    assert(requireNamespace(whatPkg, quietly = TRUE))
     verbose <- getOption("acid.verbose", default = FALSE)
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
     if (identical(whatPkg, "data.table")) {
         ## data.table ----------------------------------------------------------
-        assert(requireNamespace(whatPkg, quietly = TRUE))
         whatFun <- "fread"
         what <- get(
             x = whatFun,
@@ -492,7 +492,6 @@ formals(import)[c("metadata", "quiet")] <-
         }
     } else if (identical(whatPkg, "readr")) {
         ## readr ---------------------------------------------------------------
-        assert(requireNamespace(whatPkg, quietly = TRUE))
         whatFun <- switch(
             EXPR = ext,
             "CSV" = "read_csv",
@@ -517,7 +516,6 @@ formals(import)[c("metadata", "quiet")] <-
         )
     } else if (identical(whatPkg, "vroom")) {
         ## vroom ---------------------------------------------------------------
-        assert(requireNamespace(whatPkg, quietly = TRUE))
         whatFun <- "vroom"
         what <- get(
             x = whatFun,
