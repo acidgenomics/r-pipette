@@ -1,5 +1,5 @@
 #' @name export
-#' @inherit bioverbs::export
+#' @inherit acidgenerics::export
 #' @note Updated 2020-01-18.
 #'
 #' @section Row names:
@@ -63,7 +63,7 @@ NULL
 
 #' @rdname export
 #' @name export
-#' @importFrom bioverbs export
+#' @importFrom acidgenerics export
 #' @usage export(object, ...)
 #' @export
 NULL
