@@ -99,7 +99,7 @@
 #' `DOC`, `DOCX`, `PDF`, `PPT`, `PPTX`.
 #'
 #' @export
-#' @note Updated 2020-01-17.
+#' @note Updated 2020-01-18.
 #'
 #' @inheritParams acidroxygen::params
 #' @param rownames `logical(1)`.
@@ -185,7 +185,7 @@
 #' - `utils::read.table()`.
 #'
 #' @examples
-#' file <- system.file("extdata/example.csv", package = "brio")
+#' file <- system.file("extdata/example.csv", package = "pipette")
 #'
 #' ## Row and column names enabled.
 #' x <- import(file)
@@ -442,7 +442,7 @@ formals(import)[c("metadata", "quiet")] <-
 ## Internal importer for a delimited file (e.g. `.csv`, `.tsv`).
 ## Calls `data.table::fread()` internally by default.
 ## Can override using `acid.import.engine` option, which also supports readr.
-## Updated 2020-01-17.
+## Updated 2020-01-18.
 .importDelim <- function(
     file,
     colnames,
@@ -457,16 +457,20 @@ formals(import)[c("metadata", "quiet")] <-
         isFlag(metadata),
         isFlag(quiet)
     )
-    engine <- match.arg(
+    whatPkg <- match.arg(
         arg = getOption("acid.import.engine", default = "data.table"),
-        choices = c("data.table", "readr")
+        choices = c("data.table", "readr", "vroom")
     )
-    whatPkg <- engine
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
-    if (identical(engine, "data.table")) {
+    if (identical(whatPkg, "data.table")) {
         ## data.table ----------------------------------------------------------
+        assert(requireNamespace(whatPkg, quietly = TRUE))
         whatFun <- "fread"
-        what <- fread
+        what <- get(
+            x = whatFun,
+            envir = asNamespace(whatPkg),
+            inherits = TRUE
+        )
         args <- list(
             file = tmpfile,
             blank.lines.skip = TRUE,
@@ -486,15 +490,15 @@ formals(import)[c("metadata", "quiet")] <-
         } else {
             args[["header"]] <- colnames
         }
-    } else if (identical(engine, "readr")) {
+    } else if (identical(whatPkg, "readr")) {
         ## readr ---------------------------------------------------------------
+        assert(requireNamespace(whatPkg, quietly = TRUE))
         whatFun <- switch(
             EXPR = ext,
             "CSV" = "read_csv",
             "TSV" = "read_tsv",
             "TXT" = "read_delim"
         )
-        assert(requireNamespace(whatPkg, quietly = TRUE))
         what <- get(
             x = whatFun,
             envir = asNamespace(whatPkg),
@@ -504,11 +508,31 @@ formals(import)[c("metadata", "quiet")] <-
         args <- list(
             file = tmpfile,
             col_names = colnames,
+            col_types = readr::cols(),
             na = naStrings,
+            progress = FALSE,
             trim_ws = TRUE,
             skip = 0L,
-            progress = FALSE,
             skip_empty_rows = TRUE
+        )
+    } else if (identical(whatPkg, "vroom")) {
+        ## vroom ---------------------------------------------------------------
+        assert(requireNamespace(whatPkg, quietly = TRUE))
+        whatFun <- "vroom"
+        what <- get(
+            x = whatFun,
+            envir = asNamespace(whatPkg),
+            inherits = TRUE
+        )
+        args <- list(
+            file = tmpfile,
+            col_names = colnames,
+            col_types = vroom::cols(),
+            na = naStrings,
+            progress = FALSE,
+            skip = 0L,
+            trim_ws = TRUE,
+            .name_repair = make.names  # or "universal"
         )
     }
     if (!isTRUE(quiet)) {
