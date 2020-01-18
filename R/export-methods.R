@@ -1,6 +1,6 @@
 #' @name export
 #' @inherit bioverbs::export
-#' @note Updated 2020-01-17.
+#' @note Updated 2020-01-18.
 #'
 #' @section Row names:
 #'
@@ -74,21 +74,22 @@ NULL
 ## `data.table`, `tbl_df`, and `DataFrame` classes. Note that `rio::export()`
 ## does not preserve row names by default, so we're ensuring row names get
 ## coerced to "rowname" column consistently here.
-## Updated 2019-12-09.
+## Updated 2020-01-18.
 `export,matrix` <-  # nolint
     function(
         object,
         ext,
         dir,
         file = NULL,
-        overwrite
+        overwrite,
+        quiet
     ) {
         validObject(object)
-        engine <- match.arg(
+        whatPkg <- match.arg(
             arg = getOption("acid.export.engine", default = "data.table"),
-            choices = c("data.table", "readr")
+            choices = c("data.table", "readr", "vroom")
         )
-        whatPkg <- engine
+        assert(requireNamespace(whatPkg, quietly = TRUE))
         verbose <- getOption("acid.verbose", default = FALSE)
         assert(
             hasLength(object),
@@ -169,9 +170,8 @@ NULL
                 x = file
             )
         }
-        if (identical(engine, "data.table")) {
+        if (identical(whatPkg, "data.table")) {
             ## data.table ------------------------------------------------------
-            ## Current default in rio package.
             whatFun <- "fwrite"
             what <- fwrite
             args <- list(
@@ -185,9 +185,8 @@ NULL
                 "csv" = ",",
                 "tsv" = "\t"
             )
-        } else if (identical(engine, "readr")) {
+        } else if (identical(whatPkg, "readr")) {
             ## readr -----------------------------------------------------------
-            assert(requireNamespace(whatPkg, quietly = TRUE))
             whatFun <- switch(
                 EXPR = ext,
                 "csv" = "write_csv",
@@ -202,6 +201,25 @@ NULL
             args <- list(
                 x = object,
                 path = file
+            )
+        }  else if (identical(whatPkg, "vroom")) {
+            ## vroom -----------------------------------------------------------
+            whatFun <- "vroom_write"
+            what <- get(
+                x = whatFun,
+                envir = asNamespace(whatPkg),
+                inherits = TRUE
+            )
+            assert(is.function(what))
+            args <- list(
+                x = object,
+                path = file,
+                progress = FALSE
+            )
+            args[["delim"]] <- switch(
+                EXPR = ext,
+                "csv" = ",",
+                "tsv" = "\t"
             )
         }
         cli_alert(sprintf(
@@ -223,9 +241,14 @@ NULL
         invisible(file)
     }
 
-formals(`export,matrix`)[["dir"]] <- .formalsList[["export.dir"]]
-formals(`export,matrix`)[["ext"]] <- .formalsList[["export.ext"]]
-formals(`export,matrix`)[["overwrite"]] <- .formalsList[["overwrite"]]
+formals(`export,matrix`)[
+    c("dir", "ext", "overwrite", "quiet")] <-
+    .formalsList[c(
+        "export.dir",
+        "export.ext",
+        "overwrite",
+        "quiet"
+    )]
 
 
 
