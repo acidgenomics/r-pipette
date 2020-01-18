@@ -25,6 +25,7 @@
 #'   Note that positional `numeric` arguments are currently not allowed.
 #' @param value `ANY`.
 #'   Metadata values to assign into slot, defined by `which`.
+#' @param ... Additional arguments.
 #'
 #' @return
 #' - `metadata2()`: Metadata. Returns `NULL` on `which` match failure, similar

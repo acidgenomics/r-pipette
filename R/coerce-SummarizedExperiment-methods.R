@@ -19,11 +19,11 @@
 #' )
 #' ```
 #'
-#' @rdname coerce-SummarizedExperiment
-#' @name as.SummarizedExperiment
+#' @name coerce-SummarizedExperiment
 #' @note Updated 2020-01-18.
 #'
 #' @inheritParams acidroxygen::params
+#' @param ... Additional arguments.
 #'
 #' @return `SummarizedExperiment`.
 #'
