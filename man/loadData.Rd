@@ -58,7 +58,7 @@ names using non-standard evaluation.
 Updated 2020-01-17.
 }
 \examples{
-dir <- system.file("extdata", package = "brio")
+dir <- system.file("extdata", package = "pipette")
 
 ## Interactive mode ====
 ## Note that this method uses non-standard evaluation.

@@ -39,12 +39,12 @@ extensions are natively supported: \code{BZ2}, \code{GZ}, \code{XZ}, \code{ZIP}.
 
 \examples{
 ## Local
-file <- system.file("extdata/example.csv", package = "brio")
+file <- system.file("extdata/example.csv", package = "pipette")
 x <- localOrRemoteFile(file)
 basename(x)
 
 ## Remote
-file <- pasteURL(brioTestsURL, "hgnc.txt.gz", protocol = "none")
+file <- pasteURL(pipetteTestsURL, "hgnc.txt.gz", protocol = "none")
 x <- localOrRemoteFile(file)
 basename(x)
 }

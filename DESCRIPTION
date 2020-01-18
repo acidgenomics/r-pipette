@@ -24,6 +24,7 @@ Depends: R (>= 3.6)
 Imports:
     BiocGenerics (>= 0.32),
     GenomicRanges (>= 1.38),
+    IRanges,
     Matrix (>= 1.2),
     R.utils (>= 2.9),
     RCurl (>= 1.95),
