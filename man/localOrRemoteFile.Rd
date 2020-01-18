@@ -12,9 +12,6 @@ localOrRemoteFile(
 \arguments{
 \item{file}{\code{character(1)}.
 Local file paths or remote URLs.}
-
-\item{quiet}{\code{logical(1)}.
-Perform command quietly, suppressing messages.}
 }
 \value{
 \code{character}.

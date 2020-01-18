@@ -38,9 +38,6 @@ position of the sheet). Defaults to the first sheet.}
 
 \item{metadata}{\code{list}.
 Metadata.}
-
-\item{quiet}{\code{logical(1)}.
-Perform command quietly, suppressing messages.}
 }
 \value{
 Varies, depending on the file type.
@@ -104,7 +101,7 @@ arguments. Remote URLs and compressed files are supported. If you need more
 complex import settings, just call the wrapped importer directly instead.
 }
 \note{
-Updated 2020-01-17.
+Updated 2020-01-18.
 }
 \section{Row and column names}{
 
@@ -217,7 +214,7 @@ These file formats are blacklisted, and intentionally not supported:
 }
 
 \examples{
-file <- system.file("extdata/example.csv", package = "brio")
+file <- system.file("extdata/example.csv", package = "pipette")
 
 ## Row and column names enabled.
 x <- import(file)
