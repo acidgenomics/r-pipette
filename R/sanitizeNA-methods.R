@@ -1,5 +1,5 @@
 #' @name sanitizeNA
-#' @inherit bioverbs::sanitizeNA
+#' @inherit acidgenerics::sanitizeNA
 #' @note Updated 2019-10-12.
 #'
 #' @inheritParams acidroxygen::params
@@ -27,7 +27,7 @@ NULL
 
 #' @rdname sanitizeNA
 #' @name sanitizeNA
-#' @importFrom bioverbs sanitizeNA
+#' @importFrom acidgenerics sanitizeNA
 #' @usage sanitizeNA(object, ...)
 #' @export
 NULL

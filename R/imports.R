@@ -1,8 +1,3 @@
-#' @importMethodsFrom transformer coerce
-NULL
-
-
-
 #' @importFrom GenomicRanges GRanges
 #' @importFrom Matrix readMM writeMM
 #' @importFrom RCurl getURL url.exists
@@ -27,7 +22,5 @@ NULL
 #' @importFrom rtracklayer import
 #' @importFrom stats na.omit
 #' @importFrom stringr str_extract str_match str_subset
-#' @importFrom transformer as.data.frame atomize decode encode factorize
-#'   metadata2 metadata2<-
 #' @importFrom utils download.file packageVersion
 NULL
