@@ -408,7 +408,7 @@ import <- function(
 }
 
 formals(import)[c("metadata", "quiet")] <-
-    .formalsList[c("import.metadata", "import.quiet")]
+    .formalsList[c("import.metadata", "quiet")]
 
 
 
@@ -450,7 +450,6 @@ formals(import)[c("metadata", "quiet")] <-
     metadata,
     quiet
 ) {
-    verbose <- getOption("acid.verbose", default = FALSE)
     assert(
         isFlag(colnames) || isCharacter(colnames),
         isFlag(verbose),
@@ -461,6 +460,7 @@ formals(import)[c("metadata", "quiet")] <-
         arg = getOption("acid.import.engine", default = "data.table"),
         choices = c("data.table", "readr", "vroom")
     )
+    verbose <- getOption("acid.verbose", default = FALSE)
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
     if (identical(whatPkg, "data.table")) {
         ## data.table ----------------------------------------------------------
