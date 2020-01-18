@@ -95,4 +95,3 @@ Collate:
     'sanitizeNA-methods.R'
     'sanitizePercent-methods.R'
     'transmit.R'
-    'writeCounts.R'
