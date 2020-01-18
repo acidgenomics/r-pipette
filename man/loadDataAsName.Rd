@@ -39,7 +39,7 @@ names using non-standard evaluation.
 Updated 2019-10-12.
 }
 \examples{
-dir <- system.file("extdata", package = "brio")
+dir <- system.file("extdata", package = "pipette")
 loadDataAsName(renamed = example, dir = dir)
 class(renamed)
 }

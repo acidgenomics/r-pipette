@@ -1,4 +1,5 @@
 #' @importFrom GenomicRanges GRanges
+#' @importFrom IRanges end start width
 #' @importFrom Matrix readMM writeMM
 #' @importFrom RCurl getURL url.exists
 #' @importFrom R.utils gzip
@@ -6,7 +7,7 @@
 #'   tail
 #' @importFrom SingleCellExperiment reducedDimNames reducedDim
 #' @importFrom SummarizedExperiment assayNames assayNames<- assays colData
-#'   rowData rowRanges
+#'   colData<- rowData rowData<- rowRanges
 #' @importFrom acidbase basenameSansExt bapply compressExtPattern dots
 #'   extPattern initDir matchArgsToDoCall pasteURL realpath standardizeCall
 #' @importFrom cli cli_alert cli_alert_info cli_alert_success cli_alert_warning
@@ -17,8 +18,8 @@
 #'   areSetEqual formalCompress hasColnames hasCols hasDimnames hasInternet
 #'   hasLength hasNames hasNoDuplicates hasRownames hasRows hasValidNames
 #'   hasValidDimnames isAFile isAURL isAny isCharacter isFlag isMatchingRegex
-#'   isScalar isString isSubset
-#' @importFrom methods as is slotNames validObject
+#'   isScalar isString isSubset validNames
+#' @importFrom methods as is slotNames validObject .hasSlot
 #' @importFrom rtracklayer import
 #' @importFrom stats na.omit
 #' @importFrom stringr str_extract str_match str_subset
