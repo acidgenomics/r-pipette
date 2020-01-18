@@ -4,7 +4,7 @@
 #' FTP server. Also enables on-the-fly file renaming and compression.
 #'
 #' @export
-#' @note Updated 2019-10-12.
+#' @note Updated 2020-01-18.
 #'
 #' @inheritParams acidroxygen::params
 #' @inheritParams saveData
@@ -26,16 +26,16 @@
 #'     !isTRUE(nzchar(Sys.getenv("CI")))
 #' ) {
 #'     remoteDir <- paste(
-#'         "ftp://ftp.pantherdb.org",
-#'         "sequence_classifications",
-#'         "current_release",
+#'         "ftp://ftp.ncbi.nlm.nih.gov",
+#'         "genomes",
+#'         "Homo_sapiens",
 #'         sep = "/"
 #'     )
 #'     readme <- transmit(
 #'         remoteDir = remoteDir,
 #'         pattern = "README",
-#'         rename = "panther_readme.txt",
-#'         compress = TRUE
+#'         rename = "ncbi-readme.txt",
+#'         compress = FALSE
 #'     )
 #'     basename(readme)
 #'     file.exists(readme)

@@ -6,13 +6,13 @@ skip_on_docker()
 
 ## Note that only FTP is currently supported.
 remoteDir <- paste(
-    "ftp://ftp.pantherdb.org",
-    "sequence_classifications",
-    "current_release",
+    "ftp://ftp.ncbi.nlm.nih.gov",
+    "genomes",
+    "Homo_sapiens",
     sep = "/"
 )
 
-test_that("PANTHER README file", {
+test_that("NCBI FTP README file", {
     object <- transmit(
         remoteDir = remoteDir,
         pattern = "README",

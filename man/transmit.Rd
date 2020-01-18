@@ -31,7 +31,7 @@ Utility function that supports easy file matching and download from a remote
 FTP server. Also enables on-the-fly file renaming and compression.
 }
 \note{
-Updated 2019-10-12.
+Updated 2020-01-18.
 }
 \examples{
 if (
@@ -39,16 +39,16 @@ if (
     !isTRUE(nzchar(Sys.getenv("CI")))
 ) {
     remoteDir <- paste(
-        "ftp://ftp.pantherdb.org",
-        "sequence_classifications",
-        "current_release",
+        "ftp://ftp.ncbi.nlm.nih.gov",
+        "genomes",
+        "Homo_sapiens",
         sep = "/"
     )
     readme <- transmit(
         remoteDir = remoteDir,
         pattern = "README",
-        rename = "panther_readme.txt",
-        compress = TRUE
+        rename = "ncbi-readme.txt",
+        compress = FALSE
     )
     basename(readme)
     file.exists(readme)
