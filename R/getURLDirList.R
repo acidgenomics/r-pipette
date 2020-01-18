@@ -2,7 +2,7 @@
 #'
 #' @export
 #' @note Best served using FTP instead of HTTP.
-#' @note Updated 2019-10-18.
+#' @note Updated 2020-01-18.
 #'
 #' @inheritParams acidroxygen::params
 #'
@@ -14,8 +14,8 @@
 #'     goalie::hasInternet() &&
 #'     !isTRUE(nzchar(Sys.getenv("CI")))
 #' ) {
-#'     url <- "ftp://ftp.ensembl.org/pub/"
-#'     x <- getURLDirList(url, pattern = "^release-")
+#'     url <- "ftp://ftp.ncbi.nlm.nih.gov/genomes/Homo_sapiens/current"
+#'     x <- getURLDirList(url)
 #'     tail(x)
 #' }
 getURLDirList <- function(url, pattern = NULL) {
@@ -24,7 +24,7 @@ getURLDirList <- function(url, pattern = NULL) {
         isString(pattern, nullOK = TRUE)
     )
     if (!isTRUE(grepl("/$", url))) {
-        stop("URL does not contain a trailing slash.")
+        url <- paste0(url, "/")
     }
     x <- getURL(url = url, dirlistonly = TRUE)
     x <- unlist(strsplit(x, split = "\n"))
