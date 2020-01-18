@@ -1,7 +1,6 @@
-#' brio
+#' pipette
 #'
-#' Extension of the rio and rtracklayer packages with improved support for
-#' biological data structures.
+#' Input/output functions for biological data formats.
 #'
 #' @keywords internal
 "_PACKAGE"
