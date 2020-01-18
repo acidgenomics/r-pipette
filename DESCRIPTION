@@ -80,7 +80,6 @@ Collate:
     'encode-methods.R'
     'export-methods.R'
     'factorize-methods.R'
-    'getURLDirList.R'
     'import.R'
     'imports.R'
     'loadData.R'
@@ -94,4 +93,3 @@ Collate:
     'removeNA-methods.R'
     'sanitizeNA-methods.R'
     'sanitizePercent-methods.R'
-    'transmit.R'
