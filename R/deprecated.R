@@ -32,5 +32,14 @@ sanitizeRowRanges <- function(...) {
 
 
 
+## v0.4.0 ======================================================================
+#' @rdname defunct
+#' @export
+writeCounts <- function(...) {
+    .Defunct("export")
+}
+
+
+
 ## nolint end
 ## nocov end
