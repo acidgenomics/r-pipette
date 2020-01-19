@@ -38,7 +38,7 @@ as.data.frame(x, row.names = NULL, optional = FALSE, ...)
 Coerce to \code{data.frame}.
 }
 \note{
-Updated 2020-01-08.
+Updated 2020-01-19.
 }
 \examples{
 data(sparseMatrix, package = "acidtest")

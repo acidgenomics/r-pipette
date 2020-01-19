@@ -42,7 +42,7 @@ Note that we're manually defining the \code{"rowname"} column instead of using
 \code{TRUE}, to match the conventions used in our \code{as_tibble()} methods.
 }
 \note{
-Updated 2020-01-08.
+Updated 2020-01-19.
 }
 \section{S3 \code{as.data.table()}}{
 

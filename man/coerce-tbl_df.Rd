@@ -58,7 +58,7 @@ for bioinformatics. This is accomplished by setting \code{rownames = "rowname"} 
 default instead of \code{rownames = NULL}.
 }
 \note{
-Updated 2020-01-08.
+Updated 2020-01-19.
 }
 \section{S3 \code{as_tibble()}}{
 
