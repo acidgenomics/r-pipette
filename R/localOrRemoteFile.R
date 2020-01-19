@@ -76,7 +76,12 @@ localOrRemoteFile <- function(file, quiet) {
                 ## Write (default).
                 mode <- "w"
             }
-            destfile <- file.path(tempdir(), basename(file))
+            tmpdir <- realpath(tempdir())
+            destfile <- tempfile(
+                pattern = "pipette-",
+                tmpdir = tmpdir,
+                fileext = paste0(".", fileExt(file))
+            )
             download.file(
                 url = file,
                 destfile = destfile,
@@ -88,7 +93,7 @@ localOrRemoteFile <- function(file, quiet) {
         SIMPLIFY = TRUE,
         USE.NAMES = FALSE
     )
-    .autoDecompress(file = file, quiet = quiet)
+    .autoDecompress(file = file)
 }
 
 formals(localOrRemoteFile)[["quiet"]] <- formalsList[["quiet"]]
@@ -100,8 +105,7 @@ formals(localOrRemoteFile)[["quiet"]] <- formalsList[["quiet"]]
 ## write permission issues, unless R is running as administrator. Ensure that
 ## decompressed is removed manually before attempting to overwrite, otherwise
 ## this step can error out.
-.autoDecompress <- function(file, quiet) {
-    assert(isFlag(quiet))
+.autoDecompress <- function(file) {
     file <- realpath(file)
     vapply(
         X = file,
@@ -109,51 +113,23 @@ formals(localOrRemoteFile)[["quiet"]] <- formalsList[["quiet"]]
             if (!grepl(compressExtPattern, file)) {
                 return(file)
             }
-            if (!isTRUE(quiet)) {
-                cli_alert(sprintf(
-                    "Decompressing {.file %s} in {.path %s}.",
-                    basename(file), "tempdir()"
-                ))
+            tmpdir <- realpath(tempdir())
+            if (!isTRUE(grepl(pattern = tmpdir, x = file))) {
+                tmpfile <- tempfile(
+                    pattern = "pipette-",
+                    tmpdir = tmpdir,
+                    fileext = paste0(".", fileExt(file))
+                )
+                file.copy(from = file, to = tmpfile)
+                file <- tmpfile
             }
-            ## Get the compression extension and decompressed file basename.
-            match <- str_match(
-                string = basename(file),
-                pattern = compressExtPattern
+            destfile <- decompress(
+                file = file,
+                remove = FALSE,
+                overwrite = TRUE
             )
-            assert(is.matrix(match), nrow(match) == 1L)
-            match <- match[1L, , drop = TRUE]
-            compressExt <- toupper(match[[2L]])
-            if (compressExt %in% c("BZ2", "GZ", "XZ")) {
-                ## Using the R.utils package to handle BZ2, GZ, XZ.
-                if (compressExt == "BZ2") {
-                    fun <- bzfile
-                } else if (compressExt == "GZ") {
-                    fun <- gzfile
-                } else if (compressExt == "XZ") {
-                    fun <- xzfile
-                }
-                ## FIXME Can we use base method instead of R.utils here?
-                ## FIXME Switch to using gzfile, bzfile, xzfile internally.
-                file <- decompressFile(
-                    filename = file,
-                    ext = compressExt,
-                    FUN = fun,
-                    temporary = TRUE,
-                    skip = FALSE,
-                    overwrite = TRUE,
-                    remove = FALSE
-                )
-            } else if (compressExt == "ZIP") {
-                ## Using the utils package to handle ZIP.
-                file <- unzip(
-                    zipfile = file,
-                    overwrite = TRUE,
-                    exdir = tempdir()
-                )
-                ## Ensure we're returning a string.
-                file <- file[[1L]]
-            }
-            file
+            assert(isString(destfile))
+            destfile
         },
         FUN.VALUE = character(1L),
         USE.NAMES = FALSE
