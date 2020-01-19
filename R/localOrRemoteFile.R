@@ -141,6 +141,8 @@ formals(localOrRemoteFile)[["quiet"]] <- .formalsList[["quiet"]]
                 } else if (compressExt == "XZ") {
                     fun <- xzfile
                 }
+                ## FIXME Can we use base method instead of R.utils here?
+                ## FIXME Switch to using gzfile, bzfile, xzfile internally.
                 file <- decompressFile(
                     filename = file,
                     ext = compressExt,
