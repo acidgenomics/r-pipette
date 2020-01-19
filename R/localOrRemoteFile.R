@@ -8,7 +8,7 @@
 #' @section Compressed files:
 #'
 #' Compressed files will automatically be decompressed. Currently, these file
-#' extensions are natively supported: `BZ2`, `GZ`, `XZ`, `ZIP`.
+#' extensions are natively supported: `BZ2`, `GZ`, `XZ`, and `ZIP`.
 #'
 #' @export
 #' @note Updated 2020-01-19.
@@ -20,7 +20,9 @@
 #' @return `character`.
 #' Local file path(s). Stops on a missing file.
 #'
-#' @seealso [tempdir()].
+#' @seealso
+#' - [tempfile()].
+#' - [tempdir()].
 #'
 #' @examples
 #' ## Local
