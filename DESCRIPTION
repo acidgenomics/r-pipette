@@ -2,7 +2,7 @@ Package: pipette
 Title: Pipette Biological Data In and Out of R
 Description: Input/output functions for biological data formats.
 Version: 0.4.0
-Date: 2020-01-18
+Date: 2020-01-19
 Authors@R: c(
     person(
         "Michael", "Steinbaugh",
@@ -24,14 +24,12 @@ Depends: R (>= 3.6)
 Imports:
     BiocGenerics (>= 0.32),
     GenomicRanges (>= 1.38),
-    IRanges,
+    IRanges (>= 2.20),
     Matrix (>= 1.2),
-    R.utils (>= 2.9),
-    RCurl (>= 1.95),
     S4Vectors (>= 0.24),
     SingleCellExperiment (>= 1.8),
     SummarizedExperiment (>= 1.16),
-    acidbase (>= 0.1.3),
+    acidbase (>= 0.1.4),
     acidgenerics (>= 0.3.0),
     cli (>= 2.0),
     data.table (>= 1.12.8),
@@ -42,7 +40,6 @@ Imports:
     tibble (>= 2.1),
     yaml (>= 2.2),
     methods,
-    stats,
     utils
 Suggests:
     acidroxygen (>= 0.1.5),
@@ -89,7 +86,6 @@ Collate:
     'matchRowNameColumn-methods.R'
     'metadata2-methods.R'
     'package.R'
-    'reexports.R'
     'removeNA-methods.R'
     'sanitizeNA-methods.R'
     'sanitizePercent-methods.R'
