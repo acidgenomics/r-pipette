@@ -123,19 +123,6 @@ formals(localOrRemoteFile)[["quiet"]] <- formalsList[["quiet"]]
             assert(is.matrix(match), nrow(match) == 1L)
             match <- match[1L, , drop = TRUE]
             compressExt <- toupper(match[[2L]])
-            ## Attempt to force removal of an existing decompressed file on
-            ## Windows, which can error out on some machines. Fail with a clear
-            ## error message if and when this occurs.
-            if (identical(.Platform[["OS.type"]], "windows")) {
-                ## nocov start
-                decompressedFile <- sub(
-                    pattern = compressExtPattern,
-                    replacement = "",
-                    x = basename(file)
-                )
-                .removeTempFile(decompressedFile)
-                ## nocov end
-            }
             if (compressExt %in% c("BZ2", "GZ", "XZ")) {
                 ## Using the R.utils package to handle BZ2, GZ, XZ.
                 if (compressExt == "BZ2") {
@@ -172,31 +159,3 @@ formals(localOrRemoteFile)[["quiet"]] <- formalsList[["quiet"]]
         USE.NAMES = FALSE
     )
 }
-
-
-
-## Fix attempt for Windows R erroring out on failure to overwrite tempfile.
-## This can happen for some non-admin user accounts, which is annoying.
-## https://support.rstudio.com/hc/en-us/community/posts/115007456107
-## nocov start
-.removeTempFile <- function(file) {
-    file <- file.path(tempdir(), file)
-    if (file.exists(file)) {
-        file.remove(file)
-    }
-    if (file.exists(file)) {
-        unlink(file, force = TRUE)
-    }
-    if (file.exists(file)) {
-        stop(
-            "Failed to remove temporary file.\n",
-            "This is a known issue with R on Windows.\n",
-            "Consider these alternatives:\n",
-            "  - Set TMPDIR to an alternate location in '.Renviron' file.\n",
-            "  - Run R as Administrator.\n",
-            "  - Switch to macOS or Linux."
-        )
-    }
-    invisible()
-}
-## nocov end
