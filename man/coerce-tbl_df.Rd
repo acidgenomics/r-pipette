@@ -67,7 +67,7 @@ transformer extends \code{\link[tibble:as_tibble]{as_tibble()}} method support f
 these S4 classes:
 \itemize{
 \item \code{DataFrame}.
-\item \code{GRanges}.
+\item \code{GenomicRanges}.
 }
 }
 
@@ -82,11 +82,11 @@ See \code{getClass("tbl_df")} for details on how tibble is a virtual class.
 }
 
 \examples{
-data(DataFrame, GRanges, IRanges, package = "acidtest")
+data(DFrame, GRanges, IRanges, package = "acidtest")
 
 ## DataFrame to tbl_df ====
-x <- as(DataFrame, "tbl_df")
-x <- as_tibble(DataFrame)
+x <- as(DFrame, "tbl_df")
+x <- as_tibble(DFrame)
 print(x)
 
 ## GenomicRanges to tbl_df ====

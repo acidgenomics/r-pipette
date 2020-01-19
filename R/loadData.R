@@ -18,7 +18,7 @@
 #' @export
 #' @note This function is desired for interactive use and interprets object
 #'   names using non-standard evaluation.
-#' @note Updated 2020-01-17.
+#' @note Updated 2020-01-19.
 #'
 #' @inheritParams acidroxygen::params
 #' @param ... Object names.
@@ -112,8 +112,8 @@ loadData <- function(
     invisible(files)
 }
 
-formals(loadData)[["dir"]] <- .formalsList[["load.dir"]]
-formals(loadData)[["overwrite"]] <- .formalsList[["overwrite"]]
+formals(loadData)[c("dir", "overwrite")] <-
+    formalsList[c("load.dir", "overwrite")]
 
 
 

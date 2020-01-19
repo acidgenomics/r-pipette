@@ -6,7 +6,7 @@
 \alias{export,data.frame-method}
 \alias{export,DataFrame-method}
 \alias{export,sparseMatrix-method}
-\alias{export,GRanges-method}
+\alias{export,GenomicRanges-method}
 \alias{export,SummarizedExperiment-method}
 \alias{export,SingleCellExperiment-method}
 \title{Export}
@@ -51,7 +51,7 @@ export(object, ...)
   overwrite = getOption("acid.overwrite", default = TRUE)
 )
 
-\S4method{export}{GRanges}(
+\S4method{export}{GenomicRanges}(
   object,
   ext = getOption("acid.export.ext", default = c("csv", "csv.gz", "csv.bz2", "tsv",
     "tsv.gz", "tsv.bz2")),

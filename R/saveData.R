@@ -11,7 +11,7 @@
 #'   on disk, following the same conventions as [`save()`][base::save].
 #'
 #' @export
-#' @note Updated 2020-01-17.
+#' @note Updated 2020-01-19.
 #'
 #' @inheritParams loadData
 #' @inheritParams base::save
@@ -130,7 +130,16 @@ saveData <- function(
     invisible(files)
 }
 
-formals(saveData)[["compress"]] <- .formalsList[["save.compress"]]
-formals(saveData)[["dir"]] <- .formalsList[["save.dir"]]
-formals(saveData)[["ext"]] <- .formalsList[["save.ext"]]
-formals(saveData)[["overwrite"]] <- .formalsList[["overwrite"]]
+formals(saveData)[
+    c(
+        "compress",
+        "dir",
+        "ext",
+        "overwrite"
+    )] <-
+    formalsList[c(
+        "save.compress",
+        "save.dir",
+        "save.ext",
+        "overwrite"
+    )]
