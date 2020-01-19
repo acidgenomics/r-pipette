@@ -51,7 +51,7 @@ skip_if_not(hasInternet())
 
 test_that("GFF3", {
     object <- import(file = file.path("cache", "example.gff3"))
-    expect_s4_class(object, "GRanges")
+    expect_s4_class(object, "GenomicRanges")
     expect_identical(
         object = levels(seqnames(object)),
         expected = "1"
@@ -96,7 +96,7 @@ test_that("GFF3", {
 
 test_that("GTF", {
     object <- import(file = file.path("cache", "example.gtf"))
-    expect_s4_class(object, "GRanges")
+    expect_s4_class(object, "GenomicRanges")
     expect_identical(
         object = levels(seqnames(object)),
         expected = "1"
