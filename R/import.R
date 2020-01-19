@@ -110,14 +110,14 @@
 #'   Applies to file types that return `data.frame` only.
 #'   Pass in a `character` vector to define the column names manually.
 #' @param format `character(1)`.
-#'   An optional file format code, which can be used to override the format
+#'   An optional file format type, which can be used to override the file format
 #'   inferred from `file`. *Not recommended by default.*
 #' @param sheet `character(1)` or `integer(1)`.
 #'   *Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.*
 #'   Sheet to read. Either a string (the name of a sheet), or an integer (the
 #'   position of the sheet). Defaults to the first sheet.
 #'
-#' @return Varies, depending on the file type.
+#' @return Varies, depending on the file type (format):
 #'
 #' - **Plain text delimited** (`CSV`, `TSV`, `TXT`): `data.frame`.\cr
 #'   Data separated by commas, tabs, or visual spaces.\cr
@@ -408,7 +408,7 @@ import <- function(
 }
 
 formals(import)[c("metadata", "quiet")] <-
-    .formalsList[c("import.metadata", "quiet")]
+    formalsList[c("import.metadata", "quiet")]
 
 
 
