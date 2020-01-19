@@ -10,8 +10,8 @@
 #' @importFrom SummarizedExperiment assayNames assayNames<- assays colData
 #'   colData<- rowData rowData<- rowRanges
 #' @importFrom acidbase basenameSansExt bapply compressExtPattern decompress
-#'   dots extPattern formalsList initDir matchArgsToDoCall pasteURL realpath
-#'   standardizeCall
+#'   dots extPattern fileExt formalsList initDir matchArgsToDoCall pasteURL
+#'   realpath standardizeCall
 #' @importFrom cli cli_alert cli_alert_info cli_alert_success cli_alert_warning
 #'   cli_text
 #' @importFrom data.table fread fwrite
