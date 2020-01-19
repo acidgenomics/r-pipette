@@ -3,7 +3,7 @@
 #' Coerce to `tbl_df`.
 #'
 #' @name coerce-tbl_df
-#' @note Updated 2020-01-08.
+#' @note Updated 2020-01-19.
 #'
 #' @inheritParams tibble::as_tibble
 #' @inheritParams acidroxygen::params
@@ -86,7 +86,7 @@ formals(as_tibble.DataFrame)[["rownames"]] <- .rownames
 #' @rdname coerce-tbl_df
 #' @export
 ## Updated 2019-07-20.
-as_tibble.IPosRanges <-  # nolint
+as_tibble.IntegerRanges <-  # nolint
     function(x, ..., rownames) {
         x <- as(x, "data.frame")
         if (!hasRownames(x)) {
@@ -95,14 +95,14 @@ as_tibble.IPosRanges <-  # nolint
         as_tibble(x = x, ..., rownames = rownames)
     }
 
-formals(as_tibble.IPosRanges)[["rownames"]] <- .rownames
+formals(as_tibble.IntegerRanges)[["rownames"]] <- .rownames
 
 
 
 #' @rdname coerce-tbl_df
 #' @export
 ## Updated 2019-07-20.
-as_tibble.GenomicRanges <- as_tibble.IPosRanges  # nolint
+as_tibble.GenomicRanges <- as_tibble.IntegerRanges  # nolint
 
 
 
@@ -163,17 +163,17 @@ setAs(
 
 
 ## Updated 2019-07-20.
-`coerce,IPosRanges,tbl_df` <-  # nolint
+`coerce,IntegerRanges,tbl_df` <-  # nolint
     `coerce,ANY,tbl_df`
 
 
 
 #' @rdname coerce-tbl_df
-#' @name coerce,IPosRanges,tbl_df-method
+#' @name coerce,IntegerRanges,tbl_df-method
 setAs(
-    from = "IPosRanges",
+    from = "IntegerRanges",
     to = "tbl_df",
-    def = `coerce,IPosRanges,tbl_df`
+    def = `coerce,IntegerRanges,tbl_df`
 )
 
 

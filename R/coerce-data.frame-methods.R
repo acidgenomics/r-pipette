@@ -3,7 +3,7 @@
 #' Coerce to `data.frame`.
 #'
 #' @name coerce-data.frame
-#' @note Updated 2020-01-08.
+#' @note Updated 2020-01-19.
 #'
 #' @inheritParams base::as.data.frame
 #' @inheritParams acidroxygen::params
@@ -29,9 +29,10 @@ NULL
 
 
 
-## Default coercion of IPosRanges (i.e. IRanges) to data.frame currently strips
-## metadata in `mcols()`. However, GenomicRanges preserves this information, so
-## we're adding a tweaked coercion method here to improve consistency.
+## Default coercion of IntegerRanges (i.e. IRanges) to data.frame currently
+## strips metadata in `mcols()`. However, GenomicRanges preserves this
+## information, so we're adding a tweaked coercion method here to improve
+## consistency.
 ##
 ## Relevant methods:
 ## > getMethod(
@@ -39,10 +40,10 @@ NULL
 ## >     signature = "GenomicRanges",
 ## >     where = asNamespace("GenomicRanges")
 ## > )
-## IRanges inherits from `IPosRanges`.
+## IRanges inherits from `IntegerRanges`.
 ## > getMethod(
 ## >     f = "as.data.frame",
-## >     signature = "IPosRanges",
+## >     signature = "IntegerRanges",
 ## >     where = asNamespace("IRanges")
 ## > )
 ##
@@ -50,7 +51,7 @@ NULL
 ## - https://github.com/Bioconductor/IRanges/issues/8
 ##
 ## Updated 2019-07-20.
-`as.data.frame,IPosRanges` <-  # nolint
+`as.data.frame,IntegerRanges` <-  # nolint
     function(
         x,
         row.names = NULL,
@@ -85,8 +86,8 @@ NULL
 #' @export
 setMethod(
     f = "as.data.frame",
-    signature = signature("IPosRanges"),
-    definition = `as.data.frame,IPosRanges`
+    signature = signature("IntegerRanges"),
+    definition = `as.data.frame,IntegerRanges`
 )
 
 
@@ -117,17 +118,17 @@ setMethod(
 
 
 ## Updated 2019-07-19.
-`coerce,IPosRanges,data.frame` <-  # nolint
+`coerce,IntegerRanges,data.frame` <-  # nolint
     `coerce,ANY,data.frame`
 
 
 
 #' @rdname coerce-data.frame
-#' @name coerce,IPosRanges,data.frame-method
+#' @name coerce,IntegerRanges,data.frame-method
 setAs(
-    from = "IPosRanges",
+    from = "IntegerRanges",
     to = "data.frame",
-    def = `coerce,IPosRanges,data.frame`
+    def = `coerce,IntegerRanges,data.frame`
 )
 
 
