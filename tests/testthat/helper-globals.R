@@ -1,5 +1,5 @@
 data(
-    DataFrame,
+    DFrame,
     GRanges,
     RangedSummarizedExperiment,
     SingleCellExperiment,
@@ -10,7 +10,7 @@ data(
     envir = environment()
 )
 
-df <- DataFrame
+df <- DFrame
 dt <- data.table
 gr <- GRanges
 rse <- RangedSummarizedExperiment

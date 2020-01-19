@@ -29,10 +29,14 @@ Load a remote R binary file. This function is vectorized and supports
 multiple URLs in a single call.
 }
 \note{
-Updated 2019-10-12.
+Updated 2020-01-19.
 }
 \examples{
-url <- pasteURL(pipetteTestsURL, "rnaseq_counts.rds", protocol = "none")
+url <- acidbase::pasteURL(
+    pipetteTestsURL,
+    "rnaseq_counts.rds",
+    protocol = "none"
+)
 print(url)
 x <- loadRemoteData(url)
 print(x)

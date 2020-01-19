@@ -21,7 +21,7 @@ Local file path(s). Stops on a missing file.
 Dynamically handle a local or remote file path
 }
 \note{
-Updated 2020-01-17.
+Updated 2020-01-19.
 }
 \section{Vectorization}{
 
@@ -44,7 +44,11 @@ x <- localOrRemoteFile(file)
 basename(x)
 
 ## Remote
-file <- pasteURL(pipetteTestsURL, "hgnc.txt.gz", protocol = "none")
+file <- acidbase::pasteURL(
+    pipetteTestsURL,
+    "hgnc.txt.gz",
+    protocol = "none"
+)
 x <- localOrRemoteFile(file)
 basename(x)
 }

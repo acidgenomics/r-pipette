@@ -4,7 +4,7 @@
 #' multiple URLs in a single call.
 #'
 #' @export
-#' @note Updated 2019-10-12.
+#' @note Updated 2020-01-19.
 #'
 #' @inheritParams acidroxygen::params
 #' @param url `character`.
@@ -14,7 +14,11 @@
 #' Local object name as the name, and the remote URL as the value.
 #'
 #' @examples
-#' url <- pasteURL(pipetteTestsURL, "rnaseq_counts.rds", protocol = "none")
+#' url <- acidbase::pasteURL(
+#'     pipetteTestsURL,
+#'     "rnaseq_counts.rds",
+#'     protocol = "none"
+#' )
 #' print(url)
 #' x <- loadRemoteData(url)
 #' print(x)
@@ -65,4 +69,4 @@ loadRemoteData <- function(
     invisible(url)
 }
 
-formals(loadRemoteData)[["overwrite"]] <- .formalsList[["overwrite"]]
+formals(loadRemoteData)[["overwrite"]] <- formalsList[["overwrite"]]

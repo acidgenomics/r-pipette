@@ -11,7 +11,7 @@
 #' extensions are natively supported: `BZ2`, `GZ`, `XZ`, `ZIP`.
 #'
 #' @export
-#' @note Updated 2020-01-17.
+#' @note Updated 2020-01-19.
 #'
 #' @inheritParams acidroxygen::params
 #' @param file `character(1)`.
@@ -29,7 +29,11 @@
 #' basename(x)
 #'
 #' ## Remote
-#' file <- pasteURL(pipetteTestsURL, "hgnc.txt.gz", protocol = "none")
+#' file <- acidbase::pasteURL(
+#'     pipetteTestsURL,
+#'     "hgnc.txt.gz",
+#'     protocol = "none"
+#' )
 #' x <- localOrRemoteFile(file)
 #' basename(x)
 localOrRemoteFile <- function(file, quiet) {
@@ -87,7 +91,7 @@ localOrRemoteFile <- function(file, quiet) {
     .autoDecompress(file = file, quiet = quiet)
 }
 
-formals(localOrRemoteFile)[["quiet"]] <- .formalsList[["quiet"]]
+formals(localOrRemoteFile)[["quiet"]] <- formalsList[["quiet"]]
 
 
 
