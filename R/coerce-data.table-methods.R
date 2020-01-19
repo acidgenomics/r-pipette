@@ -40,8 +40,8 @@
 #' data(DFrame, GRanges, IRanges, package = "acidtest")
 #'
 #' ## DataFrame to data.table ====
-#' x <- as(DataFrame, "data.table")
-#' x <- as.data.table(DataFrame)
+#' x <- as(DFrame, "data.table")
+#' x <- as.data.table(DFrame)
 #' print(x)
 #'
 #' ## GenomicRanges to data.table ====
