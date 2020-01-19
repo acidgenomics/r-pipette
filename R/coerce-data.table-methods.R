@@ -3,7 +3,7 @@
 #' Coerce to `data.table`.
 #'
 #' @name coerce-data.table
-#' @note Updated 2020-01-08.
+#' @note Updated 2020-01-19.
 #'
 #' @inheritParams data.table::as.data.table
 #' @inheritParams acidroxygen::params
@@ -90,7 +90,7 @@ as.data.table.DataFrame <-  # nolint
 #' @rdname coerce-data.table
 #' @export
 ## Updated 2019-07-19.
-as.data.table.IPosRanges <-  # nolint
+as.data.table.IntegerRanges <-  # nolint
     function(x, keep.rownames = TRUE, ...) {  # nolint
         x <- as(x, "data.frame")
         if (!hasRownames(x)) {
@@ -105,7 +105,7 @@ as.data.table.IPosRanges <-  # nolint
 #' @export
 ## Updated 2019-07-20.
 as.data.table.GenomicRanges <-  # nolint
-    as.data.table.IPosRanges
+    as.data.table.IntegerRanges
 
 
 
@@ -149,17 +149,17 @@ setAs(
 
 
 ## Updated 2019-07-19.
-`coerce,IPosRanges,data.table` <-  # nolint
+`coerce,IntegerRanges,data.table` <-  # nolint
     `coerce,ANY,data.table`
 
 
 
 #' @rdname coerce-data.table
-#' @name coerce,IPosRanges,data.table-method
+#' @name coerce,IntegerRanges,data.table-method
 setAs(
-    from = "IPosRanges",
+    from = "IntegerRanges",
     to = "data.table",
-    def = `coerce,IPosRanges,data.table`
+    def = `coerce,IntegerRanges,data.table`
 )
 
 
