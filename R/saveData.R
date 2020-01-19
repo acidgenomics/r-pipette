@@ -17,12 +17,14 @@
 #' @inheritParams base::save
 #' @inheritParams acidroxygen::params
 #' @param ext `character(1)`.
+#'   Output file format extension.
+#'
 #'   Supported arguments:
 #'   - `"rds"`: R data serialized (RDS).
 #'   - `"rda"`: R data (RDA).
 #'
-#'   RDS format is preferred when saving single objects per file, which is
-#'   always the convention of [saveData()], regardless of the extension used.
+#'   RDS is preferred when saving single objects per file, which is always the
+#'   convention of [saveData()], regardless of the extension used.
 #' @param list `character`.
 #'   A character vector containing the names of objects to be saved.
 #'   Note that this approach differs from [`save()`][base::save] in that the

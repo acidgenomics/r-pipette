@@ -24,14 +24,16 @@ quoted}.}
 Directory path.}
 
 \item{ext}{\code{character(1)}.
+Output file format extension.
+
 Supported arguments:
 \itemize{
 \item \code{"rds"}: R data serialized (RDS).
 \item \code{"rda"}: R data (RDA).
 }
 
-RDS format is preferred when saving single objects per file, which is
-always the convention of \code{\link[=saveData]{saveData()}}, regardless of the extension used.}
+RDS is preferred when saving single objects per file, which is always the
+convention of \code{\link[=saveData]{saveData()}}, regardless of the extension used.}
 
 \item{overwrite}{\code{logical(1)}.
 Overwrite existing file on disk.}
