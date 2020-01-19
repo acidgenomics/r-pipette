@@ -1,15 +1,17 @@
-#' @importFrom GenomicRanges GRanges
+#' @importClassesFrom GenomicRanges GenomicRanges
+#' @importClassesFrom IRanges IntegerRanges
+#' @importClassesFrom S4Vectors DataFrame
+#'
 #' @importFrom IRanges end start width
 #' @importFrom Matrix readMM writeMM
-#' @importFrom RCurl getURL url.exists
-#' @importFrom R.utils gzip
 #' @importFrom S4Vectors DataFrame Rle head mcols mcols<- metadata metadata<-
-#'   tail
+#'   na.omit tail
 #' @importFrom SingleCellExperiment reducedDimNames reducedDim
 #' @importFrom SummarizedExperiment assayNames assayNames<- assays colData
 #'   colData<- rowData rowData<- rowRanges
 #' @importFrom acidbase basenameSansExt bapply compressExtPattern dots
-#'   extPattern initDir matchArgsToDoCall pasteURL realpath standardizeCall
+#'   extPattern formalsList initDir matchArgsToDoCall pasteURL realpath
+#'   standardizeCall
 #' @importFrom cli cli_alert cli_alert_info cli_alert_success cli_alert_warning
 #'   cli_text
 #' @importFrom data.table fread fwrite
@@ -21,7 +23,6 @@
 #'   isScalar isString isSubset validNames
 #' @importFrom methods as is slotNames validObject .hasSlot
 #' @importFrom rtracklayer import
-#' @importFrom stats na.omit
 #' @importFrom stringr str_extract str_match str_subset
-#' @importFrom utils download.file packageVersion
+#' @importFrom utils download.file packageVersion unzip
 NULL
