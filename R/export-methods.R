@@ -102,6 +102,7 @@ NULL
         assert(
             hasLength(object),
             allAreAtomic(object),
+            isString(ext),
             isString(dir),
             isString(file, nullOK = TRUE),
             isFlag(overwrite),
@@ -124,7 +125,8 @@ NULL
             )
         )
         match <- str_match(string = file, pattern = extPattern)
-        compress <- !is.na(match[1L, 4L])
+        compressExt <- match[1L, 4L]
+        compress <- !is.na(compressExt)
         assert(
             hasRows(object),
             hasCols(object),
@@ -159,7 +161,7 @@ NULL
         ## `compress()` step below.
         if (isTRUE(compress)) {
             file <- sub(
-                pattern = paste0("\\.", compress, "$"),
+                pattern = paste0("\\.", compressExt, "$"),
                 replacement = "",
                 x = file
             )
@@ -225,7 +227,7 @@ NULL
         if (isTRUE(compress)) {
             file <- compress(
                 file = file,
-                ext = ext,
+                ext = compressExt,
                 remove = TRUE,
                 overwrite = TRUE
             )
@@ -291,7 +293,7 @@ setMethod(
 ## Note that "file" is referring to the matrix file.
 ## The correponding column and row sidecar files are generated automatically.
 ## Consider adding HDF5 support in a future update.
-## Updated 2019-08-27.
+## Updated 2020-01-19.
 `export,sparseMatrix` <-  # nolint
     function(
         object,
@@ -303,40 +305,32 @@ setMethod(
         validObject(object)
         assert(
             hasLength(object),
+            isString(ext),
             isString(dir),
             isString(file, nullOK = TRUE),
             isFlag(overwrite)
         )
-        ext <- match.arg(
-            arg = ext,
-            choices = c("mtx", "mtx.gz", "mtx.bz2")
-        )
-        ## Match the file extension and compression.
         if (is.null(file)) {
             call <- standardizeCall()
             sym <- call[["object"]]
-            if (!is.symbol(sym)) {
-                ## nocov start
-                stop(sprintf(
-                    "'export()' object argument is not a symbol: %s.",
-                    deparse(sym)
-                ))
-                ## nocov end
-            }
+            assert(is.symbol(sym))
             name <- as.character(sym)
-            assert(isString(ext))
             file <- file.path(dir, paste0(name, ".", ext))
-            string <- paste0(".", ext)
         } else {
-            string <- basename(file)
+            ext <- fileExt(file)
         }
-        match <- str_match(string = string, pattern = extPattern)
-        ext <- match[1L, 2L]
-        ext <- match.arg(arg = ext, choices = "mtx")
-        compress <- match[1L, 4L]
-        if (!is.na(compress)) {
-            compress <- match.arg(arg = compress, choices = c("gz", "bz2"))
-        }
+        ext <- match.arg(
+            arg = ext,
+            choices = c(
+                "mtx",
+                "mtx.bz2",
+                "mtx.gz",
+                "mtx.xz",
+                "mtx.zip"
+            )
+        )
+        match <- str_match(string = file, pattern = extPattern)
+        compress <- !is.na(match[1L, 4L])
         ## Inform the user regarding overwrite.
         if (isAFile(file)) {
             if (isTRUE(overwrite)) {
@@ -350,7 +344,8 @@ setMethod(
         ## Ensure directory is created automatically.
         initDir(dir = dirname(file))
         ## Remove compression extension from output file.
-        if (!is.na(compress)) {
+        if (isTRUE(compress)) {
+            ## FIXME This is broken now...
             file <- sub(
                 pattern = paste0("\\.", compress, "$"),
                 replacement = "",
