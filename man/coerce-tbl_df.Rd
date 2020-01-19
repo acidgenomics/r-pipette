@@ -4,12 +4,12 @@
 \alias{coerce-tbl_df}
 \alias{as_tibble}
 \alias{as_tibble.DataFrame}
-\alias{as_tibble.IPosRanges}
+\alias{as_tibble.IntegerRanges}
 \alias{as_tibble.GenomicRanges}
 \alias{coerce,data.frame,tbl_df-method}
 \alias{coerce,DataFrame,tbl_df-method}
 \alias{coerce,GenomicRanges,tbl_df-method}
-\alias{coerce,IPosRanges,tbl_df-method}
+\alias{coerce,IntegerRanges,tbl_df-method}
 \title{Coerce to tibble}
 \usage{
 \method{as_tibble}{DataFrame}(
@@ -18,7 +18,7 @@
   rownames = pkgconfig::get_config("tibble::rownames", "rowname")
 )
 
-\method{as_tibble}{IPosRanges}(
+\method{as_tibble}{IntegerRanges}(
   x,
   ...,
   rownames = pkgconfig::get_config("tibble::rownames", "rowname")
