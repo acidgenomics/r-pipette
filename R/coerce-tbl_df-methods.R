@@ -20,7 +20,7 @@
 #' these S4 classes:
 #'
 #' - `DataFrame`.
-#' - `GRanges`.
+#' - `GenomicRanges`.
 #'
 #' @section S4 `as()`:
 #'
@@ -35,11 +35,11 @@
 #' @return `tbl_df`.
 #'
 #' @examples
-#' data(DataFrame, GRanges, IRanges, package = "acidtest")
+#' data(DFrame, GRanges, IRanges, package = "acidtest")
 #'
 #' ## DataFrame to tbl_df ====
-#' x <- as(DataFrame, "tbl_df")
-#' x <- as_tibble(DataFrame)
+#' x <- as(DFrame, "tbl_df")
+#' x <- as_tibble(DFrame)
 #' print(x)
 #'
 #' ## GenomicRanges to tbl_df ====
