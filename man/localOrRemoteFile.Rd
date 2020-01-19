@@ -53,5 +53,8 @@ x <- localOrRemoteFile(file)
 basename(x)
 }
 \seealso{
-\code{\link[=tempdir]{tempdir()}}.
+\itemize{
+\item \code{\link[=tempfile]{tempfile()}}.
+\item \code{\link[=tempdir]{tempdir()}}.
+}
 }
