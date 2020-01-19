@@ -15,8 +15,7 @@ export(object, ...)
 
 \S4method{export}{matrix}(
   object,
-  ext = getOption("acid.export.ext", default = c("csv", "csv.gz", "csv.bz2", "tsv",
-    "tsv.gz", "tsv.bz2")),
+  ext = getOption("acid.export.ext", default = "csv"),
   dir = getOption("acid.export.dir", default = "."),
   file = NULL,
   overwrite = getOption("acid.overwrite", default = TRUE),
@@ -25,8 +24,7 @@ export(object, ...)
 
 \S4method{export}{data.frame}(
   object,
-  ext = getOption("acid.export.ext", default = c("csv", "csv.gz", "csv.bz2", "tsv",
-    "tsv.gz", "tsv.bz2")),
+  ext = getOption("acid.export.ext", default = "csv"),
   dir = getOption("acid.export.dir", default = "."),
   file = NULL,
   overwrite = getOption("acid.overwrite", default = TRUE),
@@ -35,8 +33,7 @@ export(object, ...)
 
 \S4method{export}{DataFrame}(
   object,
-  ext = getOption("acid.export.ext", default = c("csv", "csv.gz", "csv.bz2", "tsv",
-    "tsv.gz", "tsv.bz2")),
+  ext = getOption("acid.export.ext", default = "csv"),
   dir = getOption("acid.export.dir", default = "."),
   file = NULL,
   overwrite = getOption("acid.overwrite", default = TRUE),
@@ -45,7 +42,7 @@ export(object, ...)
 
 \S4method{export}{sparseMatrix}(
   object,
-  ext = getOption("acid.export.sparse.ext", default = c("mtx", "mtx.gz", "mtx.bz2")),
+  ext = getOption("acid.export.sparse.ext", default = "mtx"),
   dir = getOption("acid.export.dir", default = "."),
   file = NULL,
   overwrite = getOption("acid.overwrite", default = TRUE)
@@ -53,8 +50,7 @@ export(object, ...)
 
 \S4method{export}{GenomicRanges}(
   object,
-  ext = getOption("acid.export.ext", default = c("csv", "csv.gz", "csv.bz2", "tsv",
-    "tsv.gz", "tsv.bz2")),
+  ext = getOption("acid.export.ext", default = "csv"),
   dir = getOption("acid.export.dir", default = "."),
   file = NULL,
   overwrite = getOption("acid.overwrite", default = TRUE),
@@ -82,7 +78,12 @@ of being coerced to \code{data.frame}, to be written to disk.}
 
 \item{ext}{\code{character(1)}.
 Output file format extension.
-Uses \code{\link[base:match.arg]{match.arg()}}, where applicable.}
+
+\code{matrix} supported arguments:
+\itemize{
+\item CSV "csv", "csv.bz2", "csv.gz", "csv.xz", "csv.zip"
+\item TSV "tsv", "tsv.bz2", "tsv.gz", "tsv.xz", "tsv.zip"
+}}
 
 \item{dir}{\code{character(1)}.
 Directory path.}
@@ -113,7 +114,7 @@ File path(s).
 Export data out of R and write to disk.
 }
 \note{
-Updated 2020-01-18.
+Updated 2020-01-19.
 }
 \section{Row names}{
 

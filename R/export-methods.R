@@ -1,6 +1,11 @@
+## FIXME Need to simplify handoff to compress functions here.
+## FIXME Need to support gz, bz2, xz, and zip for all file formats.
+
+
+
 #' @name export
 #' @inherit acidgenerics::export
-#' @note Updated 2020-01-18.
+#' @note Updated 2020-01-19.
 #'
 #' @section Row names:
 #'
@@ -32,7 +37,10 @@
 #'   of being coerced to `data.frame`, to be written to disk.
 #' @param ext `character(1)`.
 #'   Output file format extension.
-#'   Uses [`match.arg()`][base::match.arg], where applicable.
+#'
+#'   `matrix` supported arguments:
+#'   - CSV "csv", "csv.bz2", "csv.gz", "csv.xz", "csv.zip"
+#'   - TSV "tsv", "tsv.bz2", "tsv.gz", "tsv.xz", "tsv.zip"
 #' @param file `character(1)`.
 #'   File path. When left unset (default), the `ext` and `dir` arguments will
 #'   be used instead.
@@ -74,7 +82,7 @@ NULL
 ## `data.table`, `tbl_df`, and `DataFrame` classes. Note that `rio::export()`
 ## does not preserve row names by default, so we're ensuring row names get
 ## coerced to "rowname" column consistently here.
-## Updated 2020-01-18.
+## Updated 2020-01-19.
 `export,matrix` <-  # nolint
     function(
         object,
@@ -99,39 +107,24 @@ NULL
             isFlag(overwrite),
             isFlag(verbose)
         )
-        ext <- match.arg(
-            arg = ext,
-            choices = c(
-                "csv", "csv.gz", "csv.bz2",
-                "tsv", "tsv.gz", "tsv.bz2"
-            )
-        )
-        ## Match the file extension and compression.
         if (is.null(file)) {
             call <- standardizeCall()
             sym <- call[["object"]]
-            if (!is.symbol(sym)) {
-                ## nocov start
-                stop(sprintf(
-                    "'export()' object argument is not a symbol: %s.",
-                    deparse(sym)
-                ))
-                ## nocov end
-            }
+            assert(is.symbol(sym))
             name <- as.character(sym)
-            assert(isString(ext))
             file <- file.path(dir, paste0(name, ".", ext))
-            string <- paste0(".", ext)
         } else {
-            string <- basename(file)
+            ext <- fileExt(file)
         }
-        match <- str_match(string = string, pattern = extPattern)
-        ext <- match[1L, 2L]
-        ext <- match.arg(arg = ext, choices = c("csv", "tsv"))
-        compress <- match[1L, 4L]
-        if (!is.na(compress)) {
-            compress <- match.arg(arg = compress, choices = c("gz", "bz2"))
-        }
+        ext <- match.arg(
+            arg = ext,
+            choices = c(
+                "csv", "csv.bz2", "csv.gz", "csv.xz", "csv.zip",
+                "tsv", "tsv.bz2", "tsv.gz", "tsv.xz", "tsv.zip"
+            )
+        )
+        match <- str_match(string = file, pattern = extPattern)
+        compress <- !is.na(match[1L, 4L])
         assert(
             hasRows(object),
             hasCols(object),
@@ -162,8 +155,9 @@ NULL
         }
         ## Ensure directory is created automatically.
         initDir(dir = dirname(file))
-        ## Remove compression extension from output file.
-        if (!is.na(compress)) {
+        ## Remove compression extension from output file path, prior to running
+        ## `compress()` step below.
+        if (isTRUE(compress)) {
             file <- sub(
                 pattern = paste0("\\.", compress, "$"),
                 replacement = "",
@@ -228,22 +222,26 @@ NULL
         ))
         do.call(what = what, args = args)
         ## Compress file, if necessary.
-        if (!is.na(compress)) {
-            compressFun <- switch(
-                EXPR = compress,
-                "gz" = gzip,
-                "bz2" = bzip2
+        if (isTRUE(compress)) {
+            file <- compress(
+                file = file,
+                ext = ext,
+                remove = TRUE,
+                overwrite = TRUE
             )
-            assert(is.function(compressFun))
-            file <- compressFun(file, overwrite = TRUE)
         }
         file <- realpath(file)
         invisible(file)
     }
 
 formals(`export,matrix`)[
-    c("dir", "ext", "overwrite", "quiet")] <-
-    .formalsList[c(
+    c(
+        "dir",
+        "ext",
+        "overwrite",
+        "quiet"
+    )] <-
+    formalsList[c(
         "export.dir",
         "export.ext",
         "overwrite",
@@ -399,12 +397,16 @@ setMethod(
         invisible(files)
     }
 
-formals(`export,sparseMatrix`)[["dir"]] <-
-    .formalsList[["export.dir"]]
-formals(`export,sparseMatrix`)[["ext"]] <-
-    .formalsList[["export.sparse.ext"]]
-formals(`export,sparseMatrix`)[["overwrite"]] <-
-    .formalsList[["overwrite"]]
+formals(`export,sparseMatrix`)[
+    c(
+        "dir",
+        "ext",
+        "overwrite"
+    )] <- formalsList[c(
+        "export.dir",
+        "export.sparse.ext",
+        "overwrite"
+    )]
 
 
 
@@ -418,7 +420,7 @@ setMethod(
 
 
 
-`export,GRanges` <- `export,DataFrame`  # nolint
+`export,GenomicRanges` <- `export,DataFrame`  # nolint
 
 
 
@@ -426,8 +428,8 @@ setMethod(
 #' @export
 setMethod(
     f = "export",
-    signature = signature("GRanges"),
-    definition = `export,GRanges`
+    signature = signature("GenomicRanges"),
+    definition = `export,GenomicRanges`
 )
 
 
@@ -565,10 +567,14 @@ setMethod(
         invisible(files)
     }
 
-formals(`export,SummarizedExperiment`)[["compress"]] <-
-    .formalsList[["export.compress"]]
-formals(`export,SummarizedExperiment`)[["dir"]] <-
-    .formalsList[["export.dir"]]
+formals(`export,SummarizedExperiment`)[
+    c(
+        "compress",
+        "dir"
+    )] <- formalsList[c(
+        "export.compress",
+        "export.dir"
+    )]
 
 
 
@@ -651,10 +657,14 @@ setMethod(
         invisible(files)
     }
 
-formals(`export,SingleCellExperiment`)[["compress"]] <-
-    .formalsList[["export.compress"]]
-formals(`export,SingleCellExperiment`)[["dir"]] <-
-    .formalsList[["export.dir"]]
+formals(`export,SingleCellExperiment`)[
+    c(
+        "compress",
+        "dir"
+    )] <- formalsList[c(
+        "export.compress",
+        "export.dir"
+    )]
 
 
 
