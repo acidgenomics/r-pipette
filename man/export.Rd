@@ -55,7 +55,8 @@ export(object, ...)
   ext = getOption("acid.export.sparse.ext", default = "mtx"),
   dir = getOption("acid.export.dir", default = "."),
   file = NULL,
-  overwrite = getOption("acid.overwrite", default = TRUE)
+  overwrite = getOption("acid.overwrite", default = TRUE),
+  quiet = getOption("acid.quiet", default = FALSE)
 )
 
 \S4method{export}{GenomicRanges}(
