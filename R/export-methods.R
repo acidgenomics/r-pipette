@@ -727,30 +727,29 @@ setMethod(
 
 
 
-## Updated 2019-08-27.
+## Updated 2020-01-19.
 `export,SingleCellExperiment` <-  # nolint
     function(
         object,
         name = NULL,
         dir,
-        compress
+        compress,
+        overwrite,
+        quiet
     ) {
         validObject(object)
         assert(
             isString(name, nullOK = TRUE),
             isString(dir),
-            isFlag(compress)
+            isFlag(compress),
+            isFlag(overwrite),
+            isFlag(quiet)
         )
         call <- standardizeCall()
         ## Get the name and create directory substructure.
         if (is.null(name)) {
             sym <- call[["object"]]
-            if (!is.symbol(sym)) {
-                stop(sprintf(
-                    "'export()' object argument is not a symbol: %s.",
-                    deparse(sym)
-                ))
-            }
+            assert(is.symbol(sym))
             name <- as.character(sym)
         }
         ## Export SummarizedExperiment-compatible slots.
@@ -758,16 +757,20 @@ setMethod(
             object = as(object, "RangedSummarizedExperiment"),
             name = name,
             dir = dir,
-            compress = compress
+            compress = compress,
+            overwrite = overwrite,
+            quiet = quiet
         )
         dir <- initDir(file.path(dir, name))
         ## Export dimensionality reduction data.
         reducedDimNames <- reducedDimNames(object)
         if (hasLength(reducedDimNames)) {
-            cli_alert(sprintf(
-                "Exporting {.var reducedDims}: {.var %s}",
-                toString(reducedDimNames)
-            ))
+            if (!isTRUE(quiet)) {
+                cli_alert(sprintf(
+                    "Exporting {.var reducedDims}: {.var %s}",
+                    toString(reducedDimNames)
+                ))
+            }
             files[["reducedDims"]] <- lapply(
                 X = reducedDimNames,
                 FUN = function(name, dir) {
@@ -786,7 +789,12 @@ setMethod(
                         ext <- paste0(ext, ".gz")
                     }
                     file <- paste0(file, ".", ext)
-                    export(reducedDim, file = file)
+                    export(
+                        object = reducedDim,
+                        file = file,
+                        overwrite = overwrite,
+                        quiet = quiet
+                    )
                 },
                 dir = initDir(file.path(dir, "reducedDims"))
             )
@@ -799,10 +807,14 @@ setMethod(
 formals(`export,SingleCellExperiment`)[
     c(
         "compress",
-        "dir"
+        "dir",
+        "overwrite",
+        "quiet"
     )] <- formalsList[c(
         "export.compress",
-        "export.dir"
+        "export.dir",
+        "overwrite",
+        "quiet"
     )]
 
 
