@@ -16,7 +16,7 @@ export(object, ...)
 
 \S4method{export}{character}(
   object,
-  ext = getOption("acid.export.ext", default = "csv"),
+  ext = "txt",
   dir = getOption("acid.export.dir", default = "."),
   file = NULL,
   overwrite = getOption("acid.overwrite", default = TRUE),
@@ -52,7 +52,7 @@ export(object, ...)
 
 \S4method{export}{sparseMatrix}(
   object,
-  ext = getOption("acid.export.sparse.ext", default = "mtx"),
+  ext = "mtx",
   dir = getOption("acid.export.dir", default = "."),
   file = NULL,
   overwrite = getOption("acid.overwrite", default = TRUE),
