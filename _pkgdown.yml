@@ -8,34 +8,29 @@ news:
   - one_page: false
 
 reference:
-  - title: Import/export of flat files
+  - title: Import/export
     contents:
     - import
     - export
-  - title: Import of R data
+  - title: R data
     contents:
     - starts_with("assign")
     - starts_with("load")
-  - title: Export of R data
-    contents:
     - starts_with("save")
-  - title: Matrix-specific export
-    contents:
-    - writeCounts
   - title: File transfers
     contents:
-    - getURLDirList
-    - initDir
     - localOrRemoteFile
-    - transmit
-  - title: File names
+  - title: Coercion
     contents:
-    - basenameSansExt
-    - fileExt
-    - pasteURL
-    - realpath
-  - title: Data sanitization
+    - starts_with("coerce")
+  - title: Data modification and sanitization
     contents:
+    - atomize
+    - decode
+    - encode
+    - factorize
+    - matchRowNameColumn
+    - metadata2
     - naStrings
     - removeNA
     - starts_with("sanitize")

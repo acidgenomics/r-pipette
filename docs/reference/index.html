@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • brio</title>
+<title>Function reference • pipette</title>
 
 
 <!-- jquery -->
@@ -68,8 +68,8 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">brio</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.17</span>
+        <a class="navbar-link" href="../index.html">pipette</a>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
       </span>
     </div>
 
@@ -90,7 +90,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/acidgenomics/brio">
+  <a href="https://github.com/acidgenomics/pipette">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -122,7 +122,7 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-import-export-of-flat-files" class="hasAnchor"><a href="#section-import-export-of-flat-files" class="anchor"></a>Import/export of flat files</h2>
+          <h2 id="section-import-export" class="hasAnchor"><a href="#section-import-export" class="anchor"></a>Import/export</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
@@ -142,7 +142,7 @@
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-import-of-r-data" class="hasAnchor"><a href="#section-import-of-r-data" class="anchor"></a>Import of R data</h2>
+          <h2 id="section-r-data" class="hasAnchor"><a href="#section-r-data" class="anchor"></a>R data</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
@@ -170,34 +170,12 @@
           <p><code><a href="loadRemoteData.html">loadRemoteData()</a></code> </p>
         </td>
         <td><p>Load remote data</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-export-of-r-data" class="hasAnchor"><a href="#section-export-of-r-data" class="anchor"></a>Export of R data</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
+      </tr><tr>
         
         <td>
           <p><code><a href="saveData.html">saveData()</a></code> </p>
         </td>
         <td><p>Save data</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-matrix-specific-export" class="hasAnchor"><a href="#section-matrix-specific-export" class="anchor"></a>Matrix-specific export</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="writeCounts.html">writeCounts()</a></code> </p>
-        </td>
-        <td><p>Write counts</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -209,50 +187,98 @@
       <tr>
         
         <td>
-          <p><code><a href="getURLDirList.html">getURLDirList()</a></code> </p>
-        </td>
-        <td><p>Get remote URL directory listing</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="reexports.html">reexports</a></code> </p>
-        </td>
-        <td><p>Objects exported from other packages</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="localOrRemoteFile.html">localOrRemoteFile()</a></code> </p>
         </td>
         <td><p>Dynamically handle a local or remote file path</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-coercion" class="hasAnchor"><a href="#section-coercion" class="anchor"></a>Coercion</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="coerce-DataFrame.html">as.DataFrame()</a></code> </p>
+        </td>
+        <td><p>Coerce to data frame</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="transmit.html">transmit()</a></code> </p>
+          <p><code><a href="coerce-SummarizedExperiment.html">as.SummarizedExperiment()</a></code> </p>
         </td>
-        <td><p>Transmit files from a remote FTP server</p></td>
+        <td><p>Coerce to summarized experiment</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="coerce-data.frame.html">as.data.frame()</a></code> </p>
+        </td>
+        <td><p>Coerce to data frame</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="coerce-data.table.html">as.data.table()</a></code> </p>
+        </td>
+        <td><p>Coerce to data table</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="coerce-list.html">coerceToList()</a></code> </p>
+        </td>
+        <td><p>Coerce to list</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="coerce-tbl_df.html">as_tibble(<i>&lt;DataFrame&gt;</i>)</a></code> <code><a href="coerce-tbl_df.html">as_tibble(<i>&lt;IntegerRanges&gt;</i>)</a></code> <code><a href="coerce-tbl_df.html">as_tibble(<i>&lt;GenomicRanges&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Coerce to tibble</p></td>
       </tr>
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-file-names" class="hasAnchor"><a href="#section-file-names" class="anchor"></a>File names</h2>
+          <h2 id="section-data-modification-and-sanitization" class="hasAnchor"><a href="#section-data-modification-and-sanitization" class="anchor"></a>Data modification and sanitization</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
       <tr>
         
         <td>
-          <p><code><a href="reexports.html">reexports</a></code> </p>
+          <p><code><a href="atomize.html">atomize()</a></code> </p>
         </td>
-        <td><p>Objects exported from other packages</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-data-sanitization" class="hasAnchor"><a href="#section-data-sanitization" class="anchor"></a>Data sanitization</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
+        <td><p>Atomize</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="decode.html">decode()</a></code> </p>
+        </td>
+        <td><p>Decode column data that uses run-length encoding</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="encode.html">encode()</a></code> </p>
+        </td>
+        <td><p>Encode using run-length encoding</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="factorize.html">factorize()</a></code> </p>
+        </td>
+        <td><p>Factorize</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="matchRowNameColumn.html">matchRowNameColumn()</a></code> </p>
+        </td>
+        <td><p>Match row name column</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="metadata2.html">metadata2()</a></code> <code><a href="metadata2.html">`metadata2<-`()</a></code> </p>
+        </td>
+        <td><p>Metadata</p></td>
+      </tr><tr>
         
         <td>
           <p><code><a href="naStrings.html">naStrings</a></code> </p>
@@ -284,13 +310,11 @@
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-import-export-of-flat-files">Import/export of flat files</a></li>
-      <li><a href="#section-import-of-r-data">Import of R data</a></li>
-      <li><a href="#section-export-of-r-data">Export of R data</a></li>
-      <li><a href="#section-matrix-specific-export">Matrix-specific export</a></li>
+      <li><a href="#section-import-export">Import/export</a></li>
+      <li><a href="#section-r-data">R data</a></li>
       <li><a href="#section-file-transfers">File transfers</a></li>
-      <li><a href="#section-file-names">File names</a></li>
-      <li><a href="#section-data-sanitization">Data sanitization</a></li>
+      <li><a href="#section-coercion">Coercion</a></li>
+      <li><a href="#section-data-modification-and-sanitization">Data modification and sanitization</a></li>
     </ul>
   </div>
 </div>

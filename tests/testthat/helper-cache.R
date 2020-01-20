@@ -49,7 +49,7 @@ mapply(
     },
     file = files,
     MoreArgs = list(
-        remoteDir = brioTestsURL,
+        remoteDir = pipetteTestsURL,
         envir = environment()
     )
 )

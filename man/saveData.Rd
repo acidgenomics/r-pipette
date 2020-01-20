@@ -7,7 +7,7 @@
 saveData(
   ...,
   dir = getOption("acid.save.dir", default = "."),
-  ext = getOption("acid.save.ext", default = c("rds", "rda")),
+  ext = getOption("acid.save.ext", default = "rds"),
   overwrite = getOption("acid.overwrite", default = TRUE),
   compress = getOption("acid.save.compress", default = TRUE),
   list = NULL,
@@ -24,8 +24,15 @@ quoted}.}
 Directory path.}
 
 \item{ext}{\code{character(1)}.
-R data serialized (\code{RDS}) or R data (\code{RDA}, \code{RDATA}). RDS is
-preferred when saving single objects per file, which is always the
+Output file format extension.
+
+Supported arguments:
+\itemize{
+\item \code{"rds"}: R data serialized (RDS).
+\item \code{"rda"}: R data (RDA).
+}
+
+RDS is preferred when saving single objects per file, which is always the
 convention of \code{\link[=saveData]{saveData()}}, regardless of the extension used.}
 
 \item{overwrite}{\code{logical(1)}.
@@ -65,7 +72,7 @@ This function is desired for interactive use and interprets object
 names using non-standard evaluation. It will \strong{overwrite} existing files
 on disk, following the same conventions as \code{\link[base:save]{save()}}.
 
-Updated 2019-10-12.
+Updated 2020-01-19.
 }
 \examples{
 dir <- "example"

@@ -8,31 +8,41 @@
 #' @section Compressed files:
 #'
 #' Compressed files will automatically be decompressed. Currently, these file
-#' extensions are natively supported: `BZ2`, `GZ`, `XZ`, `ZIP`.
+#' extensions are natively supported: `BZ2`, `GZ`, `XZ`, and `ZIP`.
 #'
 #' @export
-#' @note Updated 2019-10-18.
+#' @note Updated 2020-01-19.
 #'
+#' @inheritParams acidroxygen::params
 #' @param file `character(1)`.
 #'   Local file paths or remote URLs.
 #'
 #' @return `character`.
 #' Local file path(s). Stops on a missing file.
 #'
-#' @seealso [tempdir()].
+#' @seealso
+#' - [tempfile()].
+#' - [tempdir()].
 #'
 #' @examples
 #' ## Local
-#' file <- system.file("extdata/example.csv", package = "brio")
+#' file <- system.file("extdata/example.csv", package = "pipette")
 #' x <- localOrRemoteFile(file)
 #' basename(x)
 #'
 #' ## Remote
-#' file <- pasteURL(brioTestsURL, "hgnc.txt.gz", protocol = "none")
+#' file <- acidbase::pasteURL(
+#'     pipetteTestsURL,
+#'     "hgnc.txt.gz",
+#'     protocol = "none"
+#' )
 #' x <- localOrRemoteFile(file)
 #' basename(x)
-localOrRemoteFile <- function(file) {
-    assert(isCharacter(file))
+localOrRemoteFile <- function(file, quiet) {
+    assert(
+        isCharacter(file),
+        isFlag(quiet)
+    )
     file <- mapply(
         file = file,
         FUN = function(file) {
@@ -68,11 +78,16 @@ localOrRemoteFile <- function(file) {
                 ## Write (default).
                 mode <- "w"
             }
-            destfile <- file.path(tempdir(), basename(file))
+            tmpdir <- realpath(tempdir())
+            destfile <- tempfile(
+                pattern = "pipette-",
+                tmpdir = tmpdir,
+                fileext = paste0(".", fileExt(file))
+            )
             download.file(
                 url = file,
                 destfile = destfile,
-                quiet = TRUE,
+                quiet = quiet,
                 mode = mode
             )
             destfile
@@ -80,8 +95,10 @@ localOrRemoteFile <- function(file) {
         SIMPLIFY = TRUE,
         USE.NAMES = FALSE
     )
-    .autoDecompress(file)
+    .autoDecompress(file = file)
 }
+
+formals(localOrRemoteFile)[["quiet"]] <- formalsList[["quiet"]]
 
 
 
@@ -98,90 +115,25 @@ localOrRemoteFile <- function(file) {
             if (!grepl(compressExtPattern, file)) {
                 return(file)
             }
-            message(sprintf(
-                "Decompressing '%s' in '%s'.",
-                basename(file), "tempdir()"
-            ))
-            ## Get the compression extension and decompressed file basename.
-            match <- str_match(
-                string = basename(file),
-                pattern = compressExtPattern
+            tmpdir <- realpath(tempdir())
+            if (!isTRUE(grepl(pattern = tmpdir, x = file))) {
+                tmpfile <- tempfile(
+                    pattern = "pipette-",
+                    tmpdir = tmpdir,
+                    fileext = paste0(".", fileExt(file))
+                )
+                file.copy(from = file, to = tmpfile)
+                file <- tmpfile
+            }
+            destfile <- decompress(
+                file = file,
+                remove = FALSE,
+                overwrite = TRUE
             )
-            assert(is.matrix(match), nrow(match) == 1L)
-            match <- match[1L, , drop = TRUE]
-            compressExt <- toupper(match[[2L]])
-            ## Attempt to force removal of an existing decompressed file on
-            ## Windows, which can error out on some machines. Fail with a clear
-            ## error message if and when this occurs.
-            if (identical(.Platform[["OS.type"]], "windows")) {
-                ## nocov start
-                decompressedFile <- sub(
-                    pattern = compressExtPattern,
-                    replacement = "",
-                    x = basename(file)
-                )
-                .removeTempFile(decompressedFile)
-                ## nocov end
-            }
-            if (compressExt %in% c("BZ2", "GZ", "XZ")) {
-                ## Using the R.utils package to handle BZ2, GZ, XZ.
-                if (compressExt == "BZ2") {
-                    fun <- bzfile
-                } else if (compressExt == "GZ") {
-                    fun <- gzfile
-                } else if (compressExt == "XZ") {
-                    fun <- xzfile
-                }
-                file <- decompressFile(
-                    filename = file,
-                    ext = compressExt,
-                    FUN = fun,
-                    temporary = TRUE,
-                    skip = FALSE,
-                    overwrite = TRUE,
-                    remove = FALSE
-                )
-            } else if (compressExt == "ZIP") {
-                ## Using the utils package to handle ZIP.
-                file <- unzip(
-                    zipfile = file,
-                    overwrite = TRUE,
-                    exdir = tempdir()
-                )
-                ## Ensure we're returning a string.
-                file <- file[[1L]]
-            }
-            file
+            assert(isString(destfile))
+            destfile
         },
         FUN.VALUE = character(1L),
         USE.NAMES = FALSE
     )
 }
-
-
-
-## Fix attempt for Windows R erroring out on failure to overwrite tempfile.
-## This can happen for some non-admin user accounts, which is annoying.
-## https://support.rstudio.com/hc/en-us/community/posts/115007456107
-## nocov start
-.removeTempFile <- function(file) {
-    file <- file.path(tempdir(), file)
-    if (file.exists(file)) {
-        file.remove(file)
-    }
-    if (file.exists(file)) {
-        unlink(file, force = TRUE)
-    }
-    if (file.exists(file)) {
-        stop(
-            "Failed to remove temporary file.\n",
-            "This is a known issue with R on Windows.\n",
-            "Consider these alternatives:\n",
-            "  - Set TMPDIR to an alternate location in '.Renviron' file.\n",
-            "  - Run R as Administrator.\n",
-            "  - Switch to macOS or Linux."
-        )
-    }
-    invisible()
-}
-## nocov end

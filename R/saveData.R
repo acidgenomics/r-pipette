@@ -11,14 +11,19 @@
 #'   on disk, following the same conventions as [`save()`][base::save].
 #'
 #' @export
-#' @note Updated 2019-10-12.
+#' @note Updated 2020-01-19.
 #'
 #' @inheritParams loadData
 #' @inheritParams base::save
 #' @inheritParams acidroxygen::params
 #' @param ext `character(1)`.
-#'   R data serialized (`RDS`) or R data (`RDA`, `RDATA`). RDS is
-#'   preferred when saving single objects per file, which is always the
+#'   Output file format extension.
+#'
+#'   Supported arguments:
+#'   - `"rds"`: R data serialized (RDS).
+#'   - `"rda"`: R data (RDA).
+#'
+#'   RDS is preferred when saving single objects per file, which is always the
 #'   convention of [saveData()], regardless of the extension used.
 #' @param list `character`.
 #'   A character vector containing the names of objects to be saved.
@@ -89,8 +94,8 @@ saveData <- function(
     ext <- match.arg(arg = ext, choices = c("rds", "rda"))
     files <- file.path(dir, paste(names(objects), ext, sep = "."))
     names(files) <- names(objects)
-    message(sprintf(
-        "Saving %s to '%s'.",
+    cli_text(sprintf(
+        "Saving {.file %s} to {.path %s}.",
         toString(
             paste0("'", basename(files), "'"),
             width = 200L
@@ -130,7 +135,16 @@ saveData <- function(
     invisible(files)
 }
 
-formals(saveData)[["compress"]] <- .formalsList[["save.compress"]]
-formals(saveData)[["dir"]] <- .formalsList[["save.dir"]]
-formals(saveData)[["ext"]] <- .formalsList[["save.ext"]]
-formals(saveData)[["overwrite"]] <- .formalsList[["overwrite"]]
+formals(saveData)[
+    c(
+        "compress",
+        "dir",
+        "ext",
+        "overwrite"
+    )] <-
+    formalsList[c(
+        "save.compress",
+        "save.dir",
+        "save.ext",
+        "overwrite"
+    )]

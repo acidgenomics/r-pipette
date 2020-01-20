@@ -5,6 +5,7 @@
 \alias{sanitizeColData}
 \alias{sanitizeRowData}
 \alias{sanitizeRowRanges}
+\alias{writeCounts}
 \title{Defunct functions}
 \usage{
 sanitizeColData(...)
@@ -12,6 +13,8 @@ sanitizeColData(...)
 sanitizeRowData(...)
 
 sanitizeRowRanges(...)
+
+writeCounts(...)
 }
 \arguments{
 \item{...}{Additional arguments.}
