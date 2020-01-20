@@ -85,8 +85,8 @@ formals(as_tibble.DataFrame)[["rownames"]] <- .rownames
 
 #' @rdname coerce-tbl_df
 #' @export
-## Updated 2019-07-20.
-as_tibble.IntegerRanges <-  # nolint
+## Updated 2020-01-19.
+as_tibble.IRanges <-  # nolint
     function(x, ..., rownames) {
         x <- as(x, "data.frame")
         if (!hasRownames(x)) {
@@ -95,14 +95,14 @@ as_tibble.IntegerRanges <-  # nolint
         as_tibble(x = x, ..., rownames = rownames)
     }
 
-formals(as_tibble.IntegerRanges)[["rownames"]] <- .rownames
+formals(as_tibble.IRanges)[["rownames"]] <- .rownames
 
 
 
 #' @rdname coerce-tbl_df
 #' @export
-## Updated 2019-07-20.
-as_tibble.GenomicRanges <- as_tibble.IntegerRanges  # nolint
+## Updated 2020-01-19.
+as_tibble.GenomicRanges <- as_tibble.IRanges  # nolint
 
 
 
@@ -162,18 +162,18 @@ setAs(
 
 
 
-## Updated 2019-07-20.
-`coerce,IntegerRanges,tbl_df` <-  # nolint
+## Updated 2020-01-19.
+`coerce,IRanges,tbl_df` <-  # nolint
     `coerce,ANY,tbl_df`
 
 
 
 #' @rdname coerce-tbl_df
-#' @name coerce,IntegerRanges,tbl_df-method
+#' @name coerce,IRanges,tbl_df-method
 setAs(
-    from = "IntegerRanges",
+    from = "IRanges",
     to = "tbl_df",
-    def = `coerce,IntegerRanges,tbl_df`
+    def = `coerce,IRanges,tbl_df`
 )
 
 
