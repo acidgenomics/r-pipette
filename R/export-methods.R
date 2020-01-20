@@ -34,8 +34,14 @@
 #'   Output file format extension.
 #'
 #'   `matrix` supported arguments:
-#'   - CSV "csv", "csv.bz2", "csv.gz", "csv.xz", "csv.zip"
-#'   - TSV "tsv", "tsv.bz2", "tsv.gz", "tsv.xz", "tsv.zip"
+#'   - Comma separated values (CSV):
+#'     `"csv"`, `"csv.bz2"`, `"csv.gz"`, `"csv.xz"`, `"csv.zip"`.
+#'   - Tab separated values (TSV):
+#'     `"tsv"`, `"tsv.bz2"`, `"tsv.gz"`, `"tsv.xz"`, `"tsv.zip"`.
+#'
+#'   `Matrix` (`sparseMatrix`) supported arguments:
+#'   - MatrixMarket exchange (MTX):
+#'     `"mtx"`, `"mtx.bz2"`, `"mtx.gz"`, `"mtx.xz"`, `"mtx.zip"`.
 #' @param file `character(1)`.
 #'   File path. When left unset (default), the `ext` and `dir` arguments will
 #'   be used instead.
