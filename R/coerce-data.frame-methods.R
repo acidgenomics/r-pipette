@@ -29,7 +29,7 @@ NULL
 
 
 
-## Default coercion of IntegerRanges (i.e. IRanges) to data.frame currently
+## Default coercion of IPosRanges (i.e. IRanges) to data.frame currently
 ## strips metadata in `mcols()`. However, GenomicRanges preserves this
 ## information, so we're adding a tweaked coercion method here to improve
 ## consistency.
@@ -40,18 +40,18 @@ NULL
 ## >     signature = "GenomicRanges",
 ## >     where = asNamespace("GenomicRanges")
 ## > )
-## IRanges inherits from `IntegerRanges`.
+## IRanges inherits from `IPosRanges`.
 ## > getMethod(
 ## >     f = "as.data.frame",
-## >     signature = "IntegerRanges",
+## >     signature = "IPosRanges",
 ## >     where = asNamespace("IRanges")
 ## > )
 ##
 ## See also:
 ## - https://github.com/Bioconductor/IRanges/issues/8
 ##
-## Updated 2019-07-20.
-`as.data.frame,IntegerRanges` <-  # nolint
+## Updated 2020-01-19.
+`as.data.frame,IRanges` <-  # nolint
     function(
         x,
         row.names = NULL,
@@ -86,8 +86,8 @@ NULL
 #' @export
 setMethod(
     f = "as.data.frame",
-    signature = signature("IntegerRanges"),
-    definition = `as.data.frame,IntegerRanges`
+    signature = signature("IRanges"),
+    definition = `as.data.frame,IRanges`
 )
 
 
@@ -118,17 +118,17 @@ setMethod(
 
 
 ## Updated 2019-07-19.
-`coerce,IntegerRanges,data.frame` <-  # nolint
+`coerce,IRanges,data.frame` <-  # nolint
     `coerce,ANY,data.frame`
 
 
 
 #' @rdname coerce-data.frame
-#' @name coerce,IntegerRanges,data.frame-method
+#' @name coerce,IRanges,data.frame-method
 setAs(
-    from = "IntegerRanges",
+    from = "IRanges",
     to = "data.frame",
-    def = `coerce,IntegerRanges,data.frame`
+    def = `coerce,IRanges,data.frame`
 )
 
 
