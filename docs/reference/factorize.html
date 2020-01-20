@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>News • pipette</title>
+<title>Factorize — factorize • pipette</title>
 
 
 <!-- jquery -->
@@ -37,7 +37,9 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="News" />
+<meta property="og:title" content="Factorize — factorize" />
+<meta property="og:description" content="Coerce all columns in the object to factor (i.e. stringsAsFactors)." />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -56,7 +58,7 @@
   </head>
 
   <body>
-    <div class="container template-news-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -106,19 +108,62 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Release notes</h1>
+    <h1>Factorize</h1>
+    <small class="dont-index">Source: <a href='https://github.com/acidgenomics/pipette/blob/master/R/factorize-methods.R'><code>R/factorize-methods.R</code></a></small>
+    <div class="hidden name"><code>factorize.Rd</code></div>
     </div>
-    <ul>
-    <li><a href="news-0.4.html">Version 0.4</a></li>
-    <li><a href="news-0.3.html">Version 0.3</a></li>
-    <li><a href="news-0.2.html">Version 0.2</a></li>
-    <li><a href="news-0.1.html">Version 0.1</a></li>
+
+    <div class="ref-description">
+    <p>Coerce all columns in the object to <code>factor</code> (i.e. <code>stringsAsFactors</code>).</p>
+    </div>
+
+    <pre class="usage"><span class='fu'>factorize</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+
+<span class='co'># S4 method for DataFrame</span>
+<span class='fu'>factorize</span>(<span class='no'>object</span>)</pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>object</th>
+      <td><p>Object.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments.</p></td>
+    </tr>
+    </table>
+
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>Modified object.
+All columns will be coerced to <code>factor</code>.</p>
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>Updated 2019-07-19.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/acidgenerics/man/encode.html'>encode()</a></code> for run-length encoding (Rle) approach.</p></div>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>S4Vectors</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/S4Vectors/man/DataFrame-class.html'>DataFrame</a></span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='no'>letters</span>[<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span>(<span class='fl'>5L</span>)], <span class='kw'>b</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span>(<span class='fl'>5L</span>))
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>factorize</span>(<span class='no'>df</span>)</div></pre>
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#value">Value</a></li>
+      <li><a href="#note">Note</a></li>
+      <li><a href="#see-also">See also</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
+
   </div>
 </div>
-
 
 
       <footer>

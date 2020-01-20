@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Sanitize percentage — sanitizePercent • pipette</title>
+<title>Metadata — metadata2 • pipette</title>
 
 
 <!-- jquery -->
@@ -37,9 +37,9 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Sanitize percentage — sanitizePercent" />
-<meta property="og:description" content="Take a character vector of percentages (e.g. &quot;50%&quot;) and convert it to a
-numeric vector (e.g. 0.5)." />
+<meta property="og:title" content="Metadata — metadata2" />
+<meta property="og:description" content="Dynamically handles metadata assignment and extraction in a similar fashion
+for both S3 and S4 objects." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -111,30 +111,49 @@ numeric vector (e.g. 0.5)." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Sanitize percentage</h1>
-    <small class="dont-index">Source: <a href='https://github.com/acidgenomics/pipette/blob/master/R/sanitizePercent-methods.R'><code>R/sanitizePercent-methods.R</code></a></small>
-    <div class="hidden name"><code>sanitizePercent.Rd</code></div>
+    <h1>Metadata</h1>
+    <small class="dont-index">Source: <a href='https://github.com/acidgenomics/pipette/blob/master/R/metadata2-methods.R'><code>R/metadata2-methods.R</code></a></small>
+    <div class="hidden name"><code>metadata2.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Take a <code>character</code> vector of percentages (e.g. <code>"50%"</code>) and convert it to a
-<code>numeric</code> vector (e.g. <code>0.5</code>).</p>
+    <p>Dynamically handles metadata assignment and extraction in a similar fashion
+for both S3 and S4 objects.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>sanitizePercent</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>metadata2</span>(<span class='no'>x</span>, <span class='no'>which</span>, <span class='no'>...</span>)
 
-<span class='co'># S4 method for atomic</span>
-<span class='fu'>sanitizePercent</span>(<span class='no'>object</span>)
+<span class='fu'>metadata2</span>(<span class='no'>x</span>, <span class='no'>which</span>, <span class='no'>...</span>) <span class='kw'>&lt;-</span> <span class='no'>value</span>
 
-<span class='co'># S4 method for character</span>
-<span class='fu'>sanitizePercent</span>(<span class='no'>object</span>)</pre>
+<span class='co'># S4 method for ANY,character</span>
+<span class='fu'>metadata2</span>(<span class='no'>x</span>, <span class='no'>which</span>)
+
+<span class='co'># S4 method for Annotated,character</span>
+<span class='fu'>metadata2</span>(<span class='no'>x</span>, <span class='no'>which</span>)
+
+<span class='co'># S4 method for ANY,character</span>
+<span class='fu'>metadata2</span>(<span class='no'>x</span>, <span class='no'>which</span>) <span class='kw'>&lt;-</span> <span class='no'>value</span>
+
+<span class='co'># S4 method for Annotated,character</span>
+<span class='fu'>metadata2</span>(<span class='no'>x</span>, <span class='no'>which</span>) <span class='kw'>&lt;-</span> <span class='no'>value</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>object</th>
+      <th>x</th>
       <td><p>Object.</p></td>
+    </tr>
+    <tr>
+      <th>which</th>
+      <td><p><code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>.
+A non-empty character string specifying which attribute is to be accessed.
+Note that positional <code>numeric</code> arguments are currently not allowed.</p></td>
+    </tr>
+    <tr>
+      <th>value</th>
+      <td><p><code>ANY</code>.
+Metadata values to assign into slot, defined by <code>which</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -144,25 +163,42 @@ numeric vector (e.g. 0.5)." />
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Modified object.
-All percentage strings containing <code>"%"</code> (e.g. <code>"50%"</code>) are converted to
-numeric proportions (e.g. <code>0.5</code>).</p>
+    
+<ul>
+<li><p><code>metadata2()</code>: Metadata. Returns <code>NULL</code> on <code>which</code> match failure, similar
+to <code><a href='https://rdrr.io/r/base/attr.html'>attr()</a></code> and <code><a href='https://rdrr.io/pkg/S4Vectors/man/Annotated-class.html'>metadata()</a></code>.</p></li>
+<li><p><code>metadata2&lt;-()</code>: Modified object.</p></li>
+</ul>
+
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>Updated 2019-10-12.</p>
-    <h2 class="hasAnchor" id="intended-usage"><a class="anchor" href="#intended-usage"></a>Intended usage</h2>
+    <p>Updated 2020-01-18.</p>
+    <h2 class="hasAnchor" id="s-class"><a class="anchor" href="#s-class"></a>S3 class</h2>
 
     
 
 
+<p>Internally slots into <code><a href='https://rdrr.io/r/base/attributes.html'>attributes()</a></code>.
+Attribute is also accessible via <code><a href='https://rdrr.io/r/base/attr.html'>attr(object, which)</a></code>.</p>
+    <h2 class="hasAnchor" id="s-class"><a class="anchor" href="#s-class"></a>S4 class</h2>
 
-<p>This function is designed primarily to sanitize data imported from Microsoft
-Excel.</p>
+    
+
+
+<p>Requires that object extends <code><a href='https://rdrr.io/pkg/S4Vectors/man/Annotated-class.html'>Annotated</a></code> class,
+which supports <code><a href='https://rdrr.io/pkg/S4Vectors/man/Annotated-class.html'>metadata()</a></code>.</p>
+<p>Internally slots into <code><a href='https://rdrr.io/pkg/S4Vectors/man/Annotated-class.html'>metadata()</a></code>.
+Attribute is also accessible via <code>metadata(object)[[which]]</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>object</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"100%"</span>, <span class='st'>"10.0%"</span>, <span class='st'>"1%"</span>, <span class='st'>"0.1%"</span>, <span class='st'>"0.01%"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>object</span>)</div><div class='output co'>#&gt; [1] "character"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>object</span>)</div><div class='output co'>#&gt; [1] "100%"  "10.0%" "1%"    "0.1%"  "0.01%"</div><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>sanitizePercent</span>(<span class='no'>object</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] "numeric"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] 1e+00 1e-01 1e-02 1e-03 1e-04</div></pre>
+    <pre class="examples"><div class='input'><span class='co'>## S3 ====</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>()
+<span class='fu'>metadata2</span>(<span class='no'>x</span>, <span class='kw'>which</span> <span class='kw'>=</span> <span class='st'>"A"</span>) <span class='kw'>&lt;-</span> <span class='st'>"B"</span>
+<span class='fu'>metadata2</span>(<span class='no'>x</span>, <span class='kw'>which</span> <span class='kw'>=</span> <span class='st'>"A"</span>)</div><div class='output co'>#&gt; [1] "B"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span>(<span class='no'>x</span>, <span class='kw'>which</span> <span class='kw'>=</span> <span class='st'>"A"</span>)</div><div class='output co'>#&gt; [1] "B"</div><div class='input'>
+<span class='co'>## S4 (extending Annotated) ====</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>S4Vectors</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/S4Vectors/man/DataFrame-class.html'>DataFrame</a></span>()
+<span class='fu'>metadata2</span>(<span class='no'>x</span>, <span class='kw'>which</span> <span class='kw'>=</span> <span class='st'>"A"</span>) <span class='kw'>&lt;-</span> <span class='st'>"B"</span>
+<span class='fu'>metadata2</span>(<span class='no'>x</span>, <span class='kw'>which</span> <span class='kw'>=</span> <span class='st'>"A"</span>)</div><div class='output co'>#&gt; [1] "B"</div><div class='input'><span class='kw pkg'>S4Vectors</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/S4Vectors/man/Annotated-class.html'>metadata</a></span>(<span class='no'>x</span>)<span class='kw'>[[</span><span class='st'>"A"</span>]]</div><div class='output co'>#&gt; [1] "B"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -170,7 +206,8 @@ Excel.</p>
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
       <li><a href="#note">Note</a></li>
-      <li><a href="#intended-usage">Intended usage</a></li>
+      <li><a href="#s-class">S3 class</a></li>
+      <li><a href="#s-class">S4 class</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Objects exported from other packages — reexports • brio</title>
+<title>Coerce to list — coerceToList • pipette</title>
 
 
 <!-- jquery -->
@@ -37,19 +37,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Objects exported from other packages — reexports" />
-<meta property="og:description" content="These objects are imported from other packages. Follow the links
-below to see their documentation.
-
-  acidbasebasenameSansExt, compressExtPattern, extPattern, fileExt, initDir, pasteURL, realpath
-
-  R.utilsbunzip2, bzip2, compressFile, decompressFile, gunzip, gzip, isBzipped, isCompressedFile, isGzipped
-
-  RCurlgetURL
-
-  utilstar, untar, unzip, zip
-
-" />
+<meta property="og:title" content="Coerce to list — coerceToList" />
+<meta property="og:description" content="Coerce to list" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -81,8 +70,8 @@ below to see their documentation.
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">brio</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.17</span>
+        <a class="navbar-link" href="../index.html">pipette</a>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
       </span>
     </div>
 
@@ -103,7 +92,7 @@ below to see their documentation.
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/acidgenomics/brio">
+  <a href="https://github.com/acidgenomics/pipette">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -121,33 +110,68 @@ below to see their documentation.
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Objects exported from other packages</h1>
-    <small class="dont-index">Source: <a href='https://github.com/acidgenomics/brio/blob/master/R/reexports.R'><code>R/reexports.R</code></a></small>
-    <div class="hidden name"><code>reexports.Rd</code></div>
+    <h1>Coerce to list</h1>
+    <small class="dont-index">Source: <a href='https://github.com/acidgenomics/pipette/blob/master/R/coerce-list-methods.R'><code>R/coerce-list-methods.R</code></a></small>
+    <div class="hidden name"><code>coerce-list.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>These objects are imported from other packages. Follow the links
-below to see their documentation.</p>
-<dl class='dl-horizontal'>
-  <dt>acidbase</dt><dd><p><code><a href='https://rdrr.io/pkg/acidbase/man/basenameSansExt.html'>basenameSansExt</a></code>, <code><a href='https://rdrr.io/pkg/acidbase/man/extPattern.html'>compressExtPattern</a></code>, <code><a href='https://rdrr.io/pkg/acidbase/man/extPattern.html'>extPattern</a></code>, <code><a href='https://rdrr.io/pkg/acidbase/man/fileExt.html'>fileExt</a></code>, <code><a href='https://rdrr.io/pkg/acidbase/man/initDir.html'>initDir</a></code>, <code><a href='https://rdrr.io/pkg/acidbase/man/pasteURL.html'>pasteURL</a></code>, <code><a href='https://rdrr.io/pkg/acidbase/man/realpath.html'>realpath</a></code></p></dd>
-
-  <dt>R.utils</dt><dd><p><code><a href='https://rdrr.io/pkg/R.utils/man/compressFile.html'>bunzip2</a></code>, <code><a href='https://rdrr.io/pkg/R.utils/man/compressFile.html'>bzip2</a></code>, <code><a href='https://rdrr.io/pkg/R.utils/man/compressFile.html'>compressFile</a></code>, <code><a href='https://rdrr.io/pkg/R.utils/man/compressFile.html'>decompressFile</a></code>, <code><a href='https://rdrr.io/pkg/R.utils/man/compressFile.html'>gunzip</a></code>, <code><a href='https://rdrr.io/pkg/R.utils/man/compressFile.html'>gzip</a></code>, <code><a href='https://rdrr.io/pkg/R.utils/man/compressFile.html'>isBzipped</a></code>, <code><a href='https://rdrr.io/pkg/R.utils/man/compressFile.html'>isCompressedFile</a></code>, <code><a href='https://rdrr.io/pkg/R.utils/man/compressFile.html'>isGzipped</a></code></p></dd>
-
-  <dt>RCurl</dt><dd><p><code><a href='https://rdrr.io/pkg/RCurl/man/getURL.html'>getURL</a></code></p></dd>
-
-  <dt>utils</dt><dd><p><code><a href='https://rdrr.io/r/utils/tar.html'>tar</a></code>, <code><a href='https://rdrr.io/r/utils/untar.html'>untar</a></code>, <code><a href='https://rdrr.io/r/utils/unzip.html'>unzip</a></code>, <code><a href='https://rdrr.io/r/utils/zip.html'>zip</a></code></p></dd>
-
-</dl>
+    <p>Coerce to list</p>
     </div>
 
+    <pre class="usage"><span class='fu'>coerceToList</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
+<span class='co'># S4 method for Annotated</span>
+<span class='fu'>coerceToList</span>(<span class='no'>object</span>)</pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>object</th>
+      <td><p>Object.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments.</p></td>
+    </tr>
+    </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p><code>list</code>.</p>
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>Don't attempt to defined methods for <code>as.list</code>.</p>
+<p>Updated 2020-01-18.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Refer to the S4Vectors package for details.</p><ul>
+<li><p><code><a href='https://rdrr.io/r/utils/help.html'>help(topic = "Annotated-class", package = "S4Vectors")</a></code></p></li>
+<li><p><code><a href='https://rdrr.io/r/utils/help.html'>help(topic = "List-class", package = "S4Vectors")</a></code></p></li>
+<li><p><code>showClass("Annnotated")</code>.</p></li>
+<li><p><code>showClass("List")</code>.</p></li>
+<li><p><code><a href='https://rdrr.io/r/methods/setAs.html'>methods::coerce()</a></code>.</p></li>
+</ul>
+</div>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>RangedSummarizedExperiment</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"acidtest"</span>)
+
+<span class='co'>## SummarizedExperiment ====</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='no'>RangedSummarizedExperiment</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>coerceToList</span>(<span class='no'>x</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] "list"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] "rowRanges"       "colData"         "assays"          "NAMES"          
+#&gt; [5] "elementMetadata" "metadata"       </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#value">Value</a></li>
+      <li><a href="#note">Note</a></li>
+      <li><a href="#see-also">See also</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>

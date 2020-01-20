@@ -152,13 +152,11 @@ NULL
 formals(`export,character`)[
     c(
         "dir",
-        "ext",
         "overwrite",
         "quiet"
     )] <-
     formalsList[c(
         "export.dir",
-        "export.ext",
         "overwrite",
         "quiet"
     )]
@@ -394,7 +392,7 @@ setMethod(
 `export,sparseMatrix` <-  # nolint
     function(
         object,
-        ext,
+        ext = "mtx",
         dir,
         file = NULL,
         overwrite,
@@ -501,12 +499,10 @@ setMethod(
 formals(`export,sparseMatrix`)[
     c(
         "dir",
-        "ext",
         "overwrite",
         "quiet"
     )] <- formalsList[c(
         "export.dir",
-        "export.sparse.ext",
         "overwrite",
         "quiet"
     )]
