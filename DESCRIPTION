@@ -43,7 +43,7 @@ Imports:
     utils
 Suggests:
     acidroxygen (>= 0.1.5),
-    acidtest (>= 0.2.8),
+    acidtest (>= 0.2.9),
     gdata (>= 2.18),
     patrick (>= 0.0.1),
     pzfx (>= 0.2),
