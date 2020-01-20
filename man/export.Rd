@@ -2,6 +2,7 @@
 % Please edit documentation in R/export-methods.R
 \name{export}
 \alias{export}
+\alias{export,character-method}
 \alias{export,matrix-method}
 \alias{export,data.frame-method}
 \alias{export,DataFrame-method}
@@ -12,6 +13,15 @@
 \title{Export}
 \usage{
 export(object, ...)
+
+\S4method{export}{character}(
+  object,
+  ext = getOption("acid.export.ext", default = "csv"),
+  dir = getOption("acid.export.dir", default = "."),
+  file = NULL,
+  overwrite = getOption("acid.overwrite", default = TRUE),
+  quiet = getOption("acid.quiet", default = FALSE)
+)
 
 \S4method{export}{matrix}(
   object,
