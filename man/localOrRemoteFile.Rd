@@ -4,11 +4,14 @@
 \alias{localOrRemoteFile}
 \title{Dynamically handle a local or remote file path}
 \usage{
-localOrRemoteFile(file)
+localOrRemoteFile(file, quiet = getOption("acid.quiet", default = FALSE))
 }
 \arguments{
 \item{file}{\code{character(1)}.
 Local file paths or remote URLs.}
+
+\item{quiet}{\code{logical(1)}.
+Perform command quietly, suppressing messages.}
 }
 \value{
 \code{character}.
@@ -18,7 +21,7 @@ Local file path(s). Stops on a missing file.
 Dynamically handle a local or remote file path
 }
 \note{
-Updated 2019-10-18.
+Updated 2020-01-19.
 }
 \section{Vectorization}{
 
@@ -31,20 +34,27 @@ files are downloaded locally to a temporary directory.
 
 
 Compressed files will automatically be decompressed. Currently, these file
-extensions are natively supported: \code{BZ2}, \code{GZ}, \code{XZ}, \code{ZIP}.
+extensions are natively supported: \code{BZ2}, \code{GZ}, \code{XZ}, and \code{ZIP}.
 }
 
 \examples{
 ## Local
-file <- system.file("extdata/example.csv", package = "brio")
+file <- system.file("extdata/example.csv", package = "pipette")
 x <- localOrRemoteFile(file)
 basename(x)
 
 ## Remote
-file <- pasteURL(brioTestsURL, "hgnc.txt.gz", protocol = "none")
+file <- acidbase::pasteURL(
+    pipetteTestsURL,
+    "hgnc.txt.gz",
+    protocol = "none"
+)
 x <- localOrRemoteFile(file)
 basename(x)
 }
 \seealso{
-\code{\link[=tempdir]{tempdir()}}.
+\itemize{
+\item \code{\link[=tempfile]{tempfile()}}.
+\item \code{\link[=tempdir]{tempdir()}}.
+}
 }

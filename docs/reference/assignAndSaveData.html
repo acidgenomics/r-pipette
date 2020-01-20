@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Assign and save data — assignAndSaveData • brio</title>
+<title>Assign and save data — assignAndSaveData • pipette</title>
 
 
 <!-- jquery -->
@@ -71,8 +71,8 @@ the newly assigned object, specified by the &quot;dir&quot; argument." />
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">brio</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.17</span>
+        <a class="navbar-link" href="../index.html">pipette</a>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
       </span>
     </div>
 
@@ -93,7 +93,7 @@ the newly assigned object, specified by the &quot;dir&quot; argument." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/acidgenomics/brio">
+  <a href="https://github.com/acidgenomics/pipette">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -112,7 +112,7 @@ the newly assigned object, specified by the &quot;dir&quot; argument." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Assign and save data</h1>
-    <small class="dont-index">Source: <a href='https://github.com/acidgenomics/brio/blob/master/R/assignAndSaveData.R'><code>R/assignAndSaveData.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/acidgenomics/pipette/blob/master/R/assignAndSaveData.R'><code>R/assignAndSaveData.R</code></a></small>
     <div class="hidden name"><code>assignAndSaveData.Rd</code></div>
     </div>
 
@@ -126,7 +126,7 @@ the newly assigned object, specified by the <code>"dir"</code> argument.</p>
   <span class='no'>object</span>,
   <span class='kw'>envir</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sys.parent.html'>parent.frame</a></span>(),
   <span class='kw'>dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"acid.save.dir"</span>, <span class='kw'>default</span> <span class='kw'>=</span> <span class='st'>"."</span>),
-  <span class='kw'>ext</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"acid.save.ext"</span>, <span class='kw'>default</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"rds"</span>, <span class='st'>"rda"</span>)),
+  <span class='kw'>ext</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"acid.save.ext"</span>, <span class='kw'>default</span> <span class='kw'>=</span> <span class='st'>"rds"</span>),
   <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"acid.overwrite"</span>, <span class='kw'>default</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
   <span class='kw'>compress</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"acid.save.compress"</span>, <span class='kw'>default</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 )</pre>
@@ -157,8 +157,13 @@ Directory path.</p></td>
     <tr>
       <th>ext</th>
       <td><p><code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>.
-R data serialized (<code>RDS</code>) or R data (<code>RDA</code>, <code>RDATA</code>). RDS is
-preferred when saving single objects per file, which is always the
+Output file format extension.</p>
+<p>Supported arguments:</p><ul>
+<li><p><code>"rds"</code>: R data serialized (RDS).</p></li>
+<li><p><code>"rda"</code>: R data (RDA).</p></li>
+</ul>
+
+<p>RDS is preferred when saving single objects per file, which is always the
 convention of <code><a href='saveData.html'>saveData()</a></code>, regardless of the extension used.</p></td>
     </tr>
     <tr>
@@ -191,10 +196,11 @@ File path.</p>
     <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>x</span>,
     <span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>"."</span>,
     <span class='kw'>ext</span> <span class='kw'>=</span> <span class='st'>"rds"</span>
-)</div><div class='output co'>#&gt; <span class='message'>Saving 'example.rds' to '/home/mike/monorepo/r-packages/brio/docs/reference'.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/exists.html'>exists</a></span>(<span class='st'>"example"</span>, <span class='kw'>inherits</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/files.html'>file.exists</a></span>(<span class='st'>"example.rds"</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+)</div><div class='output co'>#&gt; <span class='message'>Saving <span style='color: #0000BB;'>'example.rds'</span><span> to</span>
+#&gt; <span class='message'></span><span style='color: #0000BB;'>/Users/mike/git/monorepo/r-packages/pipette/docs/reference</span><span>.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/exists.html'>exists</a></span>(<span class='st'>"example"</span>, <span class='kw'>inherits</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/files.html'>file.exists</a></span>(<span class='st'>"example.rds"</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='co'>## Clean up.</span>
 <span class='fu'><a href='https://rdrr.io/r/base/rm.html'>rm</a></span>(<span class='no'>example</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span>(<span class='st'>"example.rds"</span>)</div></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span>(<span class='st'>"example.rds"</span>)</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

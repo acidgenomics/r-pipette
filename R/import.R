@@ -99,7 +99,7 @@
 #' `DOC`, `DOCX`, `PDF`, `PPT`, `PPTX`.
 #'
 #' @export
-#' @note Updated 2020-01-10.
+#' @note Updated 2020-01-18.
 #'
 #' @inheritParams acidroxygen::params
 #' @param rownames `logical(1)`.
@@ -110,14 +110,14 @@
 #'   Applies to file types that return `data.frame` only.
 #'   Pass in a `character` vector to define the column names manually.
 #' @param format `character(1)`.
-#'   An optional file format code, which can be used to override the format
+#'   An optional file format type, which can be used to override the file format
 #'   inferred from `file`. *Not recommended by default.*
 #' @param sheet `character(1)` or `integer(1)`.
 #'   *Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.*
 #'   Sheet to read. Either a string (the name of a sheet), or an integer (the
 #'   position of the sheet). Defaults to the first sheet.
 #'
-#' @return Varies, depending on the file type.
+#' @return Varies, depending on the file type (format):
 #'
 #' - **Plain text delimited** (`CSV`, `TSV`, `TXT`): `data.frame`.\cr
 #'   Data separated by commas, tabs, or visual spaces.\cr
@@ -185,7 +185,7 @@
 #' - `utils::read.table()`.
 #'
 #' @examples
-#' file <- system.file("extdata/example.csv", package = "brio")
+#' file <- system.file("extdata/example.csv", package = "pipette")
 #'
 #' ## Row and column names enabled.
 #' x <- import(file)
@@ -200,7 +200,8 @@ import <- function(
     colnames = TRUE,
     format = "auto",
     sheet = 1L,
-    metadata
+    metadata,
+    quiet
 ) {
     ## We're supporting remote files, so don't check using `isAFile()` here.
     assert(
@@ -208,7 +209,8 @@ import <- function(
         isFlag(rownames),
         isFlag(colnames) || isCharacter(colnames),
         isScalar(sheet),
-        isFlag(metadata)
+        isFlag(metadata),
+        isFlag(quiet)
     )
     ## 2019-10-18: Default renamed from "none" to "auto".
     format <- match.arg(
@@ -220,7 +222,12 @@ import <- function(
     if (identical(format, "auto") || identical(format, "none")) {
         ext <- str_match(basename(file), extPattern)[1L, 2L]
         if (is.na(ext)) {
-            message("No file extension detected. Importing as lines.")
+            if (!isTRUE(quiet)) {
+                cli_alert_warning(paste(
+                    "No file extension detected.",
+                    "Importing as {.strong lines}."
+                ))
+            }
             ext <- "lines"
         }
     } else {
@@ -232,21 +239,24 @@ import <- function(
             file = file,
             colnames = colnames,
             ext = ext,
-            metadata = metadata
+            metadata = metadata,
+            quiet = quiet
         )
     } else if (identical(ext, "XLS")) {
         object <- .importXLS(
             file = file,
             sheet = sheet,
             colnames = colnames,
-            metadata = metadata
+            metadata = metadata,
+            quiet = quiet
         )
     } else if (isSubset(ext, c("XLSB", "XLSX"))) {
         object <- .importXLSX(
             file = file,
             sheet = sheet,
             colnames = colnames,
-            metadata = metadata
+            metadata = metadata,
+            quiet = quiet
         )
     } else if (identical(ext, "PZFX")) {
         ## GraphPad Prism project.
@@ -254,37 +264,58 @@ import <- function(
         object <- .importPZFX(
             file = file,
             sheet = sheet,
-            metadata = metadata
+            metadata = metadata,
+            quiet = quiet
         )
     } else if (identical(ext, "RDS")) {
-        object <- .importRDS(file = file)
+        object <- .importRDS(file = file, quiet = quiet)
     } else if (isSubset(ext, c("RDA", "RDATA"))) {
-        object <- .importRDA(file = file)
+        object <- .importRDA(file = file, quiet = quiet)
     } else if (identical(ext, "GMT")) {
-        object <- .importGMT(file = file)
+        object <- .importGMT(file = file, quiet = quiet)
     } else if (identical(ext, "GMX")) {
-        object <- .importGMX(file = file)
+        object <- .importGMX(file = file, quiet = quiet)
     } else if (identical(ext, "GRP")) {
-        object <- .importGRP(file = file)
+        object <- .importGRP(file = file, quiet = quiet)
     } else if (identical(ext, "JSON")) {
-        object <- .importJSON(file = file, metadata = metadata)
+        object <- .importJSON(
+            file = file,
+            metadata = metadata,
+            quiet = quiet
+        )
     } else if (isSubset(ext, c("YAML", "YML"))) {
-        object <- .importYAML(file = file, metadata = metadata)
+        object <- .importYAML(
+            file = file,
+            metadata = metadata,
+            quiet = quiet
+        )
     } else if (identical(ext, "MTX")) {
         ## We're always requiring row and column sidecar files for MTX.
-        object <- .importMTX(file = file, metadata = metadata)
+        object <- .importMTX(
+            file = file,
+            metadata = metadata,
+            quiet = quiet
+        )
     } else if (identical(ext, "COUNTS")) {
         ## bcbio counts format always contains row and column names.
-        object <- .importBcbioCounts(file = file, metadata = metadata)
+        object <- .importBcbioCounts(
+            file = file,
+            metadata = metadata,
+            quiet = quiet
+        )
     } else if (isSubset(ext, c("LINES", "LOG", "MD", "PY", "R", "RMD", "SH"))) {
-        object <- .importLines(file = file)
+        object <- .importLines(file = file, quiet = quiet)
     } else if (isSubset(ext, c(
         "BED", "BED15", "BEDGRAPH", "BEDPE",
         "BROADPEAK", "NARROWPEAK",
         "GFF", "GFF1", "GFF2", "GFF3", "GTF",
         "BIGWIG", "BW", "WIG"
     ))) {
-        object <- .rtracklayerImport(file = file, metadata = metadata)
+        object <- .rtracklayerImport(
+            file = file,
+            metadata = metadata,
+            quiet = quiet
+        )
     } else if (isSubset(ext, c(
         "ARFF",      # Weka Attribute-Relation File Format
         "DBF",       # dBase Database File
@@ -300,7 +331,11 @@ import <- function(
         "REC",       # Epi Info
         "XPT"        # SASS
     ))) {
-        object <- .rioImport(file = file, metadata = metadata)
+        object <- .rioImport(
+            file = file,
+            metadata = metadata,
+            quiet = quiet
+        )
     } else {
         stop(sprintf(
             "Import of '%s' failed. '%s' extension is not supported.",
@@ -311,26 +346,30 @@ import <- function(
     if (is.data.frame(object)) {
         ## Set row names automatically.
         if (isSubset("rowname", colnames(object))) {
-            message("Setting row names from 'rowname' column.")
+            if (!isTRUE(quiet)) {
+                cli_alert_info("Setting row names from {.var rowname} column.")
+            }
             rownames(object) <- object[["rowname"]]
             object[["rowname"]] <- NULL
         }
     }
     ## Check for syntactically valid names and inform the user, if necessary.
     if (
-        (hasNames(object) && !hasValidNames(object)) ||
-        (hasDimnames(object) && !hasValidDimnames(object))
+        (
+            (hasNames(object) && !hasValidNames(object)) ||
+            (hasDimnames(object) && !hasValidDimnames(object))
+        ) &&
+        !isTRUE(quiet)
     ) {
         ## nocov start
-        message(sprintf(
-            "'%s' does not contain syntactically valid names.",
+        cli_alert_warning(sprintf(
+            "{.file %s} does not contain syntactically valid names.",
             basename(file)
         ))
         ## nocov end
     }
     ## Inform the user when encountering duplicate names. This `tryCatch()` step
-    ## here helps suppress `validObject()` error for invalid
-    ## SummarizedExperiment objects.
+    ## here helps suppress `validObject()` error for invalid SE objects.
     names <- tryCatch(
         expr = names(object),
         error = function(e) e
@@ -368,12 +407,13 @@ import <- function(
     object
 }
 
-formals(import)[["metadata"]] <- .formalsList[["import.metadata"]]
+formals(import)[c("metadata", "quiet")] <-
+    formalsList[c("import.metadata", "quiet")]
 
 
 
 ## Add data provenance metadata.
-## Previously, "which" was defined as "brio", until v0.3.8.
+## Previously, "which" was defined as "pipette", until v0.3.8.
 ## Updated 2019-10-24.
 .slotImportMetadata <- function(object, file, pkg, fun) {
     assert(
@@ -382,8 +422,8 @@ formals(import)[["metadata"]] <- .formalsList[["import.metadata"]]
         isString(fun)
     )
     metadata2(object, which = "import") <- list(
-        package = "brio",
-        packageVersion = packageVersion("brio"),
+        package = "pipette",
+        packageVersion = packageVersion("pipette"),
         importer = paste0(pkg, "::", fun),
         importerVersion = packageVersion(pkg),
         file = if (isAFile(file)) {
@@ -402,29 +442,35 @@ formals(import)[["metadata"]] <- .formalsList[["import.metadata"]]
 ## Internal importer for a delimited file (e.g. `.csv`, `.tsv`).
 ## Calls `data.table::fread()` internally by default.
 ## Can override using `acid.import.engine` option, which also supports readr.
-## Updated 2020-01-10.
+## Updated 2020-01-18.
 .importDelim <- function(
     file,
     colnames,
     ext,
-    metadata
+    metadata,
+    quiet
 ) {
-    engine <- match.arg(
-        arg = getOption("acid.import.engine", default = "data.table"),
-        choices = c("data.table", "readr")
-    )
-    whatPkg <- engine
     verbose <- getOption("acid.verbose", default = FALSE)
     assert(
         isFlag(colnames) || isCharacter(colnames),
         isFlag(verbose),
-        isFlag(metadata)
+        isFlag(metadata),
+        isFlag(quiet)
     )
-    tmpfile <- localOrRemoteFile(file)
-    if (identical(engine, "data.table")) {
+    whatPkg <- match.arg(
+        arg = getOption("acid.import.engine", default = "data.table"),
+        choices = c("data.table", "readr", "vroom")
+    )
+    assert(requireNamespace(whatPkg, quietly = TRUE))
+    tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
+    if (identical(whatPkg, "data.table")) {
         ## data.table ----------------------------------------------------------
         whatFun <- "fread"
-        what <- fread
+        what <- get(
+            x = whatFun,
+            envir = asNamespace(whatPkg),
+            inherits = TRUE
+        )
         args <- list(
             file = tmpfile,
             blank.lines.skip = TRUE,
@@ -444,7 +490,7 @@ formals(import)[["metadata"]] <- .formalsList[["import.metadata"]]
         } else {
             args[["header"]] <- colnames
         }
-    } else if (identical(engine, "readr")) {
+    } else if (identical(whatPkg, "readr")) {
         ## readr ---------------------------------------------------------------
         whatFun <- switch(
             EXPR = ext,
@@ -452,7 +498,6 @@ formals(import)[["metadata"]] <- .formalsList[["import.metadata"]]
             "TSV" = "read_tsv",
             "TXT" = "read_delim"
         )
-        assert(requireNamespace(whatPkg, quietly = TRUE))
         what <- get(
             x = whatFun,
             envir = asNamespace(whatPkg),
@@ -462,17 +507,38 @@ formals(import)[["metadata"]] <- .formalsList[["import.metadata"]]
         args <- list(
             file = tmpfile,
             col_names = colnames,
+            col_types = readr::cols(),
             na = naStrings,
+            progress = FALSE,
             trim_ws = TRUE,
             skip = 0L,
-            progress = FALSE,
             skip_empty_rows = TRUE
         )
+    } else if (identical(whatPkg, "vroom")) {
+        ## vroom ---------------------------------------------------------------
+        whatFun <- "vroom"
+        what <- get(
+            x = whatFun,
+            envir = asNamespace(whatPkg),
+            inherits = TRUE
+        )
+        args <- list(
+            file = tmpfile,
+            col_names = colnames,
+            col_types = vroom::cols(),
+            na = naStrings,
+            progress = FALSE,
+            skip = 0L,
+            trim_ws = TRUE,
+            .name_repair = make.names  # or "universal"
+        )
     }
-    message(sprintf(
-        "Importing '%s' using '%s::%s()'.",
-        basename(file), whatPkg, whatFun
-    ))
+    if (!isTRUE(quiet)) {
+        cli_alert(sprintf(
+            "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
+            basename(file), whatPkg, whatFun
+        ))
+    }
     object <- do.call(what = what, args = args)
     assert(is.data.frame(object))
     if (!identical(class(object), "data.frame")) {
@@ -492,12 +558,16 @@ formals(import)[["metadata"]] <- .formalsList[["import.metadata"]]
 
 
 ## Internal importer for (source code) lines.
-.importLines <- function(file) {
-    tmpfile <- localOrRemoteFile(file)
-    message(sprintf(
-        "Importing '%s' using '%s::%s()'.",
-        basename(file), "base", "readLines"
-    ))
+## Updated 2020-01-17.
+.importLines <- function(file, quiet) {
+    assert(isFlag(quiet))
+    tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
+    if (!isTRUE(quiet)) {
+        cli_alert(sprintf(
+            "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
+            basename(file), "base", "readLines"
+        ))
+    }
     con <- file(tmpfile)
     object <- readLines(con = con)
     close(con)
@@ -508,12 +578,16 @@ formals(import)[["metadata"]] <- .formalsList[["import.metadata"]]
 
 ## R data ======================================================================
 ## Internal importer for an R data serialized file (`.rds`).
-.importRDS <- function(file) {
-    tmpfile <- localOrRemoteFile(file)
-    message(sprintf(
-        "Importing '%s' using '%s::%s()'.",
-        basename(file), "base", "readRDS"
-    ))
+## Updated 2020-01-17.
+.importRDS <- function(file, quiet) {
+    assert(isFlag(quiet))
+    tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
+    if (!isTRUE(quiet)) {
+        cli_alert(sprintf(
+            "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
+            basename(file), "base", "readRDS"
+        ))
+    }
     object <- readRDS(file = tmpfile)
     object
 }
@@ -521,12 +595,16 @@ formals(import)[["metadata"]] <- .formalsList[["import.metadata"]]
 
 
 ## Internal importer for an R data file (`.rda`).
-.importRDA <- function(file) {
-    tmpfile <- localOrRemoteFile(file)
-    message(sprintf(
-        "Importing '%s' using '%s::%s()'.",
-        basename(file), "base", "load"
-    ))
+## Updated 2020-01-17.
+.importRDA <- function(file, quiet) {
+    assert(isFlag(quiet))
+    tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
+    if (!isTRUE(quiet)) {
+        cli_alert(sprintf(
+            "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
+            basename(file), "base", "load"
+        ))
+    }
     safe <- new.env()
     object <- load(file = tmpfile, envir = safe)
     if (length(safe) != 1L) {
@@ -540,36 +618,43 @@ formals(import)[["metadata"]] <- .formalsList[["import.metadata"]]
 
 ## Sparse matrix ===============================================================
 ## Internal importer for a sparse matrix file (`.mtx`).
-## Updated 2020-01-10.
-.importMTX <- function(file, metadata) {
-    assert(isFlag(metadata))
-    tmpfile <- localOrRemoteFile(file)
-    message(sprintf(
-        "Importing '%s' using '%s::%s()'.",
-        basename(file), "Matrix", "readMM"
-    ))
+## Updated 2020-01-17.
+.importMTX <- function(file, metadata, quiet) {
+    assert(
+        isFlag(metadata),
+        isFlag(quiet)
+    )
+    tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
+    if (!isTRUE(quiet)) {
+        cli_alert(sprintf(
+            "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
+            basename(file), "Matrix", "readMM"
+        ))
+    }
     object <- readMM(file = tmpfile)
     ## Add the rownames automatically using `.rownames` sidecar file.
     rownamesFile <- paste(file, "rownames", sep = ".")
     rownamesFile <- tryCatch(
-        expr = localOrRemoteFile(rownamesFile),
+        expr = localOrRemoteFile(file = rownamesFile, quiet = quiet),
         error = function(e) {
             NULL  # nocov
         }
     )
     if (!is.null(rownamesFile)) {
-        rownames(object) <- .importMTXSidecar(rownamesFile)
+        rownames(object) <-
+            .importMTXSidecar(file = rownamesFile, quiet = quiet)
     }
     ## Add the colnames automatically using `.colnames` sidecar file.
     colnamesFile <- paste(file, "colnames", sep = ".")
     colnamesFile <- tryCatch(
-        expr = localOrRemoteFile(colnamesFile),
+        expr = localOrRemoteFile(file = colnamesFile, quiet = quiet),
         error = function(e) {
             NULL  # nocov
         }
     )
     if (!is.null(colnamesFile)) {
-        colnames(object) <- .importMTXSidecar(colnamesFile)
+        colnames(object) <-
+            .importMTXSidecar(file = colnamesFile, quiet = quiet)
     }
     if (isTRUE(metadata)) {
         object <- .slotImportMetadata(
@@ -585,23 +670,32 @@ formals(import)[["metadata"]] <- .formalsList[["import.metadata"]]
 
 
 ## Internal importer for a sparse matrix sidecar file (e.g. `.rownames`).
-.importMTXSidecar <- function(file) {
-    message(sprintf("Importing sidecar '%s'.", basename(file)))
-    .importLines(file)
+## Updated 2020-01-17.
+.importMTXSidecar <- function(file, quiet) {
+    assert(isFlag(quiet))
+    if (!isTRUE(quiet)) {
+        cli_alert(sprintf("Importing sidecar {.file %s}.", basename(file)))
+    }
+    .importLines(file = file, quiet = quiet)
 }
 
 
 
 ## List ========================================================================
 ## Internal importer for a JSON file (`.json`).
-## Updated 2020-01-10.
-.importJSON <- function(file, metadata) {
-    assert(isFlag(metadata))
-    tmpfile <- localOrRemoteFile(file)
-    message(sprintf(
-        "Importing '%s' using '%s::%s()'.",
-        basename(file), "jsonlite", "read_json"
-    ))
+## Updated 2020-01-17.
+.importJSON <- function(file, metadata, quiet) {
+    assert(
+        isFlag(metadata),
+        isFlag(quiet)
+    )
+    tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
+    if (!isTRUE(quiet)) {
+        cli_alert(sprintf(
+            "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
+            basename(file), "jsonlite", "read_json"
+        ))
+    }
     assert(requireNamespace("jsonlite", quietly = TRUE))
     object <- jsonlite::read_json(path = tmpfile)
     if (isTRUE(metadata)) {
@@ -618,14 +712,19 @@ formals(import)[["metadata"]] <- .formalsList[["import.metadata"]]
 
 
 ## Internal importer for a YAML file (`.yaml`, `.yml`).
-## Updated 2020-01-10.
-.importYAML <- function(file, metadata) {
-    assert(isFlag(metadata))
-    tmpfile <- localOrRemoteFile(file)
-    message(sprintf(
-        "Importing '%s' using '%s::%s()'.",
-        basename(file), "yaml", "yaml.load_file"
-    ))
+## Updated 2020-01-17.
+.importYAML <- function(file, metadata, quiet) {
+    assert(
+        isFlag(metadata),
+        isFlag(quiet)
+    )
+    tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
+    if (!isTRUE(quiet)) {
+        cli_alert(sprintf(
+            "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
+            basename(file), "yaml", "yaml.load_file"
+        ))
+    }
     assert(requireNamespace("yaml", quietly = TRUE))
     object <- yaml::yaml.load_file(input = tmpfile)
     if (isTRUE(metadata)) {
@@ -644,9 +743,12 @@ formals(import)[["metadata"]] <- .formalsList[["import.metadata"]]
 ## GSEA ========================================================================
 ## Internal importer for a gene matrix transposed file (`.gmt`).
 ## See also `fgsea::gmtPathways()`.
-.importGMT <- function(file) {
-    message(sprintf("Importing '%s'.", basename(file)))
-    lines <- .importLines(file)
+.importGMT <- function(file, quiet) {
+    assert(isFlag(quiet))
+    if (!isTRUE(quiet)) {
+        cli_alert(sprintf("Importing {.file %s}.", basename(file)))
+    }
+    lines <- .importLines(file = file, quiet = quiet)
     lines <- strsplit(lines, split = "\t")
     pathways <- lapply(lines, tail, n = -2L)
     names(pathways) <- vapply(
@@ -661,9 +763,12 @@ formals(import)[["metadata"]] <- .formalsList[["import.metadata"]]
 
 
 ## Internal importer for a gene matrix file (`.gmx`).
-.importGMX <- function(file) {
-    message(sprintf("Importing '%s'.", basename(file)))
-    lines <- .importLines(file)
+.importGMX <- function(file, quiet) {
+    assert(isFlag(quiet))
+    if (!isTRUE(quiet)) {
+        cli_alert(sprintf("Importing {.file %s}.", basename(file)))
+    }
+    lines <- .importLines(file = file, quiet = quiet)
     pathways <- list(tail(lines, n = -2L))
     names(pathways) <- lines[[1L]]
     pathways
@@ -681,23 +786,27 @@ formals(import)[["metadata"]] <- .formalsList[["import.metadata"]]
 ## lines removal, so ensure that is fixed downstream.
 
 ## Internal importer for a Microsoft Excel worksheet (`.xlsx`).
-## Updated 2020-01-10.
+## Updated 2020-01-17.
 .importXLSX <- function(
     file,
     sheet,
     colnames,
-    metadata
+    metadata,
+    quiet
 ) {
     assert(
         isScalar(sheet),
         isFlag(colnames) || isCharacter(colnames),
-        isFlag(metadata)
+        isFlag(metadata),
+        isFlag(quiet)
     )
-    tmpfile <- localOrRemoteFile(file)
-    message(sprintf(
-        "Importing '%s' using '%s::%s()'.",
-        basename(file), "readxl", "read_excel"
-    ))
+    tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
+    if (!isTRUE(quiet)) {
+        cli_alert(sprintf(
+            "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
+            basename(file), "readxl", "read_excel"
+        ))
+    }
     assert(requireNamespace("readxl", quietly = TRUE))
     object <- readxl::read_excel(
         path = tmpfile,
@@ -737,23 +846,27 @@ formals(import)[["metadata"]] <- .formalsList[["import.metadata"]]
 ## In the meantime, load using gdata, which is slower but does work.
 
 ## Internal importer for a legacy Microsoft Excel worksheet (`.xls`).
-## Updated 2020-01-10.
+## Updated 2020-01-17.
 .importXLS <- function(
     file,
     sheet,
     colnames,
-    metadata
+    metadata,
+    quiet
 ) {
     assert(
         isScalar(sheet),
         isFlag(colnames) || isCharacter(colnames),
-        isFlag(metadata)
+        isFlag(metadata),
+        isFlag(quiet)
     )
-    tmpfile <- localOrRemoteFile(file)
-    message(sprintf(
-        "Importing '%s' using '%s::%s()'.",
-        basename(file), "gdata", "read.xls"
-    ))
+    tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
+    if (!isTRUE(quiet)) {
+        cli_alert(sprintf(
+            "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
+            basename(file), "gdata", "read.xls"
+        ))
+    }
     assert(requireNamespace("gdata", quietly = TRUE))
     if (isCharacter(colnames)) {
         header <- FALSE
@@ -803,21 +916,25 @@ formals(import)[["metadata"]] <- .formalsList[["import.metadata"]]
 ## GraphPad Prism ==============================================================
 ## Internal importer for a GraphPad Prism file (`.pzfx`).
 ## Note that this function doesn't support optional column names.
-## Updated 2020-01-10.
+## Updated 2020-01-17.
 .importPZFX <- function(
     file,
     sheet,
-    metadata
+    metadata,
+    quiet
 ) {
     assert(
         isScalar(sheet),
-        isFlag(metadata)
+        isFlag(metadata),
+        isFlag(quiet)
     )
-    tmpfile <- localOrRemoteFile(file)
-    message(sprintf(
-        "Importing '%s' using '%s::%s()'.",
-        basename(file), "pzfx", "read_pzfx"
-    ))
+    tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
+    if (!isTRUE(quiet)) {
+        cli_alert(sprintf(
+            "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
+            basename(file), "pzfx", "read_pzfx"
+        ))
+    }
     assert(requireNamespace("pzfx", quietly = TRUE))
     object <- pzfx::read_pzfx(
         path = tmpfile,
@@ -839,18 +956,20 @@ formals(import)[["metadata"]] <- .formalsList[["import.metadata"]]
 ## bcbio =======================================================================
 ## Internal importer for a bcbio count matrix file (`.counts`).
 ## These files contain an `"id"` column that we need to coerce to row names.
-## Updated 2020-01-10.
-.importBcbioCounts <- function(file, metadata) {
-    assert(isFlag(metadata))
-    message(sprintf(
-        "Importing '%s' using '%s::%s()'.",
-        basename(file), "data.table", "fread"
-    ))
-    tmpfile <- localOrRemoteFile(file)
-    object <- fread(
-        file = tmpfile,
-        na.strings = naStrings
+## Updated 2020-01-17.
+.importBcbioCounts <- function(file, metadata, quiet) {
+    assert(
+        isFlag(metadata),
+        isFlag(quiet)
     )
+    if (!isTRUE(quiet)) {
+        cli_alert(sprintf(
+            "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
+            basename(file), "data.table", "fread"
+        ))
+    }
+    tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
+    object <- fread(file = tmpfile, na.strings = naStrings)
     assert(
         isSubset("id", colnames(object)),
         hasNoDuplicates(object[["id"]])
@@ -874,13 +993,19 @@ formals(import)[["metadata"]] <- .formalsList[["import.metadata"]]
 
 
 ## Handoff =====================================================================
-## Updated 2020-01-10.
-.rioImport <- function(file, metadata, ...) {
-    assert(isFlag(metadata))
-    tmpfile <- localOrRemoteFile(file)
-    message(sprintf("Importing '%s' using '%s::%s()'.",
-        basename(file), "rio", "import"
-    ))
+## Updated 2020-01-17.
+.rioImport <- function(file, metadata, quiet, ...) {
+    assert(
+        isFlag(metadata),
+        isFlag(quiet)
+    )
+    tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
+    if (!isTRUE(quiet)) {
+        cli_alert(sprintf(
+            "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
+            basename(file), "rio", "import"
+        ))
+    }
     assert(requireNamespace("rio", quietly = TRUE))
     object <- rio::import(file = tmpfile, ...)
     if (isTRUE(metadata)) {
@@ -897,14 +1022,19 @@ formals(import)[["metadata"]] <- .formalsList[["import.metadata"]]
 
 
 ## Using `tryCatch()` here to error if there are any warnings.
-## Updated 2020-01-10.
-.rtracklayerImport <- function(file, metadata, ...) {
-    assert(isFlag(metadata))
-    tmpfile <- localOrRemoteFile(file)
-    message(sprintf(
-        "Importing '%s' using '%s::%s()'.",
-        basename(file), "rtracklayer", "import"
-    ))
+## Updated 2020-01-17.
+.rtracklayerImport <- function(file, metadata, quiet, ...) {
+    assert(
+        isFlag(metadata),
+        isFlag(quiet)
+    )
+    tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
+    if (!isTRUE(quiet)) {
+        cli_alert(sprintf(
+            "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
+            basename(file), "rtracklayer", "import"
+        ))
+    }
     assert(requireNamespace("rtracklayer", quietly = TRUE))
     object <- tryCatch(
         expr = rtracklayer::import(con = tmpfile, ...),

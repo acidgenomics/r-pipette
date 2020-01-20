@@ -9,7 +9,7 @@ assignAndSaveData(
   object,
   envir = parent.frame(),
   dir = getOption("acid.save.dir", default = "."),
-  ext = getOption("acid.save.ext", default = c("rds", "rda")),
+  ext = getOption("acid.save.ext", default = "rds"),
   overwrite = getOption("acid.overwrite", default = TRUE),
   compress = getOption("acid.save.compress", default = TRUE)
 )
@@ -28,8 +28,15 @@ Defaults to \code{\link[=parent.frame]{parent.frame()}}, the calling environment
 Directory path.}
 
 \item{ext}{\code{character(1)}.
-R data serialized (\code{RDS}) or R data (\code{RDA}, \code{RDATA}). RDS is
-preferred when saving single objects per file, which is always the
+Output file format extension.
+
+Supported arguments:
+\itemize{
+\item \code{"rds"}: R data serialized (RDS).
+\item \code{"rda"}: R data (RDA).
+}
+
+RDS is preferred when saving single objects per file, which is always the
 convention of \code{\link[=saveData]{saveData()}}, regardless of the extension used.}
 
 \item{overwrite}{\code{logical(1)}.

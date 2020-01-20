@@ -1,6 +1,9 @@
 # https://docs.travis-ci.com/user/languages/minimal-and-generic/
 language: minimal
 
+env:
+  - RCHECK_KEEP_IT_100=1
+
 services:
   - docker
 

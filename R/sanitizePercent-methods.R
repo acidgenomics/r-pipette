@@ -1,5 +1,5 @@
 #' @name sanitizePercent
-#' @inherit bioverbs::sanitizePercent
+#' @inherit acidgenerics::sanitizePercent
 #' @note Updated 2019-10-12.
 #'
 #' @inheritParams acidroxygen::params
@@ -18,7 +18,7 @@ NULL
 
 #' @rdname sanitizePercent
 #' @name sanitizePercent
-#' @importFrom bioverbs sanitizePercent
+#' @importFrom acidgenerics sanitizePercent
 #' @usage sanitizePercent(object, ...)
 #' @export
 NULL
