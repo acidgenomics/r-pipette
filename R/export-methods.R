@@ -113,7 +113,7 @@ NULL
         compress <- !is.na(compressExt)
         ## Inform the user regarding overwrite.
         if (isAFile(file)) {
-            if (isTRUE(overwrite)) {
+            if (isTRUE(overwrite) && !isTRUE(quiet)) {
                 cli_alert_warning(
                     sprintf("Overwriting {.file %s}.", basename(file))
                 )
@@ -236,7 +236,7 @@ setMethod(
         }
         ## Inform the user regarding overwrite.
         if (isAFile(file)) {
-            if (isTRUE(overwrite)) {
+            if (isTRUE(overwrite) && !isTRUE(quiet)) {
                 cli_alert_warning(
                     sprintf("Overwriting {.file %s}.", basename(file))
                 )
@@ -391,7 +391,8 @@ setMethod(
         ext,
         dir,
         file = NULL,
-        overwrite
+        overwrite,
+        quiet
     ) {
         validObject(object)
         assert(
@@ -399,7 +400,8 @@ setMethod(
             isString(ext),
             isString(dir),
             isString(file, nullOK = TRUE),
-            isFlag(overwrite)
+            isFlag(overwrite),
+            isFlag(quiet)
         )
         if (is.null(file)) {
             call <- standardizeCall()
@@ -425,7 +427,7 @@ setMethod(
         compress <- !is.na(compressExt)
         ## Inform the user regarding overwrite.
         if (isAFile(file)) {
-            if (isTRUE(overwrite)) {
+            if (isTRUE(overwrite) && !isTRUE(quiet)) {
                 cli_alert_warning(
                     sprintf("Overwriting {.file %s}.", basename(file))
                 )
@@ -494,11 +496,13 @@ formals(`export,sparseMatrix`)[
     c(
         "dir",
         "ext",
-        "overwrite"
+        "overwrite",
+        "quiet"
     )] <- formalsList[c(
         "export.dir",
         "export.sparse.ext",
-        "overwrite"
+        "overwrite",
+        "quiet"
     )]
 
 
