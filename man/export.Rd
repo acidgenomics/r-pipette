@@ -80,7 +80,9 @@ export(object, ...)
   object,
   name = NULL,
   dir = getOption("acid.export.dir", default = "."),
-  compress = getOption("acid.export.compress", default = FALSE)
+  compress = getOption("acid.export.compress", default = FALSE),
+  overwrite = getOption("acid.overwrite", default = TRUE),
+  quiet = getOption("acid.quiet", default = FALSE)
 )
 }
 \arguments{
