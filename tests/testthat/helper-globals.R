@@ -22,6 +22,7 @@ tbl <- tbl_df
 DataFrame <- S4Vectors::DataFrame
 assay <- SummarizedExperiment::assay
 assayNames <- SummarizedExperiment::assayNames
+assays <- SummarizedExperiment::assays
 `assays<-` <- SummarizedExperiment::`assays<-`
 hasInternet <- goalie::hasInternet
 mcols <- S4Vectors::mcols
