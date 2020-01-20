@@ -1,8 +1,3 @@
-## FIXME Need to simplify handoff to compress functions here.
-## FIXME Need to support gz, bz2, xz, and zip for all file formats.
-
-
-
 #' @name export
 #' @inherit acidgenerics::export
 #' @note Updated 2020-01-19.
@@ -532,10 +527,18 @@ setMethod(
 
 
 
-## FIXME Rework `compress` argument handling here.
-## Updated 2020-01-17.
+## Updated 2020-01-19.
 .exportAssays <-  # nolint
-    function(object, name, dir, compress) {
+    function(object, name, dir, compress, overwrite, quiet) {
+        validObject(object)
+        assert(
+            is(object, "SummarizedExperiment"),
+            isString(name),
+            isString(dir),
+            isFlag(compress),
+            isFlag(overwrite),
+            isFlag(quiet)
+        )
         assayNames <- assayNames(object)
         assert(isCharacter(assayNames))
         cli_alert(sprintf("Exporting assays: {.var %s}.", toString(assayNames)))
@@ -543,7 +546,7 @@ setMethod(
             X = assayNames,
             FUN = function(name, dir) {
                 file <- file.path(dir, name)
-                assay <- assays(object)[[name]]
+                assay <- assay(x = object, i = name)
                 ## Dynamically set the file name based on the assay type.
                 if (is(assay, "sparseMatrix")) {
                     ext <- "mtx"
@@ -554,7 +557,12 @@ setMethod(
                     ext <- paste0(ext, ".gz")
                 }
                 file <- paste0(file, ".", ext)
-                export(assay, file = file)
+                export(
+                    object = assay,
+                    file = file,
+                    overwrite = overwrite,
+                    quiet = quiet
+                )
             },
             dir = initDir(file.path(dir, "assays"))
         )
@@ -564,12 +572,22 @@ setMethod(
 
 
 
-## Updated 2019-07-19.
+## Updated 2020-01-19.
 .exportColData <-  # nolint
-    function(object, ext, dir) {
+    function(object, ext, dir, overwrite, quiet) {
+        validObject(object)
+        assert(
+            is(object, "SummarizedExperiment"),
+            isString(ext),
+            isString(dir),
+            isFlag(overwrite),
+            isFlag(quiet)
+        )
         export(
             object = atomize(colData(object)),
-            file = file.path(dir, paste0("colData", ext))
+            file = file.path(dir, paste0("colData", ext)),
+            overwrite = overwrite,
+            quiet = quiet
         )
     }
 
@@ -577,9 +595,17 @@ setMethod(
 
 ## NOTE: The standard `rowData()` output is okay but doesn't include genomic
 ## ranges coordinates. That's why we're coercing from `rowRanges()` for RSE.
-## Updated 2019-07-19.
+## Updated 2020-01-19.
 .exportRowData <-  # nolint
-    function(object, ext, dir) {
+    function(object, ext, dir, overwrite, quiet) {
+        validObject(object)
+        assert(
+            is(object, "SummarizedExperiment"),
+            isString(ext),
+            isString(dir),
+            isFlag(overwrite),
+            isFlag(quiet)
+        )
         data <- rowData(object)
         ## Note that SummarizedExperiment in BioC 3.6/R 3.4 release doesn't
         ## set row names properly, so keep this step here for compatibility.
@@ -589,35 +615,39 @@ setMethod(
         data <- atomize(data)
         data <- as.data.frame(data)
         assert(identical(rownames(data), rownames(object)))
-        export(object = data, file = file.path(dir, paste0("rowData", ext)))
+        export(
+            object = data,
+            file = file.path(dir, paste0("rowData", ext)),
+            overwrite = overwrite,
+            quiet = quiet
+        )
     }
 
 
 
-## Updated 2019-08-27.
+## Updated 2020-01-19.
 `export,SummarizedExperiment` <-  # nolint
     function(
         object,
         name = NULL,
         dir,
-        compress
+        compress,
+        overwrite,
+        quiet
     ) {
         validObject(object)
         assert(
             isString(name, nullOK = TRUE),
             isString(dir),
-            isFlag(compress)
+            isFlag(compress),
+            isFlag(overwrite),
+            isFlag(quiet)
         )
         call <- standardizeCall()
         ## Get the name and create directory substructure.
         if (is.null(name)) {
             sym <- call[["object"]]
-            if (!is.symbol(sym)) {
-                stop(sprintf(
-                    "'export()' object argument is not a symbol: %s.",
-                    deparse(sym)
-                ))
-            }
+            assert(is.symbol(sym))
             name <- as.character(sym)
         }
         dir <- initDir(file.path(dir, name))
@@ -643,21 +673,27 @@ setMethod(
                 object = object,
                 name = name,
                 dir = dir,
-                compress = compress
+                compress = compress,
+                overwrite = overwrite,
+                quiet = quiet
             )
         ## Column data.
         files[["colData"]] <-
             .exportColData(
                 object = object,
                 ext = ext,
-                dir = dir
+                dir = dir,
+                overwrite = overwrite,
+                quiet = quiet
             )
         ## Row data.
         files[["rowData"]] <-
             .exportRowData(
                 object = object,
                 ext = ext,
-                dir = dir
+                dir = dir,
+                overwrite = overwrite,
+                quiet = quiet
             )
         cli_alert(sprintf("Exported {.envvar %s} to {.path %s}.", name, dir))
         ## Return named character of file paths.
@@ -669,10 +705,14 @@ setMethod(
 formals(`export,SummarizedExperiment`)[
     c(
         "compress",
-        "dir"
+        "dir",
+        "overwrite",
+        "quiet"
     )] <- formalsList[c(
         "export.compress",
-        "export.dir"
+        "export.dir",
+        "overwrite",
+        "quiet"
     )]
 
 
