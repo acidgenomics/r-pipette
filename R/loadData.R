@@ -18,7 +18,7 @@
 #' @export
 #' @note This function is desired for interactive use and interprets object
 #'   names using non-standard evaluation.
-#' @note Updated 2019-10-12.
+#' @note Updated 2020-01-19.
 #'
 #' @inheritParams acidroxygen::params
 #' @param ... Object names.
@@ -36,7 +36,7 @@
 #' - [`readRDS()`][base::readRDS].
 #'
 #' @examples
-#' dir <- system.file("extdata", package = "brio")
+#' dir <- system.file("extdata", package = "pipette")
 #'
 #' ## Interactive mode ====
 #' ## Note that this method uses non-standard evaluation.
@@ -95,7 +95,7 @@ loadData <- function(
     } else {
         stop(sprintf(
             fmt = paste(
-                "File extension error: %s.",
+                "File extension error: '%s'.",
                 "Don't mix RDS, RDA, and/or RDATA files in a directory.",
                 sep = "\n"
             ),
@@ -112,8 +112,8 @@ loadData <- function(
     invisible(files)
 }
 
-formals(loadData)[["dir"]] <- .formalsList[["load.dir"]]
-formals(loadData)[["overwrite"]] <- .formalsList[["overwrite"]]
+formals(loadData)[c("dir", "overwrite")] <-
+    formalsList[c("load.dir", "overwrite")]
 
 
 
@@ -156,8 +156,8 @@ formals(loadData)[["overwrite"]] <- .formalsList[["overwrite"]]
         FUN.VALUE = character(1L),
         USE.NAMES = TRUE
     )
-    message(sprintf(
-        "Loading %s from '%s'.",
+    cli_text(sprintf(
+        "Loading {.file %s} from {.path %s}.",
         toString(
             paste0("'", basename(files), "'"),
             width = 200L

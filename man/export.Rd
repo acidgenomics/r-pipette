@@ -2,73 +2,88 @@
 % Please edit documentation in R/export-methods.R
 \name{export}
 \alias{export}
+\alias{export,character-method}
 \alias{export,matrix-method}
 \alias{export,data.frame-method}
 \alias{export,DataFrame-method}
 \alias{export,sparseMatrix-method}
-\alias{export,GRanges-method}
+\alias{export,GenomicRanges-method}
 \alias{export,SummarizedExperiment-method}
 \alias{export,SingleCellExperiment-method}
 \title{Export}
 \usage{
 export(object, ...)
 
-\S4method{export}{matrix}(
+\S4method{export}{character}(
   object,
-  ext = getOption("acid.export.ext", default = c("csv", "csv.gz", "csv.bz2", "tsv",
-    "tsv.gz", "tsv.bz2")),
+  ext = "txt",
   dir = getOption("acid.export.dir", default = "."),
   file = NULL,
-  overwrite = getOption("acid.overwrite", default = TRUE)
+  overwrite = getOption("acid.overwrite", default = TRUE),
+  quiet = getOption("acid.quiet", default = FALSE)
+)
+
+\S4method{export}{matrix}(
+  object,
+  ext = getOption("acid.export.ext", default = "csv"),
+  dir = getOption("acid.export.dir", default = "."),
+  file = NULL,
+  overwrite = getOption("acid.overwrite", default = TRUE),
+  quiet = getOption("acid.quiet", default = FALSE)
 )
 
 \S4method{export}{data.frame}(
   object,
-  ext = getOption("acid.export.ext", default = c("csv", "csv.gz", "csv.bz2", "tsv",
-    "tsv.gz", "tsv.bz2")),
+  ext = getOption("acid.export.ext", default = "csv"),
   dir = getOption("acid.export.dir", default = "."),
   file = NULL,
-  overwrite = getOption("acid.overwrite", default = TRUE)
+  overwrite = getOption("acid.overwrite", default = TRUE),
+  quiet = getOption("acid.quiet", default = FALSE)
 )
 
 \S4method{export}{DataFrame}(
   object,
-  ext = getOption("acid.export.ext", default = c("csv", "csv.gz", "csv.bz2", "tsv",
-    "tsv.gz", "tsv.bz2")),
+  ext = getOption("acid.export.ext", default = "csv"),
   dir = getOption("acid.export.dir", default = "."),
   file = NULL,
-  overwrite = getOption("acid.overwrite", default = TRUE)
+  overwrite = getOption("acid.overwrite", default = TRUE),
+  quiet = getOption("acid.quiet", default = FALSE)
 )
 
 \S4method{export}{sparseMatrix}(
   object,
-  ext = getOption("acid.export.sparse.ext", default = c("mtx", "mtx.gz", "mtx.bz2")),
+  ext = "mtx",
   dir = getOption("acid.export.dir", default = "."),
   file = NULL,
-  overwrite = getOption("acid.overwrite", default = TRUE)
+  overwrite = getOption("acid.overwrite", default = TRUE),
+  quiet = getOption("acid.quiet", default = FALSE)
 )
 
-\S4method{export}{GRanges}(
+\S4method{export}{GenomicRanges}(
   object,
-  ext = getOption("acid.export.ext", default = c("csv", "csv.gz", "csv.bz2", "tsv",
-    "tsv.gz", "tsv.bz2")),
+  ext = getOption("acid.export.ext", default = "csv"),
   dir = getOption("acid.export.dir", default = "."),
   file = NULL,
-  overwrite = getOption("acid.overwrite", default = TRUE)
+  overwrite = getOption("acid.overwrite", default = TRUE),
+  quiet = getOption("acid.quiet", default = FALSE)
 )
 
 \S4method{export}{SummarizedExperiment}(
   object,
   name = NULL,
   dir = getOption("acid.export.dir", default = "."),
-  compress = getOption("acid.export.compress", default = FALSE)
+  compress = getOption("acid.export.compress", default = FALSE),
+  overwrite = getOption("acid.overwrite", default = TRUE),
+  quiet = getOption("acid.quiet", default = FALSE)
 )
 
 \S4method{export}{SingleCellExperiment}(
   object,
   name = NULL,
   dir = getOption("acid.export.dir", default = "."),
-  compress = getOption("acid.export.compress", default = FALSE)
+  compress = getOption("acid.export.compress", default = FALSE),
+  overwrite = getOption("acid.overwrite", default = TRUE),
+  quiet = getOption("acid.quiet", default = FALSE)
 )
 }
 \arguments{
@@ -78,7 +93,20 @@ of being coerced to \code{data.frame}, to be written to disk.}
 
 \item{ext}{\code{character(1)}.
 Output file format extension.
-Uses \code{\link[base:match.arg]{match.arg()}}, where applicable.}
+
+\code{matrix} supported arguments:
+\itemize{
+\item Comma separated values (CSV):
+\code{"csv"}, \code{"csv.bz2"}, \code{"csv.gz"}, \code{"csv.xz"}, \code{"csv.zip"}.
+\item Tab separated values (TSV):
+\code{"tsv"}, \code{"tsv.bz2"}, \code{"tsv.gz"}, \code{"tsv.xz"}, \code{"tsv.zip"}.
+}
+
+\code{Matrix} (\code{sparseMatrix}) supported arguments:
+\itemize{
+\item MatrixMarket exchange (MTX):
+\code{"mtx"}, \code{"mtx.bz2"}, \code{"mtx.gz"}, \code{"mtx.xz"}, \code{"mtx.zip"}.
+}}
 
 \item{dir}{\code{character(1)}.
 Directory path.}
@@ -89,6 +117,9 @@ be used instead.}
 
 \item{overwrite}{\code{logical(1)}.
 Overwrite existing file on disk.}
+
+\item{quiet}{\code{logical(1)}.
+Perform command quietly, suppressing messages.}
 
 \item{name}{\code{character(1)}.
 Name to use on disk. If \code{NULL}, will use the name of the object instead.}
@@ -106,7 +137,7 @@ File path(s).
 Export data out of R and write to disk.
 }
 \note{
-Updated 2019-12-09.
+Updated 2020-01-19.
 }
 \section{Row names}{
 

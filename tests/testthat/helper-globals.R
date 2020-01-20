@@ -1,5 +1,5 @@
 data(
-    DataFrame,
+    DFrame,
     GRanges,
     RangedSummarizedExperiment,
     SingleCellExperiment,
@@ -10,7 +10,7 @@ data(
     envir = environment()
 )
 
-df <- DataFrame
+df <- DFrame
 dt <- data.table
 gr <- GRanges
 rse <- RangedSummarizedExperiment
@@ -22,6 +22,7 @@ tbl <- tbl_df
 DataFrame <- S4Vectors::DataFrame
 assay <- SummarizedExperiment::assay
 assayNames <- SummarizedExperiment::assayNames
+assays <- SummarizedExperiment::assays
 `assays<-` <- SummarizedExperiment::`assays<-`
 hasInternet <- goalie::hasInternet
 mcols <- S4Vectors::mcols

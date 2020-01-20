@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Transmit files from a remote FTP server — transmit • brio</title>
+<title>Coerce to data frame — coerce-data.frame • pipette</title>
 
 
 <!-- jquery -->
@@ -37,9 +37,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Transmit files from a remote FTP server — transmit" />
-<meta property="og:description" content="Utility function that supports easy file matching and download from a remote
-FTP server. Also enables on-the-fly file renaming and compression." />
+<meta property="og:title" content="Coerce to data frame — coerce-data.frame" />
+<meta property="og:description" content="Coerce to data.frame." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -71,8 +70,8 @@ FTP server. Also enables on-the-fly file renaming and compression." />
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">brio</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.17</span>
+        <a class="navbar-link" href="../index.html">pipette</a>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
       </span>
     </div>
 
@@ -93,7 +92,7 @@ FTP server. Also enables on-the-fly file renaming and compression." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/acidgenomics/brio">
+  <a href="https://github.com/acidgenomics/pipette">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -111,78 +110,77 @@ FTP server. Also enables on-the-fly file renaming and compression." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Transmit files from a remote FTP server</h1>
-    <small class="dont-index">Source: <a href='https://github.com/acidgenomics/brio/blob/master/R/transmit.R'><code>R/transmit.R</code></a></small>
-    <div class="hidden name"><code>transmit.Rd</code></div>
+    <h1>Coerce to data frame</h1>
+    <small class="dont-index">Source: <a href='https://github.com/acidgenomics/pipette/blob/master/R/coerce-data.frame-methods.R'><code>R/coerce-data.frame-methods.R</code></a></small>
+    <div class="hidden name"><code>coerce-data.frame.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Utility function that supports easy file matching and download from a remote
-FTP server. Also enables on-the-fly file renaming and compression.</p>
+    <p>Coerce to <code>data.frame</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>transmit</span>(<span class='no'>remoteDir</span>, <span class='kw'>localDir</span> <span class='kw'>=</span> <span class='st'>"."</span>, <span class='no'>pattern</span>, <span class='kw'>rename</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>compress</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>as.data.frame</span>(<span class='no'>x</span>, <span class='kw'>row.names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>optional</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+
+<span class='co'># S4 method for IntegerRanges</span>
+<span class='fu'>as.data.frame</span>(<span class='no'>x</span>, <span class='kw'>row.names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>optional</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+
+<span class='co'># S4 method for Matrix</span>
+<span class='fu'>as.data.frame</span>(<span class='no'>x</span>, <span class='kw'>row.names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>optional</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>remoteDir</th>
-      <td><p><code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>.
-Remote FTP directory path.</p></td>
+      <th>x</th>
+      <td><p>any <span style="R">R</span> object.</p></td>
     </tr>
     <tr>
-      <th>localDir</th>
-      <td><p><code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>.
-Directory where to save files locally.</p></td>
+      <th>row.names</th>
+      <td><p><code>NULL</code> or a character vector giving the row
+    names for the data frame.  Missing values are not allowed.</p></td>
     </tr>
     <tr>
-      <th>pattern</th>
-      <td><p><code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>.
-Pattern to use for matching.</p></td>
+      <th>optional</th>
+      <td><p>logical. If <code>TRUE</code>, setting row names and
+    converting column names (to syntactic names: see
+    <code><a href='https://rdrr.io/r/base/make.names.html'>make.names</a></code>) is optional.  Note that all of <span style="R">R</span>'s
+    <span class="pkg">base</span> package <code>as.data.frame()</code> methods use
+    <code>optional</code> only for column names treatment, basically with the
+    meaning of <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>(*, check.names = !optional)</code>.
+    See also the <code>make.names</code> argument of the <code>matrix</code> method.</p></td>
     </tr>
     <tr>
-      <th>rename</th>
-      <td><p><code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> or <code>NULL</code>.
-Rename the local files (including suffix), if desired.</p></td>
-    </tr>
-    <tr>
-      <th>compress</th>
-      <td><p><code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>.
-gzip compress the files after download.</p></td>
+      <th>...</th>
+      <td><p>additional arguments to be passed to or from methods.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Invisible <code>character</code>.
-Local file paths.</p>
+    <p><code>data.frame</code>.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>Updated 2019-10-12.</p>
+    <p>Updated 2020-01-19.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (
-    <span class='kw pkg'>goalie</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/goalie/man/check-scalar-hasInternet.html'>hasInternet</a></span>() <span class='kw'>&amp;&amp;</span>
-    !<span class='fu'><a href='https://rdrr.io/r/base/Logic.html'>isTRUE</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nchar.html'>nzchar</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span>(<span class='st'>"CI"</span>)))
-) {
-    <span class='no'>remoteDir</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(
-        <span class='st'>"ftp://ftp.pantherdb.org"</span>,
-        <span class='st'>"sequence_classifications"</span>,
-        <span class='st'>"current_release"</span>,
-        <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"/"</span>
-    )
-    <span class='no'>readme</span> <span class='kw'>&lt;-</span> <span class='fu'>transmit</span>(
-        <span class='kw'>remoteDir</span> <span class='kw'>=</span> <span class='no'>remoteDir</span>,
-        <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='st'>"README"</span>,
-        <span class='kw'>rename</span> <span class='kw'>=</span> <span class='st'>"panther_readme.txt"</span>,
-        <span class='kw'>compress</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-    )
-    <span class='fu'><a href='https://rdrr.io/r/base/basename.html'>basename</a></span>(<span class='no'>readme</span>)
-    <span class='fu'><a href='https://rdrr.io/r/base/files.html'>file.exists</a></span>(<span class='no'>readme</span>)
-    <span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span>(<span class='no'>readme</span>)
-}</div><div class='output co'>#&gt; <span class='message'>Transmitting files from 'ftp.pantherdb.org'.</span></div><div class='output co'>#&gt; <span class='message'>Files matching pattern:</span>
-#&gt; <span class='message'>README</span></div><div class='output co'>#&gt; <span class='message'>Downloading panther_readme.txt.gz.</span></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>sparseMatrix</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"acidtest"</span>)
+
+<span class='co'>## Matrix to data.frame ====</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>as</span>(<span class='no'>sparseMatrix</span>, <span class='st'>"data.frame"</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;        sample01 sample02 sample03 sample04 sample05 sample06 sample07 sample08
+#&gt; gene01        0        7        0        0        0        0        0        0
+#&gt; gene02        0        0        0        0        0        0        0        0
+#&gt; gene03        0        0        0        0        0        0        0        0
+#&gt; gene04        0        0        0        0        0       21        0        0
+#&gt; gene05        0        0        0        0        0        0       28        0
+#&gt; gene06        0        0        0        0        0        0        0       35
+#&gt;        sample09 sample10
+#&gt; gene01        0        0
+#&gt; gene02        0        0
+#&gt; gene03       14        0
+#&gt; gene04        0        0
+#&gt; gene05        0        0
+#&gt; gene06        0        0</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

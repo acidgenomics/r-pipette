@@ -10,7 +10,8 @@ import(
   colnames = TRUE,
   format = "auto",
   sheet = 1L,
-  metadata = getOption("acid.import.metadata", default = FALSE)
+  metadata = getOption("acid.import.metadata", default = FALSE),
+  quiet = getOption("acid.quiet", default = FALSE)
 )
 }
 \arguments{
@@ -27,7 +28,7 @@ Applies to file types that return \code{data.frame} only.
 Pass in a \code{character} vector to define the column names manually.}
 
 \item{format}{\code{character(1)}.
-An optional file format code, which can be used to override the format
+An optional file format type, which can be used to override the file format
 inferred from \code{file}. \emph{Not recommended by default.}}
 
 \item{sheet}{\code{character(1)} or \code{integer(1)}.
@@ -37,9 +38,12 @@ position of the sheet). Defaults to the first sheet.}
 
 \item{metadata}{\code{list}.
 Metadata.}
+
+\item{quiet}{\code{logical(1)}.
+Perform command quietly, suppressing messages.}
 }
 \value{
-Varies, depending on the file type.
+Varies, depending on the file type (format):
 \itemize{
 \item \strong{Plain text delimited} (\code{CSV}, \code{TSV}, \code{TXT}): \code{data.frame}.\cr
 Data separated by commas, tabs, or visual spaces.\cr
@@ -100,7 +104,7 @@ arguments. Remote URLs and compressed files are supported. If you need more
 complex import settings, just call the wrapped importer directly instead.
 }
 \note{
-Updated 2020-01-10.
+Updated 2020-01-18.
 }
 \section{Row and column names}{
 
@@ -213,7 +217,7 @@ These file formats are blacklisted, and intentionally not supported:
 }
 
 \examples{
-file <- system.file("extdata/example.csv", package = "brio")
+file <- system.file("extdata/example.csv", package = "pipette")
 
 ## Row and column names enabled.
 x <- import(file)

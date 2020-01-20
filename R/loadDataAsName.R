@@ -3,7 +3,7 @@
 #' @export
 #' @note This function is intended for interactive use and interprets object
 #'   names using non-standard evaluation.
-#' @note Updated 2019-10-12.
+#' @note Updated 2020-01-19.
 #'
 #' @inheritParams loadData
 #' @param ... Key value pairs, defining the name mappings. For example,
@@ -14,7 +14,7 @@
 #' @return Invisible named `character`. File paths.
 #'
 #' @examples
-#' dir <- system.file("extdata", package = "brio")
+#' dir <- system.file("extdata", package = "pipette")
 #' loadDataAsName(renamed = example, dir = dir)
 #' class(renamed)
 loadDataAsName <- function(
@@ -85,5 +85,5 @@ loadDataAsName <- function(
     invisible(files)
 }
 
-formals(loadDataAsName)[["dir"]] <- .formalsList[["load.dir"]]
-formals(loadDataAsName)[["overwrite"]] <- .formalsList[["overwrite"]]
+formals(loadDataAsName)[c("dir", "overwrite")] <-
+    formalsList[c("load.dir", "overwrite")]

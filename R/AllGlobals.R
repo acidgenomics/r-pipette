@@ -2,48 +2,6 @@ globalVariables(".")
 
 
 
-.formalsList <- list(
-    export.compress = quote(
-        getOption("acid.export.compress", default = FALSE)
-    ),
-    export.dir = quote(
-        getOption("acid.export.dir", default = ".")
-    ),
-    export.ext = quote(
-        getOption(
-            "acid.export.ext",
-            default = c(
-                "csv", "csv.gz", "csv.bz2",
-                "tsv", "tsv.gz", "tsv.bz2"
-            )
-        )
-    ),
-    export.sparse.ext = quote(
-        getOption(
-            "acid.export.sparse.ext",
-            default = c("mtx", "mtx.gz", "mtx.bz2")
-        )
-    ),
-    import.metadata = quote(
-        getOption("acid.import.metadata", default = FALSE)
-    ),
-    load.dir = quote(
-        getOption("acid.load.dir", default = ".")
-    ),
-    overwrite = quote(
-        getOption("acid.overwrite", default = TRUE)
-    ),
-    save.compress = quote(
-        getOption("acid.save.compress", default = TRUE)
-    ),
-    save.dir = quote(
-        getOption("acid.save.dir", default = ".")
-    ),
-    save.ext = quote(
-        getOption("acid.save.ext", default = c("rds", "rda"))
-    )
-)
-
 .rdataExtPattern <- "\\.(rd[a|ata|s])$"
 
 .rdataLoadError <- paste(
@@ -52,17 +10,17 @@ globalVariables(".")
     sep = "\n"
 )
 
-.version <- packageVersion("brio")
+.version <- packageVersion("pipette")
 
 
 
-#' brio test data URL
+#' pipette test data URL
 #' @export
 #' @keywords internal
 #' @examples
-#' brioTestsURL
-brioTestsURL <- paste0(
-    "http://tests.acidgenomics.com/brio/",
+#' pipetteTestsURL
+pipetteTestsURL <- paste0(
+    "http://tests.acidgenomics.com/pipette/",
     "v", .version$major, ".", .version$minor  # nolint
 )
 
