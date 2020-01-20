@@ -78,6 +78,86 @@ NULL
 
 
 
+## Updated 2020-01-19.
+`export,character` <-  # nolint
+    function(
+        object,
+        ext = "txt",
+        dir,
+        file = NULL,
+        overwrite,
+        quiet
+    ) {
+        assert(
+            isCharacter(object),
+            isString(ext),
+            isString(dir),
+            isString(file, nullOK = TRUE),
+            isFlag(overwrite),
+            isFlag(quiet)
+        )
+        if (is.null(file)) {
+            call <- standardizeCall()
+            sym <- call[["object"]]
+            assert(is.symbol(sym))
+            name <- as.character(sym)
+            ext <- match.arg(
+                arg = ext,
+                choices = c(
+                    "txt",
+                    "txt.bz2",
+                    "txt.gz",
+                    "txt.xz",
+                    "txt.zip"
+                )
+            )
+            file <- file.path(dir, paste0(name, ".", ext))
+        }
+        match <- str_match(string = file, pattern = extPattern)
+        compressExt <- match[1L, 4L]
+        compress <- !is.na(compressExt)
+        con <- file(description = file)
+        writeLines(text = object, con = con)
+        close(con)
+        ## Compress file, if necessary.
+        if (isTRUE(compress)) {
+            file <- compress(
+                file = file,
+                ext = compressExt,
+                remove = TRUE,
+                overwrite = TRUE
+            )
+        }
+        file <- realpath(file)
+        invisible(file)
+    }
+
+formals(`export,character`)[
+    c(
+        "dir",
+        "ext",
+        "overwrite",
+        "quiet"
+    )] <-
+    formalsList[c(
+        "export.dir",
+        "export.ext",
+        "overwrite",
+        "quiet"
+    )]
+
+
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature("character"),
+    definition = `export,character`
+)
+
+
+
 ## This method covers standard `matrix` but is also intended to work for
 ## `data.table`, `tbl_df`, and `DataFrame` classes. Note that `rio::export()`
 ## does not preserve row names by default, so we're ensuring row names get
@@ -93,14 +173,18 @@ NULL
         quiet
     ) {
         validObject(object)
+        object <- as.data.frame(object)
         whatPkg <- match.arg(
             arg = getOption("acid.export.engine", default = "data.table"),
             choices = c("data.table", "readr", "vroom")
         )
-        assert(requireNamespace(whatPkg, quietly = TRUE))
         verbose <- getOption("acid.verbose", default = FALSE)
         assert(
+            requireNamespace(whatPkg, quietly = TRUE),
             hasLength(object),
+            hasRows(object),
+            hasCols(object),
+            hasNoDuplicates(colnames(object)),
             allAreAtomic(object),
             isString(ext),
             isString(dir),
@@ -127,12 +211,6 @@ NULL
         match <- str_match(string = file, pattern = extPattern)
         compressExt <- match[1L, 4L]
         compress <- !is.na(compressExt)
-        assert(
-            hasRows(object),
-            hasCols(object),
-            hasNoDuplicates(colnames(object))
-        )
-        object <- as.data.frame(object)
         ## Ensure row names are automatically moved to `rowname` column.
         if (hasRownames(object)) {
             assert(areDisjointSets("rowname", colnames(object)))
@@ -330,7 +408,8 @@ setMethod(
             )
         )
         match <- str_match(string = file, pattern = extPattern)
-        compress <- !is.na(match[1L, 4L])
+        compressExt <- match[1L, 4L]
+        compress <- !is.na(compressExt)
         ## Inform the user regarding overwrite.
         if (isAFile(file)) {
             if (isTRUE(overwrite)) {
@@ -345,9 +424,8 @@ setMethod(
         initDir(dir = dirname(file))
         ## Remove compression extension from output file.
         if (isTRUE(compress)) {
-            ## FIXME This is broken now...
             file <- sub(
-                pattern = paste0("\\.", compress, "$"),
+                pattern = paste0("\\.", compressExt, "$"),
                 replacement = "",
                 x = file
             )
@@ -359,24 +437,25 @@ setMethod(
         ))
         writeMM(obj = object, file = file)
         ## Compress file, if necessary.
-        if (!is.na(compress)) {
-            compressFun <- switch(
-                EXPR = compress,
-                "gz" = gzip,
-                "bz2" = bzip2
+        if (isTRUE(compress)) {
+            file <- compress(
+                file = file,
+                ext = compressExt,
+                remove = TRUE,
+                overwrite = TRUE
             )
-            assert(is.function(compressFun))
-            file <- compressFun(file, overwrite = TRUE)
         }
         ## Normalize the path.
         file <- realpath(file)
         ## Write barcodes (column names).
         barcodes <- colnames(object)
         barcodesFile <- paste0(file, ".colnames")
+        ## FIXME Switch to character export method here.
         writeLines(text = barcodes, con = barcodesFile)
         ## Write features (row names).
         features <- rownames(object)
         featuresFile <- paste0(file, ".rownames")
+        ## FIXME Switch to character export method here.
         writeLines(text = features, con = featuresFile)
         files <- c(
             matrix = file,
@@ -429,6 +508,7 @@ setMethod(
 
 
 
+## FIXME Rework `compress` argument handling here.
 ## Updated 2020-01-17.
 .exportAssays <-  # nolint
     function(object, name, dir, compress) {
