@@ -6,10 +6,13 @@ test_that("localOrRemoteFile", {
     urls <- paste(pipetteTestsURL, c("example.csv", "example.rda"), sep = "/")
     files <- localOrRemoteFile(urls)
     expect_is(files, "character")
-    expect_identical(basename(urls), basename(files))
+    expect_match(
+        object = basename(files),
+        regexp = "pipette-"
+    )
 })
 
-## `normalizePath() returns different error messages depending on the R version.
+## `normalizePath()` returns different error messages depending on R version.
 ## Current: No such file or directory
 ## AppVeyor: The system cannot find the file specified
 test_that("Missing file", {
