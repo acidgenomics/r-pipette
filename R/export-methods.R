@@ -116,6 +116,22 @@ NULL
         match <- str_match(string = file, pattern = extPattern)
         compressExt <- match[1L, 4L]
         compress <- !is.na(compressExt)
+        ## Inform the user regarding overwrite.
+        if (isAFile(file)) {
+            if (isTRUE(overwrite)) {
+                cli_alert_warning(
+                    sprintf("Overwriting {.file %s}.", basename(file))
+                )
+            } else {
+                stop(sprintf("File exists: '%s'", realpath(file)))
+            }
+        }
+        if (!isTRUE(quiet)) {
+            cli_alert(sprintf(
+                "Exporting {.file %s} using {.pkg %s}::{.fun %s}.",
+                basename(file), "base", "writeLines"
+            ))
+        }
         con <- file(description = file)
         writeLines(text = object, con = con)
         close(con)
@@ -296,10 +312,12 @@ setMethod(
                 "tsv" = "\t"
             )
         }
-        cli_alert(sprintf(
-            "Exporting {.file %s} using {.pkg %s}::{.fun %s}.",
-            basename(file), whatPkg, whatFun
-        ))
+        if (!isTRUE(quiet)) {
+            cli_alert(sprintf(
+                "Exporting {.file %s} using {.pkg %s}::{.fun %s}.",
+                basename(file), whatPkg, whatFun
+            ))
+        }
         do.call(what = what, args = args)
         ## Compress file, if necessary.
         if (isTRUE(compress)) {
@@ -431,10 +449,12 @@ setMethod(
             )
         }
         ## Export MatrixMarket file.
-        cli_alert(sprintf(
-            "Exporting {.file %s} using {.pkg %s}::{.fun %s}.",
-            basename(file), "Matrix", "writeMM"
-        ))
+        if (!isTRUE(quiet)) {
+            cli_alert(sprintf(
+                "Exporting {.file %s} using {.pkg %s}::{.fun %s}.",
+                basename(file), "Matrix", "writeMM"
+            ))
+        }
         writeMM(obj = object, file = file)
         ## Compress file, if necessary.
         if (isTRUE(compress)) {
@@ -450,23 +470,27 @@ setMethod(
         ## Write barcodes (column names).
         barcodes <- colnames(object)
         barcodesFile <- paste0(file, ".colnames")
-        ## FIXME Switch to character export method here.
-        writeLines(text = barcodes, con = barcodesFile)
+        export(
+            object = barcodes,
+            file = barcodesFile,
+            overwrite = TRUE,
+            quiet = quiet
+        )
         ## Write features (row names).
         features <- rownames(object)
         featuresFile <- paste0(file, ".rownames")
-        ## FIXME Switch to character export method here.
-        writeLines(text = features, con = featuresFile)
+        export(
+            object = features,
+            file = featuresFile,
+            overwrite = TRUE,
+            quiet = quiet
+        )
         files <- c(
             matrix = file,
             barcodes = barcodesFile,
             genes = featuresFile
         )
         assert(allAreFiles(files))
-        cli_alert(sprintf(
-            "Exported {.file %s} and sidecar files to {.path %s}.",
-            basename(file), dirname(file)
-        ))
         ## Return named character of file paths.
         invisible(files)
     }
