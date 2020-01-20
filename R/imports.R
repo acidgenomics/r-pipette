@@ -1,7 +1,10 @@
 #' @importClassesFrom GenomicRanges GenomicRanges
 #' @importClassesFrom IRanges IRanges Ranges
 #' @importClassesFrom S4Vectors DataFrame
-#'
+NULL
+
+
+
 #' @importFrom IRanges end start width
 #' @importFrom Matrix readMM writeMM
 #' @importFrom S4Vectors DataFrame Rle head mcols mcols<- metadata metadata<-
@@ -25,4 +28,11 @@
 #' @importFrom rtracklayer import
 #' @importFrom stringr str_extract str_match str_subset
 #' @importFrom utils download.file packageVersion
+NULL
+
+
+
+## This is needed to properly declare S4 `as()` coercion methods.
+#' @importFrom methods coerce
+#' @exportMethod coerce
 NULL
