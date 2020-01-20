@@ -4,11 +4,11 @@
 \alias{coerce-data.table}
 \alias{as.data.table}
 \alias{as.data.table.DataFrame}
-\alias{as.data.table.IntegerRanges}
+\alias{as.data.table.IRanges}
 \alias{as.data.table.GenomicRanges}
 \alias{coerce,data.frame,data.table-method}
 \alias{coerce,DataFrame,data.table-method}
-\alias{coerce,IntegerRanges,data.table-method}
+\alias{coerce,IRanges,data.table-method}
 \alias{coerce,GenomicRanges,data.table-method}
 \title{Coerce to data table}
 \usage{
@@ -16,7 +16,7 @@ as.data.table(x, keep.rownames = FALSE, ...)
 
 \method{as.data.table}{DataFrame}(x, keep.rownames = TRUE, ...)
 
-\method{as.data.table}{IntegerRanges}(x, keep.rownames = TRUE, ...)
+\method{as.data.table}{IRanges}(x, keep.rownames = TRUE, ...)
 
 \method{as.data.table}{GenomicRanges}(x, keep.rownames = TRUE, ...)
 }
