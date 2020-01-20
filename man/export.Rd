@@ -96,8 +96,16 @@ Output file format extension.
 
 \code{matrix} supported arguments:
 \itemize{
-\item CSV "csv", "csv.bz2", "csv.gz", "csv.xz", "csv.zip"
-\item TSV "tsv", "tsv.bz2", "tsv.gz", "tsv.xz", "tsv.zip"
+\item Comma separated values (CSV):
+\code{"csv"}, \code{"csv.bz2"}, \code{"csv.gz"}, \code{"csv.xz"}, \code{"csv.zip"}.
+\item Tab separated values (TSV):
+\code{"tsv"}, \code{"tsv.bz2"}, \code{"tsv.gz"}, \code{"tsv.xz"}, \code{"tsv.zip"}.
+}
+
+\code{Matrix} (\code{sparseMatrix}) supported arguments:
+\itemize{
+\item MatrixMarket exchange (MTX):
+\code{"mtx"}, \code{"mtx.bz2"}, \code{"mtx.gz"}, \code{"mtx.xz"}, \code{"mtx.zip"}.
 }}
 
 \item{dir}{\code{character(1)}.
