@@ -89,8 +89,8 @@ as.data.table.DataFrame <-  # nolint
 
 #' @rdname coerce-data.table
 #' @export
-## Updated 2019-07-19.
-as.data.table.IntegerRanges <-  # nolint
+## Updated 2020-01-19.
+as.data.table.IRanges <-  # nolint
     function(x, keep.rownames = TRUE, ...) {  # nolint
         x <- as(x, "data.frame")
         if (!hasRownames(x)) {
@@ -103,9 +103,9 @@ as.data.table.IntegerRanges <-  # nolint
 
 #' @rdname coerce-data.table
 #' @export
-## Updated 2019-07-20.
+## Updated 2020-01-19.
 as.data.table.GenomicRanges <-  # nolint
-    as.data.table.IntegerRanges
+    as.data.table.IRanges
 
 
 
@@ -148,18 +148,18 @@ setAs(
 
 
 
-## Updated 2019-07-19.
-`coerce,IntegerRanges,data.table` <-  # nolint
+## Updated 2020-01-19.
+`coerce,IRanges,data.table` <-  # nolint
     `coerce,ANY,data.table`
 
 
 
 #' @rdname coerce-data.table
-#' @name coerce,IntegerRanges,data.table-method
+#' @name coerce,IRanges,data.table-method
 setAs(
-    from = "IntegerRanges",
+    from = "IRanges",
     to = "data.table",
-    def = `coerce,IntegerRanges,data.table`
+    def = `coerce,IRanges,data.table`
 )
 
 

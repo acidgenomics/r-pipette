@@ -1,8 +1,18 @@
-## pipette 0.4.0 (2020-01-18)
+## pipette 0.4.0 (2020-01-19)
+
+### Major changes
+
+- Renamed package from brio to pipette, in preparation of CRAN submission.
+- `export`: Reworked internal methods to use new `compress` and `decompress`
+  functions defined in acidbase package.
+- `localOrRemoteFile`: Reworked to use new `decompress` defined in acidbase
+  internally, with improved `tempfile` handling.
+- Migrated coercion methods and other utitilies from the now archived
+  transformer package: `atomize`, `coerceToList`, `droplevels`, `decode`,
+  `encode`, `factorize`, `matchRowNameColumn`, and `metadata2`.
 
 ### Minor changes
 
-- Renamed package from brio to pipette, in preparation of CRAN submission.
 - Switched to using cli package for improved messages.
 
 ## brio 0.3.17 (2020-01-10)

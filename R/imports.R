@@ -1,5 +1,5 @@
 #' @importClassesFrom GenomicRanges GenomicRanges
-#' @importClassesFrom IRanges IntegerRanges
+#' @importClassesFrom IRanges IRanges Ranges
 #' @importClassesFrom S4Vectors DataFrame
 #'
 #' @importFrom IRanges end start width

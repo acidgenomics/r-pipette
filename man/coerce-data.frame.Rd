@@ -3,15 +3,15 @@
 \name{coerce-data.frame}
 \alias{coerce-data.frame}
 \alias{as.data.frame}
-\alias{as.data.frame,IntegerRanges-method}
+\alias{as.data.frame,IRanges-method}
 \alias{as.data.frame,Matrix-method}
-\alias{coerce,IntegerRanges,data.frame-method}
+\alias{coerce,IRanges,data.frame-method}
 \alias{coerce,Matrix,data.frame-method}
 \title{Coerce to data frame}
 \usage{
 as.data.frame(x, row.names = NULL, optional = FALSE, ...)
 
-\S4method{as.data.frame}{IntegerRanges}(x, row.names = NULL, optional = FALSE, ...)
+\S4method{as.data.frame}{IRanges}(x, row.names = NULL, optional = FALSE, ...)
 
 \S4method{as.data.frame}{Matrix}(x, row.names = NULL, optional = FALSE, ...)
 }
