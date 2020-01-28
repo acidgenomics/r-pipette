@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pipette</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
       </span>
     </div>
 
@@ -124,7 +124,7 @@
 <span class='co'># S3 method for DataFrame</span>
 <span class='fu'>as.data.table</span>(<span class='no'>x</span>, <span class='kw'>keep.rownames</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
-<span class='co'># S3 method for IntegerRanges</span>
+<span class='co'># S3 method for IRanges</span>
 <span class='fu'>as.data.table</span>(<span class='no'>x</span>, <span class='kw'>keep.rownames</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for GenomicRanges</span>
@@ -214,10 +214,10 @@ object to a <code>data.table</code>.</p>
 <span class='co'>## IRanges to data.table ====</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>as</span>(<span class='no'>IRanges</span>, <span class='st'>"data.table"</span>)
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>as.data.table</span>(<span class='no'>IRanges</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;    start end width names score
-#&gt; 1:     1   5     5     a     1
-#&gt; 2:    10  14     5     b     2
-#&gt; 3:    20  24     5     c     3</div></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;    rn start end width score
+#&gt; 1:  a     1   5     5     1
+#&gt; 2:  b    10  14     5     2
+#&gt; 3:  c    20  24     5     3</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
