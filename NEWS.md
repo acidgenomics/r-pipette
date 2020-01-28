@@ -1,3 +1,11 @@
+## pipette 0.4.1 (2020-01-28)
+
+### Minor changes
+
+- Switched license from MIT to GPL-3.
+- Ensure that `coerce` method is reexported -- thanks @dpryan79 for catching
+  this issue in basejump.
+
 ## pipette 0.4.0 (2020-01-19)
 
 ### Major changes
