@@ -43,6 +43,28 @@ with_parameters_test_that(
     ext = c("csv", "csv.gz", "tsv")
 )
 
+test_that("readr mode (experimental)", {
+    options("acid.import.engine" = "readr")
+    file <- file.path("cache", "example.csv.gz")
+    object <- import(file)
+    expect_is(object, "data.frame")
+    expect_identical(
+        object = attributes(object)[["import"]][["importer"]],
+        expected = "readr::read_csv"
+    )
+})
+
+test_that("vroom mode (experimental)", {
+    options("acid.import.engine" = "vroom")
+    file <- file.path("cache", "example.csv.gz")
+    object <- import(file)
+    expect_is(object, "data.frame")
+    expect_identical(
+        object = attributes(object)[["import"]][["importer"]],
+        expected = "vroom::vroom"
+    )
+})
+
 
 
 context("import : rtracklayer (GFF/GTF)")

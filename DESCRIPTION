@@ -1,8 +1,8 @@
 Package: pipette
 Title: Pipette Biological Data In and Out of R
 Description: Input/output functions for biological data formats.
-Version: 0.4.0
-Date: 2020-01-19
+Version: 0.4.1
+Date: 2020-01-28
 Authors@R: c(
     person(
         "Michael", "Steinbaugh",
@@ -18,7 +18,7 @@ URL:
     https://pipette.acidgenomics.com/,
     https://github.com/acidgenomics/pipette/
 BugReports: https://github.com/acidgenomics/pipette/issues/
-License: MIT + file LICENSE
+License: GPL-3
 Encoding: UTF-8
 Depends: R (>= 3.6)
 Imports:
