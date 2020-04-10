@@ -501,9 +501,9 @@ formals(import)[c("metadata", "quiet")] <-
         ## readr ---------------------------------------------------------------
         whatFun <- switch(
             EXPR = ext,
-            "CSV" = "read_csv",
-            "TSV" = "read_tsv",
-            "TXT" = "read_delim"
+            "csv" = "read_csv",
+            "tsv" = "read_tsv",
+            "txt" = "read_delim"
         )
         what <- get(
             x = whatFun,
