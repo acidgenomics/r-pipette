@@ -2,6 +2,9 @@
 
 ### Minor changes
 
+- `droplevels`: Ensuring S4 generic variant defined in S4Vectors package gets
+  reexported and masks base S3 generic. This helps avoid a `C stack usage`
+  issue that has popped up in the latest version of R.
 - `import`: Fix for importing JSON files without extension. Can now declare
   using the `format` argument. This fix was needed to import GitHub JSON URLs
   inside new `installGitHub` function defined in [bb8][] package.
