@@ -6,6 +6,8 @@
 \alias{droplevels,SummarizedExperiment-method}
 \title{Drop unused levels from factors}
 \usage{
+droplevels(x, ...)
+
 \S4method{droplevels}{Ranges}(x)
 
 \S4method{droplevels}{SummarizedExperiment}(x)
@@ -29,9 +31,9 @@ data(RangedSummarizedExperiment, package = "acidtest")
 ## Ranges ====
 rse <- RangedSummarizedExperiment
 object <- SummarizedExperiment::rowRanges(rse)
-droplevels(object)
+S4Vectors::droplevels(object)
 
 ## SummarizedExperiment ====
 object <- RangedSummarizedExperiment
-droplevels(object)
+S4Vectors::droplevels(object)
 }
