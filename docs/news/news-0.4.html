@@ -159,6 +159,8 @@
 <a href="#minor-changes" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>
+<code>droplevels</code>: Ensuring S4 generic variant defined in S4Vectors package gets reexported and masks base S3 generic. This helps avoid a <code>C stack usage</code> issue that has popped up in the latest version of R.</li>
+<li>
 <code>import</code>: Fix for importing JSON files without extension. Can now declare using the <code>format</code> argument. This fix was needed to import GitHub JSON URLs inside new <code>installGitHub</code> function defined in <a href="https://bb8.acidgenomics.com/">bb8</a> package.</li>
 </ul>
 </div>
