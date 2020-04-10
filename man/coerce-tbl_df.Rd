@@ -34,7 +34,7 @@
 \item{x}{A data frame, list, matrix, or other object that could reasonably be
 coerced to a tibble.}
 
-\item{...}{Other arguments passed on to individual methods.}
+\item{...}{Unused, for extensibility.}
 
 \item{rownames}{How to treat existing row names of a data frame or matrix:
 \itemize{
