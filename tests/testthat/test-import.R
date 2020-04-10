@@ -72,7 +72,6 @@ test_that("vroom mode", {
     file <- file.path("cache", "example.csv.gz")
     object <- import(file)
     expect_is(object, "data.frame")
-    ## FIXME This step is no longer working.
     expect_identical(
         object = attributes(object)[["import"]][["importer"]],
         expected = "vroom::vroom"
