@@ -2,7 +2,7 @@
 #'
 #' @name droplevels
 #' @inherit base::droplevels description
-#' @note Updated 2020-01-19.
+#' @note Updated 2020-04-10.
 #'
 #' @inheritParams acidroxygen::params
 #'
