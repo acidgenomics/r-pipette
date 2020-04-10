@@ -59,7 +59,7 @@ Remotes:
     acidgenomics/acidtest,
     acidgenomics/goalie
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 Collate: 
     'AllGlobals.R'
     'saveData.R'
