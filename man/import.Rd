@@ -105,7 +105,7 @@ arguments. Remote URLs and compressed files are supported. If you need more
 complex import settings, just call the wrapped importer directly instead.
 }
 \note{
-Updated 2020-01-18.
+Updated 2020-04-10.
 }
 \section{Row and column names}{
 
