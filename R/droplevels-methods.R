@@ -5,6 +5,7 @@
 #' @note Updated 2020-04-10.
 #'
 #' @inheritParams acidroxygen::params
+#' @param ... Additional arguments.
 #'
 #' @return Modified object.
 #'

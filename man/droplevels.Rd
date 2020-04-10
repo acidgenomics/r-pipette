@@ -14,6 +14,8 @@ droplevels(x, ...)
 }
 \arguments{
 \item{x}{Object.}
+
+\item{...}{Additional arguments.}
 }
 \value{
 Modified object.
