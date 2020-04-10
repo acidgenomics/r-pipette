@@ -45,7 +45,18 @@ with_parameters_test_that(
     ext = c("csv", "csv.gz", "tsv")
 )
 
-test_that("readr mode (experimental)", {
+test_that("data.table mode", {
+    options("acid.import.engine" = "data.table")
+    file <- file.path("cache", "example.csv.gz")
+    object <- import(file)
+    expect_is(object, "data.frame")
+    expect_identical(
+        object = attributes(object)[["import"]][["importer"]],
+        expected = "data.table::fread"
+    )
+})
+
+test_that("readr mode", {
     options("acid.import.engine" = "readr")
     file <- file.path("cache", "example.csv.gz")
     object <- import(file)
@@ -56,11 +67,12 @@ test_that("readr mode (experimental)", {
     )
 })
 
-test_that("vroom mode (experimental)", {
+test_that("vroom mode", {
     options("acid.import.engine" = "vroom")
     file <- file.path("cache", "example.csv.gz")
     object <- import(file)
     expect_is(object, "data.frame")
+    ## FIXME This step is no longer working.
     expect_identical(
         object = attributes(object)[["import"]][["importer"]],
         expected = "vroom::vroom"
