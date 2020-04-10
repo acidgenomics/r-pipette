@@ -111,7 +111,8 @@
 #'   Pass in a `character` vector to define the column names manually.
 #' @param format `character(1)`.
 #'   An optional file format type, which can be used to override the file format
-#'   inferred from `file`. *Not recommended by default.*
+#'   inferred from `file`. Only recommended for file and URL paths that don't
+#'   contain an extension.
 #' @param sheet `character(1)` or `integer(1)`.
 #'   *Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.*
 #'   Sheet to read. Either a string (the name of a sheet), or an integer (the
@@ -214,21 +215,29 @@ import <- function(
     )
     ## 2019-10-18: Default renamed from "none" to "auto".
     format <- match.arg(
-        arg = format,
-        choices = c("auto", "csv", "tsv", "txt", "lines", "none")
+        arg = toupper(format),
+        choices = c(
+            ## Special:
+            "AUTO", "LINES", "NONE",
+            ## File type extensions:
+            "ARFF", "BED", "BED15", "BEDGRAPH", "BEDPE", "BIGWIG", "BROADPEAK",
+            "BW", "COUNTS", "DBF", "DIF", "DTA", "GFF", "GFF1", "GFF2", "GFF3",
+            "GMT", "GMX", "GRP", "GTF", "JSON", "LOG", "MAT", "MD", "MTP",
+            "MTX", "NARROWPEAK", "ODS", "POR", "PY", "R", "REC", "RMD",
+            "SAS7BDAT", "SAV", "SH", "SYD", "WIG", "XPT", "YAML", "YML"
+        )
     )
     ## Allow Google Sheets import using rio, by matching the URL.
     ## Otherwise, coerce the file extension to uppercase, for easy matching.
     if (identical(format, "auto") || identical(format, "none")) {
         ext <- str_match(basename(file), extPattern)[1L, 2L]
         if (is.na(ext)) {
-            if (!isTRUE(quiet)) {
-                cli_alert_warning(paste(
-                    "No file extension detected.",
-                    "Importing as {.strong lines}."
-                ))
-            }
-            ext <- "lines"
+            stop(paste(
+                "'file' argument does not contain file type extension.",
+                "Set the file format manually using the 'format' argument.",
+                "Refer to 'pipette::import()' documentation for details.",
+                sep = "\n"
+            ))
         }
     } else {
         ext <- format
