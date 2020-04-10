@@ -99,7 +99,7 @@
 #' `DOC`, `DOCX`, `PDF`, `PPT`, `PPTX`.
 #'
 #' @export
-#' @note Updated 2020-01-18.
+#' @note Updated 2020-04-10.
 #'
 #' @inheritParams acidroxygen::params
 #' @param rownames `logical(1)`.
@@ -215,16 +215,16 @@ import <- function(
     )
     ## 2019-10-18: Default renamed from "none" to "auto".
     format <- match.arg(
-        arg = toupper(format),
+        arg = tolower(format),
         choices = c(
             ## Special:
-            "AUTO", "LINES", "NONE",
+            "auto", "lines", "none",
             ## File type extensions:
-            "ARFF", "BED", "BED15", "BEDGRAPH", "BEDPE", "BIGWIG", "BROADPEAK",
-            "BW", "COUNTS", "DBF", "DIF", "DTA", "GFF", "GFF1", "GFF2", "GFF3",
-            "GMT", "GMX", "GRP", "GTF", "JSON", "LOG", "MAT", "MD", "MTP",
-            "MTX", "NARROWPEAK", "ODS", "POR", "PY", "R", "REC", "RMD",
-            "SAS7BDAT", "SAV", "SH", "SYD", "WIG", "XPT", "YAML", "YML"
+            "arff", "bed", "bed15", "bedgraph", "bedpe", "bigwig", "broadpeak",
+            "bw", "counts", "dbf", "dif", "dta", "gff", "gff1", "gff2", "gff3",
+            "gmt", "gmx", "grp", "gtf", "json", "log", "mat", "md", "mtp",
+            "mtx", "narrowpeak", "ods", "por", "py", "r", "rec", "rmd",
+            "sas7bdat", "sav", "sh", "syd", "wig", "xpt", "yaml", "yml"
         )
     )
     ## Allow Google Sheets import using rio, by matching the URL.
@@ -242,8 +242,8 @@ import <- function(
     } else {
         ext <- format
     }
-    ext <- toupper(ext)
-    if (isSubset(ext, c("CSV", "FWF", "PSV", "TSV", "TXT"))) {
+    ext <- tolower(ext)
+    if (isSubset(ext, c("csv", "fwf", "psv", "tsv", "txt"))) {
         object <- .importDelim(
             file = file,
             colnames = colnames,
@@ -251,7 +251,7 @@ import <- function(
             metadata = metadata,
             quiet = quiet
         )
-    } else if (identical(ext, "XLS")) {
+    } else if (identical(ext, "xls")) {
         object <- .importXLS(
             file = file,
             sheet = sheet,
@@ -259,7 +259,7 @@ import <- function(
             metadata = metadata,
             quiet = quiet
         )
-    } else if (isSubset(ext, c("XLSB", "XLSX"))) {
+    } else if (isSubset(ext, c("xlsb", "xlsx"))) {
         object <- .importXLSX(
             file = file,
             sheet = sheet,
@@ -267,7 +267,7 @@ import <- function(
             metadata = metadata,
             quiet = quiet
         )
-    } else if (identical(ext, "PZFX")) {
+    } else if (identical(ext, "pzfx")) {
         ## GraphPad Prism project.
         ## Note that Prism files always contain column names.
         object <- .importPZFX(
@@ -276,49 +276,47 @@ import <- function(
             metadata = metadata,
             quiet = quiet
         )
-    } else if (identical(ext, "RDS")) {
+    } else if (identical(ext, "rds")) {
         object <- .importRDS(file = file, quiet = quiet)
-    } else if (isSubset(ext, c("RDA", "RDATA"))) {
+    } else if (isSubset(ext, c("rda", "rdata"))) {
         object <- .importRDA(file = file, quiet = quiet)
-    } else if (identical(ext, "GMT")) {
+    } else if (identical(ext, "gmt")) {
         object <- .importGMT(file = file, quiet = quiet)
-    } else if (identical(ext, "GMX")) {
+    } else if (identical(ext, "gmx")) {
         object <- .importGMX(file = file, quiet = quiet)
-    } else if (identical(ext, "GRP")) {
+    } else if (identical(ext, "grp")) {
         object <- .importGRP(file = file, quiet = quiet)
-    } else if (identical(ext, "JSON")) {
+    } else if (identical(ext, "json")) {
         object <- .importJSON(
             file = file,
             metadata = metadata,
             quiet = quiet
         )
-    } else if (isSubset(ext, c("YAML", "YML"))) {
+    } else if (isSubset(ext, c("yaml", "yml"))) {
         object <- .importYAML(
             file = file,
             metadata = metadata,
             quiet = quiet
         )
-    } else if (identical(ext, "MTX")) {
+    } else if (identical(ext, "mtx")) {
         ## We're always requiring row and column sidecar files for MTX.
         object <- .importMTX(
             file = file,
             metadata = metadata,
             quiet = quiet
         )
-    } else if (identical(ext, "COUNTS")) {
+    } else if (identical(ext, "counts")) {
         ## bcbio counts format always contains row and column names.
         object <- .importBcbioCounts(
             file = file,
             metadata = metadata,
             quiet = quiet
         )
-    } else if (isSubset(ext, c("LINES", "LOG", "MD", "PY", "R", "RMD", "SH"))) {
+    } else if (isSubset(ext, c("lines", "log", "md", "py", "r", "rmd", "sh"))) {
         object <- .importLines(file = file, quiet = quiet)
     } else if (isSubset(ext, c(
-        "BED", "BED15", "BEDGRAPH", "BEDPE",
-        "BROADPEAK", "NARROWPEAK",
-        "GFF", "GFF1", "GFF2", "GFF3", "GTF",
-        "BIGWIG", "BW", "WIG"
+        "bed", "bed15", "bedgraph", "bedpe", "bigwig", "broadpeak", "bw", "gff",
+        "gff1", "gff2", "gff3", "gtf", "narrowpeak", "wig"
     ))) {
         object <- .rtracklayerImport(
             file = file,
@@ -326,19 +324,19 @@ import <- function(
             quiet = quiet
         )
     } else if (isSubset(ext, c(
-        "ARFF",      # Weka Attribute-Relation File Format
-        "DBF",       # dBase Database File
-        "DIF",       # Data Interchange Format
-        "DTA",       # Stata
-        "MAT",       # Matlab
-        "MTP",       # Minitab
-        "ODS",       # OpenDocument (LibreOffice)
-        "POR",       # SPSS
-        "SAS7BDAT",  # SASS
-        "SAV",       # SPSS
-        "SYD",       # Systat
-        "REC",       # Epi Info
-        "XPT"        # SASS
+        "arff",      # Weka Attribute-Relation File Format
+        "dbf",       # dBase Database File
+        "dif",       # Data Interchange Format
+        "dta",       # Stata
+        "mat",       # Matlab
+        "mtp",       # Minitab
+        "ods",       # OpenDocument (LibreOffice)
+        "por",       # SPSS
+        "sas7bdat",  # SASS
+        "sav",       # SPSS
+        "syd",       # Systat
+        "rec",       # Epi Info
+        "xpt"        # SASS
     ))) {
         object <- .rioImport(
             file = file,
