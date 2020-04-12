@@ -1,3 +1,14 @@
+## pipette 0.4.2 (2020-04-10)
+
+### Minor changes
+
+- `droplevels`: Ensuring S4 generic variant defined in S4Vectors package gets
+  reexported and masks base S3 generic. This helps avoid a `C stack usage`
+  issue that has popped up in the latest version of R.
+- `import`: Fix for importing JSON files without extension. Can now declare
+  using the `format` argument. This fix was needed to import GitHub JSON URLs
+  inside new `installGitHub` function defined in [bb8][] package.
+
 ## pipette 0.4.1 (2020-01-28)
 
 ### Minor changes
@@ -454,6 +465,7 @@ Initial release. Migrated input-output (IO) functions from [basejump][].
 [acid genomics]: https://acidgenomics.com/
 [appveyor ci]: https://www.appveyor.com/
 [basejump]: https://basejump.acidgenomics.com/
+[bb8]: https://bb8.acidgenomics.com/
 [freerange]: https://freerange.acidgenomics.com/
 [testthat]: http://testthat.r-lib.org/
 [transformer]: https://transformer.acidgenomics.com/

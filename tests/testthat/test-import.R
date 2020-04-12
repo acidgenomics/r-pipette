@@ -15,8 +15,10 @@ test_that("Invalid extension", {
 test_that("No extension", {
     unlink("example", recursive = TRUE)
     file.create("example")
-    x <- import("example")
-    expect_identical(x, character())
+    expect_error(
+        object = import("example"),
+        regexp = "does not contain file type extension"
+    )
     unlink("example")
 })
 
@@ -43,7 +45,18 @@ with_parameters_test_that(
     ext = c("csv", "csv.gz", "tsv")
 )
 
-test_that("readr mode (experimental)", {
+test_that("data.table mode", {
+    options("acid.import.engine" = "data.table")
+    file <- file.path("cache", "example.csv.gz")
+    object <- import(file)
+    expect_is(object, "data.frame")
+    expect_identical(
+        object = attributes(object)[["import"]][["importer"]],
+        expected = "data.table::fread"
+    )
+})
+
+test_that("readr mode", {
     options("acid.import.engine" = "readr")
     file <- file.path("cache", "example.csv.gz")
     object <- import(file)
@@ -54,7 +67,7 @@ test_that("readr mode (experimental)", {
     )
 })
 
-test_that("vroom mode (experimental)", {
+test_that("vroom mode", {
     options("acid.import.engine" = "vroom")
     file <- file.path("cache", "example.csv.gz")
     object <- import(file)
