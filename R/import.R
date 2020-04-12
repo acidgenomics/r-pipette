@@ -99,7 +99,7 @@
 #' `DOC`, `DOCX`, `PDF`, `PPT`, `PPTX`.
 #'
 #' @export
-#' @note Updated 2020-01-18.
+#' @note Updated 2020-04-10.
 #'
 #' @inheritParams acidroxygen::params
 #' @param rownames `logical(1)`.
@@ -111,7 +111,8 @@
 #'   Pass in a `character` vector to define the column names manually.
 #' @param format `character(1)`.
 #'   An optional file format type, which can be used to override the file format
-#'   inferred from `file`. *Not recommended by default.*
+#'   inferred from `file`. Only recommended for file and URL paths that don't
+#'   contain an extension.
 #' @param sheet `character(1)` or `integer(1)`.
 #'   *Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.*
 #'   Sheet to read. Either a string (the name of a sheet), or an integer (the
@@ -214,27 +215,35 @@ import <- function(
     )
     ## 2019-10-18: Default renamed from "none" to "auto".
     format <- match.arg(
-        arg = format,
-        choices = c("auto", "csv", "tsv", "txt", "lines", "none")
+        arg = tolower(format),
+        choices = c(
+            ## Special:
+            "auto", "lines", "none",
+            ## File type extensions:
+            "arff", "bed", "bed15", "bedgraph", "bedpe", "bigwig", "broadpeak",
+            "bw", "counts", "dbf", "dif", "dta", "gff", "gff1", "gff2", "gff3",
+            "gmt", "gmx", "grp", "gtf", "json", "log", "mat", "md", "mtp",
+            "mtx", "narrowpeak", "ods", "por", "py", "r", "rec", "rmd",
+            "sas7bdat", "sav", "sh", "syd", "wig", "xpt", "yaml", "yml"
+        )
     )
     ## Allow Google Sheets import using rio, by matching the URL.
     ## Otherwise, coerce the file extension to uppercase, for easy matching.
     if (identical(format, "auto") || identical(format, "none")) {
         ext <- str_match(basename(file), extPattern)[1L, 2L]
         if (is.na(ext)) {
-            if (!isTRUE(quiet)) {
-                cli_alert_warning(paste(
-                    "No file extension detected.",
-                    "Importing as {.strong lines}."
-                ))
-            }
-            ext <- "lines"
+            stop(paste(
+                "'file' argument does not contain file type extension.",
+                "Set the file format manually using the 'format' argument.",
+                "Refer to 'pipette::import()' documentation for details.",
+                sep = "\n"
+            ))
         }
     } else {
         ext <- format
     }
-    ext <- toupper(ext)
-    if (isSubset(ext, c("CSV", "FWF", "PSV", "TSV", "TXT"))) {
+    ext <- tolower(ext)
+    if (isSubset(ext, c("csv", "fwf", "psv", "tsv", "txt"))) {
         object <- .importDelim(
             file = file,
             colnames = colnames,
@@ -242,7 +251,7 @@ import <- function(
             metadata = metadata,
             quiet = quiet
         )
-    } else if (identical(ext, "XLS")) {
+    } else if (identical(ext, "xls")) {
         object <- .importXLS(
             file = file,
             sheet = sheet,
@@ -250,7 +259,7 @@ import <- function(
             metadata = metadata,
             quiet = quiet
         )
-    } else if (isSubset(ext, c("XLSB", "XLSX"))) {
+    } else if (isSubset(ext, c("xlsb", "xlsx"))) {
         object <- .importXLSX(
             file = file,
             sheet = sheet,
@@ -258,7 +267,7 @@ import <- function(
             metadata = metadata,
             quiet = quiet
         )
-    } else if (identical(ext, "PZFX")) {
+    } else if (identical(ext, "pzfx")) {
         ## GraphPad Prism project.
         ## Note that Prism files always contain column names.
         object <- .importPZFX(
@@ -267,49 +276,47 @@ import <- function(
             metadata = metadata,
             quiet = quiet
         )
-    } else if (identical(ext, "RDS")) {
+    } else if (identical(ext, "rds")) {
         object <- .importRDS(file = file, quiet = quiet)
-    } else if (isSubset(ext, c("RDA", "RDATA"))) {
+    } else if (isSubset(ext, c("rda", "rdata"))) {
         object <- .importRDA(file = file, quiet = quiet)
-    } else if (identical(ext, "GMT")) {
+    } else if (identical(ext, "gmt")) {
         object <- .importGMT(file = file, quiet = quiet)
-    } else if (identical(ext, "GMX")) {
+    } else if (identical(ext, "gmx")) {
         object <- .importGMX(file = file, quiet = quiet)
-    } else if (identical(ext, "GRP")) {
+    } else if (identical(ext, "grp")) {
         object <- .importGRP(file = file, quiet = quiet)
-    } else if (identical(ext, "JSON")) {
+    } else if (identical(ext, "json")) {
         object <- .importJSON(
             file = file,
             metadata = metadata,
             quiet = quiet
         )
-    } else if (isSubset(ext, c("YAML", "YML"))) {
+    } else if (isSubset(ext, c("yaml", "yml"))) {
         object <- .importYAML(
             file = file,
             metadata = metadata,
             quiet = quiet
         )
-    } else if (identical(ext, "MTX")) {
+    } else if (identical(ext, "mtx")) {
         ## We're always requiring row and column sidecar files for MTX.
         object <- .importMTX(
             file = file,
             metadata = metadata,
             quiet = quiet
         )
-    } else if (identical(ext, "COUNTS")) {
+    } else if (identical(ext, "counts")) {
         ## bcbio counts format always contains row and column names.
         object <- .importBcbioCounts(
             file = file,
             metadata = metadata,
             quiet = quiet
         )
-    } else if (isSubset(ext, c("LINES", "LOG", "MD", "PY", "R", "RMD", "SH"))) {
+    } else if (isSubset(ext, c("lines", "log", "md", "py", "r", "rmd", "sh"))) {
         object <- .importLines(file = file, quiet = quiet)
     } else if (isSubset(ext, c(
-        "BED", "BED15", "BEDGRAPH", "BEDPE",
-        "BROADPEAK", "NARROWPEAK",
-        "GFF", "GFF1", "GFF2", "GFF3", "GTF",
-        "BIGWIG", "BW", "WIG"
+        "bed", "bed15", "bedgraph", "bedpe", "bigwig", "broadpeak", "bw", "gff",
+        "gff1", "gff2", "gff3", "gtf", "narrowpeak", "wig"
     ))) {
         object <- .rtracklayerImport(
             file = file,
@@ -317,19 +324,19 @@ import <- function(
             quiet = quiet
         )
     } else if (isSubset(ext, c(
-        "ARFF",      # Weka Attribute-Relation File Format
-        "DBF",       # dBase Database File
-        "DIF",       # Data Interchange Format
-        "DTA",       # Stata
-        "MAT",       # Matlab
-        "MTP",       # Minitab
-        "ODS",       # OpenDocument (LibreOffice)
-        "POR",       # SPSS
-        "SAS7BDAT",  # SASS
-        "SAV",       # SPSS
-        "SYD",       # Systat
-        "REC",       # Epi Info
-        "XPT"        # SASS
+        "arff",      # Weka Attribute-Relation File Format
+        "dbf",       # dBase Database File
+        "dif",       # Data Interchange Format
+        "dta",       # Stata
+        "mat",       # Matlab
+        "mtp",       # Minitab
+        "ods",       # OpenDocument (LibreOffice)
+        "por",       # SPSS
+        "sas7bdat",  # SASS
+        "sav",       # SPSS
+        "syd",       # Systat
+        "rec",       # Epi Info
+        "xpt"        # SASS
     ))) {
         object <- .rioImport(
             file = file,
@@ -494,9 +501,9 @@ formals(import)[c("metadata", "quiet")] <-
         ## readr ---------------------------------------------------------------
         whatFun <- switch(
             EXPR = ext,
-            "CSV" = "read_csv",
-            "TSV" = "read_tsv",
-            "TXT" = "read_delim"
+            "csv" = "read_csv",
+            "tsv" = "read_tsv",
+            "txt" = "read_delim"
         )
         what <- get(
             x = whatFun,

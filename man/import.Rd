@@ -29,7 +29,8 @@ Pass in a \code{character} vector to define the column names manually.}
 
 \item{format}{\code{character(1)}.
 An optional file format type, which can be used to override the file format
-inferred from \code{file}. \emph{Not recommended by default.}}
+inferred from \code{file}. Only recommended for file and URL paths that don't
+contain an extension.}
 
 \item{sheet}{\code{character(1)} or \code{integer(1)}.
 \emph{Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.}
@@ -104,7 +105,7 @@ arguments. Remote URLs and compressed files are supported. If you need more
 complex import settings, just call the wrapped importer directly instead.
 }
 \note{
-Updated 2020-01-18.
+Updated 2020-04-10.
 }
 \section{Row and column names}{
 
