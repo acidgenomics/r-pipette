@@ -2,7 +2,6 @@ context("droplevels")
 
 Rle <- structure("Rle", package = "S4Vectors")  # nolint
 
-## This is defined in S4Vectors.
 test_that("DataFrame", {
     cd <- colData(rse)
     expect_s4_class(cd, "DataFrame")

@@ -4,7 +4,9 @@
 \name{naStrings}
 \alias{naStrings}
 \title{NA strings}
-\format{An object of class \code{character} of length 5.}
+\format{
+An object of class \code{character} of length 5.
+}
 \usage{
 naStrings
 }

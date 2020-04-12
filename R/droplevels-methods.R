@@ -1,11 +1,11 @@
 #' Drop unused levels from factors
 #'
 #' @name droplevels
-#' @exportMethod droplevels
 #' @inherit base::droplevels description
-#' @note Updated 2020-01-19.
+#' @note Updated 2020-04-10.
 #'
 #' @inheritParams acidroxygen::params
+#' @param ... Additional arguments.
 #'
 #' @return Modified object.
 #'
@@ -15,11 +15,20 @@
 #' ## Ranges ====
 #' rse <- RangedSummarizedExperiment
 #' object <- SummarizedExperiment::rowRanges(rse)
-#' droplevels(object)
+#' S4Vectors::droplevels(object)
 #'
 #' ## SummarizedExperiment ====
 #' object <- RangedSummarizedExperiment
-#' droplevels(object)
+#' S4Vectors::droplevels(object)
+NULL
+
+
+
+#' @rdname droplevels
+#' @name droplevels
+#' @importFrom S4Vectors droplevels
+#' @usage droplevels(x, ...)
+#' @export
 NULL
 
 
