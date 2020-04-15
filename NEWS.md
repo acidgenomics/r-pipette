@@ -1,3 +1,9 @@
+## pipette 0.4.3 (2020-04-15)
+
+### Minor changes
+
+- `import`: Bug fix for `format` argument erroring on some supported file types.
+
 ## pipette 0.4.2 (2020-04-10)
 
 ### Minor changes

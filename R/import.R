@@ -99,7 +99,7 @@
 #' `DOC`, `DOCX`, `PDF`, `PPT`, `PPTX`.
 #'
 #' @export
-#' @note Updated 2020-04-10.
+#' @note Updated 2020-04-15.
 #'
 #' @inheritParams acidroxygen::params
 #' @param rownames `logical(1)`.
@@ -209,24 +209,12 @@ import <- function(
         isAFile(file) || isAURL(file),
         isFlag(rownames),
         isFlag(colnames) || isCharacter(colnames),
+        isString(format),
         isScalar(sheet),
         isFlag(metadata),
         isFlag(quiet)
     )
-    ## 2019-10-18: Default renamed from "none" to "auto".
-    format <- match.arg(
-        arg = tolower(format),
-        choices = c(
-            ## Special:
-            "auto", "lines", "none",
-            ## File type extensions:
-            "arff", "bed", "bed15", "bedgraph", "bedpe", "bigwig", "broadpeak",
-            "bw", "counts", "dbf", "dif", "dta", "gff", "gff1", "gff2", "gff3",
-            "gmt", "gmx", "grp", "gtf", "json", "log", "mat", "md", "mtp",
-            "mtx", "narrowpeak", "ods", "por", "py", "r", "rec", "rmd",
-            "sas7bdat", "sav", "sh", "syd", "wig", "xpt", "yaml", "yml"
-        )
-    )
+    format <- tolower(format)
     ## Allow Google Sheets import using rio, by matching the URL.
     ## Otherwise, coerce the file extension to uppercase, for easy matching.
     if (identical(format, "auto") || identical(format, "none")) {
