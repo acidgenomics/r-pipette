@@ -4,10 +4,6 @@
 #' @inheritParams acidroxygen::params
 #' @param ... Additional arguments.
 #'
-#' @seealso
-#' - `base:::as.data.frame.matrix()`.
-#' - `S4Vectors:::as.data.frame.DataTable()`.
-#'
 #' @examples
 #' df <- S4Vectors::DataFrame(a = "a", b = list(a = seq_len(3)))
 #' lapply(df, is.atomic)
