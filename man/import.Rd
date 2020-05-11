@@ -105,7 +105,7 @@ arguments. Remote URLs and compressed files are supported. If you need more
 complex import settings, just call the wrapped importer directly instead.
 }
 \note{
-Updated 2020-04-10.
+Updated 2020-04-15.
 }
 \section{Row and column names}{
 
@@ -147,7 +147,7 @@ Supported return types:
 }
 \item \code{DataFrame}: Recommended when working with Bioconductor packages.
 \itemize{
-\item S4 class; inherits \code{DataTable} virtual class.
+\item S4 class.
 \item Allows rownames, but they're optional and can be set \code{NULL}.
 \item See \code{help(topic = "DataFrame", package = "S4Vectors")} for details.
 }
