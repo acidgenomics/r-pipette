@@ -32,9 +32,3 @@ df <- S4Vectors::DataFrame(a = "a", b = list(a = seq_len(3)))
 lapply(df, is.atomic)
 x <- atomize(df)
 }
-\seealso{
-\itemize{
-\item \code{base:::as.data.frame.matrix()}.
-\item \code{S4Vectors:::as.data.frame.DataTable()}.
-}
-}

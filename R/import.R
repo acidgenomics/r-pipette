@@ -41,7 +41,7 @@
 #'   - Allows rownames, but they're required and can't be set `NULL`.
 #'   - See `help(topic = "data.frame", package = "base")` for details.
 #' - `DataFrame`: Recommended when working with Bioconductor packages.
-#'   - S4 class; inherits `DataTable` virtual class.
+#'   - S4 class.
 #'   - Allows rownames, but they're optional and can be set `NULL`.
 #'   - See `help(topic = "DataFrame", package = "S4Vectors")` for details.
 #' - `tbl_df` (`tibble`): Recommended when working with tidyverse packages.
