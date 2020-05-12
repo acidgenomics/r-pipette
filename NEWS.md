@@ -1,3 +1,10 @@
+## pipette 0.4.4 (2020-05-12)
+
+### Minor changes
+
+- `loadData`, `saveData`: Switched to using `cli_alert` instead of `cli_text`
+  internally for status messages.
+
 ## pipette 0.4.3 (2020-04-15)
 
 ### Minor changes

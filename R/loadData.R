@@ -18,7 +18,7 @@
 #' @export
 #' @note This function is desired for interactive use and interprets object
 #'   names using non-standard evaluation.
-#' @note Updated 2020-01-19.
+#' @note Updated 2020-05-12.
 #'
 #' @inheritParams acidroxygen::params
 #' @param ... Object names.
@@ -156,7 +156,7 @@ formals(loadData)[c("dir", "overwrite")] <-
         FUN.VALUE = character(1L),
         USE.NAMES = TRUE
     )
-    cli_text(sprintf(
+    cli_alert(sprintf(
         "Loading {.file %s} from {.path %s}.",
         toString(
             paste0("'", basename(files), "'"),
