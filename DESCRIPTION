@@ -1,8 +1,8 @@
 Package: pipette
 Title: Pipette Biological Data In and Out of R
 Description: Input/output functions for biological data formats.
-Version: 0.4.3
-Date: 2020-04-15
+Version: 0.4.4
+Date: 2020-05-12
 Authors@R: c(
     person(
         "Michael", "Steinbaugh",
@@ -29,11 +29,11 @@ Imports:
     S4Vectors (>= 0.24),
     SingleCellExperiment (>= 1.8),
     SummarizedExperiment (>= 1.16),
-    acidbase (>= 0.1.7),
+    acidbase (>= 0.1.9),
     acidgenerics (>= 0.3.4),
     cli (>= 2.0),
     data.table (>= 1.12.8),
-    goalie (>= 0.4.3),
+    goalie (>= 0.4.4),
     jsonlite (>= 1.6),
     rtracklayer (>= 1.46),
     stringr (>= 1.4),
@@ -42,8 +42,7 @@ Imports:
     methods,
     utils
 Suggests:
-    acidroxygen (>= 0.1.5),
-    acidtest (>= 0.2.9),
+    acidtest (>= 0.3.0),
     gdata (>= 2.18),
     patrick (>= 0.0.1),
     pzfx (>= 0.2),
@@ -55,7 +54,6 @@ Suggests:
 Remotes:
     acidgenomics/acidbase,
     acidgenomics/acidgenerics,
-    acidgenomics/acidroxygen,
     acidgenomics/acidtest,
     acidgenomics/goalie
 Roxygen: list(markdown = TRUE)
