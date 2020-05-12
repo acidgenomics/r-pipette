@@ -1,5 +1,13 @@
 ## pipette 0.4.4 (2020-05-12)
 
+### Major changes
+
+- `import` and `export` functions now default to using vroom engine instead
+  of data.table. Internally, these now call `vroom` and `vroom_write`.
+  We noticed that the data.table `fwrite` function in particular can have issues
+  writing many files on AWS EC2 instances, resulting in a stack imbalance.
+  The vroom package seems to be more stable currently.
+
 ### Minor changes
 
 - `loadData`, `saveData`: Switched to using `cli_alert` instead of `cli_text`
