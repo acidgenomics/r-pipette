@@ -1,6 +1,6 @@
 #' @name export
 #' @inherit acidgenerics::export
-#' @note Updated 2020-01-19.
+#' @note Updated 2020-05-12.
 #'
 #' @section Row names:
 #'
@@ -21,10 +21,8 @@
 #'
 #' @section Debugging:
 #'
-#' Note that this function currently wraps [data.table::fwrite()] by default
-#' for exporting `data.frame` and `matrix` class objects. If you encounter any
-#' stack imbalance or segfault warnings during export, these are errors from
-#' data.table.
+#' Note that this function currently wraps [vroom::voom_write()] by default
+#' for exporting `data.frame` and `matrix` class objects.
 #'
 #' @inheritParams acidroxygen::params
 #' @param object Object.
@@ -55,10 +53,21 @@
 #' File path(s).
 #'
 #' @seealso
-#' - [rio::export()].
-#' - [rtracklayer::export()].
-#' - [data.table::fwrite()].
-#' - [readr::write_csv()].
+#' Packages:
+#'
+#' - [data.table](http://r-datatable.com/).
+#' - [readr](http://readr.tidyverse.org).
+#' - [rio](https://cran.r-project.org/package=rio).
+#' - [rtracklayer](http://bioconductor.org/packages/rtracklayer/).
+#' - [vroom](https://vroom.r-lib.org).
+#'
+#' Export functions:
+#'
+#' - `data.table::fwrite()`.
+#' - `readr::write_csv()`.
+#' - `rio::export()`.
+#' - `rtracklayer::export()`.
+#' - `vroom::vroom_write()`.
 #'
 #' @examples
 #' counts <- matrix(data = seq_len(100L), nrow = 10)
@@ -177,7 +186,7 @@ setMethod(
 ## `data.table`, `tbl_df`, and `DataFrame` classes. Note that `rio::export()`
 ## does not preserve row names by default, so we're ensuring row names get
 ## coerced to "rowname" column consistently here.
-## Updated 2020-01-19.
+## Updated 2020-05-12.
 `export,matrix` <-  # nolint
     function(
         object,
@@ -190,7 +199,7 @@ setMethod(
         validObject(object)
         object <- as.data.frame(object)
         whatPkg <- match.arg(
-            arg = getOption("acid.export.engine", default = "data.table"),
+            arg = getOption("acid.export.engine", default = "vroom"),
             choices = c("data.table", "readr", "vroom")
         )
         verbose <- getOption("acid.verbose", default = FALSE)

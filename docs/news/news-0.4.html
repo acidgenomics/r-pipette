@@ -119,9 +119,9 @@
     <div id="pipette-0-4-0-2020-01-19" class="section level2">
 <h2 class="hasAnchor">
 <a href="#pipette-0-4-0-2020-01-19" class="anchor"></a>pipette 0.4.0 (2020-01-19)</h2>
-<div id="major-changes" class="section level3">
+<div id="major-changes-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#major-changes" class="anchor"></a>Major changes</h3>
+<a href="#major-changes-1" class="anchor"></a>Major changes</h3>
 <ul>
 <li>Renamed package from brio to pipette, in preparation of CRAN submission.</li>
 <li>
@@ -180,6 +180,14 @@
     <div id="pipette-0-4-4-2020-05-12" class="section level2">
 <h2 class="hasAnchor">
 <a href="#pipette-0-4-4-2020-05-12" class="anchor"></a>pipette 0.4.4 (2020-05-12)</h2>
+<div id="major-changes" class="section level3">
+<h3 class="hasAnchor">
+<a href="#major-changes" class="anchor"></a>Major changes</h3>
+<ul>
+<li>
+<code>import</code> and <code>export</code> functions now default to using vroom engine instead of data.table. Internally, these now call <code>vroom</code> and <code>vroom_write</code>. We noticed that the data.table <code>fwrite</code> function in particular can have issues writing many files on AWS EC2 instances, resulting in a stack imbalance. The vroom package seems to be more stable currently.</li>
+</ul>
+</div>
 <div id="minor-changes" class="section level3">
 <h3 class="hasAnchor">
 <a href="#minor-changes" class="anchor"></a>Minor changes</h3>
