@@ -202,9 +202,9 @@
 <ul>
 <li>Updated R dependency to 3.6.</li>
 </ul>
-<div id="major-changes-3" class="section level3">
+<div id="major-changes-4" class="section level3">
 <h3 class="hasAnchor">
-<a href="#major-changes-3" class="anchor"></a>Major changes</h3>
+<a href="#major-changes-4" class="anchor"></a>Major changes</h3>
 <ul>
 <li>
 <code>export</code>: Reworked internal code to call <code><a href="https://Rdatatable.gitlab.io/data.table/reference/fwrite.html">data.table::fwrite</a></code> directly, rather than having to pass to <code>brio::export</code>. Added support for <code>bz2</code> output for <code>matrix</code> and <code>sparseMatrix</code> classes.</li>
@@ -226,9 +226,9 @@
     <div id="brio-0-3-8-2019-09-11" class="section level2">
 <h2 class="hasAnchor">
 <a href="#brio-0-3-8-2019-09-11" class="anchor"></a>brio 0.3.8 (2019-09-11)</h2>
-<div id="major-changes-2" class="section level3">
+<div id="major-changes-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#major-changes-2" class="anchor"></a>Major changes</h3>
+<a href="#major-changes-3" class="anchor"></a>Major changes</h3>
 <ul>
 <li>
 <code>import</code>: Improved metadata stash approach inside S4 (<code>metadata</code>) and S3 (<code>attributes</code>) return objects. Previously, import metadata was stashed inside “brio”, but this has been renamed to “import”. Metadata is no longer stashed inside R data objects loaded via <code>import</code>. Simplified the internal code inside <code>import</code> to only stash the <code>call</code>, whereas importer metadata is now handled by an internal <code>.defineImportMetadata</code> function.</li>
@@ -258,9 +258,9 @@
     <div id="brio-0-3-10-2019-10-12" class="section level2">
 <h2 class="hasAnchor">
 <a href="#brio-0-3-10-2019-10-12" class="anchor"></a>brio 0.3.10 (2019-10-12)</h2>
-<div id="major-changes-1" class="section level3">
+<div id="major-changes-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#major-changes-1" class="anchor"></a>Major changes</h3>
+<a href="#major-changes-2" class="anchor"></a>Major changes</h3>
 <ul>
 <li>
 <p>Added back internal support for readr package instead of data.table for <code>import</code> and <code>export</code> functions. We have observed stack imbalance and segfault memory dump issues with the latest data.table release (v1.12.4) on multi-core Azure VMs. The engine can now be changed using global options:</p>

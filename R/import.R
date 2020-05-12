@@ -99,7 +99,7 @@
 #' `DOC`, `DOCX`, `PDF`, `PPT`, `PPTX`.
 #'
 #' @export
-#' @note Updated 2020-04-15.
+#' @note Updated 2020-05-12.
 #'
 #' @inheritParams acidroxygen::params
 #' @param rownames `logical(1)`.
@@ -125,7 +125,7 @@
 #'   Note that TXT structure is amgibuous and actively discouraged.\cr
 #'   Refer to `Data frame return` section for details on how to change the
 #'   default return type to `DataFrame`, `tbl_df` or `data.table`.\cr
-#'   Imported by [data.table::fread()].
+#'   Imported by [vroom::vroom()].
 #' - **Excel workbook** (`XLSB`, `XLSX`): `data.frame`.\cr
 #'   Resave in plain text delimited format instead, if possible.\cr
 #'   Imported by [readxl::read_excel()].
@@ -171,19 +171,21 @@
 #' @seealso
 #' Packages:
 #'
-#' - [rio](https://cran.r-project.org/package=rio).
-#' - [rtracklayer](http://bioconductor.org/packages/rtracklayer/).
 #' - [data.table](http://r-datatable.com/).
 #' - [readr](http://readr.tidyverse.org).
 #' - [readxl](http://readxl.tidyverse.org).
+#' - [rio](https://cran.r-project.org/package=rio).
+#' - [rtracklayer](http://bioconductor.org/packages/rtracklayer/).
+#' - [vroom](https://vroom.r-lib.org).
 #'
-#' Importer functions:
+#' Import functions:
 #'
-#' - `rtracklayer::import()`.
-#' - `rio::import()`.
 #' - `data.table::fread()`.
 #' - `readr::read_csv()`.
+#' - `rio::import()`.
+#' - `rtracklayer::import()`.
 #' - `utils::read.table()`.
+#' - `vroom::vroom()`.
 #'
 #' @examples
 #' file <- system.file("extdata/example.csv", package = "pipette")
@@ -435,9 +437,10 @@ formals(import)[c("metadata", "quiet")] <-
 
 ## Basic =======================================================================
 ## Internal importer for a delimited file (e.g. `.csv`, `.tsv`).
-## Calls `data.table::fread()` internally by default.
-## Can override using `acid.import.engine` option, which also supports readr.
-## Updated 2020-01-18.
+## Calls `vroom::vroom()` internally by default.
+## Can override using `acid.import.engine` option, which also supports
+## data.table and readr packages.
+## Updated 2020-05-12.
 .importDelim <- function(
     file,
     colnames,
@@ -453,7 +456,7 @@ formals(import)[c("metadata", "quiet")] <-
         isFlag(quiet)
     )
     whatPkg <- match.arg(
-        arg = getOption("acid.import.engine", default = "data.table"),
+        arg = getOption("acid.import.engine", default = "vroom"),
         choices = c("data.table", "readr", "vroom")
     )
     assert(requireNamespace(whatPkg, quietly = TRUE))

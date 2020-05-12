@@ -39,7 +39,7 @@ with_parameters_test_that(
         )
         expect_identical(
             object = attributes(object)[["import"]][["importer"]],
-            expected = "data.table::fread"
+            expected = "vroom::vroom"
         )
     },
     ext = c("csv", "csv.gz", "tsv")
