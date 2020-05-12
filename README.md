@@ -3,7 +3,7 @@
 [![Repo status: active](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![Travis CI build status](https://travis-ci.com/acidgenomics/pipette.svg?branch=master)](https://travis-ci.com/acidgenomics/pipette)
 [![AppVeyor CI build status](https://ci.appveyor.com/api/projects/status/cjde5mhr8226ctl8/branch/master?svg=true)](https://ci.appveyor.com/project/mjsteinbaugh/pipette/branch/master)
-[![Anaconda version](https://anaconda.org/bioconda/r-pipette/badges/version.svg) ![Anaconda latest release date](https://anaconda.org/bioconda/r-pipette/badges/latest_release_date.svg) ![Anaconda downloads](https://anaconda.org/bioconda/r-pipette/badges/downloads.svg)](https://anaconda.org/bioconda/r-pipette)
+[![Install with bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](http://bioconda.github.io/recipes/r-pipette/README.html)
 
 Pipette biological data in and out of R.
 
