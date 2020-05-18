@@ -99,7 +99,7 @@
 #' `DOC`, `DOCX`, `PDF`, `PPT`, `PPTX`.
 #'
 #' @export
-#' @note Updated 2020-05-12.
+#' @note Updated 2020-05-18.
 #'
 #' @inheritParams acidroxygen::params
 #' @param rownames `logical(1)`.
@@ -520,8 +520,15 @@ formals(import)[c("metadata", "quiet")] <-
             envir = asNamespace(whatPkg),
             inherits = TRUE
         )
+        delim <- switch(
+            EXPR = ext,
+            "csv" = ",",
+            "tsv" = "\t",
+            "txt" = " "
+        )
         args <- list(
             file = tmpfile,
+            delim = delim,
             col_names = colnames,
             col_types = vroom::cols(),
             na = naStrings,
