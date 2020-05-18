@@ -1,3 +1,11 @@
+## pipette 0.4.5 (2020-05-18)
+
+### Minor changes
+
+- `import`: Now setting delim internally for `vroom` import call, to handle
+  single column data frame import. Otherwise vroom will warn about failing
+  to detect expected delimiter.
+
 ## pipette 0.4.4 (2020-05-12)
 
 ### Major changes
