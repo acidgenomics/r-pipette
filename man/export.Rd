@@ -137,7 +137,7 @@ File path(s).
 Export data out of R and write to disk.
 }
 \note{
-Updated 2020-01-19.
+Updated 2020-05-12.
 }
 \section{Row names}{
 
@@ -161,10 +161,8 @@ intentionally unsupported in the current release.
 \section{Debugging}{
 
 
-Note that this function currently wraps \code{\link[data.table:fwrite]{data.table::fwrite()}} by default
-for exporting \code{data.frame} and \code{matrix} class objects. If you encounter any
-stack imbalance or segfault warnings during export, these are errors from
-data.table.
+Note that this function currently wraps \code{\link[vroom:voom_write]{vroom::voom_write()}} by default
+for exporting \code{data.frame} and \code{matrix} class objects.
 }
 
 \examples{
@@ -175,10 +173,21 @@ export(counts, ext = "csv")
 file.remove("counts.csv")
 }
 \seealso{
+Packages:
 \itemize{
-\item \code{\link[rio:export]{rio::export()}}.
-\item \code{\link[rtracklayer:export]{rtracklayer::export()}}.
-\item \code{\link[data.table:fwrite]{data.table::fwrite()}}.
-\item \code{\link[readr:write_csv]{readr::write_csv()}}.
+\item \href{http://r-datatable.com/}{data.table}.
+\item \href{http://readr.tidyverse.org}{readr}.
+\item \href{https://cran.r-project.org/package=rio}{rio}.
+\item \href{http://bioconductor.org/packages/rtracklayer/}{rtracklayer}.
+\item \href{https://vroom.r-lib.org}{vroom}.
+}
+
+Export functions:
+\itemize{
+\item \code{data.table::fwrite()}.
+\item \code{readr::write_csv()}.
+\item \code{rio::export()}.
+\item \code{rtracklayer::export()}.
+\item \code{vroom::vroom_write()}.
 }
 }
