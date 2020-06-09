@@ -272,7 +272,7 @@ Apply gzip compression to all files.</p></td>
 File path(s).</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>Updated 2020-01-19.</p>
+    <p>Updated 2020-05-12.</p>
     <h2 class="hasAnchor" id="row-names"><a class="anchor" href="#row-names"></a>Row names</h2>
 
     
@@ -297,18 +297,24 @@ intentionally unsupported in the current release.</p>
     
 
 
-<p>Note that this function currently wraps <code><a href='https://Rdatatable.gitlab.io/data.table/reference/fwrite.html'>data.table::fwrite()</a></code> by default
-for exporting <code>data.frame</code> and <code>matrix</code> class objects. If you encounter any
-stack imbalance or segfault warnings during export, these are errors from
-data.table.</p>
+<p>Note that this function currently wraps <code>vroom::voom_write()</code> by default
+for exporting <code>data.frame</code> and <code>matrix</code> class objects.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'>
-<ul>
-<li><p><code><a href='https://rdrr.io/pkg/rio/man/export.html'>rio::export()</a></code>.</p></li>
-<li><p><code><a href='https://rdrr.io/pkg/rtracklayer/man/export.html'>rtracklayer::export()</a></code>.</p></li>
+    <div class='dont-index'><p>Packages:</p><ul>
+<li><p><a href='http://r-datatable.com/'>data.table</a>.</p></li>
+<li><p><a href='http://readr.tidyverse.org'>readr</a>.</p></li>
+<li><p><a href='https://cran.r-project.org/package=rio'>rio</a>.</p></li>
+<li><p><a href='http://bioconductor.org/packages/rtracklayer/'>rtracklayer</a>.</p></li>
+<li><p><a href='https://vroom.r-lib.org'>vroom</a>.</p></li>
+</ul>
+
+<p>Export functions:</p><ul>
 <li><p><code><a href='https://Rdatatable.gitlab.io/data.table/reference/fwrite.html'>data.table::fwrite()</a></code>.</p></li>
 <li><p><code><a href='https://readr.tidyverse.org/reference/write_delim.html'>readr::write_csv()</a></code>.</p></li>
+<li><p><code><a href='https://rdrr.io/pkg/rio/man/export.html'>rio::export()</a></code>.</p></li>
+<li><p><code><a href='https://rdrr.io/pkg/rtracklayer/man/export.html'>rtracklayer::export()</a></code>.</p></li>
+<li><p><code><a href='https://vroom.r-lib.org/reference/vroom_write.html'>vroom::vroom_write()</a></code>.</p></li>
 </ul>
 </div>
 
