@@ -20,7 +20,7 @@ globalVariables(".")
 #' @examples
 #' pipetteTestsURL
 pipetteTestsURL <- paste0(
-    "http://tests.acidgenomics.com/pipette/",
+    "https://tests.acidgenomics.com/pipette/",
     "v", .version$major, ".", .version$minor  # nolint
 )
 
