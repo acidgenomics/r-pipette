@@ -187,7 +187,7 @@ Data separated by commas, tabs, or visual spaces.<br />
 Note that TXT structure is amgibuous and actively discouraged.<br />
 Refer to <code>Data frame return</code> section for details on how to change the
 default return type to <code>DataFrame</code>, <code>tbl_df</code> or <code>data.table</code>.<br />
-Imported by <code><a href='https://Rdatatable.gitlab.io/data.table/reference/fread.html'>data.table::fread()</a></code>.</p></li>
+Imported by <code><a href='https://vroom.r-lib.org/reference/vroom.html'>vroom::vroom()</a></code>.</p></li>
 <li><p><strong>Excel workbook</strong> (<code>XLSB</code>, <code>XLSX</code>): <code>data.frame</code>.<br />
 Resave in plain text delimited format instead, if possible.<br />
 Imported by <code><a href='https://readxl.tidyverse.org/reference/read_excel.html'>readxl::read_excel()</a></code>.</p></li>
@@ -239,7 +239,7 @@ arguments. Remote URLs and compressed files are supported. If you need more
 complex import settings, just call the wrapped importer directly instead.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>Updated 2020-04-15.</p>
+    <p>Updated 2020-05-18.</p>
     <h2 class="hasAnchor" id="row-and-column-names"><a class="anchor" href="#row-and-column-names"></a>Row and column names</h2>
 
     
@@ -344,19 +344,21 @@ makes GFF loading simple.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Packages:</p><ul>
-<li><p><a href='https://cran.r-project.org/package=rio'>rio</a>.</p></li>
-<li><p><a href='http://bioconductor.org/packages/rtracklayer/'>rtracklayer</a>.</p></li>
 <li><p><a href='http://r-datatable.com/'>data.table</a>.</p></li>
 <li><p><a href='http://readr.tidyverse.org'>readr</a>.</p></li>
 <li><p><a href='http://readxl.tidyverse.org'>readxl</a>.</p></li>
+<li><p><a href='https://cran.r-project.org/package=rio'>rio</a>.</p></li>
+<li><p><a href='http://bioconductor.org/packages/rtracklayer/'>rtracklayer</a>.</p></li>
+<li><p><a href='https://vroom.r-lib.org'>vroom</a>.</p></li>
 </ul>
 
-<p>Importer functions:</p><ul>
-<li><p><code><a href='https://rdrr.io/pkg/rtracklayer/man/export.html'>rtracklayer::import()</a></code>.</p></li>
-<li><p><code><a href='https://rdrr.io/pkg/rio/man/import.html'>rio::import()</a></code>.</p></li>
+<p>Import functions:</p><ul>
 <li><p><code><a href='https://Rdatatable.gitlab.io/data.table/reference/fread.html'>data.table::fread()</a></code>.</p></li>
 <li><p><code><a href='https://readr.tidyverse.org/reference/read_delim.html'>readr::read_csv()</a></code>.</p></li>
+<li><p><code><a href='https://rdrr.io/pkg/rio/man/import.html'>rio::import()</a></code>.</p></li>
+<li><p><code><a href='https://rdrr.io/pkg/rtracklayer/man/export.html'>rtracklayer::import()</a></code>.</p></li>
 <li><p><code><a href='https://rdrr.io/r/utils/read.table.html'>utils::read.table()</a></code>.</p></li>
+<li><p><code><a href='https://vroom.r-lib.org/reference/vroom.html'>vroom::vroom()</a></code>.</p></li>
 </ul>
 </div>
 
