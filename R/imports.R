@@ -22,7 +22,7 @@ NULL
 #'   areSetEqual formalCompress hasColnames hasCols hasDimnames hasInternet
 #'   hasLength hasNames hasNoDuplicates hasRownames hasRows hasValidNames
 #'   hasValidDimnames isAFile isAURL isAny isCharacter isFlag isMatchingRegex
-#'   isScalar isString isSubset validNames
+#'   isInt isScalar isString isSubset validNames
 #' @importFrom methods as is slotNames validObject .hasSlot
 #' @importFrom rtracklayer import
 #' @importFrom stringr str_extract str_match str_subset

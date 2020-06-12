@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pipette</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.6</span>
       </span>
     </div>
 
@@ -128,6 +128,7 @@
   <span class='kw'>colnames</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"auto"</span>,
   <span class='kw'>sheet</span> <span class='kw'>=</span> <span class='fl'>1L</span>,
+  <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>0L</span>,
   <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"acid.import.metadata"</span>, <span class='kw'>default</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>),
   <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"acid.quiet"</span>, <span class='kw'>default</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 )</pre>
@@ -166,6 +167,12 @@ contain an extension.</p></td>
 <em>Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.</em>
 Sheet to read. Either a string (the name of a sheet), or an integer (the
 position of the sheet). Defaults to the first sheet.</p></td>
+    </tr>
+    <tr>
+      <th>skip</th>
+      <td><p><code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>.
+<em>Applies to delimited file (CSV, TSV), Excel Workbook, or lines.</em>
+Number of lines to skip.</p></td>
     </tr>
     <tr>
       <th>metadata</th>
@@ -217,7 +224,7 @@ Imported by <code><a href='https://jeroen.cran.dev/jsonlite/reference/read_json.
 Imported by <code><a href='https://rdrr.io/pkg/yaml/man/yaml.load.html'>yaml::yaml.load_file()</a></code>.</p></li>
 <li><p><strong>Lines</strong> (<code>LOG</code>, <code>MD</code>, <code>PY</code>, <code>R</code>, <code>RMD</code>, <code>SH</code>): <code>character</code>.
 Source code or log files.<br />
-Imported by <code><a href='https://rdrr.io/r/base/readLines.html'>readLines()</a></code>.</p></li>
+Imported by <code><a href='https://readr.tidyverse.org/reference/read_lines.html'>read_lines()</a></code>.</p></li>
 <li><p><strong>R data serialized</strong> (<code>RDS</code>): <em>variable</em>.<br />
 Currently recommend over RDA, if possible.<br />
 Imported by <code><a href='https://rdrr.io/r/base/readRDS.html'>readRDS()</a></code>.</p></li>
@@ -239,7 +246,7 @@ arguments. Remote URLs and compressed files are supported. If you need more
 complex import settings, just call the wrapped importer directly instead.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>Updated 2020-05-18.</p>
+    <p>Updated 2020-06-11.</p>
     <h2 class="hasAnchor" id="row-and-column-names"><a class="anchor" href="#row-and-column-names"></a>Row and column names</h2>
 
     
