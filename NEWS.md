@@ -5,6 +5,8 @@
 - `import` Hardened Excel input to intentionally error on any warnings returned
   by internal `read_excel` call, which is too liberal in coercing data types,
   in my opinion.
+- `import`: Switched XLS parser from gdata (no longer updated) back to readxl,
+  which is more actively developed.
 
 ## pipette 0.4.6 (2020-06-11)
 
