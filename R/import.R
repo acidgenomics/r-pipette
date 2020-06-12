@@ -579,7 +579,7 @@ formals(import)[c("metadata", "quiet")] <-
 
 ## Internal importer for (source code) lines.
 ## Updated 2020-06-11.
-.importLines <- function(file, skip, quiet) {
+.importLines <- function(file, skip = 0L, quiet) {
     assert(
         requireNamespace("readr", quietly = TRUE),
         isInt(skip),
