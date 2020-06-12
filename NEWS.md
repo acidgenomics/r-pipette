@@ -4,6 +4,8 @@
 
 - `import`: Added support for `skip` argument, which allows the user to skip
   a certain number of lines in the input.
+- `import` and `export` of source code lines now uses readr package internally
+  (`read_lines` and `write_lines`) instead of base `readLines` and `writeLines`.
 
 ## pipette 0.4.5 (2020-05-18)
 
