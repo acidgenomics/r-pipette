@@ -812,7 +812,7 @@ formals(import)[c("metadata", "quiet")] <-
 ## lines removal, so ensure that is fixed downstream.
 
 ## Internal importer for a Microsoft Excel worksheet (`.xlsx`).
-## Updated 2020-06-11.
+## Updated 2020-06-12.
 .importXLSX <- function(
     file,
     sheet,
@@ -836,7 +836,11 @@ formals(import)[c("metadata", "quiet")] <-
         ))
     }
     assert(requireNamespace("readxl", quietly = TRUE))
-    object <- readxl::read_excel(
+    ## Note that `tryCatch()` or `withCallingHandlers()` doesn't work here.
+    ## http://adv-r.had.co.nz/Exceptions-Debugging.html
+    warn <- getOption("warn")
+    options(warn = 2L)
+    readxl::read_excel(
         path = tmpfile,
         sheet = sheet,
         col_names = colnames,
@@ -846,6 +850,7 @@ formals(import)[c("metadata", "quiet")] <-
         progress = FALSE,
         .name_repair = "minimal"
     )
+    options(warn = warn)
     ## Always return as data.frame instead of tibble at this step.
     object <- as.data.frame(
         x = object,
