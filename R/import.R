@@ -840,7 +840,7 @@ formals(import)[c("metadata", "quiet")] <-
     ## http://adv-r.had.co.nz/Exceptions-Debugging.html
     warn <- getOption("warn")
     options(warn = 2L)
-    readxl::read_excel(
+    object <- readxl::read_excel(
         path = tmpfile,
         sheet = sheet,
         col_names = colnames,
