@@ -99,7 +99,7 @@
 #' `DOC`, `DOCX`, `PDF`, `PPT`, `PPTX`.
 #'
 #' @export
-#' @note Updated 2020-05-18.
+#' @note Updated 2020-06-11.
 #'
 #' @inheritParams acidroxygen::params
 #' @param rownames `logical(1)`.
@@ -117,6 +117,9 @@
 #'   *Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.*
 #'   Sheet to read. Either a string (the name of a sheet), or an integer (the
 #'   position of the sheet). Defaults to the first sheet.
+#' @param skip `integer(1)`.
+#'   *Applies to delimited file (CSV, TSV), Excel Workbook, or lines.*
+#'   Number of lines to skip.
 #'
 #' @return Varies, depending on the file type (format):
 #'
@@ -155,7 +158,7 @@
 #'   Imported by [yaml::yaml.load_file()].
 #' - **Lines** (`LOG`, `MD`, `PY`, `R`, `RMD`, `SH`): `character`.
 #'   Source code or log files.\cr
-#'   Imported by [`readLines()`][base::readLines].
+#'   Imported by [`read_lines()`][readr::read_lines].
 #' - **R data serialized** (`RDS`): *variable*.\cr
 #'   Currently recommend over RDA, if possible.\cr
 #'   Imported by [`readRDS()`][base::readRDS].
@@ -203,6 +206,7 @@ import <- function(
     colnames = TRUE,
     format = "auto",
     sheet = 1L,
+    skip = 0L,
     metadata,
     quiet
 ) {
@@ -213,6 +217,7 @@ import <- function(
         isFlag(colnames) || isCharacter(colnames),
         isString(format),
         isScalar(sheet),
+        isInt(skip),
         isFlag(metadata),
         isFlag(quiet)
     )
@@ -236,24 +241,27 @@ import <- function(
     if (isSubset(ext, c("csv", "fwf", "psv", "tsv", "txt"))) {
         object <- .importDelim(
             file = file,
-            colnames = colnames,
             ext = ext,
+            colnames = colnames,
+            skip = skip,
             metadata = metadata,
             quiet = quiet
         )
     } else if (identical(ext, "xls")) {
         object <- .importXLS(
             file = file,
-            sheet = sheet,
             colnames = colnames,
+            sheet = sheet,
+            skip = skip,
             metadata = metadata,
             quiet = quiet
         )
     } else if (isSubset(ext, c("xlsb", "xlsx"))) {
         object <- .importXLSX(
             file = file,
-            sheet = sheet,
             colnames = colnames,
+            sheet = sheet,
+            skip = skip,
             metadata = metadata,
             quiet = quiet
         )
@@ -303,7 +311,11 @@ import <- function(
             quiet = quiet
         )
     } else if (isSubset(ext, c("lines", "log", "md", "py", "r", "rmd", "sh"))) {
-        object <- .importLines(file = file, quiet = quiet)
+        object <- .importLines(
+            file = file,
+            skip = skip,
+            quiet = quiet
+        )
     } else if (isSubset(ext, c(
         "bed", "bed15", "bedgraph", "bedpe", "bigwig", "broadpeak", "bw", "gff",
         "gff1", "gff2", "gff3", "gtf", "narrowpeak", "wig"
@@ -445,15 +457,18 @@ formals(import)[c("metadata", "quiet")] <-
     file,
     colnames,
     ext,
+    skip,
     metadata,
     quiet
 ) {
     verbose <- getOption("acid.verbose", default = FALSE)
     assert(
         isFlag(colnames) || isCharacter(colnames),
-        isFlag(verbose),
+        isString(ext),
+        isInt(skip),
         isFlag(metadata),
-        isFlag(quiet)
+        isFlag(quiet),
+        isFlag(verbose)
     )
     whatPkg <- match.arg(
         arg = getOption("acid.import.engine", default = "vroom"),
@@ -476,7 +491,7 @@ formals(import)[c("metadata", "quiet")] <-
             data.table = FALSE,
             fill = FALSE,
             na.strings = naStrings,
-            skip = 0L,
+            skip = skip,
             showProgress = FALSE,
             stringsAsFactors = FALSE,
             strip.white = TRUE,
@@ -509,7 +524,7 @@ formals(import)[c("metadata", "quiet")] <-
             na = naStrings,
             progress = FALSE,
             trim_ws = TRUE,
-            skip = 0L,
+            skip = skip,
             skip_empty_rows = TRUE
         )
     } else if (identical(whatPkg, "vroom")) {
@@ -533,7 +548,7 @@ formals(import)[c("metadata", "quiet")] <-
             col_types = vroom::cols(),
             na = naStrings,
             progress = FALSE,
-            skip = 0L,
+            skip = skip,
             trim_ws = TRUE,
             .name_repair = make.names  # or "universal"
         )
@@ -563,20 +578,26 @@ formals(import)[c("metadata", "quiet")] <-
 
 
 ## Internal importer for (source code) lines.
-## Updated 2020-01-17.
-.importLines <- function(file, quiet) {
-    assert(isFlag(quiet))
+## Updated 2020-06-11.
+.importLines <- function(file, skip = 0L, quiet) {
+    assert(
+        requireNamespace("readr", quietly = TRUE),
+        isInt(skip),
+        isFlag(quiet)
+    )
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
     if (!isTRUE(quiet)) {
         cli_alert(sprintf(
             "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
-            basename(file), "base", "readLines"
+            basename(file), "readr", "read_lines"
         ))
     }
-    con <- file(tmpfile)
-    object <- readLines(con = con)
-    close(con)
-    object
+    readr::read_lines(
+        file = file,
+        skip = skip,
+        skip_empty_rows = FALSE,
+        progress = FALSE
+    )
 }
 
 
@@ -791,17 +812,19 @@ formals(import)[c("metadata", "quiet")] <-
 ## lines removal, so ensure that is fixed downstream.
 
 ## Internal importer for a Microsoft Excel worksheet (`.xlsx`).
-## Updated 2020-01-17.
+## Updated 2020-06-11.
 .importXLSX <- function(
     file,
     sheet,
     colnames,
+    skip,
     metadata,
     quiet
 ) {
     assert(
         isScalar(sheet),
         isFlag(colnames) || isCharacter(colnames),
+        isInt(skip),
         isFlag(metadata),
         isFlag(quiet)
     )
@@ -819,6 +842,7 @@ formals(import)[c("metadata", "quiet")] <-
         col_names = colnames,
         na = naStrings,
         trim_ws = TRUE,
+        skip = skip,
         progress = FALSE,
         .name_repair = "minimal"
     )
@@ -856,12 +880,14 @@ formals(import)[c("metadata", "quiet")] <-
     file,
     sheet,
     colnames,
+    skip,
     metadata,
     quiet
 ) {
     assert(
         isScalar(sheet),
         isFlag(colnames) || isCharacter(colnames),
+        isInt(skip),
         isFlag(metadata),
         isFlag(quiet)
     )
@@ -886,7 +912,8 @@ formals(import)[c("metadata", "quiet")] <-
             sheet = sheet,
             verbose = FALSE,
             na.strings = naStrings,
-            header = header
+            header = header,
+            skip = skip
         ),
         warning = function(w) {
             ## nocov start

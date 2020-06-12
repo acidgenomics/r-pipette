@@ -137,7 +137,7 @@ File path(s).
 Export data out of R and write to disk.
 }
 \note{
-Updated 2020-05-12.
+Updated 2020-06-11.
 }
 \section{Row names}{
 
@@ -150,18 +150,10 @@ Here we're performing any internal tibble coercion step to ensure row names
 are always moved to a \code{"rowname"} column in the CSV export.
 }
 
-\section{Exporting vectors}{
-
-
-Use \code{\link[base:writeLines]{writeLines()}} instead of \code{\link[=export]{export()}} to write vectors
-to disk. An S4 character method may be defined in a future update, but it is
-intentionally unsupported in the current release.
-}
-
 \section{Debugging}{
 
 
-Note that this function currently wraps \code{\link[vroom:voom_write]{vroom::voom_write()}} by default
+Note that this function currently wraps \code{vroom::voom_write()} by default
 for exporting \code{data.frame} and \code{matrix} class objects.
 }
 

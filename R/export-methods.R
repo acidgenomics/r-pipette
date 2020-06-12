@@ -1,6 +1,6 @@
 #' @name export
 #' @inherit acidgenerics::export
-#' @note Updated 2020-05-12.
+#' @note Updated 2020-06-11.
 #'
 #' @section Row names:
 #'
@@ -13,15 +13,9 @@
 #'
 #' [readr]: https://readr.tidyverse.org/
 #'
-#' @section Exporting vectors:
-#'
-#' Use [`writeLines()`][base::writeLines] instead of [export()] to write vectors
-#' to disk. An S4 character method may be defined in a future update, but it is
-#' intentionally unsupported in the current release.
-#'
 #' @section Debugging:
 #'
-#' Note that this function currently wraps [vroom::voom_write()] by default
+#' Note that this function currently wraps `vroom::voom_write()` by default
 #' for exporting `data.frame` and `matrix` class objects.
 #'
 #' @inheritParams acidroxygen::params
@@ -88,7 +82,7 @@ NULL
 
 
 
-## Updated 2020-01-19.
+## Updated 2020-06-11.
 `export,character` <-  # nolint
     function(
         object,
@@ -99,6 +93,7 @@ NULL
         quiet
     ) {
         assert(
+            requireNamespace("readr", quietly = TRUE),
             isCharacter(object),
             isString(ext),
             isString(dir),
@@ -139,12 +134,14 @@ NULL
         if (!isTRUE(quiet)) {
             cli_alert(sprintf(
                 "Exporting {.file %s} using {.pkg %s}::{.fun %s}.",
-                basename(file), "base", "writeLines"
+                basename(file), "readr", "write_lines"
             ))
         }
-        con <- file(description = file)
-        writeLines(text = object, con = con)
-        close(con)
+        readr::write_lines(
+            x = object,
+            path = file,
+            append = FALSE
+        )
         ## Compress file, if necessary.
         if (isTRUE(compress)) {
             file <- compress(
