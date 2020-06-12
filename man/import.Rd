@@ -10,6 +10,7 @@ import(
   colnames = TRUE,
   format = "auto",
   sheet = 1L,
+  skip = 0L,
   metadata = getOption("acid.import.metadata", default = FALSE),
   quiet = getOption("acid.quiet", default = FALSE)
 )
@@ -36,6 +37,10 @@ contain an extension.}
 \emph{Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.}
 Sheet to read. Either a string (the name of a sheet), or an integer (the
 position of the sheet). Defaults to the first sheet.}
+
+\item{skip}{\code{integer(1)}.
+\emph{Applies to delimited file (CSV, TSV), Excel Workbook, or lines.}
+Number of lines to skip.}
 
 \item{metadata}{\code{list}.
 Metadata.}
@@ -81,7 +86,7 @@ Imported by \code{\link[jsonlite:read_json]{jsonlite::read_json()}}.
 Imported by \code{\link[yaml:yaml.load_file]{yaml::yaml.load_file()}}.
 \item \strong{Lines} (\code{LOG}, \code{MD}, \code{PY}, \code{R}, \code{RMD}, \code{SH}): \code{character}.
 Source code or log files.\cr
-Imported by \code{\link[base:readLines]{readLines()}}.
+Imported by \code{\link[readr:read_lines]{read_lines()}}.
 \item \strong{R data serialized} (\code{RDS}): \emph{variable}.\cr
 Currently recommend over RDA, if possible.\cr
 Imported by \code{\link[base:readRDS]{readRDS()}}.
@@ -105,7 +110,7 @@ arguments. Remote URLs and compressed files are supported. If you need more
 complex import settings, just call the wrapped importer directly instead.
 }
 \note{
-Updated 2020-05-18.
+Updated 2020-06-11.
 }
 \section{Row and column names}{
 
