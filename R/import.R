@@ -135,7 +135,7 @@
 #' - **Legacy Excel workbook (pre-2007)** (`XLS`): `data.frame`.\cr
 #'   Resave in plain text delimited format instead, if possible.\cr
 #'   Note that import of files in this format is slow.\cr
-#'   Imported by [gdata::read.xls()].
+#'   Imported by [readxl::read_excel()].
 #' - **GraphPad Prism project** (`PZFX`): `data.frame`.\cr
 #'   Experimental. Consider resaving in CSV format instead.\cr
 #'   Imported by [pzfx::read_pzfx()].
@@ -202,9 +202,9 @@
 #' print(head(x))
 import <- function(
     file,
+    format = "auto",
     rownames = TRUE,
     colnames = TRUE,
-    format = "auto",
     sheet = 1L,
     skip = 0L,
     metadata,
@@ -238,7 +238,71 @@ import <- function(
         ext <- format
     }
     ext <- tolower(ext)
-    if (isSubset(ext, c("csv", "fwf", "psv", "tsv", "txt"))) {
+    extGroup <- list(
+        delim = c("csv", "fwf", "psv", "tsv", "txt"),
+        excel = c("xls", "xlsb", "xlsx"),
+        lines = c(
+            "lines",
+            "log",
+            "md",        # Markdown
+            "py",        # Python
+            "r",         # R
+            "rmd",       # R Markdown
+            "sh"         # Shell
+        ),
+        rda = c("rda", "rdata"),
+        rio = c(
+            "arff",      # Weka Attribute-Relation File Format
+            "dbf",       # dBase Database File
+            "dif",       # Data Interchange Format
+            "dta",       # Stata
+            "mat",       # Matlab
+            "mtp",       # Minitab
+            "ods",       # OpenDocument (LibreOffice)
+            "por",       # SPSS
+            "sas7bdat",  # SASS
+            "sav",       # SPSS
+            "syd",       # Systat
+            "rec",       # Epi Info
+            "xpt"        # SASS
+        ),
+        rtracklayer = c(
+            "bed", "bed15", "bedgraph", "bedpe",
+            "bigwig", "bw", "wig",
+            "gff", "gff1", "gff2", "gff3", "gtf",
+            "broadpeak", "narrowpeak"
+        ),
+        yaml = c("yaml", "yml")
+    )
+    ## Check that user hasn't changed default arguments unsupported for some
+    ## file types.
+    ## - rownames / colnames
+    if (!isSubset(
+        x = ext,
+        y = c(extGroup[["delim"]], extGroup[["excel"]])
+    )) {
+        assert(
+            identical(rownames, eval(formals()[["rownames"]])),
+            identical(colnames, eval(formals()[["colnames"]]))
+        )
+    }
+    ## - sheet (excel, prism)
+    if (!isSubset(ext, c(extGroup[["excel"]], "pzfx"))) {
+        assert(identical(sheet, eval(formals()[["sheet"]])))
+    }
+    ## - skip
+    if (!isSubset(
+        x = ext,
+        y = c(extGroup[["delim"]], extGroup[["excel"]], extGroup[["lines"]])
+    )) {
+        assert(identical(skip, eval(formals()[["skip"]])))
+    }
+    ## - metadata
+    if (isSubset(ext, extGroup[["lines"]])) {
+        assert(identical(metadata, eval(formals()[["metadata"]])))
+    }
+    ## Now we're ready to hand off to file-type-specific importers.
+    if (isSubset(ext, extGroup[["delim"]])) {
         object <- .importDelim(
             file = file,
             ext = ext,
@@ -247,17 +311,8 @@ import <- function(
             metadata = metadata,
             quiet = quiet
         )
-    } else if (identical(ext, "xls")) {
-        object <- .importXLS(
-            file = file,
-            colnames = colnames,
-            sheet = sheet,
-            skip = skip,
-            metadata = metadata,
-            quiet = quiet
-        )
-    } else if (isSubset(ext, c("xlsb", "xlsx"))) {
-        object <- .importXLSX(
+    } else if (isSubset(ext, extGroup[["excel"]])) {
+        object <- .importExcel(
             file = file,
             colnames = colnames,
             sheet = sheet,
@@ -276,7 +331,7 @@ import <- function(
         )
     } else if (identical(ext, "rds")) {
         object <- .importRDS(file = file, quiet = quiet)
-    } else if (isSubset(ext, c("rda", "rdata"))) {
+    } else if (isSubset(ext, extGroup[["rda"]])) {
         object <- .importRDA(file = file, quiet = quiet)
     } else if (identical(ext, "gmt")) {
         object <- .importGMT(file = file, quiet = quiet)
@@ -290,7 +345,7 @@ import <- function(
             metadata = metadata,
             quiet = quiet
         )
-    } else if (isSubset(ext, c("yaml", "yml"))) {
+    } else if (isSubset(ext, extGroup[["yaml"]])) {
         object <- .importYAML(
             file = file,
             metadata = metadata,
@@ -310,36 +365,19 @@ import <- function(
             metadata = metadata,
             quiet = quiet
         )
-    } else if (isSubset(ext, c("lines", "log", "md", "py", "r", "rmd", "sh"))) {
+    } else if (isSubset(ext, extGroup[["lines"]])) {
         object <- .importLines(
             file = file,
             skip = skip,
             quiet = quiet
         )
-    } else if (isSubset(ext, c(
-        "bed", "bed15", "bedgraph", "bedpe", "bigwig", "broadpeak", "bw", "gff",
-        "gff1", "gff2", "gff3", "gtf", "narrowpeak", "wig"
-    ))) {
+    } else if (isSubset(ext, extGroup[["rtracklayer"]])) {
         object <- .rtracklayerImport(
             file = file,
             metadata = metadata,
             quiet = quiet
         )
-    } else if (isSubset(ext, c(
-        "arff",      # Weka Attribute-Relation File Format
-        "dbf",       # dBase Database File
-        "dif",       # Data Interchange Format
-        "dta",       # Stata
-        "mat",       # Matlab
-        "mtp",       # Minitab
-        "ods",       # OpenDocument (LibreOffice)
-        "por",       # SPSS
-        "sas7bdat",  # SASS
-        "sav",       # SPSS
-        "syd",       # Systat
-        "rec",       # Epi Info
-        "xpt"        # SASS
-    ))) {
+    } else if (isSubset(ext, extGroup[["rio"]])) {
         object <- .rioImport(
             file = file,
             metadata = metadata,
@@ -354,7 +392,7 @@ import <- function(
     ## Data frame-specific operations.
     if (is.data.frame(object)) {
         ## Set row names automatically.
-        if (isSubset("rowname", colnames(object))) {
+        if (isTRUE(rownames) && isSubset("rowname", colnames(object))) {
             if (!isTRUE(quiet)) {
                 cli_alert_info("Setting row names from {.var rowname} column.")
             }
@@ -813,7 +851,7 @@ formals(import)[c("metadata", "quiet")] <-
 
 ## Internal importer for a Microsoft Excel worksheet (`.xlsx`).
 ## Updated 2020-06-12.
-.importXLSX <- function(
+.importExcel <- function(
     file,
     sheet,
     colnames,
@@ -863,86 +901,6 @@ formals(import)[c("metadata", "quiet")] <-
             file = file,
             pkg = "readxl",
             fun = "read_excel"
-        )
-    }
-    object
-}
-
-
-
-## readxl does support XLS format also but it's buggy for many files.
-## Make some minimal repex examples and file issue on GitHub.
-##
-## See also:
-## - https://github.com/tidyverse/readxl/issues/466
-## - https://github.com/tidyverse/readxl/issues/472
-##
-## In the meantime, load using gdata, which is slower but does work.
-
-## Internal importer for a legacy Microsoft Excel worksheet (`.xls`).
-## Updated 2020-01-17.
-.importXLS <- function(
-    file,
-    sheet,
-    colnames,
-    skip,
-    metadata,
-    quiet
-) {
-    assert(
-        isScalar(sheet),
-        isFlag(colnames) || isCharacter(colnames),
-        isInt(skip),
-        isFlag(metadata),
-        isFlag(quiet)
-    )
-    tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
-    if (!isTRUE(quiet)) {
-        cli_alert(sprintf(
-            "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
-            basename(file), "gdata", "read.xls"
-        ))
-    }
-    assert(requireNamespace("gdata", quietly = TRUE))
-    if (isCharacter(colnames)) {
-        header <- FALSE
-    } else {
-        header <- colnames
-    }
-    ## gdata currently has an OS.type partial match issue.
-    ## `read.xls()` passes `...` to `utils::read.table()`.
-    object <- withCallingHandlers(
-        expr = gdata::read.xls(
-            xls = tmpfile,
-            sheet = sheet,
-            verbose = FALSE,
-            na.strings = naStrings,
-            header = header,
-            skip = skip
-        ),
-        warning = function(w) {
-            ## nocov start
-            if (isTRUE(grepl(
-                pattern = "partial match of 'OS' to 'OS.type'",
-                x = as.character(w)
-            ))) {
-                invokeRestart("muffleWarning")
-            } else {
-                w
-            }
-            ## nocov end
-        }
-    )
-    if (isCharacter(colnames)) {
-        assert(hasLength(colnames, n = ncol(object)))
-        colnames(object) <- colnames
-    }
-    if (isTRUE(metadata)) {
-        object <- .slotImportMetadata(
-            object = object,
-            file = file,
-            pkg = "gdata",
-            fun = "read.xls"
         )
     }
     object
