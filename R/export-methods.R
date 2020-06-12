@@ -15,7 +15,7 @@
 #'
 #' @section Debugging:
 #'
-#' Note that this function currently wraps [vroom::voom_write()] by default
+#' Note that this function currently wraps `vroom::voom_write()` by default
 #' for exporting `data.frame` and `matrix` class objects.
 #'
 #' @inheritParams acidroxygen::params
