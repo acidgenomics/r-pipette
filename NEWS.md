@@ -1,3 +1,10 @@
+## pipette 0.4.6 (2020-06-11)
+
+### Minor changes
+
+- `import`: Added support for `skip` argument, which allows the user to skip
+  a certain number of lines in the input.
+
 ## pipette 0.4.5 (2020-05-18)
 
 ### Minor changes
