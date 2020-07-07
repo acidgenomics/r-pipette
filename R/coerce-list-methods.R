@@ -14,7 +14,7 @@
 #' - `help(topic = "List-class", package = "S4Vectors")`
 #' - `showClass("Annnotated")`.
 #' - `showClass("List")`.
-#' - `methods::coerce()`.
+#' - `methods::coerce`.
 #'
 #' @return `list`.
 #'

@@ -59,8 +59,8 @@ support for these S4 classes:
 
 
 Since \code{data.table} is a class that extends \code{data.frame}, we need to define an
-S4 coercion method that allows us to use \code{\link[methods:as]{as()}} to coerce an
-object to a \code{data.table}.
+S4 coercion method that allows us to use \code{as()} to coerce an object to a
+\code{data.table}.
 
 See \code{getClass("data.table")} for details.
 }

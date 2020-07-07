@@ -41,6 +41,6 @@ Refer to the S4Vectors package for details.
 \item \code{help(topic = "List-class", package = "S4Vectors")}
 \item \code{showClass("Annnotated")}.
 \item \code{showClass("List")}.
-\item \code{methods::coerce()}.
+\item \code{methods::coerce}.
 }
 }

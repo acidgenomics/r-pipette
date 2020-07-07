@@ -27,8 +27,8 @@
 #' @section S4 `as()`:
 #'
 #' Since `data.table` is a class that extends `data.frame`, we need to define an
-#' S4 coercion method that allows us to use [`as()`][methods::as] to coerce an
-#' object to a `data.table`.
+#' S4 coercion method that allows us to use `as()` to coerce an object to a
+#' `data.table`.
 #'
 #' See `getClass("data.table")` for details.
 #'
