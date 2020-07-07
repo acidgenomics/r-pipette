@@ -48,5 +48,5 @@ x <- decode(RangedSummarizedExperiment)
 lapply(rowData(x), class)
 }
 \seealso{
-\code{\link[S4Vectors:decode]{S4Vectors::decode()}}.
+\code{\link[S4Vectors:Rle-class]{S4Vectors::decode()}}.
 }

@@ -335,27 +335,20 @@ test_that("PZFX", {
 
 
 
-context("import : XLS")
+context("import : Excel")
 
 skip_if_not(hasInternet())
+skip_if_not_installed(pkg = "readxl")
+skip_on_appveyor()
 
-test_that("XLS", {
-    skip_if_not_installed(pkg = "gdata")
-    skip_on_appveyor()
-    file <- file.path("cache", "example.xls")
+test_that("XLSX", {
+    file <- file.path("cache", "example.xlsx")
     object <- import(file)
     expect_is(object, "data.frame")
 })
 
-
-
-context("import : XLSX")
-
-skip_if_not(hasInternet())
-
-test_that("XLSX", {
-    skip_on_appveyor()
-    file <- file.path("cache", "example.xlsx")
+test_that("XLS", {
+    file <- file.path("cache", "example.xls")
     object <- import(file)
     expect_is(object, "data.frame")
 })
