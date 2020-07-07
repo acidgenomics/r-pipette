@@ -31,19 +31,12 @@
 )
 }
 \arguments{
-\item{x}{A data frame, list, matrix, or other object that could reasonably be
-coerced to a tibble.}
+\item{x}{Object.}
 
-\item{...}{Unused, for extensibility.}
+\item{...}{Additional arguments.}
 
-\item{rownames}{How to treat existing row names of a data frame or matrix:
-\itemize{
-\item \code{NULL}: remove row names. This is the default.
-\item \code{NA}: keep row names.
-\item A string: the name of a new column. Existing rownames are transferred
-into this column and the \code{row.names} attribute is deleted.
-Read more in \link[tibble]{rownames}.
-}}
+\item{rownames}{\code{logical(1)}.
+Apply to row names.}
 }
 \value{
 \code{tbl_df}.
@@ -75,8 +68,8 @@ these S4 classes:
 
 
 Since \code{tbl_df} is a virtual class that extends \code{tbl} and \code{data.frame}, we
-need to define an S4 coercion method that allows us to use
-\code{\link[methods:as]{as()}} to coerce an object to a tibble.
+need to define an S4 coercion method that allows us to use \code{as()} to coerce
+an object to a tibble.
 
 See \code{getClass("tbl_df")} for details on how tibble is a virtual class.
 }
