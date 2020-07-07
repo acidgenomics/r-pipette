@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pipette</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.7</span>
       </span>
     </div>
 
@@ -124,11 +124,12 @@
 
     <pre class="usage"><span class='fu'>import</span>(
   <span class='no'>file</span>,
+  <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"auto"</span>,
   <span class='kw'>rownames</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>colnames</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"auto"</span>,
   <span class='kw'>sheet</span> <span class='kw'>=</span> <span class='fl'>1L</span>,
   <span class='kw'>skip</span> <span class='kw'>=</span> <span class='fl'>0L</span>,
+  <span class='kw'>makeNames</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"acid.import.make.names"</span>, <span class='kw'>default</span> <span class='kw'>=</span> <span class='kw pkg'>syntactic</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/syntactic/man/makeNames.html'>makeNames</a></span>),
   <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"acid.import.metadata"</span>, <span class='kw'>default</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>),
   <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"acid.quiet"</span>, <span class='kw'>default</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 )</pre>
@@ -140,6 +141,13 @@
       <th>file</th>
       <td><p><code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>.
 File path.</p></td>
+    </tr>
+    <tr>
+      <th>format</th>
+      <td><p><code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>.
+An optional file format type, which can be used to override the file format
+inferred from <code>file</code>. Only recommended for file and URL paths that don't
+contain an extension.</p></td>
     </tr>
     <tr>
       <th>rownames</th>
@@ -155,13 +163,6 @@ Applies to file types that return <code>data.frame</code> only.
 Pass in a <code>character</code> vector to define the column names manually.</p></td>
     </tr>
     <tr>
-      <th>format</th>
-      <td><p><code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>.
-An optional file format type, which can be used to override the file format
-inferred from <code>file</code>. Only recommended for file and URL paths that don't
-contain an extension.</p></td>
-    </tr>
-    <tr>
       <th>sheet</th>
       <td><p><code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> or <code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>.
 <em>Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.</em>
@@ -173,6 +174,11 @@ position of the sheet). Defaults to the first sheet.</p></td>
       <td><p><code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>.
 <em>Applies to delimited file (CSV, TSV), Excel Workbook, or lines.</em>
 Number of lines to skip.</p></td>
+    </tr>
+    <tr>
+      <th>makeNames</th>
+      <td><p><code>function</code>.
+Apply syntactic naming function to (column) names.</p></td>
     </tr>
     <tr>
       <th>metadata</th>
@@ -201,7 +207,7 @@ Imported by <code><a href='https://readxl.tidyverse.org/reference/read_excel.htm
 <li><p><strong>Legacy Excel workbook (pre-2007)</strong> (<code>XLS</code>): <code>data.frame</code>.<br />
 Resave in plain text delimited format instead, if possible.<br />
 Note that import of files in this format is slow.<br />
-Imported by <code><a href='https://rdrr.io/pkg/gdata/man/read.xls.html'>gdata::read.xls()</a></code>.</p></li>
+Imported by <code><a href='https://readxl.tidyverse.org/reference/read_excel.html'>readxl::read_excel()</a></code>.</p></li>
 <li><p><strong>GraphPad Prism project</strong> (<code>PZFX</code>): <code>data.frame</code>.<br />
 Experimental. Consider resaving in CSV format instead.<br />
 Imported by <code><a href='https://rdrr.io/pkg/pzfx/man/read_pzfx.html'>pzfx::read_pzfx()</a></code>.</p></li>
@@ -246,7 +252,7 @@ arguments. Remote URLs and compressed files are supported. If you need more
 complex import settings, just call the wrapped importer directly instead.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>Updated 2020-06-11.</p>
+    <p>Updated 2020-07-07.</p>
     <h2 class="hasAnchor" id="row-and-column-names"><a class="anchor" href="#row-and-column-names"></a>Row and column names</h2>
 
     
@@ -296,7 +302,7 @@ globally using <code><a href='https://rdrr.io/r/base/options.html'>options(acid.
 <li><p><code>data.table</code>: Recommended when working with the data.table package.</p><ul>
 <li><p>S3 class; inherits <code>data.frame</code>.</p></li>
 <li><p>Does not allow rownames.</p></li>
-<li><p>See <code><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>help(topic = "data.table", package = "data.table")</a></code> for details.</p></li>
+<li><p>See <code><a href='https://rdrr.io/pkg/data.table/man/data.table.html'>help(topic = "data.table", package = "data.table")</a></code> for details.</p></li>
 </ul></li>
 </ul>
 
@@ -360,7 +366,7 @@ makes GFF loading simple.</p>
 </ul>
 
 <p>Import functions:</p><ul>
-<li><p><code><a href='https://Rdatatable.gitlab.io/data.table/reference/fread.html'>data.table::fread()</a></code>.</p></li>
+<li><p><code><a href='https://rdrr.io/pkg/data.table/man/fread.html'>data.table::fread()</a></code>.</p></li>
 <li><p><code><a href='https://readr.tidyverse.org/reference/read_delim.html'>readr::read_csv()</a></code>.</p></li>
 <li><p><code><a href='https://rdrr.io/pkg/rio/man/import.html'>rio::import()</a></code>.</p></li>
 <li><p><code><a href='https://rdrr.io/pkg/rtracklayer/man/export.html'>rtracklayer::import()</a></code>.</p></li>
