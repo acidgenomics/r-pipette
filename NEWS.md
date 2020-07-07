@@ -1,4 +1,4 @@
-## pipette 0.4.7 (2020-06-12)
+## pipette 0.4.7 (2020-07-07)
 
 ### Minor changes
 
@@ -7,6 +7,9 @@
   in my opinion.
 - `import`: Switched XLS parser from gdata (no longer updated) back to readxl,
   which is more actively developed.
+- `import`: Added `makeNames` argument, to override default internal handling.
+  This allows the user to apply snake case and/or camel case formatting
+  automatically with this argument.
 
 ## pipette 0.4.6 (2020-06-11)
 

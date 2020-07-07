@@ -6,11 +6,12 @@
 \usage{
 import(
   file,
+  format = "auto",
   rownames = TRUE,
   colnames = TRUE,
-  format = "auto",
   sheet = 1L,
   skip = 0L,
+  makeNames = getOption("acid.import.make.names", default = syntactic::makeNames),
   metadata = getOption("acid.import.metadata", default = FALSE),
   quiet = getOption("acid.quiet", default = FALSE)
 )
@@ -18,6 +19,11 @@ import(
 \arguments{
 \item{file}{\code{character(1)}.
 File path.}
+
+\item{format}{\code{character(1)}.
+An optional file format type, which can be used to override the file format
+inferred from \code{file}. Only recommended for file and URL paths that don't
+contain an extension.}
 
 \item{rownames}{\code{logical(1)}.
 Automatically assign row names, if \code{rowname} column is defined.
@@ -28,11 +34,6 @@ Automatically assign column names, using the first header row.
 Applies to file types that return \code{data.frame} only.
 Pass in a \code{character} vector to define the column names manually.}
 
-\item{format}{\code{character(1)}.
-An optional file format type, which can be used to override the file format
-inferred from \code{file}. Only recommended for file and URL paths that don't
-contain an extension.}
-
 \item{sheet}{\code{character(1)} or \code{integer(1)}.
 \emph{Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.}
 Sheet to read. Either a string (the name of a sheet), or an integer (the
@@ -41,6 +42,9 @@ position of the sheet). Defaults to the first sheet.}
 \item{skip}{\code{integer(1)}.
 \emph{Applies to delimited file (CSV, TSV), Excel Workbook, or lines.}
 Number of lines to skip.}
+
+\item{makeNames}{\code{function}.
+Apply syntactic naming function to (column) names.}
 
 \item{metadata}{\code{list}.
 Metadata.}
@@ -63,27 +67,27 @@ Imported by \code{\link[readxl:read_excel]{readxl::read_excel()}}.
 \item \strong{Legacy Excel workbook (pre-2007)} (\code{XLS}): \code{data.frame}.\cr
 Resave in plain text delimited format instead, if possible.\cr
 Note that import of files in this format is slow.\cr
-Imported by \code{\link[gdata:read.xls]{gdata::read.xls()}}.
+Imported by \code{\link[readxl:read_excel]{readxl::read_excel()}}.
 \item \strong{GraphPad Prism project} (\code{PZFX}): \code{data.frame}.\cr
 Experimental. Consider resaving in CSV format instead.\cr
 Imported by \code{\link[pzfx:read_pzfx]{pzfx::read_pzfx()}}.
 \item \strong{General feature format} (\code{GFF}, \code{GFF1}, \code{GFF2}, \code{GFF3}, \code{GTF}):
 \code{GRanges}.\cr
-Imported by \code{\link[rtracklayer:import]{rtracklayer::import()}}.
+Imported by \code{\link[rtracklayer:export]{rtracklayer::import()}}.
 \item \strong{MatrixMarket exchange sparse matrix} (\code{MTX}): \code{sparseMatrix}.\cr
-Imported by \code{\link[Matrix:readMM]{Matrix::readMM()}}.
+Imported by \code{\link[Matrix:externalFormats]{Matrix::readMM()}}.
 \item \strong{Gene sets (for GSEA)} (\code{GMT}, \code{GMX}): \code{character}.
 \item \strong{Browser extensible data} (\code{BED}, \code{BED15}, \code{BEDGRAPH}, \code{BEDPE}):
 \code{GRanges}.\cr
-Imported by \code{\link[rtracklayer:import]{rtracklayer::import()}}.
+Imported by \code{\link[rtracklayer:export]{rtracklayer::import()}}.
 \item \strong{ChIP-seq peaks} (\code{BROADPEAK}, \code{NARROWPEAK}): \code{GRanges}.\cr
-Imported by \code{\link[rtracklayer:import]{rtracklayer::import()}}.
+Imported by \code{\link[rtracklayer:export]{rtracklayer::import()}}.
 \item \strong{Wiggle track format} (\code{BIGWIG}, \code{BW}, \code{WIG}): \code{GRanges}.\cr
-Imported by \code{\link[rtracklayer:import]{rtracklayer::import()}}.
+Imported by \code{\link[rtracklayer:export]{rtracklayer::import()}}.
 \item \strong{JSON serialization data} (\code{JSON}): \code{list}.\cr
 Imported by \code{\link[jsonlite:read_json]{jsonlite::read_json()}}.
 \item \strong{YAML serialization data} (\code{YAML}, \code{YML}): \code{list}.\cr
-Imported by \code{\link[yaml:yaml.load_file]{yaml::yaml.load_file()}}.
+Imported by \code{\link[yaml:yaml.load]{yaml::yaml.load_file()}}.
 \item \strong{Lines} (\code{LOG}, \code{MD}, \code{PY}, \code{R}, \code{RMD}, \code{SH}): \code{character}.
 Source code or log files.\cr
 Imported by \code{\link[readr:read_lines]{read_lines()}}.
@@ -110,7 +114,7 @@ arguments. Remote URLs and compressed files are supported. If you need more
 complex import settings, just call the wrapped importer directly instead.
 }
 \note{
-Updated 2020-06-11.
+Updated 2020-07-07.
 }
 \section{Row and column names}{
 
@@ -125,7 +129,7 @@ intentionally do not support row names. When returning in this format, no
 attempt to assign the \code{rowname} column into the return object's row names is
 made. Note that \code{\link[=import]{import()}} is strict about this matching and only checks for
 a \code{rowname} column, similar to the default syntax recommended in
-\code{\link[tibble:rownames_to_column]{tibble::rownames_to_column()}}. To disable this behavior, set
+\code{\link[tibble:rownames]{tibble::rownames_to_column()}}. To disable this behavior, set
 \code{rownames = FALSE}, and no attempt will be made to set the row names.
 
 \strong{Column names.} \code{\link[=import]{import()}} assumes that delimited files always contain

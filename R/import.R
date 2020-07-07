@@ -99,7 +99,7 @@
 #' `DOC`, `DOCX`, `PDF`, `PPT`, `PPTX`.
 #'
 #' @export
-#' @note Updated 2020-06-11.
+#' @note Updated 2020-07-07.
 #'
 #' @inheritParams acidroxygen::params
 #' @param rownames `logical(1)`.
@@ -120,6 +120,8 @@
 #' @param skip `integer(1)`.
 #'   *Applies to delimited file (CSV, TSV), Excel Workbook, or lines.*
 #'   Number of lines to skip.
+#' @param makeNames `function`.
+#'   Apply syntactic naming function to (column) names.
 #'
 #' @return Varies, depending on the file type (format):
 #'
@@ -207,6 +209,7 @@ import <- function(
     colnames = TRUE,
     sheet = 1L,
     skip = 0L,
+    makeNames,
     metadata,
     quiet
 ) {
@@ -218,6 +221,7 @@ import <- function(
         isString(format),
         isScalar(sheet),
         isInt(skip),
+        is.function(makeNames),
         isFlag(metadata),
         isFlag(quiet)
     )
@@ -400,44 +404,9 @@ import <- function(
             object[["rowname"]] <- NULL
         }
     }
-    ## Check for syntactically valid names and inform the user, if necessary.
-    if (
-        (
-            (hasNames(object) && !hasValidNames(object)) ||
-            (hasDimnames(object) && !hasValidDimnames(object))
-        ) &&
-        !isTRUE(quiet)
-    ) {
-        ## nocov start
-        cli_alert_warning(sprintf(
-            "{.file %s} does not contain syntactically valid names.",
-            basename(file)
-        ))
-        ## nocov end
-    }
-    ## Inform the user when encountering duplicate names. This `tryCatch()` step
-    ## here helps suppress `validObject()` error for invalid SE objects.
-    names <- tryCatch(
-        expr = names(object),
-        error = function(e) e
-    )
-    if (isCharacter(names)) {
-        dupes <- duplicated(names)
-        if (any(dupes)) {
-            ## nocov start
-            dupes <- sort(unique(names[dupes]))
-            warning(sprintf(
-                "%d duplicate %s: %s",
-                length(dupes),
-                ngettext(
-                    n = length(dupes),
-                    msg1 = "name",
-                    msg2 = "names"
-                ),
-                toString(dupes, width = 200L)
-            ))
-            ## nocov end
-        }
+    if (hasNames(object)) {
+        names(object) <- makeNames(names(object))
+        assert(hasValidNames(object))
     }
     if (isTRUE(metadata)) {
         if (!is.null(metadata2(object, which = "import"))) {
@@ -454,8 +423,8 @@ import <- function(
     object
 }
 
-formals(import)[c("metadata", "quiet")] <-
-    formalsList[c("import.metadata", "quiet")]
+formals(import)[c("makeNames", "metadata", "quiet")] <-
+    formalsList[c("import.make.names", "import.metadata", "quiet")]
 
 
 
@@ -525,7 +494,7 @@ formals(import)[c("metadata", "quiet")] <-
         args <- list(
             file = tmpfile,
             blank.lines.skip = TRUE,
-            check.names = FALSE,
+            check.names = TRUE,
             data.table = FALSE,
             fill = FALSE,
             na.strings = naStrings,
@@ -588,7 +557,7 @@ formals(import)[c("metadata", "quiet")] <-
             progress = FALSE,
             skip = skip,
             trim_ws = TRUE,
-            .name_repair = make.names  # or "universal"
+            .name_repair = make.names
         )
     }
     if (!isTRUE(quiet)) {
@@ -850,7 +819,7 @@ formals(import)[c("metadata", "quiet")] <-
 ## lines removal, so ensure that is fixed downstream.
 
 ## Internal importer for a Microsoft Excel worksheet (`.xlsx`).
-## Updated 2020-06-12.
+## Updated 2020-07-07.
 .importExcel <- function(
     file,
     sheet,
@@ -886,7 +855,7 @@ formals(import)[c("metadata", "quiet")] <-
         trim_ws = TRUE,
         skip = skip,
         progress = FALSE,
-        .name_repair = "minimal"
+        .name_repair = make.names
     )
     options(warn = warn)
     ## Always return as data.frame instead of tibble at this step.

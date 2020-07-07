@@ -223,9 +223,9 @@
 </ul>
 </div>
 </div>
-    <div id="pipette-047-2020-06-12" class="section level2">
+    <div id="pipette-047-2020-07-07" class="section level2">
 <h2 class="hasAnchor">
-<a href="#pipette-047-2020-06-12" class="anchor"></a>pipette 0.4.7 (2020-06-12)</h2>
+<a href="#pipette-047-2020-07-07" class="anchor"></a>pipette 0.4.7 (2020-07-07)</h2>
 <div id="minor-changes" class="section level3">
 <h3 class="hasAnchor">
 <a href="#minor-changes" class="anchor"></a>Minor changes</h3>
@@ -234,6 +234,8 @@
 <code>import</code> Hardened Excel input to intentionally error on any warnings returned by internal <code>read_excel</code> call, which is too liberal in coercing data types, in my opinion.</li>
 <li>
 <code>import</code>: Switched XLS parser from gdata (no longer updated) back to readxl, which is more actively developed.</li>
+<li>
+<code>import</code>: Added <code>makeNames</code> argument, to override default internal handling. This allows the user to apply snake case and/or camel case formatting automatically with this argument.</li>
 </ul>
 </div>
 </div>
