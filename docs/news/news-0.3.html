@@ -177,7 +177,7 @@
 <li>Reworked organization and naming of internal importer functions. Now including these in the <code>import</code> documentation, for clarity.</li>
 <li>
 <code>import</code>: Added <code>format</code> and <code>setclass</code> arguments.</li>
-<li>Switched to <code><a href="https://Rdatatable.gitlab.io/data.table/reference/fread.html">data.table::fread</a></code> for import of bcbio count matrix. Previously, was using <code><a href="https://readr.tidyverse.org/reference/read_delim.html">readr::read_tsv</a></code>.</li>
+<li>Switched to <code><a href="https://rdrr.io/pkg/data.table/man/fread.html">data.table::fread</a></code> for import of bcbio count matrix. Previously, was using <code><a href="https://readr.tidyverse.org/reference/read_delim.html">readr::read_tsv</a></code>.</li>
 <li>Import of lines no longer stores brio attributes.</li>
 <li>Reduced number of package dependencies, no longer requiring readr.</li>
 </ul>
@@ -207,7 +207,7 @@
 <a href="#major-changes-4" class="anchor"></a>Major changes</h3>
 <ul>
 <li>
-<code>export</code>: Reworked internal code to call <code><a href="https://Rdatatable.gitlab.io/data.table/reference/fwrite.html">data.table::fwrite</a></code> directly, rather than having to pass to <code>brio::export</code>. Added support for <code>bz2</code> output for <code>matrix</code> and <code>sparseMatrix</code> classes.</li>
+<code>export</code>: Reworked internal code to call <code><a href="https://rdrr.io/pkg/data.table/man/fwrite.html">data.table::fwrite</a></code> directly, rather than having to pass to <code>brio::export</code>. Added support for <code>bz2</code> output for <code>matrix</code> and <code>sparseMatrix</code> classes.</li>
 </ul>
 </div>
 </div>
@@ -219,7 +219,7 @@
 <a href="#minor-changes-17" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>
-<code>import</code>: Improved internal arguments passed to <code><a href="https://Rdatatable.gitlab.io/data.table/reference/fread.html">data.table::fread</a></code>.</li>
+<code>import</code>: Improved internal arguments passed to <code><a href="https://rdrr.io/pkg/data.table/man/fread.html">data.table::fread</a></code>.</li>
 </ul>
 </div>
 </div>

@@ -102,6 +102,6 @@ unlink(dir, recursive = TRUE)
 \seealso{
 \itemize{
 \item \code{\link[base:save]{save()}}
-\item \code{\link[base:saveRDS]{saveRDS()}}.
+\item \code{\link[base:readRDS]{saveRDS()}}.
 }
 }

@@ -27,7 +27,7 @@ Coerce to \code{SummarizedExperiment}.
 \details{
 Improved S4 methods for reliably coercing objects that extend
 \code{RangedSummarizedExperiment} to a standard \code{SummarizedExperiment}, that
-doesn't drop \code{\link[SummarizedExperiment:rowData]{rowData()}}.
+doesn't drop \code{\link[SummarizedExperiment:SummarizedExperiment-class]{rowData()}}.
 
 Related S4 coercion method of interest:\preformatted{getMethod(
     f = "coerce",

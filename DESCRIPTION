@@ -29,7 +29,7 @@ Imports:
     S4Vectors (>= 0.24),
     SingleCellExperiment (>= 1.8),
     SummarizedExperiment (>= 1.16),
-    acidbase (>= 0.1.9),
+    acidbase (>= 0.1.10),
     acidgenerics (>= 0.3.7),
     cli (>= 2.0),
     data.table (>= 1.12.8),
