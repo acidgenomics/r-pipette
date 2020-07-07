@@ -5,7 +5,6 @@
 #' @name coerce-tbl_df
 #' @note Updated 2020-01-19.
 #'
-#' @inheritParams tibble::as_tibble
 #' @inheritParams acidroxygen::params
 #'
 #' @details
