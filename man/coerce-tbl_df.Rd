@@ -75,8 +75,8 @@ these S4 classes:
 
 
 Since \code{tbl_df} is a virtual class that extends \code{tbl} and \code{data.frame}, we
-need to define an S4 coercion method that allows us to use
-\code{\link[methods:as]{as()}} to coerce an object to a tibble.
+need to define an S4 coercion method that allows us to use \code{as()} to coerce
+an object to a tibble.
 
 See \code{getClass("tbl_df")} for details on how tibble is a virtual class.
 }

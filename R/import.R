@@ -278,9 +278,7 @@ import <- function(
         ),
         yaml = c("yaml", "yml")
     )
-    ## Check that user hasn't changed default arguments unsupported for some
-    ## file types.
-    ## - rownames / colnames
+    ## Check that user hasn't changed unsupported  arguments.
     if (!isSubset(
         x = ext,
         y = c(extGroup[["delim"]], extGroup[["excel"]])

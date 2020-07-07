@@ -25,8 +25,8 @@
 #' @section S4 `as()`:
 #'
 #' Since `tbl_df` is a virtual class that extends `tbl` and `data.frame`, we
-#' need to define an S4 coercion method that allows us to use
-#' [`as()`][methods::as] to coerce an object to a tibble.
+#' need to define an S4 coercion method that allows us to use `as()` to coerce
+#' an object to a tibble.
 #'
 #' See `getClass("tbl_df")` for details on how tibble is a virtual class.
 #'
