@@ -99,7 +99,7 @@
 #' `DOC`, `DOCX`, `PDF`, `PPT`, `PPTX`.
 #'
 #' @export
-#' @note Updated 2020-07-07.
+#' @note Updated 2020-07-13.
 #'
 #' @inheritParams acidroxygen::params
 #' @param rownames `logical(1)`.
@@ -403,6 +403,12 @@ import <- function(
         }
     }
     if (hasNames(object)) {
+        if (isTRUE(any(duplicated(names(object))))) {
+            dupes <- sort(names(object)[duplicated(names(object))])
+            cli_alert_warning(
+                paste("Duplicate names:", toString(dupes, width = 200L))
+            )
+        }
         names(object) <- makeNames(names(object))
         assert(hasValidNames(object))
     }
