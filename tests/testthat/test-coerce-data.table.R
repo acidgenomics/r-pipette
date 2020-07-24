@@ -24,11 +24,7 @@ test_that("DataFrame", {
     ## Error on complex S4 column (e.g. GRanges).
     data <- as(rowRanges(rse), "DataFrame")
     expect_s4_class(data[["X"]], "GRanges")
-    ## Expect error on "X" column, which contains nested GRanges.
-    expect_error(
-        object = as(data, "data.table"),
-        regexp = "X"
-    )
+    expect_error(suppressWarnings(as(data, "data.table")))
 
     ## Check handling when rownames are NULL.
     data <- DataFrame(a = 1L, b = "b")
