@@ -1,3 +1,10 @@
+## pipette 0.4.8 (2020-07-24)
+
+### Minor changes
+
+- `export`: Improved messaages to include full output path.
+- Increased minimum R dependency to 4.0.
+
 ## pipette 0.4.7 (2020-07-07)
 
 ### Minor changes
