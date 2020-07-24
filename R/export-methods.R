@@ -127,8 +127,7 @@ NULL
             if (isTRUE(overwrite) && !isTRUE(quiet)) {
                 cli_alert_warning(sprintf(
                     fmt = "Overwriting {.file %s} at {.path %s}.",
-                    basename(file),
-                    dirname(file)
+                    basename(file), dirname(file)
                 ))
             } else {
                 stop(sprintf("File exists: '%s'", file))
@@ -142,10 +141,8 @@ NULL
                     "Exporting {.file %s} at {.path %s}",
                     "using {.pkg %s}::{.fun %s}."
                 ),
-                basename(file),
-                dirname(file),
-                "readr",
-                "write_lines"
+                basename(file), dirname(file),
+                "readr", "write_lines"
             ))
         }
         readr::write_lines(
@@ -261,8 +258,7 @@ setMethod(
             if (isTRUE(overwrite) && !isTRUE(quiet)) {
                 cli_alert_warning(sprintf(
                     fmt = "Overwriting {.file %s} at {.path %s}.",
-                    basename(file),
-                    dirname(file)
+                    basename(file), dirname(file)
                 ))
             } else {
                 stop(sprintf("File exists: '%s'", file))
@@ -337,10 +333,8 @@ setMethod(
                     "Exporting {.file %s} at {.path %s}",
                     "using {.pkg %s}::{.fun %s}."
                 ),
-                basename(file),
-                dirname(file),
-                whatPkg,
-                whatFun
+                basename(file), dirname(file),
+                whatPkg, whatFun
             ))
         }
         do.call(what = what, args = args)
@@ -461,8 +455,7 @@ setMethod(
             if (isTRUE(overwrite) && !isTRUE(quiet)) {
                 cli_alert_warning(sprintf(
                     fmt = "Overwriting {.file %s} at {.path %s}.",
-                    basename(file),
-                    dirname(file)
+                    basename(file), dirname(file)
                 ))
             } else {
                 stop(sprintf("File exists: %s", file))
@@ -485,10 +478,8 @@ setMethod(
                     "Exporting {.file %s} at {.path %s}",
                     "using {.pkg %s}::{.fun %s}."
                 ),
-                basename(file),
-                dirname(file),
-                "Matrix",
-                "writeMM"
+                basename(file), dirname(file),
+                "Matrix", "writeMM"
             ))
         }
         writeMM(obj = object, file = file)
@@ -585,8 +576,7 @@ setMethod(
         dir <- realpath(initDir(dir))
         cli_alert(sprintf(
             fmt = "Exporting assays {.var %s} to {.path %s}.",
-            toString(assayNames),
-            dir
+            toString(assayNames), dir
         ))
         out <- lapply(
             X = assayNames,
@@ -697,7 +687,12 @@ setMethod(
             name <- as.character(sym)
         }
         dir <- realpath(initDir(file.path(dir, name)))
-        cli_alert(sprintf("Exporting {.envvar %s} to {.path %s}.", name, dir))
+        if (!isTRUE(quiet)) {
+            cli_alert(sprintf(
+                fmt = "Exporting {.envvar %s} to {.path %s}.",
+                name, dir
+            ))
+        }
         ## Return the file paths back to the user as a named list.
         files <- list()
         ## Set the desired output extension, depending on whether we need to
