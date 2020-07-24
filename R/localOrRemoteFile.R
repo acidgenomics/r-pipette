@@ -11,7 +11,7 @@
 #' extensions are natively supported: `BZ2`, `GZ`, `XZ`, and `ZIP`.
 #'
 #' @export
-#' @note Updated 2020-01-19.
+#' @note Updated 2020-07-24.
 #'
 #' @inheritParams acidroxygen::params
 #' @param file `character(1)`.
@@ -95,7 +95,7 @@ localOrRemoteFile <- function(file, quiet) {
         SIMPLIFY = TRUE,
         USE.NAMES = FALSE
     )
-    .autoDecompress(file = file)
+    realpath(.autoDecompress(file))
 }
 
 formals(localOrRemoteFile)[["quiet"]] <- formalsList[["quiet"]]
@@ -107,10 +107,10 @@ formals(localOrRemoteFile)[["quiet"]] <- formalsList[["quiet"]]
 ## write permission issues, unless R is running as administrator. Ensure that
 ## decompressed is removed manually before attempting to overwrite, otherwise
 ## this step can error out.
+## Updated 2020-07-24.
 .autoDecompress <- function(file) {
-    file <- realpath(file)
     vapply(
-        X = file,
+        X = realpath(file),
         FUN = function(file) {
             if (!grepl(compressExtPattern, file)) {
                 return(file)
