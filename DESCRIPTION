@@ -1,8 +1,8 @@
 Package: pipette
 Title: Pipette Biological Data In and Out of R
 Description: Input/output functions for biological data formats.
-Version: 0.4.7
-Date: 2020-07-13
+Version: 0.4.8
+Date: 2020-07-24
 Authors@R: c(
     person(
         "Michael", "Steinbaugh",
@@ -20,7 +20,7 @@ URL:
 BugReports: https://github.com/acidgenomics/pipette/issues/
 License: GPL-3
 Encoding: UTF-8
-Depends: R (>= 3.6)
+Depends: R (>= 4.0)
 Imports:
     BiocGenerics (>= 0.32),
     GenomicRanges (>= 1.38),
@@ -35,13 +35,13 @@ Imports:
     data.table (>= 1.12.8),
     goalie (>= 0.4.5),
     jsonlite (>= 1.6),
+    methods,
     rtracklayer (>= 1.46),
     stringr (>= 1.4),
     tibble (>= 3.0.1),
+    utils,
     vroom (>= 1.2.1),
-    yaml (>= 2.2.1),
-    methods,
-    utils
+    yaml (>= 2.2.1)
 Suggests:
     acidtest (>= 0.3.0),
     patrick (>= 0.0.1),
