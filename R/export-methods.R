@@ -92,8 +92,8 @@ NULL
         overwrite,
         quiet
     ) {
+        requireNamespaces("readr")
         assert(
-            requireNamespace("readr", quietly = TRUE),
             isCharacter(object),
             isString(ext),
             isString(dir),
@@ -207,9 +207,9 @@ setMethod(
             arg = getOption("acid.export.engine", default = "vroom"),
             choices = c("data.table", "readr", "vroom")
         )
+        requireNamespaces(whatPkg)
         verbose <- getOption("acid.verbose", default = FALSE)
         assert(
-            requireNamespace(whatPkg, quietly = TRUE),
             hasLength(object),
             hasRows(object),
             hasCols(object),

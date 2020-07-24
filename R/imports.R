@@ -14,7 +14,7 @@ NULL
 #'   colData<- rowData rowData<- rowRanges
 #' @importFrom acidbase basenameSansExt bapply compress compressExtPattern
 #'   decompress dots extPattern fileExt formalsList initDir matchArgsToDoCall
-#'   pasteURL realpath standardizeCall
+#'   pasteURL realpath requireNamespaces standardizeCall
 #' @importFrom cli cli_alert cli_alert_info cli_alert_success cli_alert_warning
 #' @importFrom data.table fread fwrite
 #' @importFrom goalie assert allAreAtomic allAreExisting allAreFiles
