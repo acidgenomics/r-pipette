@@ -21,7 +21,7 @@ Local file path(s). Stops on a missing file.
 Dynamically handle a local or remote file path
 }
 \note{
-Updated 2020-01-19.
+Updated 2020-07-24.
 }
 \section{Vectorization}{
 
