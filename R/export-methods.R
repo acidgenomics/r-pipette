@@ -1,6 +1,6 @@
 #' @name export
 #' @inherit acidgenerics::export
-#' @note Updated 2020-06-11.
+#' @note Updated 2020-07-24.
 #'
 #' @section Row names:
 #'
@@ -82,7 +82,7 @@ NULL
 
 
 
-## Updated 2020-06-11.
+## Updated 2020-07-24.
 `export,character` <-  # nolint
     function(
         object,
@@ -123,18 +123,29 @@ NULL
         compress <- !is.na(compressExt)
         ## Inform the user regarding overwrite.
         if (isAFile(file)) {
+            file <- realpath(file)
             if (isTRUE(overwrite) && !isTRUE(quiet)) {
-                cli_alert_warning(
-                    sprintf("Overwriting {.file %s}.", basename(file))
-                )
+                cli_alert_warning(sprintf(
+                    fmt = "Overwriting {.file %s} at {.path %s}.",
+                    basename(file),
+                    dirname(file)
+                ))
             } else {
-                stop(sprintf("File exists: '%s'", realpath(file)))
+                stop(sprintf("File exists: '%s'", file))
             }
         }
+        ## Ensure directory is created automatically.
+        initDir(dirname(file))
         if (!isTRUE(quiet)) {
             cli_alert(sprintf(
-                "Exporting {.file %s} using {.pkg %s}::{.fun %s}.",
-                basename(file), "readr", "write_lines"
+                fmt = paste(
+                    "Exporting {.file %s} at {.path %s}",
+                    "using {.pkg %s}::{.fun %s}."
+                ),
+                basename(file),
+                dirname(file),
+                "readr",
+                "write_lines"
             ))
         }
         readr::write_lines(
@@ -183,7 +194,7 @@ setMethod(
 ## `data.table`, `tbl_df`, and `DataFrame` classes. Note that `rio::export()`
 ## does not preserve row names by default, so we're ensuring row names get
 ## coerced to "rowname" column consistently here.
-## Updated 2020-05-12.
+## Updated 2020-07-24.
 `export,matrix` <-  # nolint
     function(
         object,
@@ -246,16 +257,19 @@ setMethod(
         }
         ## Inform the user regarding overwrite.
         if (isAFile(file)) {
+            file <- realpath(file)
             if (isTRUE(overwrite) && !isTRUE(quiet)) {
-                cli_alert_warning(
-                    sprintf("Overwriting {.file %s}.", basename(file))
-                )
+                cli_alert_warning(sprintf(
+                    fmt = "Overwriting {.file %s} at {.path %s}.",
+                    basename(file),
+                    dirname(file)
+                ))
             } else {
-                stop(sprintf("File exists: '%s'", realpath(file)))
+                stop(sprintf("File exists: '%s'", file))
             }
         }
         ## Ensure directory is created automatically.
-        initDir(dir = dirname(file))
+        initDir(dirname(file))
         ## Remove compression extension from output file path, prior to running
         ## `compress()` step below.
         if (isTRUE(compress)) {
@@ -319,8 +333,14 @@ setMethod(
         }
         if (!isTRUE(quiet)) {
             cli_alert(sprintf(
-                "Exporting {.file %s} using {.pkg %s}::{.fun %s}.",
-                basename(file), whatPkg, whatFun
+                fmt = paste(
+                    "Exporting {.file %s} at {.path %s}",
+                    "using {.pkg %s}::{.fun %s}."
+                ),
+                basename(file),
+                dirname(file),
+                whatPkg,
+                whatFun
             ))
         }
         do.call(what = what, args = args)
@@ -437,16 +457,19 @@ setMethod(
         compress <- !is.na(compressExt)
         ## Inform the user regarding overwrite.
         if (isAFile(file)) {
+            file <- realpath(file)
             if (isTRUE(overwrite) && !isTRUE(quiet)) {
-                cli_alert_warning(
-                    sprintf("Overwriting {.file %s}.", basename(file))
-                )
+                cli_alert_warning(sprintf(
+                    fmt = "Overwriting {.file %s} at {.path %s}.",
+                    basename(file),
+                    dirname(file)
+                ))
             } else {
-                stop(sprintf("File exists: %s", realpath(file)))
+                stop(sprintf("File exists: %s", file))
             }
         }
         ## Ensure directory is created automatically.
-        initDir(dir = dirname(file))
+        initDir(dirname(file))
         ## Remove compression extension from output file.
         if (isTRUE(compress)) {
             file <- sub(
@@ -458,8 +481,14 @@ setMethod(
         ## Export MatrixMarket file.
         if (!isTRUE(quiet)) {
             cli_alert(sprintf(
-                "Exporting {.file %s} using {.pkg %s}::{.fun %s}.",
-                basename(file), "Matrix", "writeMM"
+                fmt = paste(
+                    "Exporting {.file %s} at {.path %s}",
+                    "using {.pkg %s}::{.fun %s}."
+                ),
+                basename(file),
+                dirname(file),
+                "Matrix",
+                "writeMM"
             ))
         }
         writeMM(obj = object, file = file)
@@ -539,7 +568,7 @@ setMethod(
 
 
 
-## Updated 2020-01-19.
+## Updated 2020-07-24.
 .exportAssays <-  # nolint
     function(object, name, dir, compress, overwrite, quiet) {
         validObject(object)
@@ -553,7 +582,12 @@ setMethod(
         )
         assayNames <- assayNames(object)
         assert(isCharacter(assayNames))
-        cli_alert(sprintf("Exporting assays: {.var %s}.", toString(assayNames)))
+        dir <- realpath(initDir(dir))
+        cli_alert(sprintf(
+            fmt = "Exporting assays {.var %s} to {.path %s}.",
+            toString(assayNames),
+            dir
+        ))
         out <- lapply(
             X = assayNames,
             FUN = function(name, dir) {
@@ -637,7 +671,7 @@ setMethod(
 
 
 
-## Updated 2020-01-19.
+## Updated 2020-07-24.
 `export,SummarizedExperiment` <-  # nolint
     function(
         object,
@@ -662,7 +696,8 @@ setMethod(
             assert(is.symbol(sym))
             name <- as.character(sym)
         }
-        dir <- initDir(file.path(dir, name))
+        dir <- realpath(initDir(file.path(dir, name)))
+        cli_alert(sprintf("Exporting {.envvar %s} to {.path %s}.", name, dir))
         ## Return the file paths back to the user as a named list.
         files <- list()
         ## Set the desired output extension, depending on whether we need to
@@ -707,7 +742,6 @@ setMethod(
                 overwrite = overwrite,
                 quiet = quiet
             )
-        cli_alert(sprintf("Exported {.envvar %s} to {.path %s}.", name, dir))
         ## Return named character of file paths.
         files <- Filter(Negate(is.null), files)
         assert(hasNames(files))
