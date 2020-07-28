@@ -29,11 +29,11 @@ test_that("No file extension", {
     )
 })
 
-with_parameters_test_that(
+test_that(
     "Automatic decompression", {
+        for (ext in c("bz2", "gz", "xz", "zip")) {
         file <- file.path("cache", paste0("example.txt.", ext))
         file <- localOrRemoteFile(file)
         expect_identical(readLines(file), "acid")
-    },
-    ext = c("bz2", "gz", "xz", "zip")
-)
+    }
+})
