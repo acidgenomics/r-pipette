@@ -8,25 +8,20 @@ test_that("DataFrame", {
     data <- colData(rse)
     x <- as(data, "tbl_df")
     expect_is(x, "tbl_df")
-
     ## Expect that rownames are automatically moved to first column.
     expect_identical(colnames(x)[[1L]], "rowname")
-
     ## Early return if already tibble.
     x <- tibble()
     expect_identical(x, as(x, "tbl_df"))
-
     ## Coercion of a DataFrame containing a list column is allowed.
     data <- DataFrame()
     data[["x"]] <- list()
     data <- as(data, "tbl_df")
     expect_is(data, "tbl_df")
-
     ## Error on complex S4 column (e.g. GRanges).
     data <- as(rowRanges(rse), "DataFrame")
     expect_s4_class(data[["X"]], "GRanges")
     expect_error(suppressWarnings(as(data, "tbl_df")))
-
     ## Check handling when rownames are NULL.
     data <- DataFrame(a = 1L, b = "b")
     expect_null(rownames(data))
@@ -37,8 +32,8 @@ test_that("DataFrame", {
     expect_identical(rownames(data), "1")
 })
 
-with_parameters_test_that(
-    "Ranges", {
+test_that("Ranges", {
+    for (object in list(gr, ir)) {
         expect_is(as_tibble(object), "tbl_df")
         expect_is(as(object, "tbl_df"), "tbl_df")
         expect_true(isSubset(
@@ -54,6 +49,5 @@ with_parameters_test_that(
             x = "rowname",
             y = colnames(as_tibble(unname(object)))
         ))
-    },
-    object = list(gr, ir)
-)
+    }
+})
