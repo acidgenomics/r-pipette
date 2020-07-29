@@ -2,16 +2,14 @@ context("coerce : data.frame")
 
 ## Note that `as(object, "data.frame")` should keep `tbl_df` class here.
 
-with_parameters_test_that(
-    "S3(ish) and S4", {
+test_that("S3(ish) and S4", {
+    for (object in list(gr, ir, sparse, tbl)) {
         x <- as.data.frame(object)
         expect_is(x, "data.frame")
-
         x <- as(object, "data.frame")
         expect_is(x, "data.frame")
-    },
-    object = list(gr, ir, sparse, tbl)
-)
+    }
+})
 
 test_that("Ranges", {
     expect_true(hasRownames(as.data.frame(gr)))

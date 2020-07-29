@@ -1,3 +1,10 @@
+## pipette 0.4.9 (2020-07-27)
+
+### Minor changes
+
+- Decreased data.table dependency from 1.13.0 back to 1.12.8, so we can build
+  successfully on bioconda.
+
 ## pipette 0.4.8 (2020-07-24)
 
 ### Minor changes

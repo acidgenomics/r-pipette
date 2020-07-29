@@ -1,11 +1,8 @@
 context("export : matrix")
 
-ext <- eval(formals(`export,matrix`)[["ext"]])
-
-with_parameters_test_that(
-    "'ext' argument", {
+test_that("'ext' argument", {
+    for (ext in eval(formals(`export,matrix`)[["ext"]])) {
         file <- paste0("mat", ".", ext)
-
         x <- export(object = mat, ext = ext)
         expect_identical(x, realpath(file))
         expect_true(file.exists(file))
@@ -14,7 +11,6 @@ with_parameters_test_that(
             pattern = "rowname",
             x = head(readLines(file), n = 1L)
         ))
-
         ## Check accidental overwrite support.
         expect_error(
             export(mat, ext = ext, overwrite = FALSE),
@@ -24,7 +20,6 @@ with_parameters_test_that(
             export(mat, ext = ext, overwrite = TRUE),
             "Overwriting"
         )
-
         ## Now strip the names, and confirm that export still works.
         mat <- unname(mat)
         x <- export(object = mat, ext = ext)
@@ -34,11 +29,9 @@ with_parameters_test_that(
             pattern = "V1",
             x = head(readLines(file), n = 1L)
         ))
-
         file.remove(file)
-    },
-    ext = ext
-)
+    }
+})
 
 test_that("readr mode (experimental)", {
     options("acid.export.engine" = "readr")
@@ -67,10 +60,8 @@ test_that("Invalid input", {
 
 context("export : DataFrame")
 
-ext <- eval(formals(`export,DataFrame`)[["ext"]])
-
-with_parameters_test_that(
-    "'ext' argument", {
+test_that("'ext' argument", {
+    for (ext in eval(formals(`export,DataFrame`)[["ext"]])) {
         file <- paste0("df", ".", ext)
         x <- export(df, ext = ext)
         expect_identical(x, realpath(file))
@@ -81,9 +72,8 @@ with_parameters_test_that(
             x = head(readLines(file), n = 1L)
         ))
         file.remove(file)
-    },
-    ext = ext
-)
+    }
+})
 
 test_that("'file' argument", {
     x <- export(df, file = "df.csv")
@@ -115,7 +105,6 @@ test_that("'ext' argument, using gzip compression (default)", {
         )
     )
     expect_true(all(file.exists(x)))
-
     ## Check accidental overwrite support.
     expect_error(
         export(sparse, ext = "mtx.gz", overwrite = FALSE),
@@ -125,7 +114,6 @@ test_that("'ext' argument, using gzip compression (default)", {
         export(sparse, ext = "mtx.gz", overwrite = TRUE),
         "Overwriting"
     )
-
     file.remove(x)
 })
 
