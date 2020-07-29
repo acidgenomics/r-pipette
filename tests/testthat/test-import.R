@@ -28,8 +28,8 @@ context("import : data frame")
 
 skip_if_not(hasInternet())
 
-with_parameters_test_that(
-    "Delimited files", {
+test_that("Delimited files", {
+    for (ext in c("csv", "csv.gz", "tsv")) {
         file <- file.path(file = "cache", paste0("example.", ext))
         object <- import(file)
         expect_is(object, "data.frame")
@@ -41,9 +41,8 @@ with_parameters_test_that(
             object = attributes(object)[["import"]][["importer"]],
             expected = "vroom::vroom"
         )
-    },
-    ext = c("csv", "csv.gz", "tsv")
-)
+    }
+})
 
 test_that("data.table mode", {
     options("acid.import.engine" = "data.table")
@@ -244,30 +243,37 @@ context("import : GSEA")
 
 skip_if_not(hasInternet())
 
-with_parameters_test_that(
-    "MSigDB hallmark", {
-        file <- file.path("cache", file)
-        object <- import(file)
-        expect_identical(length(object), 50L)
-        expect_identical(
-            object = names(object)[[1L]],
-            expected = "HALLMARK_TNFA_SIGNALING_VIA_NFKB"
-        )
-        expect_identical(length(object[[1L]]), 200L)
-        expect_identical(head(object[[1L]]), ids)
-    },
-    file = c(
-        symbols = "h.all.v6.2.symbols.gmt",
-        entrez = "h.all.v6.2.entrez.gmt"
-    ),
-    ids = list(
-        symbols = c("JUNB", "CXCL2", "ATF3", "NFKBIA", "TNFAIP3", "PTGS2"),
-        entrez = c("3726", "2920", "467", "4792", "7128", "5743")
+test_that("MSigDB hallmark", {
+    mapply(
+        file = c(
+            symbols = "h.all.v6.2.symbols.gmt",
+            entrez = "h.all.v6.2.entrez.gmt"
+        ),
+        ids = list(
+            symbols = c("JUNB", "CXCL2", "ATF3", "NFKBIA", "TNFAIP3", "PTGS2"),
+            entrez = c("3726", "2920", "467", "4792", "7128", "5743")
+        ),
+        FUN = function(file, ids) {
+            file <- file.path("cache", file)
+            object <- import(file)
+            expect_identical(length(object), 50L)
+            expect_identical(
+                object = names(object)[[1L]],
+                expected = "HALLMARK_TNFA_SIGNALING_VIA_NFKB"
+            )
+            expect_identical(length(object[[1L]]), 200L)
+            expect_identical(head(object[[1L]]), ids)
+        },
+        SIMPLIFY = FALSE
     )
-)
+})
 
-with_parameters_test_that(
-    "T_CELL_ACTIVATION", {
+test_that("T_CELL_ACTIVATION", {
+    for (file in c(
+        gmt = "geneset.gmt",
+        gmx = "geneset.gmx",
+        grp = "geneset.grp"
+    )) {
         file <- file.path("cache", file)
         object <- import(file)
         expect_identical(names(object), "T_CELL_ACTIVATION")
@@ -276,13 +282,8 @@ with_parameters_test_that(
             head(object[[1L]]),
             c("CADM1", "CD1D", "CD2", "CD24", "CD276", "CD28")
         )
-    },
-    file = c(
-        gmt = "geneset.gmt",
-        gmx = "geneset.gmx",
-        grp = "geneset.grp"
-    )
-)
+    }
+})
 
 
 
@@ -290,13 +291,12 @@ context("import : JSON/YAML")
 
 skip_if_not(hasInternet())
 
-with_parameters_test_that(
-    "JSON/YAML", {
+test_that("JSON/YAML", {
+    for (ext in c("json", "yml")) {
         object <- import(file = file.path("cache", paste0("example.", ext)))
         expect_is(object, "list")
-    },
-    ext = c("json", "yml")
-)
+    }
+})
 
 test_that("'rio::import()', e.g. Stata DTA file", {
     skip_if_not_installed("haven")
