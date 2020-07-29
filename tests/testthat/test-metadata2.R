@@ -1,7 +1,10 @@
 context("metadata2")
 
 test_that("metadata2", {
-    for (x = list(data.frame(), S4Vectors::DataFrame())) {
+    for (x in list(
+        data.frame(),
+        S4Vectors::DataFrame()
+    )) {
         which <- "A"
         expect_null(metadata2(x, which = which))
         value <- "B"
