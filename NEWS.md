@@ -1,3 +1,9 @@
+## pipette 0.4.10 (2020-08-03)
+
+### Minor changes
+
+- Relax name checks for `import`.
+
 ## pipette 0.4.9 (2020-07-27)
 
 ### Minor changes
