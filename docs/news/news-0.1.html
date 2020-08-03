@@ -73,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pipette</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.10</span>
       </span>
     </div>
 
@@ -124,9 +124,9 @@
     <div id="brio-011-2019-01-05" class="section level2">
 <h2 class="hasAnchor">
 <a href="#brio-011-2019-01-05" class="anchor"></a>brio 0.1.1 (2019-01-05)</h2>
-<div id="minor-changes-45" class="section level3">
+<div id="minor-changes-46" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-45" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-46" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Added <a href="https://travis-ci.com/">Travis CI</a> and <a href="https://www.appveyor.com/">AppVeyor CI</a> support.</li>
 <li>Improved documention in <code>import</code> regarding supported file formats.</li>
@@ -140,9 +140,9 @@
     <div id="brio-012-2019-12-12" class="section level2">
 <h2 class="hasAnchor">
 <a href="#brio-012-2019-12-12" class="anchor"></a>brio 0.1.2 (2019-12-12)</h2>
-<div id="minor-changes-44" class="section level3">
+<div id="minor-changes-45" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-44" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-45" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Improved <code>extPattern</code> to inherit <code>compressExtPattern</code>.</li>
 <li>Improved documentation in <code>import</code> regarding compressed file handling.</li>
@@ -155,9 +155,9 @@
     <div id="brio-013-2019-12-13" class="section level2">
 <h2 class="hasAnchor">
 <a href="#brio-013-2019-12-13" class="anchor"></a>brio 0.1.3 (2019-12-13)</h2>
-<div id="minor-changes-43" class="section level3">
+<div id="minor-changes-44" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-43" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-44" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Updated imports to reflect renaming of S4Transformer package to simply <a href="https://transformer.acidgenomics.com/">transformer</a>.</li>
 </ul>
@@ -188,9 +188,9 @@
 <li>Removed <code>sanitizeColData</code> and <code>sanitizeRowData</code>. May need to add back in a future release, but removed for time being.</li>
 </ul>
 </div>
-<div id="minor-changes-42" class="section level3">
+<div id="minor-changes-43" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-42" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-43" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>
 <code>realpath</code>: Removed unnecessary assert check using <code>allHaveAccess</code>, since <code>normalizePath</code> already checks for this when <code>mustWork = TRUE</code>.</li>
@@ -202,9 +202,9 @@
 <h2 class="hasAnchor">
 <a href="#brio-015-2019-02-11" class="anchor"></a>brio 0.1.5 (2019-02-11)</h2>
 <p>This release helps ensure backward compatibility with R 3.4.</p>
-<div id="minor-changes-41" class="section level3">
+<div id="minor-changes-42" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-41" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-42" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Bug fix for assert in <code>transmit</code>: Need to wrap <code>isMatchingRegex</code> in <code>all</code> for backward compatibility with R 3.4.</li>
 <li>Miscellaneous CI fixes to <a href="https://travis-ci.com/">Travis CI</a> and <a href="https://www.appveyor.com/">AppVeyor CI</a>.</li>
@@ -214,9 +214,9 @@
     <div id="brio-016-2019-02-12" class="section level2">
 <h2 class="hasAnchor">
 <a href="#brio-016-2019-02-12" class="anchor"></a>brio 0.1.6 (2019-02-12)</h2>
-<div id="minor-changes-40" class="section level3">
+<div id="minor-changes-41" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-40" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-41" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Documentation fixes and website improvements.</li>
 </ul>
@@ -233,9 +233,9 @@
 <code>fileExt</code>: An improved variation on <code><a href="https://rdrr.io/r/tools/fileutils.html">tools::file_ext</a></code>.</li>
 </ul>
 </div>
-<div id="minor-changes-39" class="section level3">
+<div id="minor-changes-40" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-39" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-40" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>
 <code>basenameSansExt</code>: Tightened up this function to return <code>NA</code> on match failure. This behaves simiarly to the new <code>fileExt</code> function.</li>
@@ -247,9 +247,9 @@
     <div id="brio-018-2019-02-25" class="section level2">
 <h2 class="hasAnchor">
 <a href="#brio-018-2019-02-25" class="anchor"></a>brio 0.1.8 (2019-02-25)</h2>
-<div id="minor-changes-38" class="section level3">
+<div id="minor-changes-39" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-38" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-39" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>
 <code>export</code>: Tightened up the method support, removing the <code>ANY</code> method. Now we’re explicitly exporting <code>data.frame</code>, <code>DataFrame</code>, <code>matrix</code>, and <code>GRanges</code> methods. This also has the added benefit of making the documentation more readable.</li>
@@ -267,9 +267,9 @@
 <code>loadData</code> and <code>saveData</code> now support <code>list</code> argument, supporting a character vector of object names. This allows for programmatic use of the functions with standard evaluation. For reference, this approach is inspired by the method defined in <code>save</code>.</li>
 </ul>
 </div>
-<div id="minor-changes-37" class="section level3">
+<div id="minor-changes-38" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-37" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-38" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>
 <code>import</code>: Data provenance metadata is now slotted into <code>attributes</code> for S3 return (e.g. <code>data.frame</code>) and <code>metadata</code> for S4 return (e.g. <code>DataFrame</code>).</li>
@@ -279,9 +279,9 @@
     <div id="brio-0110-2019-03-11" class="section level2">
 <h2 class="hasAnchor">
 <a href="#brio-0110-2019-03-11" class="anchor"></a>brio 0.1.10 (2019-03-11)</h2>
-<div id="minor-changes-36" class="section level3">
+<div id="minor-changes-37" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-36" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-37" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>
 <code>localOrRemoteFile</code>: Binary file extension pattern matching bug fix. Applies to files downloaded on Windows. If <code>download.file</code> is not called with mode <code>wb</code> (write binary) for files on Windows, decompression will fail.</li>
@@ -291,9 +291,9 @@
     <div id="brio-0111-2019-03-13" class="section level2">
 <h2 class="hasAnchor">
 <a href="#brio-0111-2019-03-13" class="anchor"></a>brio 0.1.11 (2019-03-13)</h2>
-<div id="minor-changes-35" class="section level3">
+<div id="minor-changes-36" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-35" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-36" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>
 <code>import</code>: Switched to using <code><a href="https://rdrr.io/pkg/gdata/man/read.xls.html">gdata::read.xls</a></code> to import legacy XLS binary files. <code><a href="https://readxl.tidyverse.org/reference/read_excel.html">readxl::read_excel</a></code> doesn’t work consistently for some files and returns <code>libxls</code> error. In the meantime, use gdata package, which is slow but works.</li>
@@ -304,9 +304,9 @@
     <div id="brio-0112-2019-03-17" class="section level2">
 <h2 class="hasAnchor">
 <a href="#brio-0112-2019-03-17" class="anchor"></a>brio 0.1.12 (2019-03-17)</h2>
-<div id="minor-changes-34" class="section level3">
+<div id="minor-changes-35" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-34" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-35" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>
 <code>import</code>: Added initial <code>rownames</code> and <code>colnames</code> parameter support for <code>data.frame</code> import. I strongly recommend leaving these enabled by default. However, these are useful in some edge cases when loading data from remote servers (e.g. WormBase).</li>
@@ -318,9 +318,9 @@
     <div id="brio-0113-2019-03-20" class="section level2">
 <h2 class="hasAnchor">
 <a href="#brio-0113-2019-03-20" class="anchor"></a>brio 0.1.13 (2019-03-20)</h2>
-<div id="minor-changes-33" class="section level3">
+<div id="minor-changes-34" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-33" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-34" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>
 <code>localOrRemoteFile</code>: Improved error message for Windows users when tempfile can’t be removed successfully. This can happen on systems when the user is not running as Administrator, but doesn’t happen on macOS or Linux.</li>
@@ -330,9 +330,9 @@
     <div id="brio-0114-2019-03-22" class="section level2">
 <h2 class="hasAnchor">
 <a href="#brio-0114-2019-03-22" class="anchor"></a>brio 0.1.14 (2019-03-22)</h2>
-<div id="minor-changes-32" class="section level3">
+<div id="minor-changes-33" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-32" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-33" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Migrated code to <a href="https://acidgenomics.com/">Acid Genomics</a>.</li>
 </ul>
@@ -370,9 +370,9 @@
     <div id="brio-0117-2019-03-31" class="section level2">
 <h2 class="hasAnchor">
 <a href="#brio-0117-2019-03-31" class="anchor"></a>brio 0.1.17 (2019-03-31)</h2>
-<div id="minor-changes-31" class="section level3">
+<div id="minor-changes-32" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-31" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-32" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>
 <code>import</code>: Added GRP file support for GSEA.</li>
@@ -385,9 +385,9 @@
     <div id="brio-0118-2019-04-01" class="section level2">
 <h2 class="hasAnchor">
 <a href="#brio-0118-2019-04-01" class="anchor"></a>brio 0.1.18 (2019-04-01)</h2>
-<div id="minor-changes-30" class="section level3">
+<div id="minor-changes-31" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-30" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-31" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Bug fix release. Re-importing rio package to ensure <code><a href="../reference/export.html">export()</a></code> always works on <code>data.frame</code> method.</li>
 </ul>
@@ -396,9 +396,9 @@
     <div id="brio-0119-2019-04-22" class="section level2">
 <h2 class="hasAnchor">
 <a href="#brio-0119-2019-04-22" class="anchor"></a>brio 0.1.19 (2019-04-22)</h2>
-<div id="minor-changes-29" class="section level3">
+<div id="minor-changes-30" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-29" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-30" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Backward compatibility fixes/updates to support R 3.4.</li>
 </ul>
@@ -407,9 +407,9 @@
     <div id="brio-0120-2019-04-25" class="section level2">
 <h2 class="hasAnchor">
 <a href="#brio-0120-2019-04-25" class="anchor"></a>brio 0.1.20 (2019-04-25)</h2>
-<div id="minor-changes-28" class="section level3">
+<div id="minor-changes-29" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-28" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-29" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>S4 generic reexport documentation fixes.</li>
 </ul>
