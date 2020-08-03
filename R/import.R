@@ -99,7 +99,7 @@
 #' `DOC`, `DOCX`, `PDF`, `PPT`, `PPTX`.
 #'
 #' @export
-#' @note Updated 2020-07-24.
+#' @note Updated 2020-08-03.
 #'
 #' @inheritParams acidroxygen::params
 #' @param rownames `logical(1)`.
@@ -410,7 +410,9 @@ import <- function(
             )
         }
         names(object) <- makeNames(names(object))
-        assert(hasValidNames(object))
+        if (!isTRUE(hasValidNames(object))) {
+            cli_alert_warning("Invalid names detected.")
+        }
     }
     if (isTRUE(metadata)) {
         if (!is.null(metadata2(object, which = "import"))) {
