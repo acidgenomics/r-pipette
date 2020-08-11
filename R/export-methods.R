@@ -1,6 +1,6 @@
 #' @name export
 #' @inherit acidgenerics::export
-#' @note Updated 2020-07-24.
+#' @note Updated 2020-08-11.
 #'
 #' @section Row names:
 #'
@@ -82,7 +82,7 @@ NULL
 
 
 
-## Updated 2020-07-24.
+## Updated 2020-08-11.
 `export,character` <-  # nolint
     function(
         object,
@@ -108,20 +108,16 @@ NULL
             name <- as.character(sym)
             ext <- match.arg(
                 arg = ext,
-                choices = c(
-                    "txt",
-                    "txt.bz2",
-                    "txt.gz",
-                    "txt.xz",
-                    "txt.zip"
-                )
+                choices = c("txt", "txt.bz2", "txt.gz", "txt.xz", "txt.zip")
             )
+            dir <- initDir(dir)
             file <- file.path(dir, paste0(name, ".", ext))
+        } else {
+            initDir(dirname(file))
         }
         match <- str_match(string = file, pattern = extPattern)
         compressExt <- match[1L, 4L]
         compress <- !is.na(compressExt)
-        ## Inform the user regarding overwrite.
         if (isAFile(file)) {
             file <- realpath(file)
             if (isTRUE(overwrite) && !isTRUE(quiet)) {
@@ -133,8 +129,6 @@ NULL
                 stop(sprintf("File exists: '%s'", file))
             }
         }
-        ## Ensure directory is created automatically.
-        initDir(dirname(file))
         if (!isTRUE(quiet)) {
             cli_alert(sprintf(
                 fmt = paste(
@@ -145,12 +139,7 @@ NULL
                 "readr", "write_lines"
             ))
         }
-        readr::write_lines(
-            x = object,
-            path = file,
-            append = FALSE
-        )
-        ## Compress file, if necessary.
+        readr::write_lines(x = object, path = file, append = FALSE)
         if (isTRUE(compress)) {
             file <- compress(
                 file = file,
@@ -163,17 +152,8 @@ NULL
         invisible(file)
     }
 
-formals(`export,character`)[
-    c(
-        "dir",
-        "overwrite",
-        "quiet"
-    )] <-
-    formalsList[c(
-        "export.dir",
-        "overwrite",
-        "quiet"
-    )]
+formals(`export,character`)[c("dir", "overwrite", "quiet")] <-
+    formalsList[c("export.dir", "overwrite", "quiet")]
 
 
 
@@ -191,7 +171,7 @@ setMethod(
 ## `data.table`, `tbl_df`, and `DataFrame` classes. Note that `rio::export()`
 ## does not preserve row names by default, so we're ensuring row names get
 ## coerced to "rowname" column consistently here.
-## Updated 2020-07-24.
+## Updated 2020-08-11.
 `export,matrix` <-  # nolint
     function(
         object,
@@ -226,9 +206,11 @@ setMethod(
             sym <- call[["object"]]
             assert(is.symbol(sym))
             name <- as.character(sym)
+            dir <- initDir(dir)
             file <- file.path(dir, paste0(name, ".", ext))
         } else {
             ext <- fileExt(file)
+            initDir(dirname(file))
         }
         ext <- match.arg(
             arg = ext,
@@ -240,19 +222,16 @@ setMethod(
         match <- str_match(string = file, pattern = extPattern)
         compressExt <- match[1L, 4L]
         compress <- !is.na(compressExt)
-        ## Ensure row names are automatically moved to `rowname` column.
         if (hasRownames(object)) {
             assert(areDisjointSets("rowname", colnames(object)))
             object[["rowname"]] <- rownames(object)
             rownames(object) <- NULL
-            ## Ensure the "rowname" column appears first.
             object <- object[
                 ,
                 c("rowname", setdiff(colnames(object), "rowname")),
                 drop = FALSE
             ]
         }
-        ## Inform the user regarding overwrite.
         if (isAFile(file)) {
             file <- realpath(file)
             if (isTRUE(overwrite) && !isTRUE(quiet)) {
@@ -264,10 +243,6 @@ setMethod(
                 stop(sprintf("File exists: '%s'", file))
             }
         }
-        ## Ensure directory is created automatically.
-        initDir(dirname(file))
-        ## Remove compression extension from output file path, prior to running
-        ## `compress()` step below.
         if (isTRUE(compress)) {
             file <- sub(
                 pattern = paste0("\\.", compressExt, "$"),
@@ -276,7 +251,6 @@ setMethod(
             )
         }
         if (identical(whatPkg, "data.table")) {
-            ## data.table ------------------------------------------------------
             whatFun <- "fwrite"
             what <- fwrite
             args <- list(
@@ -291,7 +265,6 @@ setMethod(
                 "tsv" = "\t"
             )
         } else if (identical(whatPkg, "readr")) {
-            ## readr -----------------------------------------------------------
             whatFun <- switch(
                 EXPR = ext,
                 "csv" = "write_csv",
@@ -308,7 +281,6 @@ setMethod(
                 path = file
             )
         }  else if (identical(whatPkg, "vroom")) {
-            ## vroom -----------------------------------------------------------
             whatFun <- "vroom_write"
             what <- get(
                 x = whatFun,
@@ -338,7 +310,6 @@ setMethod(
             ))
         }
         do.call(what = what, args = args)
-        ## Compress file, if necessary.
         if (isTRUE(compress)) {
             file <- compress(
                 file = file,
@@ -352,18 +323,8 @@ setMethod(
     }
 
 formals(`export,matrix`)[
-    c(
-        "dir",
-        "ext",
-        "overwrite",
-        "quiet"
-    )] <-
-    formalsList[c(
-        "export.dir",
-        "export.ext",
-        "overwrite",
-        "quiet"
-    )]
+    c("dir", "ext", "overwrite", "quiet")] <-
+    formalsList[c("export.dir", "export.ext", "overwrite", "quiet")]
 
 
 
@@ -408,7 +369,7 @@ setMethod(
 ## Note that "file" is referring to the matrix file.
 ## The correponding column and row sidecar files are generated automatically.
 ## Consider adding HDF5 support in a future update.
-## Updated 2020-01-19.
+## Updated 2020-08-11.
 `export,sparseMatrix` <-  # nolint
     function(
         object,
@@ -432,24 +393,19 @@ setMethod(
             sym <- call[["object"]]
             assert(is.symbol(sym))
             name <- as.character(sym)
+            dir <- initDir(dir)
             file <- file.path(dir, paste0(name, ".", ext))
         } else {
             ext <- fileExt(file)
+            initDir(dirname(file))
         }
         ext <- match.arg(
             arg = ext,
-            choices = c(
-                "mtx",
-                "mtx.bz2",
-                "mtx.gz",
-                "mtx.xz",
-                "mtx.zip"
-            )
+            choices = c("mtx", "mtx.bz2", "mtx.gz", "mtx.xz", "mtx.zip")
         )
         match <- str_match(string = file, pattern = extPattern)
         compressExt <- match[1L, 4L]
         compress <- !is.na(compressExt)
-        ## Inform the user regarding overwrite.
         if (isAFile(file)) {
             file <- realpath(file)
             if (isTRUE(overwrite) && !isTRUE(quiet)) {
@@ -461,9 +417,6 @@ setMethod(
                 stop(sprintf("File exists: %s", file))
             }
         }
-        ## Ensure directory is created automatically.
-        initDir(dirname(file))
-        ## Remove compression extension from output file.
         if (isTRUE(compress)) {
             file <- sub(
                 pattern = paste0("\\.", compressExt, "$"),
@@ -471,7 +424,6 @@ setMethod(
                 x = file
             )
         }
-        ## Export MatrixMarket file.
         if (!isTRUE(quiet)) {
             cli_alert(sprintf(
                 fmt = paste(
@@ -483,7 +435,6 @@ setMethod(
             ))
         }
         writeMM(obj = object, file = file)
-        ## Compress file, if necessary.
         if (isTRUE(compress)) {
             file <- compress(
                 file = file,
@@ -492,7 +443,6 @@ setMethod(
                 overwrite = TRUE
             )
         }
-        ## Normalize the path.
         file <- realpath(file)
         ## Write barcodes (column names).
         barcodes <- colnames(object)
@@ -518,20 +468,12 @@ setMethod(
             genes = featuresFile
         )
         assert(allAreFiles(files))
-        ## Return named character of file paths.
         invisible(files)
     }
 
 formals(`export,sparseMatrix`)[
-    c(
-        "dir",
-        "overwrite",
-        "quiet"
-    )] <- formalsList[c(
-        "export.dir",
-        "overwrite",
-        "quiet"
-    )]
+    c("dir", "overwrite", "quiet")] <-
+    formalsList[c("export.dir", "overwrite", "quiet")]
 
 
 
@@ -559,8 +501,8 @@ setMethod(
 
 
 
-## Updated 2020-07-24.
-.exportAssays <-  # nolint
+## Updated 2020-08-11.
+.exportAssays <-
     function(object, name, dir, compress, overwrite, quiet) {
         validObject(object)
         assert(
@@ -583,7 +525,6 @@ setMethod(
             FUN = function(name, dir) {
                 file <- file.path(dir, name)
                 assay <- assay(x = object, i = name)
-                ## Dynamically set the file name based on the assay type.
                 if (is(assay, "sparseMatrix")) {
                     ext <- "mtx"
                 } else {
@@ -608,8 +549,8 @@ setMethod(
 
 
 
-## Updated 2020-01-19.
-.exportColData <-  # nolint
+## Updated 2020-08-11.
+.exportColData <-
     function(object, ext, dir, overwrite, quiet) {
         validObject(object)
         assert(
@@ -631,8 +572,8 @@ setMethod(
 
 ## NOTE: The standard `rowData()` output is okay but doesn't include genomic
 ## ranges coordinates. That's why we're coercing from `rowRanges()` for RSE.
-## Updated 2020-01-19.
-.exportRowData <-  # nolint
+## Updated 2020-08-11.
+.exportRowData <-
     function(object, ext, dir, overwrite, quiet) {
         validObject(object)
         assert(
@@ -661,7 +602,12 @@ setMethod(
 
 
 
-## Updated 2020-07-24.
+## Ensure the assays list is always named. Note that valid SE objects don't have
+## to contain named assays (e.g. DESeqTransform). In the event that an SE object
+## contains a single, unnamed assay, we make sure to rename it internally to
+## "assay" before exporting.
+##
+## Updated 2020-08-11.
 `export,SummarizedExperiment` <-  # nolint
     function(
         object,
@@ -680,36 +626,25 @@ setMethod(
             isFlag(quiet)
         )
         call <- standardizeCall()
-        ## Get the name and create directory substructure.
         if (is.null(name)) {
             sym <- call[["object"]]
             assert(is.symbol(sym))
             name <- as.character(sym)
         }
-        dir <- realpath(initDir(file.path(dir, name)))
+        dir <- initDir(file.path(dir, name))
         if (!isTRUE(quiet)) {
             cli_alert(sprintf(
                 fmt = "Exporting {.envvar %s} to {.path %s}.",
                 name, dir
             ))
         }
-        ## Return the file paths back to the user as a named list.
         files <- list()
-        ## Set the desired output extension, depending on whether we need to
-        ## enable compression. Always output consistently in CSV format.
         ext <- "csv"
-        if (isTRUE(compress)) {
-            ext <- paste0(ext, ".gz")
-        }
+        if (isTRUE(compress)) ext <- paste0(ext, ".gz")
         ext <- paste0(".", ext)
-        ## Ensure the assays list is always named. Note that valid SE objects
-        ## don't have to contain named assays (e.g. DESeqTransform). In the
-        ## event that an SE object contains a single, unnamed assay, we make
-        ## sure to rename it internally to "assay" before exporting.
         if (is.null(assayNames(object))) {
             assayNames(object) <- "assay"
         }
-        ## Assays.
         files[["assays"]] <-
             .exportAssays(
                 object = object,
@@ -719,7 +654,6 @@ setMethod(
                 overwrite = overwrite,
                 quiet = quiet
             )
-        ## Column data.
         files[["colData"]] <-
             .exportColData(
                 object = object,
@@ -728,7 +662,6 @@ setMethod(
                 overwrite = overwrite,
                 quiet = quiet
             )
-        ## Row data.
         files[["rowData"]] <-
             .exportRowData(
                 object = object,
@@ -737,24 +670,14 @@ setMethod(
                 overwrite = overwrite,
                 quiet = quiet
             )
-        ## Return named character of file paths.
         files <- Filter(Negate(is.null), files)
         assert(hasNames(files))
         invisible(files)
     }
 
 formals(`export,SummarizedExperiment`)[
-    c(
-        "compress",
-        "dir",
-        "overwrite",
-        "quiet"
-    )] <- formalsList[c(
-        "export.compress",
-        "export.dir",
-        "overwrite",
-        "quiet"
-    )]
+    c("compress", "dir", "overwrite", "quiet")] <-
+    formalsList[c("export.compress", "export.dir", "overwrite", "quiet")]
 
 
 
@@ -768,7 +691,7 @@ setMethod(
 
 
 
-## Updated 2020-01-19.
+## Updated 2020-08-11.
 `export,SingleCellExperiment` <-  # nolint
     function(
         object,
@@ -787,7 +710,6 @@ setMethod(
             isFlag(quiet)
         )
         call <- standardizeCall()
-        ## Get the name and create directory substructure.
         if (is.null(name)) {
             sym <- call[["object"]]
             assert(is.symbol(sym))
@@ -802,8 +724,8 @@ setMethod(
             overwrite = overwrite,
             quiet = quiet
         )
-        dir <- initDir(file.path(dir, name))
         ## Export dimensionality reduction data.
+        dir <- initDir(file.path(dir, name))
         reducedDimNames <- reducedDimNames(object)
         if (hasLength(reducedDimNames)) {
             if (!isTRUE(quiet)) {
@@ -846,17 +768,8 @@ setMethod(
     }
 
 formals(`export,SingleCellExperiment`)[
-    c(
-        "compress",
-        "dir",
-        "overwrite",
-        "quiet"
-    )] <- formalsList[c(
-        "export.compress",
-        "export.dir",
-        "overwrite",
-        "quiet"
-    )]
+    c("compress", "dir", "overwrite", "quiet")] <-
+    formalsList[c("export.compress", "export.dir", "overwrite", "quiet")]
 
 
 

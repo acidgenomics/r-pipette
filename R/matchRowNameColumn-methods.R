@@ -41,7 +41,7 @@ NULL
 
 
 
-## Updated 2019-10-22.
+## Updated 2020-08-11.
 `matchRowNameColumn,data.frame` <-  # nolint
     function(
         object,
@@ -67,9 +67,10 @@ NULL
             assert(validNames(rownames))
             col
         } else if (length(match) > 1L) {
+            fail <- colnames(object)[match]
             stop(sprintf(
                 "Multiple row names columns detected: %s.",
-                toString(colnames(object)[match], width = 100L)
+                toString(fail, width = 100L)
             ))
         }
     }
