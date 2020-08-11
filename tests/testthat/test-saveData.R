@@ -28,7 +28,7 @@ test_that("R data serialized", {
 })
 
 test_that("overwrite = FALSE", {
-    expect_warning(
+    expect_message(
         object = saveData(
             rse, sce,
             dir = dir, overwrite = FALSE
