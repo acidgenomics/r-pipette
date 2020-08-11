@@ -405,9 +405,10 @@ import <- function(
     if (hasNames(object)) {
         if (isTRUE(any(duplicated(names(object))))) {
             dupes <- sort(names(object)[duplicated(names(object))])
-            cli_alert_warning(
-                paste("Duplicate names:", toString(dupes, width = 200L))
-            )
+            cli_alert_warning(sprintf(
+                "Duplicate names: {.var %s}.",
+                toString(dupes, width = 100L)
+            ))
         }
         names(object) <- makeNames(names(object))
         if (!isTRUE(hasValidNames(object))) {
