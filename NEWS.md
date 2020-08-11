@@ -1,6 +1,9 @@
 ## pipette 0.4.11 (2020-08-11)
 
+### Minor changes
+
 - `export`: Ensuring that full directory path is always resolved in message.
+- Miscellaneous message improvements, related to internal `toString` handling.
 
 ## pipette 0.4.10 (2020-08-03)
 
