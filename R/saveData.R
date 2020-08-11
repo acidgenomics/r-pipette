@@ -11,7 +11,7 @@
 #'   on disk, following the same conventions as [`save()`][base::save].
 #'
 #' @export
-#' @note Updated 2020-05-12.
+#' @note Updated 2020-08-11.
 #'
 #' @inheritParams loadData
 #' @inheritParams base::save
@@ -77,7 +77,6 @@ saveData <- function(
         formalCompress(compress)
     )
     if (!is.null(list)) {
-        ## Character vector list mode (similar to `save()`).
         assert(
             isCharacter(list),
             is.environment(envir)
@@ -86,7 +85,6 @@ saveData <- function(
         names(objects) <- list
         rm(list)
     } else {
-        ## Non-standard evaluation mode (default).
         objects <- list(...)
         names(objects) <- dots(..., character = TRUE)
     }
@@ -96,24 +94,18 @@ saveData <- function(
     names(files) <- names(objects)
     cli_alert(sprintf(
         "Saving {.file %s} to {.path %s}.",
-        toString(
-            paste0("'", basename(files), "'"),
-            width = 200L
-        ),
-        dir
+        toString(basename(files), width = 100L), dir
     ))
-    ## If `overwrite = FALSE`, inform the user which files were skipped.
     if (identical(overwrite, FALSE) && any(file.exists(files))) {
         skip <- files[file.exists(files)]
-        warning(sprintf("Skipped %s.", toString(basename(skip))))
+        cli_alert_warning(sprintf("Skipped %s.", toString(basename(skip))))
         files <- files[!file.exists(files)]
         if (length(files) == 0L) {
-            warning("No files were saved.")
-            return(invisible())
+            cli_alert_warning("No files were saved.")
+            return()
         }
         objects <- objects[!file.exists(files)]  # nocov
     }
-    ## Determine which save function to use.
     if (ext == "rds") {
         mapply(
             FUN = saveRDS,
@@ -136,15 +128,5 @@ saveData <- function(
 }
 
 formals(saveData)[
-    c(
-        "compress",
-        "dir",
-        "ext",
-        "overwrite"
-    )] <-
-    formalsList[c(
-        "save.compress",
-        "save.dir",
-        "save.ext",
-        "overwrite"
-    )]
+    c("compress", "dir", "ext", "overwrite")] <-
+    formalsList[c("save.compress", "save.dir", "save.ext", "overwrite")]
