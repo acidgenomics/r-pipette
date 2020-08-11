@@ -1,3 +1,7 @@
+## pipette 0.4.11 (2020-08-11)
+
+- `export`: Ensuring that full directory path is always resolved in message.
+
 ## pipette 0.4.10 (2020-08-03)
 
 ### Minor changes
