@@ -21,15 +21,14 @@ NULL
 
 
 
-## Updated 2019-07-19.
+## Keep only atomic columns. Complex columns won't write to disk as CSVs or work
+## with R Markdown functions.
+##
+## Updated 2019-08-11.
 `atomize,data.frame` <-  # nolint
     function(object) {
-        ## Keep only atomic columns. Complex columns won't write to disk as CSVs
-        ## or work with R Markdown functions.
         keep <- vapply(X = object, FUN = is.atomic, FUN.VALUE = logical(1L))
         assert(hasLength(keep))
-
-        ## Inform the user about which columns to drop.
         drop <- names(keep)[!keep]
         if (hasLength(drop)) {
             message(sprintf(
@@ -37,7 +36,6 @@ NULL
                 toString(drop, width = 100L)
             ))
         }
-
         object[, keep, drop = FALSE]
     }
 
