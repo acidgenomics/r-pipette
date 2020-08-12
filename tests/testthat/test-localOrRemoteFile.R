@@ -17,15 +17,13 @@ test_that("localOrRemoteFile", {
 ## AppVeyor: The system cannot find the file specified
 test_that("Missing file", {
     expect_error(
-        object = localOrRemoteFile("XXX.csv"),
-        regexp = "Access"
+        object = localOrRemoteFile("XXX.csv")
     )
 })
 
 test_that("No file extension", {
     expect_error(
-        object = localOrRemoteFile("file"),
-        regexp = "Access"
+        object = localOrRemoteFile("file")
     )
 })
 
