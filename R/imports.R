@@ -29,7 +29,7 @@ NULL
 #' @importFrom stringr str_extract str_match str_subset
 #' @importFrom syntactic makeNames
 #' @importFrom utils download.file packageVersion
-#' @importFrom vroom vroom vroom_write
+#' @importFrom vroom cols vroom vroom_write
 NULL
 
 
