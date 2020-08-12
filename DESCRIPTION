@@ -2,7 +2,7 @@ Package: pipette
 Title: Pipette Biological Data In and Out of R
 Description: Input/output functions for biological data formats.
 Version: 0.4.11
-Date: 2020-08-11
+Date: 2020-08-12
 Authors@R: c(
     person(
         "Michael", "Steinbaugh",
@@ -38,6 +38,7 @@ Imports:
     methods,
     rtracklayer,
     stringr (>= 1.4.0),
+    syntactic (>= 0.4.2),
     tibble (>= 3.0.3),
     utils,
     vroom (>= 1.2.1),
@@ -53,7 +54,8 @@ Remotes:
     acidgenomics/acidbase,
     acidgenomics/acidgenerics,
     acidgenomics/acidtest,
-    acidgenomics/goalie
+    acidgenomics/goalie,
+    acidgenomics/syntactic
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Collate: 
@@ -83,6 +85,7 @@ Collate:
     'matchRowNameColumn-methods.R'
     'metadata2-methods.R'
     'package.R'
+    'reexports.R'
     'removeNA-methods.R'
     'sanitizeNA-methods.R'
     'sanitizePercent-methods.R'
