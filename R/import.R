@@ -405,9 +405,10 @@ import <- function(
     if (hasNames(object)) {
         if (isTRUE(any(duplicated(names(object))))) {
             dupes <- sort(names(object)[duplicated(names(object))])
-            cli_alert_warning(
-                paste("Duplicate names:", toString(dupes, width = 200L))
-            )
+            cli_alert_warning(sprintf(
+                "Duplicate names: {.var %s}.",
+                toString(dupes, width = 100L)
+            ))
         }
         names(object) <- makeNames(names(object))
         if (!isTRUE(hasValidNames(object))) {
@@ -592,9 +593,8 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 
 ## Internal importer for (source code) lines.
-## Updated 2020-07-24.
+## Updated 2020-08-12.
 .importLines <- function(file, skip = 0L, quiet) {
-    requireNamespaces("readr")
     assert(
         isInt(skip),
         isFlag(quiet)
@@ -607,7 +607,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
             "readr", "read_lines"
         ))
     }
-    readr::read_lines(
+    read_lines(
         file = file,
         skip = skip,
         skip_empty_rows = FALSE,

@@ -18,7 +18,7 @@
 #' @export
 #' @note This function is desired for interactive use and interprets object
 #'   names using non-standard evaluation.
-#' @note Updated 2020-05-12.
+#' @note Updated 2020-08-11.
 #'
 #' @inheritParams acidroxygen::params
 #' @param ... Object names.
@@ -133,9 +133,7 @@ formals(loadData)[c("dir", "overwrite")] <-
             if (length(files) == 0L) {
                 stop(sprintf(
                     fmt = paste(
-                        "'%s' is missing.",
-                        "dir: '%s'",
-                        "%s",
+                        "'%s' is missing.", "dir: '%s'", "%s",
                         sep = "\n"
                     ),
                     name, dir, .rdataLoadError
@@ -143,9 +141,7 @@ formals(loadData)[c("dir", "overwrite")] <-
             } else if (length(files) > 1L) {
                 stop(sprintf(
                     fmt = paste(
-                        "'%s' is not unique on disk.",
-                        "dir: '%s'",
-                        "%s",
+                        "'%s' is not unique on disk.", "dir: '%s'", "%s",
                         sep = "\n"
                     ),
                     name, dir, .rdataLoadError
@@ -158,11 +154,7 @@ formals(loadData)[c("dir", "overwrite")] <-
     )
     cli_alert(sprintf(
         "Loading {.file %s} from {.path %s}.",
-        toString(
-            paste0("'", basename(files), "'"),
-            width = 200L
-        ),
-        dir
+        toString(basename(files), width = 100L), dir
     ))
     files
 }
@@ -238,8 +230,7 @@ formals(loadData)[c("dir", "overwrite")] <-
     if (!isString(loaded)) {
         stop(sprintf(
             "'%s' contains multiple objects: %s.",
-            basename(file),
-            toString(loaded, width = 200L)
+            basename(file), toString(loaded, width = 100L)
         ))
     }
     if (!identical(name, loaded)) {

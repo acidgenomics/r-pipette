@@ -24,9 +24,12 @@ NULL
 #'   hasValidDimnames isAFile isAURL isAny isCharacter isFlag isMatchingRegex
 #'   isInt isScalar isString isSubset validNames
 #' @importFrom methods as is slotNames validObject .hasSlot
+#' @importFrom readr read_lines write_lines
 #' @importFrom rtracklayer import
 #' @importFrom stringr str_extract str_match str_subset
+#' @importFrom syntactic makeNames
 #' @importFrom utils download.file packageVersion
+#' @importFrom vroom cols vroom vroom_write
 NULL
 
 
