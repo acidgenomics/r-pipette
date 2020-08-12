@@ -56,8 +56,7 @@ test_that("Multiple objects in single file", {
 
 test_that("Invalid arguments", {
     expect_error(
-        object = loadDataAsName(data = gr, dir = "XXX"),
-        regexp = "Access"
+        object = loadDataAsName(data = gr, dir = "XXX")
     )
     expect_error(
         object = loadDataAsName(data = gr, dir = dir, envir = "XXX"),
