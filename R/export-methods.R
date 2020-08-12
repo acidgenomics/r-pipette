@@ -82,7 +82,7 @@ NULL
 
 
 
-## Updated 2020-08-11.
+## Updated 2020-08-12.
 `export,character` <-  # nolint
     function(
         object,
@@ -92,7 +92,6 @@ NULL
         overwrite,
         quiet
     ) {
-        requireNamespaces("readr")
         assert(
             isCharacter(object),
             isString(ext),
@@ -139,7 +138,7 @@ NULL
                 "readr", "write_lines"
             ))
         }
-        readr::write_lines(x = object, path = file, append = FALSE)
+        write_lines(x = object, path = file, append = FALSE)
         if (isTRUE(compress)) {
             file <- compress(
                 file = file,
