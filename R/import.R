@@ -593,9 +593,8 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 
 ## Internal importer for (source code) lines.
-## Updated 2020-07-24.
+## Updated 2020-08-12.
 .importLines <- function(file, skip = 0L, quiet) {
-    requireNamespaces("readr")
     assert(
         isInt(skip),
         isFlag(quiet)
@@ -608,7 +607,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
             "readr", "read_lines"
         ))
     }
-    readr::read_lines(
+    read_lines(
         file = file,
         skip = skip,
         skip_empty_rows = FALSE,
