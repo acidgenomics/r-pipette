@@ -26,6 +26,7 @@ NULL
 #' @importFrom methods as is slotNames validObject .hasSlot
 #' @importFrom rtracklayer import
 #' @importFrom stringr str_extract str_match str_subset
+#' @importFrom syntactic makeNames
 #' @importFrom utils download.file packageVersion
 NULL
 
