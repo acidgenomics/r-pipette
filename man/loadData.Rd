@@ -55,7 +55,7 @@ an object with the same name already exists in the destination \code{environment
 This function is desired for interactive use and interprets object
 names using non-standard evaluation.
 
-Updated 2020-05-12.
+Updated 2020-08-11.
 }
 \examples{
 dir <- system.file("extdata", package = "pipette")
