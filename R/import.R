@@ -99,7 +99,7 @@
 #' `DOC`, `DOCX`, `PDF`, `PPT`, `PPTX`.
 #'
 #' @export
-#' @note Updated 2020-08-03.
+#' @note Updated 2020-08-13.
 #'
 #' @inheritParams acidroxygen::params
 #' @param rownames `logical(1)`.
@@ -466,7 +466,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 ## Calls `vroom::vroom()` internally by default.
 ## Can override using `acid.import.engine` option, which also supports
 ## data.table and readr packages.
-## Updated 2020-07-24.
+## Updated 2020-08-13.
 .importDelim <- function(
     file,
     colnames,
@@ -568,9 +568,14 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
         )
     }
     if (!isTRUE(quiet)) {
+        where <- ifelse(
+            test = isAURL(file),
+            yes = dirname(file),
+            no = realpath(dirname(file))
+        )
         cli_alert(sprintf(
             "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
-            basename(file), dirname(file),
+            basename(file), where,
             whatPkg, whatFun
         ))
     }
@@ -593,7 +598,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 
 ## Internal importer for (source code) lines.
-## Updated 2020-08-12.
+## Updated 2020-08-13.
 .importLines <- function(file, skip = 0L, quiet) {
     assert(
         isInt(skip),
@@ -601,9 +606,14 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
     )
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
     if (!isTRUE(quiet)) {
+        where <- ifelse(
+            test = isAURL(file),
+            yes = dirname(file),
+            no = realpath(dirname(file))
+        )
         cli_alert(sprintf(
             "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
-            basename(file), dirname(file),
+            basename(file), where,
             "readr", "read_lines"
         ))
     }
@@ -619,14 +629,19 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 ## R data ======================================================================
 ## Internal importer for an R data serialized file (`.rds`).
-## Updated 2020-07-24.
+## Updated 2020-08-13.
 .importRDS <- function(file, quiet) {
     assert(isFlag(quiet))
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
     if (!isTRUE(quiet)) {
+        where <- ifelse(
+            test = isAURL(file),
+            yes = dirname(file),
+            no = realpath(dirname(file))
+        )
         cli_alert(sprintf(
             "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
-            basename(file), dirname(file),
+            basename(file), where,
             "base", "readRDS"
         ))
     }
@@ -637,14 +652,19 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 
 ## Internal importer for an R data file (`.rda`).
-## Updated 2020-07-24.
+## Updated 2020-08-13.
 .importRDA <- function(file, quiet) {
     assert(isFlag(quiet))
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
     if (!isTRUE(quiet)) {
+        where <- ifelse(
+            test = isAURL(file),
+            yes = dirname(file),
+            no = realpath(dirname(file))
+        )
         cli_alert(sprintf(
             "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
-            basename(file), dirname(file),
+            basename(file), where,
             "base", "load"
         ))
     }
@@ -661,7 +681,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 ## Sparse matrix ===============================================================
 ## Internal importer for a sparse matrix file (`.mtx`).
-## Updated 2020-07-24.
+## Updated 2020-08-13.
 .importMTX <- function(file, metadata, quiet) {
     assert(
         isFlag(metadata),
@@ -669,9 +689,14 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
     )
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
     if (!isTRUE(quiet)) {
+        where <- ifelse(
+            test = isAURL(file),
+            yes = dirname(file),
+            no = realpath(dirname(file))
+        )
         cli_alert(sprintf(
             "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
-            basename(file), dirname(file),
+            basename(file), where,
             "Matrix", "readMM"
         ))
     }
@@ -714,13 +739,18 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 
 ## Internal importer for a sparse matrix sidecar file (e.g. `.rownames`).
-## Updated 2020-07-24.
+## Updated 2020-08-13.
 .importMTXSidecar <- function(file, quiet) {
     assert(isFlag(quiet))
     if (!isTRUE(quiet)) {
+        where <- ifelse(
+            test = isAURL(file),
+            yes = dirname(file),
+            no = realpath(dirname(file))
+        )
         cli_alert(sprintf(
             "Importing sidecar {.file %s} at {.path %s}.",
-            basename(file), dirname(file)
+            basename(file), where
         ))
     }
     .importLines(file = file, quiet = quiet)
@@ -730,7 +760,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 ## List ========================================================================
 ## Internal importer for a JSON file (`.json`).
-## Updated 2020-07-24.
+## Updated 2020-08-13.
 .importJSON <- function(file, metadata, quiet) {
     requireNamespaces("jsonlite")
     assert(
@@ -739,9 +769,14 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
     )
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
     if (!isTRUE(quiet)) {
+        where <- ifelse(
+            test = isAURL(file),
+            yes = dirname(file),
+            no = realpath(dirname(file))
+        )
         cli_alert(sprintf(
             "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
-            basename(file), dirname(file),
+            basename(file), where,
             "jsonlite", "read_json"
         ))
     }
@@ -760,7 +795,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 
 ## Internal importer for a YAML file (`.yaml`, `.yml`).
-## Updated 2020-07-24.
+## Updated 2020-08-13.
 .importYAML <- function(file, metadata, quiet) {
     requireNamespaces("yaml")
     assert(
@@ -769,9 +804,14 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
     )
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
     if (!isTRUE(quiet)) {
+        where <- ifelse(
+            test = isAURL(file),
+            yes = dirname(file),
+            no = realpath(dirname(file))
+        )
         cli_alert(sprintf(
             "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
-            basename(file), dirname(file),
+            basename(file), where,
             "yaml", "yaml.load_file"
         ))
     }
@@ -792,13 +832,18 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 ## GSEA ========================================================================
 ## Internal importer for a gene matrix transposed file (`.gmt`).
 ## See also `fgsea::gmtPathways()`.
-## Updated 2020-07-24.
+## Updated 2020-08-13.
 .importGMT <- function(file, quiet) {
     assert(isFlag(quiet))
     if (!isTRUE(quiet)) {
+        where <- ifelse(
+            test = isAURL(file),
+            yes = dirname(file),
+            no = realpath(dirname(file))
+        )
         cli_alert(sprintf(
             "Importing {.file %s} at {.path %s}.",
-            basename(file), dirname(file)
+            basename(file), where
         ))
     }
     lines <- .importLines(file = file, quiet = quiet)
@@ -816,13 +861,18 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 
 ## Internal importer for a gene matrix file (`.gmx`).
-## Updated 2020-07-24.
+## Updated 2020-08-13.
 .importGMX <- function(file, quiet) {
     assert(isFlag(quiet))
     if (!isTRUE(quiet)) {
+        where <- ifelse(
+            test = isAURL(file),
+            yes = dirname(file),
+            no = realpath(dirname(file))
+        )
         cli_alert(sprintf(
             "Importing {.file %s} at {.path %s}.",
-            basename(file), dirname(file)
+            basename(file), where
         ))
     }
     lines <- .importLines(file = file, quiet = quiet)
@@ -843,7 +893,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 ## lines removal, so ensure that is fixed downstream.
 
 ## Internal importer for a Microsoft Excel worksheet (`.xlsx`).
-## Updated 2020-07-24.
+## Updated 2020-08-13.
 .importExcel <- function(
     file,
     sheet,
@@ -862,9 +912,14 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
     )
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
     if (!isTRUE(quiet)) {
+        where <- ifelse(
+            test = isAURL(file),
+            yes = dirname(file),
+            no = realpath(dirname(file))
+        )
         cli_alert(sprintf(
             "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
-            basename(file), dirname(file),
+            basename(file), where,
             "readxl", "read_excel"
         ))
     }
@@ -905,7 +960,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 ## GraphPad Prism ==============================================================
 ## Internal importer for a GraphPad Prism file (`.pzfx`).
 ## Note that this function doesn't support optional column names.
-## Updated 2020-07-24.
+## Updated 2020-08-13.
 .importPZFX <- function(
     file,
     sheet,
@@ -920,9 +975,14 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
     )
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
     if (!isTRUE(quiet)) {
+        where <- ifelse(
+            test = isAURL(file),
+            yes = dirname(file),
+            no = realpath(dirname(file))
+        )
         cli_alert(sprintf(
             "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
-            basename(file), dirname(file),
+            basename(file), where,
             "pzfx", "read_pzfx"
         ))
     }
@@ -946,16 +1006,21 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 ## bcbio =======================================================================
 ## Internal importer for a bcbio count matrix file (`.counts`).
 ## These files contain an `"id"` column that we need to coerce to row names.
-## Updated 2020-07-24.
+## Updated 2020-08-13.
 .importBcbioCounts <- function(file, metadata, quiet) {
     assert(
         isFlag(metadata),
         isFlag(quiet)
     )
     if (!isTRUE(quiet)) {
+        where <- ifelse(
+            test = isAURL(file),
+            yes = dirname(file),
+            no = realpath(dirname(file))
+        )
         cli_alert(sprintf(
             "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
-            basename(file), dirname(file),
+            basename(file), where,
             "data.table", "fread"
         ))
     }
@@ -984,7 +1049,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 
 ## Handoff =====================================================================
-## Updated 2020-07-24.
+## Updated 2020-08-13.
 .rioImport <- function(file, metadata, quiet, ...) {
     requireNamespaces("rio")
     assert(
@@ -993,9 +1058,14 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
     )
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
     if (!isTRUE(quiet)) {
+        where <- ifelse(
+            test = isAURL(file),
+            yes = dirname(file),
+            no = realpath(dirname(file))
+        )
         cli_alert(sprintf(
             "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
-            basename(file), dirname(file),
+            basename(file), where,
             "rio", "import"
         ))
     }
@@ -1014,7 +1084,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 
 ## Using `tryCatch()` here to error if there are any warnings.
-## Updated 2020-07-24.
+## Updated 2020-08-13.
 .rtracklayerImport <- function(file, metadata, quiet, ...) {
     requireNamespaces("rtracklayer")
     assert(
@@ -1023,9 +1093,14 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
     )
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
     if (!isTRUE(quiet)) {
+        where <- ifelse(
+            test = isAURL(file),
+            yes = dirname(file),
+            no = realpath(dirname(file))
+        )
         cli_alert(sprintf(
             "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
-            basename(file), dirname(file),
+            basename(file), where,
             "rtracklayer", "import"
         ))
     }
