@@ -568,9 +568,14 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
         )
     }
     if (!isTRUE(quiet)) {
+        where <- ifelse(
+            test = isURL(file),
+            yes = dirname(file),
+            no = realpath(dirname(file))
+        )
         cli_alert(sprintf(
             "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
-            basename(file), realpath(dirname(file)),
+            basename(file), where,
             whatPkg, whatFun
         ))
     }
@@ -601,9 +606,14 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
     )
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
     if (!isTRUE(quiet)) {
+        where <- ifelse(
+            test = isURL(file),
+            yes = dirname(file),
+            no = realpath(dirname(file))
+        )
         cli_alert(sprintf(
             "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
-            basename(file), realpath(dirname(file)),
+            basename(file), where,
             "readr", "read_lines"
         ))
     }
@@ -624,9 +634,14 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
     assert(isFlag(quiet))
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
     if (!isTRUE(quiet)) {
+        where <- ifelse(
+            test = isURL(file),
+            yes = dirname(file),
+            no = realpath(dirname(file))
+        )
         cli_alert(sprintf(
             "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
-            basename(file), realpath(dirname(file)),
+            basename(file), where,
             "base", "readRDS"
         ))
     }
@@ -642,9 +657,14 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
     assert(isFlag(quiet))
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
     if (!isTRUE(quiet)) {
+        where <- ifelse(
+            test = isURL(file),
+            yes = dirname(file),
+            no = realpath(dirname(file))
+        )
         cli_alert(sprintf(
             "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
-            basename(file), realpath(dirname(file)),
+            basename(file), where,
             "base", "load"
         ))
     }
@@ -669,9 +689,14 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
     )
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
     if (!isTRUE(quiet)) {
+        where <- ifelse(
+            test = isURL(file),
+            yes = dirname(file),
+            no = realpath(dirname(file))
+        )
         cli_alert(sprintf(
             "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
-            basename(file), realpath(dirname(file)),
+            basename(file), where,
             "Matrix", "readMM"
         ))
     }
@@ -718,9 +743,14 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 .importMTXSidecar <- function(file, quiet) {
     assert(isFlag(quiet))
     if (!isTRUE(quiet)) {
+        where <- ifelse(
+            test = isURL(file),
+            yes = dirname(file),
+            no = realpath(dirname(file))
+        )
         cli_alert(sprintf(
             "Importing sidecar {.file %s} at {.path %s}.",
-            basename(file), realpath(dirname(file))
+            basename(file), where
         ))
     }
     .importLines(file = file, quiet = quiet)
@@ -739,9 +769,14 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
     )
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
     if (!isTRUE(quiet)) {
+        where <- ifelse(
+            test = isURL(file),
+            yes = dirname(file),
+            no = realpath(dirname(file))
+        )
         cli_alert(sprintf(
             "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
-            basename(file), realpath(dirname(file)),
+            basename(file), where,
             "jsonlite", "read_json"
         ))
     }
@@ -769,9 +804,14 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
     )
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
     if (!isTRUE(quiet)) {
+        where <- ifelse(
+            test = isURL(file),
+            yes = dirname(file),
+            no = realpath(dirname(file))
+        )
         cli_alert(sprintf(
             "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
-            basename(file), realpath(dirname(file)),
+            basename(file), where,
             "yaml", "yaml.load_file"
         ))
     }
@@ -796,9 +836,14 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 .importGMT <- function(file, quiet) {
     assert(isFlag(quiet))
     if (!isTRUE(quiet)) {
+        where <- ifelse(
+            test = isURL(file),
+            yes = dirname(file),
+            no = realpath(dirname(file))
+        )
         cli_alert(sprintf(
             "Importing {.file %s} at {.path %s}.",
-            basename(file), realpath(dirname(file))
+            basename(file), where
         ))
     }
     lines <- .importLines(file = file, quiet = quiet)
@@ -820,9 +865,14 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 .importGMX <- function(file, quiet) {
     assert(isFlag(quiet))
     if (!isTRUE(quiet)) {
+        where <- ifelse(
+            test = isURL(file),
+            yes = dirname(file),
+            no = realpath(dirname(file))
+        )
         cli_alert(sprintf(
             "Importing {.file %s} at {.path %s}.",
-            basename(file), realpath(dirname(file))
+            basename(file), where
         ))
     }
     lines <- .importLines(file = file, quiet = quiet)
@@ -862,9 +912,14 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
     )
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
     if (!isTRUE(quiet)) {
+        where <- ifelse(
+            test = isURL(file),
+            yes = dirname(file),
+            no = realpath(dirname(file))
+        )
         cli_alert(sprintf(
             "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
-            basename(file), realpath(dirname(file)),
+            basename(file), where,
             "readxl", "read_excel"
         ))
     }
@@ -920,9 +975,14 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
     )
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
     if (!isTRUE(quiet)) {
+        where <- ifelse(
+            test = isURL(file),
+            yes = dirname(file),
+            no = realpath(dirname(file))
+        )
         cli_alert(sprintf(
             "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
-            basename(file), realpath(dirname(file)),
+            basename(file), where,
             "pzfx", "read_pzfx"
         ))
     }
@@ -953,9 +1013,14 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
         isFlag(quiet)
     )
     if (!isTRUE(quiet)) {
+        where <- ifelse(
+            test = isURL(file),
+            yes = dirname(file),
+            no = realpath(dirname(file))
+        )
         cli_alert(sprintf(
             "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
-            basename(file), realpath(dirname(file)),
+            basename(file), where,
             "data.table", "fread"
         ))
     }
@@ -993,9 +1058,14 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
     )
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
     if (!isTRUE(quiet)) {
+        where <- ifelse(
+            test = isURL(file),
+            yes = dirname(file),
+            no = realpath(dirname(file))
+        )
         cli_alert(sprintf(
             "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
-            basename(file), realpath(dirname(file)),
+            basename(file), where,
             "rio", "import"
         ))
     }
@@ -1023,9 +1093,14 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
     )
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
     if (!isTRUE(quiet)) {
+        where <- ifelse(
+            test = isURL(file),
+            yes = dirname(file),
+            no = realpath(dirname(file))
+        )
         cli_alert(sprintf(
             "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
-            basename(file), realpath(dirname(file)),
+            basename(file), where,
             "rtracklayer", "import"
         ))
     }
