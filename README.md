@@ -12,23 +12,24 @@ Pipette biological data in and out of R.
 ### [R][] method
 
 ```r
-if (!requireNamespace("remotes", quietly = TRUE)) {
-    install.packages("remotes")
-}
-Sys.setenv(R_REMOTES_UPGRADE = "always")
-## Set `GITHUB_PAT` in `~/.Renviron` if you get a rate limit error.
-remotes::install_github("acidgenomics/pipette")
+install.packages(
+    pkgs = "pipette",
+    repos = c("r.acidgenomics.com", getOption("repos"))
+)
 ```
 
-### [conda][] method
+### [Conda][] method
 
-Configure [conda][] to use the [bioconda][] channels.
+Configure [Conda][] to use the [Bioconda][] channels.
 
 ```sh
-conda install -c bioconda r-pipette
+# Don't install recipe into base environment.
+name="r-pipette"
+conda create --name="$name" "$name"
+conda activate "$name"
+R
 ```
 
-[basejump]: https://basejump.acidgenomics.com/
 [bioconda]: https://bioconda.github.io/
 [conda]: https://conda.io/
 [r]: https://www.r-project.org/
