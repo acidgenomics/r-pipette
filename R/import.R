@@ -569,7 +569,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
     }
     if (!isTRUE(quiet)) {
         where <- ifelse(
-            test = isURL(file),
+            test = isAURL(file),
             yes = dirname(file),
             no = realpath(dirname(file))
         )
@@ -607,7 +607,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
     if (!isTRUE(quiet)) {
         where <- ifelse(
-            test = isURL(file),
+            test = isAURL(file),
             yes = dirname(file),
             no = realpath(dirname(file))
         )
@@ -635,7 +635,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
     if (!isTRUE(quiet)) {
         where <- ifelse(
-            test = isURL(file),
+            test = isAURL(file),
             yes = dirname(file),
             no = realpath(dirname(file))
         )
@@ -658,7 +658,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
     if (!isTRUE(quiet)) {
         where <- ifelse(
-            test = isURL(file),
+            test = isAURL(file),
             yes = dirname(file),
             no = realpath(dirname(file))
         )
@@ -690,7 +690,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
     if (!isTRUE(quiet)) {
         where <- ifelse(
-            test = isURL(file),
+            test = isAURL(file),
             yes = dirname(file),
             no = realpath(dirname(file))
         )
@@ -744,7 +744,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
     assert(isFlag(quiet))
     if (!isTRUE(quiet)) {
         where <- ifelse(
-            test = isURL(file),
+            test = isAURL(file),
             yes = dirname(file),
             no = realpath(dirname(file))
         )
@@ -770,7 +770,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
     if (!isTRUE(quiet)) {
         where <- ifelse(
-            test = isURL(file),
+            test = isAURL(file),
             yes = dirname(file),
             no = realpath(dirname(file))
         )
@@ -805,7 +805,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
     if (!isTRUE(quiet)) {
         where <- ifelse(
-            test = isURL(file),
+            test = isAURL(file),
             yes = dirname(file),
             no = realpath(dirname(file))
         )
@@ -837,7 +837,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
     assert(isFlag(quiet))
     if (!isTRUE(quiet)) {
         where <- ifelse(
-            test = isURL(file),
+            test = isAURL(file),
             yes = dirname(file),
             no = realpath(dirname(file))
         )
@@ -866,7 +866,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
     assert(isFlag(quiet))
     if (!isTRUE(quiet)) {
         where <- ifelse(
-            test = isURL(file),
+            test = isAURL(file),
             yes = dirname(file),
             no = realpath(dirname(file))
         )
@@ -913,7 +913,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
     if (!isTRUE(quiet)) {
         where <- ifelse(
-            test = isURL(file),
+            test = isAURL(file),
             yes = dirname(file),
             no = realpath(dirname(file))
         )
@@ -976,7 +976,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
     if (!isTRUE(quiet)) {
         where <- ifelse(
-            test = isURL(file),
+            test = isAURL(file),
             yes = dirname(file),
             no = realpath(dirname(file))
         )
@@ -1014,7 +1014,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
     )
     if (!isTRUE(quiet)) {
         where <- ifelse(
-            test = isURL(file),
+            test = isAURL(file),
             yes = dirname(file),
             no = realpath(dirname(file))
         )
@@ -1059,7 +1059,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
     if (!isTRUE(quiet)) {
         where <- ifelse(
-            test = isURL(file),
+            test = isAURL(file),
             yes = dirname(file),
             no = realpath(dirname(file))
         )
@@ -1094,7 +1094,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
     if (!isTRUE(quiet)) {
         where <- ifelse(
-            test = isURL(file),
+            test = isAURL(file),
             yes = dirname(file),
             no = realpath(dirname(file))
         )
