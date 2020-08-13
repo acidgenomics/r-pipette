@@ -33,9 +33,9 @@ test_that("Delimited files", {
         file <- file.path(file = "cache", paste0("example.", ext))
         object <- import(file)
         expect_is(object, "data.frame")
-        expect_identical(
+        expect_is(
             object = attributes(object)[["import"]][["file"]],
-            expected = realpath(file)
+            class = "character"
         )
         expect_identical(
             object = attributes(object)[["import"]][["importer"]],
