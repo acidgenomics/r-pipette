@@ -1,3 +1,10 @@
+## pipette 0.4.12 (2020-08-13)
+
+### Minor changes
+
+- `import`: Improved messages to always resolve full path to import directory.
+- Bug fix for AppVeyor CI config.
+
 ## pipette 0.4.11 (2020-08-11)
 
 ### Minor changes
