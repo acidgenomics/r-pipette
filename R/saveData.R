@@ -102,7 +102,7 @@ saveData <- function(
         files <- files[!file.exists(files)]
         if (length(files) == 0L) {
             cli_alert_warning("No files were saved.")
-            return()
+            return(invisible())
         }
         objects <- objects[!file.exists(files)]  # nocov
     }
