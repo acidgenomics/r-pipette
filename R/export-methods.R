@@ -1,6 +1,6 @@
 #' @name export
 #' @inherit acidgenerics::export
-#' @note Updated 2020-08-11.
+#' @note Updated 2020-08-18.
 #'
 #' @section Row names:
 #'
@@ -170,7 +170,7 @@ setMethod(
 ## `data.table`, `tbl_df`, and `DataFrame` classes. Note that `rio::export()`
 ## does not preserve row names by default, so we're ensuring row names get
 ## coerced to "rowname" column consistently here.
-## Updated 2020-08-11.
+## Updated 2020-08-18.
 `export,matrix` <-  # nolint
     function(
         object,
@@ -193,7 +193,6 @@ setMethod(
             hasRows(object),
             hasCols(object),
             hasNoDuplicates(colnames(object)),
-            allAreAtomic(object),
             isString(ext),
             isString(dir),
             isString(file, nullOK = TRUE),
@@ -221,6 +220,17 @@ setMethod(
         match <- str_match(string = file, pattern = extPattern)
         compressExt <- match[1L, 4L]
         compress <- !is.na(compressExt)
+        ## Drop non-atomic columns automatically, if necessary.
+        keep <- bapply(X = object, FUN = is.atomic)
+        if (!all(keep)) {
+            fail <- names(keep)[!keep]
+            cli_alert_warning(sprintf(
+                "Dropping non-atomic columns: {.var %s}.",
+                toString(fail, width = 200L)
+            ))
+            object <- object[, keep, drop = FALSE]
+        }
+        assert(allAreAtomic(object))
         if (hasRownames(object)) {
             assert(areDisjointSets("rowname", colnames(object)))
             object[["rowname"]] <- rownames(object)
