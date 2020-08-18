@@ -1,3 +1,11 @@
+## pipette 0.4.13 (2020-08-18)
+
+### Minor changes
+
+- `export`: Now dropping non-atomic columns (e.g. Entrez ID list column) from
+  data frames automatically prior to export. Previously, the `allAreAtomic`
+  assert check was called automatically and would error on non-atomics.
+
 ## pipette 0.4.12 (2020-08-13)
 
 ### Minor changes
