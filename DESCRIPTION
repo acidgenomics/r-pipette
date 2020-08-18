@@ -1,8 +1,8 @@
 Package: pipette
 Title: Pipette Biological Data In and Out of R
 Description: Input/output functions for biological data formats.
-Version: 0.4.11
-Date: 2020-08-12
+Version: 0.4.12
+Date: 2020-08-18
 Authors@R: c(
     person(
         "Michael", "Steinbaugh",
@@ -29,8 +29,8 @@ Imports:
     S4Vectors,
     SingleCellExperiment,
     SummarizedExperiment,
-    acidbase (>= 0.1.11),
-    acidgenerics (>= 0.3.8),
+    acidbase (>= 0.1.13),
+    acidgenerics (>= 0.3.10),
     cli (>= 2.0),
     data.table (>= 1.12.8),
     goalie (>= 0.4.6),
