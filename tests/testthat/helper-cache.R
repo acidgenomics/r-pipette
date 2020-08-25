@@ -1,6 +1,6 @@
 if (!isTRUE(hasInternet())) {
     warning("No Internet connection detected.")
-    return(invisible())
+    return(invisible(NULL))
 }
 dir.create("cache", showWarnings = FALSE)
 files <- c(
