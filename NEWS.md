@@ -1,3 +1,10 @@
+## pipette 0.4.14 (2020-09-14)
+
+### Minor changes
+
+- `sanitizeNA`: Added support for "N/A" string, which is present in some Excel
+  spreadsheets.
+
 ## pipette 0.4.13 (2020-08-18)
 
 ### Minor changes
