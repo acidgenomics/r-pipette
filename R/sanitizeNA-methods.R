@@ -1,6 +1,6 @@
 #' @name sanitizeNA
 #' @inherit acidgenerics::sanitizeNA
-#' @note Updated 2019-10-12.
+#' @note Updated 2020-09-14.
 #'
 #' @inheritParams acidroxygen::params
 #' @param ... Additional arguments.
@@ -52,14 +52,15 @@ setMethod(
 
 
 ## Note that names will be kept here after the gsub call.
-## Updated 2019-07-19.
+## Updated 2020-09-14.
 `sanitizeNA,character` <-  # nolint
     function(object) {
         patterns <- c(
             "^$",
-            "^\\s+$",
+            "^N/A$",
             "^NA$",
             "^NULL$",
+            "^\\s+$",
             "^none available$"
         )
         gsub(
