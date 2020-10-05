@@ -1,6 +1,6 @@
 #' @name sanitizeNA
 #' @inherit acidgenerics::sanitizeNA
-#' @note Updated 2020-09-14.
+#' @note Updated 2020-10-05.
 #'
 #' @inheritParams acidroxygen::params
 #' @param ... Additional arguments.
