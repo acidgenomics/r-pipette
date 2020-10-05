@@ -5,6 +5,8 @@ NULL
 
 
 
+#' @importFrom BiocFileCache BiocFileCache bfcadd bfccache bfcdownload
+#'   bfcneedsupdate bfcquery bfcrpath
 #' @importFrom IRanges end start width
 #' @importFrom Matrix readMM writeMM
 #' @importFrom S4Vectors DataFrame Rle head mcols mcols<- metadata metadata<-
@@ -16,6 +18,7 @@ NULL
 #'   decompress dots extPattern fileExt formalsList initDir matchArgsToDoCall
 #'   pasteURL realpath requireNamespaces standardizeCall
 #' @importFrom cli cli_alert cli_alert_info cli_alert_success cli_alert_warning
+#'   cli_dl
 #' @importFrom data.table fread fwrite
 #' @importFrom goalie assert allAreAtomic allAreExisting allAreFiles
 #'   allAreNonExisting allAreURLs allHaveAccess areDisjointSets areSameLength
@@ -24,11 +27,12 @@ NULL
 #'   hasValidDimnames isAFile isAURL isAny isCharacter isFlag isMatchingRegex
 #'   isInt isScalar isString isSubset validNames
 #' @importFrom methods as is slotNames validObject .hasSlot
+#' @importFrom rappdirs user_cache_dir
 #' @importFrom readr read_lines write_lines
 #' @importFrom rtracklayer import
 #' @importFrom stringr str_extract str_match str_subset
 #' @importFrom syntactic makeNames
-#' @importFrom utils download.file packageVersion
+#' @importFrom utils download.file packageName packageVersion
 #' @importFrom vroom cols vroom vroom_write
 NULL
 
