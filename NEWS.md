@@ -1,3 +1,10 @@
+## pipette 0.4.16 (2020-10-06)
+
+### New functions
+
+- `getURLDirList`: Migrated this function from previous definition in basejump,
+  so we can inherit inside new AcidGenomes package.
+
 ## pipette 0.4.15 (2020-10-06)
 
 ### New functions
