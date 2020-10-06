@@ -20,7 +20,7 @@
 #'   names using non-standard evaluation.
 #' @note Updated 2020-08-11.
 #'
-#' @inheritParams acidroxygen::params
+#' @inheritParams AcidRoxygen::params
 #' @param ... Object names.
 #'   Note that these arguments are interpreted as symbols using non-standard
 #'   evaluation for convenience during interactive use, and *must not be
@@ -71,7 +71,7 @@ loadData <- function(
         ## By default, assume user has passed in actual file paths.
         ## Otherwise, behave like NSE method, and attempt to add `dir`.
         if (isTRUE(allAreFiles(names))) {
-            files <- realpath(names)
+            files <- realpath(names)  # nocov
         } else {
             files <- .listData(names = names, dir = dir)
         }

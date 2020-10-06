@@ -32,7 +32,7 @@ multiple URLs in a single call.
 Updated 2020-01-19.
 }
 \examples{
-url <- acidbase::pasteURL(
+url <- AcidBase::pasteURL(
     pipetteTestsURL,
     "rnaseq_counts.rds",
     protocol = "none"

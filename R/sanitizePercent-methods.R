@@ -1,8 +1,8 @@
 #' @name sanitizePercent
-#' @inherit acidgenerics::sanitizePercent
+#' @inherit AcidGenerics::sanitizePercent
 #' @note Updated 2019-10-12.
 #'
-#' @inheritParams acidroxygen::params
+#' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
 #'
 #' @examples
@@ -18,7 +18,7 @@ NULL
 
 #' @rdname sanitizePercent
 #' @name sanitizePercent
-#' @importFrom acidgenerics sanitizePercent
+#' @importFrom AcidGenerics sanitizePercent
 #' @usage sanitizePercent(object, ...)
 #' @export
 NULL
