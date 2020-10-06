@@ -75,7 +75,7 @@ object names passed as symbols." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pipette</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.15</span>
       </span>
     </div>
 
@@ -96,6 +96,12 @@ object names passed as symbols." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
+  <a href="https://acidgenomics.com/">
+    <span class="fas fa fas fa-vial fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="https://github.com/acidgenomics/pipette/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
@@ -124,15 +130,15 @@ object names passed as symbols." />
 object names passed as symbols.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>saveData</span>(
-  <span class='no'>...</span>,
-  <span class='kw'>dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"acid.save.dir"</span>, <span class='kw'>default</span> <span class='kw'>=</span> <span class='st'>"."</span>),
-  <span class='kw'>ext</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"acid.save.ext"</span>, <span class='kw'>default</span> <span class='kw'>=</span> <span class='st'>"rds"</span>),
-  <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"acid.overwrite"</span>, <span class='kw'>default</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
-  <span class='kw'>compress</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"acid.save.compress"</span>, <span class='kw'>default</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
-  <span class='kw'>list</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>envir</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sys.parent.html'>parent.frame</a></span>()
-)</pre>
+    <pre class="usage"><span class='fu'>saveData</span><span class='op'>(</span>
+  <span class='va'>...</span>,
+  dir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"acid.save.dir"</span>, default <span class='op'>=</span> <span class='st'>"."</span><span class='op'>)</span>,
+  ext <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"acid.save.ext"</span>, default <span class='op'>=</span> <span class='st'>"rds"</span><span class='op'>)</span>,
+  overwrite <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"acid.overwrite"</span>, default <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
+  compress <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"acid.save.compress"</span>, default <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
+  list <span class='op'>=</span> <span class='cn'>NULL</span>,
+  envir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sys.parent.html'>parent.frame</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -215,25 +221,30 @@ on disk, following the same conventions as <code><a href='https://rdrr.io/r/base
 </div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>dir</span> <span class='kw'>&lt;-</span> <span class='st'>"example"</span>
+    <pre class="examples"><div class='input'><span class='va'>dir</span> <span class='op'>&lt;-</span> <span class='st'>"example"</span>
 
 <span class='co'>## Interactive mode ====</span>
 <span class='co'>## Note that this method uses non-standard evaluation.</span>
-<span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>
-<span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fl'>2</span>
-<span class='fu'>saveData</span>(<span class='no'>a</span>, <span class='no'>b</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='no'>dir</span>)</div><div class='output co'>#&gt; <span class='message'>→ Saving <span style='color: #0000BB;'>a.rds, b.rds</span><span> to </span><span style='color: #0000BB;'>/Users/mike/git/monorepo/r-packages/pipette/docs/reference/example</span><span>.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/sort.html'>sort</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.files</a></span>(<span class='no'>dir</span>))</div><div class='output co'>#&gt; [1] "a.rds" "b.rds"</div><div class='input'>
+<span class='va'>a</span> <span class='op'>&lt;-</span> <span class='fl'>1</span>
+<span class='va'>b</span> <span class='op'>&lt;-</span> <span class='fl'>2</span>
+<span class='fu'>saveData</span><span class='op'>(</span><span class='va'>a</span>, <span class='va'>b</span>, dir <span class='op'>=</span> <span class='va'>dir</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>→ Saving <span style='color: #0000BB;'>a.rds, b.rds</span><span> to </span><span style='color: #0000BB;'>/Volumes/widener/git/monorepo/r-packages/pipette/docs/reference/example</span><span>.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/sort.html'>sort</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.files</a></span><span class='op'>(</span><span class='va'>dir</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "a.rds" "b.rds"</div><div class='input'>
 <span class='co'>## Clean up.</span>
-<span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span>(<span class='no'>dir</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span><span class='op'>(</span><span class='va'>dir</span>, recursive <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='co'>## List mode ====</span>
 <span class='co'>## Note that this method uses standard evaluation.</span>
 <span class='co'>## Use this approach inside of functions.</span>
-<span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>
-<span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fl'>2</span>
-<span class='no'>list</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"a"</span>, <span class='st'>"b"</span>)
-<span class='fu'>saveData</span>(<span class='kw'>list</span> <span class='kw'>=</span> <span class='no'>list</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='no'>dir</span>)</div><div class='output co'>#&gt; <span class='message'>→ Saving </span><span style='color: #0000BB;'>a.rds, b.rds</span><span> to </span><span style='color: #0000BB;'>/Users/mike/git/monorepo/r-packages/pipette/docs/reference/example</span><span>.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/sort.html'>sort</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.files</a></span>(<span class='no'>dir</span>))</div><div class='output co'>#&gt; [1] "a.rds" "b.rds"</div><div class='input'>
+<span class='va'>a</span> <span class='op'>&lt;-</span> <span class='fl'>1</span>
+<span class='va'>b</span> <span class='op'>&lt;-</span> <span class='fl'>2</span>
+<span class='va'>list</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='st'>"b"</span><span class='op'>)</span>
+<span class='fu'>saveData</span><span class='op'>(</span>list <span class='op'>=</span> <span class='va'>list</span>, dir <span class='op'>=</span> <span class='va'>dir</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>→ Saving </span><span style='color: #0000BB;'>a.rds, b.rds</span><span> to </span><span style='color: #0000BB;'>/Volumes/widener/git/monorepo/r-packages/pipette/docs/reference/example</span><span>.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/sort.html'>sort</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.files</a></span><span class='op'>(</span><span class='va'>dir</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "a.rds" "b.rds"</div><div class='input'>
 <span class='co'>## Clean up.</span>
-<span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span>(<span class='no'>dir</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div></span></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span><span class='op'>(</span><span class='va'>dir</span>, recursive <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -249,7 +260,7 @@ on disk, following the same conventions as <code><a href='https://rdrr.io/r/base
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

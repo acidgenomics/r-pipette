@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pipette</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.15</span>
       </span>
     </div>
 
@@ -95,6 +95,12 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
+  <a href="https://acidgenomics.com/">
+    <span class="fas fa fas fa-vial fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="https://github.com/acidgenomics/pipette/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
@@ -122,22 +128,22 @@
     <p>Remove rows and columns containing only NA values</p>
     </div>
 
-    <pre class="usage"><span class='fu'>removeNA</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>removeNA</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S4 method for atomic</span>
-<span class='fu'>removeNA</span>(<span class='no'>object</span>)
+<span class='fu'>removeNA</span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span>
 
 <span class='co'># S4 method for matrix</span>
-<span class='fu'>removeNA</span>(<span class='no'>object</span>)
+<span class='fu'>removeNA</span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span>
 
 <span class='co'># S4 method for sparseMatrix</span>
-<span class='fu'>removeNA</span>(<span class='no'>object</span>)
+<span class='fu'>removeNA</span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span>
 
 <span class='co'># S4 method for data.frame</span>
-<span class='fu'>removeNA</span>(<span class='no'>object</span>)
+<span class='fu'>removeNA</span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span>
 
 <span class='co'># S4 method for DataFrame</span>
-<span class='fu'>removeNA</span>(<span class='no'>object</span>)</pre>
+<span class='fu'>removeNA</span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -161,41 +167,47 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## atomic ====</span>
-<span class='fu'>removeNA</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"hello"</span>, <span class='st'>"world"</span>, <span class='fl'>NA</span>))</div><div class='output co'>#&gt; [1] "hello" "world"
+<span class='fu'>removeNA</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"hello"</span>, <span class='st'>"world"</span>, <span class='cn'>NA</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "hello" "world"
 #&gt; attr(,"na.action")
 #&gt; [1] 3
 #&gt; attr(,"class")
-#&gt; [1] "omit"</div><div class='input'><span class='fu'>removeNA</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>NA</span>))</div><div class='output co'>#&gt; [1] 1 2
+#&gt; [1] "omit"</div><div class='input'><span class='fu'>removeNA</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='cn'>NA</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 1 2
 #&gt; attr(,"na.action")
 #&gt; [1] 3
 #&gt; attr(,"class")
 #&gt; [1] "omit"</div><div class='input'>
 <span class='co'>## matrix ====</span>
-<span class='no'>from</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(
-    <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>NA</span>, <span class='fl'>3</span>, <span class='fl'>NA</span>, <span class='fl'>NA</span>, <span class='fl'>NA</span>, <span class='fl'>2</span>, <span class='fl'>NA</span>, <span class='fl'>4</span>),
-    <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>3</span>,
-    <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>3</span>
-)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>from</span>)</div><div class='output co'>#&gt;      [,1] [,2] [,3]
+<span class='va'>from</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span>
+    data <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='cn'>NA</span>, <span class='fl'>3</span>, <span class='cn'>NA</span>, <span class='cn'>NA</span>, <span class='cn'>NA</span>, <span class='fl'>2</span>, <span class='cn'>NA</span>, <span class='fl'>4</span><span class='op'>)</span>,
+    nrow <span class='op'>=</span> <span class='fl'>3</span>,
+    ncol <span class='op'>=</span> <span class='fl'>3</span>
+<span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>from</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;      [,1] [,2] [,3]
 #&gt; [1,]    1   NA    2
 #&gt; [2,]   NA   NA   NA
-#&gt; [3,]    3   NA    4</div><div class='input'><span class='no'>to</span> <span class='kw'>&lt;-</span> <span class='fu'>removeNA</span>(<span class='no'>from</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>to</span>)</div><div class='output co'>#&gt;      [,1] [,2]
+#&gt; [3,]    3   NA    4</div><div class='input'><span class='va'>to</span> <span class='op'>&lt;-</span> <span class='fu'>removeNA</span><span class='op'>(</span><span class='va'>from</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>to</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;      [,1] [,2]
 #&gt; [1,]    1    2
 #&gt; [2,]    3    4</div><div class='input'>
 <span class='co'>## DataFrame ====</span>
-<span class='no'>from</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>S4Vectors</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/S4Vectors/man/DataFrame-class.html'>DataFrame</a></span>(
-    <span class='kw'>a</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"A"</span>, <span class='fl'>NA</span>, <span class='st'>"C"</span>),
-    <span class='kw'>b</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>NA</span>, <span class='fl'>NA</span>, <span class='fl'>NA</span>),
-    <span class='kw'>c</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"B"</span>, <span class='fl'>NA</span>, <span class='st'>"D"</span>)
-)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>from</span>)</div><div class='output co'>#&gt; DataFrame with 3 rows and 3 columns
+<span class='va'>from</span> <span class='op'>&lt;-</span> <span class='fu'>S4Vectors</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/S4Vectors/man/DataFrame-class.html'>DataFrame</a></span><span class='op'>(</span>
+    a <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>, <span class='cn'>NA</span>, <span class='st'>"C"</span><span class='op'>)</span>,
+    b <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='cn'>NA</span>, <span class='cn'>NA</span><span class='op'>)</span>,
+    c <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"B"</span>, <span class='cn'>NA</span>, <span class='st'>"D"</span><span class='op'>)</span>
+<span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>from</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; DataFrame with 3 rows and 3 columns
 #&gt;             a         b           c
 #&gt;   &lt;character&gt; &lt;logical&gt; &lt;character&gt;
 #&gt; 1           A        NA           B
 #&gt; 2          NA        NA          NA
-#&gt; 3           C        NA           D</div><div class='input'><span class='no'>to</span> <span class='kw'>&lt;-</span> <span class='fu'>removeNA</span>(<span class='no'>from</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>to</span>)</div><div class='output co'>#&gt; DataFrame with 2 rows and 2 columns
+#&gt; 3           C        NA           D</div><div class='input'><span class='va'>to</span> <span class='op'>&lt;-</span> <span class='fu'>removeNA</span><span class='op'>(</span><span class='va'>from</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>to</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; DataFrame with 2 rows and 2 columns
 #&gt;             a           c
 #&gt;   &lt;character&gt; &lt;character&gt;
 #&gt; 1           A           B
@@ -215,7 +227,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
