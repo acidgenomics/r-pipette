@@ -7,6 +7,9 @@
 #' @param fileName `character(1)`.
 #'   File name to store internally in `BiocFileCache`.
 #'   Defaults to basename of URL.
+#' @param pkg `character(1)`.
+#'   Package name.
+#'   Defaults to current package.
 #' @param update `logical(1)`.
 #'   Call `bfcneedsupdate` internally to see if URL needs an update.
 #'   Doesn't work reliably for all servers, so disabled by default.
@@ -27,6 +30,7 @@
 cacheURL <- function(
     url,
     fileName = basename(url),
+    pkg = packageName(),
     update = FALSE,
     ask = FALSE,
     verbose = TRUE
@@ -35,6 +39,7 @@ cacheURL <- function(
         hasInternet(),
         isAURL(url),
         isString(fileName),
+        isString(pkg),
         isFlag(update),
         isFlag(ask),
         isFlag(verbose)
@@ -46,7 +51,7 @@ cacheURL <- function(
         }
         cli_dl(items)
     }
-    bfc <- .biocPackageCache(ask = ask)
+    bfc <- .biocPackageCache(pkg = pkg, ask = ask)
     rid <- bfcquery(
         x = bfc,
         query = fileName,
@@ -85,18 +90,9 @@ cacheURL <- function(
 
 #' Prepare BiocFileCache for package
 #'
-#' @note Updated 2020-10-05.
+#' @note Updated 2020-10-06.
 #' @noRd
-.biocPackageCache <- function(
-    pkg = packageName(),
-    ask = TRUE
-) {
-    assert(
-        isString(pkg),
-        isFlag(ask)
-    )
-    BiocFileCache(
-        cache = user_cache_dir(appname = pkg),
-        ask = ask
-    )
+.biocPackageCache <- function(pkg = packageName(), ask = TRUE) {
+    assert(isString(pkg), isFlag(ask))
+    BiocFileCache(cache = user_cache_dir(appname = pkg), ask = ask)
 }
