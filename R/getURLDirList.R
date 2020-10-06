@@ -24,7 +24,7 @@ getURLDirList <- function(url, pattern = NULL) {
         isString(pattern, nullOK = TRUE)
     )
     if (!isTRUE(grepl("/$", url))) {
-        url <- paste0(url, "/")
+        url <- paste0(url, "/")  # nocov
     }
     x <- getURL(url = url, dirlistonly = TRUE)
     x <- unlist(strsplit(x, split = "\n"))
