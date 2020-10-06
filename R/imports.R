@@ -19,7 +19,6 @@ NULL
 #' @importFrom SummarizedExperiment assayNames assayNames<- assay colData
 #'   colData<- rowData rowData<- rowRanges
 #' @importFrom cli cli_alert cli_alert_info cli_alert_success cli_alert_warning
-#'   cli_dl
 #' @importFrom data.table fread fwrite
 #' @importFrom goalie assert allAreAtomic allAreExisting allAreFiles
 #'   allAreNonExisting allAreURLs allHaveAccess areDisjointSets areSameLength
