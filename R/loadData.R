@@ -20,7 +20,7 @@
 #'   names using non-standard evaluation.
 #' @note Updated 2020-08-11.
 #'
-#' @inheritParams acidroxygen::params
+#' @inheritParams AcidRoxygen::params
 #' @param ... Object names.
 #'   Note that these arguments are interpreted as symbols using non-standard
 #'   evaluation for convenience during interactive use, and *must not be

@@ -19,7 +19,7 @@
 #' Internally slots into [`metadata()`][S4Vectors::metadata].
 #' Attribute is also accessible via `metadata(object)[[which]]`.
 #'
-#' @inheritParams acidroxygen::params
+#' @inheritParams AcidRoxygen::params
 #' @param which `character(1)`.
 #'   A non-empty character string specifying which attribute is to be accessed.
 #'   Note that positional `numeric` arguments are currently not allowed.
@@ -50,14 +50,14 @@ NULL
 
 #' @rdname metadata2
 #' @name metadata2
-#' @importFrom acidgenerics metadata2
+#' @importFrom AcidGenerics metadata2
 #' @usage metadata2(x, which, ...)
 #' @export
 NULL
 
 #' @rdname metadata2
 #' @name metadata2<-
-#' @importFrom acidgenerics metadata2<-
+#' @importFrom AcidGenerics metadata2<-
 #' @usage metadata2(x, which, ...) <- value
 #' @export
 NULL

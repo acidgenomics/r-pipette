@@ -12,7 +12,7 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{acidbase}{\code{\link[acidbase]{pasteURL}}}
+  \item{AcidBase}{\code{\link[AcidBase]{pasteURL}}}
 
   \item{syntactic}{\code{\link[syntactic]{makeNames}}}
 }}

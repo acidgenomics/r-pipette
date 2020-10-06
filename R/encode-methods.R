@@ -1,8 +1,8 @@
 #' @name encode
-#' @inherit acidgenerics::encode
+#' @inherit AcidGenerics::encode
 #' @note Updated 2019-07-20.
 #'
-#' @inheritParams acidroxygen::params
+#' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
 #'
 #' @seealso [S4Vectors::Rle()].
@@ -26,7 +26,7 @@ NULL
 
 #' @rdname encode
 #' @name encode
-#' @importFrom acidgenerics encode
+#' @importFrom AcidGenerics encode
 #' @usage encode(x, ...)
 #' @export
 NULL

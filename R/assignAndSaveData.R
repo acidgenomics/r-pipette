@@ -9,7 +9,7 @@
 #'   [`assign()`][base::assign].
 #' @note Updated 2019-10-12.
 #'
-#' @inheritParams acidroxygen::params
+#' @inheritParams AcidRoxygen::params
 #' @inheritParams saveData
 #' @param name `character(1)`.
 #'   Desired variable name.

@@ -101,7 +101,7 @@
 #' @export
 #' @note Updated 2020-08-13.
 #'
-#' @inheritParams acidroxygen::params
+#' @inheritParams AcidRoxygen::params
 #' @param rownames `logical(1)`.
 #'   Automatically assign row names, if `rowname` column is defined.
 #'   Applies to file types that return `data.frame` only.

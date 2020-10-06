@@ -1,6 +1,6 @@
-#' @importFrom acidbase pasteURL
+#' @importFrom AcidBase pasteURL
 #' @export
-acidbase::pasteURL
+AcidBase::pasteURL
 
 
 

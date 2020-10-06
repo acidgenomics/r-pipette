@@ -1,7 +1,7 @@
 #' @name atomize
-#' @inherit acidgenerics::atomize
+#' @inherit AcidGenerics::atomize
 #'
-#' @inheritParams acidroxygen::params
+#' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
 #'
 #' @examples
@@ -14,7 +14,7 @@ NULL
 
 #' @rdname atomize
 #' @name atomize
-#' @importFrom acidgenerics atomize
+#' @importFrom AcidGenerics atomize
 #' @usage atomize(object, ...)
 #' @export
 NULL

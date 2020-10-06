@@ -7,7 +7,7 @@
 #' @name matchRowNameColumn
 #' @note Updated 2020-01-18.
 #'
-#' @inheritParams acidroxygen::params
+#' @inheritParams AcidRoxygen::params
 #' @param choices `character`.
 #'   Column name choices to use internally for matching.
 #'   Note that case-insensitive matching is performed against [`make.names()`]
@@ -21,7 +21,7 @@
 #'   - tibble: `"rowname"`.
 #'
 #' @examples
-#' data(data.table, tbl_df, package = "acidtest")
+#' data(data.table, tbl_df, package = "AcidTest")
 #'
 #' ## data.table ====
 #' matchRowNameColumn(data.table)
@@ -34,7 +34,7 @@ NULL
 
 #' @rdname matchRowNameColumn
 #' @name matchRowNameColumn
-#' @importFrom acidgenerics matchRowNameColumn
+#' @importFrom AcidGenerics matchRowNameColumn
 #' @usage matchRowNameColumn(object, ...)
 #' @export
 NULL

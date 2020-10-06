@@ -1,8 +1,8 @@
 #' @name factorize
-#' @inherit acidgenerics::factorize
+#' @inherit AcidGenerics::factorize
 #' @note Updated 2019-07-19.
 #'
-#' @inheritParams acidroxygen::params
+#' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
 #'
 #' @examples
@@ -14,7 +14,7 @@ NULL
 
 #' @rdname factorize
 #' @name factorize
-#' @importFrom acidgenerics factorize
+#' @importFrom AcidGenerics factorize
 #' @usage factorize(object, ...)
 #' @export
 NULL

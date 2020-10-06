@@ -29,5 +29,5 @@ df <- S4Vectors::DataFrame(a = letters[seq_len(5L)], b = seq_len(5L))
 x <- factorize(df)
 }
 \seealso{
-\code{\link[acidgenerics:encode]{encode()}} for run-length encoding (Rle) approach.
+\code{\link[AcidGenerics:encode]{encode()}} for run-length encoding (Rle) approach.
 }

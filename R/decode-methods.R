@@ -4,7 +4,7 @@
 #' @inherit S4Vectors::decode description return
 #' @note Updated 2019-07-20.
 #'
-#' @inheritParams acidroxygen::params
+#' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
 #'
 #' @return Modified object.
@@ -13,7 +13,7 @@
 #' @seealso [S4Vectors::decode()].
 #'
 #' @examples
-#' data(RangedSummarizedExperiment, package = "acidtest")
+#' data(RangedSummarizedExperiment, package = "AcidTest")
 #' rowData <- SummarizedExperiment::rowData
 #'
 #' ## DataFrame ====

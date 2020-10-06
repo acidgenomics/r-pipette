@@ -41,7 +41,7 @@ Coerce to \code{data.frame}.
 Updated 2020-01-19.
 }
 \examples{
-data(sparseMatrix, package = "acidtest")
+data(sparseMatrix, package = "AcidTest")
 
 ## Matrix to data.frame ====
 x <- as(sparseMatrix, "data.frame")

@@ -75,7 +75,7 @@ See \code{getClass("tbl_df")} for details on how tibble is a virtual class.
 }
 
 \examples{
-data(DFrame, GRanges, IRanges, package = "acidtest")
+data(DFrame, GRanges, IRanges, package = "AcidTest")
 
 ## DataFrame to tbl_df ====
 x <- as(DFrame, "tbl_df")

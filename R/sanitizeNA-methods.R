@@ -1,8 +1,8 @@
 #' @name sanitizeNA
-#' @inherit acidgenerics::sanitizeNA
+#' @inherit AcidGenerics::sanitizeNA
 #' @note Updated 2020-10-05.
 #'
-#' @inheritParams acidroxygen::params
+#' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
 #'
 #' @examples
@@ -27,7 +27,7 @@ NULL
 
 #' @rdname sanitizeNA
 #' @name sanitizeNA
-#' @importFrom acidgenerics sanitizeNA
+#' @importFrom AcidGenerics sanitizeNA
 #' @usage sanitizeNA(object, ...)
 #' @export
 NULL

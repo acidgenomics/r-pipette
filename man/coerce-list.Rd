@@ -26,7 +26,7 @@ Don't attempt to defined methods for \code{as.list}.
 Updated 2020-01-18.
 }
 \examples{
-data(RangedSummarizedExperiment, package = "acidtest")
+data(RangedSummarizedExperiment, package = "AcidTest")
 
 ## SummarizedExperiment ====
 x <- RangedSummarizedExperiment
