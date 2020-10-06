@@ -1,7 +1,7 @@
 #' Download and cache a file using BiocFileCache
 #'
 #' @export
-#' @note Updated 2020-10-05.
+#' @note Updated 2020-10-06.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param fileName `character(1)`.
@@ -42,7 +42,7 @@ cacheURL <- function(
     if (isTRUE(verbose)) {
         items <- c("URL" = url)
         if (!identical(basename(url), fileName)) {
-            items <- c(items, "File" = fileName)
+            items <- c(items, "File" = fileName)  # nocov
         }
         cli_dl(items)
     }
@@ -54,6 +54,7 @@ cacheURL <- function(
         exact = TRUE
     )[["rid"]]
     if (!hasLength(rid)) {
+        ## nocov start
         if (isTRUE(verbose)) {
             cli_alert(sprintf(
                 "Caching {.file %s} at {.path %s}.",
@@ -66,11 +67,14 @@ cacheURL <- function(
             fpath = url,
             download = TRUE
         ))
+        ## nocov end
     }
     if (isTRUE(update)) {
+        ## nocov start
         if (!isFALSE(bfcneedsupdate(x = bfc, rids = rid))) {
             bfcdownload(x = bfc, rid = rid, ask = ask)
         }
+        ## nocov end
     }
     out <- unname(bfcrpath(x = bfc, rids = rid))
     assert(isAFile(out))
