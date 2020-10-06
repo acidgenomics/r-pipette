@@ -34,7 +34,7 @@ a \code{list} to \code{DataFrame}.
 Updated 2020-01-18.
 }
 \examples{
-data(data.table, sparseMatrix, tbl_df, package = "acidtest")
+data(data.table, sparseMatrix, tbl_df, package = "AcidTest")
 
 ## Matrix to DataFrame ====
 from <- sparseMatrix

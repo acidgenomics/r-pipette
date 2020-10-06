@@ -3,7 +3,7 @@
 #' @export
 #' @note Updated 2020-10-05.
 #'
-#' @inheritParams acidroxygen::params
+#' @inheritParams AcidRoxygen::params
 #' @param fileName `character(1)`.
 #'   File name to store internally in `BiocFileCache`.
 #'   Defaults to basename of URL.

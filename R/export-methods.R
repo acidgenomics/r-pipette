@@ -1,5 +1,5 @@
 #' @name export
-#' @inherit acidgenerics::export
+#' @inherit AcidGenerics::export
 #' @note Updated 2020-08-18.
 #'
 #' @section Row names:
@@ -18,7 +18,7 @@
 #' Note that this function currently wraps `vroom::voom_write()` by default
 #' for exporting `data.frame` and `matrix` class objects.
 #'
-#' @inheritParams acidroxygen::params
+#' @inheritParams AcidRoxygen::params
 #' @param object Object.
 #'   An object supporting [`dim()`][base::dim], or a supported class capable
 #'   of being coerced to `data.frame`, to be written to disk.
@@ -75,7 +75,7 @@ NULL
 
 #' @rdname export
 #' @name export
-#' @importFrom acidgenerics export
+#' @importFrom AcidGenerics export
 #' @usage export(object, ...)
 #' @export
 NULL

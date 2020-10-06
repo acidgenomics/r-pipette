@@ -15,7 +15,7 @@
 #'
 #' @inheritParams loadData
 #' @inheritParams base::save
-#' @inheritParams acidroxygen::params
+#' @inheritParams AcidRoxygen::params
 #' @param ext `character(1)`.
 #'   Output file format extension.
 #'

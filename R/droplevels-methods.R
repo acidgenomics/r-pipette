@@ -4,13 +4,13 @@
 #' @inherit base::droplevels description
 #' @note Updated 2020-04-10.
 #'
-#' @inheritParams acidroxygen::params
+#' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
 #'
 #' @return Modified object.
 #'
 #' @examples
-#' data(RangedSummarizedExperiment, package = "acidtest")
+#' data(RangedSummarizedExperiment, package = "AcidTest")
 #'
 #' ## Ranges ====
 #' rse <- RangedSummarizedExperiment
