@@ -22,8 +22,7 @@ File name to store internally in \code{BiocFileCache}.
 Defaults to basename of URL.}
 
 \item{pkg}{\code{character(1)}.
-Package name.
-Defaults to current package.}
+Package name.}
 
 \item{update}{\code{logical(1)}.
 Call \code{bfcneedsupdate} internally to see if URL needs an update.
