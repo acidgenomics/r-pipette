@@ -1,3 +1,32 @@
+context("export : character")
+
+vec <- c("hello", "world")
+
+test_that("'ext' argument", {
+    for (ext in eval(formals(`export,character`)[["ext"]])) {
+        file <- paste0("vec", ".", ext)
+        x <- export(object = vec, ext = ext)
+        expect_identical(x, realpath(file))
+        expect_true(file.exists(file))
+        expect_identical(
+            object = readLines(file),
+            expected = vec
+        )
+        ## Check accidental overwrite support.
+        expect_error(
+            export(vec, ext = ext, overwrite = FALSE),
+            "File exists"
+        )
+        expect_message(
+            export(vec, ext = ext, overwrite = TRUE),
+            "Overwriting"
+        )
+        file.remove(file)
+    }
+})
+
+
+
 context("export : matrix")
 
 test_that("'ext' argument", {
