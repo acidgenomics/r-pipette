@@ -62,20 +62,14 @@ test_that("'ext' argument", {
     }
 })
 
-test_that("readr mode (experimental)", {
-    options("acid.export.engine" = "readr")
-    file <- export(object = mat, ext = "csv")
-    expect_true(file.exists(file))
-    expect_identical(basename(file), "mat.csv")
-    unlink(file)
-})
-
-test_that("vroom mode (experimental)", {
-    options("acid.export.engine" = "vroom")
-    file <- export(object = mat, ext = "csv")
-    expect_true(file.exists(file))
-    expect_identical(basename(file), "mat.csv")
-    unlink(file)
+test_that("Specify the internal import engine (experimental)", {
+    for (engijne in c("data.table", "readr", "vroom")) {
+        options("acid.export.engine" = engine)
+        file <- export(object = mat, ext = "csv")
+        expect_true(file.exists(file))
+        expect_identical(basename(file), "mat.csv")
+        unlink(file)
+    }
 })
 
 test_that("Invalid input", {
