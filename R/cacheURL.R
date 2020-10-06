@@ -9,7 +9,6 @@
 #'   Defaults to basename of URL.
 #' @param pkg `character(1)`.
 #'   Package name.
-#'   Defaults to current package.
 #' @param update `logical(1)`.
 #'   Call `bfcneedsupdate` internally to see if URL needs an update.
 #'   Doesn't work reliably for all servers, so disabled by default.
