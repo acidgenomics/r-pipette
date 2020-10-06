@@ -12,6 +12,7 @@ NULL
 #'   bfcneedsupdate bfcquery bfcrpath
 #' @importFrom IRanges end start width
 #' @importFrom Matrix readMM writeMM
+#' @importFrom RCurl getURL
 #' @importFrom S4Vectors DataFrame Rle head mcols mcols<- metadata metadata<-
 #'   na.omit tail
 #' @importFrom SingleCellExperiment reducedDimNames reducedDim
