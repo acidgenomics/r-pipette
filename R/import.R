@@ -239,7 +239,7 @@ import <- function(
             ))
         }
     } else {
-        ext <- format
+        ext <- format  # nocov
     }
     ext <- tolower(ext)
     extGroup <- list(
@@ -404,15 +404,17 @@ import <- function(
     }
     if (hasNames(object)) {
         if (isTRUE(any(duplicated(names(object))))) {
+            ## nocov start
             dupes <- sort(names(object)[duplicated(names(object))])
             cli_alert_warning(sprintf(
                 "Duplicate names: {.var %s}.",
                 toString(dupes, width = 100L)
             ))
+            ## nocov end
         }
         names(object) <- makeNames(names(object))
         if (!isTRUE(hasValidNames(object))) {
-            cli_alert_warning("Invalid names detected.")
+            cli_alert_warning("Invalid names detected.")  # nocov
         }
     }
     if (isTRUE(metadata)) {
@@ -452,7 +454,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
         file = if (isAFile(file)) {
             realpath(file)
         } else {
-            file
+            file  # nocov
         },
         date = Sys.Date()
     )
@@ -512,8 +514,10 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
             verbose = verbose
         )
         if (isCharacter(colnames)) {
+            ## nocov start
             args[["header"]] <- FALSE
             args[["col.names"]] <- colnames
+            ## nocov end
         } else {
             args[["header"]] <- colnames
         }
