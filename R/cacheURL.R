@@ -44,11 +44,7 @@ cacheURL <- function(
         isFlag(verbose)
     )
     if (isTRUE(verbose)) {
-        items <- c("URL" = url)
-        if (!identical(basename(url), fileName)) {
-            items <- c(items, "File" = fileName)  # nocov
-        }
-        cli_dl(items)
+        cli_alert(sprintf("Caching URL at {.url %s}.", url))
     }
     bfc <- .biocPackageCache(pkg = pkg, ask = ask)
     rid <- bfcquery(
