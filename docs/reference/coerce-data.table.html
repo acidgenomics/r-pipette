@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pipette</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.15</span>
       </span>
     </div>
 
@@ -95,6 +95,12 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
+  <a href="https://acidgenomics.com/">
+    <span class="fas fa fas fa-vial fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="https://github.com/acidgenomics/pipette/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
@@ -122,16 +128,16 @@
     <p>Coerce to <code>data.table</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>as.data.table</span>(<span class='no'>x</span>, <span class='kw'>keep.rownames</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>as.data.table</span><span class='op'>(</span><span class='va'>x</span>, keep.rownames <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for DataFrame</span>
-<span class='fu'>as.data.table</span>(<span class='no'>x</span>, <span class='kw'>keep.rownames</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+<span class='fu'>as.data.table</span><span class='op'>(</span><span class='va'>x</span>, keep.rownames <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for IRanges</span>
-<span class='fu'>as.data.table</span>(<span class='no'>x</span>, <span class='kw'>keep.rownames</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+<span class='fu'>as.data.table</span><span class='op'>(</span><span class='va'>x</span>, keep.rownames <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for GenomicRanges</span>
-<span class='fu'>as.data.table</span>(<span class='no'>x</span>, <span class='kw'>keep.rownames</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>as.data.table</span><span class='op'>(</span><span class='va'>x</span>, keep.rownames <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -189,20 +195,22 @@ S4 coercion method that allows us to use <code>as()</code> to coerce an object t
     <div class='dont-index'><p><code><a href='https://Rdatatable.gitlab.io/data.table/reference/as.data.table.html'>data.table::as.data.table()</a></code>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>DFrame</span>, <span class='no'>GRanges</span>, <span class='no'>IRanges</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"acidtest"</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>DFrame</span>, <span class='va'>GRanges</span>, <span class='va'>IRanges</span>, package <span class='op'>=</span> <span class='st'>"AcidTest"</span><span class='op'>)</span>
 
 <span class='co'>## DataFrame to data.table ====</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>as</span>(<span class='no'>DFrame</span>, <span class='st'>"data.table"</span>)
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>as.data.table</span>(<span class='no'>DFrame</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;        rn sample01 sample02 sample03 sample04
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>as</span><span class='op'>(</span><span class='va'>DFrame</span>, <span class='st'>"data.table"</span><span class='op'>)</span>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>as.data.table</span><span class='op'>(</span><span class='va'>DFrame</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;        rn sample01 sample02 sample03 sample04
 #&gt; 1: gene01        1        2        3        4
 #&gt; 2: gene02        5        6        7        8
 #&gt; 3: gene03        9       10       11       12
 #&gt; 4: gene04       13       14       15       16</div><div class='input'>
 <span class='co'>## GenomicRanges to data.table ====</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>as</span>(<span class='no'>GRanges</span>, <span class='st'>"data.table"</span>)
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>as.data.table</span>(<span class='no'>GRanges</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;                 rn seqnames     start       end  width strand          geneID
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>as</span><span class='op'>(</span><span class='va'>GRanges</span>, <span class='st'>"data.table"</span><span class='op'>)</span>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>as.data.table</span><span class='op'>(</span><span class='va'>GRanges</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;                 rn seqnames     start       end  width strand          geneID
 #&gt; 1: ENSG00000000003        X 100627109 100639991  12883      - ENSG00000000003
 #&gt; 2: ENSG00000000005        X 100584802 100599885  15084      + ENSG00000000005
 #&gt; 3: ENSG00000000419       20  50934867  50958555  23689      - ENSG00000000419
@@ -215,9 +223,10 @@ S4 coercion method that allows us to use <code>as()</code> to coerce an object t
 #&gt; 4:    SCYL3
 #&gt; 5: C1orf112</div><div class='input'>
 <span class='co'>## IRanges to data.table ====</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>as</span>(<span class='no'>IRanges</span>, <span class='st'>"data.table"</span>)
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>as.data.table</span>(<span class='no'>IRanges</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;    rn start end width score
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>as</span><span class='op'>(</span><span class='va'>IRanges</span>, <span class='st'>"data.table"</span><span class='op'>)</span>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>as.data.table</span><span class='op'>(</span><span class='va'>IRanges</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;    rn start end width score
 #&gt; 1:  a     1   5     5     1
 #&gt; 2:  b    10  14     5     2
 #&gt; 3:  c    20  24     5     3</div></pre>
@@ -236,7 +245,7 @@ S4 coercion method that allows us to use <code>as()</code> to coerce an object t
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
