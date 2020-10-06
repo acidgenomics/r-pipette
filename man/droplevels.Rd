@@ -28,7 +28,7 @@ The function \code{droplevels} is used to drop unused levels from a
 Updated 2020-04-10.
 }
 \examples{
-data(RangedSummarizedExperiment, package = "acidtest")
+data(RangedSummarizedExperiment, package = "AcidTest")
 
 ## Ranges ====
 rse <- RangedSummarizedExperiment

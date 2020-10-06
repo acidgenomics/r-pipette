@@ -5,7 +5,7 @@
 #' @name coerce-tbl_df
 #' @note Updated 2020-01-19.
 #'
-#' @inheritParams acidroxygen::params
+#' @inheritParams AcidRoxygen::params
 #'
 #' @details
 #' Our defined methods attempt to improve on the defaults in the tibble package
@@ -34,7 +34,7 @@
 #' @return `tbl_df`.
 #'
 #' @examples
-#' data(DFrame, GRanges, IRanges, package = "acidtest")
+#' data(DFrame, GRanges, IRanges, package = "AcidTest")
 #'
 #' ## DataFrame to tbl_df ====
 #' x <- as(DFrame, "tbl_df")

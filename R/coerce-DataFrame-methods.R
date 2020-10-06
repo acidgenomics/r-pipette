@@ -8,14 +8,14 @@
 #'   a `list` to `DataFrame`.
 #' @note Updated 2020-01-18.
 #'
-#' @inheritParams acidroxygen::params
+#' @inheritParams AcidRoxygen::params
 #' @param row.names `NULL` or `character`.
 #' @param ... Additional arguments.
 #'
 #' @return `DataFrame`.
 #'
 #' @examples
-#' data(data.table, sparseMatrix, tbl_df, package = "acidtest")
+#' data(data.table, sparseMatrix, tbl_df, package = "AcidTest")
 #'
 #' ## Matrix to DataFrame ====
 #' from <- sparseMatrix
@@ -46,7 +46,7 @@ NULL
 
 #' @rdname coerce-DataFrame
 #' @name as.DataFrame
-#' @importFrom acidgenerics as.DataFrame
+#' @importFrom AcidGenerics as.DataFrame
 #' @usage as.DataFrame(x, ...)
 #' @export
 NULL

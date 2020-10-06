@@ -46,7 +46,7 @@ The data.table package uses "rn" by default, whereas tibble uses "rowname".
 Updated 2020-01-18.
 }
 \examples{
-data(data.table, tbl_df, package = "acidtest")
+data(data.table, tbl_df, package = "AcidTest")
 
 ## data.table ====
 matchRowNameColumn(data.table)

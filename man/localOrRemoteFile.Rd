@@ -44,7 +44,7 @@ x <- localOrRemoteFile(file)
 basename(x)
 
 ## Remote
-file <- acidbase::pasteURL(
+file <- AcidBase::pasteURL(
     pipetteTestsURL,
     "hgnc.txt.gz",
     protocol = "none"

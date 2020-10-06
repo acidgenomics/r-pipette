@@ -5,7 +5,7 @@
 #' @note Don't attempt to defined methods for `as.list`.
 #' @note Updated 2020-01-18.
 #'
-#' @inheritParams acidroxygen::params
+#' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
 #'
 #' @seealso
@@ -19,7 +19,7 @@
 #' @return `list`.
 #'
 #' @examples
-#' data(RangedSummarizedExperiment, package = "acidtest")
+#' data(RangedSummarizedExperiment, package = "AcidTest")
 #'
 #' ## SummarizedExperiment ====
 #' x <- RangedSummarizedExperiment
@@ -32,7 +32,7 @@ NULL
 
 #' @rdname coerce-list
 #' @name coerceToList
-#' @importFrom acidgenerics coerceToList
+#' @importFrom AcidGenerics coerceToList
 #' @usage coerceToList(object, ...)
 #' @export
 NULL

@@ -1,8 +1,8 @@
 #' @name removeNA
-#' @inherit acidgenerics::removeNA
+#' @inherit AcidGenerics::removeNA
 #' @note Updated 2019-10-12.
 #'
-#' @inheritParams acidroxygen::params
+#' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
 #'
 #' @examples
@@ -35,7 +35,7 @@ NULL
 
 #' @rdname removeNA
 #' @name removeNA
-#' @importFrom acidgenerics removeNA
+#' @importFrom AcidGenerics removeNA
 #' @usage removeNA(object, ...)
 #' @export
 NULL
