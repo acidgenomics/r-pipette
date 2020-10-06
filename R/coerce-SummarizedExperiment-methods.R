@@ -22,14 +22,14 @@
 #' @name coerce-SummarizedExperiment
 #' @note Updated 2020-01-18.
 #'
-#' @inheritParams acidroxygen::params
+#' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
 #'
 #' @return `SummarizedExperiment`.
 #'
 #' @examples
 #' suppressPackageStartupMessages(library(SummarizedExperiment))
-#' data(RangedSummarizedExperiment, package = "acidtest")
+#' data(RangedSummarizedExperiment, package = "AcidTest")
 #'
 #' ## RangedSummarizedExperiment ===
 #' ## Current S4 coercion drops row metadata.
@@ -45,7 +45,7 @@ NULL
 
 #' @rdname coerce-SummarizedExperiment
 #' @name as.SummarizedExperiment
-#' @importFrom acidgenerics as.SummarizedExperiment
+#' @importFrom AcidGenerics as.SummarizedExperiment
 #' @usage as.SummarizedExperiment(x, ...)
 #' @export
 NULL

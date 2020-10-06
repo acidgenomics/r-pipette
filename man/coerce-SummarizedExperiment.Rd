@@ -44,7 +44,7 @@ Updated 2020-01-18.
 }
 \examples{
 suppressPackageStartupMessages(library(SummarizedExperiment))
-data(RangedSummarizedExperiment, package = "acidtest")
+data(RangedSummarizedExperiment, package = "AcidTest")
 
 ## RangedSummarizedExperiment ===
 ## Current S4 coercion drops row metadata.

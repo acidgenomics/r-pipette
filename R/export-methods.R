@@ -1,6 +1,6 @@
 #' @name export
-#' @inherit acidgenerics::export
-#' @note Updated 2020-08-18.
+#' @inherit AcidGenerics::export
+#' @note Updated 2020-10-06.
 #'
 #' @section Row names:
 #'
@@ -18,7 +18,7 @@
 #' Note that this function currently wraps `vroom::voom_write()` by default
 #' for exporting `data.frame` and `matrix` class objects.
 #'
-#' @inheritParams acidroxygen::params
+#' @inheritParams AcidRoxygen::params
 #' @param object Object.
 #'   An object supporting [`dim()`][base::dim], or a supported class capable
 #'   of being coerced to `data.frame`, to be written to disk.
@@ -75,7 +75,7 @@ NULL
 
 #' @rdname export
 #' @name export
-#' @importFrom acidgenerics export
+#' @importFrom AcidGenerics export
 #' @usage export(object, ...)
 #' @export
 NULL
@@ -140,12 +140,14 @@ NULL
         }
         write_lines(x = object, path = file, append = FALSE)
         if (isTRUE(compress)) {
+            ## nocov start
             file <- compress(
                 file = file,
                 ext = compressExt,
                 remove = TRUE,
                 overwrite = TRUE
             )
+            ## nocov end
         }
         file <- realpath(file)
         invisible(file)
@@ -223,12 +225,15 @@ setMethod(
         ## Drop non-atomic columns automatically, if necessary.
         keep <- bapply(X = object, FUN = is.atomic)
         if (!all(keep)) {
+            ## nocov start
+            ## This is used to handle rowData with nested entrezIDs.
             fail <- names(keep)[!keep]
             cli_alert_warning(sprintf(
                 "Dropping non-atomic columns: {.var %s}.",
                 toString(fail, width = 200L)
             ))
             object <- object[, keep, drop = FALSE]
+            ## nocov end
         }
         assert(allAreAtomic(object))
         if (hasRownames(object)) {
@@ -754,8 +759,8 @@ setMethod(
                     )
                     if (is(reducedDim, "matrix")) {
                         ext <- "csv"
-                    } else if (is(reducedDim, "sparseMatrix")) {
-                        ext <- "mtx"
+                    } else if (is(reducedDim, "sparseMatrix")) {  # nocov
+                        ext <- "mtx"  # nocov
                     }
                     if (isTRUE(compress)) {
                         ext <- paste0(ext, ".gz")

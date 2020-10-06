@@ -13,7 +13,7 @@
 #' @export
 #' @note Updated 2020-07-24.
 #'
-#' @inheritParams acidroxygen::params
+#' @inheritParams AcidRoxygen::params
 #' @param file `character(1)`.
 #'   Local file paths or remote URLs.
 #'
@@ -31,7 +31,7 @@
 #' basename(x)
 #'
 #' ## Remote
-#' file <- acidbase::pasteURL(
+#' file <- AcidBase::pasteURL(
 #'     pipetteTestsURL,
 #'     "hgnc.txt.gz",
 #'     protocol = "none"

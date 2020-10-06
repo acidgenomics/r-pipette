@@ -1,3 +1,32 @@
+context("export : character")
+
+vec <- c("hello", "world")
+
+test_that("'ext' argument", {
+    for (ext in eval(formals(`export,character`)[["ext"]])) {
+        file <- paste0("vec", ".", ext)
+        x <- export(object = vec, ext = ext)
+        expect_identical(x, realpath(file))
+        expect_true(file.exists(file))
+        expect_identical(
+            object = readLines(file),
+            expected = vec
+        )
+        ## Check accidental overwrite support.
+        expect_error(
+            export(vec, ext = ext, overwrite = FALSE),
+            "File exists"
+        )
+        expect_message(
+            export(vec, ext = ext, overwrite = TRUE),
+            "Overwriting"
+        )
+        file.remove(file)
+    }
+})
+
+
+
 context("export : matrix")
 
 test_that("'ext' argument", {
@@ -33,20 +62,14 @@ test_that("'ext' argument", {
     }
 })
 
-test_that("readr mode (experimental)", {
-    options("acid.export.engine" = "readr")
-    file <- export(object = mat, ext = "csv")
-    expect_true(file.exists(file))
-    expect_identical(basename(file), "mat.csv")
-    unlink(file)
-})
-
-test_that("vroom mode (experimental)", {
-    options("acid.export.engine" = "vroom")
-    file <- export(object = mat, ext = "csv")
-    expect_true(file.exists(file))
-    expect_identical(basename(file), "mat.csv")
-    unlink(file)
+test_that("Specify the internal import engine (experimental)", {
+    for (engine in c("data.table", "readr", "vroom")) {
+        options("acid.export.engine" = engine)
+        file <- export(object = mat, ext = "csv")
+        expect_true(file.exists(file))
+        expect_identical(basename(file), "mat.csv")
+        unlink(file)
+    }
 })
 
 test_that("Invalid input", {
