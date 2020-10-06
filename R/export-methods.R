@@ -759,8 +759,8 @@ setMethod(
                     )
                     if (is(reducedDim, "matrix")) {
                         ext <- "csv"
-                    } else if (is(reducedDim, "sparseMatrix")) {
-                        ext <- "mtx"
+                    } else if (is(reducedDim, "sparseMatrix")) {  # nocov
+                        ext <- "mtx"  # nocov
                     }
                     if (isTRUE(compress)) {
                         ext <- paste0(ext, ".gz")

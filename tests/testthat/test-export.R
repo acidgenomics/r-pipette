@@ -63,7 +63,7 @@ test_that("'ext' argument", {
 })
 
 test_that("Specify the internal import engine (experimental)", {
-    for (engijne in c("data.table", "readr", "vroom")) {
+    for (engine in c("data.table", "readr", "vroom")) {
         options("acid.export.engine" = engine)
         file <- export(object = mat, ext = "csv")
         expect_true(file.exists(file))
