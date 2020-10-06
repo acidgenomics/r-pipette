@@ -29,6 +29,7 @@ Imports:
     GenomicRanges,
     IRanges,
     Matrix (>= 1.2),
+    RCurl (>= 1.98),
     S4Vectors,
     SingleCellExperiment,
     SummarizedExperiment,
@@ -79,6 +80,7 @@ Collate:
     'encode-methods.R'
     'export-methods.R'
     'factorize-methods.R'
+    'getURLDirList.R'
     'import.R'
     'imports.R'
     'loadData.R'
