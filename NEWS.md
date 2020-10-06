@@ -5,6 +5,11 @@
 - `getURLDirList`: Migrated this function from previous definition in basejump,
   so we can inherit inside new AcidGenomes package.
 
+### Minor changes
+
+- `cacheURL`: Added `package` argument, so other packages that use this
+  function will automatically inherit the current package, as expected.
+
 ## pipette 0.4.15 (2020-10-06)
 
 ### New functions
