@@ -66,7 +66,7 @@ See \code{getClass("data.table")} for details.
 }
 
 \examples{
-data(DFrame, GRanges, IRanges, package = "acidtest")
+data(DFrame, GRanges, IRanges, package = "AcidTest")
 
 ## DataFrame to data.table ====
 x <- as(DFrame, "data.table")

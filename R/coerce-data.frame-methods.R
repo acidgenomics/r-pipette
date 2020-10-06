@@ -6,12 +6,12 @@
 #' @note Updated 2020-01-19.
 #'
 #' @inheritParams base::as.data.frame
-#' @inheritParams acidroxygen::params
+#' @inheritParams AcidRoxygen::params
 #'
 #' @return `data.frame`.
 #'
 #' @examples
-#' data(sparseMatrix, package = "acidtest")
+#' data(sparseMatrix, package = "AcidTest")
 #'
 #' ## Matrix to data.frame ====
 #' x <- as(sparseMatrix, "data.frame")

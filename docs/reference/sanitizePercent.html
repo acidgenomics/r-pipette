@@ -75,7 +75,7 @@ numeric vector (e.g. 0.5)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pipette</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.15</span>
       </span>
     </div>
 
@@ -96,6 +96,12 @@ numeric vector (e.g. 0.5)." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
+  <a href="https://acidgenomics.com/">
+    <span class="fas fa fas fa-vial fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="https://github.com/acidgenomics/pipette/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
@@ -124,13 +130,13 @@ numeric vector (e.g. 0.5)." />
 <code>numeric</code> vector (e.g. <code>0.5</code>).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>sanitizePercent</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>sanitizePercent</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S4 method for atomic</span>
-<span class='fu'>sanitizePercent</span>(<span class='no'>object</span>)
+<span class='fu'>sanitizePercent</span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span>
 
 <span class='co'># S4 method for character</span>
-<span class='fu'>sanitizePercent</span>(<span class='no'>object</span>)</pre>
+<span class='fu'>sanitizePercent</span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -163,9 +169,13 @@ numeric proportions (e.g. <code>0.5</code>).</p>
 Excel.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>object</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"100%"</span>, <span class='st'>"10.0%"</span>, <span class='st'>"1%"</span>, <span class='st'>"0.1%"</span>, <span class='st'>"0.01%"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>object</span>)</div><div class='output co'>#&gt; [1] "character"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>object</span>)</div><div class='output co'>#&gt; [1] "100%"  "10.0%" "1%"    "0.1%"  "0.01%"</div><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>sanitizePercent</span>(<span class='no'>object</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] "numeric"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] 1e+00 1e-01 1e-02 1e-03 1e-04</div></pre>
+    <pre class="examples"><div class='input'><span class='va'>object</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"100%"</span>, <span class='st'>"10.0%"</span>, <span class='st'>"1%"</span>, <span class='st'>"0.1%"</span>, <span class='st'>"0.01%"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "character"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "100%"  "10.0%" "1%"    "0.1%"  "0.01%"</div><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>sanitizePercent</span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "numeric"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 1e+00 1e-01 1e-02 1e-03 1e-04</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -181,7 +191,7 @@ Excel.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

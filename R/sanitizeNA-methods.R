@@ -1,8 +1,8 @@
 #' @name sanitizeNA
-#' @inherit acidgenerics::sanitizeNA
-#' @note Updated 2020-09-14.
+#' @inherit AcidGenerics::sanitizeNA
+#' @note Updated 2020-10-05.
 #'
-#' @inheritParams acidroxygen::params
+#' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
 #'
 #' @examples
@@ -27,7 +27,7 @@ NULL
 
 #' @rdname sanitizeNA
 #' @name sanitizeNA
-#' @importFrom acidgenerics sanitizeNA
+#' @importFrom AcidGenerics sanitizeNA
 #' @usage sanitizeNA(object, ...)
 #' @export
 NULL
@@ -118,7 +118,7 @@ setMethod(
 `sanitizeNA,data.frame` <-  # nolint
     function(object) {
         if (hasRownames(object)) {
-            rownames <- rownames(object)
+            rownames <- rownames(object)  # nocov
         } else {
             rownames <- NULL
         }
@@ -128,14 +128,14 @@ setMethod(
                 if (is.character(col)) {
                     sanitizeNA(col)
                 } else {
-                    I(col)
+                    I(col)  # nocov
                 }
             }
         )
         out <- data.frame(list, row.names = rownames, stringsAsFactors = FALSE)
         ## This step ensures we keep `tbl_df`, `data.table` class, if necessary.
         if (!identical(class(object), "data.frame")) {
-            out <- as(out, class(object)[[1L]])
+            out <- as(out, class(object)[[1L]])  # nocov
         }
         out
     }
@@ -156,6 +156,7 @@ setMethod(
 `sanitizeNA,DataFrame` <-  # nolint
     function(object) {
         rownames <- rownames(object)
+        ## nocov start
         list <- lapply(
             X = object,
             FUN = function(x) {
@@ -168,6 +169,7 @@ setMethod(
                 }
             }
         )
+        ## nocov end
         DataFrame(list, row.names = rownames)
     }
 

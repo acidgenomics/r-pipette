@@ -8,7 +8,7 @@ data(
     data.table,
     sparseMatrix,
     tbl_df,
-    package = "acidtest",
+    package = "AcidTest",
     envir = environment()
 )
 

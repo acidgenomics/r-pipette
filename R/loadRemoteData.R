@@ -6,7 +6,7 @@
 #' @export
 #' @note Updated 2020-01-19.
 #'
-#' @inheritParams acidroxygen::params
+#' @inheritParams AcidRoxygen::params
 #' @param url `character`.
 #'   Remote URL file path(s) to R data.
 #'
@@ -14,7 +14,7 @@
 #' Local object name as the name, and the remote URL as the value.
 #'
 #' @examples
-#' url <- acidbase::pasteURL(
+#' url <- AcidBase::pasteURL(
 #'     pipetteTestsURL,
 #'     "rnaseq_counts.rds",
 #'     protocol = "none"

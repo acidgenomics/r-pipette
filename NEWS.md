@@ -1,3 +1,14 @@
+## pipette 0.4.15 (2020-10-06)
+
+### New functions
+
+- `cacheURL`: Utility function for easy package file caching using BiocFileCache
+  package internally.
+
+### Minor changes
+
+- Updated Acid Genomics package dependencies.
+
 ## pipette 0.4.14 (2020-09-14)
 
 ### Minor changes

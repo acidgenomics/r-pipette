@@ -33,7 +33,7 @@ The Rle class is a general container for storing an atomic vector
 Updated 2019-07-20.
 }
 \examples{
-data(RangedSummarizedExperiment, package = "acidtest")
+data(RangedSummarizedExperiment, package = "AcidTest")
 rowData <- SummarizedExperiment::rowData
 
 ## DataFrame ====

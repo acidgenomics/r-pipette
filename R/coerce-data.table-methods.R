@@ -6,7 +6,7 @@
 #' @note Updated 2020-01-19.
 #'
 #' @inheritParams data.table::as.data.table
-#' @inheritParams acidroxygen::params
+#' @inheritParams AcidRoxygen::params
 #'
 #' @details
 #' Our defined methods attempt to improve on the defaults in the data.table
@@ -37,7 +37,7 @@
 #' @seealso [data.table::as.data.table()].
 #'
 #' @examples
-#' data(DFrame, GRanges, IRanges, package = "acidtest")
+#' data(DFrame, GRanges, IRanges, package = "AcidTest")
 #'
 #' ## DataFrame to data.table ====
 #' x <- as(DFrame, "data.table")

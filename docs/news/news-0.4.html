@@ -73,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pipette</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.15</span>
       </span>
     </div>
 
@@ -94,6 +94,12 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
+  <a href="https://acidgenomics.com/">
+    <span class="fas fa fas fa-vial fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="https://github.com/acidgenomics/pipette/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
@@ -131,9 +137,9 @@
 <li>Migrated coercion methods and other utitilies from the now archived transformer package: <code>atomize</code>, <code>coerceToList</code>, <code>droplevels</code>, <code>decode</code>, <code>encode</code>, <code>factorize</code>, <code>matchRowNameColumn</code>, and <code>metadata2</code>.</li>
 </ul>
 </div>
-<div id="minor-changes-14" class="section level3">
+<div id="minor-changes-15" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-14" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-15" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Switched to using cli package for improved messages.</li>
 </ul>
@@ -142,9 +148,9 @@
     <div id="pipette-041-2020-01-28" class="section level2">
 <h2 class="hasAnchor">
 <a href="#pipette-041-2020-01-28" class="anchor"></a>pipette 0.4.1 (2020-01-28)</h2>
-<div id="minor-changes-13" class="section level3">
+<div id="minor-changes-14" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-13" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-14" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Switched license from MIT to GPL-3.</li>
 <li>Ensure that <code>coerce</code> method is reexported – thanks <a href='https://github.com/dpryan79'>@dpryan79</a> for catching this issue in basejump.</li>
@@ -154,9 +160,9 @@
     <div id="pipette-042-2020-04-10" class="section level2">
 <h2 class="hasAnchor">
 <a href="#pipette-042-2020-04-10" class="anchor"></a>pipette 0.4.2 (2020-04-10)</h2>
-<div id="minor-changes-12" class="section level3">
+<div id="minor-changes-13" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-12" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-13" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>
 <code>droplevels</code>: Ensuring S4 generic variant defined in S4Vectors package gets reexported and masks base S3 generic. This helps avoid a <code>C stack usage</code> issue that has popped up in the latest version of R.</li>
@@ -168,9 +174,9 @@
     <div id="pipette-043-2020-04-15" class="section level2">
 <h2 class="hasAnchor">
 <a href="#pipette-043-2020-04-15" class="anchor"></a>pipette 0.4.3 (2020-04-15)</h2>
-<div id="minor-changes-11" class="section level3">
+<div id="minor-changes-12" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-11" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-12" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>
 <code>import</code>: Bug fix for <code>format</code> argument erroring on some supported file types.</li>
@@ -188,9 +194,9 @@
 <code>import</code> and <code>export</code> functions now default to using vroom engine instead of data.table. Internally, these now call <code>vroom</code> and <code>vroom_write</code>. We noticed that the data.table <code>fwrite</code> function in particular can have issues writing many files on AWS EC2 instances, resulting in a stack imbalance. The vroom package seems to be more stable currently.</li>
 </ul>
 </div>
-<div id="minor-changes-10" class="section level3">
+<div id="minor-changes-11" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-10" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-11" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>
 <code>loadData</code>, <code>saveData</code>: Switched to using <code>cli_alert</code> instead of <code>cli_text</code> internally for status messages.</li>
@@ -200,9 +206,9 @@
     <div id="pipette-045-2020-05-18" class="section level2">
 <h2 class="hasAnchor">
 <a href="#pipette-045-2020-05-18" class="anchor"></a>pipette 0.4.5 (2020-05-18)</h2>
-<div id="minor-changes-9" class="section level3">
+<div id="minor-changes-10" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-9" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-10" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>
 <code>import</code>: Now setting delim internally for <code>vroom</code> import call, to handle single column data frame import. Otherwise vroom will warn about failing to detect expected delimiter.</li>
@@ -212,9 +218,9 @@
     <div id="pipette-046-2020-06-11" class="section level2">
 <h2 class="hasAnchor">
 <a href="#pipette-046-2020-06-11" class="anchor"></a>pipette 0.4.6 (2020-06-11)</h2>
-<div id="minor-changes-8" class="section level3">
+<div id="minor-changes-9" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-8" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-9" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>
 <code>import</code>: Added support for <code>skip</code> argument, which allows the user to skip a certain number of lines in the input.</li>
@@ -226,9 +232,9 @@
     <div id="pipette-047-2020-07-07" class="section level2">
 <h2 class="hasAnchor">
 <a href="#pipette-047-2020-07-07" class="anchor"></a>pipette 0.4.7 (2020-07-07)</h2>
-<div id="minor-changes-7" class="section level3">
+<div id="minor-changes-8" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-7" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-8" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>
 <code>import</code> Hardened Excel input to intentionally error on any warnings returned by internal <code>read_excel</code> call, which is too liberal in coercing data types, in my opinion.</li>
@@ -242,9 +248,9 @@
     <div id="pipette-048-2020-07-24" class="section level2">
 <h2 class="hasAnchor">
 <a href="#pipette-048-2020-07-24" class="anchor"></a>pipette 0.4.8 (2020-07-24)</h2>
-<div id="minor-changes-6" class="section level3">
+<div id="minor-changes-7" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-6" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-7" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>
 <code>export</code>: Improved messaages to include full output path.</li>
@@ -255,9 +261,9 @@
     <div id="pipette-049-2020-07-27" class="section level2">
 <h2 class="hasAnchor">
 <a href="#pipette-049-2020-07-27" class="anchor"></a>pipette 0.4.9 (2020-07-27)</h2>
-<div id="minor-changes-5" class="section level3">
+<div id="minor-changes-6" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-5" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-6" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Decreased data.table dependency from 1.13.0 back to 1.12.8, so we can build successfully on bioconda.</li>
 </ul>
@@ -266,9 +272,9 @@
     <div id="pipette-0410-2020-08-03" class="section level2">
 <h2 class="hasAnchor">
 <a href="#pipette-0410-2020-08-03" class="anchor"></a>pipette 0.4.10 (2020-08-03)</h2>
-<div id="minor-changes-4" class="section level3">
+<div id="minor-changes-5" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-4" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-5" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Relax name checks for <code>import</code>.</li>
 </ul>
@@ -277,9 +283,9 @@
     <div id="pipette-0411-2020-08-11" class="section level2">
 <h2 class="hasAnchor">
 <a href="#pipette-0411-2020-08-11" class="anchor"></a>pipette 0.4.11 (2020-08-11)</h2>
-<div id="minor-changes-3" class="section level3">
+<div id="minor-changes-4" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-3" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-4" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>
 <code>export</code>: Ensuring that full directory path is always resolved in message.</li>
@@ -290,9 +296,9 @@
     <div id="pipette-0412-2020-08-13" class="section level2">
 <h2 class="hasAnchor">
 <a href="#pipette-0412-2020-08-13" class="anchor"></a>pipette 0.4.12 (2020-08-13)</h2>
-<div id="minor-changes-2" class="section level3">
+<div id="minor-changes-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-2" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-3" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>
 <code>import</code>: Improved messages to always resolve full path to import directory.</li>
@@ -303,9 +309,9 @@
     <div id="pipette-0413-2020-08-18" class="section level2">
 <h2 class="hasAnchor">
 <a href="#pipette-0413-2020-08-18" class="anchor"></a>pipette 0.4.13 (2020-08-18)</h2>
-<div id="minor-changes-1" class="section level3">
+<div id="minor-changes-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-1" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-2" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>
 <code>export</code>: Now dropping non-atomic columns (e.g. Entrez ID list column) from data frames automatically prior to export. Previously, the <code>allAreAtomic</code> assert check was called automatically and would error on non-atomics.</li>
@@ -315,12 +321,31 @@
     <div id="pipette-0414-2020-09-14" class="section level2">
 <h2 class="hasAnchor">
 <a href="#pipette-0414-2020-09-14" class="anchor"></a>pipette 0.4.14 (2020-09-14)</h2>
+<div id="minor-changes-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#minor-changes-1" class="anchor"></a>Minor changes</h3>
+<ul>
+<li>
+<code>sanitizeNA</code>: Added support for “N/A” string, which is present in some Excel spreadsheets.</li>
+</ul>
+</div>
+</div>
+    <div id="pipette-0415-2020-10-06" class="section level2">
+<h2 class="hasAnchor">
+<a href="#pipette-0415-2020-10-06" class="anchor"></a>pipette 0.4.15 (2020-10-06)</h2>
+<div id="new-functions" class="section level3">
+<h3 class="hasAnchor">
+<a href="#new-functions" class="anchor"></a>New functions</h3>
+<ul>
+<li>
+<code>cacheURL</code>: Utility function for easy package file caching using BiocFileCache package internally.</li>
+</ul>
+</div>
 <div id="minor-changes" class="section level3">
 <h3 class="hasAnchor">
 <a href="#minor-changes" class="anchor"></a>Minor changes</h3>
 <ul>
-<li>
-<code>sanitizeNA</code>: Added support for “N/A” string, which is present in some Excel spreadsheets.</li>
+<li>Updated Acid Genomics package dependencies.</li>
 </ul>
 </div>
 </div>
@@ -341,7 +366,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

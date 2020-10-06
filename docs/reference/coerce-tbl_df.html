@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pipette</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.15</span>
       </span>
     </div>
 
@@ -95,6 +95,12 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
+  <a href="https://acidgenomics.com/">
+    <span class="fas fa fas fa-vial fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="https://github.com/acidgenomics/pipette/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
@@ -123,25 +129,25 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for DataFrame</span>
-<span class='fu'>as_tibble</span>(
-  <span class='no'>x</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>rownames</span> <span class='kw'>=</span> <span class='kw pkg'>pkgconfig</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/pkgconfig/man/get_config.html'>get_config</a></span>(<span class='st'>"tibble::rownames"</span>, <span class='st'>"rowname"</span>)
-)
+<span class='fu'>as_tibble</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>...</span>,
+  rownames <span class='op'>=</span> <span class='fu'>pkgconfig</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/pkgconfig/man/get_config.html'>get_config</a></span><span class='op'>(</span><span class='st'>"tibble::rownames"</span>, <span class='st'>"rowname"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for IRanges</span>
-<span class='fu'>as_tibble</span>(
-  <span class='no'>x</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>rownames</span> <span class='kw'>=</span> <span class='kw pkg'>pkgconfig</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/pkgconfig/man/get_config.html'>get_config</a></span>(<span class='st'>"tibble::rownames"</span>, <span class='st'>"rowname"</span>)
-)
+<span class='fu'>as_tibble</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>...</span>,
+  rownames <span class='op'>=</span> <span class='fu'>pkgconfig</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/pkgconfig/man/get_config.html'>get_config</a></span><span class='op'>(</span><span class='st'>"tibble::rownames"</span>, <span class='st'>"rowname"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for GenomicRanges</span>
-<span class='fu'>as_tibble</span>(
-  <span class='no'>x</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>rownames</span> <span class='kw'>=</span> <span class='kw pkg'>pkgconfig</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/pkgconfig/man/get_config.html'>get_config</a></span>(<span class='st'>"tibble::rownames"</span>, <span class='st'>"rowname"</span>)
-)</pre>
+<span class='fu'>as_tibble</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>...</span>,
+  rownames <span class='op'>=</span> <span class='fu'>pkgconfig</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/pkgconfig/man/get_config.html'>get_config</a></span><span class='op'>(</span><span class='st'>"tibble::rownames"</span>, <span class='st'>"rowname"</span><span class='op'>)</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -198,12 +204,13 @@ an object to a tibble.</p>
     <div class='dont-index'><p><code><a href='https://tibble.tidyverse.org/reference/as_tibble.html'>tibble::as_tibble()</a></code>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>DFrame</span>, <span class='no'>GRanges</span>, <span class='no'>IRanges</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"acidtest"</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>DFrame</span>, <span class='va'>GRanges</span>, <span class='va'>IRanges</span>, package <span class='op'>=</span> <span class='st'>"AcidTest"</span><span class='op'>)</span>
 
 <span class='co'>## DataFrame to tbl_df ====</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>as</span>(<span class='no'>DFrame</span>, <span class='st'>"tbl_df"</span>)
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>as_tibble</span>(<span class='no'>DFrame</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 4 x 5</span><span>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>as</span><span class='op'>(</span><span class='va'>DFrame</span>, <span class='st'>"tbl_df"</span><span class='op'>)</span>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>as_tibble</span><span class='op'>(</span><span class='va'>DFrame</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 4 x 5</span><span>
 #&gt;   rowname sample01 sample02 sample03 sample04
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span> gene01         1        2        3        4
@@ -211,9 +218,10 @@ an object to a tibble.</p>
 #&gt; </span><span style='color: #555555;'>3</span><span> gene03         9       10       11       12
 #&gt; </span><span style='color: #555555;'>4</span><span> gene04        13       14       15       16</div><div class='input'>
 <span class='co'>## GenomicRanges to tbl_df ====</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>as</span>(<span class='no'>GRanges</span>, <span class='st'>"tbl_df"</span>)
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>as_tibble</span>(<span class='no'>GRanges</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 5 x 8</span><span>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>as</span><span class='op'>(</span><span class='va'>GRanges</span>, <span class='st'>"tbl_df"</span><span class='op'>)</span>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>as_tibble</span><span class='op'>(</span><span class='va'>GRanges</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 5 x 8</span><span>
 #&gt;   rowname        seqnames    start      end  width strand geneID        geneName
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   
 #&gt; </span><span style='color: #555555;'>1</span><span> ENSG000000000… X          1.01</span><span style='color: #555555;'>e</span><span>8   1.01</span><span style='color: #555555;'>e</span><span>8  </span><span style='text-decoration: underline;'>12</span><span>883 -      ENSG00000000… TSPAN6  
@@ -222,9 +230,10 @@ an object to a tibble.</p>
 #&gt; </span><span style='color: #555555;'>4</span><span> ENSG000000004… 1          1.70</span><span style='color: #555555;'>e</span><span>8   1.70</span><span style='color: #555555;'>e</span><span>8  </span><span style='text-decoration: underline;'>44</span><span>637 -      ENSG00000000… SCYL3   
 #&gt; </span><span style='color: #555555;'>5</span><span> ENSG000000004… 1          1.70</span><span style='color: #555555;'>e</span><span>8   1.70</span><span style='color: #555555;'>e</span><span>8 </span><span style='text-decoration: underline;'>192</span><span>074 +      ENSG00000000… C1orf112</div><div class='input'>
 <span class='co'>## IRanges to tbl_df ====</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>as</span>(<span class='no'>IRanges</span>, <span class='st'>"tbl_df"</span>)
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>as_tibble</span>(<span class='no'>IRanges</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 5</span><span>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>as</span><span class='op'>(</span><span class='va'>IRanges</span>, <span class='st'>"tbl_df"</span><span class='op'>)</span>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>as_tibble</span><span class='op'>(</span><span class='va'>IRanges</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 5</span><span>
 #&gt;   rowname start   end width score
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span> a           1     5     5     1
@@ -245,7 +254,7 @@ an object to a tibble.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

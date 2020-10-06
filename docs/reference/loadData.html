@@ -75,7 +75,7 @@ paths. Supports RDS, RDA, and RDATA file extensions." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pipette</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.15</span>
       </span>
     </div>
 
@@ -96,6 +96,12 @@ paths. Supports RDS, RDA, and RDATA file extensions." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
+  <a href="https://acidgenomics.com/">
+    <span class="fas fa fas fa-vial fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="https://github.com/acidgenomics/pipette/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
@@ -124,13 +130,13 @@ paths. Supports RDS, RDA, and RDATA file extensions." />
 paths. Supports <code>RDS</code>, <code>RDA</code>, and <code>RDATA</code> file extensions.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>loadData</span>(
-  <span class='no'>...</span>,
-  <span class='kw'>dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"acid.load.dir"</span>, <span class='kw'>default</span> <span class='kw'>=</span> <span class='st'>"."</span>),
-  <span class='kw'>envir</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/environment.html'>globalenv</a></span>(),
-  <span class='kw'>list</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"acid.overwrite"</span>, <span class='kw'>default</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-)</pre>
+    <pre class="usage"><span class='fu'>loadData</span><span class='op'>(</span>
+  <span class='va'>...</span>,
+  dir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"acid.load.dir"</span>, default <span class='op'>=</span> <span class='st'>"."</span><span class='op'>)</span>,
+  envir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/environment.html'>globalenv</a></span><span class='op'>(</span><span class='op'>)</span>,
+  list <span class='op'>=</span> <span class='cn'>NULL</span>,
+  overwrite <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"acid.overwrite"</span>, default <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -195,21 +201,24 @@ names using non-standard evaluation.</p>
 </div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>dir</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"pipette"</span>)
+    <pre class="examples"><div class='input'><span class='va'>dir</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, package <span class='op'>=</span> <span class='st'>"pipette"</span><span class='op'>)</span>
 
 <span class='co'>## Interactive mode ====</span>
 <span class='co'>## Note that this method uses non-standard evaluation.</span>
-<span class='fu'>loadData</span>(<span class='no'>example</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='no'>dir</span>)</div><div class='output co'>#&gt; <span class='message'>→ Loading <span style='color: #0000BB;'>example.rds</span><span> from </span><span style='color: #0000BB;'>/private/var/folders/l1/8y8sjzmn15v49jgrqglghcfr0000gn/T/RtmpNgLlSO/temp_libpath28297c43414/pipette/extdata</span><span>.</span></div><div class='input'>
+<span class='fu'>loadData</span><span class='op'>(</span><span class='va'>example</span>, dir <span class='op'>=</span> <span class='va'>dir</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>→ Loading <span style='color: #0000BB;'>example.rds</span><span> from </span><span style='color: #0000BB;'>/private/var/folders/l1/8y8sjzmn15v49jgrqglghcfr0000gn/T/RtmpHJX0V5/temp_libpathb8111fcf84e/pipette/extdata</span><span>.</span></div><div class='input'>
 <span class='co'>## Clean up.</span>
-<span class='fu'><a href='https://rdrr.io/r/base/rm.html'>rm</a></span>(<span class='no'>example</span>, <span class='kw'>inherits</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/rm.html'>rm</a></span><span class='op'>(</span><span class='va'>example</span>, inherits <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='co'>## List mode ====</span>
 <span class='co'>## Note that this method uses standard evaluation.</span>
 <span class='co'>## Use this approach inside of functions.</span>
-<span class='no'>list</span> <span class='kw'>&lt;-</span> <span class='st'>"example"</span>
-<span class='fu'>loadData</span>(<span class='kw'>list</span> <span class='kw'>=</span> <span class='no'>list</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='no'>dir</span>)</div><div class='output co'>#&gt; <span class='message'>→ Loading </span><span style='color: #0000BB;'>example.rds</span><span> from </span><span style='color: #0000BB;'>/private/var/folders/l1/8y8sjzmn15v49jgrqglghcfr0000gn/T/RtmpNgLlSO/temp_libpath28297c43414/pipette/extdata</span><span>.</span></div><div class='input'>
+<span class='va'>list</span> <span class='op'>&lt;-</span> <span class='st'>"example"</span>
+<span class='fu'>loadData</span><span class='op'>(</span>list <span class='op'>=</span> <span class='va'>list</span>, dir <span class='op'>=</span> <span class='va'>dir</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>→ Loading </span><span style='color: #0000BB;'>example.rds</span><span> from </span><span style='color: #0000BB;'>/private/var/folders/l1/8y8sjzmn15v49jgrqglghcfr0000gn/T/RtmpHJX0V5/temp_libpathb8111fcf84e/pipette/extdata</span><span>.</span></div><div class='input'>
 <span class='co'>## Clean up.</span>
-<span class='fu'><a href='https://rdrr.io/r/base/rm.html'>rm</a></span>(<span class='no'>example</span>, <span class='kw'>inherits</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div></span></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/rm.html'>rm</a></span><span class='op'>(</span><span class='va'>example</span>, inherits <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -225,7 +234,7 @@ names using non-standard evaluation.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
