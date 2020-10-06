@@ -1,6 +1,6 @@
 #' @name export
 #' @inherit AcidGenerics::export
-#' @note Updated 2020-08-18.
+#' @note Updated 2020-10-06.
 #'
 #' @section Row names:
 #'
@@ -140,12 +140,14 @@ NULL
         }
         write_lines(x = object, path = file, append = FALSE)
         if (isTRUE(compress)) {
+            ## nocov start
             file <- compress(
                 file = file,
                 ext = compressExt,
                 remove = TRUE,
                 overwrite = TRUE
             )
+            ## nocov end
         }
         file <- realpath(file)
         invisible(file)
@@ -223,12 +225,15 @@ setMethod(
         ## Drop non-atomic columns automatically, if necessary.
         keep <- bapply(X = object, FUN = is.atomic)
         if (!all(keep)) {
+            ## nocov start
+            ## This is used to handle rowData with nested entrezIDs.
             fail <- names(keep)[!keep]
             cli_alert_warning(sprintf(
                 "Dropping non-atomic columns: {.var %s}.",
                 toString(fail, width = 200L)
             ))
             object <- object[, keep, drop = FALSE]
+            ## nocov end
         }
         assert(allAreAtomic(object))
         if (hasRownames(object)) {
