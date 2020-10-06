@@ -71,7 +71,7 @@ loadData <- function(
         ## By default, assume user has passed in actual file paths.
         ## Otherwise, behave like NSE method, and attempt to add `dir`.
         if (isTRUE(allAreFiles(names))) {
-            files <- realpath(names)
+            files <- realpath(names)  # nocov
         } else {
             files <- .listData(names = names, dir = dir)
         }
