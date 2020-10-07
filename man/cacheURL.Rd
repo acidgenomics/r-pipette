@@ -7,6 +7,7 @@
 cacheURL(
   url,
   fileName = basename(url),
+  pkg = packageName(),
   update = FALSE,
   ask = FALSE,
   verbose = TRUE
@@ -19,6 +20,9 @@ Uniform Resource Locator (URL).}
 \item{fileName}{\code{character(1)}.
 File name to store internally in \code{BiocFileCache}.
 Defaults to basename of URL.}
+
+\item{pkg}{\code{character(1)}.
+Package name.}
 
 \item{update}{\code{logical(1)}.
 Call \code{bfcneedsupdate} internally to see if URL needs an update.
@@ -38,7 +42,7 @@ Cached file path on disk.
 Download and cache a file using BiocFileCache
 }
 \note{
-Updated 2020-10-05.
+Updated 2020-10-06.
 }
 \examples{
 url <- pasteURL(
