@@ -73,15 +73,6 @@ NULL
 
 
 
-#' @rdname export
-#' @name export
-#' @importFrom AcidGenerics export
-#' @usage export(object, ...)
-#' @export
-NULL
-
-
-
 ## Updated 2020-08-12.
 `export,character` <-  # nolint
     function(

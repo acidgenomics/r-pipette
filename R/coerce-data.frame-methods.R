@@ -20,15 +20,6 @@ NULL
 
 
 
-#' @rdname coerce-data.frame
-#' @name as.data.frame
-#' @importFrom BiocGenerics as.data.frame
-#' @usage as.data.frame(x, row.names = NULL, optional = FALSE, ...)
-#' @export
-NULL
-
-
-
 ## Default coercion of IPosRanges (i.e. IRanges) to data.frame currently
 ## strips metadata in `mcols()`. However, GenomicRanges preserves this
 ## information, so we're adding a tweaked coercion method here to improve

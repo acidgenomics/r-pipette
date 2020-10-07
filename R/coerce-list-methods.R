@@ -30,15 +30,6 @@ NULL
 
 
 
-#' @rdname coerce-list
-#' @name coerceToList
-#' @importFrom AcidGenerics coerceToList
-#' @usage coerceToList(object, ...)
-#' @export
-NULL
-
-
-
 ## Updated 2019-10-22.
 `coerceToList,Annotated` <-  # nolint
     function(object) {
