@@ -24,15 +24,6 @@ NULL
 
 
 
-#' @rdname droplevels
-#' @name droplevels
-#' @importFrom S4Vectors droplevels
-#' @usage droplevels(x, ...)
-#' @export
-NULL
-
-
-
 `droplevels,Ranges` <-  # nolint
     function(x) {
         mcols <- mcols(x)

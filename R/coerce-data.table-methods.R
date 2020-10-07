@@ -57,15 +57,6 @@ NULL
 
 
 
-#' @rdname coerce-data.table
-#' @name as.data.table
-#' @importFrom data.table as.data.table
-#' @usage as.data.table(x, keep.rownames = FALSE, ...)
-#' @export
-NULL
-
-
-
 ## Note that we're matching `as_tibble()` convention here, using "rowname" as
 ## column for row names assignment. We also using similar internal assert checks
 ## here, allowing atomic and/or list columns only.

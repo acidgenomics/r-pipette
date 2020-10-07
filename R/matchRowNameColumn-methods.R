@@ -32,15 +32,6 @@ NULL
 
 
 
-#' @rdname matchRowNameColumn
-#' @name matchRowNameColumn
-#' @importFrom AcidGenerics matchRowNameColumn
-#' @usage matchRowNameColumn(object, ...)
-#' @export
-NULL
-
-
-
 ## Updated 2020-08-11.
 `matchRowNameColumn,data.frame` <-  # nolint
     function(

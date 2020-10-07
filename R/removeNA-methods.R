@@ -33,15 +33,6 @@ NULL
 
 
 
-#' @rdname removeNA
-#' @name removeNA
-#' @importFrom AcidGenerics removeNA
-#' @usage removeNA(object, ...)
-#' @export
-NULL
-
-
-
 ## Updated 2019-07-19.
 .allNonNA <- function(x) {
     !all(is.na(x))

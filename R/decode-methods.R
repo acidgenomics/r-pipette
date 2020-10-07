@@ -30,15 +30,6 @@ NULL
 
 
 
-#' @rdname decode
-#' @name decode
-#' @importFrom S4Vectors decode
-#' @usage decode(x, ...)
-#' @export
-NULL
-
-
-
 ## Updated 2019-07-19.
 `decode,DataFrame` <-  # nolint
     function(x) {

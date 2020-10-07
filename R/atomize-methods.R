@@ -12,15 +12,6 @@ NULL
 
 
 
-#' @rdname atomize
-#' @name atomize
-#' @importFrom AcidGenerics atomize
-#' @usage atomize(object, ...)
-#' @export
-NULL
-
-
-
 ## Keep only atomic columns. Complex columns won't write to disk as CSVs or work
 ## with R Markdown functions.
 ##
