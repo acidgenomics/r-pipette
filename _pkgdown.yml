@@ -28,6 +28,7 @@ reference:
   - title: File transfers
     contents:
     - cacheURL
+    - getURLDirList
     - localOrRemoteFile
   - title: Coercion
     contents:
