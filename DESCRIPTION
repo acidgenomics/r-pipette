@@ -53,12 +53,6 @@ Suggests:
     readxl (>= 1.3),
     rio (>= 0.5.16),
     testthat
-Remotes:
-    acidgenomics/AcidBase,
-    acidgenomics/AcidGenerics,
-    acidgenomics/AcidTest,
-    acidgenomics/goalie,
-    acidgenomics/syntactic
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Collate: 
