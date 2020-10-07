@@ -54,14 +54,6 @@ NULL
 
 
 
-#' @rdname coerce-tbl_df
-#' @name as_tibble
-#' @importFrom tibble as_tibble
-#' @export
-NULL
-
-
-
 .rownames <- quote(pkgconfig::get_config("tibble::rownames", "rowname"))
 
 

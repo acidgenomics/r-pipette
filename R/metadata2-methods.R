@@ -48,22 +48,6 @@ NULL
 
 
 
-#' @rdname metadata2
-#' @name metadata2
-#' @importFrom AcidGenerics metadata2
-#' @usage metadata2(x, which, ...)
-#' @export
-NULL
-
-#' @rdname metadata2
-#' @name metadata2<-
-#' @importFrom AcidGenerics metadata2<-
-#' @usage metadata2(x, which, ...) <- value
-#' @export
-NULL
-
-
-
 ## Intended for S3 class, or S4 class that doesn't support `metadata()`.
 ## Updated 2019-10-24.
 `metadata2,ANY` <-  # nolint

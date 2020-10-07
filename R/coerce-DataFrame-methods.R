@@ -44,15 +44,6 @@ NULL
 
 
 
-#' @rdname coerce-DataFrame
-#' @name as.DataFrame
-#' @importFrom AcidGenerics as.DataFrame
-#' @usage as.DataFrame(x, ...)
-#' @export
-NULL
-
-
-
 ## Wrapping the columns in an `I()` works when passing to `DataFrame()`.
 ## See also `as_tibble()` for easy list to data frame coercion.
 ##

@@ -25,15 +25,6 @@ NULL
 
 
 
-#' @rdname sanitizeNA
-#' @name sanitizeNA
-#' @importFrom AcidGenerics sanitizeNA
-#' @usage sanitizeNA(object, ...)
-#' @export
-NULL
-
-
-
 ## Updated 2019-07-19.
 `sanitizeNA,atomic` <-  # nolint
     function(object) {
