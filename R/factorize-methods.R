@@ -12,15 +12,6 @@ NULL
 
 
 
-#' @rdname factorize
-#' @name factorize
-#' @importFrom AcidGenerics factorize
-#' @usage factorize(object, ...)
-#' @export
-NULL
-
-
-
 ## Updated 2019-07-19.
 `factorize,DataFrame` <-  # nolint
     function(object) {

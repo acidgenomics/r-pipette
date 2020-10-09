@@ -16,15 +16,6 @@ NULL
 
 
 
-#' @rdname sanitizePercent
-#' @name sanitizePercent
-#' @importFrom AcidGenerics sanitizePercent
-#' @usage sanitizePercent(object, ...)
-#' @export
-NULL
-
-
-
 ## Updated 2019-07-19.
 `sanitizePercent,atomic` <-  # nolint
     function(object) {
