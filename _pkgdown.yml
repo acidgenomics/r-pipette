@@ -30,6 +30,7 @@ reference:
     - cacheURL
     - getURLDirList
     - localOrRemoteFile
+    - transmit
   - title: Coercion
     contents:
     - starts_with("coerce")
