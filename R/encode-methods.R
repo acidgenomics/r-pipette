@@ -24,15 +24,6 @@ NULL
 
 
 
-#' @rdname encode
-#' @name encode
-#' @importFrom AcidGenerics encode
-#' @usage encode(x, ...)
-#' @export
-NULL
-
-
-
 ## Updated 2019-07-20.
 `encode,DataFrame` <-  # nolint
     function(x) {

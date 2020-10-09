@@ -447,8 +447,8 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
         isString(fun)
     )
     metadata2(object, which = "import") <- list(
-        package = "pipette",
-        packageVersion = packageVersion("pipette"),
+        package = packageName(),
+        packageVersion = packageVersion(packageName()),
         importer = paste0(pkg, "::", fun),
         importerVersion = packageVersion(pkg),
         file = if (isAFile(file)) {
