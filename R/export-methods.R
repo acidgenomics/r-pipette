@@ -1,6 +1,6 @@
 #' @name export
 #' @inherit AcidGenerics::export
-#' @note Updated 2020-10-06.
+#' @note Updated 2020-10-09.
 #'
 #' @section Row names:
 #'
@@ -129,7 +129,8 @@ NULL
                 "readr", "write_lines"
             ))
         }
-        write_lines(x = object, path = file, append = FALSE)
+        ## readr v1.4 changed "path" to "file".
+        write_lines(x = object, file = file, append = FALSE)
         if (isTRUE(compress)) {
             ## nocov start
             file <- compress(
@@ -281,10 +282,8 @@ setMethod(
                 inherits = TRUE
             )
             assert(is.function(what))
-            args <- list(
-                x = object,
-                path = file
-            )
+            ## readr v1.4 changed "path" to "file".
+            args <- list(x = object, file = file)
         }  else if (identical(whatPkg, "vroom")) {
             whatFun <- "vroom_write"
             what <- get(
