@@ -53,7 +53,7 @@ transmit <- function(
     )
     ## `RCurl::getURL()` requires a trailing slash.
     if (!grepl("/$", remoteDir)) {
-        remoteDir <- paste0(remoteDir, "/")
+        remoteDir <- paste0(remoteDir, "/")  # nocov
     }
     localDir <- initDir(localDir)
     assert(
