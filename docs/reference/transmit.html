@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Atomize — atomize • pipette</title>
+<title>Transmit files from a remote FTP server — transmit • pipette</title>
 
 
 <!-- jquery -->
@@ -41,8 +41,9 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Atomize — atomize" />
-<meta property="og:description" content="Ensure all columns in the object are atomic." />
+<meta property="og:title" content="Transmit files from a remote FTP server — transmit" />
+<meta property="og:description" content="Utility function that supports easy file matching and download from a remote
+FTP server. Also enables on-the-fly file renaming and compression." />
 
 
 
@@ -119,54 +120,73 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Atomize</h1>
-    <small class="dont-index">Source: <a href='https://github.com/acidgenomics/pipette/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/acidgenomics/pipette/blob/master/R/atomize-methods.R'><code>R/atomize-methods.R</code></a></small>
-    <div class="hidden name"><code>atomize.Rd</code></div>
+    <h1>Transmit files from a remote FTP server</h1>
+    <small class="dont-index">Source: <a href='https://github.com/acidgenomics/pipette/blob/master/R/transmit.R'><code>R/transmit.R</code></a></small>
+    <div class="hidden name"><code>transmit.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Ensure all columns in the object are <code>atomic</code>.</p>
+    <p>Utility function that supports easy file matching and download from a remote
+FTP server. Also enables on-the-fly file renaming and compression.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>atomize</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='co'># S4 method for data.frame</span>
-<span class='fu'>atomize</span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span>
-
-<span class='co'># S4 method for DataFrame</span>
-<span class='fu'>atomize</span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span>
-
-<span class='co'># S4 method for Ranges</span>
-<span class='fu'>atomize</span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>transmit</span><span class='op'>(</span><span class='va'>remoteDir</span>, localDir <span class='op'>=</span> <span class='st'>"."</span>, <span class='va'>pattern</span>, rename <span class='op'>=</span> <span class='cn'>NULL</span>, compress <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>object</th>
-      <td><p>Object.</p></td>
+      <th>remoteDir</th>
+      <td><p><code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>.
+Remote FTP directory path.</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>Additional arguments.</p></td>
+      <th>localDir</th>
+      <td><p><code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>.
+Directory where to save files locally.</p></td>
+    </tr>
+    <tr>
+      <th>pattern</th>
+      <td><p><code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>.
+Pattern to use for matching.</p></td>
+    </tr>
+    <tr>
+      <th>rename</th>
+      <td><p><code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code> or <code>NULL</code>.
+Rename the local files (including suffix), if desired.</p></td>
+    </tr>
+    <tr>
+      <th>compress</th>
+      <td><p><code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>.
+Compress the downloaded files.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Modified object.
-Non-atomic columns (e.g. <code>list</code> or complex S4 classes) will be dropped.</p>
+    <p>Invisible <code>character</code>.
+Local file paths.</p>
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>Updated 2020-10-09.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>S4Vectors</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/S4Vectors/man/DataFrame-class.html'>DataFrame</a></span><span class='op'>(</span>a <span class='op'>=</span> <span class='st'>"a"</span>, b <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>a <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span><span class='op'>(</span><span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>is.atomic</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $a
-#&gt; [1] TRUE
-#&gt; 
-#&gt; $b.a
-#&gt; [1] TRUE
-#&gt; </div><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>atomize</span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='va'>remoteDir</span> <span class='op'>&lt;-</span> <span class='st'>"ftp://ftp.ncbi.nlm.nih.gov/genomes/"</span>
+<span class='kw'>if</span> <span class='op'>(</span>
+    <span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/Logic.html'>isTRUE</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/nchar.html'>nzchar</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span><span class='op'>(</span><span class='st'>"CI"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>&amp;&amp;</span>
+    <span class='fu'>goalie</span><span class='fu'>::</span><span class='fu'><a href='https://goalie.acidgenomics.com/reference/check-scalar-hasInternet.html'>hasInternet</a></span><span class='op'>(</span><span class='va'>remoteDir</span><span class='op'>)</span>
+<span class='op'>)</span> <span class='op'>{</span>
+    <span class='va'>readme</span> <span class='op'>&lt;-</span> <span class='fu'>transmit</span><span class='op'>(</span>
+        remoteDir <span class='op'>=</span> <span class='va'>remoteDir</span>,
+        pattern <span class='op'>=</span> <span class='st'>"^README\\.txt$"</span>,
+        rename <span class='op'>=</span> <span class='st'>"ncbi-readme.txt"</span>,
+        compress <span class='op'>=</span> <span class='cn'>FALSE</span>
+    <span class='op'>)</span>
+    <span class='fu'><a href='https://rdrr.io/r/base/basename.html'>basename</a></span><span class='op'>(</span><span class='va'>readme</span><span class='op'>)</span>
+    <span class='fu'><a href='https://rdrr.io/r/base/files.html'>file.exists</a></span><span class='op'>(</span><span class='va'>readme</span><span class='op'>)</span>
+    <span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span><span class='op'>(</span><span class='va'>readme</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div><div class='output co'>#&gt; <span class='message'>Transmitting files from <span style='color: #0000BB;font-style: italic;'>&lt;ftp.ncbi.nlm.nih.gov&gt;</span><span>.</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>ℹ</span><span> Files matching pattern: </span><span style='color: #0000BB;'>README.txt</span><span></span></div><div class='output co'>#&gt; <span class='message'>→ Downloading </span><span style='color: #0000BB;'>ncbi-readme.txt</span><span>.</span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
