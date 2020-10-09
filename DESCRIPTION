@@ -1,8 +1,8 @@
 Package: pipette
 Title: Pipette Biological Data In and Out of R
 Description: Input/output functions for biological data formats.
-Version: 0.4.16
-Date: 2020-10-06
+Version: 0.4.17
+Date: 2020-10-09
 Authors@R: c(
     person(
         "Michael", "Steinbaugh",
@@ -22,7 +22,7 @@ License: GPL-3
 Encoding: UTF-8
 Depends: R (>= 4.0)
 Imports:
-    AcidBase (>= 0.2.0),
+    AcidBase (>= 0.2.3),
     AcidGenerics (>= 0.4.0),
     BiocFileCache,
     BiocGenerics,
@@ -89,3 +89,4 @@ Collate:
     'removeNA-methods.R'
     'sanitizeNA-methods.R'
     'sanitizePercent-methods.R'
+    'transmit.R'

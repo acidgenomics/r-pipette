@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Atomize — atomize • pipette</title>
+<title>Download and cache a file using BiocFileCache — cacheURL • pipette</title>
 
 
 <!-- jquery -->
@@ -41,8 +41,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Atomize — atomize" />
-<meta property="og:description" content="Ensure all columns in the object are atomic." />
+<meta property="og:title" content="Download and cache a file using BiocFileCache — cacheURL" />
+<meta property="og:description" content="Download and cache a file using BiocFileCache" />
 
 
 
@@ -119,54 +119,78 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Atomize</h1>
-    <small class="dont-index">Source: <a href='https://github.com/acidgenomics/pipette/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/acidgenomics/pipette/blob/master/R/atomize-methods.R'><code>R/atomize-methods.R</code></a></small>
-    <div class="hidden name"><code>atomize.Rd</code></div>
+    <h1>Download and cache a file using BiocFileCache</h1>
+    <small class="dont-index">Source: <a href='https://github.com/acidgenomics/pipette/blob/master/R/cacheURL.R'><code>R/cacheURL.R</code></a></small>
+    <div class="hidden name"><code>cacheURL.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Ensure all columns in the object are <code>atomic</code>.</p>
+    <p>Download and cache a file using BiocFileCache</p>
     </div>
 
-    <pre class="usage"><span class='fu'>atomize</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='co'># S4 method for data.frame</span>
-<span class='fu'>atomize</span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span>
-
-<span class='co'># S4 method for DataFrame</span>
-<span class='fu'>atomize</span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span>
-
-<span class='co'># S4 method for Ranges</span>
-<span class='fu'>atomize</span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>cacheURL</span><span class='op'>(</span>
+  <span class='va'>url</span>,
+  fileName <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/basename.html'>basename</a></span><span class='op'>(</span><span class='va'>url</span><span class='op'>)</span>,
+  pkg <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/utils/packageName.html'>packageName</a></span><span class='op'>(</span><span class='op'>)</span>,
+  update <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  ask <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>object</th>
-      <td><p>Object.</p></td>
+      <th>url</th>
+      <td><p><code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>.
+Uniform Resource Locator (URL).</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>Additional arguments.</p></td>
+      <th>fileName</th>
+      <td><p><code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>.
+File name to store internally in <code>BiocFileCache</code>.
+Defaults to basename of URL.</p></td>
+    </tr>
+    <tr>
+      <th>pkg</th>
+      <td><p><code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>.
+Package name.</p></td>
+    </tr>
+    <tr>
+      <th>update</th>
+      <td><p><code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>.
+Call <code>bfcneedsupdate</code> internally to see if URL needs an update.
+Doesn't work reliably for all servers, so disabled by default.</p></td>
+    </tr>
+    <tr>
+      <th>ask</th>
+      <td><p><code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>.
+Ask if package cache needs to be created or if file needs to be updated.</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p><code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>.
+Run the function with verbose output.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Modified object.
-Non-atomic columns (e.g. <code>list</code> or complex S4 classes) will be dropped.</p>
+    <p><code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>.
+Cached file path on disk.</p>
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>Updated 2020-10-06.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>S4Vectors</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/S4Vectors/man/DataFrame-class.html'>DataFrame</a></span><span class='op'>(</span>a <span class='op'>=</span> <span class='st'>"a"</span>, b <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>a <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span><span class='op'>(</span><span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>is.atomic</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $a
-#&gt; [1] TRUE
-#&gt; 
-#&gt; $b.a
-#&gt; [1] TRUE
-#&gt; </div><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>atomize</span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='va'>url</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://acidbase.acidgenomics.com/reference/pasteURL.html'>pasteURL</a></span><span class='op'>(</span>
+    <span class='va'>pipetteTestsURL</span>,
+    <span class='st'>"biocfilecache-test.txt"</span>,
+    protocol <span class='op'>=</span> <span class='st'>"none"</span>
+<span class='op'>)</span>
+<span class='va'>file</span> <span class='op'>&lt;-</span> <span class='fu'>cacheURL</span><span class='op'>(</span><span class='va'>url</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>→ Caching URL at <span style='color: #0000BB;font-style: italic;'>&lt;https://tests.acidgenomics.com/pipette/v0.4/biocfilecache-test.txt&gt;</span><span>.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>file</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "/Users/mike/Library/Caches/pipette/185e5813f6f9_biocfilecache-test.txt"</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

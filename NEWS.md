@@ -1,3 +1,9 @@
+## pipette 0.4.17 (2020-10-09)
+
+### New functions
+
+- Migrated `transmit` here from basejump.
+
 ## pipette 0.4.16 (2020-10-06)
 
 ### New functions
