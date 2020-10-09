@@ -1,3 +1,11 @@
+## pipette 0.4.18 (2020-10-09)
+
+### Minor changes
+
+- Bug fix for breaking change in readr v1.4 release. In the `write_*` functions,
+  including `write_lines` and `write_csv`, the `path` argument has been renamed
+  to `file`. Now requiring readr v1.4+ in pipette.
+
 ## pipette 0.4.17 (2020-10-09)
 
 ### New functions
