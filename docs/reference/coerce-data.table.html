@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Coerce to data table — coerce-data.table • pipette</title>
+<title>Coerce to data table — as.data.table • pipette</title>
 
 
 <!-- jquery -->
@@ -41,7 +41,7 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Coerce to data table — coerce-data.table" />
+<meta property="og:title" content="Coerce to data table — as.data.table" />
 <meta property="og:description" content="Coerce to data.table." />
 
 
@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pipette</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.17</span>
       </span>
     </div>
 
@@ -120,7 +120,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Coerce to data table</h1>
-    <small class="dont-index">Source: <a href='https://github.com/acidgenomics/pipette/blob/master/R/coerce-data.table-methods.R'><code>R/coerce-data.table-methods.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/acidgenomics/pipette/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/acidgenomics/pipette/blob/master/R/coerce-data.table-methods.R'><code>R/coerce-data.table-methods.R</code></a></small>
     <div class="hidden name"><code>coerce-data.table.Rd</code></div>
     </div>
 
@@ -166,7 +166,7 @@ package to ensure that row names are not dropped by default, which is a poor
 default for bioinformatics. This is accomplished by setting
 <code>keep.rownames = "rowname"</code> by default instead of <code>keep.rownames = NULL</code>.
 Note that we're manually defining the <code>"rowname"</code> column instead of using
-<code>TRUE</code>, to match the conventions used in our <code><a href='coerce-tbl_df.html'>as_tibble()</a></code> methods.</p>
+<code>TRUE</code>, to match the conventions used in our <code><a href='as_tibble.html'>as_tibble()</a></code> methods.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>Updated 2020-01-19.</p>
