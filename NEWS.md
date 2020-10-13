@@ -1,3 +1,11 @@
+## pipette 0.4.19 (2020-10-12)
+
+### Minor changes
+
+- `transmit`: Added `download` argument support, to optionally return matching
+  URLs without downloading. This is useful for handing off to `cacheURL`
+  function for caching files inside of packages with BiocFileCache.
+
 ## pipette 0.4.18 (2020-10-09)
 
 ### Minor changes
