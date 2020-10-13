@@ -4,7 +4,14 @@
 \alias{transmit}
 \title{Transmit files from a remote FTP server}
 \usage{
-transmit(remoteDir, localDir = ".", pattern, rename = NULL, compress = FALSE)
+transmit(
+  remoteDir,
+  localDir = ".",
+  pattern,
+  rename = NULL,
+  compress = FALSE,
+  download = TRUE
+)
 }
 \arguments{
 \item{remoteDir}{\code{character(1)}.
@@ -21,6 +28,9 @@ Rename the local files (including suffix), if desired.}
 
 \item{compress}{\code{logical(1)}.
 Compress the downloaded files.}
+
+\item{download}{\code{logical(1)}.
+Download files (default) or only return the matching URL(s).}
 }
 \value{
 Invisible \code{character}.
@@ -31,7 +41,7 @@ Utility function that supports easy file matching and download from a remote
 FTP server. Also enables on-the-fly file renaming and compression.
 }
 \note{
-Updated 2020-10-09.
+Updated 2020-10-12.
 }
 \examples{
 remoteDir <- "ftp://ftp.ncbi.nlm.nih.gov/genomes/"
