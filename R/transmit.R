@@ -4,7 +4,7 @@
 #' FTP server. Also enables on-the-fly file renaming and compression.
 #'
 #' @export
-#' @note Updated 2020-10-09.
+#' @note Updated 2020-10-12.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @inheritParams saveData
@@ -16,6 +16,8 @@
 #'   Rename the local files (including suffix), if desired.
 #' @param compress `logical(1)`.
 #'   Compress the downloaded files.
+#' @param download `logical(1)`.
+#'   Download files (default) or only return the matching URL(s).
 #'
 #' @return Invisible `character`.
 #' Local file paths.
@@ -41,26 +43,25 @@ transmit <- function(
     localDir = ".",
     pattern,
     rename = NULL,
-    compress = FALSE
+    compress = FALSE,
+    download = TRUE
 ) {
     assert(
         hasInternet(),
         isString(remoteDir),
-        ## Check for public FTP protocol. Note that we're wrapping with `all()`
-        ## here because the check is parameterized, and includes name, which
-        ## causes the check to fail on R 3.4.
-        all(isMatchingRegex(remoteDir, "^ftp\\://"))
+        all(isMatchingRegex(remoteDir, "^ftp\\://")),
+        isString(pattern),
+        isAny(rename, classes = c("character", "NULL")),
+        isFlag(compress),
+        isFlag(download)
     )
     ## `RCurl::getURL()` requires a trailing slash.
     if (!grepl("/$", remoteDir)) {
         remoteDir <- paste0(remoteDir, "/")  # nocov
     }
-    localDir <- initDir(localDir)
-    assert(
-        isString(pattern),
-        isAny(rename, classes = c("character", "NULL")),
-        isFlag(compress)
-    )
+    if (isTRUE(download)) {
+        localDir <- initDir(localDir)
+    }
     ## Get the name of the server.
     server <- str_match(remoteDir, "^.*//([^/]+)/.*$")[1L, 2L]
     assert(isString(server))
@@ -101,8 +102,10 @@ transmit <- function(
         "Files matching pattern: {.file %s}",
         toString(match, width = 200L)
     ))
-    ## Concatenate using paste but strip the trailing slash (see above).
-    remotePaths <- paste(gsub("/$", "", remoteDir), match, sep = "/")
+    remotePaths <- pasteURL(remoteDir, match, protocol = "none")
+    if (isFALSE(download)) {
+        return(remotePaths)
+    }
     ## Rename files, if desired.
     if (is.character(rename)) {
         assert(areSameLength(x = match, y = rename))
