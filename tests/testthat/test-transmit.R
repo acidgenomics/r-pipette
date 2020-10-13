@@ -42,6 +42,21 @@ test_that("Rename and compress", {
     unlink("readme.txt.gz")
 })
 
+test_that("URL return", {
+    url <- transmit(
+        remoteDir = pasteURL(
+            "ftp.pantherdb.org",
+            "sequence_classifications",
+            "current_release",
+            "PANTHER_Sequence_Classification_files",
+            protocol = "ftp"
+        ),
+        pattern = "human",
+        download = FALSE
+    )
+    expect_true(isAURL(url))
+})
+
 test_that("Invalid parameters", {
     expect_error(
         object = transmit(
