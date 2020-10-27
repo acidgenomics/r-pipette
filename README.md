@@ -13,7 +13,10 @@ Pipette biological data in and out of R.
 ```r
 install.packages(
     pkgs = "pipette",
-    repos = c("r.acidgenomics.com", getOption("repos"))
+    repos = c(
+        "https://r.acidgenomics.com",
+        getOption("repos")
+    )
 )
 ```
 
