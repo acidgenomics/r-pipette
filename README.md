@@ -11,11 +11,14 @@ Pipette biological data in and out of R.
 ### [R][] method
 
 ```r
+if (!requireNamespace("BiocManager", quietly = TRUE)) {
+    install.packages("BiocManager")
+}
 install.packages(
     pkgs = "pipette",
     repos = c(
         "https://r.acidgenomics.com",
-        getOption("repos")
+        BiocManager::repositories()
     )
 )
 ```
