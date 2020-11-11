@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pipette</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.17</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.19</span>
       </span>
     </div>
 
@@ -179,45 +179,32 @@
 #&gt;   gene498       12 122471599-122501073      - |     coding
 #&gt;   gene499        7 151211484-151227205      - |     coding
 #&gt;   gene500        7 151232489-151238827      + |     coding
-#&gt;                                                                                              description
-#&gt;                                                                                                    &lt;Rle&gt;
-#&gt;   gene001                                              tetraspanin 6 [Source:HGNC Symbol;Acc:HGNC:11858]
-#&gt;   gene002                                                tenomodulin [Source:HGNC Symbol;Acc:HGNC:17757]
-#&gt;   gene003 dolichyl-phosphate mannosyltransferase subunit 1, catalytic [Source:HGNC Symbol;Acc:HGNC:3005]
-#&gt;   gene004                                   SCY1 like pseudokinase 3 [Source:HGNC Symbol;Acc:HGNC:19285]
-#&gt;   gene005                        chromosome 1 open reading frame 112 [Source:HGNC Symbol;Acc:HGNC:25565]
-#&gt;       ...                                                                                            ...
-#&gt;   gene496                                intraflagellar transport 88 [Source:HGNC Symbol;Acc:HGNC:20606]
-#&gt;   gene497 ALG1 chitobiosyldiphosphodolichol beta-mannosyltransferase [Source:HGNC Symbol;Acc:HGNC:18294]
-#&gt;   gene498                         zinc finger CCHC-type containing 8 [Source:HGNC Symbol;Acc:HGNC:25265]
-#&gt;   gene499                     ATP binding cassette subfamily F member 2 [Source:HGNC Symbol;Acc:HGNC:71]
-#&gt;   gene500                          chondroitin polymerizing factor 2 [Source:HGNC Symbol;Acc:HGNC:29270]
-#&gt;           entrezID    geneBiotype          geneID      geneIDVersion geneName
-#&gt;             &lt;list&gt;          &lt;Rle&gt;           &lt;Rle&gt;              &lt;Rle&gt;    &lt;Rle&gt;
-#&gt;   gene001     7105 protein_coding ENSG00000000003 ENSG00000000003.15   TSPAN6
-#&gt;   gene002    64102 protein_coding ENSG00000000005  ENSG00000000005.6     TNMD
-#&gt;   gene003     8813 protein_coding ENSG00000000419 ENSG00000000419.12     DPM1
-#&gt;   gene004    57147 protein_coding ENSG00000000457 ENSG00000000457.14    SCYL3
-#&gt;   gene005    55732 protein_coding ENSG00000000460 ENSG00000000460.17 C1orf112
-#&gt;       ...      ...            ...             ...                ...      ...
-#&gt;   gene496     8100 protein_coding ENSG00000032742 ENSG00000032742.17    IFT88
-#&gt;   gene497    56052 protein_coding ENSG00000033011 ENSG00000033011.12     ALG1
-#&gt;   gene498    55596 protein_coding ENSG00000033030 ENSG00000033030.15   ZCCHC8
-#&gt;   gene499    10061 protein_coding ENSG00000033050  ENSG00000033050.9    ABCF2
-#&gt;   gene500    54480 protein_coding ENSG00000033100 ENSG00000033100.16    CHPF2
-#&gt;           seqCoordSystem
-#&gt;                    &lt;Rle&gt;
-#&gt;   gene001     chromosome
-#&gt;   gene002     chromosome
-#&gt;   gene003     chromosome
-#&gt;   gene004     chromosome
-#&gt;   gene005     chromosome
-#&gt;       ...            ...
-#&gt;   gene496     chromosome
-#&gt;   gene497     chromosome
-#&gt;   gene498     chromosome
-#&gt;   gene499     chromosome
-#&gt;   gene500     chromosome
+#&gt;                      description entrezID    geneBiotype          geneID
+#&gt;                            &lt;Rle&gt;   &lt;list&gt;          &lt;Rle&gt;           &lt;Rle&gt;
+#&gt;   gene001 tetraspanin 6 [Sourc..     7105 protein_coding ENSG00000000003
+#&gt;   gene002 tenomodulin [Source:..    64102 protein_coding ENSG00000000005
+#&gt;   gene003 dolichyl-phosphate m..     8813 protein_coding ENSG00000000419
+#&gt;   gene004 SCY1 like pseudokina..    57147 protein_coding ENSG00000000457
+#&gt;   gene005 chromosome 1 open re..    55732 protein_coding ENSG00000000460
+#&gt;       ...                    ...      ...            ...             ...
+#&gt;   gene496 intraflagellar trans..     8100 protein_coding ENSG00000032742
+#&gt;   gene497 ALG1 chitobiosyldiph..    56052 protein_coding ENSG00000033011
+#&gt;   gene498 zinc finger CCHC-typ..    55596 protein_coding ENSG00000033030
+#&gt;   gene499 ATP binding cassette..    10061 protein_coding ENSG00000033050
+#&gt;   gene500 chondroitin polymeri..    54480 protein_coding ENSG00000033100
+#&gt;                geneIDVersion geneName seqCoordSystem
+#&gt;                        &lt;Rle&gt;    &lt;Rle&gt;          &lt;Rle&gt;
+#&gt;   gene001 ENSG00000000003.15   TSPAN6     chromosome
+#&gt;   gene002  ENSG00000000005.6     TNMD     chromosome
+#&gt;   gene003 ENSG00000000419.12     DPM1     chromosome
+#&gt;   gene004 ENSG00000000457.14    SCYL3     chromosome
+#&gt;   gene005 ENSG00000000460.17 C1orf112     chromosome
+#&gt;       ...                ...      ...            ...
+#&gt;   gene496 ENSG00000032742.17    IFT88     chromosome
+#&gt;   gene497 ENSG00000033011.12     ALG1     chromosome
+#&gt;   gene498 ENSG00000033030.15   ZCCHC8     chromosome
+#&gt;   gene499  ENSG00000033050.9    ABCF2     chromosome
+#&gt;   gene500 ENSG00000033100.16    CHPF2     chromosome
 #&gt;   -------
 #&gt;   seqinfo: 454 sequences from GRCh38 genome</div><div class='input'>
 <span class='co'>## SummarizedExperiment ====</span>
