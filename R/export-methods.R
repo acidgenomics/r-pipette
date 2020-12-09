@@ -98,6 +98,9 @@ NULL
         if (isTRUE(append)) {
             overwrite <- FALSE
         }
+        if (isTRUE(overwrite)) {
+            assert(isFALSE(append))
+        }
         if (is.null(file)) {
             call <- standardizeCall()
             sym <- call[["object"]]
