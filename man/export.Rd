@@ -19,8 +19,8 @@ export(object, ...)
   ext = "txt",
   dir = getOption("acid.export.dir", default = "."),
   file = NULL,
-  overwrite = getOption("acid.overwrite", default = TRUE),
   append = FALSE,
+  overwrite = getOption("acid.overwrite", default = TRUE),
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
@@ -115,6 +115,10 @@ Directory path.}
 \item{file}{\code{character(1)}.
 File path. When left unset (default), the \code{ext} and \code{dir} arguments will
 be used instead.}
+
+\item{append}{\code{logical(1)}.
+Append to output file.
+When enabled, automatically sets \code{overwrite} argument to \code{FALSE}.}
 
 \item{overwrite}{\code{logical(1)}.
 Overwrite existing file on disk.}
