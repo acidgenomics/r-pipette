@@ -20,6 +20,7 @@ export(object, ...)
   dir = getOption("acid.export.dir", default = "."),
   file = NULL,
   overwrite = getOption("acid.overwrite", default = TRUE),
+  append = FALSE,
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
@@ -137,7 +138,7 @@ File path(s).
 Export data out of R and write to disk.
 }
 \note{
-Updated 2020-10-09.
+Updated 2020-12-09.
 }
 \section{Row names}{
 
