@@ -1,6 +1,6 @@
 #' @name export
 #' @inherit AcidGenerics::export
-#' @note Updated 2020-10-09.
+#' @note Updated 2020-12-09.
 #'
 #' @section Row names:
 #'
@@ -41,6 +41,9 @@
 #'   Apply gzip compression to all files.
 #' @param name `character(1)`.
 #'   Name to use on disk. If `NULL`, will use the name of the object instead.
+#' @param append `logical(1)`.
+#'   Append to output file.
+#'   When enabled, automatically sets `overwrite` argument to `FALSE`.
 #' @param ... Additional arguments.
 #'
 #' @return Invisible `character`.
@@ -73,24 +76,31 @@ NULL
 
 
 
-## Updated 2020-08-12.
+## Updated 2020-12-09.
 `export,character` <-  # nolint
     function(
         object,
         ext = "txt",
         dir,
         file = NULL,
+        append = FALSE,
         overwrite,
         quiet
     ) {
         assert(
-            isCharacter(object),
             isString(ext),
             isString(dir),
             isString(file, nullOK = TRUE),
             isFlag(overwrite),
+            isFlag(append),
             isFlag(quiet)
         )
+        if (isTRUE(append)) {
+            overwrite <- FALSE
+        }
+        if (isTRUE(overwrite)) {
+            assert(isFALSE(append))
+        }
         if (is.null(file)) {
             call <- standardizeCall()
             sym <- call[["object"]]
@@ -130,7 +140,7 @@ NULL
             ))
         }
         ## readr v1.4 changed "path" to "file".
-        write_lines(x = object, file = file, append = FALSE)
+        write_lines(x = object, file = file, append = append)
         if (isTRUE(compress)) {
             ## nocov start
             file <- compress(
