@@ -41,6 +41,9 @@
 #'   Apply gzip compression to all files.
 #' @param name `character(1)`.
 #'   Name to use on disk. If `NULL`, will use the name of the object instead.
+#' @param append `logical(1)`.
+#'   Append to output file.
+#'   When enabled, automatically sets `overwrite` argument to `FALSE`.
 #' @param ... Additional arguments.
 #'
 #' @return Invisible `character`.
@@ -80,8 +83,8 @@ NULL
         ext = "txt",
         dir,
         file = NULL,
-        overwrite,
         append = FALSE,
+        overwrite,
         quiet
     ) {
         assert(
@@ -92,6 +95,9 @@ NULL
             isFlag(append),
             isFlag(quiet)
         )
+        if (isTRUE(append)) {
+            overwrite <- FALSE
+        }
         if (is.null(file)) {
             call <- standardizeCall()
             sym <- call[["object"]]
