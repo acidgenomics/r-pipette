@@ -1,6 +1,6 @@
 #' @name export
 #' @inherit AcidGenerics::export
-#' @note Updated 2020-10-09.
+#' @note Updated 2020-12-09.
 #'
 #' @section Row names:
 #'
@@ -73,7 +73,7 @@ NULL
 
 
 
-## Updated 2020-08-12.
+## Updated 2020-12-09.
 `export,character` <-  # nolint
     function(
         object,
@@ -81,14 +81,15 @@ NULL
         dir,
         file = NULL,
         overwrite,
+        append = FALSE,
         quiet
     ) {
         assert(
-            isCharacter(object),
             isString(ext),
             isString(dir),
             isString(file, nullOK = TRUE),
             isFlag(overwrite),
+            isFlag(append),
             isFlag(quiet)
         )
         if (is.null(file)) {
@@ -130,7 +131,7 @@ NULL
             ))
         }
         ## readr v1.4 changed "path" to "file".
-        write_lines(x = object, file = file, append = FALSE)
+        write_lines(x = object, file = file, append = append)
         if (isTRUE(compress)) {
             ## nocov start
             file <- compress(

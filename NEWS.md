@@ -1,3 +1,11 @@
+## pipette 0.4.20 (2020-12-09)
+
+### Minor changes
+
+- Updated dependency versions.
+- `export`: Added `append` option for `character` method. Also relaxed checks
+  on `character` method, allowing for exporting of empty vectors.
+
 ## pipette 0.4.19 (2020-10-12)
 
 ### Minor changes
