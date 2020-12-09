@@ -19,6 +19,7 @@ export(object, ...)
   ext = "txt",
   dir = getOption("acid.export.dir", default = "."),
   file = NULL,
+  append = FALSE,
   overwrite = getOption("acid.overwrite", default = TRUE),
   quiet = getOption("acid.quiet", default = FALSE)
 )
@@ -115,6 +116,10 @@ Directory path.}
 File path. When left unset (default), the \code{ext} and \code{dir} arguments will
 be used instead.}
 
+\item{append}{\code{logical(1)}.
+Append to output file.
+When enabled, automatically sets \code{overwrite} argument to \code{FALSE}.}
+
 \item{overwrite}{\code{logical(1)}.
 Overwrite existing file on disk.}
 
@@ -137,7 +142,7 @@ File path(s).
 Export data out of R and write to disk.
 }
 \note{
-Updated 2020-10-09.
+Updated 2020-12-09.
 }
 \section{Row names}{
 
