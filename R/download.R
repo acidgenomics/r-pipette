@@ -27,16 +27,34 @@
 #' print(out)
 #' file.remove(out)
 download <-
-    function(url, destfile, ...) {
+    function(
+        url,
+        destfile,
+        quiet = FALSE,
+        ...
+    ) {
         assert(
             isAURL(url),
-            isString(destfile)
+            isString(destfile),
+            isFlag(quiet)
         )
+        destfile <- normalizePath(destfile, mustWork = FALSE)
         timeout <- getOption("timeout")
         if (is.numeric(timeout)) {
             options("timeout" = 99999L)
         }
-        status <- download.file(url = url, destfile = destfile, ...)
+        if (isFALSE(quiet)) {
+            cli_alert(sprintf(
+                "Downloading {.url %s} to {.file %s}.",
+                url, destfile
+            ))
+        }
+        status <- download.file(
+            url = url,
+            destfile = destfile,
+            quiet = quiet,
+            ...
+        )
         if (!identical(status, 0L)) {
             stop(sprintf(
                 "Failed to download '%s' to '%s' successfully.",

@@ -4,7 +4,7 @@
 \alias{download}
 \title{Download a file from the Internet}
 \usage{
-download(url, destfile, ...)
+download(url, destfile, quiet = FALSE, ...)
 }
 \arguments{
 \item{url}{\code{character(1)}.
