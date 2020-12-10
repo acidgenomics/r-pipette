@@ -72,7 +72,6 @@ Collate:
     'data.frame-internal.R'
     'decode-methods.R'
     'deprecated.R'
-    'download.R'
     'droplevels-methods.R'
     'encode-methods.R'
     'export-methods.R'

@@ -6,8 +6,8 @@ NULL
 
 
 #' @importFrom AcidBase basenameSansExt bapply compress compressExtPattern
-#'   decompress dots extPattern fileExt formalsList initDir matchArgsToDoCall
-#'   pasteURL realpath requireNamespaces standardizeCall
+#'   decompress dots download extPattern fileExt formalsList initDir
+#'   matchArgsToDoCall pasteURL realpath requireNamespaces standardizeCall
 #' @importFrom BiocFileCache BiocFileCache bfcadd bfccache bfcdownload
 #'   bfcneedsupdate bfcquery bfcrpath
 #' @importFrom IRanges end start width
