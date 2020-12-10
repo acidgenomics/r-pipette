@@ -30,6 +30,9 @@ failure. Automatically sets a long time out internally via
 \code{options(timeout = 9999L)}, to avoid download issues related to \code{timeout}
 configuration in \code{Rprofile}.
 }
+\note{
+Updated 2020-12-10.
+}
 \examples{
 url <- "https://bioconductor.org/bioc-version"
 destfile <- "bioc-version.txt"
