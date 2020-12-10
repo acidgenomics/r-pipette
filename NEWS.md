@@ -1,3 +1,14 @@
+## pipette 0.4.21 (2020-12-10)
+
+### New functions
+
+- Added `download`, which acts as a hardened wrapper for `utils::download.file`.
+  Annoying, `download.file` returns status codes but does not intentionally
+  error on any unsuccessful downloads. Our wrapper ensures that R always errors
+  on any file download issue. It also sets a longer timeout internally, to
+  avoid any potential issues with the `timeout` option being defined in
+  `Rprofile`.
+
 ## pipette 0.4.20 (2020-12-09)
 
 ### Minor changes
