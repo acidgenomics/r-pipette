@@ -7,9 +7,11 @@
 download(url, destfile, ...)
 }
 \arguments{
-\item{url}{\code{character(1)}.}
+\item{url}{\code{character(1)}.
+URL.}
 
-\item{destfile}{\code{character(1)}.}
+\item{destfile}{\code{character(1)}.
+Destination file.}
 
 \item{...}{Passthrough arguments to \code{\link[utils:download.file]{utils::download.file()}}.}
 }
@@ -24,10 +26,9 @@ Download a file from the Internet
 }
 \details{
 Unlike \code{\link[utils:download.file]{utils::download.file()}}, intentionally errors on any download
-failure.
-
-Automatically sets a long time out internally via \code{options(timeout = 9999L)},
-to avoid download issues related to \code{timeout} configuration in \code{Rprofile}.
+failure. Automatically sets a long time out internally via
+\code{options(timeout = 9999L)}, to avoid download issues related to \code{timeout}
+configuration in \code{Rprofile}.
 }
 \examples{
 url <- "https://bioconductor.org/bioc-version"
