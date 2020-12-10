@@ -4,7 +4,7 @@
 #' FTP server. Also enables on-the-fly file renaming and compression.
 #'
 #' @export
-#' @note Updated 2020-10-12.
+#' @note Updated 2020-12-10.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @inheritParams saveData
@@ -143,7 +143,7 @@ transmit <- function(
     ))
     files <- mapply(
         FUN = function(url, destfile, compress = FALSE) {
-            download.file(url = url, destfile = destfile)
+            download(url = url, destfile = destfile)
             if (isTRUE(compress)) {
                 destfile <- compress(destfile, overwrite = TRUE)
             }

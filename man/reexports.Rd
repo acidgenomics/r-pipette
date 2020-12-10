@@ -3,6 +3,9 @@
 \docType{import}
 \name{reexports}
 \alias{reexports}
+\alias{compress}
+\alias{decompress}
+\alias{download}
 \alias{pasteURL}
 \alias{getURL}
 \alias{makeNames}
@@ -13,7 +16,7 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{AcidBase}{\code{\link[AcidBase]{pasteURL}}}
+  \item{AcidBase}{\code{\link[AcidBase]{compress}}, \code{\link[AcidBase:compress]{decompress}}, \code{\link[AcidBase]{download}}, \code{\link[AcidBase]{pasteURL}}}
 
   \item{RCurl}{\code{\link[RCurl]{getURL}}}
 
