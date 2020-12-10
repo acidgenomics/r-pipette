@@ -161,14 +161,17 @@ Note that this differs from <code>download.file</code>, which returns a status c
 failure. Automatically sets a long time out internally via
 <code><a href='https://rdrr.io/r/base/options.html'>options(timeout = 9999L)</a></code>, to avoid download issues related to <code>timeout</code>
 configuration in <code>Rprofile</code>.</p>
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>Updated 2020-12-10.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>url</span> <span class='op'>&lt;-</span> <span class='st'>"https://bioconductor.org/bioc-version"</span>
 <span class='va'>destfile</span> <span class='op'>&lt;-</span> <span class='st'>"bioc-version.txt"</span>
 <span class='va'>out</span> <span class='op'>&lt;-</span> <span class='fu'>download</span><span class='op'>(</span>url <span class='op'>=</span> <span class='va'>url</span>, destfile <span class='op'>=</span> <span class='va'>destfile</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in download(url = url, destfile = destfile): could not find function "download"</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>out</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>out</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "bioc-version.txt"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/files.html'>file.remove</a></span><span class='op'>(</span><span class='va'>out</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: cannot remove file 'bioc-version.txt', reason 'No such file or directory'</span></div><div class='output co'>#&gt; [1] FALSE</div></pre>
+</div><div class='output co'>#&gt; [1] TRUE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

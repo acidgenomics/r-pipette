@@ -1,5 +1,8 @@
 #' Download a file from the Internet
 #'
+#' @export
+#' @note Updated 2020-12-10.
+#'
 #' @details
 #' Unlike [utils::download.file()], intentionally errors on any download
 #' failure. Automatically sets a long time out internally via
