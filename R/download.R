@@ -2,14 +2,14 @@
 #'
 #' @details
 #' Unlike [utils::download.file()], intentionally errors on any download
-#' failure.
-#'
-#' Automatically sets a long time out internally via `options(timeout = 9999L)`,
-#' to avoid download issues related to `timeout` configuration in `Rprofile`.
+#' failure. Automatically sets a long time out internally via
+#' `options(timeout = 9999L)`, to avoid download issues related to `timeout`
+#' configuration in `Rprofile`.
 #'
 #' @param url `character(1)`.
+#'   URL.
 #' @param destfile `character(1)`.
-#'
+#'   Destination file.
 #' @param ... Passthrough arguments to [utils::download.file()].
 #'
 #' @return `character(1)`.
