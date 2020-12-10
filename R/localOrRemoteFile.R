@@ -11,7 +11,7 @@
 #' extensions are natively supported: `BZ2`, `GZ`, `XZ`, and `ZIP`.
 #'
 #' @export
-#' @note Updated 2020-07-24.
+#' @note Updated 2020-12-10.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param file `character(1)`.
@@ -84,7 +84,7 @@ localOrRemoteFile <- function(file, quiet) {
                 tmpdir = tmpdir,
                 fileext = paste0(".", fileExt(file))
             )
-            download.file(
+            download(
                 url = file,
                 destfile = destfile,
                 quiet = quiet,
