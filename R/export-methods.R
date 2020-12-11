@@ -76,7 +76,7 @@ NULL
 
 
 
-## Updated 2020-12-09.
+## Updated 2020-12-10.
 `export,character` <-  # nolint
     function(
         object,
@@ -113,7 +113,7 @@ NULL
             dir <- initDir(dir)
             file <- file.path(dir, paste0(name, ".", ext))
         } else {
-            initDir(dirname(file))
+            dir <- initDir(dirname(file))
         }
         match <- str_match(string = file, pattern = extPattern)
         compressExt <- match[1L, 4L]
@@ -123,7 +123,7 @@ NULL
             if (isTRUE(overwrite) && !isTRUE(quiet)) {
                 cli_alert_warning(sprintf(
                     fmt = "Overwriting {.file %s} at {.path %s}.",
-                    basename(file), dirname(file)
+                    basename(file), realpath(dirname(file))
                 ))
             } else {
                 stop(sprintf("File exists: '%s'", file))
@@ -135,7 +135,7 @@ NULL
                     "Exporting {.file %s} at {.path %s}",
                     "using {.pkg %s}::{.fun %s}."
                 ),
-                basename(file), dirname(file),
+                basename(file), realpath(dirname(file)),
                 "readr", "write_lines"
             ))
         }
@@ -216,7 +216,7 @@ setMethod(
             file <- file.path(dir, paste0(name, ".", ext))
         } else {
             ext <- fileExt(file)
-            initDir(dirname(file))
+            dir <- initDir(dirname(file))
         }
         ext <- match.arg(
             arg = ext,
@@ -260,7 +260,7 @@ setMethod(
             if (isTRUE(overwrite) && !isTRUE(quiet)) {
                 cli_alert_warning(sprintf(
                     fmt = "Overwriting {.file %s} at {.path %s}.",
-                    basename(file), dirname(file)
+                    basename(file), realpath(dirname(file))
                 ))
             } else {
                 stop(sprintf("File exists: '%s'", file))
@@ -335,7 +335,7 @@ setMethod(
                     "Exporting {.file %s} at {.path %s}",
                     "using {.pkg %s}::{.fun %s}."
                 ),
-                basename(file), dirname(file),
+                basename(file), realpath(dirname(file)),
                 whatPkg, whatFun
             ))
         }
@@ -399,7 +399,7 @@ setMethod(
 ## Note that "file" is referring to the matrix file.
 ## The correponding column and row sidecar files are generated automatically.
 ## Consider adding HDF5 support in a future update.
-## Updated 2020-08-11.
+## Updated 2020-12-10.
 `export,sparseMatrix` <-  # nolint
     function(
         object,
@@ -427,7 +427,7 @@ setMethod(
             file <- file.path(dir, paste0(name, ".", ext))
         } else {
             ext <- fileExt(file)
-            initDir(dirname(file))
+            dir <- initDir(dirname(file))
         }
         ext <- match.arg(
             arg = ext,
@@ -441,7 +441,7 @@ setMethod(
             if (isTRUE(overwrite) && !isTRUE(quiet)) {
                 cli_alert_warning(sprintf(
                     fmt = "Overwriting {.file %s} at {.path %s}.",
-                    basename(file), dirname(file)
+                    basename(file), realpath(dirname(file))
                 ))
             } else {
                 stop(sprintf("File exists: %s", file))
@@ -460,7 +460,7 @@ setMethod(
                     "Exporting {.file %s} at {.path %s}",
                     "using {.pkg %s}::{.fun %s}."
                 ),
-                basename(file), dirname(file),
+                basename(file), realpath(dirname(file)),
                 "Matrix", "writeMM"
             ))
         }
