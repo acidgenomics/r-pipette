@@ -1,6 +1,6 @@
 #' @name export
 #' @inherit AcidGenerics::export
-#' @note Updated 2020-12-09.
+#' @note Updated 2020-12-10.
 #'
 #' @section Row names:
 #'
@@ -96,7 +96,7 @@ NULL
             isFlag(quiet)
         )
         if (isTRUE(append)) {
-            overwrite <- FALSE
+            overwrite <- FALSE  # nocov
         }
         if (isTRUE(overwrite)) {
             assert(isFALSE(append))
@@ -174,13 +174,15 @@ setMethod(
 ## `data.table`, `tbl_df`, and `DataFrame` classes. Note that `rio::export()`
 ## does not preserve row names by default, so we're ensuring row names get
 ## coerced to "rowname" column consistently here.
-## Updated 2020-08-18.
+## Updated 2020-12-10.
 `export,matrix` <-  # nolint
     function(
         object,
         ext,
         dir,
         file = NULL,
+        rownames = TRUE,
+        colnames = TRUE,
         overwrite,
         quiet
     ) {
@@ -200,6 +202,8 @@ setMethod(
             isString(ext),
             isString(dir),
             isString(file, nullOK = TRUE),
+            isFlag(rownames),
+            isFlag(colnames),
             isFlag(overwrite),
             isFlag(verbose)
         )
@@ -238,6 +242,9 @@ setMethod(
             ## nocov end
         }
         assert(allAreAtomic(object))
+        if (isFALSE(rownames)) {
+            rownames(object) <- NULL  # nocov
+        }
         if (hasRownames(object)) {
             assert(areDisjointSets("rowname", colnames(object)))
             object[["rowname"]] <- rownames(object)
@@ -272,6 +279,8 @@ setMethod(
             args <- list(
                 x = object,
                 file = file,
+                append = FALSE,
+                col.names = colnames,
                 row.names = FALSE,
                 verbose = verbose
             )
@@ -293,7 +302,12 @@ setMethod(
             )
             assert(is.function(what))
             ## readr v1.4 changed "path" to "file".
-            args <- list(x = object, file = file)
+            args <- list(
+                x = object,
+                file = file,
+                append = FALSE,
+                col_names = colnames
+            )
         }  else if (identical(whatPkg, "vroom")) {
             whatFun <- "vroom_write"
             what <- get(
@@ -305,6 +319,8 @@ setMethod(
             args <- list(
                 x = object,
                 path = file,
+                col_names = colnames,
+                append = FALSE,
                 progress = FALSE
             )
             args[["delim"]] <- switch(
