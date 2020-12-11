@@ -1,3 +1,10 @@
+## pipette 0.4.22 (2020-12-11)
+
+### Minor changes
+
+- `export`: Added option to intentionally not export column and/or rownames
+  for `matrix`, `data.frame`, and `DataFrame` classes.
+
 ## pipette 0.4.21 (2020-12-10)
 
 ### New functions
