@@ -242,6 +242,9 @@ setMethod(
             ## nocov end
         }
         assert(allAreAtomic(object))
+        if (isFALSE(rownames)) {
+            rownames(object) <- NULL
+        }
         if (hasRownames(object)) {
             assert(areDisjointSets("rowname", colnames(object)))
             object[["rowname"]] <- rownames(object)
