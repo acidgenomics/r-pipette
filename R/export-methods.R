@@ -96,7 +96,7 @@ NULL
             isFlag(quiet)
         )
         if (isTRUE(append)) {
-            overwrite <- FALSE
+            overwrite <- FALSE  # nocov
         }
         if (isTRUE(overwrite)) {
             assert(isFALSE(append))
@@ -243,7 +243,7 @@ setMethod(
         }
         assert(allAreAtomic(object))
         if (isFALSE(rownames)) {
-            rownames(object) <- NULL
+            rownames(object) <- NULL  # nocov
         }
         if (hasRownames(object)) {
             assert(areDisjointSets("rowname", colnames(object)))
