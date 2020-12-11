@@ -29,6 +29,8 @@ export(object, ...)
   ext = getOption("acid.export.ext", default = "csv"),
   dir = getOption("acid.export.dir", default = "."),
   file = NULL,
+  rownames = TRUE,
+  colnames = TRUE,
   overwrite = getOption("acid.overwrite", default = TRUE),
   quiet = getOption("acid.quiet", default = FALSE)
 )
@@ -38,6 +40,8 @@ export(object, ...)
   ext = getOption("acid.export.ext", default = "csv"),
   dir = getOption("acid.export.dir", default = "."),
   file = NULL,
+  rownames = TRUE,
+  colnames = TRUE,
   overwrite = getOption("acid.overwrite", default = TRUE),
   quiet = getOption("acid.quiet", default = FALSE)
 )
@@ -47,6 +51,8 @@ export(object, ...)
   ext = getOption("acid.export.ext", default = "csv"),
   dir = getOption("acid.export.dir", default = "."),
   file = NULL,
+  rownames = TRUE,
+  colnames = TRUE,
   overwrite = getOption("acid.overwrite", default = TRUE),
   quiet = getOption("acid.quiet", default = FALSE)
 )
@@ -65,6 +71,8 @@ export(object, ...)
   ext = getOption("acid.export.ext", default = "csv"),
   dir = getOption("acid.export.dir", default = "."),
   file = NULL,
+  rownames = TRUE,
+  colnames = TRUE,
   overwrite = getOption("acid.overwrite", default = TRUE),
   quiet = getOption("acid.quiet", default = FALSE)
 )
@@ -126,6 +134,12 @@ Overwrite existing file on disk.}
 \item{quiet}{\code{logical(1)}.
 Perform command quietly, suppressing messages.}
 
+\item{rownames}{\code{logical(1)}.
+Apply to row names.}
+
+\item{colnames}{\code{logical(1)}.
+Apply to column names.}
+
 \item{name}{\code{character(1)}.
 Name to use on disk. If \code{NULL}, will use the name of the object instead.}
 
@@ -142,7 +156,7 @@ File path(s).
 Export data out of R and write to disk.
 }
 \note{
-Updated 2020-12-09.
+Updated 2020-12-10.
 }
 \section{Row names}{
 
