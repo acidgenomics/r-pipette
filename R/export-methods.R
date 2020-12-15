@@ -1,7 +1,3 @@
-## FIXME MOVE THE COMPLICATED S4 METHODS TO BASEJUMP.
-
-
-
 #' @name export
 #' @inherit AcidGenerics::export
 #' @note Updated 2020-12-15.
@@ -285,7 +281,7 @@ setMethod(
         }
         if (identical(whatPkg, "data.table")) {
             whatFun <- "fwrite"
-            what <- fwrite
+            what <- data.table::fwrite
             args <- list(
                 x = object,
                 file = file,
@@ -409,7 +405,7 @@ setMethod(
 ## Note that "file" is referring to the matrix file.
 ## The correponding column and row sidecar files are generated automatically.
 ## Consider adding HDF5 support in a future update.
-## Updated 2020-12-10.
+## Updated 2020-12-15.
 `export,sparseMatrix` <-  # nolint
     function(
         object,
@@ -419,6 +415,7 @@ setMethod(
         overwrite,
         quiet
     ) {
+        requireNamespaces("Matrix")
         validObject(object)
         assert(
             hasLength(object),
@@ -474,7 +471,7 @@ setMethod(
                 "Matrix", "writeMM"
             ))
         }
-        writeMM(obj = object, file = file)
+        Matrix::writeMM(obj = object, file = file)
         if (isTRUE(compress)) {
             file <- compress(
                 file = file,
@@ -731,7 +728,7 @@ setMethod(
 
 
 
-## Updated 2020-08-11.
+## Updated 2020-12-15.
 `export,SingleCellExperiment` <-  # nolint
     function(
         object,
@@ -741,6 +738,7 @@ setMethod(
         overwrite,
         quiet
     ) {
+        requireNamespaces("SingleCellExperiment")
         validObject(object)
         assert(
             isString(name, nullOK = TRUE),
@@ -766,7 +764,7 @@ setMethod(
         )
         ## Export dimensionality reduction data.
         dir <- initDir(file.path(dir, name))
-        reducedDimNames <- reducedDimNames(object)
+        reducedDimNames <- SingleCellExperiment::reducedDimNames(object)
         if (hasLength(reducedDimNames)) {
             if (!isTRUE(quiet)) {
                 cli_alert(sprintf(
@@ -778,7 +776,7 @@ setMethod(
                 X = reducedDimNames,
                 FUN = function(name, dir) {
                     file <- file.path(dir, name)
-                    reducedDim <- reducedDim(
+                    reducedDim <- SingleCellExperiment::reducedDim(
                         x = object,
                         type = name,
                         withDimnames = TRUE

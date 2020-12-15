@@ -99,7 +99,7 @@
 #' `DOC`, `DOCX`, `PDF`, `PPT`, `PPTX`.
 #'
 #' @export
-#' @note Updated 2020-08-13.
+#' @note Updated 2020-12-15.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param rownames `logical(1)`.
@@ -685,8 +685,9 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 ## Sparse matrix ===============================================================
 ## Internal importer for a sparse matrix file (`.mtx`).
-## Updated 2020-08-13.
+## Updated 2020-12-15.
 .importMTX <- function(file, metadata, quiet) {
+    requireNamespaces("Matrix")
     assert(
         isFlag(metadata),
         isFlag(quiet)
@@ -704,7 +705,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
             "Matrix", "readMM"
         ))
     }
-    object <- readMM(file = tmpfile)
+    object <- Matrix::readMM(file = tmpfile)
     ## Add the rownames automatically using `.rownames` sidecar file.
     rownamesFile <- paste(file, "rownames", sep = ".")
     rownamesFile <- tryCatch(
@@ -1010,8 +1011,9 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 ## bcbio =======================================================================
 ## Internal importer for a bcbio count matrix file (`.counts`).
 ## These files contain an `"id"` column that we need to coerce to row names.
-## Updated 2020-08-13.
+## Updated 2020-12-15.
 .importBcbioCounts <- function(file, metadata, quiet) {
+    requireNamespaces("data.table")
     assert(
         isFlag(metadata),
         isFlag(quiet)
@@ -1029,7 +1031,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
         ))
     }
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
-    object <- fread(file = tmpfile, na.strings = naStrings)
+    object <- data.table::fread(file = tmpfile, na.strings = naStrings)
     assert(
         isSubset("id", colnames(object)),
         hasNoDuplicates(object[["id"]])
