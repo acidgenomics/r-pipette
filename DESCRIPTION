@@ -28,7 +28,6 @@ Imports:
     BiocGenerics,
     GenomicRanges,
     IRanges,
-    Matrix (>= 1.2),
     RCurl (>= 1.98),
     S4Vectors,
     SingleCellExperiment,
@@ -44,15 +43,16 @@ Imports:
     syntactic (>= 0.4.3),
     tibble (>= 3.0),
     utils,
-    vroom (>= 1.3),
-    yaml (>= 2.2)
+    vroom (>= 1.3)
 Suggests:
     AcidTest (>= 0.4.0),
+    Matrix (>= 1.2),
     pzfx (>= 0.3),
     readxl (>= 1.3),
     rio (>= 0.5.16),
     rtracklayer,
-    testthat
+    testthat,
+    yaml (>= 2.2)
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Additional_repositories: https://r.acidgenomics.com
