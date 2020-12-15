@@ -8,8 +8,6 @@
 \alias{export,DataFrame-method}
 \alias{export,sparseMatrix-method}
 \alias{export,GenomicRanges-method}
-\alias{export,SummarizedExperiment-method}
-\alias{export,SingleCellExperiment-method}
 \title{Export}
 \usage{
 export(object, ...)
@@ -76,24 +74,6 @@ export(object, ...)
   overwrite = getOption("acid.overwrite", default = TRUE),
   quiet = getOption("acid.quiet", default = FALSE)
 )
-
-\S4method{export}{SummarizedExperiment}(
-  object,
-  name = NULL,
-  dir = getOption("acid.export.dir", default = "."),
-  compress = getOption("acid.export.compress", default = FALSE),
-  overwrite = getOption("acid.overwrite", default = TRUE),
-  quiet = getOption("acid.quiet", default = FALSE)
-)
-
-\S4method{export}{SingleCellExperiment}(
-  object,
-  name = NULL,
-  dir = getOption("acid.export.dir", default = "."),
-  compress = getOption("acid.export.compress", default = FALSE),
-  overwrite = getOption("acid.overwrite", default = TRUE),
-  quiet = getOption("acid.quiet", default = FALSE)
-)
 }
 \arguments{
 \item{object}{Object.
@@ -140,11 +120,11 @@ Apply to row names.}
 \item{colnames}{\code{logical(1)}.
 Apply to column names.}
 
-\item{name}{\code{character(1)}.
-Name to use on disk. If \code{NULL}, will use the name of the object instead.}
-
 \item{compress}{\code{logical(1)}.
 Apply gzip compression to all files.}
+
+\item{name}{\code{character(1)}.
+Name to use on disk. If \code{NULL}, will use the name of the object instead.}
 
 \item{...}{Additional arguments.}
 }
