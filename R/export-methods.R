@@ -1,6 +1,6 @@
 #' @name export
 #' @inherit AcidGenerics::export
-#' @note Updated 2020-12-10.
+#' @note Updated 2020-12-15.
 #'
 #' @section Row names:
 #'
@@ -218,6 +218,9 @@ setMethod(
             ext <- fileExt(file)
             dir <- initDir(dirname(file))
         }
+        ## These are used in CLI messages.
+        whatFile <- basename(file)
+        whatDir <- realpath(dirname(file))
         ext <- match.arg(
             arg = ext,
             choices = c(
@@ -257,11 +260,14 @@ setMethod(
         }
         if (isAFile(file)) {
             file <- realpath(file)
-            if (isTRUE(overwrite) && !isTRUE(quiet)) {
-                cli_alert_warning(sprintf(
-                    fmt = "Overwriting {.file %s} at {.path %s}.",
-                    basename(file), realpath(dirname(file))
-                ))
+            if (isTRUE(overwrite)) {
+                if (!isTRUE(quiet)) {
+                    cli_alert_warning(sprintf(
+                        fmt = "Overwriting {.file %s} at {.path %s}.",
+                        whatFile, whatDir
+                    ))
+                }
+                file.remove(file)
             } else {
                 stop(sprintf("File exists: '%s'", file))
             }
@@ -335,7 +341,7 @@ setMethod(
                     "Exporting {.file %s} at {.path %s}",
                     "using {.pkg %s}::{.fun %s}."
                 ),
-                basename(file), realpath(dirname(file)),
+                whatFile, whatDir,
                 whatPkg, whatFun
             ))
         }
