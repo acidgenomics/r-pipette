@@ -1,3 +1,9 @@
+## pipette 0.4.23 (2020-12-15)
+
+### Minor changes
+
+- `export`: Improved internal file name handling for CLI messages.
+
 ## pipette 0.4.22 (2020-12-11)
 
 ### Minor changes
