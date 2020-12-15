@@ -35,7 +35,6 @@ Imports:
     cli (>= 2.2),
     data.table (>= 1.13),
     goalie (>= 0.4.11),
-    jsonlite (>= 1.7),
     methods,
     rappdirs (>= 0.3),
     readr (>= 1.4),
@@ -47,6 +46,7 @@ Imports:
 Suggests:
     AcidTest (>= 0.4.0),
     Matrix (>= 1.2),
+    jsonlite (>= 1.7),
     pzfx (>= 0.3),
     readxl (>= 1.3),
     rio (>= 0.5.16),
