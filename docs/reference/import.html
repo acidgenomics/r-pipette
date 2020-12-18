@@ -236,7 +236,7 @@ Imported by <code><a href='https://rdrr.io/pkg/jsonlite/man/read_json.html'>json
 Imported by <code><a href='https://rdrr.io/pkg/yaml/man/yaml.load.html'>yaml::yaml.load_file()</a></code>.</p></li>
 <li><p><strong>Lines</strong> (<code>LOG</code>, <code>MD</code>, <code>PY</code>, <code>R</code>, <code>RMD</code>, <code>SH</code>): <code>character</code>.
 Source code or log files.<br />
-Imported by <code><a href='https://readr.tidyverse.org/reference/read_lines.html'>read_lines()</a></code>.</p></li>
+Imported by <code><a href='https://vroom.r-lib.org/reference/vroom_lines.html'>vroom_lines()</a></code>.</p></li>
 <li><p><strong>R data serialized</strong> (<code>RDS</code>): <em>variable</em>.<br />
 Currently recommend over RDA, if possible.<br />
 Imported by <code><a href='https://rdrr.io/r/base/readRDS.html'>readRDS()</a></code>.</p></li>
@@ -258,7 +258,7 @@ arguments. Remote URLs and compressed files are supported. If you need more
 complex import settings, just call the wrapped importer directly instead.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>Updated 2020-08-13.</p>
+    <p>Updated 2020-12-15.</p>
     <h2 class="hasAnchor" id="row-and-column-names"><a class="anchor" href="#row-and-column-names"></a>Row and column names</h2>
 
     
@@ -386,7 +386,7 @@ makes GFF loading simple.</p>
 
 <span class='co'>## Row and column names enabled.</span>
 <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>import</span><span class='op'>(</span><span class='va'>file</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>→ Importing <span style='color: #0000BB;'>example.csv</span><span> at </span><span style='color: #0000BB;'>/private/var/folders/l1/8y8sjzmn15v49jgrqglghcfr0000gn/T/RtmpD0L6lG/temp_libpathc82b28ba5cf4/pipette/extdata</span><span> using </span><span style='color: #0000BB;'>vroom</span><span>::</span><span style='color: #000000;background-color: #BBBBBB;'>`vroom()`</span><span>.</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>ℹ</span><span> Setting row names from </span><span style='color: #000000;background-color: #BBBBBB;'>`rowname`</span><span> column.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>→ Importing <span style='color: #0000BB;'>example.csv</span><span> at </span><span style='color: #0000BB;'>/private/var/folders/l1/8y8sjzmn15v49jgrqglghcfr0000gn/T/RtmpdUZG2R/temp_libpath58c136de3104/pipette/extdata</span><span> using </span><span style='color: #0000BB;'>vroom</span><span>::</span><span style='color: #000000;background-color: #BBBBBB;'>`vroom()`</span><span>.</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>ℹ</span><span> Setting row names from </span><span style='color: #000000;background-color: #BBBBBB;'>`rowname`</span><span> column.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;       sample1 sample2 sample3 sample4
 #&gt; gene1      16      20      13      16
 #&gt; gene2      29      22      43      50
@@ -396,7 +396,7 @@ makes GFF loading simple.</p>
 #&gt; gene6      10      17      18      11</div><div class='input'>
 <span class='co'>## Row and column names disabled.</span>
 <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>import</span><span class='op'>(</span><span class='va'>file</span>, rownames <span class='op'>=</span> <span class='cn'>FALSE</span>, colnames <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>→ Importing </span><span style='color: #0000BB;'>example.csv</span><span> at </span><span style='color: #0000BB;'>/private/var/folders/l1/8y8sjzmn15v49jgrqglghcfr0000gn/T/RtmpD0L6lG/temp_libpathc82b28ba5cf4/pipette/extdata</span><span> using </span><span style='color: #0000BB;'>vroom</span><span>::</span><span style='color: #000000;background-color: #BBBBBB;'>`vroom()`</span><span>.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>→ Importing </span><span style='color: #0000BB;'>example.csv</span><span> at </span><span style='color: #0000BB;'>/private/var/folders/l1/8y8sjzmn15v49jgrqglghcfr0000gn/T/RtmpdUZG2R/temp_libpath58c136de3104/pipette/extdata</span><span> using </span><span style='color: #0000BB;'>vroom</span><span>::</span><span style='color: #000000;background-color: #BBBBBB;'>`vroom()`</span><span>.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;        X1      X2      X3      X4      X5
 #&gt; 1 rowname sample1 sample2 sample3 sample4
 #&gt; 2   gene1      16      20      13      16
