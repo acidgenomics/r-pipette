@@ -90,7 +90,7 @@ Imported by \code{\link[jsonlite:read_json]{jsonlite::read_json()}}.
 Imported by \code{\link[yaml:yaml.load]{yaml::yaml.load_file()}}.
 \item \strong{Lines} (\code{LOG}, \code{MD}, \code{PY}, \code{R}, \code{RMD}, \code{SH}): \code{character}.
 Source code or log files.\cr
-Imported by \code{\link[readr:read_lines]{read_lines()}}.
+Imported by \code{\link[vroom:vroom_lines]{vroom_lines()}}.
 \item \strong{R data serialized} (\code{RDS}): \emph{variable}.\cr
 Currently recommend over RDA, if possible.\cr
 Imported by \code{\link[base:readRDS]{readRDS()}}.
