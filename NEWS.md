@@ -3,6 +3,9 @@
 ### Minor changes
 
 - `export`: Improved internal file name handling for CLI messages.
+- Removed dependency on readr. Import of lines now uses `vroom::vroom_lines`
+  internally, and `export` character method will conditionally switch to using
+  base `writeLines` if the readr package is not installed.
 
 ## pipette 0.4.22 (2020-12-11)
 
