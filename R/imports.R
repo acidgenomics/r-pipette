@@ -14,11 +14,10 @@
 #'   isInt isScalar isString isSubset validNames
 #' @importFrom methods as is slotNames validObject .hasSlot
 #' @importFrom rappdirs user_cache_dir
-#' @importFrom readr read_lines write_lines
 #' @importFrom stringr str_extract str_match str_subset
 #' @importFrom syntactic makeNames
 #' @importFrom utils download.file packageName packageVersion
-#' @importFrom vroom cols vroom vroom_write
+#' @importFrom vroom cols vroom vroom_lines vroom_write
 NULL
 
 
