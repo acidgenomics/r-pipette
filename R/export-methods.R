@@ -97,8 +97,10 @@ NULL
             isFlag(quiet)
         )
         if (isTRUE(append)) {
+            ## nocov start
             requireNamespaces("readr")
-            overwrite <- FALSE  # nocov
+            overwrite <- FALSE
+            ## nocov end
         }
         if (isTRUE(overwrite)) {
             assert(isFALSE(append))
@@ -107,8 +109,10 @@ NULL
             whatPkg <- "readr"
             whatFun <- "write_lines"
         } else {
+            ## nocov start
             whatPkg <- "base"
             whatFun <- "writeLines"
+            ## nocov end
         }
         if (is.null(file)) {
             call <- standardizeCall()
@@ -151,7 +155,9 @@ NULL
         args <- switch(
             EXPR = whatPkg,
             "base" = {
+                ## nocov start
                 writeLines(text = object, con = file)
+                ## nocov end
             },
             "readr" = {
                 readr::write_lines(
