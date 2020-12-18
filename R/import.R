@@ -160,7 +160,7 @@
 #'   Imported by [yaml::yaml.load_file()].
 #' - **Lines** (`LOG`, `MD`, `PY`, `R`, `RMD`, `SH`): `character`.
 #'   Source code or log files.\cr
-#'   Imported by [`read_lines()`][readr::read_lines].
+#'   Imported by [`vroom_lines()`][vroom::vroom_lines].
 #' - **R data serialized** (`RDS`): *variable*.\cr
 #'   Currently recommend over RDA, if possible.\cr
 #'   Imported by [`readRDS()`][base::readRDS].
@@ -602,7 +602,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 
 ## Internal importer for (source code) lines.
-## Updated 2020-08-13.
+## Updated 2020-12-18.
 .importLines <- function(file, skip = 0L, quiet) {
     assert(
         isInt(skip),
@@ -618,13 +618,12 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
         cli_alert(sprintf(
             "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
             basename(file), where,
-            "readr", "read_lines"
+            "vroom", "vroom_lines"
         ))
     }
-    read_lines(
+    vroom_lines(
         file = file,
         skip = skip,
-        skip_empty_rows = FALSE,
         progress = FALSE
     )
 }
