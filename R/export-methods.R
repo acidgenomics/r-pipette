@@ -77,7 +77,7 @@ NULL
 
 
 
-## Updated 2020-12-10.
+## Updated 2020-12-18.
 `export,character` <-  # nolint
     function(
         object,
