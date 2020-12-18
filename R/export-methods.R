@@ -545,7 +545,6 @@ setMethod(
 
 
 
-## FIXME MOVE TO BASEJUMP?
 `export,GenomicRanges` <- `export,DataFrame`  # nolint
 
 
