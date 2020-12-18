@@ -1,9 +1,22 @@
+#' @importClassesFrom GenomicRanges GenomicRanges
+#' @importClassesFrom IRanges IRanges Ranges
+#' @importClassesFrom S4Vectors DataFrame
+NULL
+
+
+
 #' @importFrom AcidBase basenameSansExt bapply compress compressExtPattern
 #'   decompress dots download extPattern fileExt formalsList initDir
 #'   matchArgsToDoCall pasteURL realpath requireNamespaces standardizeCall
 #' @importFrom BiocFileCache BiocFileCache bfcadd bfccache bfcdownload
 #'   bfcneedsupdate bfcquery bfcrpath
+#' @importFrom IRanges end start width
 #' @importFrom RCurl getURL url.exists
+#' @importFrom S4Vectors DataFrame Rle head mcols mcols<- metadata metadata<-
+#'   na.omit tail
+#' @importFrom SingleCellExperiment reducedDimNames reducedDim
+#' @importFrom SummarizedExperiment assayNames assayNames<- assay colData
+#'   colData<- rowData rowData<- rowRanges
 #' @importFrom cli cli_alert cli_alert_info cli_alert_success cli_alert_warning
 #'   cli_text
 #' @importFrom goalie assert allAreAtomic allAreExisting allAreFiles
@@ -26,22 +39,3 @@ NULL
 #' @importFrom methods coerce
 #' @exportMethod coerce
 NULL
-
-
-
-
-
-
-## FIXME MOVE THESE TO BASEJUMP
-
-#' @importClassesFrom GenomicRanges GenomicRanges
-#' @importClassesFrom IRanges IRanges Ranges
-#' @importClassesFrom S4Vectors DataFrame
-NULL
-
-## FIXME Move these to basejump
-#' @importFrom IRanges end start width
-#' @importFrom S4Vectors DataFrame Rle head mcols mcols<- metadata metadata<-
-#'   na.omit tail
-#' @importFrom SummarizedExperiment assayNames assayNames<- assay colData
-#'   colData<- rowData rowData<- rowRanges
