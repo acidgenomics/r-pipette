@@ -1,6 +1,6 @@
 #' @name export
 #' @inherit AcidGenerics::export
-#' @note Updated 2020-12-15.
+#' @note Updated 2020-12-18.
 #'
 #' @section Row names:
 #'
@@ -44,6 +44,7 @@
 #' @param append `logical(1)`.
 #'   Append to output file.
 #'   When enabled, automatically sets `overwrite` argument to `FALSE`.
+#'   Requires readr package to be installed.
 #' @param ... Additional arguments.
 #'
 #' @return Invisible `character`.
@@ -96,10 +97,18 @@ NULL
             isFlag(quiet)
         )
         if (isTRUE(append)) {
+            requireNamespaces("readr")
             overwrite <- FALSE  # nocov
         }
         if (isTRUE(overwrite)) {
             assert(isFALSE(append))
+        }
+        if (isInstalled("readr")) {
+            whatPkg <- "readr"
+            whatFun <- "write_lines"
+        } else {
+            whatPkg <- "base"
+            whatFun <- "writeLines"
         }
         if (is.null(file)) {
             call <- standardizeCall()
@@ -136,11 +145,23 @@ NULL
                     "using {.pkg %s}::{.fun %s}."
                 ),
                 basename(file), realpath(dirname(file)),
-                "readr", "write_lines"
+                whatPkg, whatFun
             ))
         }
-        ## readr v1.4 changed "path" to "file".
-        write_lines(x = object, file = file, append = append)
+        args <- switch(
+            EXPR = whatPkg,
+            "base" = list(
+                text = object,
+                con = file
+            ),
+            "readr" = list(
+                x = object,
+                ## readr v1.4 changed "path" to "file".
+                file = file,
+                append = append
+            )
+        )
+        do.call(what = paste0(whatPkg, "::", whatFun), args = args)
         if (isTRUE(compress)) {
             ## nocov start
             file <- compress(
