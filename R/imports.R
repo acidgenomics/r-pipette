@@ -23,8 +23,8 @@ NULL
 #'   allAreNonExisting allAreURLs allHaveAccess areDisjointSets areSameLength
 #'   areSetEqual formalCompress hasColnames hasCols hasDimnames hasInternet
 #'   hasLength hasNames hasNoDuplicates hasRownames hasRows hasValidNames
-#'   hasValidDimnames isAFile isAURL isAny isCharacter isFlag isMatchingRegex
-#'   isInt isScalar isString isSubset validNames
+#'   hasValidDimnames isAFile isAURL isAny isCharacter isFlag isInstalled
+#'   isMatchingRegex isInt isScalar isString isSubset validNames
 #' @importFrom methods as is slotNames validObject .hasSlot
 #' @importFrom rappdirs user_cache_dir
 #' @importFrom stringr str_extract str_match str_subset
