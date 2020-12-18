@@ -448,6 +448,8 @@
 <ul>
 <li>
 <code>export</code>: Improved internal file name handling for CLI messages.</li>
+<li>Removed dependency on readr. Import of lines now uses <code><a href="https://vroom.r-lib.org/reference/vroom_lines.html">vroom::vroom_lines</a></code> internally, and <code>export</code> character method will conditionally switch to using base <code>writeLines</code> if the readr package is not installed.</li>
+<li>Reworked rtracklayer as a suggested package instead of an explicit import.</li>
 </ul>
 </div>
 </div>
