@@ -1,3 +1,7 @@
+## FIXME MOVE THIS GENERIC TO ACIDGENERICS
+
+
+
 #' Decode column data that uses run-length encoding
 #'
 #' @name decode
