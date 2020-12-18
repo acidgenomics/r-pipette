@@ -446,10 +446,16 @@
 <h3 class="hasAnchor">
 <a href="#minor-changes" class="anchor"></a>Minor changes</h3>
 <ul>
+<li>Made some previous imports conditional suggested packages: jsonlite, readr, rtracklayer, yaml.</li>
 <li>
 <code>export</code>: Improved internal file name handling for CLI messages.</li>
-<li>Removed dependency on readr. Import of lines now uses <code><a href="https://vroom.r-lib.org/reference/vroom_lines.html">vroom::vroom_lines</a></code> internally, and <code>export</code> character method will conditionally switch to using base <code>writeLines</code> if the readr package is not installed.</li>
 <li>Reworked rtracklayer as a suggested package instead of an explicit import.</li>
+<li>
+<code>import</code>: Improved internal bcbio counts importer code to use default TSV method, rather than relying on data.table <code>fread</code> function manually.</li>
+<li>Removed dependency on readr. Import of lines now uses <code><a href="https://vroom.r-lib.org/reference/vroom_lines.html">vroom::vroom_lines</a></code> internally, and <code>export</code> character method will conditionally switch to using base <code>writeLines</code> if the readr package is not installed.</li>
+<li>Removed Matrix <code>readMM</code> and <code>writeMM</code> as imports.</li>
+<li>Removed data.table <code>fread</code> and <code>fwrite</code> as imports.</li>
+<li>Removed BiocGenerics dependency, in favor of rexports defined in AcidGenerics. This helps keep the number of dependencies declared in the package more compact and manageable.</li>
 </ul>
 </div>
 </div>
