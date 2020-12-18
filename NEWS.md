@@ -2,11 +2,17 @@
 
 ### Minor changes
 
+- Made some previous imports conditional suggested packages:
+  jsonlite, readr, rtracklayer, yaml.
 - `export`: Improved internal file name handling for CLI messages.
+- Reworked rtracklayer as a suggested package instead of an explicit import.
+- `import`: Improved internal bcbio counts importer code to use default TSV
+  method, rather than relying on data.table `fread` function manually.
 - Removed dependency on readr. Import of lines now uses `vroom::vroom_lines`
   internally, and `export` character method will conditionally switch to using
   base `writeLines` if the readr package is not installed.
-- Reworked rtracklayer as a suggested package instead of an explicit import.
+- Removed Matrix `readMM` and `writeMM` as imports.
+- Removed data.table `fread` and `fwrite` as imports.
 
 ## pipette 0.4.22 (2020-12-11)
 
