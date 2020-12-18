@@ -13,6 +13,9 @@
   base `writeLines` if the readr package is not installed.
 - Removed Matrix `readMM` and `writeMM` as imports.
 - Removed data.table `fread` and `fwrite` as imports.
+- Removed BiocGenerics dependency, in favor of rexports defined in AcidGenerics.
+  This helps keep the number of dependencies declared in the package more
+  compact and manageable.
 
 ## pipette 0.4.22 (2020-12-11)
 
