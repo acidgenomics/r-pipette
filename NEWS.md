@@ -1,4 +1,4 @@
-## pipette 0.4.23 (2020-12-15)
+## pipette 0.4.23 (2020-12-19)
 
 ### Minor changes
 
@@ -16,6 +16,8 @@
 - Removed BiocGenerics dependency, in favor of rexports defined in AcidGenerics.
   This helps keep the number of dependencies declared in the package more
   compact and manageable.
+- `export`: Bug fix for handling of GZ file name extension for `character`
+  method.
 
 ## pipette 0.4.22 (2020-12-11)
 
