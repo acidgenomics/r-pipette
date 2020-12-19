@@ -1,6 +1,6 @@
 #' @name export
 #' @inherit AcidGenerics::export
-#' @note Updated 2020-12-18.
+#' @note Updated 2020-12-19.
 #'
 #' @section Row names:
 #'
@@ -77,7 +77,7 @@ NULL
 
 
 
-## Updated 2020-12-18.
+## Updated 2020-12-19.
 `export,character` <-  # nolint
     function(
         object,
@@ -128,15 +128,21 @@ NULL
         } else {
             dir <- initDir(dirname(file))
         }
+        whatFile <- basename(file)
+        whatDir <- realpath(dirname(file))
         match <- str_match(string = file, pattern = extPattern)
         compressExt <- match[1L, 4L]
         compress <- !is.na(compressExt)
+
+        ## FIXME NEED TO STRIP THE COMPRESSED FILE NAME FROM EXTENSION.
+        ## FIXME REFER TO DATA FRAME METHOD.
+
         if (isAFile(file)) {
             file <- realpath(file)
             if (isTRUE(overwrite) && !isTRUE(quiet)) {
                 cli_alert_warning(sprintf(
                     fmt = "Overwriting {.file %s} at {.path %s}.",
-                    basename(file), realpath(dirname(file))
+                    whatFile, whatDir
                 ))
             } else {
                 stop(sprintf("File exists: '%s'", file))
@@ -148,9 +154,16 @@ NULL
                     "Exporting {.file %s} at {.path %s}",
                     "using {.pkg %s}::{.fun %s}."
                 ),
-                basename(file), realpath(dirname(file)),
+                whatFile, whatDir,
                 whatPkg, whatFun
             ))
+        }
+        if (isTRUE(compress)) {
+            file <- sub(
+                pattern = paste0("\\.", compressExt, "$"),
+                replacement = "",
+                x = file
+            )
         }
         args <- switch(
             EXPR = whatPkg,
