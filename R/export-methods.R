@@ -77,7 +77,7 @@ NULL
 
 
 
-## Updated 2020-12-19.
+## Updated 2020-12-22.
 `export,character` <-  # nolint
     function(
         object,
@@ -133,10 +133,6 @@ NULL
         match <- str_match(string = file, pattern = extPattern)
         compressExt <- match[1L, 4L]
         compress <- !is.na(compressExt)
-
-        ## FIXME NEED TO STRIP THE COMPRESSED FILE NAME FROM EXTENSION.
-        ## FIXME REFER TO DATA FRAME METHOD.
-
         if (isAFile(file)) {
             file <- realpath(file)
             if (isTRUE(overwrite) && !isTRUE(quiet)) {
