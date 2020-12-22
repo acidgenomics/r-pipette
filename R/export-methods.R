@@ -155,11 +155,13 @@ NULL
             ))
         }
         if (isTRUE(compress)) {
+            ## nocov start
             file <- sub(
                 pattern = paste0("\\.", compressExt, "$"),
                 replacement = "",
                 x = file
             )
+            ## nocov end
         }
         args <- switch(
             EXPR = whatPkg,
