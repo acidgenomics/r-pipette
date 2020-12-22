@@ -1,4 +1,4 @@
-## pipette 0.4.23 (2020-12-19)
+## pipette 0.4.23 (2020-12-22)
 
 ### Minor changes
 
@@ -18,6 +18,8 @@
   compact and manageable.
 - `export`: Bug fix for handling of GZ file name extension for `character`
   method.
+- Bug fix for `vroom_lines` error import error of bcbio log:
+  `Unnamed col_types must have the same length as col_names`.
 
 ## pipette 0.4.22 (2020-12-11)
 
