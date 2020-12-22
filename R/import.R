@@ -622,7 +622,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
         ))
     }
     if (file.size(file) == 0L) {
-        return(character())
+        return(character())  # nocov
     }
     vroom_lines(
         file = file,
