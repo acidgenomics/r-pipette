@@ -621,8 +621,9 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
             "vroom", "vroom_lines"
         ))
     }
-    ## FIXME THIS FUNCTION CURRENTLY ERRORS ON EMPTY FILES.
-    ## Unnamed col_types must have the same length as col_names
+    if (file.size(file) == 0L) {
+        return(character())
+    }
     vroom_lines(
         file = file,
         skip = skip,
