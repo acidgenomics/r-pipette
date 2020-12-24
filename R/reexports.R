@@ -22,6 +22,32 @@ RCurl::getURL
 
 
 
+#' @importFrom S4Vectors DataFrame
+#' @export
+S4Vectors::DataFrame
+
+
+
+#' @importFrom data.table data.table
+#' @export
+data.table::data.table
+
+
+
 #' @importFrom syntactic makeNames
 #' @export
 syntactic::makeNames
+
+
+
+#' @importFrom tibble column_to_rownames
+#' @export
+tibble::column_to_rownames
+
+#' @importFrom tibble rownames_to_column
+#' @export
+tibble::rownames_to_column
+
+#' @importFrom tibble tibble
+#' @export
+tibble::tibble
