@@ -1,4 +1,4 @@
-## pipette 0.4.23 (2020-12-22)
+## pipette 0.4.23 (2020-12-24)
 
 ### Minor changes
 
@@ -20,6 +20,7 @@
   method.
 - Bug fix for `vroom_lines` error import error of bcbio log:
   `Unnamed col_types must have the same length as col_names`.
+- Now including additional reexports from data.table and tibble packages.
 
 ## pipette 0.4.22 (2020-12-11)
 
