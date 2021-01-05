@@ -21,6 +21,8 @@
 - Bug fix for `vroom_lines` error import error of bcbio log:
   `Unnamed col_types must have the same length as col_names`.
 - Now including additional reexports from data.table and tibble packages.
+- Bug fixes for `import`/`export` of tx2gene file handling for pending
+  AcidGenomes package update.
 
 ## pipette 0.4.22 (2020-12-11)
 
