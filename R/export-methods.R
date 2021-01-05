@@ -1,6 +1,6 @@
 #' @name export
 #' @inherit AcidGenerics::export
-#' @note Updated 2020-12-19.
+#' @note Updated 2021-01-05.
 #'
 #' @section Row names:
 #'
@@ -212,7 +212,7 @@ setMethod(
 ## `data.table`, `tbl_df`, and `DataFrame` classes. Note that `rio::export()`
 ## does not preserve row names by default, so we're ensuring row names get
 ## coerced to "rowname" column consistently here.
-## Updated 2020-12-10.
+## Updated 2021-01-05.
 `export,matrix` <-  # nolint
     function(
         object,
@@ -315,6 +315,10 @@ setMethod(
                 pattern = paste0("\\.", compressExt, "$"),
                 replacement = "",
                 x = file
+            )
+            ext <- match.arg(
+                arg = fileExt(file),
+                choices = c("csv", "tsv")
             )
         }
         if (identical(whatPkg, "data.table")) {
