@@ -2,7 +2,7 @@ Package: pipette
 Title: Pipette Biological Data In and Out of R
 Description: Input/output functions for biological data formats.
 Version: 0.4.23
-Date: 2020-12-24
+Date: 2021-01-05
 Authors@R: c(
     person(
         "Michael", "Steinbaugh",
@@ -15,9 +15,9 @@ Authors@R: c(
         role = c("cph", "fnd")
     ))
 URL:
-    https://pipette.acidgenomics.com/,
-    https://github.com/acidgenomics/pipette/
-BugReports: https://github.com/acidgenomics/pipette/issues/
+    https://r.acidgenomics.com/packages/pipette/,
+    https://github.com/acidgenomics/r-pipette/
+BugReports: https://github.com/acidgenomics/r-pipette/issues/
 License: GPL-3
 Encoding: UTF-8
 Depends: R (>= 4.0)
@@ -33,7 +33,7 @@ Imports:
     SingleCellExperiment,
     SummarizedExperiment,
     cli (>= 2.2),
-    data.table (>= 1.13),
+    data.table (>= 1.13.6),
     goalie (>= 0.4.11),
     methods,
     rappdirs (>= 0.3),
@@ -41,7 +41,7 @@ Imports:
     syntactic (>= 0.4.3),
     tibble (>= 3.0),
     utils,
-    vroom (>= 1.3)
+    vroom (>= 1.3.2)
 Suggests:
     AcidTest (>= 0.4.0),
     jsonlite (>= 1.7),
