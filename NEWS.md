@@ -23,6 +23,8 @@
 - Now including additional reexports from data.table and tibble packages.
 - Bug fixes for `import`/`export` of tx2gene file handling for pending
   AcidGenomes package update.
+- `import`: Hardened against `makeNames` usage on objects that don't support
+  names assignment.
 
 ## pipette 0.4.22 (2020-12-11)
 
