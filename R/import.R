@@ -391,6 +391,10 @@ import <- function(
             basename(file), ext
         ))
     }
+    ## Ensure imported R objects return unmodified.
+    if (identical(ext, "rds") || isSubset(ext, extGroup[["rda"]])) {
+        return(object)
+    }
     ## Data frame-specific operations.
     if (is.data.frame(object)) {
         ## Set row names automatically.
@@ -402,10 +406,7 @@ import <- function(
             object[["rowname"]] <- NULL
         }
     }
-    if (
-        !(identical(ext, "rds") || isSubset(ext, extGroup[["rda"]])) &&
-        hasNames(object)
-    ) {
+    if (hasNames(object)) {
         if (isTRUE(any(duplicated(names(object))))) {
             ## nocov start
             dupes <- sort(names(object)[duplicated(names(object))])
