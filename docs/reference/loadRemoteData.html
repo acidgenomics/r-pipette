@@ -75,7 +75,7 @@ multiple URLs in a single call." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pipette</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.20</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.23</span>
       </span>
     </div>
 
@@ -83,7 +83,7 @@ multiple URLs in a single call." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -97,13 +97,13 @@ multiple URLs in a single call." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://acidgenomics.com/">
-    <span class="fas fa fas fa-vial fa-lg"></span>
+    <span class="fas fa-vial fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://github.com/acidgenomics/pipette/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/acidgenomics/r-pipette/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -121,7 +121,7 @@ multiple URLs in a single call." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Load remote data</h1>
-    <small class="dont-index">Source: <a href='https://github.com/acidgenomics/pipette/blob/master/R/loadRemoteData.R'><code>R/loadRemoteData.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/acidgenomics/r-pipette/blob/master/R/loadRemoteData.R'><code>R/loadRemoteData.R</code></a></small>
     <div class="hidden name"><code>loadRemoteData.Rd</code></div>
     </div>
 
@@ -172,7 +172,7 @@ Local object name as the name, and the remote URL as the value.</p>
 <span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>url</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "https://tests.acidgenomics.com/pipette/v0.4/rnaseq_counts.rds"</div><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>loadRemoteData</span><span class='op'>(</span><span class='va'>url</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>→ Importing <span style='color: #0000BB;'>rnaseq_counts.rds</span><span> at </span><span style='color: #0000BB;'>https://tests.acidgenomics.com/pipette/v0.4</span><span> using </span><span style='color: #0000BB;'>base</span><span>::</span><span style='color: #000000;background-color: #BBBBBB;'>`readRDS()`</span><span>.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Downloading 'https://tests.acidgenomics.com/pipette/v0.4/rnaseq_counts.rds' to '/private/var/folders/l1/8y8sjzmn15v49jgrqglghcfr0000gn/T/Rtmpa7Breq/pipette-107c626b9ae9c.rds'.</span></div><div class='output co'>#&gt; <span class='message'>→ Importing <span style='color: #0000BB;'>rnaseq_counts.rds</span><span> at </span><span style='color: #0000BB;'>https://tests.acidgenomics.com/pipette/v0.4</span><span> using </span><span style='color: #0000BB;'>base</span><span>::</span><span style='color: #000000;background-color: #BBBBBB;'>`readRDS()`</span><span>.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;                                                   rnaseq_counts 
 #&gt; "https://tests.acidgenomics.com/pipette/v0.4/rnaseq_counts.rds" </div></span></pre>
   </div>
