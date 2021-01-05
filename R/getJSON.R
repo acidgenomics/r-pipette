@@ -8,7 +8,7 @@
 #' @return `list`.
 #'
 #' @examples
-#' ## Get current list of genomes from UCSC Genome Browser.
+#' ## Access the UCSC Genome Browser API.
 #' url <- "https://api.genome.ucsc.edu/list/ucscGenomes"
 #' json <- getJSON(url)
 #' names(json)
