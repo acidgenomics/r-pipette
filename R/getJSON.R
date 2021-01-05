@@ -3,6 +3,10 @@
 #' @export
 #' @note Updated 2020-01-05.
 #'
+#' @inheritParams AcidRoxygen::params
+#'
+#' @return `list`.
+#'
 #' @examples
 #' ## Get current list of genomes from UCSC Genome Browser.
 #' url <- "https://api.genome.ucsc.edu/list/ucscGenomes"
