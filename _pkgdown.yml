@@ -29,6 +29,7 @@ reference:
     contents:
     - cacheURL
     - download
+    - getJSON
     - getURLDirList
     - localOrRemoteFile
     - transmit
