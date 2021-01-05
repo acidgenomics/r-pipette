@@ -402,7 +402,10 @@ import <- function(
             object[["rowname"]] <- NULL
         }
     }
-    if (hasNames(object)) {
+    if (
+        !(identical(ext, "rds") || isSubset(ext, extGroup[["rda"]])) &&
+        hasNames(object)
+    ) {
         if (isTRUE(any(duplicated(names(object))))) {
             ## nocov start
             dupes <- sort(names(object)[duplicated(names(object))])
@@ -412,8 +415,8 @@ import <- function(
             ))
             ## nocov end
         }
-        ## Harden against S4 objects that don't support names assignment, to
-        ## prevent unwanted error on this step.
+        ## Harden against any object classes that don't support names
+        ## assignment, to prevent unwanted error on this step.
         tryCatch(
             expr = {
                 names(object) <- makeNames(names(object))
