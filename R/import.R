@@ -412,7 +412,14 @@ import <- function(
             ))
             ## nocov end
         }
-        names(object) <- makeNames(names(object))
+        ## Harden against S4 objects that don't support names assignment, to
+        ## prevent unwanted error on this step.
+        tryCatch(
+            expr = {
+                names(object) <- makeNames(names(object))
+            },
+            error = function(e) NULL
+        )
         if (!isTRUE(hasValidNames(object))) {
             cli_alert_warning("Invalid names detected.")  # nocov
         }
