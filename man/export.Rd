@@ -126,7 +126,8 @@ be used instead.}
 
 \item{append}{\code{logical(1)}.
 Append to output file.
-When enabled, automatically sets \code{overwrite} argument to \code{FALSE}.}
+When enabled, automatically sets \code{overwrite} argument to \code{FALSE}.
+Requires readr package to be installed.}
 
 \item{overwrite}{\code{logical(1)}.
 Overwrite existing file on disk.}
@@ -156,7 +157,7 @@ File path(s).
 Export data out of R and write to disk.
 }
 \note{
-Updated 2020-12-10.
+Updated 2020-12-19.
 }
 \section{Row names}{
 

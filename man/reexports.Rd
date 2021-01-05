@@ -8,7 +8,12 @@
 \alias{download}
 \alias{pasteURL}
 \alias{getURL}
+\alias{DataFrame}
+\alias{data.table}
 \alias{makeNames}
+\alias{column_to_rownames}
+\alias{rownames_to_column}
+\alias{tibble}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -18,8 +23,14 @@ below to see their documentation.
 \describe{
   \item{AcidBase}{\code{\link[AcidBase]{compress}}, \code{\link[AcidBase:compress]{decompress}}, \code{\link[AcidBase]{download}}, \code{\link[AcidBase]{pasteURL}}}
 
+  \item{data.table}{\code{\link[data.table]{data.table}}}
+
   \item{RCurl}{\code{\link[RCurl]{getURL}}}
 
+  \item{S4Vectors}{\code{\link[S4Vectors:DataFrame-class]{DataFrame}}}
+
   \item{syntactic}{\code{\link[syntactic]{makeNames}}}
+
+  \item{tibble}{\code{\link[tibble:rownames]{column_to_rownames}}, \code{\link[tibble:rownames]{rownames_to_column}}, \code{\link[tibble]{tibble}}}
 }}
 

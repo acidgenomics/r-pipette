@@ -27,7 +27,7 @@ NULL
 
 #' @rdname coerce-data.frame
 #' @name as.data.frame
-#' @importFrom BiocGenerics as.data.frame
+#' @importFrom AcidGenerics as.data.frame
 #' @usage as.data.frame(x, row.names = NULL, optional = FALSE, ...)
 #' @export
 NULL
@@ -62,7 +62,7 @@ NULL
 
 #' @rdname decode
 #' @name decode
-#' @importFrom S4Vectors decode
+#' @importFrom AcidGenerics decode
 #' @usage decode(x, ...)
 #' @export
 NULL
@@ -71,7 +71,7 @@ NULL
 
 #' @rdname droplevels
 #' @name droplevels
-#' @importFrom S4Vectors droplevels
+#' @importFrom AcidGenerics droplevels
 #' @usage droplevels(x, ...)
 #' @export
 NULL

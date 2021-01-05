@@ -1,3 +1,29 @@
+## pipette 0.4.23 (2020-12-24)
+
+### Minor changes
+
+- Made some previous imports conditional suggested packages:
+  jsonlite, readr, rtracklayer, yaml.
+- `export`: Improved internal file name handling for CLI messages.
+- Reworked rtracklayer as a suggested package instead of an explicit import.
+- `import`: Improved internal bcbio counts importer code to use default TSV
+  method, rather than relying on data.table `fread` function manually.
+- Removed dependency on readr. Import of lines now uses `vroom::vroom_lines`
+  internally, and `export` character method will conditionally switch to using
+  base `writeLines` if the readr package is not installed.
+- Removed Matrix `readMM` and `writeMM` as imports.
+- Removed data.table `fread` and `fwrite` as imports.
+- Removed BiocGenerics dependency, in favor of rexports defined in AcidGenerics.
+  This helps keep the number of dependencies declared in the package more
+  compact and manageable.
+- `export`: Bug fix for handling of GZ file name extension for `character`
+  method.
+- Bug fix for `vroom_lines` error import error of bcbio log:
+  `Unnamed col_types must have the same length as col_names`.
+- Now including additional reexports from data.table and tibble packages.
+- Bug fixes for `import`/`export` of tx2gene file handling for pending
+  AcidGenomes package update.
+
 ## pipette 0.4.22 (2020-12-11)
 
 ### Minor changes

@@ -99,7 +99,7 @@
 #' `DOC`, `DOCX`, `PDF`, `PPT`, `PPTX`.
 #'
 #' @export
-#' @note Updated 2020-08-13.
+#' @note Updated 2021-01-05.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param rownames `logical(1)`.
@@ -160,7 +160,7 @@
 #'   Imported by [yaml::yaml.load_file()].
 #' - **Lines** (`LOG`, `MD`, `PY`, `R`, `RMD`, `SH`): `character`.
 #'   Source code or log files.\cr
-#'   Imported by [`read_lines()`][readr::read_lines].
+#'   Imported by [`vroom_lines()`][vroom::vroom_lines].
 #' - **R data serialized** (`RDS`): *variable*.\cr
 #'   Currently recommend over RDA, if possible.\cr
 #'   Imported by [`readRDS()`][base::readRDS].
@@ -602,7 +602,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 
 ## Internal importer for (source code) lines.
-## Updated 2020-08-13.
+## Updated 2021-01-05.
 .importLines <- function(file, skip = 0L, quiet) {
     assert(
         isInt(skip),
@@ -618,13 +618,15 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
         cli_alert(sprintf(
             "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
             basename(file), where,
-            "readr", "read_lines"
+            "vroom", "vroom_lines"
         ))
     }
-    read_lines(
-        file = file,
+    if (file.size(tmpfile) == 0L) {
+        return(character())  # nocov
+    }
+    vroom_lines(
+        file = tmpfile,
         skip = skip,
-        skip_empty_rows = FALSE,
         progress = FALSE
     )
 }
@@ -685,8 +687,9 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 ## Sparse matrix ===============================================================
 ## Internal importer for a sparse matrix file (`.mtx`).
-## Updated 2020-08-13.
+## Updated 2020-12-15.
 .importMTX <- function(file, metadata, quiet) {
+    requireNamespaces("Matrix")
     assert(
         isFlag(metadata),
         isFlag(quiet)
@@ -704,7 +707,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
             "Matrix", "readMM"
         ))
     }
-    object <- readMM(file = tmpfile)
+    object <- Matrix::readMM(file = tmpfile)
     ## Add the rownames automatically using `.rownames` sidecar file.
     rownamesFile <- paste(file, "rownames", sep = ".")
     rownamesFile <- tryCatch(
@@ -1008,44 +1011,43 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 
 ## bcbio =======================================================================
-## Internal importer for a bcbio count matrix file (`.counts`).
-## These files contain an `"id"` column that we need to coerce to row names.
-## Updated 2020-08-13.
+#' Import bcbio featureCounts file
+#'
+#' @details
+#' Internal importer for a bcbio count matrix file (`.counts`).
+#' These files contain an `"id"` column that we need to coerce to row names.
+#'
+#' @note Updated 2020-12-18.
+#' @noRd
 .importBcbioCounts <- function(file, metadata, quiet) {
     assert(
         isFlag(metadata),
         isFlag(quiet)
     )
-    if (!isTRUE(quiet)) {
-        where <- ifelse(
-            test = isAURL(file),
-            yes = dirname(file),
-            no = realpath(dirname(file))
+    object <- import(
+        file = file,
+        format = "tsv",
+        metadata = metadata,
+        quiet = quiet
+    )
+    if (isTRUE(metadata)) {
+        m <- metadata2(object, which = "import")
+        assert(
+            is.list(m),
+            hasLength(m)
         )
-        cli_alert(sprintf(
-            "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
-            basename(file), where,
-            "data.table", "fread"
-        ))
     }
-    tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
-    object <- fread(file = tmpfile, na.strings = naStrings)
     assert(
+        is.data.frame(object),
         isSubset("id", colnames(object)),
         hasNoDuplicates(object[["id"]])
     )
-    object <- as.data.frame(object)
     rownames(object) <- object[["id"]]
     object[["id"]] <- NULL
     object <- as.matrix(object)
     mode(object) <- "integer"
     if (isTRUE(metadata)) {
-        object <- .slotImportMetadata(
-            object = object,
-            file = file,
-            pkg = "data.table",
-            fun = "fread"
-        )
+        metadata2(object, which = "import") <- m
     }
     object
 }

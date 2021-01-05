@@ -1,6 +1,6 @@
 #' @name export
 #' @inherit AcidGenerics::export
-#' @note Updated 2020-12-10.
+#' @note Updated 2021-01-05.
 #'
 #' @section Row names:
 #'
@@ -44,6 +44,7 @@
 #' @param append `logical(1)`.
 #'   Append to output file.
 #'   When enabled, automatically sets `overwrite` argument to `FALSE`.
+#'   Requires readr package to be installed.
 #' @param ... Additional arguments.
 #'
 #' @return Invisible `character`.
@@ -76,7 +77,7 @@ NULL
 
 
 
-## Updated 2020-12-09.
+## Updated 2020-12-22.
 `export,character` <-  # nolint
     function(
         object,
@@ -96,10 +97,22 @@ NULL
             isFlag(quiet)
         )
         if (isTRUE(append)) {
-            overwrite <- FALSE  # nocov
+            ## nocov start
+            requireNamespaces("readr")
+            overwrite <- FALSE
+            ## nocov end
         }
         if (isTRUE(overwrite)) {
             assert(isFALSE(append))
+        }
+        if (isInstalled("readr")) {
+            whatPkg <- "readr"
+            whatFun <- "write_lines"
+        } else {
+            ## nocov start
+            whatPkg <- "base"
+            whatFun <- "writeLines"
+            ## nocov end
         }
         if (is.null(file)) {
             call <- standardizeCall()
@@ -113,8 +126,10 @@ NULL
             dir <- initDir(dir)
             file <- file.path(dir, paste0(name, ".", ext))
         } else {
-            initDir(dirname(file))
+            dir <- initDir(dirname(file))
         }
+        whatFile <- basename(file)
+        whatDir <- realpath(dirname(file))
         match <- str_match(string = file, pattern = extPattern)
         compressExt <- match[1L, 4L]
         compress <- !is.na(compressExt)
@@ -123,7 +138,7 @@ NULL
             if (isTRUE(overwrite) && !isTRUE(quiet)) {
                 cli_alert_warning(sprintf(
                     fmt = "Overwriting {.file %s} at {.path %s}.",
-                    basename(file), dirname(file)
+                    whatFile, whatDir
                 ))
             } else {
                 stop(sprintf("File exists: '%s'", file))
@@ -135,12 +150,35 @@ NULL
                     "Exporting {.file %s} at {.path %s}",
                     "using {.pkg %s}::{.fun %s}."
                 ),
-                basename(file), dirname(file),
-                "readr", "write_lines"
+                whatFile, whatDir,
+                whatPkg, whatFun
             ))
         }
-        ## readr v1.4 changed "path" to "file".
-        write_lines(x = object, file = file, append = append)
+        if (isTRUE(compress)) {
+            ## nocov start
+            file <- sub(
+                pattern = paste0("\\.", compressExt, "$"),
+                replacement = "",
+                x = file
+            )
+            ## nocov end
+        }
+        args <- switch(
+            EXPR = whatPkg,
+            "base" = {
+                ## nocov start
+                writeLines(text = object, con = file)
+                ## nocov end
+            },
+            "readr" = {
+                readr::write_lines(
+                    x = object,
+                    ## readr v1.4 changed "path" to "file".
+                    file = file,
+                    append = append
+                )
+            }
+        )
         if (isTRUE(compress)) {
             ## nocov start
             file <- compress(
@@ -174,7 +212,7 @@ setMethod(
 ## `data.table`, `tbl_df`, and `DataFrame` classes. Note that `rio::export()`
 ## does not preserve row names by default, so we're ensuring row names get
 ## coerced to "rowname" column consistently here.
-## Updated 2020-12-10.
+## Updated 2021-01-05.
 `export,matrix` <-  # nolint
     function(
         object,
@@ -216,8 +254,11 @@ setMethod(
             file <- file.path(dir, paste0(name, ".", ext))
         } else {
             ext <- fileExt(file)
-            initDir(dirname(file))
+            dir <- initDir(dirname(file))
         }
+        ## These are used in CLI messages.
+        whatFile <- basename(file)
+        whatDir <- realpath(dirname(file))
         ext <- match.arg(
             arg = ext,
             choices = c(
@@ -257,11 +298,14 @@ setMethod(
         }
         if (isAFile(file)) {
             file <- realpath(file)
-            if (isTRUE(overwrite) && !isTRUE(quiet)) {
-                cli_alert_warning(sprintf(
-                    fmt = "Overwriting {.file %s} at {.path %s}.",
-                    basename(file), dirname(file)
-                ))
+            if (isTRUE(overwrite)) {
+                if (!isTRUE(quiet)) {
+                    cli_alert_warning(sprintf(
+                        fmt = "Overwriting {.file %s} at {.path %s}.",
+                        whatFile, whatDir
+                    ))
+                }
+                file.remove(file)
             } else {
                 stop(sprintf("File exists: '%s'", file))
             }
@@ -272,10 +316,14 @@ setMethod(
                 replacement = "",
                 x = file
             )
+            ext <- match.arg(
+                arg = fileExt(file),
+                choices = c("csv", "tsv")
+            )
         }
         if (identical(whatPkg, "data.table")) {
             whatFun <- "fwrite"
-            what <- fwrite
+            what <- data.table::fwrite
             args <- list(
                 x = object,
                 file = file,
@@ -335,7 +383,7 @@ setMethod(
                     "Exporting {.file %s} at {.path %s}",
                     "using {.pkg %s}::{.fun %s}."
                 ),
-                basename(file), dirname(file),
+                whatFile, whatDir,
                 whatPkg, whatFun
             ))
         }
@@ -399,7 +447,7 @@ setMethod(
 ## Note that "file" is referring to the matrix file.
 ## The correponding column and row sidecar files are generated automatically.
 ## Consider adding HDF5 support in a future update.
-## Updated 2020-08-11.
+## Updated 2020-12-15.
 `export,sparseMatrix` <-  # nolint
     function(
         object,
@@ -409,6 +457,7 @@ setMethod(
         overwrite,
         quiet
     ) {
+        requireNamespaces("Matrix")
         validObject(object)
         assert(
             hasLength(object),
@@ -427,7 +476,7 @@ setMethod(
             file <- file.path(dir, paste0(name, ".", ext))
         } else {
             ext <- fileExt(file)
-            initDir(dirname(file))
+            dir <- initDir(dirname(file))
         }
         ext <- match.arg(
             arg = ext,
@@ -441,7 +490,7 @@ setMethod(
             if (isTRUE(overwrite) && !isTRUE(quiet)) {
                 cli_alert_warning(sprintf(
                     fmt = "Overwriting {.file %s} at {.path %s}.",
-                    basename(file), dirname(file)
+                    basename(file), realpath(dirname(file))
                 ))
             } else {
                 stop(sprintf("File exists: %s", file))
@@ -460,11 +509,11 @@ setMethod(
                     "Exporting {.file %s} at {.path %s}",
                     "using {.pkg %s}::{.fun %s}."
                 ),
-                basename(file), dirname(file),
+                basename(file), realpath(dirname(file)),
                 "Matrix", "writeMM"
             ))
         }
-        writeMM(obj = object, file = file)
+        Matrix::writeMM(obj = object, file = file)
         if (isTRUE(compress)) {
             file <- compress(
                 file = file,
