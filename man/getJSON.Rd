@@ -6,6 +6,13 @@
 \usage{
 getJSON(url)
 }
+\arguments{
+\item{url}{\code{character(1)}.
+Uniform Resource Locator (URL).}
+}
+\value{
+\code{list}.
+}
 \description{
 Get JSON from an API
 }
