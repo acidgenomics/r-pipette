@@ -99,7 +99,7 @@
 #' `DOC`, `DOCX`, `PDF`, `PPT`, `PPTX`.
 #'
 #' @export
-#' @note Updated 2020-12-15.
+#' @note Updated 2021-01-05.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param rownames `logical(1)`.
@@ -602,7 +602,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 
 ## Internal importer for (source code) lines.
-## Updated 2020-12-18.
+## Updated 2021-01-05.
 .importLines <- function(file, skip = 0L, quiet) {
     assert(
         isInt(skip),
@@ -621,11 +621,11 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
             "vroom", "vroom_lines"
         ))
     }
-    if (file.size(file) == 0L) {
+    if (file.size(tmpfile) == 0L) {
         return(character())  # nocov
     }
     vroom_lines(
-        file = file,
+        file = tmpfile,
         skip = skip,
         progress = FALSE
     )
