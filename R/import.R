@@ -391,6 +391,10 @@ import <- function(
             basename(file), ext
         ))
     }
+    ## Ensure imported R objects return unmodified.
+    if (identical(ext, "rds") || isSubset(ext, extGroup[["rda"]])) {
+        return(object)
+    }
     ## Data frame-specific operations.
     if (is.data.frame(object)) {
         ## Set row names automatically.
@@ -412,7 +416,14 @@ import <- function(
             ))
             ## nocov end
         }
-        names(object) <- makeNames(names(object))
+        ## Harden against any object classes that don't support names
+        ## assignment, to prevent unwanted error on this step.
+        tryCatch(
+            expr = {
+                names(object) <- makeNames(names(object))
+            },
+            error = function(e) NULL
+        )
         if (!isTRUE(hasValidNames(object))) {
             cli_alert_warning("Invalid names detected.")  # nocov
         }
