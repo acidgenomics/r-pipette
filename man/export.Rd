@@ -157,7 +157,7 @@ File path(s).
 Export data out of R and write to disk.
 }
 \note{
-Updated 2020-12-19.
+Updated 2021-01-05.
 }
 \section{Row names}{
 
