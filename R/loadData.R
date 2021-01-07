@@ -152,7 +152,7 @@ formals(loadData)[c("dir", "overwrite")] <-
         FUN.VALUE = character(1L),
         USE.NAMES = TRUE
     )
-    cli_alert(sprintf(
+    alert(sprintf(
         "Loading {.file %s} from {.path %s}.",
         toString(basename(files), width = 100L), dir
     ))
