@@ -8,11 +8,7 @@ NULL
 #' @importFrom AcidBase basenameSansExt bapply compress compressExtPattern
 #'   decompress dots download extPattern fileExt formalsList initDir
 #'   matchArgsToDoCall pasteURL realpath requireNamespaces standardizeCall
-#' @importFrom AcidCLI alert alertInfo alertSuccess alertWarning txt
-#'
-#' @importFrom cli cli_alert cli_alert_info cli_alert_success cli_alert_warning
-#'   cli_text
-#'
+#' @importFrom AcidCLI alert alertInfo alertSuccess alertWarning
 #' @importFrom BiocFileCache BiocFileCache bfcadd bfccache bfcdownload
 #'   bfcneedsupdate bfcquery bfcrpath
 #' @importFrom IRanges end start width

@@ -92,16 +92,16 @@ saveData <- function(
     ext <- match.arg(arg = ext, choices = c("rds", "rda"))
     files <- file.path(dir, paste(names(objects), ext, sep = "."))
     names(files) <- names(objects)
-    cli_alert(sprintf(
+    alert(sprintf(
         "Saving {.file %s} to {.path %s}.",
         toString(basename(files), width = 100L), dir
     ))
     if (identical(overwrite, FALSE) && any(file.exists(files))) {
         skip <- files[file.exists(files)]
-        cli_alert_warning(sprintf("Skipped %s.", toString(basename(skip))))
+        alertWarning(sprintf("Skipped %s.", toString(basename(skip))))
         files <- files[!file.exists(files)]
         if (length(files) == 0L) {
-            cli_alert_warning("No files were saved.")
+            alertWarning("No files were saved.")
             return(invisible(NULL))
         }
         objects <- objects[!file.exists(files)]  # nocov
