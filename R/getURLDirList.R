@@ -7,7 +7,7 @@
 #'
 #' @export
 #' @note Best served using FTP instead of HTTP.
-#' @note Updated 2020-10-06.
+#' @note Updated 2021-01-08.
 #'
 #' @inheritParams AcidRoxygen::params
 #'
@@ -37,6 +37,7 @@ getURLDirList <- function(url, pattern = NULL) {
         keep <- grepl(pattern = pattern, x = x)
         x <- x[keep]
     }
+    x <- sort(x)
     x
 }
 

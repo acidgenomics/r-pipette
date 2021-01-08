@@ -8,6 +8,7 @@
 \alias{download}
 \alias{pasteURL}
 \alias{getURL}
+\alias{url.exists}
 \alias{DataFrame}
 \alias{data.table}
 \alias{makeNames}
@@ -25,7 +26,7 @@ below to see their documentation.
 
   \item{data.table}{\code{\link[data.table]{data.table}}}
 
-  \item{RCurl}{\code{\link[RCurl]{getURL}}}
+  \item{RCurl}{\code{\link[RCurl]{getURL}}, \code{\link[RCurl]{url.exists}}}
 
   \item{S4Vectors}{\code{\link[S4Vectors:DataFrame-class]{DataFrame}}}
 

@@ -20,6 +20,10 @@ AcidBase::pasteURL
 #' @export
 RCurl::getURL
 
+#' @importFrom RCurl url.exists
+#' @export
+RCurl::url.exists
+
 
 
 #' @importFrom S4Vectors DataFrame
