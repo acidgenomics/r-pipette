@@ -1,3 +1,9 @@
+## pipette 0.4.24 (2021-01-06)
+
+### Minor changes
+
+- Switched from using cli package internally to AcidCLI.
+
 ## pipette 0.4.23 (2020-12-24)
 
 ### Minor changes

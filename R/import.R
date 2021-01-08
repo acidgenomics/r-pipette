@@ -400,7 +400,7 @@ import <- function(
         ## Set row names automatically.
         if (isTRUE(rownames) && isSubset("rowname", colnames(object))) {
             if (!isTRUE(quiet)) {
-                cli_alert_info("Setting row names from {.var rowname} column.")
+                alertInfo("Setting row names from {.var rowname} column.")
             }
             rownames(object) <- object[["rowname"]]
             object[["rowname"]] <- NULL
@@ -410,7 +410,7 @@ import <- function(
         if (isTRUE(any(duplicated(names(object))))) {
             ## nocov start
             dupes <- sort(names(object)[duplicated(names(object))])
-            cli_alert_warning(sprintf(
+            alertWarning(sprintf(
                 "Duplicate names: {.var %s}.",
                 toString(dupes, width = 100L)
             ))
@@ -425,7 +425,7 @@ import <- function(
             error = function(e) NULL
         )
         if (!isTRUE(hasValidNames(object))) {
-            cli_alert_warning("Invalid names detected.")  # nocov
+            alertWarning("Invalid names detected.")  # nocov
         }
     }
     if (isTRUE(metadata)) {
@@ -588,7 +588,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
             yes = dirname(file),
             no = realpath(dirname(file))
         )
-        cli_alert(sprintf(
+        alert(sprintf(
             "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
             basename(file), where,
             whatPkg, whatFun
@@ -626,7 +626,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
             yes = dirname(file),
             no = realpath(dirname(file))
         )
-        cli_alert(sprintf(
+        alert(sprintf(
             "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
             basename(file), where,
             "vroom", "vroom_lines"
@@ -656,7 +656,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
             yes = dirname(file),
             no = realpath(dirname(file))
         )
-        cli_alert(sprintf(
+        alert(sprintf(
             "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
             basename(file), where,
             "base", "readRDS"
@@ -679,7 +679,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
             yes = dirname(file),
             no = realpath(dirname(file))
         )
-        cli_alert(sprintf(
+        alert(sprintf(
             "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
             basename(file), where,
             "base", "load"
@@ -712,7 +712,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
             yes = dirname(file),
             no = realpath(dirname(file))
         )
-        cli_alert(sprintf(
+        alert(sprintf(
             "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
             basename(file), where,
             "Matrix", "readMM"
@@ -766,7 +766,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
             yes = dirname(file),
             no = realpath(dirname(file))
         )
-        cli_alert(sprintf(
+        alert(sprintf(
             "Importing sidecar {.file %s} at {.path %s}.",
             basename(file), where
         ))
@@ -792,7 +792,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
             yes = dirname(file),
             no = realpath(dirname(file))
         )
-        cli_alert(sprintf(
+        alert(sprintf(
             "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
             basename(file), where,
             "jsonlite", "read_json"
@@ -827,7 +827,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
             yes = dirname(file),
             no = realpath(dirname(file))
         )
-        cli_alert(sprintf(
+        alert(sprintf(
             "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
             basename(file), where,
             "yaml", "yaml.load_file"
@@ -859,7 +859,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
             yes = dirname(file),
             no = realpath(dirname(file))
         )
-        cli_alert(sprintf(
+        alert(sprintf(
             "Importing {.file %s} at {.path %s}.",
             basename(file), where
         ))
@@ -888,7 +888,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
             yes = dirname(file),
             no = realpath(dirname(file))
         )
-        cli_alert(sprintf(
+        alert(sprintf(
             "Importing {.file %s} at {.path %s}.",
             basename(file), where
         ))
@@ -935,7 +935,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
             yes = dirname(file),
             no = realpath(dirname(file))
         )
-        cli_alert(sprintf(
+        alert(sprintf(
             "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
             basename(file), where,
             "readxl", "read_excel"
@@ -998,7 +998,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
             yes = dirname(file),
             no = realpath(dirname(file))
         )
-        cli_alert(sprintf(
+        alert(sprintf(
             "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
             basename(file), where,
             "pzfx", "read_pzfx"
@@ -1080,7 +1080,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
             yes = dirname(file),
             no = realpath(dirname(file))
         )
-        cli_alert(sprintf(
+        alert(sprintf(
             "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
             basename(file), where,
             "rio", "import"
@@ -1115,7 +1115,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
             yes = dirname(file),
             no = realpath(dirname(file))
         )
-        cli_alert(sprintf(
+        alert(sprintf(
             "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
             basename(file), where,
             "rtracklayer", "import"

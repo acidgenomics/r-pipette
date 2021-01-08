@@ -1,6 +1,6 @@
 #' @name export
 #' @inherit AcidGenerics::export
-#' @note Updated 2021-01-05.
+#' @note Updated 2021-01-06.
 #'
 #' @section Row names:
 #'
@@ -136,7 +136,7 @@ NULL
         if (isAFile(file)) {
             file <- realpath(file)
             if (isTRUE(overwrite) && !isTRUE(quiet)) {
-                cli_alert_warning(sprintf(
+                alertWarning(sprintf(
                     fmt = "Overwriting {.file %s} at {.path %s}.",
                     whatFile, whatDir
                 ))
@@ -145,7 +145,7 @@ NULL
             }
         }
         if (!isTRUE(quiet)) {
-            cli_alert(sprintf(
+            alert(sprintf(
                 fmt = paste(
                     "Exporting {.file %s} at {.path %s}",
                     "using {.pkg %s}::{.fun %s}."
@@ -275,7 +275,7 @@ setMethod(
             ## nocov start
             ## This is used to handle rowData with nested entrezIDs.
             fail <- names(keep)[!keep]
-            cli_alert_warning(sprintf(
+            alertWarning(sprintf(
                 "Dropping non-atomic columns: {.var %s}.",
                 toString(fail, width = 200L)
             ))
@@ -300,7 +300,7 @@ setMethod(
             file <- realpath(file)
             if (isTRUE(overwrite)) {
                 if (!isTRUE(quiet)) {
-                    cli_alert_warning(sprintf(
+                    alertWarning(sprintf(
                         fmt = "Overwriting {.file %s} at {.path %s}.",
                         whatFile, whatDir
                     ))
@@ -378,7 +378,7 @@ setMethod(
             )
         }
         if (!isTRUE(quiet)) {
-            cli_alert(sprintf(
+            alert(sprintf(
                 fmt = paste(
                     "Exporting {.file %s} at {.path %s}",
                     "using {.pkg %s}::{.fun %s}."
@@ -488,7 +488,7 @@ setMethod(
         if (isAFile(file)) {
             file <- realpath(file)
             if (isTRUE(overwrite) && !isTRUE(quiet)) {
-                cli_alert_warning(sprintf(
+                alertWarning(sprintf(
                     fmt = "Overwriting {.file %s} at {.path %s}.",
                     basename(file), realpath(dirname(file))
                 ))
@@ -504,7 +504,7 @@ setMethod(
             )
         }
         if (!isTRUE(quiet)) {
-            cli_alert(sprintf(
+            alert(sprintf(
                 fmt = paste(
                     "Exporting {.file %s} at {.path %s}",
                     "using {.pkg %s}::{.fun %s}."
@@ -595,7 +595,7 @@ setMethod(
         assayNames <- assayNames(object)
         assert(isCharacter(assayNames))
         dir <- realpath(initDir(dir))
-        cli_alert(sprintf(
+        alert(sprintf(
             fmt = "Exporting assays {.var %s} to {.path %s}.",
             toString(assayNames), dir
         ))
@@ -712,7 +712,7 @@ setMethod(
         }
         dir <- initDir(file.path(dir, name))
         if (!isTRUE(quiet)) {
-            cli_alert(sprintf(
+            alert(sprintf(
                 fmt = "Exporting {.envvar %s} to {.path %s}.",
                 name, dir
             ))
@@ -808,7 +808,7 @@ setMethod(
         reducedDimNames <- reducedDimNames(object)
         if (hasLength(reducedDimNames)) {
             if (!isTRUE(quiet)) {
-                cli_alert(sprintf(
+                alert(sprintf(
                     "Exporting {.var reducedDims}: {.var %s}",
                     toString(reducedDimNames)
                 ))
