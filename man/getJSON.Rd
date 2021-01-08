@@ -20,7 +20,7 @@ Get JSON from an API
 Updated 2020-01-05.
 }
 \examples{
-## Get current list of genomes from UCSC Genome Browser.
+## Access the UCSC Genome Browser API.
 url <- "https://api.genome.ucsc.edu/list/ucscGenomes"
 json <- getJSON(url)
 names(json)
