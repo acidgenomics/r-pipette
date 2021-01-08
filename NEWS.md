@@ -1,3 +1,10 @@
+## pipette 0.4.25 (2021-01-08)
+
+### Minor changes
+
+- `getURLDirList` now returns sorted.
+- Reexporting `url.exists` function from RCurl, for convenience.
+
 ## pipette 0.4.24 (2021-01-06)
 
 ### Minor changes
