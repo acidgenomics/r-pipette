@@ -8,6 +8,7 @@ NULL
 #' @importFrom AcidBase basenameSansExt bapply compress compressExtPattern
 #'   decompress dots download extPattern fileExt formalsList initDir
 #'   matchArgsToDoCall pasteURL realpath requireNamespaces standardizeCall
+#' @importFrom AcidCLI alert alertInfo alertSuccess alertWarning
 #' @importFrom BiocFileCache BiocFileCache bfcadd bfccache bfcdownload
 #'   bfcneedsupdate bfcquery bfcrpath
 #' @importFrom IRanges end start width
@@ -17,8 +18,6 @@ NULL
 #' @importFrom SingleCellExperiment reducedDimNames reducedDim
 #' @importFrom SummarizedExperiment assayNames assayNames<- assay colData
 #'   colData<- rowData rowData<- rowRanges
-#' @importFrom cli cli_alert cli_alert_info cli_alert_success cli_alert_warning
-#'   cli_text
 #' @importFrom goalie assert allAreAtomic allAreExisting allAreFiles
 #'   allAreNonExisting allAreURLs allHaveAccess areDisjointSets areSameLength
 #'   areSetEqual formalCompress hasColnames hasCols hasDimnames hasInternet
