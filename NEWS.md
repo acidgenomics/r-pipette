@@ -1,3 +1,17 @@
+## pipette 0.5.0 (2021-01-13)
+
+### Major changes
+
+- `import`: Improved internal engine support for plain text delimited (e.g.
+  CSV, TSV) files and source code lines. The vroom engine remains enabled by
+  default but data.table, readr, and base R are consistently supported for
+  import of either delimited files or source code lines.
+- `export`: Added supported for base R export of CSV and TSV files. Internal
+  engine consistency has been improved for `character` and `matrix`/`data.frame`
+  methods. Note that `character` method currently falls back to using
+  readr's `write_lines` function instead of attempting to use the vroom
+  package by default.
+
 ## pipette 0.4.25 (2021-01-08)
 
 ### Minor changes
