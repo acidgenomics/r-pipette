@@ -1,3 +1,11 @@
+## pipette 0.5.1 (2021-01-13)
+
+### Minor changes
+
+- `naStrings`: Now including lowercase `NA` variants, which are seen in some
+  files on RefSeq FTP server.
+- `sanitizeNA`: Updated to also match lowercase `NA` patterns.
+
 ## pipette 0.5.0 (2021-01-13)
 
 ### Major changes
