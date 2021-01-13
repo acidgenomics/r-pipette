@@ -43,6 +43,20 @@
 
 
 
+#' Import/export engines for parsing plain text delimited files
+#'
+#' @note Updated 2021-01-13.
+#' @noRd
+.delimEngines <- c("vroom", "data.table", "readr", "base")
+
+#' Default plain text engine
+#'
+#' @note Updated 2021-01-13.
+#' @noRd
+.defaultDelimEngine <- .delimEngines[[1L]]
+
+
+
 #' R data extension pattern
 #'
 #' @note Updated 2020-10-07.

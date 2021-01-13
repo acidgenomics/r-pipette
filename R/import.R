@@ -471,8 +471,11 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
     )
     ext <- match.arg(ext, choices = .extGroup[["delim"]])
     whatPkg <- match.arg(
-        arg = getOption("acid.import.engine", default = "vroom"),
-        choices = c("base", "data.table", "readr", "vroom")
+        arg = getOption(
+            x = "acid.import.engine",
+            default = .defaultDelimEngine
+        ),
+        choices = .delimEngines
     )
     if (ext == "txt") ext <- "table"
     if (ext == "table") whatPkg <- "base"
@@ -644,8 +647,11 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
         assert(is.infinite(nMax))
     }
     whatPkg <- match.arg(
-        arg = getOption("acid.import.engine", default = "vroom"),
-        choices = c("base", "data.table", "readr", "vroom")
+        arg = getOption(
+            x = "acid.import.engine",
+            default = .defaultDelimEngine
+        ),
+        choices = .delimEngines
     )
     requireNamespaces(whatPkg)
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
