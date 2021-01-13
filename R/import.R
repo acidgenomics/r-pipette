@@ -451,11 +451,15 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 
 ## Basic =======================================================================
-## Internal importer for a delimited file (e.g. `.csv`, `.tsv`).
-## Calls `vroom::vroom()` internally by default.
-## Can override using `acid.import.engine` option, which also supports
-## data.table and readr packages.
-## Updated 2021-01-13.
+#' Internal importer for a delimited file (e.g. `.csv`, `.tsv`).
+#'
+#' @details
+#' Calls `vroom::vroom()` internally by default.
+#' Can override using `acid.import.engine` option, which also supports
+#' data.table and readr packages.
+#'
+#' @note Updated 2021-01-13.
+#' @noRd
 .importDelim <- function(
     file,
     colnames,
@@ -634,8 +638,13 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 
 
-## Internal importer for (source code) lines.
-## Updated 2021-01-13.
+#' Internal importer for (source code) lines
+#'
+#' @note Updated 2021-01-13.
+#' @noRd
+#'
+#' @note `vroom_lines` can return this error on empty files:
+#' Error: Unnamed `col_types` must have the same length as `col_names`.
 .importLines <- function(
     file,
     comment = "",
@@ -744,8 +753,10 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 
 ## R data ======================================================================
-## Internal importer for an R data serialized file (`.rds`).
-## Updated 2020-08-13.
+#' Internal importer for an R data serialized file (`.rds`)
+#'
+#' @note Updated 2020-08-13.
+#' @noRd
 .importRDS <- function(file, quiet) {
     assert(isFlag(quiet))
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
@@ -767,8 +778,10 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 
 
-## Internal importer for an R data file (`.rda`).
-## Updated 2020-08-13.
+#' Internal importer for an R data file (`.rda`)
+#'
+#' @note Updated 2020-08-13.
+#' @noRd
 .importRDA <- function(file, quiet) {
     assert(isFlag(quiet))
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
@@ -796,8 +809,10 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 
 ## Sparse matrix ===============================================================
-## Internal importer for a sparse matrix file (`.mtx`).
-## Updated 2020-12-15.
+#' Internal importer for a sparse matrix file (`.mtx`)
+#'
+#' @note Updated 2020-12-15.
+#' @noRd
 .importMTX <- function(file, metadata, quiet) {
     requireNamespaces("Matrix")
     assert(
@@ -855,8 +870,10 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 
 
-## Internal importer for a sparse matrix sidecar file (e.g. `.rownames`).
-## Updated 2020-08-13.
+#' Internal importer for a sparse matrix sidecar file (e.g. `.rownames`)
+#'
+#' @note Updated 2020-08-13
+#' @noRd
 .importMTXSidecar <- function(file, quiet) {
     assert(isFlag(quiet))
     if (!isTRUE(quiet)) {
@@ -876,8 +893,10 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 
 ## List ========================================================================
-## Internal importer for a JSON file (`.json`).
-## Updated 2020-08-13.
+#' Internal importer for a JSON file (`.json`)
+#'
+#' @note Updated 2020-08-13.
+#' @noRd
 .importJSON <- function(file, metadata, quiet) {
     requireNamespaces("jsonlite")
     assert(
@@ -911,8 +930,10 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 
 
-## Internal importer for a YAML file (`.yaml`, `.yml`).
-## Updated 2020-08-13.
+#' Internal importer for a YAML file (`.yaml`, `.yml`)
+#'
+#' @note Updated 2020-08-13.
+#' @noRd
 .importYAML <- function(file, metadata, quiet) {
     requireNamespaces("yaml")
     assert(
@@ -947,9 +968,12 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 
 ## GSEA ========================================================================
-## Internal importer for a gene matrix transposed file (`.gmt`).
-## See also `fgsea::gmtPathways()`.
-## Updated 2020-08-13.
+#' Internal importer for a gene matrix transposed file (`.gmt`)
+#'
+#' @note Updated 2020-08-13
+#' @noRd
+#'
+#' @seealso `fgsea::gmtPathways()`.
 .importGMT <- function(file, quiet) {
     assert(isFlag(quiet))
     if (!isTRUE(quiet)) {
@@ -977,8 +1001,10 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 
 
-## Internal importer for a gene matrix file (`.gmx`).
-## Updated 2020-08-13.
+#' Internal importer for a gene matrix file (`.gmx`)
+#'
+#' @note Updated 2020-08-13.
+#' @noRd
 .importGMX <- function(file, quiet) {
     assert(isFlag(quiet))
     if (!isTRUE(quiet)) {
@@ -1000,7 +1026,10 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 
 
-## Internal importer for a gene set file (`.grp`).
+#' Internal importer for a gene set file (`.grp`)
+#'
+#' @note Updated 2021-01-13
+#' @noRd
 .importGRP <- .importGMX
 
 
@@ -1009,8 +1038,10 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 ## Note that `readxl::read_excel()` doesn't currently support automatic blank
 ## lines removal, so ensure that is fixed downstream.
 
-## Internal importer for a Microsoft Excel worksheet (`.xlsx`).
-## Updated 2021-01-13.
+#' Internal importer for a Microsoft Excel worksheet (`.xlsx`)
+#'
+#' @note Updated 2021-01-13.
+#' @noRd
 .importExcel <- function(
     file,
     colnames,
@@ -1078,9 +1109,12 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 
 ## GraphPad Prism ==============================================================
-## Internal importer for a GraphPad Prism file (`.pzfx`).
-## Note that this function doesn't support optional column names.
-## Updated 2020-08-13.
+#' Internal importer for a GraphPad Prism file (`.pzfx`)
+#'
+#' @note Updated 2020-08-13.
+#' @noRd
+#'
+#' @note This function doesn't support optional column names.
 .importPZFX <- function(
     file,
     sheet,
@@ -1168,7 +1202,10 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 
 ## Handoff =====================================================================
-## Updated 2020-08-13.
+#' Handoff to rio import
+#'
+#' @note Updated 2020-08-13.
+#' @noRd
 .rioImport <- function(file, metadata, quiet, ...) {
     requireNamespaces("rio")
     assert(
@@ -1202,8 +1239,12 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 
 
-## Using `tryCatch()` here to error if there are any warnings.
-## Updated 2020-08-13.
+#' Handoff to rtracklayer import
+#'
+#' @note Updated 2020-08-13.
+#' @noRd
+#'
+#' @note Using `tryCatch()` here to error if there are any warnings.
 .rtracklayerImport <- function(file, metadata, quiet, ...) {
     requireNamespaces("rtracklayer")
     assert(
