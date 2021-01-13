@@ -99,9 +99,13 @@
 #' `DOC`, `DOCX`, `PDF`, `PPT`, `PPTX`.
 #'
 #' @export
-#' @note Updated 2021-01-05.
+#' @note Updated 2021-01-13.
 #'
 #' @inheritParams AcidRoxygen::params
+#' @param format `character(1)`.
+#'   An optional file format type, which can be used to override the file format
+#'   inferred from `file`. Only recommended for file and URL paths that don't
+#'   contain an extension.
 #' @param rownames `logical(1)`.
 #'   Automatically assign row names, if `rowname` column is defined.
 #'   Applies to file types that return `data.frame` only.
@@ -109,19 +113,25 @@
 #'   Automatically assign column names, using the first header row.
 #'   Applies to file types that return `data.frame` only.
 #'   Pass in a `character` vector to define the column names manually.
-#' @param format `character(1)`.
-#'   An optional file format type, which can be used to override the file format
-#'   inferred from `file`. Only recommended for file and URL paths that don't
-#'   contain an extension.
 #' @param sheet `character(1)` or `integer(1)`.
 #'   *Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.*
 #'   Sheet to read. Either a string (the name of a sheet), or an integer (the
 #'   position of the sheet). Defaults to the first sheet.
+#' @param comment `character(1)`.
+#'   Comment character to detect at beginning of line, which will skip when
+#'   parsing file. Use `""` to disable interpretation of comments, which is
+#'   particularly
+#'   useful when parsing lines.
+#'   *Applies to plain text delimited and source code lines only.*
 #' @param skip `integer(1)`.
 #'   *Applies to delimited file (CSV, TSV), Excel Workbook, or lines.*
 #'   Number of lines to skip.
+#' @param nMax `integer(1)` or `Inf`.
+#'   Maximum number of lines to parse.
+#'   *Applies to plain text delimited, Excel, and source code lines only.*
 #' @param makeNames `function`.
 #'   Apply syntactic naming function to (column) names.
+#'   *Does not apply to import of R data files.*
 #'
 #' @return Varies, depending on the file type (format):
 #'
@@ -208,7 +218,9 @@ import <- function(
     rownames = TRUE,
     colnames = TRUE,
     sheet = 1L,
+    comment = "",
     skip = 0L,
+    nMax = Inf,
     makeNames,
     metadata,
     quiet
@@ -220,7 +232,9 @@ import <- function(
         isFlag(colnames) || isCharacter(colnames),
         isString(format),
         isScalar(sheet),
-        isInt(skip),
+        is.character(comment) && length(comment) <= 1L,
+        isInt(skip), isNonNegative(skip),
+        isPositive(nMax),
         is.function(makeNames),
         isFlag(metadata),
         isFlag(quiet)
@@ -239,49 +253,13 @@ import <- function(
             ))
         }
     } else {
-        ext <- format  # nocov
+        ext <- format
     }
     ext <- tolower(ext)
-    extGroup <- list(
-        delim = c("csv", "fwf", "psv", "tsv", "txt"),
-        excel = c("xls", "xlsb", "xlsx"),
-        lines = c(
-            "lines",
-            "log",
-            "md",        # Markdown
-            "py",        # Python
-            "r",         # R
-            "rmd",       # R Markdown
-            "sh"         # Shell
-        ),
-        rda = c("rda", "rdata"),
-        rio = c(
-            "arff",      # Weka Attribute-Relation File Format
-            "dbf",       # dBase Database File
-            "dif",       # Data Interchange Format
-            "dta",       # Stata
-            "mat",       # Matlab
-            "mtp",       # Minitab
-            "ods",       # OpenDocument (LibreOffice)
-            "por",       # SPSS
-            "sas7bdat",  # SASS
-            "sav",       # SPSS
-            "syd",       # Systat
-            "rec",       # Epi Info
-            "xpt"        # SASS
-        ),
-        rtracklayer = c(
-            "bed", "bed15", "bedgraph", "bedpe",
-            "bigwig", "bw", "wig",
-            "gff", "gff1", "gff2", "gff3", "gtf",
-            "broadpeak", "narrowpeak"
-        ),
-        yaml = c("yaml", "yml")
-    )
     ## Check that user hasn't changed unsupported  arguments.
     if (!isSubset(
         x = ext,
-        y = c(extGroup[["delim"]], extGroup[["excel"]])
+        y = c(.extGroup[["delim"]], .extGroup[["excel"]])
     )) {
         assert(
             identical(rownames, eval(formals()[["rownames"]])),
@@ -289,110 +267,110 @@ import <- function(
         )
     }
     ## - sheet (excel, prism)
-    if (!isSubset(ext, c(extGroup[["excel"]], "pzfx"))) {
+    if (!isSubset(ext, c(.extGroup[["excel"]], "pzfx"))) {
         assert(identical(sheet, eval(formals()[["sheet"]])))
     }
     ## - skip
     if (!isSubset(
         x = ext,
-        y = c(extGroup[["delim"]], extGroup[["excel"]], extGroup[["lines"]])
+        y = c(.extGroup[["delim"]], .extGroup[["excel"]], .extGroup[["lines"]])
     )) {
         assert(identical(skip, eval(formals()[["skip"]])))
     }
     ## - metadata
-    if (isSubset(ext, extGroup[["lines"]])) {
+    if (isSubset(ext, .extGroup[["lines"]])) {
         assert(identical(metadata, eval(formals()[["metadata"]])))
     }
     ## Now we're ready to hand off to file-type-specific importers.
-    if (isSubset(ext, extGroup[["delim"]])) {
-        object <- .importDelim(
-            file = file,
-            ext = ext,
-            colnames = colnames,
-            skip = skip,
-            metadata = metadata,
-            quiet = quiet
+    args <- list(
+        "file" = file,
+        "quiet" = quiet
+    )
+    if (isSubset(ext, .extGroup[["delim"]])) {
+        fun <- .importDelim
+        args <- append(
+            x = args,
+            values = list(
+                "colnames" = colnames,
+                "comment" = comment,
+                "ext" = ext,
+                "metadata" = metadata,
+                "nMax" = nMax,
+                "skip" = skip
+            )
         )
-    } else if (isSubset(ext, extGroup[["excel"]])) {
-        object <- .importExcel(
-            file = file,
-            colnames = colnames,
-            sheet = sheet,
-            skip = skip,
-            metadata = metadata,
-            quiet = quiet
+    } else if (isSubset(ext, .extGroup[["excel"]])) {
+        fun <- .importExcel
+        args <- append(
+            x = args,
+            values = list(
+                "colnames" = colnames,
+                "metadata" = metadata,
+                "nMax" = nMax,
+                "sheet" = sheet,
+                "skip" = skip
+            )
         )
     } else if (identical(ext, "pzfx")) {
         ## GraphPad Prism project.
         ## Note that Prism files always contain column names.
-        object <- .importPZFX(
-            file = file,
-            sheet = sheet,
-            metadata = metadata,
-            quiet = quiet
+        fun <- .importPZFX
+        args <- append(
+            x = args,
+            values = list(
+                "metadata" = metadata,
+                "sheet" = sheet
+            )
         )
     } else if (identical(ext, "rds")) {
-        object <- .importRDS(file = file, quiet = quiet)
-    } else if (isSubset(ext, extGroup[["rda"]])) {
-        object <- .importRDA(file = file, quiet = quiet)
+        fun <- .importRDS
+    } else if (isSubset(ext, .extGroup[["rda"]])) {
+        fun <- .importRDA
     } else if (identical(ext, "gmt")) {
-        object <- .importGMT(file = file, quiet = quiet)
+        fun <- .importGMT
     } else if (identical(ext, "gmx")) {
-        object <- .importGMX(file = file, quiet = quiet)
+        fun <- .importGMX
     } else if (identical(ext, "grp")) {
-        object <- .importGRP(file = file, quiet = quiet)
+        fun <- .importGRP
     } else if (identical(ext, "json")) {
-        object <- .importJSON(
-            file = file,
-            metadata = metadata,
-            quiet = quiet
-        )
-    } else if (isSubset(ext, extGroup[["yaml"]])) {
-        object <- .importYAML(
-            file = file,
-            metadata = metadata,
-            quiet = quiet
-        )
+        fun <- .importJSON
+        args <- append(x = args, values = list("metadata" = metadata))
+    } else if (isSubset(ext, .extGroup[["yaml"]])) {
+        fun <- .importYAML
+        args <- append(x = args, values = list("metadata" = metadata))
     } else if (identical(ext, "mtx")) {
         ## We're always requiring row and column sidecar files for MTX.
-        object <- .importMTX(
-            file = file,
-            metadata = metadata,
-            quiet = quiet
-        )
+        fun <- .importMTX
+        args <- append(x = args, values = list("metadata" = metadata))
     } else if (identical(ext, "counts")) {
         ## bcbio counts format always contains row and column names.
-        object <- .importBcbioCounts(
-            file = file,
-            metadata = metadata,
-            quiet = quiet
+        fun <- .importBcbioCounts
+        args <- append(x = args, values = list("metadata" = metadata))
+    } else if (isSubset(ext, .extGroup[["lines"]])) {
+        fun <- .importLines
+        args <- append(
+            x = args,
+            values = list(
+                "comment" = comment,
+                "nMax" = nMax,
+                "skip" = skip
+            )
         )
-    } else if (isSubset(ext, extGroup[["lines"]])) {
-        object <- .importLines(
-            file = file,
-            skip = skip,
-            quiet = quiet
-        )
-    } else if (isSubset(ext, extGroup[["rtracklayer"]])) {
-        object <- .rtracklayerImport(
-            file = file,
-            metadata = metadata,
-            quiet = quiet
-        )
-    } else if (isSubset(ext, extGroup[["rio"]])) {
-        object <- .rioImport(
-            file = file,
-            metadata = metadata,
-            quiet = quiet
-        )
+    } else if (isSubset(ext, .extGroup[["rtracklayer"]])) {
+        fun <- .rtracklayerImport
+        args <- append(x = args, values = list("metadata" = metadata))
+    } else if (isSubset(ext, .extGroup[["rio"]])) {
+        fun <- .rioImport
+        args <- append(x = args, values = list("metadata" = metadata))
     } else {
         stop(sprintf(
             "Import of '%s' failed. '%s' extension is not supported.",
             basename(file), ext
         ))
     }
+    object <- do.call(what = fun, args = args)
     ## Ensure imported R objects return unmodified.
-    if (identical(ext, "rds") || isSubset(ext, extGroup[["rda"]])) {
+    if (identical(ext, "rds") || isSubset(ext, .extGroup[["rda"]])) {
         return(object)
     }
     ## Data frame-specific operations.
@@ -408,13 +386,11 @@ import <- function(
     }
     if (hasNames(object)) {
         if (isTRUE(any(duplicated(names(object))))) {
-            ## nocov start
             dupes <- sort(names(object)[duplicated(names(object))])
             alertWarning(sprintf(
                 "Duplicate names: {.var %s}.",
                 toString(dupes, width = 100L)
             ))
-            ## nocov end
         }
         ## Harden against any object classes that don't support names
         ## assignment, to prevent unwanted error on this step.
@@ -425,7 +401,7 @@ import <- function(
             error = function(e) NULL
         )
         if (!isTRUE(hasValidNames(object))) {
-            alertWarning("Invalid names detected.")  # nocov
+            alertWarning("Invalid names detected.")
         }
     }
     if (isTRUE(metadata)) {
@@ -475,113 +451,157 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 
 ## Basic =======================================================================
-## Internal importer for a delimited file (e.g. `.csv`, `.tsv`).
-## Calls `vroom::vroom()` internally by default.
-## Can override using `acid.import.engine` option, which also supports
-## data.table and readr packages.
-## Updated 2020-08-13.
+#' Internal importer for a delimited file (e.g. `.csv`, `.tsv`).
+#'
+#' @details
+#' Calls `vroom::vroom()` internally by default.
+#' Can override using `acid.import.engine` option, which also supports
+#' data.table and readr packages.
+#'
+#' @note Updated 2021-01-13.
+#' @noRd
 .importDelim <- function(
     file,
     colnames,
+    comment,
     ext,
-    skip,
     metadata,
-    quiet
+    nMax,
+    quiet,
+    skip
 ) {
     verbose <- getOption("acid.verbose", default = FALSE)
     assert(
         isFlag(colnames) || isCharacter(colnames),
+        is.character(comment) && length(comment) <= 1L,
         isString(ext),
-        isInt(skip),
         isFlag(metadata),
+        isPositive(nMax),
         isFlag(quiet),
+        isInt(skip), isNonNegative(skip),
         isFlag(verbose)
     )
+    ext <- match.arg(ext, choices = .extGroup[["delim"]])
     whatPkg <- match.arg(
-        arg = getOption("acid.import.engine", default = "vroom"),
-        choices = c("data.table", "readr", "vroom")
+        arg = getOption(
+            x = "acid.import.engine",
+            default = .defaultDelimEngine
+        ),
+        choices = .delimEngines
     )
+    if (ext == "txt") ext <- "table"
+    if (ext == "table") whatPkg <- "base"
     requireNamespaces(whatPkg)
+    ## This step will automatically decompress on the fly, if necessary.
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
-    if (identical(whatPkg, "data.table")) {
-        ## data.table ----------------------------------------------------------
-        whatFun <- "fread"
-        what <- get(
-            x = whatFun,
-            envir = asNamespace(whatPkg),
-            inherits = TRUE
-        )
-        args <- list(
-            file = tmpfile,
-            blank.lines.skip = TRUE,
-            check.names = TRUE,
-            data.table = FALSE,
-            fill = FALSE,
-            na.strings = naStrings,
-            skip = skip,
-            showProgress = FALSE,
-            stringsAsFactors = FALSE,
-            strip.white = TRUE,
-            verbose = verbose
-        )
-        if (isCharacter(colnames)) {
-            ## nocov start
-            args[["header"]] <- FALSE
-            args[["col.names"]] <- colnames
-            ## nocov end
-        } else {
-            args[["header"]] <- colnames
+    switch(
+        EXPR = whatPkg,
+        "base" = {
+            args <- list(
+                "file" = tmpfile,
+                "blank.lines.skip" = TRUE,
+                "comment.char" = comment,
+                "na.strings" = naStrings,
+                "nrows" = nMax,
+                "skip" = skip,
+                "stringsAsFactors" = FALSE,
+                "strip.white" = TRUE
+            )
+            if (isCharacter(colnames)) {
+                args[["header"]] <- FALSE
+                args[["col.names"]] <- colnames
+            } else {
+                args[["header"]] <- colnames
+            }
+            switch(
+                EXPR = ext,
+                "csv" = {
+                    whatFun <- "read.csv"
+                },
+                "tsv" = {
+                    whatFun <- "read.delim"
+                    args[["sep"]] <- "\t"
+                },
+                "table" = {
+                    whatFun <- "read.table"
+                }
+            )
+        },
+        "data.table" = {
+            whatFun <- "fread"
+            if (isString(comment)) {
+                ## nocov start
+                stop(sprintf(
+                    paste0(
+                        "'%s::%s' does not yet support comment exclusion.\n",
+                        "See '%s' for details."
+                    ),
+                    whatPkg, whatFun,
+                    "https://github.com/Rdatatable/data.table/issues/856"
+                ))
+                ## nocov end
+            }
+            args <- list(
+                "file" = tmpfile,
+                "blank.lines.skip" = TRUE,
+                "check.names" = TRUE,
+                "data.table" = FALSE,
+                "fill" = FALSE,
+                "na.strings" = naStrings,
+                "nrows" = nMax,
+                "skip" = skip,
+                "showProgress" = FALSE,
+                "stringsAsFactors" = FALSE,
+                "strip.white" = TRUE,
+                "verbose" = verbose
+            )
+            if (isCharacter(colnames)) {
+                args[["header"]] <- FALSE
+                args[["col.names"]] <- colnames
+            } else {
+                args[["header"]] <- colnames
+            }
+        },
+        "readr" = {
+            whatFun <- switch(
+                EXPR = ext,
+                "csv" = "read_csv",
+                "tsv" = "read_tsv"
+            )
+            args <- list(
+                "file" = tmpfile,
+                "col_names" = colnames,
+                "col_types" = readr::cols(),
+                "comment" = comment,
+                "na" = naStrings,
+                "n_max" = nMax,
+                "progress" = FALSE,
+                "trim_ws" = TRUE,
+                "skip" = skip,
+                "skip_empty_rows" = TRUE
+            )
+        },
+        "vroom" = {
+            whatFun <- "vroom"
+            args <- list(
+                "file" = tmpfile,
+                "delim" = switch(
+                    EXPR = ext,
+                    "csv" = ",",
+                    "tsv" = "\t"
+                ),
+                "col_names" = colnames,
+                "col_types" = vroom::cols(),
+                "comment" = comment,
+                "na" = naStrings,
+                "n_max" = nMax,
+                "progress" = FALSE,
+                "skip" = skip,
+                "trim_ws" = TRUE,
+                ".name_repair" = make.names
+            )
         }
-    } else if (identical(whatPkg, "readr")) {
-        ## readr ---------------------------------------------------------------
-        whatFun <- switch(
-            EXPR = ext,
-            "csv" = "read_csv",
-            "tsv" = "read_tsv",
-            "txt" = "read_delim"
-        )
-        what <- get(
-            x = whatFun,
-            envir = asNamespace(whatPkg),
-            inherits = TRUE
-        )
-        assert(is.function(what))
-        args <- list(
-            file = tmpfile,
-            col_names = colnames,
-            col_types = readr::cols(),
-            na = naStrings,
-            progress = FALSE,
-            trim_ws = TRUE,
-            skip = skip,
-            skip_empty_rows = TRUE
-        )
-    } else if (identical(whatPkg, "vroom")) {
-        ## vroom ---------------------------------------------------------------
-        whatFun <- "vroom"
-        what <- get(
-            x = whatFun,
-            envir = asNamespace(whatPkg),
-            inherits = TRUE
-        )
-        delim <- switch(
-            EXPR = ext,
-            "csv" = ",",
-            "tsv" = "\t",
-            "txt" = " "
-        )
-        args <- list(
-            file = tmpfile,
-            delim = delim,
-            col_names = colnames,
-            col_types = vroom::cols(),
-            na = naStrings,
-            progress = FALSE,
-            skip = skip,
-            trim_ws = TRUE,
-            .name_repair = make.names
-        )
-    }
+    )
     if (!isTRUE(quiet)) {
         where <- ifelse(
             test = isAURL(file),
@@ -594,10 +614,16 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
             whatPkg, whatFun
         ))
     }
+    what <- get(x = whatFun, envir = asNamespace(whatPkg), inherits = TRUE)
+    assert(is.function(what))
     object <- do.call(what = what, args = args)
     assert(is.data.frame(object))
     if (!identical(class(object), "data.frame")) {
-        object <- as.data.frame(object, stringsAsFactors = FALSE)
+        object <- as.data.frame(
+            x = object,
+            make.names = FALSE,
+            stringsAsFactors = FALSE
+        )
     }
     if (isTRUE(metadata)) {
         object <- .slotImportMetadata(
@@ -612,14 +638,80 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 
 
-## Internal importer for (source code) lines.
-## Updated 2021-01-05.
-.importLines <- function(file, skip = 0L, quiet) {
+#' Internal importer for (source code) lines
+#'
+#' @note Updated 2021-01-13.
+#' @noRd
+#'
+#' @note `vroom_lines` can return this error on empty files:
+#' Error: Unnamed `col_types` must have the same length as `col_names`.
+.importLines <- function(
+    file,
+    comment = "",
+    nMax = Inf,
+    quiet,
+    skip = 0L
+) {
     assert(
         isInt(skip),
-        isFlag(quiet)
+        is.character(comment) && length(comment) <= 1L,
+        isPositive(nMax),
+        isFlag(quiet),
+        isInt(skip), isNonNegative(skip),
+        isPositive(nMax)
     )
+    if (isString(comment)) {
+        assert(is.infinite(nMax))
+    }
+    whatPkg <- match.arg(
+        arg = getOption(
+            x = "acid.import.engine",
+            default = .defaultDelimEngine
+        ),
+        choices = .delimEngines
+    )
+    requireNamespaces(whatPkg)
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
+    switch(
+        EXPR = whatPkg,
+        "base" = {
+            whatFun <- "readLines"
+            args <- list(
+                "con" = tmpfile,
+                "warn" = FALSE
+            )
+        },
+        "data.table" = {
+            whatFun <- "fread"
+            args <- list(
+                "file" = tmpfile,
+                "blank.lines.skip" = FALSE,
+                "header" = FALSE,
+                "nrows" = nMax,
+                "sep" = "\n",
+                "skip" = skip
+            )
+        },
+        "readr" = {
+            whatFun <- "read_lines"
+            args <- list(
+                "file" = tmpfile,
+                "n_max" = nMax,
+                "progress" = FALSE,
+                "skip" = skip,
+                "skip_empty_rows" = FALSE
+            )
+        },
+        "vroom" = {
+            whatFun <- "vroom_lines"
+            args <- list(
+                "file" = tmpfile,
+                "n_max" = nMax,
+                "progress" = FALSE,
+                "skip" = skip
+            )
+        }
+    )
     if (!isTRUE(quiet)) {
         where <- ifelse(
             test = isAURL(file),
@@ -629,24 +721,42 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
         alert(sprintf(
             "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
             basename(file), where,
-            "vroom", "vroom_lines"
+            whatPkg, whatFun
         ))
     }
     if (file.size(tmpfile) == 0L) {
-        return(character())  # nocov
+        return(character())
     }
-    vroom_lines(
-        file = tmpfile,
-        skip = skip,
-        progress = FALSE
-    )
+    what <- get(x = whatFun, envir = asNamespace(whatPkg), inherits = TRUE)
+    assert(is.function(what))
+    x <- do.call(what = what, args = args)
+    if (whatPkg == "data.table") x <- x[[1L]]
+    assert(is.character(x))
+    if (isString(comment)) {
+        keep <- !grepl(pattern = paste0("^", comment), x = x)
+        x <- x[keep]
+    }
+    if (whatPkg == "base") {
+        if (skip > 0L) {
+            assert(skip < length(x))
+            start <- skip + 1L
+            end <- length(x)
+            x <- x[start:end]
+        }
+        if (nMax < length(x)) {
+            x <- x[1L:nMax]
+        }
+    }
+    x
 }
 
 
 
 ## R data ======================================================================
-## Internal importer for an R data serialized file (`.rds`).
-## Updated 2020-08-13.
+#' Internal importer for an R data serialized file (`.rds`)
+#'
+#' @note Updated 2020-08-13.
+#' @noRd
 .importRDS <- function(file, quiet) {
     assert(isFlag(quiet))
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
@@ -668,8 +778,10 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 
 
-## Internal importer for an R data file (`.rda`).
-## Updated 2020-08-13.
+#' Internal importer for an R data file (`.rda`)
+#'
+#' @note Updated 2020-08-13.
+#' @noRd
 .importRDA <- function(file, quiet) {
     assert(isFlag(quiet))
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
@@ -697,8 +809,10 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 
 ## Sparse matrix ===============================================================
-## Internal importer for a sparse matrix file (`.mtx`).
-## Updated 2020-12-15.
+#' Internal importer for a sparse matrix file (`.mtx`)
+#'
+#' @note Updated 2020-12-15.
+#' @noRd
 .importMTX <- function(file, metadata, quiet) {
     requireNamespaces("Matrix")
     assert(
@@ -756,8 +870,10 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 
 
-## Internal importer for a sparse matrix sidecar file (e.g. `.rownames`).
-## Updated 2020-08-13.
+#' Internal importer for a sparse matrix sidecar file (e.g. `.rownames`)
+#'
+#' @note Updated 2020-08-13
+#' @noRd
 .importMTXSidecar <- function(file, quiet) {
     assert(isFlag(quiet))
     if (!isTRUE(quiet)) {
@@ -777,8 +893,10 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 
 ## List ========================================================================
-## Internal importer for a JSON file (`.json`).
-## Updated 2020-08-13.
+#' Internal importer for a JSON file (`.json`)
+#'
+#' @note Updated 2020-08-13.
+#' @noRd
 .importJSON <- function(file, metadata, quiet) {
     requireNamespaces("jsonlite")
     assert(
@@ -812,8 +930,10 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 
 
-## Internal importer for a YAML file (`.yaml`, `.yml`).
-## Updated 2020-08-13.
+#' Internal importer for a YAML file (`.yaml`, `.yml`)
+#'
+#' @note Updated 2020-08-13.
+#' @noRd
 .importYAML <- function(file, metadata, quiet) {
     requireNamespaces("yaml")
     assert(
@@ -848,9 +968,12 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 
 ## GSEA ========================================================================
-## Internal importer for a gene matrix transposed file (`.gmt`).
-## See also `fgsea::gmtPathways()`.
-## Updated 2020-08-13.
+#' Internal importer for a gene matrix transposed file (`.gmt`)
+#'
+#' @note Updated 2020-08-13
+#' @noRd
+#'
+#' @seealso `fgsea::gmtPathways()`.
 .importGMT <- function(file, quiet) {
     assert(isFlag(quiet))
     if (!isTRUE(quiet)) {
@@ -878,8 +1001,10 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 
 
-## Internal importer for a gene matrix file (`.gmx`).
-## Updated 2020-08-13.
+#' Internal importer for a gene matrix file (`.gmx`)
+#'
+#' @note Updated 2020-08-13.
+#' @noRd
 .importGMX <- function(file, quiet) {
     assert(isFlag(quiet))
     if (!isTRUE(quiet)) {
@@ -901,7 +1026,10 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 
 
-## Internal importer for a gene set file (`.grp`).
+#' Internal importer for a gene set file (`.grp`)
+#'
+#' @note Updated 2021-01-13
+#' @noRd
 .importGRP <- .importGMX
 
 
@@ -910,23 +1038,27 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 ## Note that `readxl::read_excel()` doesn't currently support automatic blank
 ## lines removal, so ensure that is fixed downstream.
 
-## Internal importer for a Microsoft Excel worksheet (`.xlsx`).
-## Updated 2020-08-13.
+#' Internal importer for a Microsoft Excel worksheet (`.xlsx`)
+#'
+#' @note Updated 2021-01-13.
+#' @noRd
 .importExcel <- function(
     file,
-    sheet,
     colnames,
-    skip,
     metadata,
-    quiet
+    nMax,
+    quiet,
+    sheet,
+    skip
 ) {
     requireNamespaces("readxl")
     assert(
-        isScalar(sheet),
         isFlag(colnames) || isCharacter(colnames),
-        isInt(skip),
         isFlag(metadata),
-        isFlag(quiet)
+        isPositive(nMax),
+        isFlag(quiet),
+        isScalar(sheet),
+        isInt(skip), isNonNegative(skip)
     )
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
     if (!isTRUE(quiet)) {
@@ -947,12 +1079,13 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
     options(warn = 2L)
     object <- readxl::read_excel(
         path = tmpfile,
-        sheet = sheet,
         col_names = colnames,
+        n_max = nMax,
         na = naStrings,
-        trim_ws = TRUE,
-        skip = skip,
         progress = FALSE,
+        sheet = sheet,
+        skip = skip,
+        trim_ws = TRUE,
         .name_repair = make.names
     )
     options(warn = warn)
@@ -976,9 +1109,12 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 
 ## GraphPad Prism ==============================================================
-## Internal importer for a GraphPad Prism file (`.pzfx`).
-## Note that this function doesn't support optional column names.
-## Updated 2020-08-13.
+#' Internal importer for a GraphPad Prism file (`.pzfx`)
+#'
+#' @note Updated 2020-08-13.
+#' @noRd
+#'
+#' @note This function doesn't support optional column names.
 .importPZFX <- function(
     file,
     sheet,
@@ -1066,7 +1202,10 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 
 ## Handoff =====================================================================
-## Updated 2020-08-13.
+#' Handoff to rio import
+#'
+#' @note Updated 2020-08-13.
+#' @noRd
 .rioImport <- function(file, metadata, quiet, ...) {
     requireNamespaces("rio")
     assert(
@@ -1100,8 +1239,12 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 
 
-## Using `tryCatch()` here to error if there are any warnings.
-## Updated 2020-08-13.
+#' Handoff to rtracklayer import
+#'
+#' @note Updated 2020-08-13.
+#' @noRd
+#'
+#' @note Using `tryCatch()` here to error if there are any warnings.
 .rtracklayerImport <- function(file, metadata, quiet, ...) {
     requireNamespaces("rtracklayer")
     assert(
