@@ -13,6 +13,9 @@ pipetteTestsURL
 \description{
 pipette test data URL
 }
+\note{
+Updated 2021-01-13.
+}
 \examples{
 pipetteTestsURL
 }

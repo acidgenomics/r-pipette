@@ -85,26 +85,36 @@
 
 
 
+#' NA strings
+#'
+#' @export
+#' @note Updated 2021-01-13.
+#'
+#' @examples
+#' naStrings
+naStrings <- c(
+    "",
+    "#N/A",
+    "#n/a",
+    "N/A",
+    "NA",
+    "NULL",
+    "n/a",
+    "na",
+    "null"
+)
+
+
+
 #' pipette test data URL
+#'
 #' @export
 #' @keywords internal
+#' @note Updated 2021-01-13.
+#'
 #' @examples
 #' pipetteTestsURL
 pipetteTestsURL <- paste0(
     "https://tests.acidgenomics.com/pipette/",
     "v", .version$major, ".", .version$minor  # nolint
-)
-
-
-
-#' NA strings
-#' @export
-#' @examples
-#' naStrings
-naStrings <- c(
-    "NA",
-    "#N/A",
-    "NULL",
-    "null",
-    ""
 )
