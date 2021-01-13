@@ -10,8 +10,9 @@ import(
   rownames = TRUE,
   colnames = TRUE,
   sheet = 1L,
-  skip = 0L,
   comment = "",
+  skip = 0L,
+  nMax = Inf,
   makeNames = getOption("acid.import.make.names", default = syntactic::makeNames),
   metadata = getOption("acid.import.metadata", default = FALSE),
   quiet = getOption("acid.quiet", default = FALSE)
@@ -40,16 +41,20 @@ Pass in a \code{character} vector to define the column names manually.}
 Sheet to read. Either a string (the name of a sheet), or an integer (the
 position of the sheet). Defaults to the first sheet.}
 
-\item{skip}{\code{integer(1)}.
-\emph{Applies to delimited file (CSV, TSV), Excel Workbook, or lines.}
-Number of lines to skip.}
-
 \item{comment}{\code{character(1)}.
 Comment character to detect at beginning of line, which will skip when
 parsing file. Use \code{""} to disable interpretation of comments, which is
 particularly
 useful when parsing lines.
 \emph{Applies to plain text delimited and source code lines only.}}
+
+\item{skip}{\code{integer(1)}.
+\emph{Applies to delimited file (CSV, TSV), Excel Workbook, or lines.}
+Number of lines to skip.}
+
+\item{nMax}{\code{integer(1)} or \code{Inf}.
+Maximum number of lines to parse.
+\emph{Applies to plain text delimited, Excel, and source code lines only.}}
 
 \item{makeNames}{\code{function}.
 Apply syntactic naming function to (column) names.
