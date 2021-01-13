@@ -77,7 +77,7 @@ NULL
 
 
 
-## Updated 2020-12-22.
+## Updated 2021-01-13.
 `export,character` <-  # nolint
     function(
         object,
@@ -96,24 +96,30 @@ NULL
             isFlag(append),
             isFlag(quiet)
         )
+        whatPkg <- match.arg(
+            arg = getOption(
+                x = "acid.export.engine",
+                default = .defaultDelimEngine
+            ),
+            choices = .delimEngines
+        )
+        ## The vroom engine currently doesn't offer `write_lines` support,
+        ## so fall back to readr (if installed), and then base R.
+        if (whatPkg == "vroom") {
+            if (isInstalled("readr")) {
+                whatPkg <- "readr"
+            } else {
+                whatPkg <- "base"  # nocov
+            }
+        }
         if (isTRUE(append)) {
-            ## nocov start
-            requireNamespaces("readr")
-            overwrite <- FALSE
-            ## nocov end
+            assert(!identical(whatPkg, "base"))
+            overwrite = FALSE
         }
         if (isTRUE(overwrite)) {
             assert(isFALSE(append))
         }
-        if (isInstalled("readr")) {
-            whatPkg <- "readr"
-            whatFun <- "write_lines"
-        } else {
-            ## nocov start
-            whatPkg <- "base"
-            whatFun <- "writeLines"
-            ## nocov end
-        }
+        requireNamespaces(whatPkg)
         if (is.null(file)) {
             call <- standardizeCall()
             sym <- call[["object"]]
@@ -144,6 +150,41 @@ NULL
                 stop(sprintf("File exists: '%s'", file))
             }
         }
+        if (isTRUE(compress)) {
+            file <- sub(
+                pattern = paste0("\\.", compressExt, "$"),
+                replacement = "",
+                x = file
+            )
+        }
+        switch(
+            EXPR = whatPkg,
+            "base" = {
+                whatFun <- "writeLines"
+                args <- list(
+                    "text" = object,
+                    "con" = file
+                )
+            },
+            "data.table" = {
+                whatFun <- "fwrite"
+                args <- list(
+                    "x" = as.list(object),
+                    "file" = file,
+                    "append" = append,
+                    "sep" = "\n"
+                )
+            },
+            "readr" = {
+                ## readr v1.4 changed "path" to "file".
+                whatFun <- "write_lines"
+                args <- list(
+                    "x" = object,
+                    "file" = file,
+                    "append" = append
+                )
+            }
+        )
         if (!isTRUE(quiet)) {
             alert(sprintf(
                 fmt = paste(
@@ -154,40 +195,16 @@ NULL
                 whatPkg, whatFun
             ))
         }
+        what <- get(x = whatFun, envir = asNamespace(whatPkg), inherits = TRUE)
+        assert(is.function(what))
+        do.call(what = what, args = args)
         if (isTRUE(compress)) {
-            ## nocov start
-            file <- sub(
-                pattern = paste0("\\.", compressExt, "$"),
-                replacement = "",
-                x = file
-            )
-            ## nocov end
-        }
-        args <- switch(
-            EXPR = whatPkg,
-            "base" = {
-                ## nocov start
-                writeLines(text = object, con = file)
-                ## nocov end
-            },
-            "readr" = {
-                readr::write_lines(
-                    x = object,
-                    ## readr v1.4 changed "path" to "file".
-                    file = file,
-                    append = append
-                )
-            }
-        )
-        if (isTRUE(compress)) {
-            ## nocov start
             file <- compress(
                 file = file,
                 ext = compressExt,
                 remove = TRUE,
                 overwrite = TRUE
             )
-            ## nocov end
         }
         file <- realpath(file)
         invisible(file)
@@ -208,13 +225,11 @@ setMethod(
 
 
 
-## FIXME ADD SUPPORT FOR BASE EXPORT HERE TOO?
-
 ## This method covers standard `matrix` but is also intended to work for
 ## `data.table`, `tbl_df`, and `DataFrame` classes. Note that `rio::export()`
 ## does not preserve row names by default, so we're ensuring row names get
 ## coerced to "rowname" column consistently here.
-## Updated 2021-01-05.
+## Updated 2021-01-13.
 `export,matrix` <-  # nolint
     function(
         object,
@@ -227,12 +242,15 @@ setMethod(
         quiet
     ) {
         validObject(object)
-        object <- as.data.frame(object)
         whatPkg <- match.arg(
-            arg = getOption("acid.export.engine", default = "vroom"),
-            choices = c("data.table", "readr", "vroom")
+            arg = getOption(
+                x = "acid.export.engine",
+                default = .defaultDelimEngine
+            ),
+            choices = .delimEngines
         )
         requireNamespaces(whatPkg)
+        object <- as.data.frame(object)
         verbose <- getOption("acid.verbose", default = FALSE)
         assert(
             hasLength(object),
@@ -323,62 +341,73 @@ setMethod(
                 choices = c("csv", "tsv")
             )
         }
-        if (identical(whatPkg, "data.table")) {
-            whatFun <- "fwrite"
-            what <- data.table::fwrite
-            args <- list(
-                x = object,
-                file = file,
-                append = FALSE,
-                col.names = colnames,
-                row.names = FALSE,
-                verbose = verbose
-            )
-            args[["sep"]] <- switch(
-                EXPR = ext,
-                "csv" = ",",
-                "tsv" = "\t"
-            )
-        } else if (identical(whatPkg, "readr")) {
-            whatFun <- switch(
-                EXPR = ext,
-                "csv" = "write_csv",
-                "tsv" = "write_tsv"
-            )
-            what <- get(
-                x = whatFun,
-                envir = asNamespace(whatPkg),
-                inherits = TRUE
-            )
-            assert(is.function(what))
-            ## readr v1.4 changed "path" to "file".
-            args <- list(
-                x = object,
-                file = file,
-                append = FALSE,
-                col_names = colnames
-            )
-        }  else if (identical(whatPkg, "vroom")) {
-            whatFun <- "vroom_write"
-            what <- get(
-                x = whatFun,
-                envir = asNamespace(whatPkg),
-                inherits = TRUE
-            )
-            assert(is.function(what))
-            args <- list(
-                x = object,
-                path = file,
-                col_names = colnames,
-                append = FALSE,
-                progress = FALSE
-            )
-            args[["delim"]] <- switch(
-                EXPR = ext,
-                "csv" = ",",
-                "tsv" = "\t"
-            )
-        }
+        switch(
+            EXPR = whatPkg,
+            "base" = {
+                args <- list(
+                    "x" = object,
+                    "file" = file,
+                    "append" = FALSE,
+                    "col.names" = colnames,
+                    "row.names" = FALSE
+                )
+                switch(
+                    EXPR = ext,
+                    "csv" = {
+                        whatFun <- "write.csv"
+                    },
+                    "tsv" = {
+                        whatFun <- "write.table"
+                        args[["sep"]] <- "\t"
+                    }
+                )
+            },
+            "data.table" = {
+                whatFun <- "fwrite"
+                args <- list(
+                    "x" = object,
+                    "file" = file,
+                    "append" = FALSE,
+                    "col.names" = colnames,
+                    "row.names" = FALSE,
+                    "sep" = switch(
+                        EXPR = ext,
+                        "csv" = ",",
+                        "tsv" = "\t"
+                    ),
+                    "verbose" = verbose
+                )
+            },
+            "readr" = {
+                whatFun <- switch(
+                    EXPR = ext,
+                    "csv" = "write_csv",
+                    "tsv" = "write_tsv"
+                )
+                ## readr v1.4 changed "path" to "file".
+                args <- list(
+                    "x" = object,
+                    "file" = file,
+                    "append" = FALSE,
+                    "col_names" = colnames
+                )
+            },
+            "vroom" = {
+                whatFun <- "vroom_write"
+                args <- list(
+                    "x" = object,
+                    "path" = file,
+                    "append" = FALSE,
+                    "col_names" = colnames,
+                    "delim" = switch(
+                        EXPR = ext,
+                        "csv" = ",",
+                        "tsv" = "\t"
+                    ),
+                    "progress" = FALSE
+                )
+            }
+        )
         if (!isTRUE(quiet)) {
             alert(sprintf(
                 fmt = paste(
@@ -389,6 +418,8 @@ setMethod(
                 whatPkg, whatFun
             ))
         }
+        what <- get(x = whatFun, envir = asNamespace(whatPkg), inherits = TRUE)
+        assert(is.function(what))
         do.call(what = what, args = args)
         if (isTRUE(compress)) {
             file <- compress(
