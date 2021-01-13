@@ -114,7 +114,7 @@ NULL
         }
         if (isTRUE(append)) {
             assert(!identical(whatPkg, "base"))
-            overwrite = FALSE
+            overwrite <- FALSE
         }
         if (isTRUE(overwrite)) {
             assert(isFALSE(append))
