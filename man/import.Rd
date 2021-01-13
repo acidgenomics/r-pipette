@@ -11,6 +11,7 @@ import(
   colnames = TRUE,
   sheet = 1L,
   skip = 0L,
+  comment = "",
   makeNames = getOption("acid.import.make.names", default = syntactic::makeNames),
   metadata = getOption("acid.import.metadata", default = FALSE),
   quiet = getOption("acid.quiet", default = FALSE)
@@ -43,8 +44,16 @@ position of the sheet). Defaults to the first sheet.}
 \emph{Applies to delimited file (CSV, TSV), Excel Workbook, or lines.}
 Number of lines to skip.}
 
+\item{comment}{\code{character(1)}.
+Comment character to detect at beginning of line, which will skip when
+parsing file. Use \code{""} to disable interpretation of comments, which is
+particularly
+useful when parsing lines.
+\emph{Applies to plain text delimited and source code lines only.}}
+
 \item{makeNames}{\code{function}.
-Apply syntactic naming function to (column) names.}
+Apply syntactic naming function to (column) names.
+\emph{Does not apply to import of R data files.}}
 
 \item{metadata}{\code{list}.
 Metadata.}
@@ -114,7 +123,7 @@ arguments. Remote URLs and compressed files are supported. If you need more
 complex import settings, just call the wrapped importer directly instead.
 }
 \note{
-Updated 2021-01-05.
+Updated 2021-01-13.
 }
 \section{Row and column names}{
 
