@@ -5,13 +5,16 @@
 \alias{naStrings}
 \title{NA strings}
 \format{
-An object of class \code{character} of length 5.
+An object of class \code{character} of length 9.
 }
 \usage{
 naStrings
 }
 \description{
 NA strings
+}
+\note{
+Updated 2021-01-13.
 }
 \examples{
 naStrings
