@@ -295,7 +295,7 @@ import <- function(
             "ext" = ext,
             "metadata" = metadata,
             "nMax" = nMax,
-            "skip" = skip,
+            "skip" = skip
         )
     } else if (isSubset(ext, .extGroup[["excel"]])) {
         fun <- .importExcel
