@@ -104,7 +104,9 @@ NULL
             choices = .delimEngines
         )
         ## The vroom engine currently doesn't offer `write_lines` support,
-        ## so fall back to readr (if installed), and then base R.
+        ## so fall back to readr (if installed), and then base R. Jim is
+        ## currently working on `vroom_write_lines()`:
+        ## https://github.com/r-lib/vroom/issues/291
         if (whatPkg == "vroom") {
             if (isInstalled("readr")) {
                 whatPkg <- "readr"
