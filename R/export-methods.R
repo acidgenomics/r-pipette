@@ -208,6 +208,8 @@ setMethod(
 
 
 
+## FIXME ADD SUPPORT FOR BASE EXPORT HERE TOO?
+
 ## This method covers standard `matrix` but is also intended to work for
 ## `data.table`, `tbl_df`, and `DataFrame` classes. Note that `rio::export()`
 ## does not preserve row names by default, so we're ensuring row names get
