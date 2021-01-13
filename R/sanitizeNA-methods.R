@@ -43,21 +43,22 @@ setMethod(
 
 
 ## Note that names will be kept here after the gsub call.
-## Updated 2020-09-14.
+## Updated 2021-01-13.
 `sanitizeNA,character` <-  # nolint
     function(object) {
         patterns <- c(
             "^$",
-            "^N/A$",
-            "^NA$",
-            "^NULL$",
             "^\\s+$",
-            "^none available$"
+            "^n/a$",
+            "^na$",
+            "^none available$",
+            "^null$"
         )
         gsub(
             pattern = paste(patterns, collapse = "|"),
             replacement = NA_character_,
-            x = object
+            x = object,
+            ignore.case = TRUE
         )
     }
 
