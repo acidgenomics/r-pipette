@@ -288,33 +288,39 @@ import <- function(
     )
     if (isSubset(ext, .extGroup[["delim"]])) {
         fun <- .importDelim
-        args <- c(
-            args,
-            "colnames" = colnames,
-            "comment" = comment,
-            "ext" = ext,
-            "metadata" = metadata,
-            "nMax" = nMax,
-            "skip" = skip
+        args <- append(
+            x = args,
+            values = list(
+                "colnames" = colnames,
+                "comment" = comment,
+                "ext" = ext,
+                "metadata" = metadata,
+                "nMax" = nMax,
+                "skip" = skip
+            )
         )
     } else if (isSubset(ext, .extGroup[["excel"]])) {
         fun <- .importExcel
-        args <- c(
-            args,
-            "colnames" = colnames,
-            "metadata" = metadata,
-            "nMax" = nMax,
-            "sheet" = sheet,
-            "skip" = skip
+        args <- append(
+            x = args,
+            values = list(
+                "colnames" = colnames,
+                "metadata" = metadata,
+                "nMax" = nMax,
+                "sheet" = sheet,
+                "skip" = skip
+            )
         )
     } else if (identical(ext, "pzfx")) {
         ## GraphPad Prism project.
         ## Note that Prism files always contain column names.
         fun <- .importPZFX
-        args <- c(
-            args,
-            "metadata" = metadata,
-            "sheet" = sheet
+        args <- append(
+            x = args,
+            values = list(
+                "metadata" = metadata,
+                "sheet" = sheet
+            )
         )
     } else if (identical(ext, "rds")) {
         fun <- .importRDS
@@ -328,32 +334,34 @@ import <- function(
         fun <- .importGRP
     } else if (identical(ext, "json")) {
         fun <- .importJSON
-        args <- c(args, "metadata" = metadata)
+        args <- append(x = args, values = list("metadata" = metadata))
     } else if (isSubset(ext, .extGroup[["yaml"]])) {
         fun <- .importYAML
-        args <- c(args, "metadata" = metadata)
+        args <- append(x = args, values = list("metadata" = metadata))
     } else if (identical(ext, "mtx")) {
         ## We're always requiring row and column sidecar files for MTX.
         fun <- .importMTX
-        args <- c(args, "metadata" = metadata)
+        args <- append(x = args, values = list("metadata" = metadata))
     } else if (identical(ext, "counts")) {
         ## bcbio counts format always contains row and column names.
         fun <- .importBcbioCounts
-        args <- c(args, "metadata" = metadata)
+        args <- append(x = args, values = list("metadata" = metadata))
     } else if (isSubset(ext, .extGroup[["lines"]])) {
         fun <- .importLines
-        args <- c(
-            args,
-            "comment" = comment,
-            "nMax" = nMax,
-            "skip" = skip
+        args <- append(
+            x = args,
+            values = list(
+                "comment" = comment,
+                "nMax" = nMax,
+                "skip" = skip
+            )
         )
     } else if (isSubset(ext, .extGroup[["rtracklayer"]])) {
         fun <- .rtracklayerImport
-        args <- c(args, "metadata" = metadata)
+        args <- append(x = args, values = list("metadata" = metadata))
     } else if (isSubset(ext, .extGroup[["rio"]])) {
         fun <- .rioImport
-        args <- c(args, "metadata" = metadata)
+        args <- append(x = args, values = list("metadata" = metadata))
     } else {
         stop(sprintf(
             "Import of '%s' failed. '%s' extension is not supported.",
