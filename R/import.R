@@ -490,7 +490,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
                 "blank.lines.skip" = TRUE,
                 "comment.char" = comment,
                 "na.strings" = naStrings,
-                "nrows" = nrows,
+                "nrows" = nMax,
                 "skip" = skip,
                 "stringsAsFactors" = FALSE,
                 "strip.white" = TRUE
