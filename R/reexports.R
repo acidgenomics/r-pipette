@@ -36,6 +36,10 @@ S4Vectors::DataFrame
 #' @export
 data.table::data.table
 
+#' @importFrom data.table rbindlist
+#' @export
+data.table::rbindlist
+
 
 
 #' @importFrom syntactic makeNames
