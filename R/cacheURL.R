@@ -29,7 +29,7 @@
 cacheURL <- function(
     url,
     fileName = basename(url),
-    pkg = packageName(),
+    pkg = "BiocFileCache",
     update = FALSE,
     ask = FALSE,
     verbose = TRUE
