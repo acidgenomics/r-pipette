@@ -9,13 +9,13 @@ test_that("DataFrame", {
     expect_identical(
         object = lapply(object, class),
         expected = list(
-            broadClass = "factor",
-            description = "character",
-            geneBiotype = "character",
-            geneID = "character",
-            geneIDVersion = "character",
-            geneName = "character",
-            seqCoordSystem = "character"
+            "broadClass" = "factor",
+            "description" = "character",
+            "geneBiotype" = "character",
+            "geneId" = "character",
+            "geneIdVersion" = "character",
+            "geneName" = "character",
+            "seqCoordSystem" = "character"
         )
     )
 })
@@ -27,13 +27,13 @@ test_that("GRanges", {
     expect_identical(
         object = lapply(mcols(object), class),
         expected = list(
-            broadClass = "factor",
-            description = "character",
-            geneBiotype = "character",
-            geneID = "character",
-            geneIDVersion = "character",
-            geneName = "character",
-            seqCoordSystem = "character"
+            "broadClass" = "factor",
+            "description" = "character",
+            "geneBiotype" = "character",
+            "geneId" = "character",
+            "geneIdVersion" = "character",
+            "geneName" = "character",
+            "seqCoordSystem" = "character"
         )
     )
 })

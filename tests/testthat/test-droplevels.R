@@ -34,14 +34,14 @@ test_that("GRanges", {
     expect_identical(
         object = lapply(mcols(x), class),
         expected = list(
-            broadClass = Rle,
-            description = Rle,
-            entrezID = AsIs,
-            geneBiotype = Rle,
-            geneID = Rle,
-            geneIDVersion = Rle,
-            geneName = Rle,
-            seqCoordSystem = Rle
+            "broadClass" = Rle,
+            "description" = Rle,
+            "entrezId" = AsIs,
+            "geneBiotype" = Rle,
+            "geneId" = Rle,
+            "geneIdVersion" = Rle,
+            "geneName" = Rle,
+            "seqCoordSystem" = Rle
         )
     )
 })
