@@ -11,6 +11,7 @@
 \alias{url.exists}
 \alias{DataFrame}
 \alias{data.table}
+\alias{rbindlist}
 \alias{makeNames}
 \alias{column_to_rownames}
 \alias{rownames_to_column}
@@ -24,7 +25,7 @@ below to see their documentation.
 \describe{
   \item{AcidBase}{\code{\link[AcidBase]{compress}}, \code{\link[AcidBase:compress]{decompress}}, \code{\link[AcidBase]{download}}, \code{\link[AcidBase]{pasteURL}}}
 
-  \item{data.table}{\code{\link[data.table]{data.table}}}
+  \item{data.table}{\code{\link[data.table]{data.table}}, \code{\link[data.table]{rbindlist}}}
 
   \item{RCurl}{\code{\link[RCurl]{getURL}}, \code{\link[RCurl]{url.exists}}}
 

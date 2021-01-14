@@ -3,6 +3,7 @@
 - `cacheURL`: Improved message. Now only showing when file gets cached into
   package cache via BiocFileCache. Now defaults to caching into BiocFileCache
   directory instead of pipette.
+- Now exporting useful `rbindlist` function from data.table.
 
 ## pipette 0.5.1 (2021-01-13)
 

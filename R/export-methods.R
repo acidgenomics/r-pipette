@@ -295,7 +295,7 @@ setMethod(
         keep <- bapply(X = object, FUN = is.atomic)
         if (!all(keep)) {
             ## nocov start
-            ## This is used to handle rowData with nested entrezIDs.
+            ## This is used to handle rowData with nested entrez identifiers.
             fail <- names(keep)[!keep]
             alertWarning(sprintf(
                 "Dropping non-atomic columns: {.var %s}.",
