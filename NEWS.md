@@ -1,3 +1,9 @@
+## pipette 0.5.2 (2021-01-14)
+
+- `cacheURL`: Improved message. Now only showing when file gets cached into
+  package cache via BiocFileCache. Now defaults to caching into BiocFileCache
+  directory instead of pipette.
+
 ## pipette 0.5.1 (2021-01-13)
 
 ### Minor changes
