@@ -84,7 +84,7 @@ Collate:
     'loadDataAsName.R'
     'loadRemoteData.R'
     'localOrRemoteFile.R'
-    'matchRowNameColumn-methods.R'
+    'matchRownameColumn-methods.R'
     'metadata2-methods.R'
     'package.R'
     'reexports.R'
