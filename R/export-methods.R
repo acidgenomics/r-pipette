@@ -76,7 +76,6 @@
 NULL
 
 
-
 ## Updated 2021-01-13.
 `export,character` <-  # nolint
     function(
@@ -227,11 +226,16 @@ setMethod(
 
 
 
-## This method covers standard `matrix` but is also intended to work for
-## `data.table`, `tbl_df`, and `DataFrame` classes. Note that `rio::export()`
-## does not preserve row names by default, so we're ensuring row names get
-## coerced to "rowname" column consistently here.
-## Updated 2021-01-13.
+#' export matrix method
+#'
+#' @note Updated 2021-01-13.
+#' @noRd
+#'
+#' @details
+#' This method covers standard `matrix` but is also intended to work for
+#' `data.table`, `tbl_df`, and `DataFrame` classes. Note that `rio::export()`
+#' does not preserve row names by default, so we're ensuring row names get
+#' coerced to "rowname" column consistently here.
 `export,matrix` <-  # nolint
     function(
         object,
@@ -479,10 +483,15 @@ setMethod(
 
 
 
-## Note that "file" is referring to the matrix file.
-## The correponding column and row sidecar files are generated automatically.
-## Consider adding HDF5 support in a future update.
-## Updated 2020-12-15.
+#' export sparseMatrix method
+#'
+#' @note Updated 2020-12-15.
+#' @noRd
+#'
+#' @details
+#' Note that "file" is referring to the matrix file.
+#' The correponding column and row sidecar files are generated automatically.
+#' Consider adding HDF5 support in a future update.
 `export,sparseMatrix` <-  # nolint
     function(
         object,
@@ -615,7 +624,10 @@ setMethod(
 
 
 
-## Updated 2020-08-11.
+#' Export assays (in SummarizedExperiment)
+#'
+#' @note Updated 2020-08-11.
+#' @noRd
 .exportAssays <-
     function(object, name, dir, compress, overwrite, quiet) {
         validObject(object)
@@ -663,7 +675,10 @@ setMethod(
 
 
 
-## Updated 2020-08-11.
+#' Export column data (in SummarizedExperiment)
+#'
+#' @note Updated 2020-08-11.
+#' @noRd
 .exportColData <-
     function(object, ext, dir, overwrite, quiet) {
         validObject(object)
@@ -684,9 +699,14 @@ setMethod(
 
 
 
-## NOTE: The standard `rowData()` output is okay but doesn't include genomic
-## ranges coordinates. That's why we're coercing from `rowRanges()` for RSE.
-## Updated 2020-08-11.
+#' Export row data  (in SummarizedExperiment)
+#'
+#' @note Updated 2020-08-11.
+#' @noRd
+#'
+#' @details
+#' The standard `rowData()` output is okay but doesn't include genomic ranges
+#' coordinates. That's why we're coercing from `rowRanges()` for RSE.
 .exportRowData <-
     function(object, ext, dir, overwrite, quiet) {
         validObject(object)
@@ -716,12 +736,16 @@ setMethod(
 
 
 
-## Ensure the assays list is always named. Note that valid SE objects don't have
-## to contain named assays (e.g. DESeqTransform). In the event that an SE object
-## contains a single, unnamed assay, we make sure to rename it internally to
-## "assay" before exporting.
-##
-## Updated 2020-08-11.
+#' export SummarizedExperiment method
+#'
+#' @note Updated 2020-08-11
+#' @noRd
+#'
+#' @details
+#' Ensure the assays list is always named. Note that valid SE objects don't have
+#' to contain named assays (e.g. DESeqTransform). In the event that an SE object
+#' contains a single, unnamed assay, we make sure to rename it internally to
+#' "assay" before exporting.
 `export,SummarizedExperiment` <-  # nolint
     function(
         object,
@@ -805,7 +829,14 @@ setMethod(
 
 
 
-## Updated 2020-08-11.
+#' export SingleCellExperiment method
+#'
+#' @note Updated 2020-08-11.
+#' @noRd
+#'
+#' @details
+#' This method extends `SummarizedExperiment` but also handles export of the
+#' `reducedDims` slot (i.e. containing UMAP, tSNE, and PCA).
 `export,SingleCellExperiment` <-  # nolint
     function(
         object,
