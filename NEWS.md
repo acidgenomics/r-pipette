@@ -1,9 +1,10 @@
-## pipette 0.5.2 (2021-01-14)
+## pipette 0.5.2 (2021-01-15)
 
 - `cacheURL`: Improved message. Now only showing when file gets cached into
   package cache via BiocFileCache. Now defaults to caching into BiocFileCache
   directory instead of pipette.
 - Now exporting useful `rbindlist` function from data.table.
+- Renamed `matchRowNameColumn` to `matchRownameColumn` (note case).
 
 ## pipette 0.5.1 (2021-01-13)
 

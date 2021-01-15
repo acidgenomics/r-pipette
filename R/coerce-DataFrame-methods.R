@@ -71,14 +71,14 @@ setMethod(
 
 
 
-## Updated 2019-07-19.
+## Updated 2021-01-15.
 `coerce,ANY,DataFrame` <-  # nolint
     function(from) {
         to <- as.data.frame(from, stringsAsFactors = FALSE)
         to <- as(to, "DataFrame")
         ## Move row names automatically, if defined.
         if (!hasRownames(to)) {
-            rncol <- matchRowNameColumn(to)
+            rncol <- matchRownameColumn(to)
             if (is.character(rncol) && length(rncol) == 1L) {
                 rownames(to) <- as.character(to[[rncol]])
                 to[[rncol]] <- NULL

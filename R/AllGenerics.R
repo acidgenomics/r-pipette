@@ -105,10 +105,10 @@ NULL
 
 
 
-#' @rdname matchRowNameColumn
-#' @name matchRowNameColumn
-#' @importFrom AcidGenerics matchRowNameColumn
-#' @usage matchRowNameColumn(object, ...)
+#' @rdname matchRownameColumn
+#' @name matchRownameColumn
+#' @importFrom AcidGenerics matchRownameColumn
+#' @usage matchRownameColumn(object, ...)
 #' @export
 NULL
 

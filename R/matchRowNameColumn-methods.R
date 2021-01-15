@@ -4,7 +4,7 @@
 #'
 #' The data.table package uses "rn" by default, whereas tibble uses "rowname".
 #'
-#' @name matchRowNameColumn
+#' @name matchRownameColumn
 #' @note Updated 2020-01-18.
 #'
 #' @inheritParams AcidRoxygen::params
@@ -24,16 +24,16 @@
 #' data(data.table, tbl_df, package = "AcidTest")
 #'
 #' ## data.table ====
-#' matchRowNameColumn(data.table)
+#' matchRownameColumn(data.table)
 #'
 #' ## tbl_df ====
-#' matchRowNameColumn(tbl_df)
+#' matchRownameColumn(tbl_df)
 NULL
 
 
 
 ## Updated 2020-08-11.
-`matchRowNameColumn,data.frame` <-  # nolint
+`matchRownameColumn,data.frame` <-  # nolint
     function(
         object,
         choices = c(
@@ -68,24 +68,24 @@ NULL
 
 
 
-#' @rdname matchRowNameColumn
+#' @rdname matchRownameColumn
 #' @export
 setMethod(
-    f = "matchRowNameColumn",
+    f = "matchRownameColumn",
     signature = signature("data.frame"),
-    definition = `matchRowNameColumn,data.frame`
+    definition = `matchRownameColumn,data.frame`
 )
 
 
 
-`matchRowNameColumn,DataFrame` <- `matchRowNameColumn,data.frame`  # nolint
+`matchRownameColumn,DataFrame` <- `matchRownameColumn,data.frame`  # nolint
 
 
 
-#' @rdname matchRowNameColumn
+#' @rdname matchRownameColumn
 #' @export
 setMethod(
-    f = "matchRowNameColumn",
+    f = "matchRownameColumn",
     signature = signature("DataFrame"),
-    definition = `matchRowNameColumn,DataFrame`
+    definition = `matchRownameColumn,DataFrame`
 )
