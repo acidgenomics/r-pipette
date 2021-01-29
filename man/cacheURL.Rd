@@ -6,7 +6,6 @@
 \usage{
 cacheURL(
   url,
-  fileName = basename(url),
   pkg = "BiocFileCache",
   update = FALSE,
   ask = FALSE,
@@ -16,10 +15,6 @@ cacheURL(
 \arguments{
 \item{url}{\code{character(1)}.
 Uniform Resource Locator (URL).}
-
-\item{fileName}{\code{character(1)}.
-File name to store internally in \code{BiocFileCache}.
-Defaults to basename of URL.}
 
 \item{pkg}{\code{character(1)}.
 Package name.}
@@ -42,7 +37,7 @@ Cached file path on disk.
 Download and cache a file using BiocFileCache
 }
 \note{
-Updated 2021-01-14.
+Updated 2021-01-29.
 }
 \examples{
 url <- pasteURL(
@@ -52,4 +47,9 @@ url <- pasteURL(
 )
 file <- cacheURL(url)
 print(file)
+}
+\seealso{
+\itemize{
+\item \code{BiocFileCache::bfcinfo()}.
+}
 }
