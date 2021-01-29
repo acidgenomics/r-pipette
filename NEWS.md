@@ -1,4 +1,19 @@
+## pipette 0.5.3 (2021-01-29)
+
+### Major changes
+
+- `cacheURL`: Fix bug that resulted in different remote URLs with the same
+  base name being cached as the same object internally by BiocFileCache. Now
+  URLs should always be cached uniquely.
+
+### Minor changes
+
+- Migrated test data from "tests.acidgenomics.com" to
+  "r.acidgenomics.com/testdata".
+
 ## pipette 0.5.2 (2021-01-15)
+
+### Minor changes
 
 - `cacheURL`: Improved message. Now only showing when file gets cached into
   package cache via BiocFileCache. Now defaults to caching into BiocFileCache
