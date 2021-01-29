@@ -22,9 +22,10 @@ test_that("IRanges", {
 })
 
 test_that("GRanges", {
-    rr <- rowRanges(rse)
-    expect_s4_class(rr, "GRanges")
-    x <- droplevels(rr)
+    gr <- rowRanges(rse)
+    names(mcols(gr)) <- camelCase(names(mcols(gr)), strict = TRUE)
+    expect_s4_class(gr, "GRanges")
+    x <- droplevels(gr)
     expect_s4_class(x, "GRanges")
     if (packageVersion("GenomicRanges") < "1.31") {
         AsIs <- "AsIs"  # nolint

@@ -2,6 +2,8 @@ context("atomize")
 
 test_that("DataFrame", {
     data <- rowData(rse)
+    ## Fix for gene identifier rename in AcidTest.
+    colnames(data) <- camelCase(colnames(data), strict = TRUE)
     rownames(data) <- rownames(rse)
     object <- atomize(data)
     expect_s4_class(object, "DataFrame")
@@ -21,7 +23,10 @@ test_that("DataFrame", {
 })
 
 test_that("GRanges", {
-    object <- atomize(rowRanges(rse))
+    gr <- rowRanges(rse)
+    names(mcols(gr)) <-
+        camelCase(names(mcols(gr)), strict = TRUE)
+    object <- atomize(gr)
     expect_s4_class(object, "GRanges")
     expect_true(hasNames(object))
     expect_identical(
