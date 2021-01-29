@@ -1,8 +1,8 @@
 Package: pipette
 Title: Pipette Biological Data In and Out of R
 Description: Input/output functions for biological data formats.
-Version: 0.5.2
-Date: 2021-01-15
+Version: 0.5.3
+Date: 2021-01-29
 Authors@R: c(
     person(
         "Michael", "Steinbaugh",
@@ -22,9 +22,9 @@ License: GPL-3
 Encoding: UTF-8
 Depends: R (>= 4.0)
 Imports:
-    AcidBase (>= 0.3.1),
-    AcidCLI (>= 0.0.4),
-    AcidGenerics (>= 0.5.1),
+    AcidBase (>= 0.3.4),
+    AcidCLI (>= 0.0.5),
+    AcidGenerics (>= 0.5.3),
     BiocFileCache,
     GenomicRanges,
     IRanges,
@@ -36,7 +36,7 @@ Imports:
     data.table (>= 1.13.6),
     goalie (>= 0.4.14),
     methods,
-    rappdirs (>= 0.3),
+    rappdirs (>= 0.3.2),
     stringr (>= 1.4),
     syntactic (>= 0.4.3),
     tibble (>= 3.0),
