@@ -23,11 +23,11 @@ test_that("URLs with the same base name", {
         "Homo_sapiens.GRCh38.cdna.all.fa.gz",
         protocol = "ftp"
     )
-    lines <- import(file = url1, format = "lines")
-    expect_identical(
-        object = length(lines),
-        expected = 5063317L
-    )
+    ## > lines <- import(file = url1, format = "lines")
+    ## > expect_identical(
+    ## >     object = length(lines),
+    ## >     expected = 5063317L
+    ## > )
     ## SHA256: 0adbf00421ad63b7139481cefe03d9e3d226945696b17e48a4396c5d663ee7b0
     url2 <- pasteURL(
         "ftp.ensembl.org",
@@ -39,11 +39,11 @@ test_that("URLs with the same base name", {
         "Homo_sapiens.GRCh38.cdna.all.fa.gz",
         protocol = "ftp"
     )
-    lines <- import(file = url2, format = "lines")
-    expect_identical(
-        object = length(lines),
-        expected = 5883368L
-    )
+    ## > lines <- import(file = url2, format = "lines")
+    ## > expect_identical(
+    ## >     object = length(lines),
+    ## >     expected = 5883368L
+    ## > )
     cacheFile1 <- cacheURL(url1)
     cacheFile2 <- cacheURL(url2)
     expect_true(file.exists(cacheFile1))
