@@ -31,8 +31,6 @@ Imports:
     Matrix (>= 1.3),
     RCurl (>= 1.98),
     S4Vectors,
-    SingleCellExperiment,
-    SummarizedExperiment,
     data.table (>= 1.13.6),
     digest (>= 0.6),
     goalie (>= 0.4.14),
@@ -66,10 +64,8 @@ Collate:
     'cacheURL.R'
     'checksums.R'
     'coerce-DataFrame-methods.R'
-    'coerce-SummarizedExperiment-methods.R'
     'coerce-data.frame-methods.R'
     'coerce-data.table-methods.R'
-    'coerce-list-methods.R'
     'coerce-tbl_df-methods.R'
     'data.frame-internal.R'
     'decode-methods.R'
