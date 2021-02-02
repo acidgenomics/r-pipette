@@ -483,7 +483,7 @@ setMethod(
 
 
 
-#' export sparseMatrix method
+#' Export sparseMatrix method
 #'
 #' @note Updated 2020-12-15.
 #' @noRd
