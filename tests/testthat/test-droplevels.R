@@ -3,6 +3,7 @@ context("droplevels")
 Rle <- structure("Rle", package = "S4Vectors")  # nolint
 
 test_that("DataFrame", {
+    ## FIXME REWORK.
     cd <- colData(rse)
     expect_s4_class(cd, "DataFrame")
     x <- droplevels(cd)
@@ -45,22 +46,4 @@ test_that("GRanges", {
             "seqCoordSystem" = Rle
         )
     )
-})
-
-test_that("SummarizedExperiment", {
-    x <- droplevels(rse)
-    expect_s4_class(x, "RangedSummarizedExperiment")
-    ## Check for factor columns.
-    ok <- any(vapply(
-        X = decode(rowData(x)),
-        FUN = is.factor,
-        FUN.VALUE = logical(1L)
-    ))
-    expect_true(ok)
-    ok <- any(vapply(
-        X = decode(colData(x)),
-        FUN = is.factor,
-        FUN.VALUE = logical(1L)
-    ))
-    expect_true(ok)
 })
