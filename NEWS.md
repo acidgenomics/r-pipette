@@ -1,4 +1,10 @@
-## pipette 0.5.3 (2021-01-29)
+## pipette 0.5.3 (2021-02-02)
+
+### New functions
+
+- Added `md5` and `sha256` functions, that use the digest package internally.
+  Previously these were defined in the AcidGenomes package, but have migrated
+  here for file management consistency.
 
 ### Major changes
 
