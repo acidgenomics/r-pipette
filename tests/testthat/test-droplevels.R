@@ -3,17 +3,22 @@ context("droplevels")
 Rle <- structure("Rle", package = "S4Vectors")  # nolint
 
 test_that("DataFrame", {
-    x <- DFrame(
-        "aaa" = c("a", "a", "b", "b"),
-        "bbb" = c("b", "b", "c", "c")
+    x <- DataFrame(
+        "aaa" = factor(
+            x = c("a", "a", "b", "b"),
+            levels = c("a", "b", "c")
+        ),
+        "bbb" = as.factor(c("b", "b", "c", "c"))
     )
-
-    expect_s4_class(x, "DataFrame")
     x <- droplevels(x)
     expect_s4_class(x, "DataFrame")
+    expect_true(all(bapply(X = x, FUN = is.factor)))
     expect_identical(
-        object = lapply(x, class),
-        expected = list(condition = "factor")
+        object = lapply(X = x, FUN = levels),
+        expected = list(
+            "aaa" = c("a", "b"),
+            "bbb" = c("b", "c")
+        )
     )
 })
 
@@ -26,16 +31,12 @@ test_that("IRanges", {
 })
 
 test_that("GRanges", {
-    gr <- rowRanges(rse)
-    names(mcols(gr)) <- camelCase(names(mcols(gr)), strict = TRUE)
-    expect_s4_class(gr, "GRanges")
-    x <- droplevels(gr)
+    x <- GRanges
+    mcols(x)[[1L]] <- as.factor(mcols(x)[[1L]])
+    expect_true(any(bapply(X = mcols(x), FUN = is.factor)))
+    x <- droplevels(x)
     expect_s4_class(x, "GRanges")
-    if (packageVersion("GenomicRanges") < "1.31") {
-        AsIs <- "AsIs"  # nolint
-    } else {
-        AsIs <- "list"  # nolint
-    }
+    expect_true(any(bapply(X = mcols(x), FUN = is.factor)))
     expect_identical(
         object = lapply(mcols(x), class),
         expected = list(
