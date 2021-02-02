@@ -1,5 +1,6 @@
 #' @importClassesFrom GenomicRanges GenomicRanges
 #' @importClassesFrom IRanges IRanges Ranges
+#' @importClassesFrom Matrix Matrix
 #' @importClassesFrom S4Vectors DataFrame
 NULL
 

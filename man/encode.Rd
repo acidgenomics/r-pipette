@@ -4,7 +4,6 @@
 \alias{encode}
 \alias{encode,DataFrame-method}
 \alias{encode,Ranges-method}
-\alias{encode,SummarizedExperiment-method}
 \title{Encode using run-length encoding}
 \usage{
 encode(x, ...)
@@ -12,8 +11,6 @@ encode(x, ...)
 \S4method{encode}{DataFrame}(x)
 
 \S4method{encode}{Ranges}(x)
-
-\S4method{encode}{SummarizedExperiment}(x)
 }
 \arguments{
 \item{x}{Object.}
