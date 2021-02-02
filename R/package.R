@@ -4,3 +4,7 @@
 #'
 #' @keywords internal
 "_PACKAGE"
+
+
+
+## FIXME MOVE ALL MATRIX METHODS TO ACIDSINGLECELL.
