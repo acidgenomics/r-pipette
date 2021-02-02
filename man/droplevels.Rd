@@ -3,14 +3,11 @@
 \name{droplevels}
 \alias{droplevels}
 \alias{droplevels,Ranges-method}
-\alias{droplevels,SummarizedExperiment-method}
 \title{Drop unused levels from factors}
 \usage{
 droplevels(x, ...)
 
 \S4method{droplevels}{Ranges}(x)
-
-\S4method{droplevels}{SummarizedExperiment}(x)
 }
 \arguments{
 \item{x}{Object.}
@@ -25,17 +22,12 @@ The function \code{droplevels} is used to drop unused levels from a
   \code{\link[base]{factor}} or, more commonly, from factors in a data frame.
 }
 \note{
-Updated 2020-04-10.
+Updated 2021-02-02.
 }
 \examples{
-data(RangedSummarizedExperiment, package = "AcidTest")
+data(GRanges, package = "AcidTest")
 
 ## Ranges ====
-rse <- RangedSummarizedExperiment
-object <- SummarizedExperiment::rowRanges(rse)
-S4Vectors::droplevels(object)
-
-## SummarizedExperiment ====
-object <- RangedSummarizedExperiment
+object <- GRanges
 S4Vectors::droplevels(object)
 }
