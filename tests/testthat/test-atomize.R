@@ -1,44 +1,19 @@
 context("atomize")
 
 test_that("DataFrame", {
-    data <- rowData(rse)
-    ## Fix for gene identifier rename in AcidTest.
-    colnames(data) <- camelCase(colnames(data), strict = TRUE)
-    rownames(data) <- rownames(rse)
-    object <- atomize(data)
+    object <- encode(df)
+    expect_false(any(bapply(X = object, FUN = is.atomic)))
+    object <- atomize(object)
+    expect_true(all(bapply(X = object, FUN = is.atomic)))
     expect_s4_class(object, "DataFrame")
     expect_true(hasRownames(object))
-    expect_identical(
-        object = lapply(object, class),
-        expected = list(
-            "broadClass" = "factor",
-            "description" = "character",
-            "geneBiotype" = "character",
-            "geneId" = "character",
-            "geneIdVersion" = "character",
-            "geneName" = "character",
-            "seqCoordSystem" = "character"
-        )
-    )
 })
 
 test_that("GRanges", {
-    gr <- rowRanges(rse)
-    names(mcols(gr)) <-
-        camelCase(names(mcols(gr)), strict = TRUE)
+    object <- encode(gr)
+    expect_false(any(bapply(X = mcols(object), FUN = is.atomic)))
     object <- atomize(gr)
+    expect_true(all(bapply(X = mcols(object), FUN = is.atomic)))
     expect_s4_class(object, "GRanges")
     expect_true(hasNames(object))
-    expect_identical(
-        object = lapply(mcols(object), class),
-        expected = list(
-            "broadClass" = "factor",
-            "description" = "character",
-            "geneBiotype" = "character",
-            "geneId" = "character",
-            "geneIdVersion" = "character",
-            "geneName" = "character",
-            "seqCoordSystem" = "character"
-        )
-    )
 })
