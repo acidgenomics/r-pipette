@@ -4,7 +4,7 @@
 \alias{removeNA}
 \alias{removeNA,atomic-method}
 \alias{removeNA,matrix-method}
-\alias{removeNA,sparseMatrix-method}
+\alias{removeNA,Matrix-method}
 \alias{removeNA,data.frame-method}
 \alias{removeNA,DataFrame-method}
 \title{Remove rows and columns containing only NA values}
@@ -15,7 +15,7 @@ removeNA(object, ...)
 
 \S4method{removeNA}{matrix}(object)
 
-\S4method{removeNA}{sparseMatrix}(object)
+\S4method{removeNA}{Matrix}(object)
 
 \S4method{removeNA}{data.frame}(object)
 
