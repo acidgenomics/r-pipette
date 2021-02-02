@@ -1,36 +1,36 @@
 context("saveData")
 
+object1 <- "aaa"
+object2 <- "bbb"
 dir <- "example"
-paths <- file.path(getwd(), "example", c("rse.rda", "sce.rda"))
-names(paths) <- c("rse", "sce")
-
-test_that("R data", {
-    object <- saveData(
-        rse, sce,
-        ext = "rda",
-        dir = dir,
-        overwrite = TRUE
-    )
-    expect_identical(object, paths)
-})
+paths <- file.path(getwd(), dir, c("object1.rds", "object2.rds"))
+names(paths) <- c("object1", "object2")
 
 test_that("R data serialized", {
     object <- saveData(
-        rse, sce,
+        object1, object2,
         ext = "rds",
         dir = dir,
         overwrite = TRUE
     )
-    expect_identical(
-        object = basename(object),
-        expected = c("rse.rds", "sce.rds")
+    expect_identical(object, expected = paths)
+})
+
+test_that("R data", {
+    object <- saveData(
+        object1, object2,
+        ext = "rda",
+        dir = dir,
+        overwrite = TRUE
     )
+    paths <- gsub(pattern = "\\.rds", replacement = ".rda", x = paths)
+    expect_identical(object, paths)
 })
 
 test_that("overwrite = FALSE", {
     expect_message(
         object = saveData(
-            rse, sce,
+            object1, object2,
             dir = dir, overwrite = FALSE
         ),
         regexp = "No files were saved."
@@ -60,7 +60,7 @@ test_that("Invalid parameters", {
         regexp = "non-standard evaluation"
     )
     expect_error(
-        object = saveData(rse, dir = NULL),
+        object = saveData(object1, dir = NULL),
         regexp = "isString"
     )
 })
