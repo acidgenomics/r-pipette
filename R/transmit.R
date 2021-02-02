@@ -4,7 +4,7 @@
 #' FTP server. Also enables on-the-fly file renaming and compression.
 #'
 #' @export
-#' @note Updated 2020-12-10.
+#' @note Updated 2021-02-02.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @inheritParams saveData
@@ -46,6 +46,7 @@ transmit <- function(
     compress = FALSE,
     download = TRUE
 ) {
+    requireNamespaces("RCurl")
     assert(
         hasInternet(),
         isString(remoteDir),
@@ -67,7 +68,7 @@ transmit <- function(
     assert(isString(server))
     alert(sprintf("Transmitting files from {.url %s}.", server))
     ## Get a list of the files in the remote directory.
-    remoteTxt <- getURL(remoteDir)
+    remoteTxt <- RCurl::getURL(remoteDir)
     if (!all(
         is.character(remoteTxt),
         length(remoteTxt) > 0L
