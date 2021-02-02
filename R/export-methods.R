@@ -502,7 +502,6 @@ setMethod(
         overwrite,
         quiet
     ) {
-        requireNamespaces("Matrix")
         validObject(object)
         assert(
             hasLength(object),
@@ -558,7 +557,7 @@ setMethod(
                 "Matrix", "writeMM"
             ))
         }
-        Matrix::writeMM(obj = object, file = file)
+        writeMM(obj = object, file = file)
         if (isTRUE(compress)) {
             file <- compress(
                 file = file,
