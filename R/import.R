@@ -811,10 +811,9 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 ## Sparse matrix ===============================================================
 #' Internal importer for a sparse matrix file (`.mtx`)
 #'
-#' @note Updated 2020-12-15.
+#' @note Updated 2021-02-02.
 #' @noRd
 .importMTX <- function(file, metadata, quiet) {
-    requireNamespaces("Matrix")
     assert(
         isFlag(metadata),
         isFlag(quiet)
@@ -832,7 +831,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
             "Matrix", "readMM"
         ))
     }
-    object <- Matrix::readMM(file = tmpfile)
+    object <- readMM(file = tmpfile)
     ## Add the rownames automatically using `.rownames` sidecar file.
     rownamesFile <- paste(file, "rownames", sep = ".")
     rownamesFile <- tryCatch(

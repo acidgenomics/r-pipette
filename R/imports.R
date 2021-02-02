@@ -13,6 +13,7 @@ NULL
 #' @importFrom BiocFileCache BiocFileCache bfcadd bfccache bfcdownload
 #'   bfcneedsupdate bfcquery bfcrpath
 #' @importFrom IRanges end start width
+#' @importFrom Matrix readMM writeMM
 #' @importFrom S4Vectors DataFrame Rle head mcols mcols<- metadata metadata<-
 #'   na.omit tail
 #' @importFrom digest digest
