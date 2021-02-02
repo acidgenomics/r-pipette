@@ -78,8 +78,8 @@ setMethod(
 
 
 
-## Updated 2019-07-19.
-`removeNA,sparseMatrix` <- `removeNA,matrix`  # nolint
+## Updated 2021-02-02.
+`removeNA,Matrix` <- `removeNA,matrix`  # nolint
 
 
 
@@ -87,8 +87,8 @@ setMethod(
 #' @export
 setMethod(
     f = "removeNA",
-    signature = signature("sparseMatrix"),
-    definition = `removeNA,sparseMatrix`
+    signature = signature("Matrix"),
+    definition = `removeNA,Matrix`
 )
 
 
