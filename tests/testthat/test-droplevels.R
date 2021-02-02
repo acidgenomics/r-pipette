@@ -3,10 +3,13 @@ context("droplevels")
 Rle <- structure("Rle", package = "S4Vectors")  # nolint
 
 test_that("DataFrame", {
-    ## FIXME REWORK.
-    cd <- colData(rse)
-    expect_s4_class(cd, "DataFrame")
-    x <- droplevels(cd)
+    x <- DFrame(
+        "aaa" = c("a", "a", "b", "b"),
+        "bbb" = c("b", "b", "c", "c")
+    )
+
+    expect_s4_class(x, "DataFrame")
+    x <- droplevels(x)
     expect_s4_class(x, "DataFrame")
     expect_identical(
         object = lapply(x, class),
