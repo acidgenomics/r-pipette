@@ -17,10 +17,6 @@ test_that("DataFrame", {
     data[["x"]] <- list()
     data <- as(data, "data.table")
     expect_is(data, "data.table")
-    ## Error on complex S4 column (e.g. GRanges).
-    data <- as(rowRanges(rse), "DataFrame")
-    expect_s4_class(data[["X"]], "GRanges")
-    expect_error(suppressWarnings(as(data, "data.table")))
     ## Check handling when rownames are NULL.
     data <- DataFrame(a = 1L, b = "b")
     expect_null(rownames(data))
