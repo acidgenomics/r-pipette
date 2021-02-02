@@ -2,7 +2,7 @@ Package: pipette
 Title: Pipette Biological Data In and Out of R
 Description: Input/output functions for biological data formats.
 Version: 0.5.3
-Date: 2021-01-29
+Date: 2021-02-02
 Authors@R: c(
     person(
         "Michael", "Steinbaugh",
@@ -34,6 +34,7 @@ Imports:
     SingleCellExperiment,
     SummarizedExperiment,
     data.table (>= 1.13.6),
+    digest (>= 0.6),
     goalie (>= 0.4.14),
     methods,
     rappdirs (>= 0.3.2),
@@ -63,6 +64,7 @@ Collate:
     'assignAndSaveData.R'
     'atomize-methods.R'
     'cacheURL.R'
+    'checksums.R'
     'coerce-DataFrame-methods.R'
     'coerce-SummarizedExperiment-methods.R'
     'coerce-data.frame-methods.R'
