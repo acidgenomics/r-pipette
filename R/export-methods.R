@@ -76,6 +76,7 @@
 NULL
 
 
+
 ## Updated 2021-01-13.
 `export,character` <-  # nolint
     function(
@@ -226,7 +227,7 @@ setMethod(
 
 
 
-#' export matrix method
+#' Export `matrix` method
 #'
 #' @note Updated 2021-01-13.
 #' @noRd
@@ -483,16 +484,16 @@ setMethod(
 
 
 
-#' Export sparseMatrix method
+#' Export `Matrix` (e.g. `sparseMatrix`) method
 #'
-#' @note Updated 2020-12-15.
+#' @note Updated 2021-02-02.
 #' @noRd
 #'
 #' @details
 #' Note that "file" is referring to the matrix file.
 #' The correponding column and row sidecar files are generated automatically.
 #' Consider adding HDF5 support in a future update.
-`export,sparseMatrix` <-  # nolint
+`export,Matrix` <-  # nolint
     function(
         object,
         ext = "mtx",
@@ -594,7 +595,7 @@ setMethod(
         invisible(files)
     }
 
-formals(`export,sparseMatrix`)[
+formals(`export,Matrix`)[
     c("dir", "overwrite", "quiet")] <-
     formalsList[c("export.dir", "overwrite", "quiet")]
 
@@ -604,8 +605,8 @@ formals(`export,sparseMatrix`)[
 #' @export
 setMethod(
     f = "export",
-    signature = signature("sparseMatrix"),
-    definition = `export,sparseMatrix`
+    signature = signature("Matrix"),
+    definition = `export,Matrix`
 )
 
 
