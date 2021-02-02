@@ -18,6 +18,7 @@ NULL
 #' @importFrom SingleCellExperiment reducedDimNames reducedDim
 #' @importFrom SummarizedExperiment assayNames assayNames<- assay colData
 #'   colData<- rowData rowData<- rowRanges
+#' @importFrom digest digest
 #' @importFrom goalie assert allAreAtomic allAreExisting allAreFiles
 #'   allAreNonExisting allAreURLs allHaveAccess areDisjointSets areSameLength
 #'   areSetEqual formalCompress hasColnames hasCols hasDimnames hasInternet
