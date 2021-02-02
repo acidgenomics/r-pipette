@@ -42,6 +42,7 @@ Imports:
     vroom (>= 1.4)
 Suggests:
     AcidTest,
+    Matrix (>= 1.3),
     httr (>= 1.4),
     jsonlite (>= 1.7),
     pzfx (>= 0.3),

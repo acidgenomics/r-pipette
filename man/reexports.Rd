@@ -8,7 +8,6 @@
 \alias{download}
 \alias{pasteURL}
 \alias{getURL}
-\alias{url.exists}
 \alias{DataFrame}
 \alias{data.table}
 \alias{rbindlist}
@@ -27,7 +26,7 @@ below to see their documentation.
 
   \item{data.table}{\code{\link[data.table]{data.table}}, \code{\link[data.table]{rbindlist}}}
 
-  \item{RCurl}{\code{\link[RCurl]{getURL}}, \code{\link[RCurl]{url.exists}}}
+  \item{RCurl}{\code{\link[RCurl]{getURL}}}
 
   \item{S4Vectors}{\code{\link[S4Vectors:DataFrame-class]{DataFrame}}}
 

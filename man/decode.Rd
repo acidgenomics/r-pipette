@@ -4,7 +4,6 @@
 \alias{decode}
 \alias{decode,DataFrame-method}
 \alias{decode,Ranges-method}
-\alias{decode,SummarizedExperiment-method}
 \title{Decode column data that uses run-length encoding}
 \usage{
 decode(x, ...)
@@ -12,8 +11,6 @@ decode(x, ...)
 \S4method{decode}{DataFrame}(x)
 
 \S4method{decode}{Ranges}(x)
-
-\S4method{decode}{SummarizedExperiment}(x)
 }
 \arguments{
 \item{x}{Object.}
@@ -25,27 +22,20 @@ Modified object.
 Columns will be decoded and no longer \code{Rle} class.
 }
 \description{
-The Rle class is a general container for storing an atomic vector
-  that is stored in a run-length encoding format. It is based on the
-  \code{\link[base]{rle}} function from the base package.
+Decode (run-length encoding)
 }
 \note{
-Updated 2019-07-20.
+Updated 2021-02-02.
 }
 \examples{
-data(RangedSummarizedExperiment, package = "AcidTest")
-rowData <- SummarizedExperiment::rowData
+data(DFrame, package = "AcidTest")
+df <- DFrame
 
 ## DataFrame ====
-df <- rowData(RangedSummarizedExperiment)
+df <- encode(df)
 lapply(df, class)
 x <- decode(df)
 lapply(x, class)
-
-## SummarizedExperiment ====
-## This works on rowData and colData.
-x <- decode(RangedSummarizedExperiment)
-lapply(rowData(x), class)
 }
 \seealso{
 \code{\link[S4Vectors:Rle-class]{S4Vectors::decode()}}.

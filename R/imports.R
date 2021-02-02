@@ -15,9 +15,6 @@ NULL
 #' @importFrom RCurl getURL
 #' @importFrom S4Vectors DataFrame Rle head mcols mcols<- metadata metadata<-
 #'   na.omit tail
-#' @importFrom SingleCellExperiment reducedDimNames reducedDim
-#' @importFrom SummarizedExperiment assayNames assayNames<- assay colData
-#'   colData<- rowData rowData<- rowRanges
 #' @importFrom digest digest
 #' @importFrom goalie assert allAreAtomic allAreExisting allAreFiles
 #'   allAreNonExisting allAreURLs allHaveAccess areDisjointSets areSameLength
