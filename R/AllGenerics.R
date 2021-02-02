@@ -34,15 +34,6 @@ NULL
 
 
 
-#' @rdname coerce-list
-#' @name coerceToList
-#' @importFrom AcidGenerics coerceToList
-#' @usage coerceToList(object, ...)
-#' @export
-NULL
-
-
-
 #' @rdname coerce-tbl_df
 #' @name as_tibble
 #' @importFrom tibble as_tibble
