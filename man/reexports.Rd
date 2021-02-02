@@ -7,6 +7,7 @@
 \alias{decompress}
 \alias{download}
 \alias{pasteURL}
+\alias{getURL}
 \alias{DataFrame}
 \alias{data.table}
 \alias{rbindlist}
@@ -24,6 +25,8 @@ below to see their documentation.
   \item{AcidBase}{\code{\link[AcidBase]{compress}}, \code{\link[AcidBase:compress]{decompress}}, \code{\link[AcidBase]{download}}, \code{\link[AcidBase]{pasteURL}}}
 
   \item{data.table}{\code{\link[data.table]{data.table}}, \code{\link[data.table]{rbindlist}}}
+
+  \item{RCurl}{\code{\link[RCurl]{getURL}}}
 
   \item{S4Vectors}{\code{\link[S4Vectors:DataFrame-class]{DataFrame}}}
 

@@ -29,6 +29,7 @@ Imports:
     GenomicRanges,
     IRanges,
     Matrix (>= 1.3),
+    RCurl (>= 1.98),
     S4Vectors,
     data.table (>= 1.13.6),
     digest (>= 0.6),
@@ -42,7 +43,6 @@ Imports:
     vroom (>= 1.4)
 Suggests:
     AcidTest,
-    RCurl (>= 1.98),
     httr (>= 1.4),
     jsonlite (>= 1.7),
     pzfx (>= 0.3),

@@ -24,7 +24,6 @@
 #'     tail(x)
 #' }
 getURLDirList <- function(url, pattern = NULL) {
-    requireNamespaces("RCurl")
     assert(
         isAURL(url),
         isString(pattern, nullOK = TRUE)
@@ -32,7 +31,7 @@ getURLDirList <- function(url, pattern = NULL) {
     if (!isTRUE(grepl("/$", url))) {
         url <- paste0(url, "/")  # nocov
     }
-    x <- RCurl::getURL(url = url, dirlistonly = TRUE)
+    x <- getURL(url = url, dirlistonly = TRUE)
     x <- unlist(strsplit(x, split = "\n"))
     if (isString(pattern)) {
         keep <- grepl(pattern = pattern, x = x)
