@@ -16,6 +16,12 @@ AcidBase::pasteURL
 
 
 
+#' @importFrom RCurl getURL
+#' @export
+RCurl::getURL
+
+
+
 #' @importFrom S4Vectors DataFrame
 #' @export
 S4Vectors::DataFrame

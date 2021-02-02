@@ -46,7 +46,6 @@ transmit <- function(
     compress = FALSE,
     download = TRUE
 ) {
-    requireNamespaces("RCurl")
     assert(
         hasInternet(),
         isString(remoteDir),
@@ -68,7 +67,7 @@ transmit <- function(
     assert(isString(server))
     alert(sprintf("Transmitting files from {.url %s}.", server))
     ## Get a list of the files in the remote directory.
-    remoteTxt <- RCurl::getURL(remoteDir)
+    remoteTxt <- getURL(remoteDir)
     if (!all(
         is.character(remoteTxt),
         length(remoteTxt) > 0L
