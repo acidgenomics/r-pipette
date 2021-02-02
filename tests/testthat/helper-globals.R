@@ -5,6 +5,7 @@ data(
     GRanges,
     IRanges,
     data.table,
+    matrix,
     sparseMatrix,
     tbl_df,
     package = "AcidTest",
@@ -24,6 +25,7 @@ df <- DFrame
 dt <- data.table
 gr <- GRanges
 ir <- IRanges
+mat <- matrix
 sparse <- sparseMatrix
 tbl <- tbl_df
 
@@ -41,7 +43,3 @@ seqnames <- GenomicRanges::seqnames
 skip_on_docker <- goalie::skip_on_docker
 tibble <- tibble::tibble
 ## nolint end
-
-## FIXME RETHINK.
-## > mat <- assay(rse)
-## > sparse <- assay(sce)
