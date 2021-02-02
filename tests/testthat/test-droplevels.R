@@ -37,17 +37,4 @@ test_that("GRanges", {
     x <- droplevels(x)
     expect_s4_class(x, "GRanges")
     expect_true(any(bapply(X = mcols(x), FUN = is.factor)))
-    expect_identical(
-        object = lapply(mcols(x), class),
-        expected = list(
-            "broadClass" = Rle,
-            "description" = Rle,
-            "entrezId" = AsIs,
-            "geneBiotype" = Rle,
-            "geneId" = Rle,
-            "geneIdVersion" = Rle,
-            "geneName" = Rle,
-            "seqCoordSystem" = Rle
-        )
-    )
 })
