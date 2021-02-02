@@ -5,7 +5,7 @@ test_that("S4 'as()' on empty data.frame", {
 })
 
 test_that("DataFrame", {
-    data <- colData(rse)
+    data <- DFrame
     x <- as(data, "tbl_df")
     expect_is(x, "tbl_df")
     ## Expect that rownames are automatically moved to first column.
@@ -18,10 +18,6 @@ test_that("DataFrame", {
     data[["x"]] <- list()
     data <- as(data, "tbl_df")
     expect_is(data, "tbl_df")
-    ## Error on complex S4 column (e.g. GRanges).
-    data <- as(rowRanges(rse), "DataFrame")
-    expect_s4_class(data[["X"]], "GRanges")
-    expect_error(suppressWarnings(as(data, "tbl_df")))
     ## Check handling when rownames are NULL.
     data <- DataFrame(a = 1L, b = "b")
     expect_null(rownames(data))
