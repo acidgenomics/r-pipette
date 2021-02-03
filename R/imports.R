@@ -1,7 +1,7 @@
 #' @importClassesFrom GenomicRanges GenomicRanges
 #' @importClassesFrom IRanges IRanges Ranges
 #' @importClassesFrom Matrix Matrix
-#' @importClassesFrom S4Vectors DataFrame
+#' @importClassesFrom S4Vectors DataFrame List
 NULL
 
 
@@ -31,6 +31,8 @@ NULL
 #' @importFrom syntactic makeNames
 #' @importFrom utils download.file packageName packageVersion
 #' @importFrom vroom cols vroom vroom_lines vroom_write
+#'
+#' @importMethodsFrom S4Vectors droplevels
 NULL
 
 
