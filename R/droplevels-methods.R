@@ -24,9 +24,7 @@ NULL
 `droplevels,DataFrame` <-  # nolint
     function(x) {
         except <- !bapply(X = decode(x), FUN = is.factor)
-        if (all(except)) {
-            return(x)
-        }
+        if (all(except)) return(x)
         x <- droplevels(x = x, except = except)
         x
     }
