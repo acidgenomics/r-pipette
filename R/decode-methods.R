@@ -2,7 +2,7 @@
 #'
 #' @name decode
 #' @inherit AcidGenerics::decode description return
-#' @note Updated 2021-02-02.
+#' @note Updated 2021-02-03.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.

@@ -2,7 +2,7 @@
 #'
 #' @name droplevels
 #' @inherit base::droplevels description
-#' @note Updated 2021-02-02.
+#' @note Updated 2021-02-03.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
@@ -19,13 +19,33 @@ NULL
 
 
 
+## Updated 2021-02-03.
+`droplevels,DataFrame` <-  # nolint
+    function(x) {
+        except <- !bapply(X = decode(x), FUN = is.factor)
+        if (all(except)) {
+            return(x)
+        }
+        x <- droplevels(x = x, except = except)
+        x
+    }
+
+
+
+#' @rdname droplevels
+setMethod(
+    f = "droplevels",
+    signature = signature("DataFrame"),
+    definition = `droplevels,DataFrame`
+)
+
+
+
+## Updated 2021-02-03.
 `droplevels,Ranges` <-  # nolint
     function(x) {
-        mcols <- mcols(x)
-        if (hasCols(mcols)) {
-            except <- !bapply(decode(mcols), is.factor)
-            mcols <- droplevels(mcols, except = except)
-            mcols(x) <- mcols
+        if (hasCols(mcols(x))) {
+            mcols(x) <- droplevels(mcols(x))
         }
         x
     }
