@@ -4,6 +4,7 @@
 \alias{as.DataFrame}
 \alias{coerce-DataFrame}
 \alias{as.DataFrame,list-method}
+\alias{as.DataFrame,List-method}
 \alias{coerce,Matrix,DataFrame-method}
 \alias{coerce,data.table,DataFrame-method}
 \alias{coerce,tbl_df,DataFrame-method}
@@ -12,6 +13,8 @@
 as.DataFrame(x, ...)
 
 \S4method{as.DataFrame}{list}(x, row.names = NULL)
+
+\S4method{as.DataFrame}{List}(x, row.names = NULL)
 }
 \arguments{
 \item{x}{Object.}

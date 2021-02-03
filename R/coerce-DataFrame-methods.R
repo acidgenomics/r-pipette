@@ -71,6 +71,22 @@ setMethod(
 
 
 
+## Updated 2021-02-03.
+`as.DataFrame,List` <-  # nolint
+    `as.DataFrame,list`
+
+
+
+#' @rdname coerce-DataFrame
+#' @export
+setMethod(
+    f = "as.DataFrame",
+    signature = signature("List"),
+    definition = `as.DataFrame,List`
+)
+
+
+
 ## Updated 2021-01-15.
 `coerce,ANY,DataFrame` <-  # nolint
     function(from) {
