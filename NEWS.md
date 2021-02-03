@@ -1,4 +1,4 @@
-## pipette 0.5.3 (2021-02-02)
+## pipette 0.5.3 (2021-02-03)
 
 ### New functions
 
@@ -16,6 +16,7 @@
 
 - Migrated test data from "tests.acidgenomics.com" to
   "r.acidgenomics.com/testdata".
+- Added `droplevels` method for `DataFrame`.
 
 ## pipette 0.5.2 (2021-01-15)
 

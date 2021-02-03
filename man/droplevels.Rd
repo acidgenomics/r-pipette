@@ -2,10 +2,13 @@
 % Please edit documentation in R/AllGenerics.R, R/droplevels-methods.R
 \name{droplevels}
 \alias{droplevels}
+\alias{droplevels,DataFrame-method}
 \alias{droplevels,Ranges-method}
 \title{Drop unused levels from factors}
 \usage{
 droplevels(x, ...)
+
+\S4method{droplevels}{DataFrame}(x)
 
 \S4method{droplevels}{Ranges}(x)
 }
@@ -22,7 +25,7 @@ The function \code{droplevels} is used to drop unused levels from a
   \code{\link[base]{factor}} or, more commonly, from factors in a data frame.
 }
 \note{
-Updated 2021-02-02.
+Updated 2021-02-03.
 }
 \examples{
 data(GRanges, package = "AcidTest")
