@@ -2,7 +2,7 @@ Package: pipette
 Title: Pipette Biological Data In and Out of R
 Description: Input/output functions for biological data formats.
 Version: 0.5.3
-Date: 2021-02-02
+Date: 2021-02-03
 Authors@R: c(
     person(
         "Michael", "Steinbaugh",
