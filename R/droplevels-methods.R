@@ -14,7 +14,8 @@
 #'
 #' ## Ranges ====
 #' object <- GRanges
-#' S4Vectors::droplevels(object)
+#' object <- S4Vectors::droplevels(object)
+#' print(object)
 NULL
 
 
