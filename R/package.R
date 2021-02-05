@@ -43,11 +43,3 @@ NULL
 #'
 #' @importMethodsFrom S4Vectors droplevels
 NULL
-
-
-
-## This is needed to properly declare S4 `as()` coercion methods.
-#' @importFrom methods coerce
-#' @export
-#' @exportMethod coerce
-methods::coerce

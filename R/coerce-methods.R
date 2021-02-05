@@ -3,7 +3,18 @@
 #' @name coerce
 #' @note Updated 2020-02-05.
 #'
-#' @section `data.table`:
+#' @details
+#' These conversion methods are primarily intended to interconvert between
+#' popular tabular formats in R, including `data.frame`, `data.table`, `tbl_df`,
+#' and the Bioconductor `DataFrame` classes.
+#'
+#' @section `DataFrame` (Bioconductor) coercion:
+#'
+#' Don't define `as()` coercion method for `list` here. It will create issues
+#' with `data.frame` coercion. Use [as.DataFrame()] instead to coerce a `list`
+#' to `DataFrame`.
+#'
+#' @section `data.table` coercion:
 #'
 #' Our defined methods attempt to improve on the defaults in the data.table
 #' package to ensure that row names are not dropped by default, which is a poor
@@ -12,49 +23,40 @@
 #' Note that we're manually defining the `"rowname"` column instead of using
 #' `TRUE`, to match the conventions used in our `as_tibble()` methods.
 #'
-#' ### S3 `as.data.table()`
+#' ## S3 `as.data.table()`
 #'
-#' transformer extends [`as.data.table()`][data.table::as.data.table] method
+#' The package extends [`as.data.table()`][data.table::as.data.table] method
 #' support for these S4 classes:
 #'
 #' - `DataFrame`.
 #' - `GenomicRanges`.
 #'
-#' ### S4 `as()`
+#' ## S4 `as()`
 #'
 #' Since `data.table` is a class that extends `data.frame`, we need to define an
 #' S4 coercion method that allows us to use `as()` to coerce an object to a
 #' `data.table`.
 #'
-#' See `getClass("data.table")` for details.
+#' @section tibble (`tbl_df`) coercion:
 #'
-#' @section: tibble (`tbl_df`):
 #' Our defined methods attempt to improve on the defaults in the tibble package
 #' to ensure that row names are not dropped by default, which is a poor default
 #' for bioinformatics. This is accomplished by setting `rownames = "rowname"` by
 #' default instead of `rownames = NULL`.
 #'
-#' ### S3 `as_tibble()`
+#' S3 `as_tibble()`
 #'
-#' transformer extends [`as_tibble()`][tibble::as_tibble] method support for
+#' The package extends [`as_tibble()`][tibble::as_tibble] method support for
 #' these S4 classes:
 #'
 #' - `DataFrame`.
 #' - `GenomicRanges`.
 #'
-#' ### S4 `as()`
+#' S4 `as()`
 #'
 #' Since `tbl_df` is a virtual class that extends `tbl` and `data.frame`, we
 #' need to define an S4 coercion method that allows us to use `as()` to coerce
 #' an object to a tibble.
-#'
-#' See `getClass("tbl_df")` for details on how tibble is a virtual class.
-#'
-#' @section `DataFrame` (Bioconductor):
-#'
-#' Don't define `as` coercion method for `list` here. It will create issues
-#' with `data.frame` coercion. Use `as.DataFrame` instead to coerce a `list`
-#' to `DataFrame`.
 #'
 #' @inheritParams base::as.data.frame
 #' @inheritParams data.table::as.data.table
@@ -67,6 +69,8 @@
 #' @seealso
 #' - [data.table::as.data.table()].
 #' - [tibble::as_tibble()].
+#' - `getClass("data.table")`.
+#' - `getClass("tbl_df")`.
 #'
 #' @examples
 #' data(DFrame, GRanges, IRanges, package = "AcidTest")
@@ -134,6 +138,15 @@ NULL
 
 
 
+## This is needed to properly declare S4 `as()` coercion methods.
+#' @name coerce
+#' @export
+#' @importFrom methods coerce
+#' @exportMethod coerce
+NULL
+
+
+
 ## Default coercion of IPosRanges (i.e. IRanges) to data.frame currently
 ## strips metadata in `mcols()`. However, GenomicRanges preserves this
 ## information, so we're adding a tweaked coercion method here to improve
@@ -187,7 +200,7 @@ NULL
 
 
 
-#' @rdname coerce-data.frame
+#' @rdname coerce
 #' @export
 setMethod(
     f = "as.data.frame",
@@ -205,7 +218,7 @@ setMethod(
 
 
 
-#' @rdname coerce-data.frame
+#' @rdname coerce
 #' @export
 setMethod(
     f = "as.data.frame",
@@ -228,7 +241,7 @@ setMethod(
 
 
 
-#' @rdname coerce-data.frame
+#' @rdname coerce
 #' @name coerce,IRanges,data.frame-method
 setAs(
     from = "IRanges",
@@ -244,7 +257,7 @@ setAs(
 
 
 
-#' @rdname coerce-data.frame
+#' @rdname coerce
 #' @name coerce,Matrix,data.frame-method
 setAs(
     from = "Matrix",
@@ -258,7 +271,7 @@ setAs(
 
 
 
-#' @rdname coerce-tbl_df
+#' @rdname coerce
 #' @export
 ## Updated 2019-07-19.
 as_tibble.DataFrame <-  # nolint
@@ -274,7 +287,7 @@ as_tibble.DataFrame <-  # nolint
 
 
 
-#' @rdname coerce-tbl_df
+#' @rdname coerce
 #' @export
 ## Updated 2020-01-19.
 as_tibble.IRanges <-  # nolint
@@ -292,11 +305,11 @@ as_tibble.IRanges <-  # nolint
     quote(pkgconfig::get_config("tibble::rownames", "rowname"))
 formals(as_tibble.DataFrame)[["rownames"]] <- .tbl_rownames
 formals(as_tibble.IRanges)[["rownames"]] <- .tbl_rownames
-rm(.rownames)
+rm(.tbl_rownames)
 
 
 
-#' @rdname coerce-tbl_df
+#' @rdname coerce
 #' @export
 ## Updated 2020-01-19.
 as_tibble.GenomicRanges <- as_tibble.IRanges  # nolint
@@ -317,7 +330,7 @@ as_tibble.GenomicRanges <- as_tibble.IRanges  # nolint
 
 
 
-#' @rdname coerce-tbl_df
+#' @rdname coerce
 #' @name coerce,data.frame,tbl_df-method
 setAs(
     from = "data.frame",
@@ -333,7 +346,7 @@ setAs(
 
 
 
-#' @rdname coerce-tbl_df
+#' @rdname coerce
 #' @name coerce,DataFrame,tbl_df-method
 setAs(
     from = "DataFrame",
@@ -349,7 +362,7 @@ setAs(
 
 
 
-#' @rdname coerce-tbl_df
+#' @rdname coerce
 #' @name coerce,GenomicRanges,tbl_df-method
 setAs(
     from = "GenomicRanges",
@@ -365,7 +378,7 @@ setAs(
 
 
 
-#' @rdname coerce-tbl_df
+#' @rdname coerce
 #' @name coerce,IRanges,tbl_df-method
 setAs(
     from = "IRanges",
@@ -403,7 +416,7 @@ setAs(
 
 
 
-#' @rdname coerce-DataFrame
+#' @rdname coerce
 #' @export
 setMethod(
     f = "as.DataFrame",
@@ -419,7 +432,7 @@ setMethod(
 
 
 
-#' @rdname coerce-DataFrame
+#' @rdname coerce
 #' @export
 setMethod(
     f = "as.DataFrame",
@@ -453,7 +466,7 @@ setMethod(
 
 
 
-#' @rdname coerce-DataFrame
+#' @rdname coerce
 #' @name coerce,Matrix,DataFrame-method
 setAs(
     from = "Matrix",
@@ -469,7 +482,7 @@ setAs(
 
 
 
-#' @rdname coerce-DataFrame
+#' @rdname coerce
 #' @name coerce,data.table,DataFrame-method
 setAs(
     from = "data.table",
@@ -485,7 +498,7 @@ setAs(
 
 
 
-#' @rdname coerce-DataFrame
+#' @rdname coerce
 #' @name coerce,tbl_df,DataFrame-method
 setAs(
     from = "tbl_df",
@@ -510,7 +523,7 @@ setAs(
 ## column for row names assignment. We also using similar internal assert checks
 ## here, allowing atomic and/or list columns only.
 
-#' @rdname coerce-data.table
+#' @rdname coerce
 #' @export
 ## Updated 2019-07-19.
 as.data.table.DataFrame <-  # nolint
@@ -527,7 +540,7 @@ as.data.table.DataFrame <-  # nolint
 ## The default handling from data.frame isn't clean, so add this.
 ## Default method will warn: `Arguments in '...' ignored`.
 
-#' @rdname coerce-data.table
+#' @rdname coerce
 #' @export
 ## Updated 2020-01-19.
 as.data.table.IRanges <-  # nolint
@@ -541,7 +554,7 @@ as.data.table.IRanges <-  # nolint
 
 
 
-#' @rdname coerce-data.table
+#' @rdname coerce
 #' @export
 ## Updated 2020-01-19.
 as.data.table.GenomicRanges <-  # nolint
@@ -562,7 +575,7 @@ as.data.table.GenomicRanges <-  # nolint
 
 
 
-#' @rdname coerce-data.table
+#' @rdname coerce
 #' @name coerce,data.frame,data.table-method
 setAs(
     from = "data.frame",
@@ -578,7 +591,7 @@ setAs(
 
 
 
-#' @rdname coerce-data.table
+#' @rdname coerce
 #' @name coerce,DataFrame,data.table-method
 setAs(
     from = "DataFrame",
@@ -594,7 +607,7 @@ setAs(
 
 
 
-#' @rdname coerce-data.table
+#' @rdname coerce
 #' @name coerce,IRanges,data.table-method
 setAs(
     from = "IRanges",
@@ -610,7 +623,7 @@ setAs(
 
 
 
-#' @rdname coerce-data.table
+#' @rdname coerce
 #' @name coerce,GenomicRanges,data.table-method
 setAs(
     from = "GenomicRanges",
