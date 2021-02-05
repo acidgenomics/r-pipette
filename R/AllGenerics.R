@@ -7,7 +7,7 @@ NULL
 
 
 
-#' @rdname coerce-DataFrame
+#' @rdname coerce
 #' @name as.DataFrame
 #' @importFrom AcidGenerics as.DataFrame
 #' @usage as.DataFrame(x, ...)
@@ -16,7 +16,7 @@ NULL
 
 
 
-#' @rdname coerce-data.frame
+#' @rdname coerce
 #' @name as.data.frame
 #' @importFrom AcidGenerics as.data.frame
 #' @usage as.data.frame(x, row.names = NULL, optional = FALSE, ...)
@@ -25,7 +25,7 @@ NULL
 
 
 
-#' @rdname coerce-data.table
+#' @rdname coerce
 #' @name as.data.table
 #' @importFrom data.table as.data.table
 #' @usage as.data.table(x, keep.rownames = FALSE, ...)
@@ -34,7 +34,7 @@ NULL
 
 
 
-#' @rdname coerce-tbl_df
+#' @rdname coerce
 #' @name as_tibble
 #' @importFrom tibble as_tibble
 #' @export
