@@ -120,7 +120,7 @@ default for bioinformatics. This is accomplished by setting
 \code{keep.rownames = "rowname"} by default instead of \code{keep.rownames = NULL}.
 Note that we're manually defining the \code{"rowname"} column instead of using
 \code{TRUE}, to match the conventions used in our \code{as_tibble()} methods.
-\subsection{S3 \code{as.data.table()}}{
+\subsection{S3: \code{as.data.table()}}{
 
 The package extends \code{\link[data.table:as.data.table]{as.data.table()}} method
 support for these S4 classes:
@@ -130,7 +130,7 @@ support for these S4 classes:
 }
 }
 
-\subsection{S4 \code{as()}}{
+\subsection{S4: \code{as()}}{
 
 Since \code{data.table} is a class that extends \code{data.frame}, we need to define an
 S4 coercion method that allows us to use \code{as()} to coerce an object to a
@@ -145,8 +145,7 @@ Our defined methods attempt to improve on the defaults in the tibble package
 to ensure that row names are not dropped by default, which is a poor default
 for bioinformatics. This is accomplished by setting \code{rownames = "rowname"} by
 default instead of \code{rownames = NULL}.
-
-S3 \code{as_tibble()}
+\subsection{S3: \code{as_tibble()}}{
 
 The package extends \code{\link[tibble:as_tibble]{as_tibble()}} method support for
 these S4 classes:
@@ -154,12 +153,14 @@ these S4 classes:
 \item \code{DataFrame}.
 \item \code{GenomicRanges}.
 }
+}
 
-S4 \code{as()}
+\subsection{S4: \code{as()}}{
 
 Since \code{tbl_df} is a virtual class that extends \code{tbl} and \code{data.frame}, we
 need to define an S4 coercion method that allows us to use \code{as()} to coerce
 an object to a tibble.
+}
 }
 
 \examples{
@@ -227,8 +228,10 @@ to
 }
 \seealso{
 \itemize{
-\item \code{\link[data.table:as.data.table]{data.table::as.data.table()}}.
-\item \code{\link[tibble:as_tibble]{tibble::as_tibble()}}.
+\item \code{\link[base:as.data.frame]{as.data.frame()}}
+\item \code{\link[data.table:as.data.table]{as.data.table()}}.
+\item \code{\link[tibble:as_tibble]{as_tibble()}}.
+\item \code{getClass("DataFrame")}.
 \item \code{getClass("data.table")}.
 \item \code{getClass("tbl_df")}.
 }
