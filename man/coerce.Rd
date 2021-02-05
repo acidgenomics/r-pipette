@@ -6,6 +6,11 @@
 \alias{as.data.table}
 \alias{as_tibble}
 \alias{coerce}
+\alias{as.DataFrame,list-method}
+\alias{as.DataFrame,List-method}
+\alias{coerce,Matrix,DataFrame-method}
+\alias{coerce,data.table,DataFrame-method}
+\alias{coerce,tbl_df,DataFrame-method}
 \alias{as.data.frame,IRanges-method}
 \alias{as.data.frame,Matrix-method}
 \alias{coerce,IRanges,data.frame-method}
@@ -17,18 +22,13 @@
 \alias{coerce,DataFrame,tbl_df-method}
 \alias{coerce,GenomicRanges,tbl_df-method}
 \alias{coerce,IRanges,tbl_df-method}
-\alias{as.DataFrame,list-method}
-\alias{as.DataFrame,List-method}
-\alias{coerce,Matrix,DataFrame-method}
-\alias{coerce,data.table,DataFrame-method}
-\alias{coerce,tbl_df,DataFrame-method}
 \alias{as.data.table.DataFrame}
 \alias{as.data.table.IRanges}
 \alias{as.data.table.GenomicRanges}
-\alias{coerce,data.frame,data.table-method}
 \alias{coerce,DataFrame,data.table-method}
-\alias{coerce,IRanges,data.table-method}
 \alias{coerce,GenomicRanges,data.table-method}
+\alias{coerce,IRanges,data.table-method}
+\alias{coerce,data.frame,data.table-method}
 \title{Coercion methods}
 \usage{
 as.DataFrame(x, ...)
@@ -36,6 +36,10 @@ as.DataFrame(x, ...)
 as.data.frame(x, row.names = NULL, optional = FALSE, ...)
 
 as.data.table(x, keep.rownames = FALSE, ...)
+
+\S4method{as.DataFrame}{list}(x, row.names = NULL)
+
+\S4method{as.DataFrame}{List}(x, row.names = NULL)
 
 \S4method{as.data.frame}{IRanges}(x, row.names = NULL, optional = FALSE, ...)
 
@@ -53,15 +57,7 @@ as.data.table(x, keep.rownames = FALSE, ...)
   rownames = pkgconfig::get_config("tibble::rownames", "rowname")
 )
 
-\method{as_tibble}{GenomicRanges}(
-  x,
-  ...,
-  rownames = pkgconfig::get_config("tibble::rownames", "rowname")
-)
-
-\S4method{as.DataFrame}{list}(x, row.names = NULL)
-
-\S4method{as.DataFrame}{List}(x, row.names = NULL)
+\method{as_tibble}{GenomicRanges}(x, ..., rownames)
 
 \method{as.data.table}{DataFrame}(x, keep.rownames = TRUE, ...)
 
@@ -109,6 +105,41 @@ Updated 2020-02-05.
 Don't define \code{as()} coercion method for \code{list} here. It will create issues
 with \code{data.frame} coercion. Use \code{\link[=as.DataFrame]{as.DataFrame()}} instead to coerce a \code{list}
 to \code{DataFrame}.
+
+Wrapping the columns in an \code{I()} works when passing to \code{DataFrame()}.
+See also \code{as_tibble()} for easy list to data frame coercion.
+
+\code{as()} method definition causes issues with \code{data.frame} to \code{DataFrame}
+coercion when defined, because \code{data.frame} inherits from list.
+}
+
+\section{\code{data.frame} coercion}{
+
+\subsection{To \code{IRanges}}{
+
+Default coercion of \code{IPosRanges} (i.e. \code{IRanges}) to \code{data.frame} currently
+strips metadata in \code{mcols()}. However, GenomicRanges preserves this
+information, so we're adding a tweaked coercion method here to improve
+consistency.
+
+Relevant methods:\if{html}{\out{<div class="r">}}\preformatted{getMethod(
+    f = "as.data.frame",
+    signature = "GenomicRanges",
+    where = asNamespace("GenomicRanges")
+)
+## IRanges inherits from `IPosRanges`.
+getMethod(
+    f = "as.data.frame",
+    signature = "IPosRanges",
+    where = asNamespace("IRanges")
+)
+}\if{html}{\out{</div>}}
+
+See also:
+\itemize{
+\item https://github.com/Bioconductor/IRanges/issues/8
+}
+}
 }
 
 \section{\code{data.table} coercion}{
@@ -145,6 +176,10 @@ Our defined methods attempt to improve on the defaults in the tibble package
 to ensure that row names are not dropped by default, which is a poor default
 for bioinformatics. This is accomplished by setting \code{rownames = "rowname"} by
 default instead of \code{rownames = NULL}.
+
+Note that we're matching \code{as_tibble()} convention here, using \code{rowname} as
+column for row names assignment. We also using similar internal assert checks
+here, allowing atomic and/or list columns only.
 \subsection{S3: \code{as_tibble()}}{
 
 The package extends \code{\link[tibble:as_tibble]{as_tibble()}} method support for
