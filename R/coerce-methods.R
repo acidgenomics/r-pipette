@@ -66,7 +66,7 @@ NULL
 #' Note that we're manually defining the `"rowname"` column instead of using
 #' `TRUE`, to match the conventions used in our `as_tibble()` methods.
 #'
-#' ## S3: `as.data.table()`
+#' ## S3 methods: `as.data.table()`
 #'
 #' The package extends [`as.data.table()`][data.table::as.data.table] method
 #' support for these S4 classes:
@@ -74,7 +74,7 @@ NULL
 #' - `DataFrame`.
 #' - `GenomicRanges`.
 #'
-#' ## S4: `as()`
+#' ## S4 methods: `as()`
 #'
 #' Since `data.table` is a class that extends `data.frame`, we need to define an
 #' S4 coercion method that allows us to use `as()` to coerce an object to a
@@ -91,7 +91,7 @@ NULL
 #' column for row names assignment. We also using similar internal assert checks
 #' here, allowing atomic and/or list columns only.
 #'
-#' ## S3: `as_tibble()`
+#' ## S3 methods: `as_tibble()`
 #'
 #' The package extends [`as_tibble()`][tibble::as_tibble] method support for
 #' these S4 classes:
@@ -99,7 +99,7 @@ NULL
 #' - `DataFrame`.
 #' - `GenomicRanges`.
 #'
-#' ## S4: `as()`
+#' ## S4 methods: `as()`
 #'
 #' Since `tbl_df` is a virtual class that extends `tbl` and `data.frame`, we
 #' need to define an S4 coercion method that allows us to use `as()` to coerce
@@ -122,60 +122,61 @@ NULL
 #' - `getClass("tbl_df")`.
 #'
 #' @examples
-#' data(DFrame, GRanges, IRanges, package = "AcidTest")
-#' data(sparseMatrix, package = "AcidTest")
-#' data(data.table, sparseMatrix, tbl_df, package = "AcidTest")
+#' data(
+#'     DFrame,
+#'     GRanges,
+#'     IRanges,
+#'     data.table,
+#'     sparseMatrix,
+#'     tbl_df,
+#'     package = "AcidTest"
+#' )
 #'
-#' ## Matrix to data.frame ====
-#' x <- as(sparseMatrix, "data.frame")
-#' head(x)
-#'
-#' ## DataFrame to data.table ====
+#' ## `DataFrame` to `data.table` ====
 #' x <- as(DFrame, "data.table")
 #' x <- as.data.table(DFrame)
 #' print(x)
 #'
-#' ## GenomicRanges to data.table ====
-#' x <- as(GRanges, "data.table")
-#' x <- as.data.table(GRanges)
-#' print(x)
-#'
-#' ## IRanges to data.table ====
-#' x <- as(IRanges, "data.table")
-#' x <- as.data.table(IRanges)
-#' print(x)
-#'
-#' ## DataFrame to tbl_df ====
+#' ## `DataFrame` to `tbl_df` ====
 #' x <- as(DFrame, "tbl_df")
 #' x <- as_tibble(DFrame)
 #' print(x)
 #'
-#' ## GenomicRanges to tbl_df ====
+#' ## `GenomicRanges` to `data.table` ====
+#' x <- as(GRanges, "data.table")
+#' x <- as.data.table(GRanges)
+#' print(x)
+#'
+#' ## `GenomicRanges` to `tbl_df` ====
 #' x <- as(GRanges, "tbl_df")
 #' x <- as_tibble(GRanges)
 #' print(x)
 #'
-#' ## IRanges to tbl_df ====
+#' ## `IRanges` to `data.table` ====
+#' x <- as(IRanges, "data.table")
+#' x <- as.data.table(IRanges)
+#' print(x)
+#'
+#' ## `IRanges` to `tbl_df` ====
 #' x <- as(IRanges, "tbl_df")
 #' x <- as_tibble(IRanges)
 #' print(x)
 #'
-#' ## Matrix to DataFrame ====
+#' ## `Matrix` to `DataFrame` ====
 #' from <- sparseMatrix
 #' to <- as(from, "DataFrame")
 #' to
 #'
-#' ## data.table to DataFrame ====
+#' ## `Matrix` to `data.frame` ====
+#' x <- as(sparseMatrix, "data.frame")
+#' head(x)
+#'
+#' ## `data.table` to `DataFrame` ====
 #' from <- data.table
 #' to <- as(from, "DataFrame")
 #' head(to)
 #'
-#' ## tbl_df to DataFrame ====
-#' from <- tbl_df
-#' to <- as(from, "DataFrame")
-#' head(to)
-#'
-#' ## list to DataFrame ====
+#' ## `list` to `DataFrame` ====
 #' ## Use `as.DataFrame()` instead of `as()` for `list` class.
 #' from <- list(
 #'     a = list(c(1, 2), c(3, 4)),
@@ -183,6 +184,11 @@ NULL
 #' )
 #' to <- as.DataFrame(from)
 #' to
+#'
+#' ## `tbl_df` to `DataFrame` ====
+#' from <- tbl_df
+#' to <- as(from, "DataFrame")
+#' head(to)
 NULL
 
 
