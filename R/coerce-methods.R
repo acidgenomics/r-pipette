@@ -23,7 +23,7 @@
 #' Note that we're manually defining the `"rowname"` column instead of using
 #' `TRUE`, to match the conventions used in our `as_tibble()` methods.
 #'
-#' ## S3 `as.data.table()`
+#' ## S3: `as.data.table()`
 #'
 #' The package extends [`as.data.table()`][data.table::as.data.table] method
 #' support for these S4 classes:
@@ -31,7 +31,7 @@
 #' - `DataFrame`.
 #' - `GenomicRanges`.
 #'
-#' ## S4 `as()`
+#' ## S4: `as()`
 #'
 #' Since `data.table` is a class that extends `data.frame`, we need to define an
 #' S4 coercion method that allows us to use `as()` to coerce an object to a
@@ -44,7 +44,7 @@
 #' for bioinformatics. This is accomplished by setting `rownames = "rowname"` by
 #' default instead of `rownames = NULL`.
 #'
-#' S3 `as_tibble()`
+#' ## S3: `as_tibble()`
 #'
 #' The package extends [`as_tibble()`][tibble::as_tibble] method support for
 #' these S4 classes:
@@ -52,7 +52,7 @@
 #' - `DataFrame`.
 #' - `GenomicRanges`.
 #'
-#' S4 `as()`
+#' ## S4: `as()`
 #'
 #' Since `tbl_df` is a virtual class that extends `tbl` and `data.frame`, we
 #' need to define an S4 coercion method that allows us to use `as()` to coerce
@@ -67,8 +67,10 @@
 #' @return Modified object, of desired conversion class.
 #'
 #' @seealso
-#' - [data.table::as.data.table()].
-#' - [tibble::as_tibble()].
+#' - [`as.data.frame()`][base::as.data.frame]
+#' - [`as.data.table()`][data.table::as.data.table].
+#' - [`as_tibble()`][tibble::as_tibble].
+#' - `getClass("DataFrame")`.
 #' - `getClass("data.table")`.
 #' - `getClass("tbl_df")`.
 #'
