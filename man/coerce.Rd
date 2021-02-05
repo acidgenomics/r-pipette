@@ -6,29 +6,29 @@
 \alias{as.data.table}
 \alias{as_tibble}
 \alias{coerce}
-\alias{as.DataFrame,list-method}
-\alias{as.DataFrame,List-method}
-\alias{coerce,Matrix,DataFrame-method}
-\alias{coerce,data.table,DataFrame-method}
-\alias{coerce,tbl_df,DataFrame-method}
-\alias{as.data.frame,IRanges-method}
-\alias{as.data.frame,Matrix-method}
-\alias{coerce,IRanges,data.frame-method}
-\alias{coerce,Matrix,data.frame-method}
 \alias{as_tibble.DataFrame}
 \alias{as_tibble.IRanges}
 \alias{as_tibble.GenomicRanges}
-\alias{coerce,data.frame,tbl_df-method}
-\alias{coerce,DataFrame,tbl_df-method}
-\alias{coerce,GenomicRanges,tbl_df-method}
-\alias{coerce,IRanges,tbl_df-method}
 \alias{as.data.table.DataFrame}
 \alias{as.data.table.IRanges}
 \alias{as.data.table.GenomicRanges}
+\alias{as.DataFrame,List-method}
+\alias{as.DataFrame,list-method}
+\alias{as.data.frame,IRanges-method}
+\alias{as.data.frame,Matrix-method}
 \alias{coerce,DataFrame,data.table-method}
+\alias{coerce,DataFrame,tbl_df-method}
 \alias{coerce,GenomicRanges,data.table-method}
+\alias{coerce,GenomicRanges,tbl_df-method}
+\alias{coerce,IRanges,data.frame-method}
 \alias{coerce,IRanges,data.table-method}
+\alias{coerce,IRanges,tbl_df-method}
+\alias{coerce,Matrix,DataFrame-method}
+\alias{coerce,Matrix,data.frame-method}
 \alias{coerce,data.frame,data.table-method}
+\alias{coerce,data.frame,tbl_df-method}
+\alias{coerce,data.table,DataFrame-method}
+\alias{coerce,tbl_df,DataFrame-method}
 \title{Coercion methods}
 \usage{
 as.DataFrame(x, ...)
@@ -36,14 +36,6 @@ as.DataFrame(x, ...)
 as.data.frame(x, row.names = NULL, optional = FALSE, ...)
 
 as.data.table(x, keep.rownames = FALSE, ...)
-
-\S4method{as.DataFrame}{list}(x, row.names = NULL)
-
-\S4method{as.DataFrame}{List}(x, row.names = NULL)
-
-\S4method{as.data.frame}{IRanges}(x, row.names = NULL, optional = FALSE, ...)
-
-\S4method{as.data.frame}{Matrix}(x, row.names = NULL, optional = FALSE, ...)
 
 \method{as_tibble}{DataFrame}(
   x,
@@ -64,9 +56,24 @@ as.data.table(x, keep.rownames = FALSE, ...)
 \method{as.data.table}{IRanges}(x, keep.rownames = TRUE, ...)
 
 \method{as.data.table}{GenomicRanges}(x, keep.rownames = TRUE, ...)
+
+\S4method{as.DataFrame}{List}(x, row.names = NULL)
+
+\S4method{as.DataFrame}{list}(x, row.names = NULL)
+
+\S4method{as.data.frame}{IRanges}(x, row.names = NULL, optional = FALSE, ...)
+
+\S4method{as.data.frame}{Matrix}(x, row.names = NULL, optional = FALSE, ...)
 }
 \arguments{
 \item{x}{any \R object.}
+
+\item{...}{Additional arguments.}
+
+\item{rownames}{\code{logical(1)}.
+Apply to row names.}
+
+\item{keep.rownames}{Default is \code{FALSE}. If \code{TRUE}, adds the input object's names as a separate column named \code{"rn"}. \code{keep.rownames = "id"} names the column \code{"id"} instead.}
 
 \item{row.names}{\code{NULL} or \code{character}.}
 
@@ -77,13 +84,6 @@ as.data.table(x, keep.rownames = FALSE, ...)
     \code{optional} only for column names treatment, basically with the
     meaning of \code{\link[base]{data.frame}(*, check.names = !optional)}.
     See also the \code{make.names} argument of the \code{matrix} method.}
-
-\item{...}{Additional arguments.}
-
-\item{rownames}{\code{logical(1)}.
-Apply to row names.}
-
-\item{keep.rownames}{Default is \code{FALSE}. If \code{TRUE}, adds the input object's names as a separate column named \code{"rn"}. \code{keep.rownames = "id"} names the column \code{"id"} instead.}
 }
 \value{
 Modified object, of desired conversion class.
@@ -151,7 +151,7 @@ default for bioinformatics. This is accomplished by setting
 \code{keep.rownames = "rowname"} by default instead of \code{keep.rownames = NULL}.
 Note that we're manually defining the \code{"rowname"} column instead of using
 \code{TRUE}, to match the conventions used in our \code{as_tibble()} methods.
-\subsection{S3: \code{as.data.table()}}{
+\subsection{S3 methods: \code{as.data.table()}}{
 
 The package extends \code{\link[data.table:as.data.table]{as.data.table()}} method
 support for these S4 classes:
@@ -161,7 +161,7 @@ support for these S4 classes:
 }
 }
 
-\subsection{S4: \code{as()}}{
+\subsection{S4 methods: \code{as()}}{
 
 Since \code{data.table} is a class that extends \code{data.frame}, we need to define an
 S4 coercion method that allows us to use \code{as()} to coerce an object to a
@@ -180,7 +180,7 @@ default instead of \code{rownames = NULL}.
 Note that we're matching \code{as_tibble()} convention here, using \code{rowname} as
 column for row names assignment. We also using similar internal assert checks
 here, allowing atomic and/or list columns only.
-\subsection{S3: \code{as_tibble()}}{
+\subsection{S3 methods: \code{as_tibble()}}{
 
 The package extends \code{\link[tibble:as_tibble]{as_tibble()}} method support for
 these S4 classes:
@@ -190,7 +190,7 @@ these S4 classes:
 }
 }
 
-\subsection{S4: \code{as()}}{
+\subsection{S4 methods: \code{as()}}{
 
 Since \code{tbl_df} is a virtual class that extends \code{tbl} and \code{data.frame}, we
 need to define an S4 coercion method that allows us to use \code{as()} to coerce
@@ -199,60 +199,61 @@ an object to a tibble.
 }
 
 \examples{
-data(DFrame, GRanges, IRanges, package = "AcidTest")
-data(sparseMatrix, package = "AcidTest")
-data(data.table, sparseMatrix, tbl_df, package = "AcidTest")
+data(
+    DFrame,
+    GRanges,
+    IRanges,
+    data.table,
+    sparseMatrix,
+    tbl_df,
+    package = "AcidTest"
+)
 
-## Matrix to data.frame ====
-x <- as(sparseMatrix, "data.frame")
-head(x)
-
-## DataFrame to data.table ====
+## `DataFrame` to `data.table` ====
 x <- as(DFrame, "data.table")
 x <- as.data.table(DFrame)
 print(x)
 
-## GenomicRanges to data.table ====
-x <- as(GRanges, "data.table")
-x <- as.data.table(GRanges)
-print(x)
-
-## IRanges to data.table ====
-x <- as(IRanges, "data.table")
-x <- as.data.table(IRanges)
-print(x)
-
-## DataFrame to tbl_df ====
+## `DataFrame` to `tbl_df` ====
 x <- as(DFrame, "tbl_df")
 x <- as_tibble(DFrame)
 print(x)
 
-## GenomicRanges to tbl_df ====
+## `GenomicRanges` to `data.table` ====
+x <- as(GRanges, "data.table")
+x <- as.data.table(GRanges)
+print(x)
+
+## `GenomicRanges` to `tbl_df` ====
 x <- as(GRanges, "tbl_df")
 x <- as_tibble(GRanges)
 print(x)
 
-## IRanges to tbl_df ====
+## `IRanges` to `data.table` ====
+x <- as(IRanges, "data.table")
+x <- as.data.table(IRanges)
+print(x)
+
+## `IRanges` to `tbl_df` ====
 x <- as(IRanges, "tbl_df")
 x <- as_tibble(IRanges)
 print(x)
 
-## Matrix to DataFrame ====
+## `Matrix` to `DataFrame` ====
 from <- sparseMatrix
 to <- as(from, "DataFrame")
 to
 
-## data.table to DataFrame ====
+## `Matrix` to `data.frame` ====
+x <- as(sparseMatrix, "data.frame")
+head(x)
+
+## `data.table` to `DataFrame` ====
 from <- data.table
 to <- as(from, "DataFrame")
 head(to)
 
-## tbl_df to DataFrame ====
-from <- tbl_df
-to <- as(from, "DataFrame")
-head(to)
-
-## list to DataFrame ====
+## `list` to `DataFrame` ====
 ## Use `as.DataFrame()` instead of `as()` for `list` class.
 from <- list(
     a = list(c(1, 2), c(3, 4)),
@@ -260,6 +261,11 @@ from <- list(
 )
 to <- as.DataFrame(from)
 to
+
+## `tbl_df` to `DataFrame` ====
+from <- tbl_df
+to <- as(from, "DataFrame")
+head(to)
 }
 \seealso{
 \itemize{
