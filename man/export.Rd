@@ -121,12 +121,6 @@ Apply to row names.}
 \item{colnames}{\code{logical(1)}.
 Apply to column names.}
 
-\item{compress}{\code{logical(1)}.
-Apply gzip compression to all files.}
-
-\item{name}{\code{character(1)}.
-Name to use on disk. If \code{NULL}, will use the name of the object instead.}
-
 \item{...}{Additional arguments.}
 }
 \value{

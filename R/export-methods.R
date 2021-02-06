@@ -37,10 +37,6 @@
 #' @param file `character(1)`.
 #'   File path. When left unset (default), the `ext` and `dir` arguments will
 #'   be used instead.
-#' @param compress `logical(1)`.
-#'   Apply gzip compression to all files.
-#' @param name `character(1)`.
-#'   Name to use on disk. If `NULL`, will use the name of the object instead.
 #' @param append `logical(1)`.
 #'   Append to output file.
 #'   When enabled, automatically sets `overwrite` argument to `FALSE`.

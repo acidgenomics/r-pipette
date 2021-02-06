@@ -291,6 +291,9 @@ NULL
 
 
 ## To tibble ===================================================================
+.tbl_rownames <-  # nolint
+    quote(pkgconfig::get_config("tibble::rownames", "rowname"))
+
 #' @rdname coerce
 #' @export
 ## Updated 2019-07-19.
@@ -303,6 +306,8 @@ as_tibble.DataFrame <-  # nolint
         as_tibble(x = x, ..., rownames = rownames)
     }
 
+formals(as_tibble.DataFrame)[["rownames"]] <- .tbl_rownames
+
 #' @rdname coerce
 #' @export
 ## Updated 2020-01-19.
@@ -314,6 +319,8 @@ as_tibble.IRanges <-  # nolint
         }
         as_tibble(x = x, ..., rownames = rownames)
     }
+
+formals(as_tibble.IRanges)[["rownames"]] <- .tbl_rownames
 
 #' @rdname coerce
 #' @export
@@ -342,10 +349,6 @@ as_tibble.GenomicRanges <- as_tibble.IRanges  # nolint
 `coerce,IRanges,tbl_df` <-  # nolint
     `coerce,ANY,tbl_df`
 
-.tbl_rownames <-  # nolint
-    quote(pkgconfig::get_config("tibble::rownames", "rowname"))
-formals(as_tibble.DataFrame)[["rownames"]] <- .tbl_rownames
-formals(as_tibble.IRanges)[["rownames"]] <- .tbl_rownames
 rm(.tbl_rownames)
 
 
