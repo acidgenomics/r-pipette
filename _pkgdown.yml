@@ -28,6 +28,7 @@ reference:
   - title: File transfers
     contents:
     - cacheURL
+    - checksums
     - download
     - getJSON
     - getURLDirList
@@ -43,7 +44,7 @@ reference:
     - droplevels
     - encode
     - factorize
-    - matchRowNameColumn
+    - matchRownameColumn
     - metadata2
     - naStrings
     - removeNA
