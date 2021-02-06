@@ -49,7 +49,11 @@ as.data.table(x, keep.rownames = FALSE, ...)
   rownames = pkgconfig::get_config("tibble::rownames", "rowname")
 )
 
-\method{as_tibble}{GenomicRanges}(x, ..., rownames)
+\method{as_tibble}{GenomicRanges}(
+  x,
+  ...,
+  rownames = pkgconfig::get_config("tibble::rownames", "rowname")
+)
 
 \method{as.data.table}{DataFrame}(x, keep.rownames = TRUE, ...)
 
