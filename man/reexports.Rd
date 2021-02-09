@@ -7,14 +7,34 @@
 \alias{decompress}
 \alias{download}
 \alias{pasteURL}
+\alias{GRanges}
+\alias{GRangesList}
+\alias{DataFrameList}
+\alias{SplitDataFrameList}
+\alias{Matrix}
+\alias{sparseMatrix}
 \alias{getURL}
 \alias{DataFrame}
+\alias{List}
+\alias{Rle}
+\alias{SimpleList}
 \alias{data.table}
 \alias{rbindlist}
 \alias{makeNames}
 \alias{column_to_rownames}
 \alias{rownames_to_column}
 \alias{tibble}
+\alias{DataFrame-class}
+\alias{DataFrameList-class}
+\alias{GRanges-class}
+\alias{GRangesList-class}
+\alias{IRanges-class}
+\alias{List-class}
+\alias{Matrix-class}
+\alias{Rle-class}
+\alias{SimpleList-class}
+\alias{SplitDataFrameList-class}
+\alias{sparseMatrix-class}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -26,9 +46,15 @@ below to see their documentation.
 
   \item{data.table}{\code{\link[data.table]{data.table}}, \code{\link[data.table]{rbindlist}}}
 
+  \item{GenomicRanges}{\code{\link[GenomicRanges:GRanges-class]{GRanges}}, \code{\link[GenomicRanges:GRangesList-class]{GRangesList}}}
+
+  \item{IRanges}{\code{\link[IRanges:DataFrameList-class]{DataFrameList}}, \code{\link[IRanges:DataFrameList-class]{SplitDataFrameList}}}
+
+  \item{Matrix}{\code{\link[Matrix]{Matrix}}, \code{\link[Matrix]{sparseMatrix}}}
+
   \item{RCurl}{\code{\link[RCurl]{getURL}}}
 
-  \item{S4Vectors}{\code{\link[S4Vectors:DataFrame-class]{DataFrame}}}
+  \item{S4Vectors}{\code{\link[S4Vectors:DataFrame-class]{DataFrame}}, \code{\link[S4Vectors:List-class]{List}}, \code{\link[S4Vectors:Rle-class]{Rle}}, \code{\link[S4Vectors:SimpleList-class]{SimpleList}}}
 
   \item{syntactic}{\code{\link[syntactic]{makeNames}}}
 
