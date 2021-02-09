@@ -2,5 +2,7 @@
 #+STARTUP: content
 * Development
 ** TODO Consider using brio package for `read_lines` and `write_lines`.
-** TODO importMTX: MTX import: look for "barcodes.tsv.gz", "genes.tsv.gz", "features.tsv.gz", which are output by CellRanger.
-** TODO `transmit()`: Need to improve error messages here rather than simply using asserts.
+** TODO importMTX: MTX import: look for "barcodes.tsv.gz", "genes.tsv.gz",
+   "features.tsv.gz", which are output by CellRanger.
+** TODO `transmit()`: Need to improve error messages here rather than simply
+   using asserts.

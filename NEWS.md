@@ -1,3 +1,10 @@
+## pipette 0.5.4 (2021-02-09)
+
+### Minor changes
+
+- Reexporting some additional functions and classes from GenomicRanges, IRanges,
+  Matrix, and S4Vectors that we can inherit in basejump.
+
 ## pipette 0.5.3 (2021-02-03)
 
 ### New functions
