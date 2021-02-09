@@ -10,6 +10,7 @@
 \alias{GRanges}
 \alias{GRangesList}
 \alias{DataFrameList}
+\alias{IRanges}
 \alias{SplitDataFrameList}
 \alias{Matrix}
 \alias{sparseMatrix}
@@ -48,7 +49,7 @@ below to see their documentation.
 
   \item{GenomicRanges}{\code{\link[GenomicRanges:GRanges-class]{GRanges}}, \code{\link[GenomicRanges:GRangesList-class]{GRangesList}}}
 
-  \item{IRanges}{\code{\link[IRanges:DataFrameList-class]{DataFrameList}}, \code{\link[IRanges:DataFrameList-class]{SplitDataFrameList}}}
+  \item{IRanges}{\code{\link[IRanges:DataFrameList-class]{DataFrameList}}, \code{\link[IRanges:IRanges-constructor]{IRanges}}, \code{\link[IRanges:DataFrameList-class]{SplitDataFrameList}}}
 
   \item{Matrix}{\code{\link[Matrix]{Matrix}}, \code{\link[Matrix]{sparseMatrix}}}
 
