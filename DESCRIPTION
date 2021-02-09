@@ -1,8 +1,8 @@
 Package: pipette
 Title: Pipette Biological Data In and Out of R
 Description: Input/output functions for biological data formats.
-Version: 0.5.3
-Date: 2021-02-03
+Version: 0.5.4
+Date: 2021-02-09
 Authors@R: c(
     person(
         "Michael", "Steinbaugh",
@@ -24,7 +24,7 @@ Depends: R (>= 4.0)
 Imports:
     AcidBase (>= 0.3.5),
     AcidCLI (>= 0.0.6),
-    AcidGenerics (>= 0.5.5),
+    AcidGenerics (>= 0.5.8),
     BiocFileCache,
     GenomicRanges,
     IRanges,
@@ -42,7 +42,7 @@ Imports:
     utils,
     vroom (>= 1.4)
 Suggests:
-    AcidTest,
+    AcidTest (>= 0.4.2),
     httr (>= 1.4),
     jsonlite (>= 1.7),
     pzfx (>= 0.3),
@@ -55,34 +55,3 @@ Suggests:
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Additional_repositories: https://r.acidgenomics.com
-Collate: 
-    'AllGenerics.R'
-    'AllGlobals.R'
-    'saveData.R'
-    'assignAndSaveData.R'
-    'atomize-methods.R'
-    'cacheURL.R'
-    'checksums.R'
-    'coerce-methods.R'
-    'data.frame-internal.R'
-    'decode-methods.R'
-    'deprecated.R'
-    'droplevels-methods.R'
-    'encode-methods.R'
-    'export-methods.R'
-    'factorize-methods.R'
-    'getJSON.R'
-    'getURLDirList.R'
-    'import.R'
-    'loadData.R'
-    'loadDataAsName.R'
-    'loadRemoteData.R'
-    'localOrRemoteFile.R'
-    'matchRownameColumn-methods.R'
-    'metadata2-methods.R'
-    'package.R'
-    'reexports.R'
-    'removeNA-methods.R'
-    'sanitizeNA-methods.R'
-    'sanitizePercent-methods.R'
-    'transmit.R'
