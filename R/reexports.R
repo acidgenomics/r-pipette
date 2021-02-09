@@ -30,6 +30,10 @@ GenomicRanges::GRangesList
 #' @export
 IRanges::DataFrameList
 
+#' @importFrom IRanges IRanges
+#' @export
+IRanges::IRanges
+
 #' @importFrom IRanges SplitDataFrameList
 #' @export
 IRanges::SplitDataFrameList
