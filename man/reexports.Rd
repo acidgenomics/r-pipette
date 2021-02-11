@@ -6,11 +6,13 @@
 \alias{CharacterList}
 \alias{DataFrame}
 \alias{DataFrameList}
+\alias{Factor}
 \alias{FactorList}
 \alias{GRanges}
 \alias{GRangesList}
 \alias{IRanges}
 \alias{IntegerList}
+\alias{LLint}
 \alias{List}
 \alias{LogicalList}
 \alias{Matrix}
@@ -31,22 +33,28 @@
 \alias{rownames_to_column}
 \alias{sparseMatrix}
 \alias{tibble}
+\alias{Annotated-class}
+\alias{AtomicList-class}
 \alias{CharacterList-class}
 \alias{DataFrame-class}
 \alias{DataFrameList-class}
+\alias{Factor-class}
 \alias{FactorList-class}
 \alias{GRanges-class}
 \alias{GRangesList-class}
 \alias{IRanges-class}
 \alias{IntegerList-class}
+\alias{LLint-class}
 \alias{List-class}
 \alias{LogicalList-class}
 \alias{Matrix-class}
 \alias{NumericList-class}
+\alias{RectangularData-class}
 \alias{Rle-class}
 \alias{RleList-class}
 \alias{SimpleList-class}
 \alias{SplitDataFrameList-class}
+\alias{Vector-class}
 \alias{sparseMatrix-class}
 \title{Objects exported from other packages}
 \keyword{internal}
@@ -67,7 +75,7 @@ below to see their documentation.
 
   \item{RCurl}{\code{\link[RCurl]{getURL}}}
 
-  \item{S4Vectors}{\code{\link[S4Vectors:DataFrame-class]{DataFrame}}, \code{\link[S4Vectors:List-class]{List}}, \code{\link[S4Vectors:Rle-class]{Rle}}, \code{\link[S4Vectors:SimpleList-class]{SimpleList}}}
+  \item{S4Vectors}{\code{\link[S4Vectors:DataFrame-class]{DataFrame}}, \code{\link[S4Vectors:Factor-class]{Factor}}, \code{\link[S4Vectors:LLint-class]{LLint}}, \code{\link[S4Vectors:List-class]{List}}, \code{\link[S4Vectors:Rle-class]{Rle}}, \code{\link[S4Vectors:SimpleList-class]{SimpleList}}}
 
   \item{syntactic}{\code{\link[syntactic]{makeNames}}}
 

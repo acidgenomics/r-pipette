@@ -1,4 +1,12 @@
-## pipette 0.5.4 (2021-02-11)
+## pipette 0.5.6 (2021-02-11)
+
+### Minor changes
+
+- Reexporting additional useful functions and classes from S4Vectors and
+  IRanges: `Annotated`, `AtomicList`, `Factor`, `LLint`, `RectangularData`,
+  and `Vector`.
+
+## pipette 0.5.5 (2021-02-11)
 
 ### Minor changes
 
