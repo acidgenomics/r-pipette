@@ -1,3 +1,11 @@
+## pipette 0.5.4 (2021-02-11)
+
+### Minor changes
+
+- Including more reexports of useful S4 classes and functions defined in IRanges
+  that we will reexport in basejump: `CharacterList`, `FactorList`,
+  `IntegerList`, `LogicalList`, `NumericList`, `RleList`.
+
 ## pipette 0.5.4 (2021-02-09)
 
 ### Minor changes
