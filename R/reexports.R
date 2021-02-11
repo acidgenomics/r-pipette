@@ -10,6 +10,10 @@ S4Vectors::DataFrame
 #' @export
 IRanges::DataFrameList
 
+#' @importFrom S4Vectors Factor
+#' @export
+S4Vectors::Factor
+
 #' @importFrom IRanges FactorList
 #' @export
 IRanges::FactorList
@@ -29,6 +33,10 @@ IRanges::IRanges
 #' @importFrom IRanges IntegerList
 #' @export
 IRanges::IntegerList
+
+#' @importFrom S4Vectors LLint
+#' @export
+S4Vectors::LLint
 
 #' @importFrom S4Vectors List
 #' @export
@@ -113,6 +121,18 @@ tibble::tibble
 
 
 #' @rdname reexports
+#' @name Annotated-class
+#' @importClassesFrom S4Vectors Annotated
+#' @exportClass Annotated
+NULL
+
+#' @rdname reexports
+#' @name AtomicList-class
+#' @importClassesFrom IRanges AtomicList
+#' @exportClass AtomicList
+NULL
+
+#' @rdname reexports
 #' @name CharacterList-class
 #' @importClassesFrom IRanges CharacterList
 #' @exportClass CharacterList
@@ -128,6 +148,12 @@ NULL
 #' @name DataFrameList-class
 #' @importClassesFrom IRanges DataFrameList
 #' @exportClass DataFrameList
+NULL
+
+#' @rdname reexports
+#' @name Factor-class
+#' @importClassesFrom S4Vectors Factor
+#' @exportClass Factor
 NULL
 
 #' @rdname reexports
@@ -161,6 +187,12 @@ NULL
 NULL
 
 #' @rdname reexports
+#' @name LLint-class
+#' @importClassesFrom S4Vectors LLint
+#' @exportClass LLint
+NULL
+
+#' @rdname reexports
 #' @name List-class
 #' @importClassesFrom S4Vectors List
 #' @exportClass List
@@ -185,6 +217,12 @@ NULL
 NULL
 
 #' @rdname reexports
+#' @name RectangularData-class
+#' @importClassesFrom S4Vectors RectangularData
+#' @exportClass RectangularData
+NULL
+
+#' @rdname reexports
 #' @name Rle-class
 #' @importClassesFrom S4Vectors Rle
 #' @exportClass Rle
@@ -206,6 +244,12 @@ NULL
 #' @name SplitDataFrameList-class
 #' @importClassesFrom IRanges SplitDataFrameList
 #' @exportClass SplitDataFrameList
+NULL
+
+#' @rdname reexports
+#' @name Vector-class
+#' @importClassesFrom S4Vectors Vector
+#' @exportClass Vector
 NULL
 
 #' @rdname reexports
