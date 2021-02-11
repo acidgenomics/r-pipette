@@ -1,20 +1,18 @@
-#' @importFrom AcidBase compress
+#' @importFrom IRanges CharacterList
 #' @export
-AcidBase::compress
+IRanges::CharacterList
 
-#' @importFrom AcidBase decompress
+#' @importFrom S4Vectors DataFrame
 #' @export
-AcidBase::decompress
+S4Vectors::DataFrame
 
-#' @importFrom AcidBase download
+#' @importFrom IRanges DataFrameList
 #' @export
-AcidBase::download
+IRanges::DataFrameList
 
-#' @importFrom AcidBase pasteURL
+#' @importFrom IRanges FactorList
 #' @export
-AcidBase::pasteURL
-
-
+IRanges::FactorList
 
 #' @importFrom GenomicRanges GRanges
 #' @export
@@ -24,85 +22,101 @@ GenomicRanges::GRanges
 #' @export
 GenomicRanges::GRangesList
 
-
-
-#' @importFrom IRanges DataFrameList
-#' @export
-IRanges::DataFrameList
-
 #' @importFrom IRanges IRanges
 #' @export
 IRanges::IRanges
 
-#' @importFrom IRanges SplitDataFrameList
+#' @importFrom IRanges IntegerList
 #' @export
-IRanges::SplitDataFrameList
-
-
-
-#' @importFrom Matrix Matrix
-#' @export
-Matrix::Matrix
-
-#' @importFrom Matrix sparseMatrix
-#' @export
-Matrix::sparseMatrix
-
-
-
-#' @importFrom RCurl getURL
-#' @export
-RCurl::getURL
-
-
-
-#' @importFrom S4Vectors DataFrame
-#' @export
-S4Vectors::DataFrame
+IRanges::IntegerList
 
 #' @importFrom S4Vectors List
 #' @export
 S4Vectors::List
 
+#' @importFrom IRanges LogicalList
+#' @export
+IRanges::LogicalList
+
+#' @importFrom Matrix Matrix
+#' @export
+Matrix::Matrix
+
+#' @importFrom IRanges NumericList
+#' @export
+IRanges::NumericList
+
 #' @importFrom S4Vectors Rle
 #' @export
 S4Vectors::Rle
+
+#' @importFrom IRanges RleList
+#' @export
+IRanges::RleList
 
 #' @importFrom S4Vectors SimpleList
 #' @export
 S4Vectors::SimpleList
 
-
-
-#' @importFrom data.table data.table
+#' @importFrom IRanges SplitDataFrameList
 #' @export
-data.table::data.table
-
-#' @importFrom data.table rbindlist
-#' @export
-data.table::rbindlist
-
-
-
-#' @importFrom syntactic makeNames
-#' @export
-syntactic::makeNames
-
-
+IRanges::SplitDataFrameList
 
 #' @importFrom tibble column_to_rownames
 #' @export
 tibble::column_to_rownames
 
+#' @importFrom AcidBase compress
+#' @export
+AcidBase::compress
+
+#' @importFrom data.table data.table
+#' @export
+data.table::data.table
+
+#' @importFrom AcidBase decompress
+#' @export
+AcidBase::decompress
+
+#' @importFrom AcidBase download
+#' @export
+AcidBase::download
+
+#' @importFrom RCurl getURL
+#' @export
+RCurl::getURL
+
+#' @importFrom syntactic makeNames
+#' @export
+syntactic::makeNames
+
+#' @importFrom AcidBase pasteURL
+#' @export
+AcidBase::pasteURL
+
+#' @importFrom data.table rbindlist
+#' @export
+data.table::rbindlist
+
 #' @importFrom tibble rownames_to_column
 #' @export
 tibble::rownames_to_column
+
+#' @importFrom Matrix sparseMatrix
+#' @export
+Matrix::sparseMatrix
 
 #' @importFrom tibble tibble
 #' @export
 tibble::tibble
 
 
+
+#' @rdname reexports
+#' @name CharacterList-class
+#' @importClassesFrom IRanges CharacterList
+#' @exportClass CharacterList
+NULL
 
 #' @rdname reexports
 #' @name DataFrame-class
@@ -114,6 +128,12 @@ NULL
 #' @name DataFrameList-class
 #' @importClassesFrom IRanges DataFrameList
 #' @exportClass DataFrameList
+NULL
+
+#' @rdname reexports
+#' @name FactorList-class
+#' @importClassesFrom IRanges FactorList
+#' @exportClass FactorList
 NULL
 
 #' @rdname reexports
@@ -135,9 +155,21 @@ NULL
 NULL
 
 #' @rdname reexports
+#' @name IntegerList-class
+#' @importClassesFrom IRanges IntegerList
+#' @exportClass IntegerList
+NULL
+
+#' @rdname reexports
 #' @name List-class
 #' @importClassesFrom S4Vectors List
 #' @exportClass List
+NULL
+
+#' @rdname reexports
+#' @name LogicalList-class
+#' @importClassesFrom IRanges LogicalList
+#' @exportClass LogicalList
 NULL
 
 #' @rdname reexports
@@ -147,9 +179,21 @@ NULL
 NULL
 
 #' @rdname reexports
+#' @name NumericList-class
+#' @importClassesFrom IRanges NumericList
+#' @exportClass NumericList
+NULL
+
+#' @rdname reexports
 #' @name Rle-class
 #' @importClassesFrom S4Vectors Rle
 #' @exportClass Rle
+NULL
+
+#' @rdname reexports
+#' @name RleList-class
+#' @importClassesFrom IRanges RleList
+#' @exportClass RleList
 NULL
 
 #' @rdname reexports
