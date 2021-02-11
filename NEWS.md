@@ -2,9 +2,10 @@
 
 ### Minor changes
 
-- Reexporting additional useful functions and classes from S4Vectors and
-  IRanges: `Annotated`, `AtomicList`, `Factor`, `LLint`, `RectangularData`,
-  and `Vector`.
+- Reexporting additional useful functions and classes from IRanges, including
+  `AtomicList` virtual class.
+- Migrated S4Vectors reexports to AcidGenerics, including `Annotated`, `Factor`,
+  `Factor`, `LLint`, and `RectangularData` classes.
 
 ## pipette 0.5.5 (2021-02-11)
 
