@@ -25,12 +25,12 @@ All \code{atomic} columns will be encoded to \code{Rle} S4 class.
 Encode using run-length encoding
 }
 \note{
-Updated 2019-07-20.
+Updated 2021-02-11.
 }
 \examples{
 ## DataFrame ====
 binary <- seq(from = 0L, to = 1L)
-df <- S4Vectors::DataFrame(
+df <- DataFrame(
     a = rep(x = binary, times = 50L),
     b = rep(x = binary, each = 50L)
 )
@@ -39,5 +39,5 @@ x <- encode(df)
 lapply(x, class)
 }
 \seealso{
-\code{\link[S4Vectors:Rle-class]{S4Vectors::Rle()}}.
+\code{\link[S4Vectors:Rle-class]{Rle()}}.
 }

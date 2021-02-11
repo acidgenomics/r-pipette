@@ -1,6 +1,6 @@
 #' @name sanitizeNA
 #' @inherit AcidGenerics::sanitizeNA
-#' @note Updated 2020-10-05.
+#' @note Updated 2021-02-11.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
@@ -13,7 +13,7 @@
 #' print(to)
 #'
 #' ## DataFrame ====
-#' from <- S4Vectors::DataFrame(
+#' from <- DataFrame(
 #'     a = c("foo", ""),
 #'     b = c(NA, "bar"),
 #'     row.names = c("c", "d")

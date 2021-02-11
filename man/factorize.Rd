@@ -22,10 +22,10 @@ All columns will be coerced to \code{factor}.
 Coerce all columns in the object to \code{factor} (i.e. \code{stringsAsFactors}).
 }
 \note{
-Updated 2019-07-19.
+Updated 2021-02-11.
 }
 \examples{
-df <- S4Vectors::DataFrame(a = letters[seq_len(5L)], b = seq_len(5L))
+df <- DataFrame(a = letters[seq_len(5L)], b = seq_len(5L))
 x <- factorize(df)
 }
 \seealso{

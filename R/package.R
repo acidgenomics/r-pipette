@@ -7,10 +7,10 @@
 
 
 
+#' @importClassesFrom AcidGenerics DataFrame List
 #' @importClassesFrom GenomicRanges GenomicRanges
 #' @importClassesFrom IRanges IRanges Ranges
 #' @importClassesFrom Matrix Matrix
-#' @importClassesFrom S4Vectors DataFrame List
 NULL
 
 
@@ -19,13 +19,13 @@ NULL
 #'   decompress dots download extPattern fileExt formalsList initDir
 #'   matchArgsToDoCall pasteURL realpath requireNamespaces standardizeCall
 #' @importFrom AcidCLI alert alertInfo alertSuccess alertWarning
+#' @importFrom AcidGenerics DataFrame Rle head mcols mcols<- metadata metadata<-
+#'   na.omit tail
 #' @importFrom BiocFileCache BiocFileCache bfcadd bfccache bfcdownload
 #'   bfcneedsupdate bfcquery bfcrpath
 #' @importFrom IRanges end start width
 #' @importFrom Matrix readMM writeMM
 #' @importFrom RCurl getURL
-#' @importFrom S4Vectors DataFrame Rle head mcols mcols<- metadata metadata<-
-#'   na.omit tail
 #' @importFrom digest digest
 #' @importFrom goalie assert allAreAtomic allAreExisting allAreFiles
 #'   allAreNonExisting allAreURLs allHaveAccess areDisjointSets areSameLength
@@ -40,6 +40,4 @@ NULL
 #' @importFrom syntactic makeNames
 #' @importFrom utils download.file packageName packageVersion
 #' @importFrom vroom cols vroom vroom_lines vroom_write
-#'
-#' @importMethodsFrom S4Vectors droplevels
 NULL

@@ -1,11 +1,11 @@
 #' @name encode
 #' @inherit AcidGenerics::encode
-#' @note Updated 2019-07-20.
+#' @note Updated 2021-02-11.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
 #'
-#' @seealso [S4Vectors::Rle()].
+#' @seealso [`Rle()`][S4Vectors::Rle].
 #'
 #' @return Modified object.
 #' All `atomic` columns will be encoded to `Rle` S4 class.
@@ -13,7 +13,7 @@
 #' @examples
 #' ## DataFrame ====
 #' binary <- seq(from = 0L, to = 1L)
-#' df <- S4Vectors::DataFrame(
+#' df <- DataFrame(
 #'     a = rep(x = binary, times = 50L),
 #'     b = rep(x = binary, each = 50L)
 #' )

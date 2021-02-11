@@ -28,7 +28,7 @@ Non-atomic columns (e.g. \code{list} or complex S4 classes) will be dropped.
 Ensure all columns in the object are \code{atomic}.
 }
 \examples{
-df <- S4Vectors::DataFrame(a = "a", b = list(a = seq_len(3)))
+df <- DataFrame(a = "a", b = list(a = seq_len(3)))
 lapply(df, is.atomic)
 x <- atomize(df)
 }

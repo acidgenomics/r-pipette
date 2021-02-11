@@ -2,17 +2,13 @@
 #' @export
 IRanges::CharacterList
 
-#' @importFrom S4Vectors DataFrame
+#' @importFrom AcidGenerics DataFrame
 #' @export
-S4Vectors::DataFrame
+AcidGenerics::DataFrame
 
 #' @importFrom IRanges DataFrameList
 #' @export
 IRanges::DataFrameList
-
-#' @importFrom S4Vectors Factor
-#' @export
-S4Vectors::Factor
 
 #' @importFrom IRanges FactorList
 #' @export
@@ -34,14 +30,6 @@ IRanges::IRanges
 #' @export
 IRanges::IntegerList
 
-#' @importFrom S4Vectors LLint
-#' @export
-S4Vectors::LLint
-
-#' @importFrom S4Vectors List
-#' @export
-S4Vectors::List
-
 #' @importFrom IRanges LogicalList
 #' @export
 IRanges::LogicalList
@@ -54,17 +42,9 @@ Matrix::Matrix
 #' @export
 IRanges::NumericList
 
-#' @importFrom S4Vectors Rle
-#' @export
-S4Vectors::Rle
-
 #' @importFrom IRanges RleList
 #' @export
 IRanges::RleList
-
-#' @importFrom S4Vectors SimpleList
-#' @export
-S4Vectors::SimpleList
 
 #' @importFrom IRanges SplitDataFrameList
 #' @export
@@ -98,6 +78,14 @@ RCurl::getURL
 #' @export
 syntactic::makeNames
 
+#' @importFrom AcidGenerics metadata
+#' @export
+AcidGenerics::metadata
+
+#' @importFrom AcidGenerics metadata<-
+#' @export
+AcidGenerics::`metadata<-`
+
 #' @importFrom AcidBase pasteURL
 #' @export
 AcidBase::pasteURL
@@ -121,12 +109,6 @@ tibble::tibble
 
 
 #' @rdname reexports
-#' @name Annotated-class
-#' @importClassesFrom S4Vectors Annotated
-#' @exportClass Annotated
-NULL
-
-#' @rdname reexports
 #' @name AtomicList-class
 #' @importClassesFrom IRanges AtomicList
 #' @exportClass AtomicList
@@ -139,21 +121,9 @@ NULL
 NULL
 
 #' @rdname reexports
-#' @name DataFrame-class
-#' @importClassesFrom S4Vectors DataFrame
-#' @exportClass DataFrame
-NULL
-
-#' @rdname reexports
 #' @name DataFrameList-class
 #' @importClassesFrom IRanges DataFrameList
 #' @exportClass DataFrameList
-NULL
-
-#' @rdname reexports
-#' @name Factor-class
-#' @importClassesFrom S4Vectors Factor
-#' @exportClass Factor
 NULL
 
 #' @rdname reexports
@@ -187,18 +157,6 @@ NULL
 NULL
 
 #' @rdname reexports
-#' @name LLint-class
-#' @importClassesFrom S4Vectors LLint
-#' @exportClass LLint
-NULL
-
-#' @rdname reexports
-#' @name List-class
-#' @importClassesFrom S4Vectors List
-#' @exportClass List
-NULL
-
-#' @rdname reexports
 #' @name LogicalList-class
 #' @importClassesFrom IRanges LogicalList
 #' @exportClass LogicalList
@@ -217,39 +175,15 @@ NULL
 NULL
 
 #' @rdname reexports
-#' @name RectangularData-class
-#' @importClassesFrom S4Vectors RectangularData
-#' @exportClass RectangularData
-NULL
-
-#' @rdname reexports
-#' @name Rle-class
-#' @importClassesFrom S4Vectors Rle
-#' @exportClass Rle
-NULL
-
-#' @rdname reexports
 #' @name RleList-class
 #' @importClassesFrom IRanges RleList
 #' @exportClass RleList
 NULL
 
 #' @rdname reexports
-#' @name SimpleList-class
-#' @importClassesFrom S4Vectors SimpleList
-#' @exportClass SimpleList
-NULL
-
-#' @rdname reexports
 #' @name SplitDataFrameList-class
 #' @importClassesFrom IRanges SplitDataFrameList
 #' @exportClass SplitDataFrameList
-NULL
-
-#' @rdname reexports
-#' @name Vector-class
-#' @importClassesFrom S4Vectors Vector
-#' @exportClass Vector
 NULL
 
 #' @rdname reexports

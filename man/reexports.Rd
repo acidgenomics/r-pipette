@@ -6,20 +6,15 @@
 \alias{CharacterList}
 \alias{DataFrame}
 \alias{DataFrameList}
-\alias{Factor}
 \alias{FactorList}
 \alias{GRanges}
 \alias{GRangesList}
 \alias{IRanges}
 \alias{IntegerList}
-\alias{LLint}
-\alias{List}
 \alias{LogicalList}
 \alias{Matrix}
 \alias{NumericList}
-\alias{Rle}
 \alias{RleList}
-\alias{SimpleList}
 \alias{SplitDataFrameList}
 \alias{column_to_rownames}
 \alias{compress}
@@ -28,33 +23,26 @@
 \alias{download}
 \alias{getURL}
 \alias{makeNames}
+\alias{metadata}
+\alias{metadata<-}
 \alias{pasteURL}
 \alias{rbindlist}
 \alias{rownames_to_column}
 \alias{sparseMatrix}
 \alias{tibble}
-\alias{Annotated-class}
 \alias{AtomicList-class}
 \alias{CharacterList-class}
-\alias{DataFrame-class}
 \alias{DataFrameList-class}
-\alias{Factor-class}
 \alias{FactorList-class}
 \alias{GRanges-class}
 \alias{GRangesList-class}
 \alias{IRanges-class}
 \alias{IntegerList-class}
-\alias{LLint-class}
-\alias{List-class}
 \alias{LogicalList-class}
 \alias{Matrix-class}
 \alias{NumericList-class}
-\alias{RectangularData-class}
-\alias{Rle-class}
 \alias{RleList-class}
-\alias{SimpleList-class}
 \alias{SplitDataFrameList-class}
-\alias{Vector-class}
 \alias{sparseMatrix-class}
 \title{Objects exported from other packages}
 \keyword{internal}
@@ -65,6 +53,8 @@ below to see their documentation.
 \describe{
   \item{AcidBase}{\code{\link[AcidBase]{compress}}, \code{\link[AcidBase:compress]{decompress}}, \code{\link[AcidBase]{download}}, \code{\link[AcidBase]{pasteURL}}}
 
+  \item{AcidGenerics}{\code{\link[AcidGenerics:reexports]{DataFrame}}, \code{\link[AcidGenerics:reexports]{metadata}}, \code{\link[AcidGenerics:reexports]{metadata<-}}}
+
   \item{data.table}{\code{\link[data.table]{data.table}}, \code{\link[data.table]{rbindlist}}}
 
   \item{GenomicRanges}{\code{\link[GenomicRanges:GRanges-class]{GRanges}}, \code{\link[GenomicRanges:GRangesList-class]{GRangesList}}}
@@ -74,8 +64,6 @@ below to see their documentation.
   \item{Matrix}{\code{\link[Matrix]{Matrix}}, \code{\link[Matrix]{sparseMatrix}}}
 
   \item{RCurl}{\code{\link[RCurl]{getURL}}}
-
-  \item{S4Vectors}{\code{\link[S4Vectors:DataFrame-class]{DataFrame}}, \code{\link[S4Vectors:Factor-class]{Factor}}, \code{\link[S4Vectors:LLint-class]{LLint}}, \code{\link[S4Vectors:List-class]{List}}, \code{\link[S4Vectors:Rle-class]{Rle}}, \code{\link[S4Vectors:SimpleList-class]{SimpleList}}}
 
   \item{syntactic}{\code{\link[syntactic]{makeNames}}}
 

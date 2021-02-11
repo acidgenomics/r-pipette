@@ -1,12 +1,12 @@
 #' @name factorize
 #' @inherit AcidGenerics::factorize
-#' @note Updated 2019-07-19.
+#' @note Updated 2021-02-11.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
 #'
 #' @examples
-#' df <- S4Vectors::DataFrame(a = letters[seq_len(5L)], b = seq_len(5L))
+#' df <- DataFrame(a = letters[seq_len(5L)], b = seq_len(5L))
 #' x <- factorize(df)
 NULL
 

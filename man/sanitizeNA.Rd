@@ -36,7 +36,7 @@ inside a character vector to \code{NA_character_}. Other \code{atomic} data type
 returned unmodified.
 }
 \note{
-Updated 2020-10-05.
+Updated 2021-02-11.
 }
 \examples{
 ## character ====
@@ -46,7 +46,7 @@ to <- sanitizeNA(from)
 print(to)
 
 ## DataFrame ====
-from <- S4Vectors::DataFrame(
+from <- DataFrame(
     a = c("foo", ""),
     b = c(NA, "bar"),
     row.names = c("c", "d")
