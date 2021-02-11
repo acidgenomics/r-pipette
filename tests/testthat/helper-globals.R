@@ -1,3 +1,5 @@
+## nolint start
+
 data(
     DFrame,
     GRanges,
@@ -9,7 +11,11 @@ data(
     package = "AcidTest",
     envir = environment()
 )
-
+data(
+    mtcars,
+    package = "datasets",
+    envir = environment()
+)
 stopifnot(
     is(DFrame, "DataFrame"),
     is(GRanges, "GRanges"),
@@ -24,20 +30,19 @@ dt <- data.table
 gr <- GRanges
 ir <- IRanges
 mat <- matrix
+mtcars <- as(mtcars, "DataFrame")
 sparse <- sparseMatrix
 tbl <- tbl_df
 
-data(mtcars, package = "datasets", envir = environment())
-mtcars <- as(mtcars, "DataFrame")
-
-## nolint start
-DataFrame <- S4Vectors::DataFrame
+DataFrame <- AcidGenerics::DataFrame
+Rle <- structure("Rle", package = "S4Vectors")
 data.table <- data.table::data.table
 hasInternet <- goalie::hasInternet
 isSubset <- goalie::isSubset
-mcols <- S4Vectors::mcols
-metadata <- S4Vectors::metadata
+mcols <- AcidGenerics::mcols
+metadata <- AcidGenerics::metadata
 seqnames <- GenomicRanges::seqnames
 skip_on_docker <- goalie::skip_on_docker
 tibble <- tibble::tibble
+
 ## nolint end

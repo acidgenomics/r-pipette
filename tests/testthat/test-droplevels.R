@@ -1,7 +1,5 @@
 context("droplevels")
 
-Rle <- structure("Rle", package = "S4Vectors")  # nolint
-
 test_that("DataFrame", {
     x <- DataFrame(
         "aaa" = factor(
