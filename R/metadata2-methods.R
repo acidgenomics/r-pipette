@@ -40,10 +40,10 @@
 #' attr(x, which = "A")
 #'
 #' ## S4 (extending Annotated) ====
-#' x <- S4Vectors::DataFrame()
+#' x <- DataFrame()
 #' metadata2(x, which = "A") <- "B"
 #' metadata2(x, which = "A")
-#' S4Vectors::metadata(x)[["A"]]
+#' metadata(x)[["A"]]
 NULL
 
 
