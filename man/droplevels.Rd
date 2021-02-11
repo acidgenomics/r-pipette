@@ -32,6 +32,6 @@ data(GRanges, package = "AcidTest")
 
 ## Ranges ====
 object <- GRanges
-object <- S4Vectors::droplevels(object)
+object <- droplevels(object)
 print(object)
 }
