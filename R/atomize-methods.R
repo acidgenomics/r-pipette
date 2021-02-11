@@ -5,7 +5,7 @@
 #' @param ... Additional arguments.
 #'
 #' @examples
-#' df <- S4Vectors::DataFrame(a = "a", b = list(a = seq_len(3)))
+#' df <- DataFrame(a = "a", b = list(a = seq_len(3)))
 #' lapply(df, is.atomic)
 #' x <- atomize(df)
 NULL
