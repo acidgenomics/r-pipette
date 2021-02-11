@@ -90,6 +90,10 @@ AcidGenerics::`metadata<-`
 #' @export
 AcidBase::pasteURL
 
+#' @importFrom IRanges ranges
+#' @export
+IRanges::ranges
+
 #' @importFrom data.table rbindlist
 #' @export
 data.table::rbindlist
@@ -105,6 +109,10 @@ Matrix::sparseMatrix
 #' @importFrom tibble tibble
 #' @export
 tibble::tibble
+
+#' @importFrom IRanges trim
+#' @export
+IRanges::trim
 
 
 
