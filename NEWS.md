@@ -1,3 +1,9 @@
+## pipette 0.5.9 (2021-02-12)
+
+### Minor changes
+
+- Migrated IRanges reexports to AcidGenerics.
+
 ## pipete 0.5.8 (2021-02-12)
 
 ### Minor changes
