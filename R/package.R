@@ -3,27 +3,23 @@
 #' Input/output functions for biological data formats.
 #'
 #' @keywords internal
-"_PACKAGE"
-
-
-
+#'
 #' @importClassesFrom AcidGenerics DataFrame List
 #' @importClassesFrom GenomicRanges GenomicRanges
 #' @importClassesFrom IRanges IRanges Ranges
 #' @importClassesFrom Matrix Matrix
-NULL
-
-
-
+#'
+#' @importMethodsFrom IRanges end start width
+#'
 #' @importFrom AcidBase basenameSansExt bapply compress compressExtPattern
-#'   decompress dots download extPattern fileExt formalsList initDir
-#'   matchArgsToDoCall pasteURL realpath requireNamespaces standardizeCall
+#'   decompress dots download download.file extPattern fileExt formalsList
+#'   initDir matchArgsToDoCall packageName packageVersion pasteURL realpath
+#'   requireNamespaces standardizeCall
 #' @importFrom AcidCLI alert alertInfo alertSuccess alertWarning
-#' @importFrom AcidGenerics DataFrame Rle head mcols mcols<- metadata metadata<-
-#'   na.omit tail
+#' @importFrom AcidGenerics DataFrame Rle end head mcols mcols<- metadata
+#'   metadata<- na.omit start tail width
 #' @importFrom BiocFileCache BiocFileCache bfcadd bfccache bfcdownload
 #'   bfcneedsupdate bfcquery bfcrpath
-#' @importFrom IRanges end start width
 #' @importFrom Matrix readMM writeMM
 #' @importFrom RCurl getURL
 #' @importFrom digest digest
@@ -38,6 +34,5 @@ NULL
 #' @importFrom rappdirs user_cache_dir
 #' @importFrom stringr str_extract str_match str_subset
 #' @importFrom syntactic makeNames
-#' @importFrom utils download.file packageName packageVersion
 #' @importFrom vroom cols vroom vroom_lines vroom_write
-NULL
+"_PACKAGE"
