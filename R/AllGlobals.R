@@ -93,6 +93,7 @@
 #' @examples
 #' naStrings
 naStrings <- c(
+    " ",
     "",
     "#N/A",
     "#n/a",
@@ -100,6 +101,7 @@ naStrings <- c(
     "N/A",
     "NA",
     "NULL",
+    "_",
     "n/a",
     "na",
     "null"
