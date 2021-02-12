@@ -1,3 +1,9 @@
+## pipete 0.5.8 (2021-02-12)
+
+### Minor changes
+
+- Updated `naStrings` to include `"-"`, `"_"`, and `" "`.
+
 ## pipette 0.5.7 (2021-02-12)
 
 ### Minor changes
