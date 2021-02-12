@@ -88,7 +88,7 @@
 #' NA strings
 #'
 #' @export
-#' @note Updated 2021-01-13.
+#' @note Updated 2021-02-12.
 #'
 #' @examples
 #' naStrings
@@ -96,6 +96,7 @@ naStrings <- c(
     "",
     "#N/A",
     "#n/a",
+    "-",  # Used by NCBI (e.g. gene info files).
     "N/A",
     "NA",
     "NULL",
