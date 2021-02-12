@@ -1,3 +1,10 @@
+## pipette 0.5.7 (2021-02-12)
+
+### Minor changes
+
+- Minor rework and simplification of NAMESPACE, inheriting from AcidGenerics
+  and AcidBase when possible.
+
 ## pipette 0.5.6 (2021-02-11)
 
 ### Minor changes
