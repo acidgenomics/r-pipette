@@ -18,7 +18,7 @@ URL:
     https://r.acidgenomics.com/packages/pipette/,
     https://github.com/acidgenomics/r-pipette/
 BugReports: https://github.com/acidgenomics/r-pipette/issues/
-License: GPL-3
+License: AGPL-3
 Encoding: UTF-8
 Depends: R (>= 4.0)
 Imports:
