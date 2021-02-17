@@ -1,3 +1,9 @@
+## pipette 0.5.10 (2021-02-17)
+
+### Minor changes
+
+- Include `CompressedGRangesList` from GenomicRanges as a reexport.
+
 ## pipette 0.5.9 (2021-02-12)
 
 ### Minor changes
