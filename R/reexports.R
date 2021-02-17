@@ -73,6 +73,12 @@ tibble::tibble
 
 
 #' @rdname reexports
+#' @name CompressedGRangesList-class
+#' @importClassesFrom GenomicRanges CompressedGRangesList
+#' @exportClass CompressedGRangesList
+NULL
+
+#' @rdname reexports
 #' @name GRanges-class
 #' @importClassesFrom GenomicRanges GRanges
 #' @exportClass GRanges
