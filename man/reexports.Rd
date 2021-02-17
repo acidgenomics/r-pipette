@@ -21,6 +21,7 @@
 \alias{rownames_to_column}
 \alias{sparseMatrix}
 \alias{tibble}
+\alias{CompressedGRangesList-class}
 \alias{GRanges-class}
 \alias{GRangesList-class}
 \alias{Matrix-class}
