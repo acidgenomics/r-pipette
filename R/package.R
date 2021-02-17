@@ -13,8 +13,8 @@
 #'
 #' @importFrom AcidBase basenameSansExt bapply compress compressExtPattern
 #'   decompress dots download download.file extPattern fileExt formalsList
-#'   initDir matchArgsToDoCall packageName packageVersion pasteURL realpath
-#'   requireNamespaces standardizeCall
+#'   initDir packageName packageVersion pasteURL realpath requireNamespaces
+#'   standardizeCall
 #' @importFrom AcidCLI alert alertInfo alertSuccess alertWarning
 #' @importFrom AcidGenerics DataFrame Rle end head mcols mcols<- metadata
 #'   metadata<- na.omit start tail width
