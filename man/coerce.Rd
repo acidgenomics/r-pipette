@@ -12,7 +12,7 @@
 \alias{as.data.table.DataFrame}
 \alias{as.data.table.IRanges}
 \alias{as.data.table.GenomicRanges}
-\alias{as.DataFrame,List-method}
+\alias{as.DataFrame,SimpleList-method}
 \alias{as.DataFrame,list-method}
 \alias{as.data.frame,IRanges-method}
 \alias{as.data.frame,Matrix-method}
@@ -61,7 +61,7 @@ as.data.table(x, keep.rownames = FALSE, ...)
 
 \method{as.data.table}{GenomicRanges}(x, keep.rownames = TRUE, ...)
 
-\S4method{as.DataFrame}{List}(x, row.names = NULL)
+\S4method{as.DataFrame}{SimpleList}(x, row.names = NULL)
 
 \S4method{as.DataFrame}{list}(x, row.names = NULL)
 

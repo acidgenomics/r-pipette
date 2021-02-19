@@ -1,3 +1,10 @@
+## pipette 0.5.19 (2021-02-19)
+
+### Minor changes
+
+- `as.DataFrame`: Restrict list-based coercion to `list` and `SimpleList`
+  (instead of `List` virtual class).
+
 ## pipette 0.5.10 (2021-02-17)
 
 ### Minor changes
