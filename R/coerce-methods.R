@@ -203,8 +203,8 @@ NULL
         )
     }
 
-## Updated 2021-02-03.
-`as.DataFrame,List` <-  # nolint
+## Updated 2021-02-19.
+`as.DataFrame,SimpleList` <-  # nolint
     `as.DataFrame,list`
 
 ## Updated 2021-01-15.
@@ -413,8 +413,8 @@ as.data.table.GenomicRanges <-  # nolint
 #' @export
 setMethod(
     f = "as.DataFrame",
-    signature = signature("List"),
-    definition = `as.DataFrame,List`
+    signature = signature("SimpleList"),
+    definition = `as.DataFrame,SimpleList`
 )
 
 #' @rdname coerce

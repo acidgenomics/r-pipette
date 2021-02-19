@@ -4,7 +4,7 @@
 #'
 #' @keywords internal
 #'
-#' @importClassesFrom AcidGenerics DataFrame List
+#' @importClassesFrom AcidGenerics DataFrame List SimpleList
 #' @importClassesFrom GenomicRanges GenomicRanges
 #' @importClassesFrom IRanges IRanges Ranges
 #' @importClassesFrom Matrix Matrix
