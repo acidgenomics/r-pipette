@@ -19,6 +19,7 @@
 \alias{pasteURL}
 \alias{rbindlist}
 \alias{rownames_to_column}
+\alias{seqnames}
 \alias{sparseMatrix}
 \alias{tibble}
 \alias{CompressedGRangesList-class}

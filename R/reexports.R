@@ -62,6 +62,13 @@ data.table::rbindlist
 #' @export
 tibble::rownames_to_column
 
+## GenomeInfoDb
+#' @rdname reexports
+#' @name seqnames
+#' @importFrom GenomicRanges seqnames
+#' @export
+NULL
+
 #' @importFrom Matrix sparseMatrix
 #' @export
 Matrix::sparseMatrix
