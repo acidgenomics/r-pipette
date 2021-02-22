@@ -1,4 +1,11 @@
-## pipette 0.5.19 (2021-02-19)
+## pipette 0.5.12 (2021-02-22)
+
+### Minor changes
+
+- Including `seqnames` as a reexport, which is defined in GenomeInfoDb via
+  GenomicRanges.
+
+## pipette 0.5.11 (2021-02-19)
 
 ### Minor changes
 
