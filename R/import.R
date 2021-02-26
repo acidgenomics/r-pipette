@@ -95,7 +95,7 @@
 #'
 #' @section Denylisted extensions:
 #'
-#' These file formats are blacklisted, and intentionally not supported:
+#' These file formats are intentionally not supported:
 #' `DOC`, `DOCX`, `PDF`, `PPT`, `PPTX`.
 #'
 #' @export
