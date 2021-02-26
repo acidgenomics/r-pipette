@@ -93,7 +93,7 @@
 #'
 #' [bcbio]: https://bcbio-nextgen.readthedocs.io/
 #'
-#' @section Blacklisted extensions:
+#' @section Denylisted extensions:
 #'
 #' These file formats are blacklisted, and intentionally not supported:
 #' `DOC`, `DOCX`, `PDF`, `PPT`, `PPTX`.
