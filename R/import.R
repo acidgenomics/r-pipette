@@ -373,6 +373,10 @@ import <- function(
     if (identical(ext, "rds") || isSubset(ext, .extGroup[["rda"]])) {
         return(object)
     }
+    ## Check that manual column names are correct.
+    if (isCharacter(colnames)) {
+        assert(identical(colnames(object), colnames))
+    }
     ## Data frame-specific operations.
     if (is.data.frame(object)) {
         ## Set row names automatically.
@@ -403,13 +407,6 @@ import <- function(
         if (!isTRUE(hasValidNames(object))) {
             alertWarning("Invalid names detected.")
         }
-    }
-    ## Check that manual rownames and/or colnames are correct.
-    if (isCharacter(rownames)) {
-        assert(identical(rownames(object), rownames))
-    }
-    if (isCharacter(colnames)) {
-        assert(identical(colnames(object), colnames))
     }
     if (isTRUE(metadata)) {
         if (!is.null(metadata2(object, which = "import"))) {
