@@ -1,3 +1,11 @@
+## pipette 0.5.13 (2021-03-04)
+
+### Minor changes
+
+- `import`: Hardened importer against unexpected mismatch when user attempts
+  to manually define column names via `colnames` argument. Some importers
+  such as `vroom` are currently too liberal about mismatches.
+
 ## pipette 0.5.12 (2021-02-22)
 
 ### Minor changes
