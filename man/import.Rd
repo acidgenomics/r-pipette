@@ -233,10 +233,10 @@ Refer to the Broad Institute \href{https://goo.gl/3ZkDPb}{GSEA wiki} for details
 }
 }
 
-\section{Blacklisted extensions}{
+\section{Denylisted extensions}{
 
 
-These file formats are blacklisted, and intentionally not supported:
+These file formats are intentionally not supported:
 \code{DOC}, \code{DOCX}, \code{PDF}, \code{PPT}, \code{PPTX}.
 }
 
