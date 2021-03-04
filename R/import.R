@@ -99,7 +99,7 @@
 #' `DOC`, `DOCX`, `PDF`, `PPT`, `PPTX`.
 #'
 #' @export
-#' @note Updated 2021-01-13.
+#' @note Updated 2021-03-04.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param format `character(1)`.
@@ -403,6 +403,13 @@ import <- function(
         if (!isTRUE(hasValidNames(object))) {
             alertWarning("Invalid names detected.")
         }
+    }
+    ## Check that manual rownames and/or colnames are correct.
+    if (isCharacter(rownames)) {
+        assert(identical(rownames(object), rownames))
+    }
+    if (isCharacter(colnames)) {
+        assert(identical(colnames(object), colnames))
     }
     if (isTRUE(metadata)) {
         if (!is.null(metadata2(object, which = "import"))) {
