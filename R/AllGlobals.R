@@ -77,6 +77,16 @@
 
 
 
+## Updated 2021-03-16.
+.symError <- paste(
+    "'export()' requires 'name' argument when 'object'",
+    "is passed in directly, not as a symbol."
+)
+
+
+
+## FIXME RENAME THIS TO PACKAGEVERSION...
+
 #' Package version
 #'
 #' @note Updated 2020-10-07.
