@@ -99,6 +99,20 @@ NULL
             ),
             choices = .delimEngines
         )
+        ## The vroom engine is currently bugging for writing lines, so fall back
+        ## to readr (if installed), and then base R.
+        ##
+        ## Jim is currently working on `vroom_write_lines()`.
+        ##
+        ## See related issue:
+        ## https://github.com/r-lib/vroom/issues/291
+        if (whatPkg == "vroom") {
+            if (isInstalled("readr")) {
+                whatPkg <- "readr"
+            } else {
+                whatPkg <- "base"  # nocov
+            }
+        }
         if (isTRUE(append)) {
             assert(!identical(whatPkg, "base"))
             overwrite <- FALSE
@@ -172,7 +186,9 @@ NULL
                 )
             },
             "vroom" = {
-                ## Support for this added in vroom 1.4.0.
+                ## Support for this added in vroom 1.4.0, but is buggy.
+                ## Only consider enabling in 1.4.1+.
+                assert(isTRUE(packageVersion("vroom") >= "1.4.1"))
                 whatFun <- "vroom_write_lines"
                 args <- list(
                     "x" = object,
