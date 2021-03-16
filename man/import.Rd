@@ -74,7 +74,7 @@ Data separated by commas, tabs, or visual spaces.\cr
 Note that TXT structure is amgibuous and actively discouraged.\cr
 Refer to \verb{Data frame return} section for details on how to change the
 default return type to \code{DataFrame}, \code{tbl_df} or \code{data.table}.\cr
-Imported by \code{\link[vroom:vroom]{vroom::vroom()}}.
+Imported by \code{\link[data.table:fread]{data.table::fread()}} by default.
 \item \strong{Excel workbook} (\code{XLSB}, \code{XLSX}): \code{data.frame}.\cr
 Resave in plain text delimited format instead, if possible.\cr
 Imported by \code{\link[readxl:read_excel]{readxl::read_excel()}}.
@@ -104,7 +104,7 @@ Imported by \code{\link[jsonlite:read_json]{jsonlite::read_json()}}.
 Imported by \code{\link[yaml:yaml.load]{yaml::yaml.load_file()}}.
 \item \strong{Lines} (\code{LOG}, \code{MD}, \code{PY}, \code{R}, \code{RMD}, \code{SH}): \code{character}.
 Source code or log files.\cr
-Imported by \code{\link[vroom:vroom_lines]{vroom_lines()}}.
+Imported by \code{\link[data.table:fread]{data.table::fread()}} by default.
 \item \strong{R data serialized} (\code{RDS}): \emph{variable}.\cr
 Currently recommend over RDA, if possible.\cr
 Imported by \code{\link[base:readRDS]{readRDS()}}.
@@ -128,7 +128,7 @@ arguments. Remote URLs and compressed files are supported. If you need more
 complex import settings, just call the wrapped importer directly instead.
 }
 \note{
-Updated 2021-03-04.
+Updated 2021-03-16.
 }
 \section{Row and column names}{
 

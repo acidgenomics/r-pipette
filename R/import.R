@@ -1,6 +1,8 @@
 ## FIXME Consider reworking this using a generic approach with file
 ## type-specific methods
 
+## FIXME Improve support for FWF files?
+
 
 
 #' Import
@@ -104,7 +106,7 @@
 #' `DOC`, `DOCX`, `PDF`, `PPT`, `PPTX`.
 #'
 #' @export
-#' @note Updated 2021-03-04.
+#' @note Updated 2021-03-16.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param format `character(1)`.
@@ -145,7 +147,7 @@
 #'   Note that TXT structure is amgibuous and actively discouraged.\cr
 #'   Refer to `Data frame return` section for details on how to change the
 #'   default return type to `DataFrame`, `tbl_df` or `data.table`.\cr
-#'   Imported by [vroom::vroom()].
+#'   Imported by [data.table::fread()] by default.
 #' - **Excel workbook** (`XLSB`, `XLSX`): `data.frame`.\cr
 #'   Resave in plain text delimited format instead, if possible.\cr
 #'   Imported by [readxl::read_excel()].
@@ -175,7 +177,7 @@
 #'   Imported by [yaml::yaml.load_file()].
 #' - **Lines** (`LOG`, `MD`, `PY`, `R`, `RMD`, `SH`): `character`.
 #'   Source code or log files.\cr
-#'   Imported by [`vroom_lines()`][vroom::vroom_lines].
+#'   Imported by [data.table::fread()] by default.
 #' - **R data serialized** (`RDS`): *variable*.\cr
 #'   Currently recommend over RDA, if possible.\cr
 #'   Imported by [`readRDS()`][base::readRDS].
@@ -417,11 +419,10 @@ import <- function(
         if (!is.null(metadata2(object, which = "import"))) {
             ## Add the call to metadata.
             m <- metadata2(object, which = "import")
-            call <- tryCatch(
+            m[["call"]] <- tryCatch(
                 expr = standardizeCall(),
                 error = function(e) NULL
             )
-            m[["call"]] <- call
             metadata2(object, which = "import") <- m
         }
     }
@@ -464,11 +465,11 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 #' Internal importer for a delimited file (e.g. `.csv`, `.tsv`).
 #'
 #' @details
-#' Calls `vroom::vroom()` internally by default.
+#' Calls `data.table::fread()` internally by default.
 #' Can override using `acid.import.engine` option, which also supports
 #' data.table and readr packages.
 #'
-#' @note Updated 2021-01-13.
+#' @note Updated 2021-03-16.
 #' @noRd
 .importDelim <- function(
     file,
@@ -650,11 +651,8 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 #' Internal importer for (source code) lines
 #'
-#' @note Updated 2021-01-13.
+#' @note Updated 2021-03-16.
 #' @noRd
-#'
-#' @note `vroom_lines` can return this error on empty files:
-#' Error: Unnamed `col_types` must have the same length as `col_names`.
 .importLines <- function(
     file,
     comment = "",
@@ -734,7 +732,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
             whatPkg, whatFun
         ))
     }
-    if (file.size(tmpfile) == 0L) {
+    if (isTRUE(file.size(tmpfile) == 0L)) {
         return(character())
     }
     what <- get(x = whatFun, envir = asNamespace(whatPkg), inherits = TRUE)
@@ -746,14 +744,14 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
         keep <- !grepl(pattern = paste0("^", comment), x = x)
         x <- x[keep]
     }
-    if (whatPkg == "base") {
-        if (skip > 0L) {
+    if (identical(whatPkg, "base")) {
+        if (isTRUE(skip > 0L)) {
             assert(skip < length(x))
             start <- skip + 1L
             end <- length(x)
             x <- x[start:end]
         }
-        if (nMax < length(x)) {
+        if (isTRUE(nMax < length(x))) {
             x <- x[1L:nMax]
         }
     }
