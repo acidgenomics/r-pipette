@@ -15,7 +15,7 @@
 #'
 #' @section Debugging:
 #'
-#' Note that this function currently wraps `vroom::voom_write()` by default
+#' Note that this function currently wraps `data.table::fwrite()` by default
 #' for exporting `data.frame` and `matrix` class objects.
 #'
 #' @inheritParams AcidRoxygen::params
@@ -99,17 +99,6 @@ NULL
             ),
             choices = .delimEngines
         )
-        ## The vroom engine currently doesn't offer `write_lines` support,
-        ## so fall back to readr (if installed), and then base R. Jim is
-        ## currently working on `vroom_write_lines()`:
-        ## https://github.com/r-lib/vroom/issues/291
-        if (whatPkg == "vroom") {
-            if (isInstalled("readr")) {
-                whatPkg <- "readr"
-            } else {
-                whatPkg <- "base"  # nocov
-            }
-        }
         if (isTRUE(append)) {
             assert(!identical(whatPkg, "base"))
             overwrite <- FALSE
@@ -179,6 +168,15 @@ NULL
                 args <- list(
                     "x" = object,
                     "file" = file,
+                    "append" = append
+                )
+            },
+            "vroom" = {
+                ## Support for this added in vroom 1.4.0.
+                whatFun <- "vroom_write_lines"
+                args <- list(
+                    "x" = object,
+                    "path" = file,
                     "append" = append
                 )
             }
