@@ -1,6 +1,6 @@
 #' @name export
 #' @inherit AcidGenerics::export
-#' @note Updated 2021-01-06.
+#' @note Updated 2021-03-16.
 #'
 #' @section Row names:
 #'
@@ -121,7 +121,7 @@ NULL
         if (is.null(file)) {
             call <- standardizeCall()
             sym <- call[["object"]]
-            assert(is.symbol(sym))
+            assert(is.symbol(sym), msg = .symError)
             name <- as.character(sym)
             ext <- match.arg(
                 arg = ext,
@@ -225,7 +225,7 @@ setMethod(
 
 #' Export `matrix` method
 #'
-#' @note Updated 2021-01-13.
+#' @note Updated 2021-03-16.
 #' @noRd
 #'
 #' @details
@@ -256,9 +256,10 @@ setMethod(
         object <- as.data.frame(object)
         verbose <- getOption("acid.verbose", default = FALSE)
         assert(
-            hasLength(object),
-            hasRows(object),
-            hasCols(object),
+            ## Now allowing export of empty objects (2021-03-16).
+            ## > hasLength(object),
+            ## > hasRows(object),
+            ## > hasCols(object),
             hasNoDuplicates(colnames(object)),
             isString(ext),
             isString(dir),
@@ -271,7 +272,7 @@ setMethod(
         if (is.null(file)) {
             call <- standardizeCall()
             sym <- call[["object"]]
-            assert(is.symbol(sym))
+            assert(is.symbol(sym), msg = .symError)
             name <- as.character(sym)
             dir <- initDir(dir)
             file <- file.path(dir, paste0(name, ".", ext))
@@ -510,7 +511,7 @@ setMethod(
         if (is.null(file)) {
             call <- standardizeCall()
             sym <- call[["object"]]
-            assert(is.symbol(sym))
+            assert(is.symbol(sym), msg = .symError)
             name <- as.character(sym)
             dir <- initDir(dir)
             file <- file.path(dir, paste0(name, ".", ext))
