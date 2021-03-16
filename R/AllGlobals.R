@@ -95,12 +95,12 @@
 #' NA strings
 #'
 #' @export
-#' @note Updated 2021-02-12.
+#' @note Updated 2021-03-16.
 #'
 #' @examples
 #' naStrings
 naStrings <- c(
-    " ",
+    ## > " ",  # data.table will warn about this.
     "",
     "#N/A",
     "#n/a",
