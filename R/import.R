@@ -1,3 +1,8 @@
+## FIXME Consider reworking this using a generic approach with file
+## type-specific methods
+
+
+
 #' Import
 #'
 #' Read file by extension into R.
@@ -430,25 +435,26 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 
 ## Add data provenance metadata.
 ## Previously, "which" was defined as "pipette", until v0.3.8.
-## Updated 2019-10-24.
+## Updated 2021-03-16.
 .slotImportMetadata <- function(object, file, pkg, fun) {
     assert(
         isString(file),
         isString(pkg),
         isString(fun)
     )
-    metadata2(object, which = "import") <- list(
-        package = packageName(),
-        packageVersion = packageVersion(packageName()),
-        importer = paste0(pkg, "::", fun),
-        importerVersion = packageVersion(pkg),
-        file = if (isAFile(file)) {
-            realpath(file)
-        } else {
-            file  # nocov
-        },
-        date = Sys.Date()
-    )
+    metadata2(object, which = "import") <-
+        list(
+            "date" = Sys.Date(),
+            "file" = ifelse(
+                test = isTRUE(isAFile(file)),
+                yes = realpath(file),
+                no = file
+            ),
+            "importerName" = paste0(pkg, "::", fun),
+            "importerVersion" = packageVersion(pkg),
+            "packageName" = .pkgName,
+            "packageVersion" = .pkgVersion
+        )
     object
 }
 
