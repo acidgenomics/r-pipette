@@ -1,6 +1,7 @@
 #+TITLE: pipette
 #+STARTUP: content
 * Development
+** TODO Consider switching default data frame engine back to data.table.
 ** TODO Consider changing `import()` to a generic, and classing file input.
 ** TODO Consider using brio package for `read_lines` and `write_lines`.
 ** TODO importMTX: MTX import: look for "barcodes.tsv.gz", "genes.tsv.gz",
