@@ -187,12 +187,13 @@ NULL
             },
             "vroom" = {
                 ## Support for this added in vroom 1.4.0, but is buggy.
-                ## Only consider enabling in 1.4.1+.
+                ## Only allow this to be enabled in 1.4.1+.
+                ## Note that "path" has been renamed to "file".
                 assert(isTRUE(packageVersion("vroom") >= "1.4.1"))
                 whatFun <- "vroom_write_lines"
                 args <- list(
                     "x" = object,
-                    "path" = file,
+                    "file" = file,
                     "append" = append
                 )
             }
@@ -414,7 +415,8 @@ setMethod(
                 whatFun <- "vroom_write"
                 args <- list(
                     "x" = object,
-                    "path" = file,
+                    ## "path" has been renamed to "file" in vroom 1.4.1.
+                    ## > "file" = file,
                     "append" = FALSE,
                     "col_names" = colnames,
                     "delim" = switch(
@@ -424,6 +426,11 @@ setMethod(
                     ),
                     "progress" = FALSE
                 )
+                if (isTRUE(packageVersion("vroom") <= "1.4.0")) {
+                    args[["path"]] <- file
+                } else {
+                    args[["file"]] <- file
+                }
             }
         )
         if (!isTRUE(quiet)) {
