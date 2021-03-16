@@ -77,9 +77,9 @@ cacheURL <- function(
 
 #' Prepare BiocFileCache for package
 #'
-#' @note Updated 2020-10-06.
+#' @note Updated 2021-03-16.
 #' @noRd
-.biocPackageCache <- function(pkg = packageName(), ask = TRUE) {
+.biocPackageCache <- function(pkg, ask) {
     assert(isString(pkg), isFlag(ask))
     BiocFileCache(cache = user_cache_dir(appname = pkg), ask = ask)
 }
