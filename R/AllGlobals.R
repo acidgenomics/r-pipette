@@ -1,11 +1,16 @@
+.pkgName <- packageName()
+.pkgVersion <- packageVersion(.pkgName)
+
+
+
 #' File extension types by group
 #'
 #' @note Updated 2021-01-13.
 #' @noRd
 .extGroup <- list(
-    delim = c("csv", "table", "tsv", "txt"),
-    excel = c("xls", "xlsb", "xlsx"),
-    lines = c(
+    "delim" = c("csv", "table", "tsv", "txt"),
+    "excel" = c("xls", "xlsb", "xlsx"),
+    "lines" = c(
         "lines",
         "log",
         "md",        # Markdown
@@ -14,8 +19,8 @@
         "rmd",       # R Markdown
         "sh"         # Shell
     ),
-    rda = c("rda", "rdata"),
-    rio = c(
+    "rda" = c("rda", "rdata"),
+    "rio" = c(
         "arff",      # Weka Attribute-Relation File Format
         "dbf",       # dBase Database File
         "dif",       # Data Interchange Format
@@ -32,22 +37,24 @@
         "rec",       # Epi Info
         "xpt"        # SASS
     ),
-    rtracklayer = c(
+    "rtracklayer" = c(
         "bed", "bed15", "bedgraph", "bedpe",
         "bigwig", "bw", "wig",
         "gff", "gff1", "gff2", "gff3", "gtf",
         "broadpeak", "narrowpeak"
     ),
-    yaml = c("yaml", "yml")
+    "yaml" = c("yaml", "yml")
 )
 
 
 
 #' Import/export engines for parsing plain text delimited files
 #'
-#' @note Updated 2021-01-13.
+#' @note Updated 2021-03-16.
 #' @noRd
-.delimEngines <- c("vroom", "data.table", "readr", "base")
+.delimEngines <- c("data.table", "vroom", "readr", "base")
+
+
 
 #' Default plain text engine
 #'
@@ -85,16 +92,6 @@
 
 
 
-## FIXME RENAME THIS TO PACKAGEVERSION...
-
-#' Package version
-#'
-#' @note Updated 2020-10-07.
-#' @noRd
-.version <- packageVersion(packageName())
-
-
-
 #' NA strings
 #'
 #' @export
@@ -123,11 +120,11 @@ naStrings <- c(
 #'
 #' @export
 #' @keywords internal
-#' @note Updated 2021-01-29.
+#' @note Updated 2021-03-16.
 #'
 #' @examples
 #' pipetteTestsURL
 pipetteTestsURL <- paste0(
     "https://r.acidgenomics.com/testdata/pipette/",
-    "v", .version$major, ".", .version$minor  # nolint
+    "v", .pkgVersion$major, ".", .pkgVersion$minor  # nolint
 )
