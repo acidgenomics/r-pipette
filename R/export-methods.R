@@ -363,22 +363,23 @@ setMethod(
         switch(
             EXPR = whatPkg,
             "base" = {
+                whatFun <- "write.table"
                 args <- list(
                     "x" = object,
                     "file" = file,
                     "append" = FALSE,
                     "col.names" = colnames,
-                    "row.names" = FALSE
-                )
-                switch(
-                    EXPR = ext,
-                    "csv" = {
-                        whatFun <- "write.csv"
-                    },
-                    "tsv" = {
-                        whatFun <- "write.table"
-                        args[["sep"]] <- "\t"
-                    }
+                    "dec" = ".",
+                    "eol" = "\n",
+                    "na" = naStrings,
+                    "qmethod" = "double",
+                    "quote" = TRUE,
+                    "row.names" = FALSE,
+                    "sep" = switch(
+                        EXPR = ext,
+                        "csv" = ",",
+                        "tsv" = "\t"
+                    )
                 )
             },
             "data.table" = {
@@ -388,27 +389,37 @@ setMethod(
                     "file" = file,
                     "append" = FALSE,
                     "col.names" = colnames,
+                    "compress" = "none",
+                    "dateTimeAs" = "ISO",
+                    "eol" = "\n",
+                    "na" = naStrings,
+                    "qmethod" = "double",
+                    "quote" = TRUE,
                     "row.names" = FALSE,
                     "sep" = switch(
                         EXPR = ext,
                         "csv" = ",",
                         "tsv" = "\t"
                     ),
+                    "showProgress" = FALSE,
                     "verbose" = verbose
                 )
             },
             "readr" = {
-                whatFun <- switch(
-                    EXPR = ext,
-                    "csv" = "write_csv",
-                    "tsv" = "write_tsv"
-                )
-                ## readr v1.4 changed "path" to "file".
+                whatFun <- "write_delim"
                 args <- list(
                     "x" = object,
                     "file" = file,
                     "append" = FALSE,
-                    "col_names" = colnames
+                    "col_names" = colnames,
+                    "delim" = switch(
+                        EXPR = ext,
+                        "csv" = ",",
+                        "tsv" = "\t"
+                    ),
+                    "eol" = "\n",
+                    "na" = naStrings,
+                    "quote_escape" = "double"
                 )
             },
             "vroom" = {
@@ -424,7 +435,11 @@ setMethod(
                         "csv" = ",",
                         "tsv" = "\t"
                     ),
-                    "progress" = FALSE
+                    "eol" = "\n",
+                    "escape" = "double",
+                    "na" = naStrings,
+                    "progress" = FALSE,
+                    "quote" = "needed"
                 )
                 if (isTRUE(packageVersion("vroom") <= "1.4.0")) {
                     args[["path"]] <- file
