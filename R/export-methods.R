@@ -371,7 +371,7 @@ setMethod(
                     "col.names" = colnames,
                     "dec" = ".",
                     "eol" = "\n",
-                    "na" = naStrings,
+                    "na" = "NA",
                     "qmethod" = "double",
                     "quote" = TRUE,
                     "row.names" = FALSE,
@@ -392,7 +392,7 @@ setMethod(
                     "compress" = "none",
                     "dateTimeAs" = "ISO",
                     "eol" = "\n",
-                    "na" = naStrings,
+                    "na" = "NA",
                     "qmethod" = "double",
                     "quote" = TRUE,
                     "row.names" = FALSE,
@@ -418,7 +418,7 @@ setMethod(
                         "tsv" = "\t"
                     ),
                     "eol" = "\n",
-                    "na" = naStrings,
+                    "na" = "NA",
                     "quote_escape" = "double"
                 )
             },
@@ -437,7 +437,7 @@ setMethod(
                     ),
                     "eol" = "\n",
                     "escape" = "double",
-                    "na" = naStrings,
+                    "na" = "NA",
                     "progress" = FALSE,
                     "quote" = "needed"
                 )

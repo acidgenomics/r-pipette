@@ -43,9 +43,9 @@ test_that("Delimited files", {
 test_that("acid.import.engine override", {
     lapply(
         X = c(
-            "base::read.csv",
+            "base::read.table",
             "data.table::fread",
-            "readr::read_csv",
+            "readr::read_delim",
             "vroom::vroom"
         ),
         FUN = function(x) {
