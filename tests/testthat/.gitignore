@@ -1,3 +1,4 @@
-example.*
 *.rda
 *.rds
+*.csv
+example.*
