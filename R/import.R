@@ -469,7 +469,7 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
 #' Can override using `acid.import.engine` option, which also supports
 #' data.table and readr packages.
 #'
-#' @note Updated 2021-03-16.
+#' @note Updated 2021-03-17.
 #' @noRd
 .importDelim <- function(
     file,
@@ -500,20 +500,31 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
         ),
         choices = .delimEngines
     )
-    if (ext == "txt") ext <- "table"
-    if (ext == "table") whatPkg <- "base"
+    if (identical(ext, "txt")) {
+        ext <- "table"
+    }
+    if (identical(ext, "table")) {
+        whatPkg <- "base"
+    }
     requireNamespaces(whatPkg)
     ## This step will automatically decompress on the fly, if necessary.
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
     switch(
         EXPR = whatPkg,
         "base" = {
+            whatFun <- "read.table"
             args <- list(
                 "file" = tmpfile,
                 "blank.lines.skip" = TRUE,
                 "comment.char" = comment,
                 "na.strings" = naStrings,
                 "nrows" = nMax,
+                "sep" = switch(
+                    EXPR = ext,
+                    "csv" = ",",
+                    "table" = "",
+                    "tsv" = "\t"
+                ),
                 "skip" = skip,
                 "stringsAsFactors" = FALSE,
                 "strip.white" = TRUE
@@ -524,19 +535,6 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
             } else {
                 args[["header"]] <- colnames
             }
-            switch(
-                EXPR = ext,
-                "csv" = {
-                    whatFun <- "read.csv"
-                },
-                "tsv" = {
-                    whatFun <- "read.delim"
-                    args[["sep"]] <- "\t"
-                },
-                "table" = {
-                    whatFun <- "read.table"
-                }
-            )
         },
         "data.table" = {
             whatFun <- "fread"
@@ -574,16 +572,17 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
             }
         },
         "readr" = {
-            whatFun <- switch(
-                EXPR = ext,
-                "csv" = "read_csv",
-                "tsv" = "read_tsv"
-            )
+            whatFun <- "read_delim"
             args <- list(
                 "file" = tmpfile,
                 "col_names" = colnames,
                 "col_types" = readr::cols(),
                 "comment" = comment,
+                "delim" = switch(
+                    EXPR = ext,
+                    "csv" = ",",
+                    "tsv" = "\t"
+                ),
                 "na" = naStrings,
                 "n_max" = nMax,
                 "progress" = FALSE,
