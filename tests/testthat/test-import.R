@@ -37,44 +37,31 @@ test_that("Delimited files", {
             object = attributes(object)[["import"]][["file"]],
             class = "character"
         )
-        expect_identical(
-            object = attributes(object)[["import"]][["importer"]],
-            expected = "vroom::vroom"
-        )
     }
 })
 
-test_that("data.table mode", {
-    options("acid.import.engine" = "data.table")
-    file <- file.path("cache", "example.csv.gz")
-    object <- import(file)
-    expect_is(object, "data.frame")
-    expect_identical(
-        object = attributes(object)[["import"]][["importer"]],
-        expected = "data.table::fread"
+test_that("acid.import.engine override", {
+    lapply(
+        X = c(
+            "base::read.csv",
+            "data.table::fread",
+            "readr::read_csv",
+            "vroom::vroom"
+        ),
+        FUN = function(x) {
+            split <- strsplit(x = x, split = "::", fixed = TRUE)[[1L]]
+            whatPkg <- split[[1L]]
+            options("acid.import.engine" = whatPkg)
+            file <- file.path("cache", "example.csv.gz")
+            object <- import(file)
+            expect_is(object, "data.frame")
+            expect_identical(
+                object = attributes(object)[["import"]][["importerName"]],
+                expected = x
+            )
+        }
     )
-})
-
-test_that("readr mode", {
-    options("acid.import.engine" = "readr")
-    file <- file.path("cache", "example.csv.gz")
-    object <- import(file)
-    expect_is(object, "data.frame")
-    expect_identical(
-        object = attributes(object)[["import"]][["importer"]],
-        expected = "readr::read_csv"
-    )
-})
-
-test_that("vroom mode", {
-    options("acid.import.engine" = "vroom")
-    file <- file.path("cache", "example.csv.gz")
-    object <- import(file)
-    expect_is(object, "data.frame")
-    expect_identical(
-        object = attributes(object)[["import"]][["importer"]],
-        expected = "vroom::vroom"
-    )
+    options("acid.import.engine" = NULL)
 })
 
 
@@ -123,7 +110,7 @@ test_that("GFF3", {
         )
     )
     expect_identical(
-        object = metadata(object)[["import"]][["importer"]],
+        object = metadata(object)[["import"]][["importerName"]],
         expected = "rtracklayer::import"
     )
 })
@@ -163,7 +150,7 @@ test_that("GTF", {
         )
     )
     expect_identical(
-        object = metadata(object)[["import"]][["importer"]],
+        object = metadata(object)[["import"]][["importerName"]],
         expected = "rtracklayer::import"
     )
 })
@@ -186,7 +173,7 @@ test_that("MTX", {
     )
     ## Note that sparseMatrix S4 class doesn't support `metadata()`.
     expect_identical(
-        object = attributes(object)[["import"]][["importer"]],
+        object = attributes(object)[["import"]][["importerName"]],
         expected = "Matrix::readMM"
     )
 })
