@@ -1,10 +1,3 @@
-## FIXME Consider reworking this using a generic approach with file
-## type-specific methods
-
-## FIXME Improve support for FWF files?
-
-
-
 #' Import
 #'
 #' Read file by extension into R.
