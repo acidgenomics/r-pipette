@@ -100,13 +100,12 @@ NULL
             choices = .delimEngines
         )
         ## The vroom engine is currently bugging for writing lines, so fall back
-        ## to readr (if installed), and then base R.
-        ##
-        ## Jim is currently working on `vroom_write_lines()`.
+        ## to readr (if installed), and then base R. This is fixed in vroom
+        ## v1.4.1, which isn't on CRAN yet.
         ##
         ## See related issue:
         ## https://github.com/r-lib/vroom/issues/291
-        if (whatPkg == "vroom") {
+        if (identical(whatPkg, "vroom")) {
             if (isInstalled("readr")) {
                 whatPkg <- "readr"
             } else {
