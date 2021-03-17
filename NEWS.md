@@ -1,3 +1,20 @@
+## pipette 0.5.14 (2021-03-17)
+
+### Major changes
+
+- Switched the default engine back to data.table package for `import` and
+  `export` functions.
+
+### Minor changes
+
+- Improved consistency of arguments for internal engines (base, data.table,
+  readr, and vroom) for `import` and `export` of delimited files.
+- Base engine now uses `read.table` and `write.table` instead of `read.csv`
+  and `write.csv` for CSV files.
+- The optional readr engine now uses `read_delim` and `write_delim`, similar
+  to the update for base engine.
+- Improved code coverage of base engine for import/export.
+
 ## pipette 0.5.13 (2021-03-04)
 
 ### Minor changes
