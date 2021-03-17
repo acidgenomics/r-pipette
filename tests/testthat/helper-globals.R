@@ -1,5 +1,8 @@
 ## nolint start
 
+options("acid.export.engine" = NULL)
+options("acid.import.engine" = NULL)
+
 data(
     DFrame,
     GRanges,
