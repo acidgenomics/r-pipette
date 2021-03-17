@@ -62,14 +62,15 @@ test_that("'ext' argument", {
     }
 })
 
-test_that("Specify the internal import engine (experimental)", {
-    for (engine in c("data.table", "readr", "vroom")) {
+test_that("acid.export.engine override", {
+    for (engine in c("base", "data.table", "readr", "vroom")) {
         options("acid.export.engine" = engine)
         file <- export(object = mat, ext = "csv")
         expect_true(file.exists(file))
         expect_identical(basename(file), "mat.csv")
         unlink(file)
     }
+    options("acid.export.engine" = NULL)
 })
 
 test_that("Invalid input", {
