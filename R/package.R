@@ -34,5 +34,4 @@
 #' @importFrom rappdirs user_cache_dir
 #' @importFrom stringr str_extract str_match str_subset
 #' @importFrom syntactic makeNames
-#' @importFrom vroom cols vroom vroom_lines vroom_write
 "_PACKAGE"
