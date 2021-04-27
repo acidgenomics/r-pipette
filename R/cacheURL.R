@@ -1,7 +1,7 @@
 #' Download and cache a file using BiocFileCache
 #'
 #' @export
-#' @note Updated 2021-01-29.
+#' @note Updated 2021-04-27.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param pkg `character(1)`.
@@ -33,6 +33,7 @@ cacheURL <- function(
     ask = FALSE,
     verbose = TRUE
 ) {
+    requireNamespaces(c("BiocFileCache", "rappdirs"))
     assert(
         hasInternet(),
         isAURL(url),
@@ -42,16 +43,21 @@ cacheURL <- function(
         isFlag(verbose)
     )
     bfc <- .biocPackageCache(pkg = pkg, ask = ask)
-    query <- bfcquery(x = bfc, query = url, field = "fpath", exact = TRUE)
+    query <- BiocFileCache::bfcquery(
+        x = bfc,
+        query = url,
+        field = "fpath",
+        exact = TRUE
+    )
     rid <- query[["rid"]]
     if (!hasLength(rid)) {
         if (isTRUE(verbose)) {
             alert(sprintf(
                 "Caching URL at {.url %s} into {.path %s}.",
-                url, bfccache(bfc)
+                url, BiocFileCache::bfccache(bfc)
             ))
         }
-        add <- bfcadd(
+        add <- BiocFileCache::bfcadd(
             x = bfc,
             rname = basename(url),
             fpath = url,
@@ -62,12 +68,12 @@ cacheURL <- function(
     }
     if (isTRUE(update)) {
         ## Note that some servers will return NA here, which isn't helpful.
-        up <- bfcneedsupdate(x = bfc, rids = rid)
+        up <- BiocFileCache::bfcneedsupdate(x = bfc, rids = rid)
         if (isTRUE(up)) {
-            bfcdownload(x = bfc, rid = rid, ask = ask)
+            BiocFileCache::bfcdownload(x = bfc, rid = rid, ask = ask)
         }
     }
-    rpath <- bfcrpath(x = bfc, rids = rid)
+    rpath <- BiocFileCache::bfcrpath(x = bfc, rids = rid)
     assert(isAFile(rpath))
     out <- unname(rpath)
     out
@@ -77,9 +83,13 @@ cacheURL <- function(
 
 #' Prepare BiocFileCache for package
 #'
-#' @note Updated 2021-03-16.
+#' @note Updated 2021-04-27.
 #' @noRd
 .biocPackageCache <- function(pkg, ask) {
+    requireNamespaces(c("BiocFileCache", "rappdirs"))
     assert(isString(pkg), isFlag(ask))
-    BiocFileCache(cache = user_cache_dir(appname = pkg), ask = ask)
+    BiocFileCache::BiocFileCache(
+        cache = rappdirs::user_cache_dir(appname = pkg),
+        ask = ask
+    )
 }
