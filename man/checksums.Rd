@@ -18,7 +18,7 @@ File path.}
 Generate checksum from file
 }
 \note{
-Updated 2021-03-04.
+Updated 2021-04-27.
 }
 \examples{
 file <- system.file("extdata/example.csv", package = "pipette")
