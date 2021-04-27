@@ -20,7 +20,6 @@
 #'   metadata<- na.omit start tail width
 #' @importFrom Matrix readMM writeMM
 #' @importFrom RCurl getURL
-
 #' @importFrom goalie assert allAreAtomic allAreExisting allAreFiles
 #'   allAreNonExisting allAreURLs allHaveAccess areDisjointSets areSameLength
 #'   areSetEqual formalCompress hasColnames hasCols hasDimnames hasInternet
@@ -32,12 +31,3 @@
 #' @importFrom stringr str_extract str_match str_subset
 #' @importFrom syntactic makeNames
 "_PACKAGE"
-
-
-
-## NOTE BiocFileCache is a bit heavy on package dependencies, and currently
-## requires dplyr.
-## > #' @importFrom BiocFileCache BiocFileCache bfcadd bfccache bfcdownload
-## > #'   bfcneedsupdate bfcquery bfcrpath
-## #' @importFrom digest digest
-## > #' @importFrom rappdirs user_cache_dir
