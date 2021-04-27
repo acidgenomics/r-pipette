@@ -1,3 +1,14 @@
+## pipette 0.5.15 (2021-04-27)
+
+### Minor changes
+
+- `cacheURL` now internally calls BiocFileCache and rappdirs as suggested
+  packages, rather than direct imports. This helps keep the package a bit
+  lighter and improve loading times, as BiocFileCache currently calls a number
+  of heavy dependencies, including dplyr.
+- The checksum functions `md5` and `sha256` now call `digest` internally as
+  a suggested package, rather than a direct import.
+
 ## pipette 0.5.14 (2021-03-17)
 
 ### Major changes

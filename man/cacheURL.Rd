@@ -37,7 +37,7 @@ Cached file path on disk.
 Download and cache a file using BiocFileCache
 }
 \note{
-Updated 2021-01-29.
+Updated 2021-04-27.
 }
 \examples{
 url <- pasteURL(
