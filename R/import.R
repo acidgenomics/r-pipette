@@ -580,6 +580,9 @@ formals(import)[c("makeNames", "metadata", "quiet")] <-
                 "n_max" = nMax,
                 "progress" = FALSE,
                 "trim_ws" = TRUE,
+                ## Print column specification whenever there is guessing.
+                ## https://github.com/tidyverse/readr/issues/522
+                "show_col_types" = TRUE,
                 "skip" = skip,
                 "skip_empty_rows" = TRUE
             )
