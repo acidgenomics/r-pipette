@@ -10,7 +10,7 @@ NULL
 #' Coercion methods
 #'
 #' @name coerce
-#' @note Updated 2020-02-05.
+#' @note Updated 2020-05-18.
 #'
 #' @details
 #' These conversion methods are primarily intended to interconvert between
@@ -192,7 +192,14 @@ NULL
 
 
 ## To DataFrame ================================================================
-## Updated 2021-05-18.
+#' Coerce a `list` to `DataFrame`
+#'
+#' @note Updated 2021-05-18.
+#' @noRd
+#'
+#' @details
+#' To store an object of a class that does not support coercion to `DataFrame`,
+#' wrap it in `I()`. The class must still have methods for `length` and `[`.
 `as.DataFrame,list` <-  # nolint
     function(x, row.names = NULL) {
         if (hasLength(x)) {
@@ -202,11 +209,20 @@ NULL
             x <- lapply(
                 X = x,
                 FUN = function(x) {
-                    if (isS4(x) || is(x, "AsIs") || !is.atomic(x)) {
-                        I(x)
-                    } else {
-                        x
+                    ## NOTE Temporary fix for S4Vectors breaking changes
+                    ## introduced in Bioconductor 3.13 (2021-05-18).
+                    if (packageVersion("S4Vectors") >= 0.29) {
+                        if (isAny(
+                            x = x,
+                            classes = c(
+                                "List",
+                                "Rle"
+                            )
+                        )) {
+                            return(x)
+                        }
                     }
+                    I(x)
                 }
             )
         } else {

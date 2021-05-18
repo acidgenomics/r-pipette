@@ -101,7 +101,7 @@ popular tabular formats in R, including \code{data.frame}, \code{data.table}, \c
 and the Bioconductor \code{DataFrame} classes.
 }
 \note{
-Updated 2020-02-05.
+Updated 2020-05-18.
 }
 \section{\code{DataFrame} (Bioconductor) coercion}{
 
