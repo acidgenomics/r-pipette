@@ -1,3 +1,10 @@
+## pipette 0.5.16 (2021-05-18)
+
+### Minor changes
+
+- Documentation updates, to pass build checks without warnings on R 4.1
+  and Bioconductor 3.13.
+
 ## pipette 0.5.15 (2021-04-27)
 
 ### Minor changes
