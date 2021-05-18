@@ -33,7 +33,7 @@ Supported arguments:
 }
 
 RDS is preferred when saving single objects per file, which is always the
-convention of \code{\link[=saveData]{saveData()}}, regardless of the extension used.}
+convention of \code{saveData()}, regardless of the extension used.}
 
 \item{overwrite}{\code{logical(1)}.
 Overwrite existing file on disk.}
@@ -47,10 +47,9 @@ Overwrite existing file on disk.}
 
 \item{list}{\code{character}.
 A character vector containing the names of objects to be saved.
-Note that this approach differs from \code{\link[base:save]{save()}} in that the
-objects are saved individually to disk, instead of inside a single R data
-file. Requires objects to be defined in environment specified by \code{envir}.
-argument.}
+Note that this approach differs from \code{save()} in that the objects are saved
+individually to disk, instead of inside a single R data file. Requires
+objects to be defined in environment specified by \code{envir}. argument.}
 
 \item{envir}{\code{environment}.
 Environment.}
@@ -60,8 +59,8 @@ Invisible named \code{character}.
 File paths.
 }
 \description{
-Wrapper for \code{\link[base:save]{save()}} supporting quick, interactive saving of
-object names passed as symbols.
+Wrapper for \code{save()} supporting quick, interactive saving of object names
+passed as symbols.
 }
 \details{
 This function always saves each object into a separate file rather than
@@ -70,7 +69,7 @@ combining multiple objects into a single file.
 \note{
 This function is desired for interactive use and interprets object
 names using non-standard evaluation. It will \strong{overwrite} existing files
-on disk, following the same conventions as \code{\link[base:save]{save()}}.
+on disk, following the same conventions as \code{save()}.
 
 Updated 2020-08-11.
 }
@@ -101,7 +100,7 @@ unlink(dir, recursive = TRUE)
 }
 \seealso{
 \itemize{
-\item \code{\link[base:save]{save()}}
-\item \code{\link[base:readRDS]{saveRDS()}}.
+\item \code{save()}.
+\item \code{saveRDS()}.
 }
 }

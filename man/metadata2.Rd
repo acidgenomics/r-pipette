@@ -36,7 +36,7 @@ Metadata values to assign into slot, defined by \code{which}.}
 \value{
 \itemize{
 \item \code{metadata2()}: Metadata. Returns \code{NULL} on \code{which} match failure, similar
-to \code{\link[base:attr]{attr()}} and \code{\link[S4Vectors:Annotated-class]{metadata()}}.
+to \code{attr()} and \code{metadata()}.
 \item \verb{metadata2<-()}: Modified object.
 }
 }
@@ -50,17 +50,15 @@ Updated 2020-01-18.
 \section{S3 class}{
 
 
-Internally slots into \code{\link[base:attributes]{attributes()}}.
+Internally slots into \code{attributes()}.
 Attribute is also accessible via \code{attr(object, which)}.
 }
 
 \section{S4 class}{
 
 
-Requires that object extends \code{\link[S4Vectors:Annotated-class]{Annotated}} class,
-which supports \code{\link[S4Vectors:Annotated-class]{metadata()}}.
-
-Internally slots into \code{\link[S4Vectors:Annotated-class]{metadata()}}.
+Requires that object extends \code{Annotated} class.
+Internally slots into \code{metadata()}.
 Attribute is also accessible via \code{metadata(object)[[which]]}.
 }
 

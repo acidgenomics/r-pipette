@@ -54,7 +54,7 @@ basename(x)
 }
 \seealso{
 \itemize{
-\item \code{\link[=tempfile]{tempfile()}}.
-\item \code{\link[=tempdir]{tempdir()}}.
+\item \code{tempfile()}.
+\item \code{tempdir()}.
 }
 }

@@ -20,7 +20,7 @@ NULL
 #' @section `DataFrame` (Bioconductor) coercion:
 #'
 #' Don't define `as()` coercion method for `list` here. It will create issues
-#' with `data.frame` coercion. Use [as.DataFrame()] instead to coerce a `list`
+#' with `data.frame` coercion. Use `as.DataFrame()` instead to coerce a `list`
 #' to `DataFrame`.
 #'
 #' Wrapping the columns in an `I()` works when passing to `DataFrame()`.
@@ -68,8 +68,7 @@ NULL
 #'
 #' ## S3 methods: `as.data.table()`
 #'
-#' The package extends [`as.data.table()`][data.table::as.data.table] method
-#' support for these S4 classes:
+#' The package extends `as.data.table()` method support for these S4 classes:
 #'
 #' - `DataFrame`.
 #' - `GenomicRanges`.
@@ -93,8 +92,7 @@ NULL
 #'
 #' ## S3 methods: `as_tibble()`
 #'
-#' The package extends [`as_tibble()`][tibble::as_tibble] method support for
-#' these S4 classes:
+#' The package extends `as_tibble()` method support for these S4 classes:
 #'
 #' - `DataFrame`.
 #' - `GenomicRanges`.
@@ -114,9 +112,9 @@ NULL
 #' @return Modified object, of desired conversion class.
 #'
 #' @seealso
-#' - [`as.data.frame()`][base::as.data.frame]
-#' - [`as.data.table()`][data.table::as.data.table].
-#' - [`as_tibble()`][tibble::as_tibble].
+#' - `as.data.frame()`.
+#' - `as.data.table()`.
+#' - `as_tibble()`.
 #' - `getClass("DataFrame")`.
 #' - `getClass("data.table")`.
 #' - `getClass("tbl_df")`.

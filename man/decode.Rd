@@ -38,5 +38,5 @@ x <- decode(df)
 lapply(x, class)
 }
 \seealso{
-\code{\link[S4Vectors:Rle-class]{S4Vectors::decode()}}.
+\code{S4Vectors::decode()}.
 }

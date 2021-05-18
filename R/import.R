@@ -2,7 +2,7 @@
 #'
 #' Read file by extension into R.
 #'
-#' [import()] supports automatic loading of common file types, by wrapping
+#' `import()` supports automatic loading of common file types, by wrapping
 #' popular importer functions. It intentionally designed to be simple, with few
 #' arguments. Remote URLs and compressed files are supported. If you need more
 #' complex import settings, just call the wrapped importer directly instead.
@@ -11,18 +11,18 @@
 #'
 #' **Row names.** Row name handling has become an inconsistent mess in R because
 #' of differential support in base R, tidyverse, data.table, and Bioconductor.
-#' To maintain sanity, [import()] attempts to handle row names automatically.
+#' To maintain sanity, `import()` attempts to handle row names automatically.
 #' The function checks for a `rowname` column in delimited data, and moves these
 #' values into the object's row names, if supported by the return type (e.g.
 #' `data.frame`, `DataFrame`). Note that `tbl_df` (tibble) and `data.table`
 #' intentionally do not support row names. When returning in this format, no
 #' attempt to assign the `rowname` column into the return object's row names is
-#' made. Note that [import()] is strict about this matching and only checks for
+#' made. Note that `import()` is strict about this matching and only checks for
 #' a `rowname` column, similar to the default syntax recommended in
-#' [tibble::rownames_to_column()]. To disable this behavior, set
+#' `tibble::rownames_to_column()`. To disable this behavior, set
 #' `rownames = FALSE`, and no attempt will be made to set the row names.
 #'
-#' **Column names.** [import()] assumes that delimited files always contain
+#' **Column names.** `import()` assumes that delimited files always contain
 #' column names. If you are working with a file that doesn't contain column
 #' names, either set `colnames = FALSE` or pass the names in as a `character`
 #' vector. It's strongly recommended to always define column names in a
@@ -30,7 +30,7 @@
 #'
 #' @section Data frame return:
 #'
-#' By default, [import()] returns a standard `data.frame` for delimited/column
+#' By default, `import()` returns a standard `data.frame` for delimited/column
 #' formatted data. However, any of these desired output formats can be set
 #' globally using `options(acid.data.frame = "data.frame")`.
 #'
@@ -140,48 +140,48 @@
 #'   Note that TXT structure is amgibuous and actively discouraged.\cr
 #'   Refer to `Data frame return` section for details on how to change the
 #'   default return type to `DataFrame`, `tbl_df` or `data.table`.\cr
-#'   Imported by [data.table::fread()] by default.
+#'   Imported by `data.table::fread()` by default.
 #' - **Excel workbook** (`XLSB`, `XLSX`): `data.frame`.\cr
 #'   Resave in plain text delimited format instead, if possible.\cr
-#'   Imported by [readxl::read_excel()].
+#'   Imported by `readxl::read_excel()`.
 #' - **Legacy Excel workbook (pre-2007)** (`XLS`): `data.frame`.\cr
 #'   Resave in plain text delimited format instead, if possible.\cr
 #'   Note that import of files in this format is slow.\cr
-#'   Imported by [readxl::read_excel()].
+#'   Imported by `readxl::read_excel()`.
 #' - **GraphPad Prism project** (`PZFX`): `data.frame`.\cr
 #'   Experimental. Consider resaving in CSV format instead.\cr
-#'   Imported by [pzfx::read_pzfx()].
+#'   Imported by `pzfx::read_pzfx()`.
 #' - **General feature format** (`GFF`, `GFF1`, `GFF2`, `GFF3`, `GTF`):
 #'   `GRanges`.\cr
-#'   Imported by [rtracklayer::import()].
+#'   Imported by `rtracklayer::import()`.
 #' - **MatrixMarket exchange sparse matrix** (`MTX`): `sparseMatrix`.\cr
-#'   Imported by [Matrix::readMM()].
+#'   Imported by `Matrix::readMM()`.
 #' - **Gene sets (for GSEA)** (`GMT`, `GMX`): `character`.
 #' - **Browser extensible data** (`BED`, `BED15`, `BEDGRAPH`, `BEDPE`):
 #'   `GRanges`.\cr
-#'   Imported by [rtracklayer::import()].
+#'   Imported by `rtracklayer::import()`.
 #' - **ChIP-seq peaks** (`BROADPEAK`, `NARROWPEAK`): `GRanges`.\cr
-#'   Imported by [rtracklayer::import()].
+#'   Imported by `rtracklayer::import()`.
 #' - **Wiggle track format** (`BIGWIG`, `BW`, `WIG`): `GRanges`.\cr
-#'   Imported by [rtracklayer::import()].
+#'   Imported by `rtracklayer::import()`.
 #' - **JSON serialization data** (`JSON`): `list`.\cr
-#'   Imported by [jsonlite::read_json()].
+#'   Imported by `jsonlite::read_json()`.
 #' - **YAML serialization data** (`YAML`, `YML`): `list`.\cr
-#'   Imported by [yaml::yaml.load_file()].
+#'   Imported by `yaml::yaml.load_file()`.
 #' - **Lines** (`LOG`, `MD`, `PY`, `R`, `RMD`, `SH`): `character`.
 #'   Source code or log files.\cr
-#'   Imported by [data.table::fread()] by default.
+#'   Imported by `data.table::fread()` by default.
 #' - **R data serialized** (`RDS`): *variable*.\cr
 #'   Currently recommend over RDA, if possible.\cr
-#'   Imported by [`readRDS()`][base::readRDS].
+#'   Imported by `readRDS()`.
 #' - **R data** (`RDA`, `RDATA`): *variable*.\cr
 #'   Must contain a single object.
-#'   Doesn't require internal object name to match, unlike [loadData()].\cr
-#'   Imported by [`load()`][base::load].
+#'   Doesn't require internal object name to match, unlike `loadData()`.\cr
+#'   Imported by `load()`.
 #' - **Infrequently used rio-compatible formats** (`ARFF`, `DBF`, `DIF`, `DTA`,
 #'   `MAT`, `MTP`, `ODS`, `POR`, `SAS7BDAT`, `SAV`, `SYD`, `REC`, `XPT`):
 #'   *variable*.\cr
-#'   Imported by [rio::import()].
+#'   Imported by `rio::import()`.
 #'
 #' @seealso
 #' Packages:

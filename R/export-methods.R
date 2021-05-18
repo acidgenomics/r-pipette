@@ -20,8 +20,8 @@
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param object Object.
-#'   An object supporting [`dim()`][base::dim], or a supported class capable
-#'   of being coerced to `data.frame`, to be written to disk.
+#'   An object supporting `dim()`, or a supported class capable of being coerced
+#'   to `data.frame`, to be written to disk.
 #' @param ext `character(1)`.
 #'   Output file format extension.
 #'

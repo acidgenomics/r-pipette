@@ -74,55 +74,55 @@ Data separated by commas, tabs, or visual spaces.\cr
 Note that TXT structure is amgibuous and actively discouraged.\cr
 Refer to \verb{Data frame return} section for details on how to change the
 default return type to \code{DataFrame}, \code{tbl_df} or \code{data.table}.\cr
-Imported by \code{\link[data.table:fread]{data.table::fread()}} by default.
+Imported by \code{data.table::fread()} by default.
 \item \strong{Excel workbook} (\code{XLSB}, \code{XLSX}): \code{data.frame}.\cr
 Resave in plain text delimited format instead, if possible.\cr
-Imported by \code{\link[readxl:read_excel]{readxl::read_excel()}}.
+Imported by \code{readxl::read_excel()}.
 \item \strong{Legacy Excel workbook (pre-2007)} (\code{XLS}): \code{data.frame}.\cr
 Resave in plain text delimited format instead, if possible.\cr
 Note that import of files in this format is slow.\cr
-Imported by \code{\link[readxl:read_excel]{readxl::read_excel()}}.
+Imported by \code{readxl::read_excel()}.
 \item \strong{GraphPad Prism project} (\code{PZFX}): \code{data.frame}.\cr
 Experimental. Consider resaving in CSV format instead.\cr
-Imported by \code{\link[pzfx:read_pzfx]{pzfx::read_pzfx()}}.
+Imported by \code{pzfx::read_pzfx()}.
 \item \strong{General feature format} (\code{GFF}, \code{GFF1}, \code{GFF2}, \code{GFF3}, \code{GTF}):
 \code{GRanges}.\cr
-Imported by \code{\link[rtracklayer:export]{rtracklayer::import()}}.
+Imported by \code{rtracklayer::import()}.
 \item \strong{MatrixMarket exchange sparse matrix} (\code{MTX}): \code{sparseMatrix}.\cr
-Imported by \code{\link[Matrix:externalFormats]{Matrix::readMM()}}.
+Imported by \code{Matrix::readMM()}.
 \item \strong{Gene sets (for GSEA)} (\code{GMT}, \code{GMX}): \code{character}.
 \item \strong{Browser extensible data} (\code{BED}, \code{BED15}, \code{BEDGRAPH}, \code{BEDPE}):
 \code{GRanges}.\cr
-Imported by \code{\link[rtracklayer:export]{rtracklayer::import()}}.
+Imported by \code{rtracklayer::import()}.
 \item \strong{ChIP-seq peaks} (\code{BROADPEAK}, \code{NARROWPEAK}): \code{GRanges}.\cr
-Imported by \code{\link[rtracklayer:export]{rtracklayer::import()}}.
+Imported by \code{rtracklayer::import()}.
 \item \strong{Wiggle track format} (\code{BIGWIG}, \code{BW}, \code{WIG}): \code{GRanges}.\cr
-Imported by \code{\link[rtracklayer:export]{rtracklayer::import()}}.
+Imported by \code{rtracklayer::import()}.
 \item \strong{JSON serialization data} (\code{JSON}): \code{list}.\cr
-Imported by \code{\link[jsonlite:read_json]{jsonlite::read_json()}}.
+Imported by \code{jsonlite::read_json()}.
 \item \strong{YAML serialization data} (\code{YAML}, \code{YML}): \code{list}.\cr
-Imported by \code{\link[yaml:yaml.load]{yaml::yaml.load_file()}}.
+Imported by \code{yaml::yaml.load_file()}.
 \item \strong{Lines} (\code{LOG}, \code{MD}, \code{PY}, \code{R}, \code{RMD}, \code{SH}): \code{character}.
 Source code or log files.\cr
-Imported by \code{\link[data.table:fread]{data.table::fread()}} by default.
+Imported by \code{data.table::fread()} by default.
 \item \strong{R data serialized} (\code{RDS}): \emph{variable}.\cr
 Currently recommend over RDA, if possible.\cr
-Imported by \code{\link[base:readRDS]{readRDS()}}.
+Imported by \code{readRDS()}.
 \item \strong{R data} (\code{RDA}, \code{RDATA}): \emph{variable}.\cr
 Must contain a single object.
-Doesn't require internal object name to match, unlike \code{\link[=loadData]{loadData()}}.\cr
-Imported by \code{\link[base:load]{load()}}.
+Doesn't require internal object name to match, unlike \code{loadData()}.\cr
+Imported by \code{load()}.
 \item \strong{Infrequently used rio-compatible formats} (\code{ARFF}, \code{DBF}, \code{DIF}, \code{DTA},
 \code{MAT}, \code{MTP}, \code{ODS}, \code{POR}, \code{SAS7BDAT}, \code{SAV}, \code{SYD}, \code{REC}, \code{XPT}):
 \emph{variable}.\cr
-Imported by \code{\link[rio:import]{rio::import()}}.
+Imported by \code{rio::import()}.
 }
 }
 \description{
 Read file by extension into R.
 }
 \details{
-\code{\link[=import]{import()}} supports automatic loading of common file types, by wrapping
+\code{import()} supports automatic loading of common file types, by wrapping
 popular importer functions. It intentionally designed to be simple, with few
 arguments. Remote URLs and compressed files are supported. If you need more
 complex import settings, just call the wrapped importer directly instead.
@@ -135,18 +135,18 @@ Updated 2021-03-16.
 
 \strong{Row names.} Row name handling has become an inconsistent mess in R because
 of differential support in base R, tidyverse, data.table, and Bioconductor.
-To maintain sanity, \code{\link[=import]{import()}} attempts to handle row names automatically.
+To maintain sanity, \code{import()} attempts to handle row names automatically.
 The function checks for a \code{rowname} column in delimited data, and moves these
 values into the object's row names, if supported by the return type (e.g.
 \code{data.frame}, \code{DataFrame}). Note that \code{tbl_df} (tibble) and \code{data.table}
 intentionally do not support row names. When returning in this format, no
 attempt to assign the \code{rowname} column into the return object's row names is
-made. Note that \code{\link[=import]{import()}} is strict about this matching and only checks for
+made. Note that \code{import()} is strict about this matching and only checks for
 a \code{rowname} column, similar to the default syntax recommended in
-\code{\link[tibble:rownames]{tibble::rownames_to_column()}}. To disable this behavior, set
+\code{tibble::rownames_to_column()}. To disable this behavior, set
 \code{rownames = FALSE}, and no attempt will be made to set the row names.
 
-\strong{Column names.} \code{\link[=import]{import()}} assumes that delimited files always contain
+\strong{Column names.} \code{import()} assumes that delimited files always contain
 column names. If you are working with a file that doesn't contain column
 names, either set \code{colnames = FALSE} or pass the names in as a \code{character}
 vector. It's strongly recommended to always define column names in a
@@ -156,7 +156,7 @@ supported file type.
 \section{Data frame return}{
 
 
-By default, \code{\link[=import]{import()}} returns a standard \code{data.frame} for delimited/column
+By default, \code{import()} returns a standard \code{data.frame} for delimited/column
 formatted data. However, any of these desired output formats can be set
 globally using \code{options(acid.data.frame = "data.frame")}.
 

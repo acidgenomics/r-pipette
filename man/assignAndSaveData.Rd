@@ -22,7 +22,7 @@ Desired variable name.}
 
 \item{envir}{\code{environment}.
 Environment to use for assignment.
-Defaults to \code{\link[=parent.frame]{parent.frame()}}, the calling environment.}
+Defaults to \code{parent.frame()}, the calling environment.}
 
 \item{dir}{\code{character(1)}.
 Directory path.}
@@ -37,7 +37,7 @@ Supported arguments:
 }
 
 RDS is preferred when saving single objects per file, which is always the
-convention of \code{\link[=saveData]{saveData()}}, regardless of the extension used.}
+convention of \code{saveData()}, regardless of the extension used.}
 
 \item{overwrite}{\code{logical(1)}.
 Overwrite existing file on disk.}
@@ -55,8 +55,7 @@ Assigns a new object by name to the current working environment then saves
 the newly assigned object, specified by the \code{"dir"} argument.
 }
 \note{
-This function attempts to follow the same order as
-\code{\link[base:assign]{assign()}}.
+This function attempts to follow the same order as \code{assign()}.
 
 Updated 2019-10-12.
 }
