@@ -1,7 +1,12 @@
 ## pipette 0.5.17 (UNRELEASED)
 
+### Major changes
+
 - `as.DataFrame`: Updated `list` to `DataFrame` coercion support that is
   compatible with Bioconductor 3.13 release update.
+- `cacheURL`: Now using `tools::R_user_dir` instead of
+  `rappdirs::user_cache_dir` internally. This matches the conventions used in
+  Bioconductor 3.13 (e.g. AnnotationHub and BiocFileCache).
 
 ## pipette 0.5.16 (2021-05-18)
 

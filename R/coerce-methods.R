@@ -215,7 +215,7 @@ NULL
                         if (isAny(
                             x = x,
                             classes = c(
-                                "List",
+                                "List",  # NOTE This may be safe to remove?
                                 "Rle"
                             )
                         )) {

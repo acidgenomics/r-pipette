@@ -1,7 +1,7 @@
 #' Download and cache a file using BiocFileCache
 #'
 #' @export
-#' @note Updated 2021-04-27.
+#' @note Updated 2021-05-18.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param pkg `character(1)`.
@@ -33,7 +33,7 @@ cacheURL <- function(
     ask = FALSE,
     verbose = TRUE
 ) {
-    requireNamespaces(c("BiocFileCache", "rappdirs"))
+    requireNamespaces(c("BiocFileCache", "tools"))
     assert(
         hasInternet(),
         isAURL(url),
@@ -83,13 +83,19 @@ cacheURL <- function(
 
 #' Prepare BiocFileCache for package
 #'
-#' @note Updated 2021-04-27.
+#' @note Updated 2021-05-18.
 #' @noRd
+#'
+#' @seealso
+#' - `Sys.getenv("R_USER_CACHE_DIR")`.
+#' - `Sys.getenv("XDG_CACHE_HOME")`.
+#' - `rappdirs::user_cache_dir()`.
+#'   Previous approach used until 2021-05-18.
+#'   Changed to match conventions in AnnotationHub update on Bioc 3.13.
 .biocPackageCache <- function(pkg, ask) {
-    requireNamespaces(c("BiocFileCache", "rappdirs"))
+    requireNamespaces(c("BiocFileCache", "tools"))
     assert(isString(pkg), isFlag(ask))
-    BiocFileCache::BiocFileCache(
-        cache = rappdirs::user_cache_dir(appname = pkg),
-        ask = ask
-    )
+    cache <- tools::R_user_dir(package = pkg, which = "cache")
+    bfc <- BiocFileCache::BiocFileCache(cache = cache, ask = ask)
+    bfc
 }
