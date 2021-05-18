@@ -1,14 +1,14 @@
 #' Save data
 #'
-#' Wrapper for [`save()`][base::save] supporting quick, interactive saving of
-#' object names passed as symbols.
+#' Wrapper for `save()` supporting quick, interactive saving of object names
+#' passed as symbols.
 #'
 #' This function always saves each object into a separate file rather than
 #' combining multiple objects into a single file.
 #'
 #' @note This function is desired for interactive use and interprets object
 #'   names using non-standard evaluation. It will **overwrite** existing files
-#'   on disk, following the same conventions as [`save()`][base::save].
+#'   on disk, following the same conventions as `save()`.
 #'
 #' @export
 #' @note Updated 2020-08-11.
@@ -24,17 +24,16 @@
 #'   - `"rda"`: R data (RDA).
 #'
 #'   RDS is preferred when saving single objects per file, which is always the
-#'   convention of [saveData()], regardless of the extension used.
+#'   convention of `saveData()`, regardless of the extension used.
 #' @param list `character`.
 #'   A character vector containing the names of objects to be saved.
-#'   Note that this approach differs from [`save()`][base::save] in that the
-#'   objects are saved individually to disk, instead of inside a single R data
-#'   file. Requires objects to be defined in environment specified by `envir`.
-#'   argument.
+#'   Note that this approach differs from `save()` in that the objects are saved
+#'   individually to disk, instead of inside a single R data file. Requires
+#'   objects to be defined in environment specified by `envir`. argument.
 #'
 #' @seealso
-#' - [`save()`][base::save]
-#' - [`saveRDS()`][base::saveRDS].
+#' - `save()`.
+#' - `saveRDS()`.
 #'
 #' @return Invisible named `character`.
 #' File paths.
@@ -139,8 +138,7 @@ formals(saveData)[
 #' the newly assigned object, specified by the `"dir"` argument.
 #'
 #' @export
-#' @note This function attempts to follow the same order as
-#'   [`assign()`][base::assign].
+#' @note This function attempts to follow the same order as `assign()`.
 #' @note Updated 2019-10-12.
 #'
 #' @inheritParams AcidRoxygen::params
@@ -149,7 +147,7 @@ formals(saveData)[
 #'   Desired variable name.
 #' @param envir `environment`.
 #'   Environment to use for assignment.
-#'   Defaults to [parent.frame()], the calling environment.
+#'   Defaults to `parent.frame()`, the calling environment.
 #'
 #' @return Invisible named `character(1)`.
 #' File path.

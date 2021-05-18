@@ -107,7 +107,7 @@ Updated 2020-02-05.
 
 
 Don't define \code{as()} coercion method for \code{list} here. It will create issues
-with \code{data.frame} coercion. Use \code{\link[=as.DataFrame]{as.DataFrame()}} instead to coerce a \code{list}
+with \code{data.frame} coercion. Use \code{as.DataFrame()} instead to coerce a \code{list}
 to \code{DataFrame}.
 
 Wrapping the columns in an \code{I()} works when passing to \code{DataFrame()}.
@@ -157,8 +157,7 @@ Note that we're manually defining the \code{"rowname"} column instead of using
 \code{TRUE}, to match the conventions used in our \code{as_tibble()} methods.
 \subsection{S3 methods: \code{as.data.table()}}{
 
-The package extends \code{\link[data.table:as.data.table]{as.data.table()}} method
-support for these S4 classes:
+The package extends \code{as.data.table()} method support for these S4 classes:
 \itemize{
 \item \code{DataFrame}.
 \item \code{GenomicRanges}.
@@ -186,8 +185,7 @@ column for row names assignment. We also using similar internal assert checks
 here, allowing atomic and/or list columns only.
 \subsection{S3 methods: \code{as_tibble()}}{
 
-The package extends \code{\link[tibble:as_tibble]{as_tibble()}} method support for
-these S4 classes:
+The package extends \code{as_tibble()} method support for these S4 classes:
 \itemize{
 \item \code{DataFrame}.
 \item \code{GenomicRanges}.
@@ -273,9 +271,9 @@ head(to)
 }
 \seealso{
 \itemize{
-\item \code{\link[base:as.data.frame]{as.data.frame()}}
-\item \code{\link[data.table:as.data.table]{as.data.table()}}.
-\item \code{\link[tibble:as_tibble]{as_tibble()}}.
+\item \code{as.data.frame()}.
+\item \code{as.data.table()}.
+\item \code{as_tibble()}.
 \item \code{getClass("DataFrame")}.
 \item \code{getClass("data.table")}.
 \item \code{getClass("tbl_df")}.

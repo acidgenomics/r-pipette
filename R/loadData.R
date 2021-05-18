@@ -3,16 +3,16 @@
 #' Load R data files from a directory using symbols rather than complete file
 #' paths. Supports `RDS`, `RDA`, and `RDATA` file extensions.
 #'
-#' [loadData()] is opinionated about the format of R data files it will accept.
-#' [`save()`][base::save] allows for the saving of multiple objects into a
-#' single R data file. This can later result in unexpected accidental
-#' replacement of an existing object in the current environment. Since an R data
-#' file internally stores the name of an object, if the file is later renamed
-#' the object name will no longer match.
+#' `loadData()` is opinionated about the format of R data files it will accept.
+#' `save()` allows for the saving of multiple objects into a single R data file.
+#' This can later result in unexpected accidental replacement of an existing
+#' object in the current environment. Since an R data file internally stores the
+#' name of an object, if the file is later renamed the object name will no
+#' longer match.
 #'
-#' To avoid any accidental replacements, [loadData()] will only load R data
+#' To avoid any accidental replacements, `loadData()` will only load R data
 #' files that contain a single object, and the internal object name must match
-#' the file name exactly. Additionally, [loadData()] will intentionally error if
+#' the file name exactly. Additionally, `loadData()` will intentionally error if
 #' an object with the same name already exists in the destination `environment`.
 #'
 #' @export
@@ -32,8 +32,8 @@
 #' File paths.
 #'
 #' @seealso
-#' - [`load()`][base::load].
-#' - [`readRDS()`][base::readRDS].
+#' - `load()`.
+#' - `readRDS()`.
 #'
 #' @examples
 #' dir <- system.file("extdata", package = "pipette")

@@ -39,16 +39,16 @@ Load R data files from a directory using symbols rather than complete file
 paths. Supports \code{RDS}, \code{RDA}, and \code{RDATA} file extensions.
 }
 \details{
-\code{\link[=loadData]{loadData()}} is opinionated about the format of R data files it will accept.
-\code{\link[base:save]{save()}} allows for the saving of multiple objects into a
-single R data file. This can later result in unexpected accidental
-replacement of an existing object in the current environment. Since an R data
-file internally stores the name of an object, if the file is later renamed
-the object name will no longer match.
+\code{loadData()} is opinionated about the format of R data files it will accept.
+\code{save()} allows for the saving of multiple objects into a single R data file.
+This can later result in unexpected accidental replacement of an existing
+object in the current environment. Since an R data file internally stores the
+name of an object, if the file is later renamed the object name will no
+longer match.
 
-To avoid any accidental replacements, \code{\link[=loadData]{loadData()}} will only load R data
+To avoid any accidental replacements, \code{loadData()} will only load R data
 files that contain a single object, and the internal object name must match
-the file name exactly. Additionally, \code{\link[=loadData]{loadData()}} will intentionally error if
+the file name exactly. Additionally, \code{loadData()} will intentionally error if
 an object with the same name already exists in the destination \code{environment}.
 }
 \note{
@@ -78,7 +78,7 @@ rm(example, inherits = TRUE)
 }
 \seealso{
 \itemize{
-\item \code{\link[base:load]{load()}}.
-\item \code{\link[base:readRDS]{readRDS()}}.
+\item \code{load()}.
+\item \code{readRDS()}.
 }
 }

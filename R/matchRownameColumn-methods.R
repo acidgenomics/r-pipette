@@ -10,7 +10,7 @@
 #' @inheritParams AcidRoxygen::params
 #' @param choices `character`.
 #'   Column name choices to use internally for matching.
-#'   Note that case-insensitive matching is performed against [`make.names()`]
+#'   Note that case-insensitive matching is performed against `make.names()`
 #'   return internally. Either dots (".") or underscores ("_") used as word
 #'   separators will match.
 #' @param ... Additional arguments.
