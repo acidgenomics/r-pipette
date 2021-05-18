@@ -1,3 +1,8 @@
+## pipette 0.5.17 (UNRELEASED)
+
+- `as.DataFrame`: Updated `list` to `DataFrame` coercion support that is
+  compatible with Bioconductor 3.13 release update.
+
 ## pipette 0.5.16 (2021-05-18)
 
 ### Minor changes

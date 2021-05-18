@@ -192,13 +192,35 @@ NULL
 
 
 ## To DataFrame ================================================================
-## Updated 2010-01-08.
+## Updated 2021-05-18.
 `as.DataFrame,list` <-  # nolint
     function(x, row.names = NULL) {
-        DataFrame(
-            lapply(X = x, FUN = I),
-            row.names = row.names
+        if (hasLength(x)) {
+            assert(hasLength(x[[1L]]))
+            nc <- length(x)
+            nr <- length(x[[1L]])
+            x <- lapply(
+                X = x,
+                FUN = function(x) {
+                    if (isS4(x) || is(x, "AsIs") || !is.atomic(x)) {
+                        I(x)
+                    } else {
+                        x
+                    }
+                }
+            )
+        } else {
+            nc <- 0L
+            nr <- 0L
+        }
+        args <- list(
+            x,
+            "row.names" = row.names,
+            "check.names" = TRUE
         )
+        out <- do.call(what = DataFrame, args = args)
+        assert(identical(dim(out), c(nr, nc)))
+        out
     }
 
 ## Updated 2021-02-19.
