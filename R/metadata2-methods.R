@@ -8,15 +8,13 @@
 #'
 #' @section S3 class:
 #'
-#' Internally slots into [`attributes()`][base::attributes].
+#' Internally slots into `attributes()`.
 #' Attribute is also accessible via `attr(object, which)`.
 #'
 #' @section S4 class:
 #'
-#' Requires that object extends [`Annotated`][S4Vectors::Annotated-class] class,
-#' which supports [`metadata()`][S4Vectors::metadata].
-#'
-#' Internally slots into [`metadata()`][S4Vectors::metadata].
+#' Requires that object extends `Annotated` class.
+#' Internally slots into `metadata()`.
 #' Attribute is also accessible via `metadata(object)[[which]]`.
 #'
 #' @inheritParams AcidRoxygen::params
@@ -29,7 +27,7 @@
 #'
 #' @return
 #' - `metadata2()`: Metadata. Returns `NULL` on `which` match failure, similar
-#'   to [`attr()`][base::attr] and [`metadata()`][S4Vectors::metadata].
+#'   to `attr()` and `metadata()`.
 #' - `metadata2<-()`: Modified object.
 #'
 #' @examples

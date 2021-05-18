@@ -21,8 +21,8 @@
 #' Local file path(s). Stops on a missing file.
 #'
 #' @seealso
-#' - [tempfile()].
-#' - [tempdir()].
+#' - `tempfile()`.
+#' - `tempdir()`.
 #'
 #' @examples
 #' ## Local
