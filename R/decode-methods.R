@@ -2,7 +2,7 @@
 #'
 #' @name decode
 #' @inherit AcidGenerics::decode description return
-#' @note Updated 2021-02-03.
+#' @note Updated 2021-05-18.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
@@ -24,9 +24,6 @@
 NULL
 
 
-
-## FIXME This may not work as expected for Bioconductor 3.13.
-## Need to refer to list to DataFrame coercion method...
 
 ## Updated 2021-05-18.
 `decode,DataFrame` <-  # nolint

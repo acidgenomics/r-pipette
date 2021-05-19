@@ -209,16 +209,8 @@ NULL
             x <- lapply(
                 X = x,
                 FUN = function(x) {
-                    ## NOTE Temporary fix for S4Vectors breaking changes
-                    ## introduced in Bioconductor 3.13 (2021-05-18).
                     if (packageVersion("S4Vectors") >= 0.29) {
-                        if (isAny(
-                            x = x,
-                            classes = c(
-                                "List",
-                                "Rle"
-                            )
-                        )) {
+                        if (isAny(x = x, classes = c("List", "Rle"))) {
                             return(x)
                         }
                     }

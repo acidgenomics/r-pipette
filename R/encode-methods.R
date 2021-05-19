@@ -1,6 +1,6 @@
 #' @name encode
 #' @inherit AcidGenerics::encode
-#' @note Updated 2021-02-11.
+#' @note Updated 2021-05-18.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
@@ -23,9 +23,6 @@
 NULL
 
 
-
-## FIXME This needs update to support Bioconductor 3.13.
-## FIXME Refer to list to DataFrame coercion method, for inspiration.
 
 ## Updated 2021-05-18.
 `encode,DataFrame` <-  # nolint
