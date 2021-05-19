@@ -1,3 +1,10 @@
+## pipette 0.5.18 (UNRELEASED)
+
+### Minor changes
+
+- `decode` / `encode`: Reworked internal code slightly to provide compatibility
+  with S4Vectors update in Bioconductor 3.13.
+
 ## pipette 0.5.17 (2021-05-18)
 
 ### Major changes
