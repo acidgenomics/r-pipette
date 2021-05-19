@@ -25,7 +25,7 @@ Columns will be decoded and no longer \code{Rle} class.
 Decode (run-length encoding)
 }
 \note{
-Updated 2021-02-03.
+Updated 2021-05-18.
 }
 \examples{
 data(DFrame, package = "AcidTest")
