@@ -1,4 +1,4 @@
-## pipette 0.5.18 (UNRELEASED)
+## pipette 0.5.18 (2021-05-18)
 
 ### Minor changes
 
