@@ -25,28 +25,36 @@ NULL
 
 
 
-## Updated 2019-07-19.
+## FIXME This may not work as expected for Bioconductor 3.13.
+## Need to refer to list to DataFrame coercion method...
+
+## Updated 2021-05-18.
 `decode,DataFrame` <-  # nolint
     function(x) {
-        DataFrame(
-            lapply(
-                X = x,
-                FUN = function(x) {
-                    if (is(x, "Rle")) {
-                        x <- decode(x)
-                        if (is.factor(x)) {
-                            x <- droplevels(x)
-                        }
-                        x
-                    } else if (!is.atomic(x)) {
-                        I(x)
-                    } else {
-                        x
-                    }
+        rn <- rownames(x)
+        x <- lapply(
+            X = x,
+            FUN = function(x) {
+                if (is(x, "List")) {
+                    return(x)
                 }
-            ),
-            row.names = rownames(x)
+                ## Decode Rle, if necessary.
+                if (is(x, "Rle")) {
+                    x <- decode(x)
+                }
+                ## Adjust (drop) factor levels, if necessary.
+                if (is.factor(x)) {
+                    x <- droplevels(x)
+                }
+                if (is.atomic(x)) {
+                    return(x)
+                }
+                x <- I(x)
+                x
+            }
         )
+        args <- list(x, row.names = rn)
+        do.call(what = DataFrame, args = args)
     }
 
 

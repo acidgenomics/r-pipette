@@ -24,31 +24,38 @@ NULL
 
 
 
-## Updated 2019-07-20.
+## FIXME This needs update to support Bioconductor 3.13.
+## FIXME Refer to list to DataFrame coercion method, for inspiration.
+
+## Updated 2021-05-18.
 `encode,DataFrame` <-  # nolint
     function(x) {
-        DataFrame(
-            lapply(
-                X = x,
-                FUN = function(x) {
-                    ## Decode Rle, if necessary.
-                    if (is(x, "Rle")) {
-                        x <- decode(x)
-                    }
-                    ## Adjust (drop) factor levels, if necessary.
-                    if (is.factor(x)) {
-                        x <- droplevels(x)
-                    }
-                    ## Use run-length encoding on atomics.
-                    if (is.atomic(x)) {
-                        Rle(x)
-                    } else {
-                        I(x)
-                    }
+        rn <- rownames(x)
+        x <- lapply(
+            X = x,
+            FUN = function(x) {
+                if (is(x, "List")) {
+                    return(x)
                 }
-            ),
-            row.names = rownames(x)
+                ## Decode Rle, if necessary.
+                if (is(x, "Rle")) {
+                    x <- decode(x)
+                }
+                ## Adjust (drop) factor levels, if necessary.
+                if (is.factor(x)) {
+                    x <- droplevels(x)
+                }
+                ## Use run-length encoding on atomics.
+                if (is.atomic(x)) {
+                    x <- Rle(x)
+                    return(x)
+                }
+                x <- I(x)
+                x
+            }
         )
+        args <- list(x, row.names = rn)
+        do.call(what = DataFrame, args = args)
     }
 
 
