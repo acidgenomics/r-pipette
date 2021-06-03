@@ -123,6 +123,15 @@ setClass(
 
 
 #' @describeIn PipetteFile-class
+#' Comma-separated values file (CSV).
+setClass(
+    Class = "CSVFile",
+    contains = "DelimFile"
+)
+
+
+
+#' @describeIn PipetteFile-class
 #' Gene matrix transposed file (GMT).
 setClass(
     Class = "GMTFile",
@@ -190,6 +199,24 @@ setClass(
 setClass(
     Class = "RDSFile",
     contains = "PipetteFile"
+)
+
+
+
+#' @describeIn PipetteFile-class
+#' Base R table file (TXT).
+setClass(
+    Class = "TableFile",
+    contains = "DelimFile"
+)
+
+
+
+#' @describeIn PipetteFile-class
+#' Tab-separated values file (TSV).
+setClass(
+    Class = "TSVFile",
+    contains = "DelimFile"
 )
 
 
