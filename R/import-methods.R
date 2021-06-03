@@ -227,6 +227,8 @@ NULL
 
 
 
+## FIXME Need to support CSVFile, TSVFile, TableFile
+
 #' Define S4 file class to use from extension
 #'
 #' @note Updated 2021-06-03.
@@ -245,9 +247,8 @@ NULL
         "broadpeak"    = "RtracklayerFile",
         "bw"           = "RtracklayerFile",
         "counts"       = "BcbioCountsFile",
-        "csv"          = "DelimFile",
+        "csv"          = "CSVFile",
         "dbf"          = "RioFile",
-        "delim"        = "DelimFile",
         "dif"          = "RioFile",
         "dta"          = "RioFile",
         "excel"        = "ExcelFile",
@@ -283,9 +284,9 @@ NULL
         "sav"          = "RioFile",
         "sh"           = "LinesFile",
         "syd"          = "RioFile",
-        "table"        = "DelimFile",
-        "tsv"          = "DelimFile",
-        "txt"          = "DelimFile",
+        "table"        = "TableFile",
+        "tsv"          = "TSVFile",
+        "txt"          = "TableFile",
         "wig"          = "RtracklayerFile",
         "xls"          = "ExcelFile",
         "xlsb"         = "ExcelFile",
@@ -568,6 +569,8 @@ formals(`import,character`)[c("makeNames", "metadata", "quiet")] <-
 
 
 ## Basic =======================================================================
+## FIXME Need to class this, so we can drop the `ext` variable requirement.
+
 #' Internal importer for a delimited file (e.g. `.csv`, `.tsv`).
 #'
 #' @details
