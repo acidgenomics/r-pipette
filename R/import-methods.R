@@ -299,6 +299,37 @@ NULL
 
 
 
+#' Slot data provenance metadata.
+#'
+#' @note Updated 2021-03-16.
+#' @noRd
+#'
+#' @details
+#' Previously, "which" was defined as "pipette", until v0.3.8.
+.slotImportMetadata <- function(object, file, pkg, fun) {
+    assert(
+        isString(file),
+        isString(pkg),
+        isString(fun)
+    )
+    metadata2(object, which = "import") <-
+        list(
+            "date" = Sys.Date(),
+            "file" = ifelse(
+                test = isTRUE(isAFile(file)),
+                yes = realpath(file),
+                no = file
+            ),
+            "importerName" = paste0(pkg, "::", fun),
+            "importerVersion" = packageVersion(pkg),
+            "packageName" = .pkgName,
+            "packageVersion" = .pkgVersion
+        )
+    object
+}
+
+
+
 #' Primary `import` method, that hands off to classed file-extension variants
 #'
 #' @note Updated 2021-06-03.
@@ -549,35 +580,13 @@ setMethod(
 
 
 
-## Add data provenance metadata.
-## Previously, "which" was defined as "pipette", until v0.3.8.
-## Updated 2021-03-16.
-.slotImportMetadata <- function(object, file, pkg, fun) {
-    assert(
-        isString(file),
-        isString(pkg),
-        isString(fun)
-    )
-    metadata2(object, which = "import") <-
-        list(
-            "date" = Sys.Date(),
-            "file" = ifelse(
-                test = isTRUE(isAFile(file)),
-                yes = realpath(file),
-                no = file
-            ),
-            "importerName" = paste0(pkg, "::", fun),
-            "importerVersion" = packageVersion(pkg),
-            "packageName" = .pkgName,
-            "packageVersion" = .pkgVersion
-        )
-    object
-}
+
 
 
 
 ## Basic =======================================================================
 ## FIXME Need to class this, so we can drop the `ext` variable requirement.
+## FIXME Need to update the formals here...
 
 #' Internal importer for a delimited file (e.g. `.csv`, `.tsv`).
 #'
@@ -586,19 +595,25 @@ setMethod(
 #' Can override using `acid.import.engine` option, which also supports
 #' data.table and readr packages.
 #'
-#' @note Updated 2021-03-17.
+#' @note Updated 2021-06-03.
 #' @noRd
-.importDelim <- function(
+`import,DelimFile` <- function(
     file,
     colnames,
     comment,
-    ext,
     metadata,
     nMax,
     quiet,
-    skip
+    skip,
+    verbose = getOption("acid.verbose", default = FALSE)
 ) {
-    verbose <- getOption("acid.verbose", default = FALSE)
+    ext <- switch(
+        EXPR = class(file),
+        "CSVFile" = "csv",
+        "TSVFile" = "tsv",
+        "TableFile" = "table",
+        stop("Unsupported delim class.")
+    )
     assert(
         isFlag(colnames) || isCharacter(colnames),
         is.character(comment) && length(comment) <= 1L,
@@ -764,7 +779,23 @@ setMethod(
         )
     }
     object
+    ## FIXME Need to return metadata and other stuff that used to be defined
+    ## in our main import function. Need to rethink here?
 }
+
+
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature("DelimFile"),
+    definition = `import,DelimFile`
+)
+
+
+
+
 
 
 
