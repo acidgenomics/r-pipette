@@ -9,6 +9,7 @@
 \alias{RioFile-class}
 \alias{RtracklayerFile-class}
 \alias{BcbioCountsFile-class}
+\alias{CSVFile-class}
 \alias{GMTFile-class}
 \alias{GMXFile-class}
 \alias{GRPFile-class}
@@ -17,6 +18,8 @@
 \alias{PZFXFile-class}
 \alias{RDataFile-class}
 \alias{RDSFile-class}
+\alias{TableFile-class}
+\alias{TSVFile-class}
 \alias{YAMLFile-class}
 \title{File extension classes}
 \description{
@@ -84,6 +87,8 @@ File extension group supporting:
 
 \item \code{BcbioCountsFile-class}: bcbio-nextgen counts file.
 
+\item \code{CSVFile-class}: Comma-separated values file (CSV).
+
 \item \code{GMTFile-class}: Gene matrix transposed file (GMT).
 
 \item \code{GMXFile-class}: Gene matrix file (GMX).
@@ -99,6 +104,10 @@ File extension group supporting:
 \item \code{RDataFile-class}: R Data file containing multiple objects (RData/RDA).
 
 \item \code{RDSFile-class}: R data file containing a single, serialized object (RDS).
+
+\item \code{TableFile-class}: Base R table file (TXT).
+
+\item \code{TSVFile-class}: Tab-separated values file (TSV).
 
 \item \code{YAMLFile-class}: YAML file.
 }}
