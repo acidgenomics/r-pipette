@@ -1,3 +1,8 @@
+## NOTE Not currently exporting these, since they are only used for `import`
+## function, and do not need to be made accessible to other packages.
+
+
+
 #' File extension classes
 #'
 #' Currently intended for use with `import` function.
@@ -52,7 +57,15 @@ setClass(
 
 #' @describeIn PipetteFile-class
 #' Source code lines file.\cr
-#' File extension group.
+#' File extension group supporting:
+#' - BASH: Bash shell script
+#' - LOG: Log file
+#' - MD: Markdown file
+#' - PY: Python script
+#' - R: R script
+#' - RMD: R Markdown file
+#' - SH: Shell script (e.g. Bash, POSIX)
+#' - ZSH: Zsh shell script
 setClass(
     Class = "LinesFile",
     contains = "PipetteFile"
