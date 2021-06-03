@@ -587,6 +587,7 @@ setMethod(
 ## Basic =======================================================================
 ## FIXME Need to class this, so we can drop the `ext` variable requirement.
 ## FIXME Need to update the formals here...
+## FIXME Need to support rownames here.
 
 #' Internal importer for a delimited file (e.g. `.csv`, `.tsv`).
 #'
@@ -599,16 +600,19 @@ setMethod(
 #' @noRd
 `import,DelimFile` <- function(
     file,
-    colnames,
-    comment,
-    metadata,
-    nMax,
-    quiet,
-    skip,
+    rownames = TRUE,  # FIXME Need to add back in support here.
+    colnames = TRUE,
+    comment = "",
+    skip = 0L,
+    nMax = Inf,
+    makeNames,  # FIXME
+    metadata,  # FIXME
     engine = getOption(
         x = "acid.import.engine",
         default = "data.table"
-    )
+    ),
+    ## FIXME quiet and verbose are kind of redundant, no?
+    quiet,
     verbose = getOption(
         x = "acid.verbose",
         default = FALSE
@@ -631,18 +635,12 @@ setMethod(
         isInt(skip), isNonNegative(skip),
         isFlag(verbose)
     )
-    ext <- match.arg(ext, choices = .extGroup[["delim"]])
-    ## FIXME Need to make this user-accessible in function call.
-    whatPkg <- match.arg(
-        arg = getOption(
-            x = "acid.import.engine",
-            default = .defaultDelimEngine
-        ),
-        choices = .delimEngines
-    )
-    if (identical(ext, "txt")) {
-        ext <- "table"
+    ## FIXME Simplify this? Redundant?
+    if (isTRUE(quiet)) {
+        assert(isFALSE(verbose))
     }
+    ext <- match.arg(ext, choices = .extGroup[["delim"]])
+    whatPkg <- match.arg(arg = engine, choices = .delimEngines)
     if (identical(ext, "table")) {
         whatPkg <- "base"
     }
@@ -778,6 +776,9 @@ setMethod(
             stringsAsFactors = FALSE
         )
     }
+    ## FIXME We need to standardize the return here...
+    ## FIXME Need to return metadata and other stuff that used to be defined
+    ## in our main import function. Need to rethink here?
     if (isTRUE(metadata)) {
         object <- .slotImportMetadata(
             object = object,
@@ -787,8 +788,6 @@ setMethod(
         )
     }
     object
-    ## FIXME Need to return metadata and other stuff that used to be defined
-    ## in our main import function. Need to rethink here?
 }
 
 
@@ -806,6 +805,9 @@ setMethod(
 
 
 
+
+## FIXME Need to ensure that whitespace isn't stripped by default.
+## FIXME Allow the user to enable this, if they want...
 
 #' Internal importer for (source code) lines
 #'
@@ -1201,6 +1203,8 @@ setMethod(
 
 
 ## Microsoft Excel =============================================================
+## FIXME This should always import colnames, no?
+
 ## Note that `readxl::read_excel()` doesn't currently support automatic blank
 ## lines removal, so ensure that is fixed downstream.
 

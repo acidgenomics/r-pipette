@@ -12,13 +12,16 @@ import(file, ...)
 
 \S4method{import}{DelimFile}(
   file,
-  colnames,
-  comment,
+  rownames = TRUE,
+  colnames = TRUE,
+  comment = "",
+  skip = 0L,
+  nMax = Inf,
+  makeNames,
   metadata,
-  nMax,
+  engine = getOption(x = "acid.import.engine", default = "data.table"),
   quiet,
-  skip,
-  verbose = getOption("acid.verbose", default = FALSE)
+  verbose = getOption(x = "acid.verbose", default = FALSE)
 )
 }
 \arguments{
@@ -32,6 +35,10 @@ An optional file format type, which can be used to override the file format
 inferred from \code{file}. Only recommended for file and URL paths that don't
 contain an extension.}
 
+\item{rownames}{\code{logical(1)}.
+Automatically assign row names, if \code{rowname} column is defined.
+Applies to file types that return \code{data.frame} only.}
+
 \item{colnames}{\code{logical(1)} or \code{character}.
 Automatically assign column names, using the first header row.
 Applies to file types that return \code{data.frame} only.
@@ -44,35 +51,31 @@ particularly
 useful when parsing lines.
 \emph{Applies to plain text delimited and source code lines only.}}
 
-\item{metadata}{\code{list}.
-Metadata.}
+\item{skip}{\code{integer(1)}.
+\emph{Applies to delimited file (CSV, TSV), Excel Workbook, or lines.}
+Number of lines to skip.}
 
 \item{nMax}{\code{integer(1)} or \code{Inf}.
 Maximum number of lines to parse.
 \emph{Applies to plain text delimited, Excel, and source code lines only.}}
 
+\item{makeNames}{\code{function}.
+Apply syntactic naming function to (column) names.
+\emph{Does not apply to import of R data files.}}
+
+\item{metadata}{\code{list}.
+Metadata.}
+
 \item{quiet}{\code{logical(1)}.
 Perform command quietly, suppressing messages.}
 
-\item{skip}{\code{integer(1)}.
-\emph{Applies to delimited file (CSV, TSV), Excel Workbook, or lines.}
-Number of lines to skip.}
-
 \item{verbose}{\code{logical(1)}.
 Run the function with verbose output.}
-
-\item{rownames}{\code{logical(1)}.
-Automatically assign row names, if \code{rowname} column is defined.
-Applies to file types that return \code{data.frame} only.}
 
 \item{sheet}{\code{character(1)} or \code{integer(1)}.
 \emph{Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.}
 Sheet to read. Either a string (the name of a sheet), or an integer (the
 position of the sheet). Defaults to the first sheet.}
-
-\item{makeNames}{\code{function}.
-Apply syntactic naming function to (column) names.
-\emph{Does not apply to import of R data files.}}
 }
 \value{
 Varies, depending on the file type (format):
