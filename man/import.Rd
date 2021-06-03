@@ -2,9 +2,17 @@
 % Please edit documentation in R/AllGenerics.R, R/import-methods.R
 \name{import}
 \alias{import}
+\alias{import,character-method}
 \title{Import}
 \usage{
 import(file, ...)
+
+\S4method{import}{character}(
+  file,
+  format = "auto",
+  quiet = getOption("acid.quiet", default = FALSE),
+  ...
+)
 }
 \arguments{
 \item{file}{\code{character(1)}.
@@ -16,6 +24,9 @@ File path.}
 An optional file format type, which can be used to override the file format
 inferred from \code{file}. Only recommended for file and URL paths that don't
 contain an extension.}
+
+\item{quiet}{\code{logical(1)}.
+Perform command quietly, suppressing messages.}
 
 \item{rownames}{\code{logical(1)}.
 Automatically assign row names, if \code{rowname} column is defined.

@@ -1,11 +1,6 @@
-## FIXME Need to make this object oriented, based on specific classes.
 ## FIXME For lines, need to allow option to strip whitespace...
 ##       Consider using a stripWhitespace argument?
-## FIXME Arguments need to be classed here...
-## FIXME Need to ensure RDA gets defined as RDataFile.
-## FIXME YML extension needs to get classed as YAMLFile.
-## FIXME TXT needs to map to TableFile.
-## FIXME Need to add support and code coverage for FWF files.
+## FIXME Need to improve the documentation for specific classes...
 
 
 
@@ -227,7 +222,7 @@ NULL
 
 
 
-#' Define S4 file class to use from extension
+#' Map file extension to corresponding S4 file class
 #'
 #' @note Updated 2021-06-03.
 #' @noRd
@@ -310,17 +305,7 @@ NULL
         file,
         format = "auto",
         quiet,
-        ...,
-
-        ## FIXME These need to be moved to class specific handlers.
-        rownames = TRUE,
-        colnames = TRUE,
-        sheet = 1L,
-        comment = "",
-        skip = 0L,
-        nMax = Inf,
-        makeNames,
-        metadata
+        ...
     ) {
         ## We're supporting remote files, so don't check using `isAFile()` here.
         assert(
@@ -357,13 +342,34 @@ NULL
         class <- .extToFileClass(ext)
         file <- new(Class = class, file)
         import(file = file, ...)
-
-
-
-
     }
 
-.importLegacyMethod <- function(FIXME) {
+formals(`import,character`)[["quiet"]] <- formalsList[["quiet"]]
+
+
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature("character"),
+    definition = `import,character`
+)
+
+
+
+.importLegacyMethod <- function(
+    FIXME,
+    ## FIXME These need to be moved to class specific handlers.
+    rownames = TRUE,
+    colnames = TRUE,
+    sheet = 1L,
+    comment = "",
+    skip = 0L,
+    nMax = Inf,
+    makeNames,
+    metadata
+) {
     stop(".extToFileClass needed here")
 
     ## Check that user hasn't changed unsupported  arguments.
@@ -483,16 +489,6 @@ NULL
         ))
     }
     object <- do.call(what = fun, args = args)
-
-
-
-
-
-
-
-
-
-
 
     ## Ensure imported R objects return unmodified.
     if (identical(ext, "rds") || isSubset(ext, .extGroup[["rda"]])) {
