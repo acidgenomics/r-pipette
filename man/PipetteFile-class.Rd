@@ -41,7 +41,17 @@ File extension group supporting:
 }
 
 \item \code{LinesFile-class}: Source code lines file.\cr
-File extension group.
+File extension group supporting:
+\itemize{
+\item BASH: Bash shell script
+\item LOG: Log file
+\item MD: Markdown file
+\item PY: Python script
+\item R: R script
+\item RMD: R Markdown file
+\item SH: Shell script (e.g. Bash, POSIX)
+\item ZSH: Zsh shell script
+}
 
 \item \code{RioFile-class}: File extension supported by \code{rio::import}.\cr
 File extension group supporting:

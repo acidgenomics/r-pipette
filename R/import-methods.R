@@ -1,6 +1,11 @@
 ## FIXME Need to make this object oriented, based on specific classes.
 ## FIXME For lines, need to allow option to strip whitespace...
+##       Consider using a stripWhitespace argument?
 ## FIXME Arguments need to be classed here...
+## FIXME Need to ensure RDA gets defined as RDataFile.
+## FIXME YML extension needs to get classed as YAMLFile.
+## FIXME TXT needs to map to TableFile.
+## FIXME Need to add support and code coverage for FWF files.
 
 
 
@@ -218,14 +223,91 @@
 #' ## Row and column names disabled.
 #' x <- import(file, rownames = FALSE, colnames = FALSE)
 #' print(head(x))
+NULL
 
 
 
+#' Define S4 file class to use from extension
+#'
+#' @note Updated 2021-06-03.
+#' @noRd
+.extToFileClass <- function(ext) {
+    ext <- tolower(ext)
+    dict <- list(
+        "arff"         = "RioFile",
+        "bash"         = "LinesFile",
+        "bcbio-counts" = "BcbioCountsFile",
+        "bed"          = "RtracklayerFile",
+        "bed15"        = "RtracklayerFile",
+        "bedgraph"     = "RtracklayerFile",
+        "bedpe"        = "RtracklayerFile",
+        "bigwig"       = "RtracklayerFile",
+        "broadpeak"    = "RtracklayerFile",
+        "bw"           = "RtracklayerFile",
+        "counts"       = "BcbioCountsFile",
+        "csv"          = "DelimFile",
+        "dbf"          = "RioFile",
+        "delim"        = "DelimFile",
+        "dif"          = "RioFile",
+        "dta"          = "RioFile",
+        "excel"        = "ExcelFile",
+        "fwf"          = "RioFile",
+        "gff"          = "RtracklayerFile",
+        "gff1"         = "RtracklayerFile",
+        "gff2"         = "RtracklayerFile",
+        "gff3"         = "RtracklayerFile",
+        "gmt"          = "GMTFile",
+        "gmx"          = "GMXFile",
+        "grp"          = "GRPFile",
+        "gtf"          = "RtracklayerFile",
+        "json"         = "JSONFile",
+        "lines"        = "LinesFile",
+        "log"          = "LinesFile",
+        "mat"          = "RioFile",
+        "md"           = "LinesFile",
+        "mtp"          = "RioFile",
+        "mtx"          = "MTXFile",
+        "narrowpeak"   = "RtracklayerFile",
+        "ods"          = "RioFile",
+        "por"          = "RioFile",
+        "psv"          = "RioFile",
+        "py"           = "LinesFile",
+        "pzfx"         = "PZFXFile",
+        "r"            = "LinesFile",
+        "rda"          = "RDataFile",
+        "rdata"        = "RDataFile",
+        "rds"          = "RDSFile",
+        "rec"          = "RioFile",
+        "rmd"          = "LinesFile",
+        "sas7bdat"     = "RioFile",
+        "sav"          = "RioFile",
+        "sh"           = "LinesFile",
+        "syd"          = "RioFile",
+        "table"        = "DelimFile",
+        "tsv"          = "DelimFile",
+        "txt"          = "DelimFile",
+        "wig"          = "RtracklayerFile",
+        "xls"          = "ExcelFile",
+        "xlsb"         = "ExcelFile",
+        "xlsx"         = "ExcelFile",
+        "xpt"          = "RioFile",
+        "yaml"         = "YAMLFile",
+        "yml"          = "YAMLFile",
+        "zsh"          = "LinesFile"
+    )
+}
 
-`import,ANY` <-
+
+
+## Updated 2021-06-03.
+`import,character` <-
     function(
         file,
         format = "auto",
+        quiet,
+        ...,
+
+        ## FIXME These need to be moved to class specific handlers.
         rownames = TRUE,
         colnames = TRUE,
         sheet = 1L,
@@ -233,22 +315,23 @@
         skip = 0L,
         nMax = Inf,
         makeNames,
-        metadata,
-        quiet
+        metadata
     ) {
         ## We're supporting remote files, so don't check using `isAFile()` here.
         assert(
             isAFile(file) || isAURL(file),
-            isFlag(rownames),
-            isFlag(colnames) || isCharacter(colnames),
             isString(format),
-            isScalar(sheet),
-            is.character(comment) && length(comment) <= 1L,
-            isInt(skip), isNonNegative(skip),
-            isPositive(nMax),
-            is.function(makeNames),
-            isFlag(metadata),
             isFlag(quiet)
+
+            ## FIXME These need to move to class-specific handlers...
+            ## > isFlag(rownames),
+            ## > isFlag(colnames) || isCharacter(colnames),
+            ## > isScalar(sheet),
+            ## > is.character(comment) && length(comment) <= 1L,
+            ## > isInt(skip), isNonNegative(skip),
+            ## > isPositive(nMax),
+            ## > is.function(makeNames),
+            ## > isFlag(metadata)
         )
         format <- tolower(format)
         ## Allow Google Sheets import using rio, by matching the URL.
@@ -266,7 +349,10 @@
         } else {
             ext <- format
         }
-        ext <- tolower(ext)
+
+
+        stop(".extToFileClass needed here")
+
         ## Check that user hasn't changed unsupported  arguments.
         if (!isSubset(
             x = ext,
@@ -284,7 +370,11 @@
         ## - skip
         if (!isSubset(
             x = ext,
-            y = c(.extGroup[["delim"]], .extGroup[["excel"]], .extGroup[["lines"]])
+            y = c(
+                .extGroup[["delim"]],
+                .extGroup[["excel"]],
+                .extGroup[["lines"]]
+            )
         )) {
             assert(identical(skip, eval(formals()[["skip"]])))
         }
@@ -335,8 +425,8 @@
             )
         } else if (identical(ext, "rds")) {
             fun <- .importRDS
-        } else if (isSubset(ext, .extGroup[["rda"]])) {
-            fun <- .importRDA
+        } else if (isSubset(ext, .extGroup[["rdata"]])) {
+            fun <- .importRData
         } else if (identical(ext, "gmt")) {
             fun <- .importGMT
         } else if (identical(ext, "gmx")) {
@@ -380,6 +470,17 @@
             ))
         }
         object <- do.call(what = fun, args = args)
+
+
+
+
+
+
+
+
+
+
+
         ## Ensure imported R objects return unmodified.
         if (identical(ext, "rds") || isSubset(ext, .extGroup[["rda"]])) {
             return(object)
@@ -433,7 +534,8 @@
         object
     }
 
-formals(`import,ANY`)[c("makeNames", "metadata", "quiet")] <-
+## FIXME Simplify this...need to rethink.
+formals(`import,character`)[c("makeNames", "metadata", "quiet")] <-
     formalsList[c("import.make.names", "import.metadata", "quiet")]
 
 
@@ -792,11 +894,11 @@ formals(`import,ANY`)[c("makeNames", "metadata", "quiet")] <-
 
 
 
-#' Internal importer for an R data file (`.rda`)
+#' Internal importer for an R data file containing multiple objects (`.rda`)
 #'
-#' @note Updated 2020-08-13.
+#' @note Updated 2021-06-03.
 #' @noRd
-.importRDA <- function(file, quiet) {
+.importRData <- function(file, quiet) {
     assert(isFlag(quiet))
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
     if (!isTRUE(quiet)) {

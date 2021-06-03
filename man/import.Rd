@@ -2,24 +2,9 @@
 % Please edit documentation in R/AllGenerics.R, R/import.R
 \name{import}
 \alias{import}
-\alias{import,ANY}
 \title{Import}
 \usage{
 import(file, ...)
-
-`import,ANY`(
-  file,
-  format = "auto",
-  rownames = TRUE,
-  colnames = TRUE,
-  sheet = 1L,
-  comment = "",
-  skip = 0L,
-  nMax = Inf,
-  makeNames = getOption("acid.import.make.names", default = syntactic::makeNames),
-  metadata = getOption("acid.import.metadata", default = FALSE),
-  quiet = getOption("acid.quiet", default = FALSE)
-)
 }
 \arguments{
 \item{file}{\code{character(1)}.
@@ -64,12 +49,6 @@ Maximum number of lines to parse.
 \item{makeNames}{\code{function}.
 Apply syntactic naming function to (column) names.
 \emph{Does not apply to import of R data files.}}
-
-\item{metadata}{\code{list}.
-Metadata.}
-
-\item{quiet}{\code{logical(1)}.
-Perform command quietly, suppressing messages.}
 }
 \value{
 Varies, depending on the file type (format):
