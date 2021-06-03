@@ -26,7 +26,10 @@ setValidity(
 ## File extension groups =======================================================
 #' @describeIn PipetteFile-class
 #' Delimited file.\cr
-#' File extension group.
+#' File extension group supporting:
+#' - CSV: Comma-separated values
+#' - TSV: Tab-separated values
+#' - Base R table (TXT)
 setClass(
     Class = "DelimFile",
     contains = "PipetteFile"
@@ -36,7 +39,10 @@ setClass(
 
 #' @describeIn PipetteFile-class
 #' Microsoft Excel file.\cr
-#' File extension group.
+#' File extension group supporting:
+#' - XLS
+#' - XLSB
+#' - XLSX
 setClass(
     Class = "ExcelFile",
     contains = "PipetteFile"
@@ -56,7 +62,22 @@ setClass(
 
 #' @describeIn PipetteFile-class
 #' File extension supported by `rio::import`.\cr
-#' File extension group.
+#' File extension group supporting:
+#' - ARFF: Weka Attribute-Relation File Format
+#' - DBF: dBase Database File
+#' - DIF: Data Interchange Format
+#' - DTA: Stata
+#' - FWF: Fixed-width formatting
+#' - MAT: Matlab
+#' - MTP: Minitab
+#' - ODS: OpenDocument (LibreOffice)
+#' - POR: SPSS
+#' - PSV: Pipe-separated values
+#' - SAS7BDAT: SASS
+#' - SAV: SPSS
+#' - SYD: Systat
+#' - REC: Epi Info
+#' - XPT: SASS
 setClass(
     Class = "RioFile",
     contains = "PipetteFile"
@@ -66,7 +87,11 @@ setClass(
 
 #' @describeIn PipetteFile-class
 #' File extension supported by `rtracklayer::import`.\cr
-#' File extension group.
+#' File extension group supporting:
+#' - BED, BED15, BEDGRAPH, BEDPE
+#' - BIGWIG, BW, WIG
+#' - GFF, GFF1, GFF2, GFF3, GTF
+#' - BROADPEAK, NARROWPEAK
 setClass(
     Class = "RtracklayerFile",
     contains = "PipetteFile"
@@ -85,30 +110,43 @@ setClass(
 
 
 #' @describeIn PipetteFile-class
-#' Comma separated values (CSV) file.\cr
-#' Contains `DelimFile` class.
+#' Gene matrix transposed file (GMT).
 setClass(
-    Class = "CSVFile",
-    contains = "DelimFile"
-)
-
-
-
-## FIXME Need to add support for this.
-## Also need to add code coverage using an example file.
-
-#' @describeIn PipetteFile-class
-#' Fixed width format (FWF) file.\cr
-#' Contains `DelimFile` class.
-setClass(
-    Class = "FWFFile",
-    contains = "DelimFile"
+    Class = "GMTFile",
+    contains = "PipetteFile"
 )
 
 
 
 #' @describeIn PipetteFile-class
-#' MatrixMarket exchange (MTX) file.
+#' Gene matrix file (GMX).
+setClass(
+    Class = "GMXFile",
+    contains = "PipetteFile"
+)
+
+
+
+#' @describeIn PipetteFile-class
+#' Gene set file (GRP).
+setClass(
+    Class = "GRPFile",
+    contains = "PipetteFile"
+)
+
+
+
+#' @describeIn PipetteFile-class
+#' JSON file.
+setClass(
+    Class = "JSONFile",
+    contains = "PipetteFile"
+)
+
+
+
+#' @describeIn PipetteFile-class
+#' MatrixMarket exchange file (MTX).
 setClass(
     Class = "MTXFile",
     contains = "PipetteFile"
@@ -116,10 +154,8 @@ setClass(
 
 
 
-#' GraphPad Prism file (PZFX)
-#'
-#' @note Updated 2021-06-03.
-#' @noRd
+#' @describeIn PipetteFile-class
+#' GraphPad Prism file (PZFX).
 setClass(
     Class = "PZFXFile",
     contains = "PipetteFile"
@@ -128,7 +164,7 @@ setClass(
 
 
 #' @describeIn PipetteFile-class
-#' R Data file containing multiple objects.
+#' R Data file containing multiple objects (RData/RDA).
 setClass(
     Class = "RDataFile",
     contains = "PipetteFile"
@@ -137,7 +173,7 @@ setClass(
 
 
 #' @describeIn PipetteFile-class
-#' R data file containing a single object (serialized).
+#' R data file containing a single, serialized object (RDS).
 setClass(
     Class = "RDSFile",
     contains = "PipetteFile"
@@ -145,55 +181,9 @@ setClass(
 
 
 
+#' @describeIn PipetteFile-class
+#' YAML file.
 setClass(
-    Class = "TableFile",
-    contains = "DelimFile"
+    Class = "YAMLFile",
+    contains = "PipetteFile"
 )
-
-
-
-setClass(
-    Class = "TSVFile",
-    contains = "DelimFile"
-)
-
-
-
-setClass(
-    Class = "TXTFile",
-    contains = "DelimFile"
-)
-
-
-
-setClass(
-    Class = "XLSFile",
-    contains = "ExcelFile"
-)
-
-
-
-setClass(
-    Class = "XLSBFile",
-    contains = "ExcelFile"
-)
-
-
-
-setClass(
-    Class = "XLSXFile",
-    contains = "ExcelFile"
-)
-
-
-
-
-## RDataObjectsFile (RDA / RData)
-## RDataSingleObjectFile (RDS)
-##
-## GMTFile  GeneMatrixTransposedFile
-## GMXFile  GeneMatrixFile
-## GRPFile  GeneSetFile
-##
-## JSONFile
-## YAMLFile
