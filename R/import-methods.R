@@ -605,7 +605,14 @@ setMethod(
     nMax,
     quiet,
     skip,
-    verbose = getOption("acid.verbose", default = FALSE)
+    engine = getOption(
+        x = "acid.import.engine",
+        default = "data.table"
+    )
+    verbose = getOption(
+        x = "acid.verbose",
+        default = FALSE
+    )
 ) {
     ext <- switch(
         EXPR = class(file),
@@ -625,6 +632,7 @@ setMethod(
         isFlag(verbose)
     )
     ext <- match.arg(ext, choices = .extGroup[["delim"]])
+    ## FIXME Need to make this user-accessible in function call.
     whatPkg <- match.arg(
         arg = getOption(
             x = "acid.import.engine",
@@ -821,6 +829,7 @@ setMethod(
     if (isString(comment)) {
         assert(is.infinite(nMax))
     }
+    ## FIXME Need to make this user-accessible in function call.
     whatPkg <- match.arg(
         arg = getOption(
             x = "acid.import.engine",

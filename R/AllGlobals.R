@@ -11,6 +11,7 @@
 
 
 
+## FIXME Declare this in formal argument instead...
 #' Default plain text engine
 #'
 #' @note Updated 2021-01-13.
