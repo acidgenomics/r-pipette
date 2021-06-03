@@ -92,6 +92,7 @@ NULL
             isFlag(append),
             isFlag(quiet)
         )
+        ## FIXME Make this user-accessible in the formals above.
         whatPkg <- match.arg(
             arg = getOption(
                 x = "acid.export.engine",
@@ -259,6 +260,7 @@ setMethod(
         quiet
     ) {
         validObject(object)
+        ## FIXME Make this user-accessible in the formals above.
         whatPkg <- match.arg(
             arg = getOption(
                 x = "acid.export.engine",
