@@ -299,33 +299,24 @@ NULL
 
 
 
-## Updated 2021-06-03.
+#' Primary `import` method, that hands off to classed file-extension variants
+#'
+#' @note Updated 2021-06-03.
+#' @noRd
+#'
+#' @details
+#' We're supporting remote files, so don't check using `isAFile()` here.
+#'
+#' Allow Google Sheets import using rio, by matching the URL.
+#' Otherwise, coerce the file extension to uppercase, for easy matching.
 `import,character` <-
-    function(
-        file,
-        format = "auto",
-        quiet,
-        ...
-    ) {
-        ## We're supporting remote files, so don't check using `isAFile()` here.
+    function(file, format = "auto", ...) {
         assert(
             isAFile(file) || isAURL(file),
-            isString(format),
-            isFlag(quiet)
-
-            ## FIXME These need to move to class-specific handlers...
-            ## > isFlag(rownames),
-            ## > isFlag(colnames) || isCharacter(colnames),
-            ## > isScalar(sheet),
-            ## > is.character(comment) && length(comment) <= 1L,
-            ## > isInt(skip), isNonNegative(skip),
-            ## > isPositive(nMax),
-            ## > is.function(makeNames),
-            ## > isFlag(metadata)
+            isString(format)
         )
         format <- tolower(format)
-        ## Allow Google Sheets import using rio, by matching the URL.
-        ## Otherwise, coerce the file extension to uppercase, for easy matching.
+
         if (identical(format, "auto") || identical(format, "none")) {
             ext <- str_match(basename(file), extPattern)[1L, 2L]
             if (is.na(ext)) {
@@ -343,8 +334,6 @@ NULL
         file <- new(Class = class, file)
         import(file = file, ...)
     }
-
-formals(`import,character`)[["quiet"]] <- formalsList[["quiet"]]
 
 
 
@@ -371,6 +360,17 @@ setMethod(
     metadata
 ) {
     stop(".extToFileClass needed here")
+
+    ## FIXME These need to move to class-specific handlers...
+    ## isFlag(quiet)
+    ## > isFlag(rownames),
+    ## > isFlag(colnames) || isCharacter(colnames),
+    ## > isScalar(sheet),
+    ## > is.character(comment) && length(comment) <= 1L,
+    ## > isInt(skip), isNonNegative(skip),
+    ## > isPositive(nMax),
+    ## > is.function(makeNames),
+    ## > isFlag(metadata)
 
     ## Check that user hasn't changed unsupported  arguments.
     if (!isSubset(
