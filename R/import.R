@@ -1,3 +1,9 @@
+## FIXME Need to make this object oriented, based on specific classes.
+## FIXME For lines, need to allow option to strip whitespace...
+## FIXME Arguments need to be classed here...
+
+
+
 #' Import
 #'
 #' Read file by extension into R.
@@ -98,8 +104,8 @@
 #' These file formats are intentionally not supported:
 #' `DOC`, `DOCX`, `PDF`, `PPT`, `PPTX`.
 #'
-#' @export
-#' @note Updated 2021-03-16.
+#' @name import
+#' @note Updated 2021-06-03.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param format `character(1)`.
@@ -212,217 +218,222 @@
 #' ## Row and column names disabled.
 #' x <- import(file, rownames = FALSE, colnames = FALSE)
 #' print(head(x))
-import <- function(
-    file,
-    format = "auto",
-    rownames = TRUE,
-    colnames = TRUE,
-    sheet = 1L,
-    comment = "",
-    skip = 0L,
-    nMax = Inf,
-    makeNames,
-    metadata,
-    quiet
-) {
-    ## We're supporting remote files, so don't check using `isAFile()` here.
-    assert(
-        isAFile(file) || isAURL(file),
-        isFlag(rownames),
-        isFlag(colnames) || isCharacter(colnames),
-        isString(format),
-        isScalar(sheet),
-        is.character(comment) && length(comment) <= 1L,
-        isInt(skip), isNonNegative(skip),
-        isPositive(nMax),
-        is.function(makeNames),
-        isFlag(metadata),
-        isFlag(quiet)
-    )
-    format <- tolower(format)
-    ## Allow Google Sheets import using rio, by matching the URL.
-    ## Otherwise, coerce the file extension to uppercase, for easy matching.
-    if (identical(format, "auto") || identical(format, "none")) {
-        ext <- str_match(basename(file), extPattern)[1L, 2L]
-        if (is.na(ext)) {
-            stop(paste(
-                "'file' argument does not contain file type extension.",
-                "Set the file format manually using the 'format' argument.",
-                "Refer to 'pipette::import()' documentation for details.",
-                sep = "\n"
-            ))
-        }
-    } else {
-        ext <- format
-    }
-    ext <- tolower(ext)
-    ## Check that user hasn't changed unsupported  arguments.
-    if (!isSubset(
-        x = ext,
-        y = c(.extGroup[["delim"]], .extGroup[["excel"]])
-    )) {
+
+
+
+
+`import,ANY` <-
+    function(
+        file,
+        format = "auto",
+        rownames = TRUE,
+        colnames = TRUE,
+        sheet = 1L,
+        comment = "",
+        skip = 0L,
+        nMax = Inf,
+        makeNames,
+        metadata,
+        quiet
+    ) {
+        ## We're supporting remote files, so don't check using `isAFile()` here.
         assert(
-            identical(rownames, eval(formals()[["rownames"]])),
-            identical(colnames, eval(formals()[["colnames"]]))
+            isAFile(file) || isAURL(file),
+            isFlag(rownames),
+            isFlag(colnames) || isCharacter(colnames),
+            isString(format),
+            isScalar(sheet),
+            is.character(comment) && length(comment) <= 1L,
+            isInt(skip), isNonNegative(skip),
+            isPositive(nMax),
+            is.function(makeNames),
+            isFlag(metadata),
+            isFlag(quiet)
         )
-    }
-    ## - sheet (excel, prism)
-    if (!isSubset(ext, c(.extGroup[["excel"]], "pzfx"))) {
-        assert(identical(sheet, eval(formals()[["sheet"]])))
-    }
-    ## - skip
-    if (!isSubset(
-        x = ext,
-        y = c(.extGroup[["delim"]], .extGroup[["excel"]], .extGroup[["lines"]])
-    )) {
-        assert(identical(skip, eval(formals()[["skip"]])))
-    }
-    ## - metadata
-    if (isSubset(ext, .extGroup[["lines"]])) {
-        assert(identical(metadata, eval(formals()[["metadata"]])))
-    }
-    ## Now we're ready to hand off to file-type-specific importers.
-    args <- list(
-        "file" = file,
-        "quiet" = quiet
-    )
-    if (isSubset(ext, .extGroup[["delim"]])) {
-        fun <- .importDelim
-        args <- append(
-            x = args,
-            values = list(
-                "colnames" = colnames,
-                "comment" = comment,
-                "ext" = ext,
-                "metadata" = metadata,
-                "nMax" = nMax,
-                "skip" = skip
-            )
-        )
-    } else if (isSubset(ext, .extGroup[["excel"]])) {
-        fun <- .importExcel
-        args <- append(
-            x = args,
-            values = list(
-                "colnames" = colnames,
-                "metadata" = metadata,
-                "nMax" = nMax,
-                "sheet" = sheet,
-                "skip" = skip
-            )
-        )
-    } else if (identical(ext, "pzfx")) {
-        ## GraphPad Prism project.
-        ## Note that Prism files always contain column names.
-        fun <- .importPZFX
-        args <- append(
-            x = args,
-            values = list(
-                "metadata" = metadata,
-                "sheet" = sheet
-            )
-        )
-    } else if (identical(ext, "rds")) {
-        fun <- .importRDS
-    } else if (isSubset(ext, .extGroup[["rda"]])) {
-        fun <- .importRDA
-    } else if (identical(ext, "gmt")) {
-        fun <- .importGMT
-    } else if (identical(ext, "gmx")) {
-        fun <- .importGMX
-    } else if (identical(ext, "grp")) {
-        fun <- .importGRP
-    } else if (identical(ext, "json")) {
-        fun <- .importJSON
-        args <- append(x = args, values = list("metadata" = metadata))
-    } else if (isSubset(ext, .extGroup[["yaml"]])) {
-        fun <- .importYAML
-        args <- append(x = args, values = list("metadata" = metadata))
-    } else if (identical(ext, "mtx")) {
-        ## We're always requiring row and column sidecar files for MTX.
-        fun <- .importMTX
-        args <- append(x = args, values = list("metadata" = metadata))
-    } else if (identical(ext, "counts")) {
-        ## bcbio counts format always contains row and column names.
-        fun <- .importBcbioCounts
-        args <- append(x = args, values = list("metadata" = metadata))
-    } else if (isSubset(ext, .extGroup[["lines"]])) {
-        fun <- .importLines
-        args <- append(
-            x = args,
-            values = list(
-                "comment" = comment,
-                "nMax" = nMax,
-                "skip" = skip
-            )
-        )
-    } else if (isSubset(ext, .extGroup[["rtracklayer"]])) {
-        fun <- .rtracklayerImport
-        args <- append(x = args, values = list("metadata" = metadata))
-    } else if (isSubset(ext, .extGroup[["rio"]])) {
-        fun <- .rioImport
-        args <- append(x = args, values = list("metadata" = metadata))
-    } else {
-        stop(sprintf(
-            "Import of '%s' failed. '%s' extension is not supported.",
-            basename(file), ext
-        ))
-    }
-    object <- do.call(what = fun, args = args)
-    ## Ensure imported R objects return unmodified.
-    if (identical(ext, "rds") || isSubset(ext, .extGroup[["rda"]])) {
-        return(object)
-    }
-    ## Check that manual column names are correct.
-    if (isCharacter(colnames)) {
-        assert(identical(colnames(object), colnames))
-    }
-    ## Data frame-specific operations.
-    if (is.data.frame(object)) {
-        ## Set row names automatically.
-        if (isTRUE(rownames) && isSubset("rowname", colnames(object))) {
-            if (!isTRUE(quiet)) {
-                alertInfo("Setting row names from {.var rowname} column.")
+        format <- tolower(format)
+        ## Allow Google Sheets import using rio, by matching the URL.
+        ## Otherwise, coerce the file extension to uppercase, for easy matching.
+        if (identical(format, "auto") || identical(format, "none")) {
+            ext <- str_match(basename(file), extPattern)[1L, 2L]
+            if (is.na(ext)) {
+                stop(paste(
+                    "'file' argument does not contain file type extension.",
+                    "Set the file format manually using the 'format' argument.",
+                    "Refer to 'pipette::import()' documentation for details.",
+                    sep = "\n"
+                ))
             }
-            rownames(object) <- object[["rowname"]]
-            object[["rowname"]] <- NULL
+        } else {
+            ext <- format
         }
-    }
-    if (hasNames(object)) {
-        if (isTRUE(any(duplicated(names(object))))) {
-            dupes <- sort(names(object)[duplicated(names(object))])
-            alertWarning(sprintf(
-                "Duplicate names: {.var %s}.",
-                toString(dupes, width = 100L)
+        ext <- tolower(ext)
+        ## Check that user hasn't changed unsupported  arguments.
+        if (!isSubset(
+            x = ext,
+            y = c(.extGroup[["delim"]], .extGroup[["excel"]])
+        )) {
+            assert(
+                identical(rownames, eval(formals()[["rownames"]])),
+                identical(colnames, eval(formals()[["colnames"]]))
+            )
+        }
+        ## - sheet (excel, prism)
+        if (!isSubset(ext, c(.extGroup[["excel"]], "pzfx"))) {
+            assert(identical(sheet, eval(formals()[["sheet"]])))
+        }
+        ## - skip
+        if (!isSubset(
+            x = ext,
+            y = c(.extGroup[["delim"]], .extGroup[["excel"]], .extGroup[["lines"]])
+        )) {
+            assert(identical(skip, eval(formals()[["skip"]])))
+        }
+        ## - metadata
+        if (isSubset(ext, .extGroup[["lines"]])) {
+            assert(identical(metadata, eval(formals()[["metadata"]])))
+        }
+        ## Now we're ready to hand off to file-type-specific importers.
+        args <- list(
+            "file" = file,
+            "quiet" = quiet
+        )
+        if (isSubset(ext, .extGroup[["delim"]])) {
+            fun <- .importDelim
+            args <- append(
+                x = args,
+                values = list(
+                    "colnames" = colnames,
+                    "comment" = comment,
+                    "ext" = ext,
+                    "metadata" = metadata,
+                    "nMax" = nMax,
+                    "skip" = skip
+                )
+            )
+        } else if (isSubset(ext, .extGroup[["excel"]])) {
+            fun <- .importExcel
+            args <- append(
+                x = args,
+                values = list(
+                    "colnames" = colnames,
+                    "metadata" = metadata,
+                    "nMax" = nMax,
+                    "sheet" = sheet,
+                    "skip" = skip
+                )
+            )
+        } else if (identical(ext, "pzfx")) {
+            ## GraphPad Prism project.
+            ## Note that Prism files always contain column names.
+            fun <- .importPZFX
+            args <- append(
+                x = args,
+                values = list(
+                    "metadata" = metadata,
+                    "sheet" = sheet
+                )
+            )
+        } else if (identical(ext, "rds")) {
+            fun <- .importRDS
+        } else if (isSubset(ext, .extGroup[["rda"]])) {
+            fun <- .importRDA
+        } else if (identical(ext, "gmt")) {
+            fun <- .importGMT
+        } else if (identical(ext, "gmx")) {
+            fun <- .importGMX
+        } else if (identical(ext, "grp")) {
+            fun <- .importGRP
+        } else if (identical(ext, "json")) {
+            fun <- .importJSON
+            args <- append(x = args, values = list("metadata" = metadata))
+        } else if (isSubset(ext, .extGroup[["yaml"]])) {
+            fun <- .importYAML
+            args <- append(x = args, values = list("metadata" = metadata))
+        } else if (identical(ext, "mtx")) {
+            ## We're always requiring row and column sidecar files for MTX.
+            fun <- .importMTX
+            args <- append(x = args, values = list("metadata" = metadata))
+        } else if (identical(ext, "counts")) {
+            ## bcbio counts format always contains row and column names.
+            fun <- .importBcbioCounts
+            args <- append(x = args, values = list("metadata" = metadata))
+        } else if (isSubset(ext, .extGroup[["lines"]])) {
+            fun <- .importLines
+            args <- append(
+                x = args,
+                values = list(
+                    "comment" = comment,
+                    "nMax" = nMax,
+                    "skip" = skip
+                )
+            )
+        } else if (isSubset(ext, .extGroup[["rtracklayer"]])) {
+            fun <- .rtracklayerImport
+            args <- append(x = args, values = list("metadata" = metadata))
+        } else if (isSubset(ext, .extGroup[["rio"]])) {
+            fun <- .rioImport
+            args <- append(x = args, values = list("metadata" = metadata))
+        } else {
+            stop(sprintf(
+                "Import of '%s' failed. '%s' extension is not supported.",
+                basename(file), ext
             ))
         }
-        ## Harden against any object classes that don't support names
-        ## assignment, to prevent unwanted error on this step.
-        tryCatch(
-            expr = {
-                names(object) <- makeNames(names(object))
-            },
-            error = function(e) NULL
-        )
-        if (!isTRUE(hasValidNames(object))) {
-            alertWarning("Invalid names detected.")
+        object <- do.call(what = fun, args = args)
+        ## Ensure imported R objects return unmodified.
+        if (identical(ext, "rds") || isSubset(ext, .extGroup[["rda"]])) {
+            return(object)
         }
-    }
-    if (isTRUE(metadata)) {
-        if (!is.null(metadata2(object, which = "import"))) {
-            ## Add the call to metadata.
-            m <- metadata2(object, which = "import")
-            m[["call"]] <- tryCatch(
-                expr = standardizeCall(),
+        ## Check that manual column names are correct.
+        if (isCharacter(colnames)) {
+            assert(identical(colnames(object), colnames))
+        }
+        ## Data frame-specific operations.
+        if (is.data.frame(object)) {
+            ## Set row names automatically.
+            if (isTRUE(rownames) && isSubset("rowname", colnames(object))) {
+                if (!isTRUE(quiet)) {
+                    alertInfo("Setting row names from {.var rowname} column.")
+                }
+                rownames(object) <- object[["rowname"]]
+                object[["rowname"]] <- NULL
+            }
+        }
+        if (hasNames(object)) {
+            if (isTRUE(any(duplicated(names(object))))) {
+                dupes <- sort(names(object)[duplicated(names(object))])
+                alertWarning(sprintf(
+                    "Duplicate names: {.var %s}.",
+                    toString(dupes, width = 100L)
+                ))
+            }
+            ## Harden against any object classes that don't support names
+            ## assignment, to prevent unwanted error on this step.
+            tryCatch(
+                expr = {
+                    names(object) <- makeNames(names(object))
+                },
                 error = function(e) NULL
             )
-            metadata2(object, which = "import") <- m
+            if (!isTRUE(hasValidNames(object))) {
+                alertWarning("Invalid names detected.")
+            }
         }
+        if (isTRUE(metadata)) {
+            if (!is.null(metadata2(object, which = "import"))) {
+                ## Add the call to metadata.
+                m <- metadata2(object, which = "import")
+                m[["call"]] <- tryCatch(
+                    expr = standardizeCall(),
+                    error = function(e) NULL
+                )
+                metadata2(object, which = "import") <- m
+            }
+        }
+        object
     }
-    object
-}
 
-formals(import)[c("makeNames", "metadata", "quiet")] <-
+formals(`import,ANY`)[c("makeNames", "metadata", "quiet")] <-
     formalsList[c("import.make.names", "import.metadata", "quiet")]
 
 
