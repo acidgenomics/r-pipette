@@ -4,6 +4,7 @@
 \alias{import}
 \alias{import,character-method}
 \alias{import,DelimFile-method}
+\alias{import,LinesFile-method}
 \title{Import}
 \usage{
 import(file, ...)
@@ -23,6 +24,8 @@ import(file, ...)
   quiet,
   verbose = getOption(x = "acid.verbose", default = FALSE)
 )
+
+\S4method{import}{LinesFile}(file, comment = "", nMax = Inf, skip = 0L, quiet)
 }
 \arguments{
 \item{file}{\code{character(1)}.
@@ -202,7 +205,7 @@ Supported return types:
 Note that \code{stringsAsFactors} is always disabled for import.
 }
 
-\section{Matrix Market Exchange (MTX)}{
+\section{Matrix Market Exchange (\code{MTXFile})}{
 
 
 Reading a Matrix Market Exchange file requires \code{ROWNAMES} and \code{COLNAMES}
@@ -227,13 +230,13 @@ See also:
 }
 }
 
-\section{Gene sets (GMT, GMX)}{
+\section{GSEA gene set files (\code{GMTFile}, \code{GMXFile}, \code{GRPFile})}{
 
 
 Refer to the Broad Institute \href{https://goo.gl/3ZkDPb}{GSEA wiki} for details.
 }
 
-\section{bcbio count matrix}{
+\section{\code{BcbioCountsFile}}{
 
 
 \href{https://bcbio-nextgen.readthedocs.io/}{bcbio} count matrix and related sidecar files are natively supported.
