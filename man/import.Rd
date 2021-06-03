@@ -3,11 +3,23 @@
 \name{import}
 \alias{import}
 \alias{import,character-method}
+\alias{import,DelimFile-method}
 \title{Import}
 \usage{
 import(file, ...)
 
 \S4method{import}{character}(file, format = "auto", ...)
+
+\S4method{import}{DelimFile}(
+  file,
+  colnames,
+  comment,
+  metadata,
+  nMax,
+  quiet,
+  skip,
+  verbose = getOption("acid.verbose", default = FALSE)
+)
 }
 \arguments{
 \item{file}{\code{character(1)}.
@@ -20,19 +32,10 @@ An optional file format type, which can be used to override the file format
 inferred from \code{file}. Only recommended for file and URL paths that don't
 contain an extension.}
 
-\item{rownames}{\code{logical(1)}.
-Automatically assign row names, if \code{rowname} column is defined.
-Applies to file types that return \code{data.frame} only.}
-
 \item{colnames}{\code{logical(1)} or \code{character}.
 Automatically assign column names, using the first header row.
 Applies to file types that return \code{data.frame} only.
 Pass in a \code{character} vector to define the column names manually.}
-
-\item{sheet}{\code{character(1)} or \code{integer(1)}.
-\emph{Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.}
-Sheet to read. Either a string (the name of a sheet), or an integer (the
-position of the sheet). Defaults to the first sheet.}
 
 \item{comment}{\code{character(1)}.
 Comment character to detect at beginning of line, which will skip when
@@ -41,13 +44,31 @@ particularly
 useful when parsing lines.
 \emph{Applies to plain text delimited and source code lines only.}}
 
-\item{skip}{\code{integer(1)}.
-\emph{Applies to delimited file (CSV, TSV), Excel Workbook, or lines.}
-Number of lines to skip.}
+\item{metadata}{\code{list}.
+Metadata.}
 
 \item{nMax}{\code{integer(1)} or \code{Inf}.
 Maximum number of lines to parse.
 \emph{Applies to plain text delimited, Excel, and source code lines only.}}
+
+\item{quiet}{\code{logical(1)}.
+Perform command quietly, suppressing messages.}
+
+\item{skip}{\code{integer(1)}.
+\emph{Applies to delimited file (CSV, TSV), Excel Workbook, or lines.}
+Number of lines to skip.}
+
+\item{verbose}{\code{logical(1)}.
+Run the function with verbose output.}
+
+\item{rownames}{\code{logical(1)}.
+Automatically assign row names, if \code{rowname} column is defined.
+Applies to file types that return \code{data.frame} only.}
+
+\item{sheet}{\code{character(1)} or \code{integer(1)}.
+\emph{Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.}
+Sheet to read. Either a string (the name of a sheet), or an integer (the
+position of the sheet). Defaults to the first sheet.}
 
 \item{makeNames}{\code{function}.
 Apply syntactic naming function to (column) names.
