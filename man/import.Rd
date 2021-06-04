@@ -9,6 +9,7 @@
 \alias{import,RDataFile-method}
 \alias{import,JSONFile-method}
 \alias{import,MTXFile-method}
+\alias{import,YAMLFile-method}
 \title{Import}
 \usage{
 import(file, ...)
@@ -52,6 +53,12 @@ import(file, ...)
 )
 
 \S4method{import}{MTXFile}(
+  file,
+  metadata = getOption("acid.import.metadata", default = FALSE),
+  quiet = getOption("acid.quiet", default = FALSE)
+)
+
+\S4method{import}{YAMLFile}(
   file,
   metadata = getOption("acid.import.metadata", default = FALSE),
   quiet = getOption("acid.quiet", default = FALSE)
