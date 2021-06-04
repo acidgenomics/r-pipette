@@ -130,16 +130,22 @@
 #' @param nMax `integer(1)` or `Inf`.
 #'   Maximum number of lines to parse.
 #'   *Applies to plain text delimited, Excel, and source code lines only.*
+#' @param removeBlank `logical(1)`.
+#'   Remove blank lines.
+#'   *Applies to source code lines*.
 #' @param rownames `logical(1)`.
 #'   Automatically assign row names, if `rowname` column is defined.
 #'   Applies to file types that return `data.frame` only.
 #' @param sheet `character(1)` or `integer(1)`.
-#'   *Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.*
 #'   Sheet to read. Either a string (the name of a sheet), or an integer (the
 #'   position of the sheet). Defaults to the first sheet.
+#'   *Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.*
 #' @param skip `integer(1)`.
-#'   *Applies to delimited file (CSV, TSV), Excel Workbook, or lines.*
 #'   Number of lines to skip.
+#'   *Applies to delimited file (CSV, TSV), Excel Workbook, or lines.*
+#' @param stripWhitespace `logical(1)`.
+#'   Strip leading and/or trailing whitespace.
+#'   *Applies to source code lines*.
 #'
 #' @return Varies, depending on the file type (format):
 #'

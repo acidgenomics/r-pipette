@@ -145,8 +145,8 @@ useful when parsing lines.
 \emph{Applies to plain text delimited and source code lines only.}}
 
 \item{skip}{\code{integer(1)}.
-\emph{Applies to delimited file (CSV, TSV), Excel Workbook, or lines.}
-Number of lines to skip.}
+Number of lines to skip.
+\emph{Applies to delimited file (CSV, TSV), Excel Workbook, or lines.}}
 
 \item{nMax}{\code{integer(1)} or \code{Inf}.
 Maximum number of lines to parse.
@@ -172,10 +172,18 @@ Metadata.}
 \item{quiet}{\code{logical(1)}.
 Perform command quietly, suppressing messages.}
 
+\item{stripWhitespace}{\code{logical(1)}.
+Strip leading and/or trailing whitespace.
+\emph{Applies to source code lines}.}
+
+\item{removeBlank}{\code{logical(1)}.
+Remove blank lines.
+\emph{Applies to source code lines}.}
+
 \item{sheet}{\code{character(1)} or \code{integer(1)}.
-\emph{Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.}
 Sheet to read. Either a string (the name of a sheet), or an integer (the
-position of the sheet). Defaults to the first sheet.}
+position of the sheet). Defaults to the first sheet.
+\emph{Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.}}
 }
 \value{
 Varies, depending on the file type (format):
