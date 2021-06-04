@@ -330,7 +330,7 @@ NULL
         ))
     }
     object <- import(
-        file = file,
+        file = as.character(file),
         format = "lines",
         quiet = quiet
     )
@@ -480,7 +480,7 @@ NULL
             isFlag(quiet)
         )
         object <- import(
-            file = file,
+            file = as.character(file),
             format = "tsv",
             metadata = metadata,
             quiet = quiet
@@ -632,10 +632,9 @@ formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
                     "na" = naStrings,
                     "n_max" = nMax,
                     "progress" = FALSE,
-                    "trim_ws" = TRUE,
-                    "show_col_types" = TRUE,
                     "skip" = skip,
-                    "skip_empty_rows" = TRUE
+                    "skip_empty_rows" = TRUE,
+                    "trim_ws" = TRUE
                 )
             },
             "vroom" = {
@@ -803,7 +802,11 @@ formals(`import,ExcelFile`)[c("metadata", "quiet")] <-
                 basename(file), where
             ))
         }
-        lines <- .importLines(file = file, quiet = quiet)
+        lines <- import(
+            file = as.character(file),
+            format = "lines",
+            quiet = quiet
+        )
         lines <- strsplit(lines, split = "\t")
         object <- lapply(lines, tail, n = -2L)
         names(object) <- vapply(
@@ -824,7 +827,7 @@ formals(`import,GMTFile`)[["quiet"]] <-
 #'
 #' @note Updated 2021-06-04.
 #' @noRd
-`import,GMXFile` <-
+`import,GMXFile` <-  # nolint
     function(file, quiet) {
         assert(isFlag(quiet))
         if (!isTRUE(quiet)) {
@@ -838,7 +841,11 @@ formals(`import,GMTFile`)[["quiet"]] <-
                 basename(file), where
             ))
         }
-        lines <- .importLines(file = file, quiet = quiet)
+        lines <- import(
+            file = as.character(file),
+            format = "lines",
+            quiet = quiet
+        )
         object <- list(tail(lines, n = -2L))
         names(object) <- lines[[1L]]
         object
@@ -853,7 +860,7 @@ formals(`import,GMXFile`)[["quiet"]] <-
 #'
 #' @note Updated 2021-06-04.
 #' @noRd
-`import,GRPFile` <- `import,GMXFile`
+`import,GRPFile` <- `import,GMXFile`    # nolint
 
 
 
@@ -861,7 +868,7 @@ formals(`import,GMXFile`)[["quiet"]] <-
 #'
 #' @note Updated 2021-06-04.
 #' @noRd
-`import,LinesFile` <-
+`import,LinesFile` <-  # nolint
     function(
         file,
         comment = "",
@@ -1058,7 +1065,7 @@ formals(`import,JSONFile`)[c("metadata", "quiet")] <-
 #'
 #' @note Updated 2021-06-04.
 #' @noRd
-`import,MTXFile` <-
+`import,MTXFile` <-  # nolint
     function(file, metadata, quiet) {
         assert(
             isFlag(metadata),
@@ -1067,7 +1074,7 @@ formals(`import,JSONFile`)[c("metadata", "quiet")] <-
         rownames <- FALSE
         colnames <- FALSE
         whatPkg <- "Matrix"
-        whatFun = "readMM"
+        whatFun <- "readMM"
         tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
         if (!isTRUE(quiet)) {
             where <- ifelse(
@@ -1275,7 +1282,7 @@ formals(`import,RioFile`)[c("metadata", "quiet")] <-
             alert(sprintf(
                 paste(
                     "Importing {.file %s} at {.path %s}",
-                    "using {.pkg %s}::{.fun %s}.",
+                    "using {.pkg %s}::{.fun %s}."
                 ),
                 basename(file), where,
                 whatPkg, whatFun
@@ -1311,7 +1318,7 @@ formals(`import,RtracklayerFile`)[c("metadata", "quiet")] <-
 #'
 #' @note Updated 2021-06-04.
 #' @noRd
-`import,RDSFile` <-
+`import,RDSFile` <-  # nolint
     function(file, quiet) {
         assert(
             isString(file),
@@ -1347,7 +1354,7 @@ formals(`import,RDSFile`)[["quiet"]] <-
 #'
 #' @note Updated 2021-06-04.
 #' @noRd
-`import,RDataFile` <-
+`import,RDataFile` <-  # nolint
     function(file, quiet) {
         assert(
             isString(file),

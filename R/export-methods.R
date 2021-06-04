@@ -80,8 +80,6 @@ NULL
 
 
 
-## FIXME Switch to base engine here.
-
 ## Updated 2021-06-04.
 `export,character` <-  # nolint
     function(
@@ -103,13 +101,13 @@ NULL
             isString(engine),
             isFlag(quiet)
         )
-        whatPkg <- match.arg(arg = engine, choices = .delimEngines)
+        whatPkg <- match.arg(arg = engine, choices = .engines)
         requireNamespaces(whatPkg)
+        ## nocov start
         ## The vroom engine is currently buggy for writing lines, so fall back
         ## to readr (if installed), and then base R. This is fixed in vroom
         ## v1.4.1, which isn't on CRAN yet.
         ## https://github.com/r-lib/vroom/issues/291
-        ## nocov start
         if (
             identical(whatPkg, "vroom") &&
             packageVersion("vroom") < "1.4.1"
@@ -119,6 +117,11 @@ NULL
             } else {
                 whatPkg <- "base"
             }
+            message(sprintf(
+                "%s %s is buggy for writing lines. Switching to %s instead.",
+                "vroom", packageVersion("vroom"),
+                whatPkg
+            ))
         }
         ## nocov end
         if (isTRUE(append)) {
