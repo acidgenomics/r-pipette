@@ -224,6 +224,12 @@ NULL
 #' @noRd
 .extToFileClass <- function(ext) {
     ext <- tolower(ext)
+    if (identical(ext, "txt")) {
+        stop(paste(
+            "Automatic import of 'txt' extension is not supported.",
+            "Specify using 'format' argument (e.g. 'lines', 'table')."
+        ))
+    }
     dict <- list(
         "arff"         = "RioFile",
         "bash"         = "LinesFile",
@@ -277,7 +283,6 @@ NULL
         "syd"          = "RioFile",
         "table"        = "TableFile",
         "tsv"          = "TSVFile",
-        "txt"          = "TableFile",
         "wig"          = "RtracklayerFile",
         "xls"          = "ExcelFile",
         "xlsb"         = "ExcelFile",
@@ -514,10 +519,9 @@ formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
         skip = 0L,
         nMax = Inf,
         makeNames,
-        engine,
+        engine = getOption(x = "acid.import.engine", default = "data.table"),
         metadata,
-        quiet,
-        verbose
+        quiet
     ) {
         assert(
             isString(file),
@@ -529,12 +533,8 @@ formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
             is.function(makeNames),
             isString(engine),
             isFlag(metadata),
-            isFlag(quiet),
-            isFlag(verbose)
+            isFlag(quiet)
         )
-        if (isTRUE(quiet)) {
-            assert(isFALSE(verbose))
-        }
         ext <- switch(
             EXPR = class(file),
             "CSVFile" = "csv",
@@ -601,7 +601,7 @@ formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
                     "showProgress" = FALSE,
                     "stringsAsFactors" = FALSE,
                     "strip.white" = TRUE,
-                    "verbose" = verbose
+                    "verbose" = FALSE
                 )
                 if (isCharacter(colnames)) {
                     args[["header"]] <- FALSE
@@ -690,8 +690,6 @@ formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
         )
     }
 
-formals(`import,DelimFile`)[c("engine", "verbose")] <-
-    .formalsList[c("engine", "verbose")]
 formals(`import,DelimFile`)[c("makeNames", "metadata", "quiet")] <-
     formalsList[c("import.make.names", "import.metadata", "quiet")]
 
@@ -852,9 +850,6 @@ formals(`import,GMXFile`)[["quiet"]] <-
 
 
 
-## FIXME Need to support stripWhitespace (for all engines).
-## FIXME Need to support removeBlank.
-
 #' Import source code lines
 #'
 #' @note Updated 2021-06-04.
@@ -868,7 +863,7 @@ formals(`import,GMXFile`)[["quiet"]] <-
         stripWhitespace = FALSE,
         removeBlank = FALSE,
         metadata,
-        engine,
+        engine = getOption(x = "acid.import.engine", default = "base"),
         quiet
     ) {
         assert(
@@ -881,8 +876,11 @@ formals(`import,GMXFile`)[["quiet"]] <-
             isFlag(removeBlank),
             isFlag(quiet)
         )
-        if (isString(comment)) {
-            assert(is.infinite(nMax))
+        if (isString(comment) || isTRUE(removeBlank)) {
+            assert(
+                identical(nMax, eval(formals()[["nMax"]])),
+                identical(skip, eval(formals()[["skip"]]))
+            )
         }
         whatPkg <- match.arg(arg = engine, choices = .engines)
         requireNamespaces(whatPkg)
@@ -900,7 +898,8 @@ formals(`import,GMXFile`)[["quiet"]] <-
                 whatFun <- "fread"
                 args <- list(
                     "file" = tmpfile,
-                    "blank.lines.skip" = FALSE,
+                    "blank.lines.skip" = removeBlank,
+                    "fill" = FALSE,
                     "header" = FALSE,
                     "nrows" = nMax,
                     "sep" = "\n",
@@ -915,7 +914,7 @@ formals(`import,GMXFile`)[["quiet"]] <-
                     "n_max" = nMax,
                     "progress" = FALSE,
                     "skip" = skip,
-                    "skip_empty_rows" = FALSE
+                    "skip_empty_rows" = removeBlank
                 )
             },
             "vroom" = {
@@ -953,6 +952,22 @@ formals(`import,GMXFile`)[["quiet"]] <-
             object <- object[[1L]]
         }
         assert(is.character(object))
+        if (isTRUE(stripWhitespace)) {
+            object <- gsub(
+                pattern = "^[[:space:]]+",
+                replacement = "",
+                x = object
+            )
+            object <- gsub(
+                pattern = "[[:space:]]+$",
+                replacement = "",
+                x = object
+            )
+        }
+        if (isTRUE(removeBlank)) {
+            requireNamespaces("stringi")
+            object <- stringi::stri_remove_empty(object)
+        }
         if (isString(comment)) {
             keep <- !grepl(pattern = paste0("^", comment), x = object)
             object <- object[keep]
@@ -980,8 +995,6 @@ formals(`import,GMXFile`)[["quiet"]] <-
         )
     }
 
-formals(`import,LinesFile`)[["engine"]] <-
-    .formalsList[["engine"]]
 formals(`import,LinesFile`)[c("metadata", "quiet")] <-
     formalsList[c("import.metadata", "quiet")]
 
