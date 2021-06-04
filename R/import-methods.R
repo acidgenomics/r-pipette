@@ -1,7 +1,3 @@
-## FIXME Need to improve the documentation for specific classes...
-
-
-
 #' Import
 #'
 #' Read file by extension into R.
@@ -65,7 +61,7 @@
 #' sidecar files containing the corresponding row and column names of the sparse
 #' matrix.
 #'
-#' @section General feature format (GFF, GTF):
+#' @section General feature format (GFF, GTF; `RtracklayerFile`):
 #'
 #' The GFF (General Feature Format) format consists of one line per feature,
 #' each containing 9 columns of data, plus optional track definition lines. The
@@ -89,7 +85,8 @@
 #'
 #' @section `BcbioCountsFile`:
 #'
-#' [bcbio][] count matrix and related sidecar files are natively supported.
+#' [bcbio][] count matrix (e.g. generated from featureCounts) and related
+#' sidecar files are natively supported.
 #'
 #' - `COUNTS`: Counts table (e.g. RNA-seq aligned counts).
 #' - `COLNAMES`: Sidecar file containing column names.
@@ -103,7 +100,7 @@
 #' `DOC`, `DOCX`, `PDF`, `PPT`, `PPTX`.
 #'
 #' @name import
-#' @note Updated 2021-06-03.
+#' @note Updated 2021-06-04.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param format `character(1)`.
@@ -1421,23 +1418,6 @@ formals(`import,YAMLFile`)[c("metadata", "quiet")] <-
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## S4 method exports ===========================================================
 #' @rdname import
 #' @export
@@ -1453,22 +1433,6 @@ setMethod(
     f = "import",
     signature = signature("DelimFile"),
     definition = `import,DelimFile`
-)
-
-#' @rdname import
-#' @export
-setMethod(
-    f = "import",
-    signature = signature("RDSFile"),
-    definition = `import,RDSFile`
-)
-
-#' @rdname import
-#' @export
-setMethod(
-    f = "import",
-    signature = signature("RDataFile"),
-    definition = `import,RDataFile`
 )
 
 #' @rdname import
@@ -1547,8 +1511,16 @@ setMethod(
 #' @export
 setMethod(
     f = "import",
-    signature = signature("BcbioCountsFile"),
-    definition = `import,BcbioCountsFile`
+    signature = signature("RDSFile"),
+    definition = `import,RDSFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature("RDataFile"),
+    definition = `import,RDataFile`
 )
 
 #' @rdname import
@@ -1565,4 +1537,12 @@ setMethod(
     f = "import",
     signature = signature("RtracklayerFile"),
     definition = `import,RtracklayerFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature("BcbioCountsFile"),
+    definition = `import,BcbioCountsFile`
 )
