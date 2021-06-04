@@ -1009,40 +1009,50 @@ formals(`import,RDataFile`)[["quiet"]] <-
 
 
 
-#' Internal importer for a YAML file (`.yaml`, `.yml`)
+#' Import a YAML file (`.yaml`, `.yml`)
 #'
-#' @note Updated 2020-08-13.
+#' @note Updated 2021-06-04.
 #' @noRd
-.importYAML <- function(file, metadata, quiet) {
-    requireNamespaces("yaml")
-    assert(
-        isFlag(metadata),
-        isFlag(quiet)
-    )
-    tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
-    if (!isTRUE(quiet)) {
-        where <- ifelse(
-            test = isAURL(file),
-            yes = dirname(file),
-            no = realpath(dirname(file))
+`import,YAMLFile` <-  # nolint
+    function(file, metadata, quiet) {
+        requireNamespaces("yaml")
+        assert(
+            isFlag(metadata),
+            isFlag(quiet)
         )
-        alert(sprintf(
-            "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
-            basename(file), where,
-            "yaml", "yaml.load_file"
-        ))
-    }
-    object <- yaml::yaml.load_file(input = tmpfile)
-    if (isTRUE(metadata)) {
-        object <- .slotImportMetadata(
+        whatPkg <- "yaml"
+        whatFun <- "yaml.load_file"
+        tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
+        if (!isTRUE(quiet)) {
+            where <- ifelse(
+                test = isAURL(file),
+                yes = dirname(file),
+                no = realpath(dirname(file))
+            )
+            alert(sprintf(
+                paste(
+                    "Importing {.file %s} at {.path %s}",
+                    "using {.pkg %s}::{.fun %s}."
+                ),
+                basename(file), where,
+                whatPkg, whatFun
+            ))
+        }
+        object <- yaml::yaml.load_file(input = tmpfile)
+        .returnImport(
             object = object,
             file = file,
-            pkg = "yaml",
-            fun = "yaml.load_file"
+            rownames = FALSE,
+            colnames = FALSE,
+            metadata = metadata,
+            whatPkg = whatPkg,
+            whatFun = whatFun,
+            quiet = quiet
         )
     }
-    object
-}
+
+formals(`import,YAMLFile`)[c("metadata", "quiet")] <-
+    formalsList[c("import.metadata", "quiet")]
 
 
 
@@ -1107,7 +1117,7 @@ formals(`import,RDataFile`)[["quiet"]] <-
 
 #' Internal importer for a gene set file (`.grp`)
 #'
-#' @note Updated 2021-01-13
+#' @note Updated 2021-01-13.
 #' @noRd
 .importGRP <- .importGMX
 
@@ -1423,4 +1433,12 @@ setMethod(
     f = "import",
     signature = signature("MTXFile"),
     definition = `import,MTXFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature("YAMLFile"),
+    definition = `import,YAMLFile`
 )
