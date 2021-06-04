@@ -46,6 +46,7 @@ Suggests:
     readxl (>= 1.3.1),
     rio (>= 0.5.26),
     rtracklayer (>= 1.50),
+    stringi (>= 1.6.2),
     testthat,
     tools,
     vroom (>= 1.4.0),
