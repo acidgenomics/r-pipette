@@ -238,10 +238,12 @@ NULL
 .extToFileClass <- function(ext) {
     ext <- tolower(ext)
     if (identical(ext, "txt")) {
+        ## nocov start
         stop(paste(
             "Automatic import of 'txt' extension is not supported.",
             "Specify using 'format' argument (e.g. 'lines', 'table')."
         ))
+        ## nocov end
     }
     dict <- list(
         "arff"         = "RioFile",
@@ -372,7 +374,7 @@ NULL
     )
     ## Check that manual column names are correct.
     if (isCharacter(colnames)) {
-        assert(identical(colnames(object), colnames))
+        assert(identical(colnames(object), colnames))  # nocov
     }
     ## Data frame-specific operations.
     if (is.data.frame(object)) {
@@ -387,11 +389,13 @@ NULL
     }
     if (hasNames(object)) {
         if (isTRUE(any(duplicated(names(object))))) {
+            ## nocov start
             dupes <- sort(names(object)[duplicated(names(object))])
             alertWarning(sprintf(
                 "Duplicate names: {.var %s}.",
                 toString(dupes, width = 100L)
             ))
+            ## nocov end
         }
         ## Harden against any object classes that don't support names
         ## assignment, to prevent unwanted error on this step.
@@ -401,8 +405,8 @@ NULL
             },
             error = function(e) NULL
         )
-        if (!isTRUE(hasValidNames(object))) {
-            alertWarning("Invalid names detected.")
+        if (isFALSE(hasValidNames(object))) {
+            alertWarning("Invalid names detected.")  # nocov
         }
     }
     if (isTRUE(metadata)) {
@@ -557,7 +561,7 @@ formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
         )
         whatPkg <- match.arg(arg = engine, choices = .engines)
         if (identical(ext, "table")) {
-            whatPkg <- "base"
+            whatPkg <- "base"  # nocov
         }
         requireNamespaces(whatPkg)
         tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
@@ -582,8 +586,10 @@ formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
                     "strip.white" = TRUE
                 )
                 if (isCharacter(colnames)) {
+                    ## nocov start
                     args[["header"]] <- FALSE
                     args[["col.names"]] <- colnames
+                    ## nocov end
                 } else {
                     args[["header"]] <- colnames
                 }
@@ -617,8 +623,10 @@ formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
                     "verbose" = FALSE
                 )
                 if (isCharacter(colnames)) {
+                    ## nocov start
                     args[["header"]] <- FALSE
                     args[["col.names"]] <- colnames
+                    ## nocov end
                 } else {
                     args[["header"]] <- colnames
                 }
@@ -897,10 +905,12 @@ formals(`import,GMXFile`)[["quiet"]] <-
             isFlag(quiet)
         )
         if (isString(comment) || isTRUE(removeBlank)) {
+            ## nocov start
             assert(
                 identical(nMax, eval(formals()[["nMax"]])),
                 identical(skip, eval(formals()[["skip"]]))
             )
+            ## nocov end
         }
         whatPkg <- match.arg(arg = engine, choices = .engines)
         requireNamespaces(whatPkg)
