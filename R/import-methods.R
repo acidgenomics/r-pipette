@@ -298,6 +298,36 @@ NULL
 
 
 
+#' Internal importer for a sparse matrix sidecar file (e.g. `.rownames`)
+#'
+#' @note Updated 2021-06-04.
+#' @noRd
+.importMTXSidecar <- function(file, quiet) {
+    assert(
+        isString(file),
+        isFlag(quiet)
+    )
+    if (!isTRUE(quiet)) {
+        where <- ifelse(
+            test = isAURL(file),
+            yes = dirname(file),
+            no = realpath(dirname(file))
+        )
+        alert(sprintf(
+            "Importing sidecar {.file %s} at {.path %s}.",
+            basename(file), where
+        ))
+    }
+    object <- import(
+        file = file,
+        format = "lines",
+        quiet = quiet
+    )
+    object
+}
+
+
+
 #' Return standardized import object
 #'
 #' @note Updated 2021-06-04.
@@ -745,7 +775,7 @@ formals(`import,DelimFile`)[c("makeNames", "metadata", "quiet")] <-
     }
 
 ## FIXME Define "verbose" and "engine" in AcidBase formalsList.
-formals(`import,DelimFile`)[["engine"]] <-
+formals(`import,LinesFile`)[["engine"]] <-
     .formalsList[["engine"]]
 formals(`import,LinesFile`)[c("metadata", "quiet")] <-
     formalsList[c("import.metadata", "quiet")]
@@ -832,86 +862,83 @@ formals(`import,RDataFile`)[["quiet"]] <-
 
 
 
-## Sparse matrix ===============================================================
-#' Internal importer for a sparse matrix file (`.mtx`)
+#' Import a sparse matrix file (`.mtx`)
 #'
-#' @note Updated 2021-02-02.
+#' @note Updated 2021-06-04.
 #' @noRd
-.importMTX <- function(file, metadata, quiet) {
-    assert(
-        isFlag(metadata),
-        isFlag(quiet)
-    )
-    tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
-    if (!isTRUE(quiet)) {
-        where <- ifelse(
-            test = isAURL(file),
-            yes = dirname(file),
-            no = realpath(dirname(file))
+`import,MTXFile` <-
+    function(file, metadata, quiet) {
+        assert(
+            isFlag(metadata),
+            isFlag(quiet)
         )
-        alert(sprintf(
-            "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
-            basename(file), where,
-            "Matrix", "readMM"
-        ))
-    }
-    object <- readMM(file = tmpfile)
-    ## Add the rownames automatically using `.rownames` sidecar file.
-    rownamesFile <- paste(file, "rownames", sep = ".")
-    rownamesFile <- tryCatch(
-        expr = localOrRemoteFile(file = rownamesFile, quiet = quiet),
-        error = function(e) {
-            NULL  # nocov
+        tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
+        rownames <- FALSE
+        colnames <- FALSE
+        whatPkg <- "Matrix"
+        whatFun = "readMM"
+        if (!isTRUE(quiet)) {
+            where <- ifelse(
+                test = isAURL(file),
+                yes = dirname(file),
+                no = realpath(dirname(file))
+            )
+            alert(sprintf(
+                paste(
+                    "Importing {.file %s} at {.path %s}",
+                    "using {.pkg %s}::{.fun %s}."
+                ),
+                basename(file), where,
+                whatPkg, whatFun
+            ))
         }
-    )
-    if (!is.null(rownamesFile)) {
-        rownames(object) <-
-            .importMTXSidecar(file = rownamesFile, quiet = quiet)
-    }
-    ## Add the colnames automatically using `.colnames` sidecar file.
-    colnamesFile <- paste(file, "colnames", sep = ".")
-    colnamesFile <- tryCatch(
-        expr = localOrRemoteFile(file = colnamesFile, quiet = quiet),
-        error = function(e) {
-            NULL  # nocov
+        object <- readMM(file = tmpfile)
+        ## Add the rownames automatically using `.rownames` sidecar file.
+        rownamesFile <- tryCatch(
+            expr = localOrRemoteFile(
+                file = paste(file, "rownames", sep = "."),
+                quiet = quiet
+            ),
+            error = function(e) {
+                NULL  # nocov
+            }
+        )
+        if (!is.null(rownamesFile)) {
+            rownames <- TRUE
+            rownames(object) <-
+                .importMTXSidecar(file = rownamesFile, quiet = quiet)
         }
-    )
-    if (!is.null(colnamesFile)) {
-        colnames(object) <-
-            .importMTXSidecar(file = colnamesFile, quiet = quiet)
-    }
-    if (isTRUE(metadata)) {
-        object <- .slotImportMetadata(
+        ## Add the colnames automatically using `.colnames` sidecar file.
+        colnamesFile <-
+        colnamesFile <- tryCatch(
+            expr = localOrRemoteFile(
+                file = paste(file, "colnames", sep = "."),
+                quiet = quiet
+            ),
+            error = function(e) {
+                NULL  # nocov
+            }
+        )
+        if (!is.null(colnamesFile)) {
+            colnames <- TRUE
+            colnames(object) <-
+                .importMTXSidecar(file = colnamesFile, quiet = quiet)
+        }
+        .returnImport(
             object = object,
             file = file,
-            pkg = "Matrix",
-            fun = "readMM"
+            rownames = rownames,
+            colnames = colnames,
+            metadata = metadata,
+            whatPkg = whatPkg,
+            whatFun = whatFun,
+            quiet = quiet
         )
     }
-    object
-}
 
+formals(`import,MTXFile`)[c("metadata", "quiet")] <-
+    formalsList[c("import.metadata", "quiet")]
 
-
-#' Internal importer for a sparse matrix sidecar file (e.g. `.rownames`)
-#'
-#' @note Updated 2020-08-13
-#' @noRd
-.importMTXSidecar <- function(file, quiet) {
-    assert(isFlag(quiet))
-    if (!isTRUE(quiet)) {
-        where <- ifelse(
-            test = isAURL(file),
-            yes = dirname(file),
-            no = realpath(dirname(file))
-        )
-        alert(sprintf(
-            "Importing sidecar {.file %s} at {.path %s}.",
-            basename(file), where
-        ))
-    }
-    .importLines(file = file, quiet = quiet)
-}
 
 
 
@@ -1351,4 +1378,12 @@ setMethod(
     f = "import",
     signature = signature("RDataFile"),
     definition = `import,RDataFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature("MTXFile"),
+    definition = `import,MTXFile`
 )
