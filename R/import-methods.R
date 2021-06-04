@@ -1,6 +1,4 @@
 ## FIXME Need to improve the documentation for specific classes...
-## FIXME For lines, need to allow option to strip whitespace...
-##       Consider using a stripWhitespace argument?
 
 
 
@@ -299,7 +297,10 @@ NULL
 
 
 
-## Updated 2021-06-04.
+#' Return standardized import object
+#'
+#' @note Updated 2021-06-04.
+#' @noRd
 .returnImport <- function(
     object,
     file,
@@ -411,16 +412,6 @@ NULL
         file <- new(Class = class, file)
         import(file = file, ...)
     }
-
-
-
-#' @rdname import
-#' @export
-setMethod(
-    f = "import",
-    signature = signature("character"),
-    definition = `import,character`
-)
 
 
 
@@ -553,8 +544,6 @@ setMethod(
                 "n_max" = nMax,
                 "progress" = FALSE,
                 "trim_ws" = TRUE,
-                ## Print column specification whenever there is guessing.
-                ## https://github.com/tidyverse/readr/issues/522
                 "show_col_types" = TRUE,
                 "skip" = skip,
                 "skip_empty_rows" = TRUE
@@ -621,16 +610,6 @@ formals(`import,DelimFile`)[c("engine", "verbose")] <-
     .formalsList[c("engine", "verbose")]
 formals(`import,DelimFile`)[c("makeNames", "metadata", "quiet")] <-
     formalsList[c("import.make.names", "import.metadata", "quiet")]
-
-
-
-#' @rdname import
-#' @export
-setMethod(
-    f = "import",
-    signature = signature("DelimFile"),
-    definition = `import,DelimFile`
-)
 
 
 
@@ -771,70 +750,83 @@ formals(`import,LinesFile`)[c("metadata", "quiet")] <-
 
 
 
-
-#' @rdname import
-#' @export
-setMethod(
-    f = "import",
-    signature = signature("LinesFile"),
-    definition = `import,LinesFile`
-)
-
-
-
-## R data ======================================================================
-#' Internal importer for an R data serialized file (`.rds`)
+#' Import an R data serialized file (`.rds`)
 #'
-#' @note Updated 2020-08-13.
+#' @note Updated 2021-06-04.
 #' @noRd
-.importRDS <- function(file, quiet) {
-    assert(isFlag(quiet))
-    tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
-    if (!isTRUE(quiet)) {
-        where <- ifelse(
-            test = isAURL(file),
-            yes = dirname(file),
-            no = realpath(dirname(file))
+`import,RDSFile` <-
+    function(file, quiet) {
+        assert(
+            isString(file),
+            isFlag(quiet)
         )
-        alert(sprintf(
-            "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
-            basename(file), where,
-            "base", "readRDS"
-        ))
+        tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
+        if (!isTRUE(quiet)) {
+            where <- ifelse(
+                test = isAURL(file),
+                yes = dirname(file),
+                no = realpath(dirname(file))
+            )
+            alert(sprintf(
+                paste(
+                    "Importing {.file %s} at {.path %s}",
+                    "using {.pkg %s}::{.fun %s}."
+                ),
+                basename(file), where,
+                "base", "readRDS"
+            ))
+        }
+        object <- readRDS(file = tmpfile)
+        validObject(object)
+        object
     }
-    object <- readRDS(file = tmpfile)
-    object
-}
+
+formals(`import,RDSFile`)[["quiet"]] <-
+    formalsList[["quiet"]]
 
 
 
-#' Internal importer for an R data file containing multiple objects (`.rda`)
+#' Import an R data file containing multiple objects (`.rda`)
 #'
-#' @note Updated 2021-06-03.
+#' @note Updated 2021-06-04.
 #' @noRd
-.importRData <- function(file, quiet) {
-    assert(isFlag(quiet))
-    tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
-    if (!isTRUE(quiet)) {
-        where <- ifelse(
-            test = isAURL(file),
-            yes = dirname(file),
-            no = realpath(dirname(file))
+`import,RDataFile` <-
+    function(file, quiet) {
+        assert(
+            isString(file),
+            isFlag(quiet)
         )
-        alert(sprintf(
-            "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
-            basename(file), where,
-            "base", "load"
-        ))
+        tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
+        if (!isTRUE(quiet)) {
+            where <- ifelse(
+                test = isAURL(file),
+                yes = dirname(file),
+                no = realpath(dirname(file))
+            )
+            alert(sprintf(
+                paste(
+                    "Importing {.file %s} at {.path %s}",
+                    "using {.pkg %s}::{.fun %s}."
+                ),
+                basename(file), where,
+                "base", "load"
+            ))
+        }
+        safe <- new.env()
+        object <- load(file = tmpfile, envir = safe)
+        if (!isTRUE(hasLength(safe, n = 1L))) {
+            stop(sprintf(
+                "'%s' does not contain a single object.",
+                basename(file)
+            ))
+        }
+        object <- get(object, envir = safe, inherits = FALSE)
+        validObject(object)
+        object
     }
-    safe <- new.env()
-    object <- load(file = tmpfile, envir = safe)
-    if (!isTRUE(hasLength(safe, n = 1L))) {
-        stop(sprintf("'%s' does not contain a single object.", basename(file)))
-    }
-    object <- get(object, envir = safe, inherits = FALSE)
-    object
-}
+
+formals(`import,RDataFile`)[["quiet"]] <-
+    formalsList[["quiet"]]
 
 
 
@@ -1315,3 +1307,45 @@ setMethod(
     }
     object
 }
+
+
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature("character"),
+    definition = `import,character`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature("DelimFile"),
+    definition = `import,DelimFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature("LinesFile"),
+    definition = `import,LinesFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature("RDSFile"),
+    definition = `import,RDSFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature("RDataFile"),
+    definition = `import,RDataFile`
+)

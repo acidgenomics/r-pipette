@@ -5,6 +5,8 @@
 \alias{import,character-method}
 \alias{import,DelimFile-method}
 \alias{import,LinesFile-method}
+\alias{import,RDSFile-method}
+\alias{import,RDataFile-method}
 \title{Import}
 \usage{
 import(file, ...)
@@ -36,6 +38,10 @@ import(file, ...)
   engine,
   quiet = getOption("acid.quiet", default = FALSE)
 )
+
+\S4method{import}{RDSFile}(file, quiet = getOption("acid.quiet", default = FALSE))
+
+\S4method{import}{RDataFile}(file, quiet = getOption("acid.quiet", default = FALSE))
 }
 \arguments{
 \item{file}{\code{character(1)}.
