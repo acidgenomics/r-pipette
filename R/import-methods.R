@@ -690,7 +690,6 @@ formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
         )
     }
 
-## FIXME Define "verbose" and "engine" in AcidBase formalsList.
 formals(`import,DelimFile`)[c("engine", "verbose")] <-
     .formalsList[c("engine", "verbose")]
 formals(`import,DelimFile`)[c("makeNames", "metadata", "quiet")] <-
@@ -888,7 +887,6 @@ formals(`import,GMXFile`)[["quiet"]] <-
         whatPkg <- match.arg(arg = engine, choices = .engines)
         requireNamespaces(whatPkg)
         tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
-        ## FIXME Need to support stripWhitespace, and removeBlank.
         switch(
             EXPR = whatPkg,
             "base" = {
@@ -982,7 +980,6 @@ formals(`import,GMXFile`)[["quiet"]] <-
         )
     }
 
-## FIXME Define "verbose" and "engine" in AcidBase formalsList.
 formals(`import,LinesFile`)[["engine"]] <-
     .formalsList[["engine"]]
 formals(`import,LinesFile`)[c("metadata", "quiet")] <-
@@ -1116,8 +1113,6 @@ formals(`import,MTXFile`)[c("metadata", "quiet")] <-
 
 
 
-## FIXME On Corey's spreadsheet this is erroring...infinite recursion.
-
 #' Import a GraphPad Prism file (`.pzfx`)
 #'
 #' @note Updated 2021-06-04.
@@ -1160,6 +1155,7 @@ formals(`import,MTXFile`)[c("metadata", "quiet")] <-
             path = tmpfile,
             table = sheet
         )
+        object <- removeNA(object)
         .returnImport(
             object = object,
             file = file,
