@@ -10,6 +10,7 @@
 \alias{import,JSONFile-method}
 \alias{import,MTXFile-method}
 \alias{import,YAMLFile-method}
+\alias{import,BcbioCountsFile-method}
 \alias{import,RioFile-method}
 \alias{import,RtracklayerFile-method}
 \title{Import}
@@ -61,6 +62,12 @@ import(file, ...)
 )
 
 \S4method{import}{YAMLFile}(
+  file,
+  metadata = getOption("acid.import.metadata", default = FALSE),
+  quiet = getOption("acid.quiet", default = FALSE)
+)
+
+\S4method{import}{BcbioCountsFile}(
   file,
   metadata = getOption("acid.import.metadata", default = FALSE),
   quiet = getOption("acid.quiet", default = FALSE)
