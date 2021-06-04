@@ -156,6 +156,16 @@ Maximum number of lines to parse.
 Apply syntactic naming function to (column) names.
 \emph{Does not apply to import of R data files.}}
 
+\item{engine}{\code{character(1)}.
+Engine (package) to use for import.
+Currently supported:
+\itemize{
+\item base
+\item data.table
+\item readr
+\item vroom
+}}
+
 \item{metadata}{\code{list}.
 Metadata.}
 
