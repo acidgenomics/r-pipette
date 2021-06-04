@@ -1357,14 +1357,14 @@ formals(`import,RtracklayerFile`)[c("metadata", "quiet")] <-
             ))
         }
         object <- readRDS(file = tmpfile)
-        ## > tryCatch(
-        ## >     expr = {
-        ## >         validObject(object)
-        ## >     },
-        ## >     error = function(e) {
-        ## >         message(e)
-        ## >     }
-        ## > )
+        tryCatch(
+            expr = {
+                validObject(object)
+            },
+            error = function(e) {
+                conditionMessage(e)
+            }
+        )
         object
     }
 
@@ -1408,14 +1408,14 @@ formals(`import,RDSFile`)[["quiet"]] <-
             ))
         }
         object <- get(object, envir = safe, inherits = FALSE)
-        ## > tryCatch(
-        ## >     expr = {
-        ## >         validObject(object)
-        ## >     },
-        ## >     error = function(e) {
-        ## >         message(e)
-        ## >     }
-        ## > )
+        tryCatch(
+            expr = {
+                validObject(object)
+            },
+            error = function(e) {
+                conditionMessage(e)
+            }
+        )
         object
     }
 
