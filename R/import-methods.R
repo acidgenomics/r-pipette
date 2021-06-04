@@ -299,32 +299,78 @@ NULL
 
 
 
-#' Slot data provenance metadata.
-#'
-#' @note Updated 2021-03-16.
-#' @noRd
-#'
-#' @details
-#' Previously, "which" was defined as "pipette", until v0.3.8.
-.slotImportMetadata <- function(object, file, pkg, fun) {
+## Updated 2021-06-04.
+.returnImport <- function(
+    object,
+    file,
+    rownames,
+    colnames,
+    metadata,
+    whatPkg,
+    whatFun,
+    quiet
+) {
+    validObject(object)
+    file <- as.character(file)
     assert(
         isString(file),
-        isString(pkg),
-        isString(fun)
+        isFlag(rownames),
+        isFlag(colnames) || isCharacter(colnames),
+        isFlag(metadata),
+        isString(whatPkg, nullOK = TRUE),
+        isString(whatFun, nullOK = TRUE),
+        isFlag(quiet)
     )
-    metadata2(object, which = "import") <-
-        list(
-            "date" = Sys.Date(),
-            "file" = ifelse(
-                test = isTRUE(isAFile(file)),
-                yes = realpath(file),
-                no = file
-            ),
-            "importerName" = paste0(pkg, "::", fun),
-            "importerVersion" = packageVersion(pkg),
-            "packageName" = .pkgName,
-            "packageVersion" = .pkgVersion
+    ## Check that manual column names are correct.
+    if (isCharacter(colnames)) {
+        assert(identical(colnames(object), colnames))
+    }
+    ## Data frame-specific operations.
+    if (is.data.frame(object)) {
+        ## Set row names automatically.
+        if (isTRUE(rownames) && isSubset("rowname", colnames(object))) {
+            if (!isTRUE(quiet)) {
+                alertInfo("Setting row names from {.var rowname} column.")
+            }
+            rownames(object) <- object[["rowname"]]
+            object[["rowname"]] <- NULL
+        }
+    }
+    if (hasNames(object)) {
+        if (isTRUE(any(duplicated(names(object))))) {
+            dupes <- sort(names(object)[duplicated(names(object))])
+            alertWarning(sprintf(
+                "Duplicate names: {.var %s}.",
+                toString(dupes, width = 100L)
+            ))
+        }
+        ## Harden against any object classes that don't support names
+        ## assignment, to prevent unwanted error on this step.
+        tryCatch(
+            expr = {
+                names(object) <- makeNames(names(object))
+            },
+            error = function(e) NULL
         )
+        if (!isTRUE(hasValidNames(object))) {
+            alertWarning("Invalid names detected.")
+        }
+    }
+    if (isTRUE(metadata)) {
+        metadata2(object, which = "import") <-
+            list(
+                "date" = Sys.Date(),
+                "file" = ifelse(
+                    test = isTRUE(isAFile(file)),
+                    yes = realpath(file),
+                    no = file
+                ),
+                "importerName" = paste0(whatPkg, "::", whatFun),
+                "importerVersion" = packageVersion(whatPkg),
+                "packageName" = .pkgName,
+                "packageVersion" = .pkgVersion
+            )
+    }
     object
 }
 
@@ -332,14 +378,14 @@ NULL
 
 #' Primary `import` method, that hands off to classed file-extension variants
 #'
-#' @note Updated 2021-06-03.
-#' @noRd
-#'
 #' @details
 #' We're supporting remote files, so don't check using `isAFile()` here.
 #'
 #' Allow Google Sheets import using rio, by matching the URL.
 #' Otherwise, coerce the file extension to uppercase, for easy matching.
+#'
+#' @note Updated 2021-06-03.
+#' @noRd
 `import,character` <-
     function(file, format = "auto", ...) {
         assert(
@@ -378,12 +424,7 @@ setMethod(
 
 
 
-## Basic =======================================================================
-## FIXME Need to class this, so we can drop the `ext` variable requirement.
-## FIXME Need to update the formals here...
-## FIXME Need to support rownames here.
-
-#' Internal importer for a delimited file (e.g. `.csv`, `.tsv`).
+#' Import a delimited file (e.g. `.csv`, `.tsv`).
 #'
 #' @details
 #' Calls `data.table::fread()` internally by default.
@@ -399,19 +440,33 @@ setMethod(
     comment = "",
     skip = 0L,
     nMax = Inf,
-    makeNames,  # FIXME
-    metadata,  # FIXME
+    makeNames,
+    metadata,
     engine = getOption(
         x = "acid.import.engine",
         default = "data.table"
     ),
-    ## FIXME quiet and verbose are kind of redundant, no?
-    quiet,
+    quiet,  # FIXME Is this used?
     verbose = getOption(
         x = "acid.verbose",
         default = FALSE
     )
 ) {
+    assert(
+        isFlag(rownames),
+        isFlag(colnames) || isCharacter(colnames),
+        is.character(comment) && length(comment) <= 1L,
+        isInt(skip), isNonNegative(skip),
+        isPositive(nMax),
+        is.function(makeNames),
+        isFlag(metadata),
+        isString(engine),
+        isFlag(quiet),
+        isFlag(verbose)
+    )
+    if (isTRUE(quiet)) {
+        assert(isFALSE(verbose))
+    }
     ext <- switch(
         EXPR = class(file),
         "CSVFile" = "csv",
@@ -419,27 +474,11 @@ setMethod(
         "TableFile" = "table",
         stop("Unsupported delim class.")
     )
-    assert(
-        isFlag(colnames) || isCharacter(colnames),
-        is.character(comment) && length(comment) <= 1L,
-        isString(ext),
-        isFlag(metadata),
-        isPositive(nMax),
-        isFlag(quiet),
-        isInt(skip), isNonNegative(skip),
-        isFlag(verbose)
-    )
-    ## FIXME Simplify this? Redundant?
-    if (isTRUE(quiet)) {
-        assert(isFALSE(verbose))
-    }
-    ext <- match.arg(ext, choices = .extGroup[["delim"]])
     whatPkg <- match.arg(arg = engine, choices = .delimEngines)
     if (identical(ext, "table")) {
         whatPkg <- "base"
     }
     requireNamespaces(whatPkg)
-    ## This step will automatically decompress on the fly, if necessary.
     tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
     switch(
         EXPR = whatPkg,
@@ -570,19 +609,30 @@ setMethod(
             stringsAsFactors = FALSE
         )
     }
-    ## FIXME We need to standardize the return here...
-    ## FIXME Need to return metadata and other stuff that used to be defined
-    ## in our main import function. Need to rethink here?
-    if (isTRUE(metadata)) {
-        object <- .slotImportMetadata(
-            object = object,
-            file = file,
-            pkg = whatPkg,
-            fun = whatFun
-        )
-    }
-    object
+    .returnImport(
+        object = object,
+        file = file,
+        rownames = rownames,
+        colnames = colnames,
+        metadata = metadata,
+        whatPkg = whatPkg,
+        whatFun = whatFun,
+        quiet = quiet
+    )
 }
+
+## FIXME Need to add verbose to formalsList and define here.
+
+## FIXME Need to add this to formalsList global:
+## > getOption(
+## >     x = "acid.verbose",
+## >     default = FALSE
+## > )
+
+## FIXME Default the import metadata to TRUE.
+
+formals(`import,DelimFile`)[c("makeNames", "metadata", "quiet")] <-
+    formalsList[c("import.make.names", "import.metadata", "quiet")]
 
 
 
@@ -596,11 +646,8 @@ setMethod(
 
 
 
-
-
-
-
 ## FIXME Need to ensure that whitespace isn't stripped by default.
+##       Is this only happening with data.table importer?
 ## FIXME Allow the user to enable this, if they want...
 
 #' Internal importer for (source code) lines
