@@ -1,3 +1,22 @@
+## pipette 0.6.0 (2021-06-04)
+
+### Major changes
+
+- `import` now uses S4 methods based on the `file` argument, which can be
+  manually overridden with the `format` argument (e.g. "csv" for a CSV file).
+- `import` and `export` now support `engine` argument for methods dispatching
+  on `character` and `data.frame`. Currently "base" (base R), "data.table",
+  "readr", and "vroom" are supported.
+- Source code lines now default to using base R for import/export by default.
+  Previously, this defaulted to data.table, which is now only used as the
+  default for import of delimited files.
+
+### Minor changes
+
+- `import`: Added support for `removeBlank` and `stripWhitespace` for import
+  of source code lines (`LinesFile`).
+- `import`: Improved import handling of source code lines using data.table.
+
 ## pipette 0.5.18 (2021-05-18)
 
 ### Minor changes
