@@ -674,7 +674,6 @@ formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
                 stringsAsFactors = FALSE
             )
         }
-        ## FIXME Check that colnames input matches, if character.
         .returnImport(
             object = object,
             file = file,
@@ -692,6 +691,87 @@ formals(`import,DelimFile`)[c("engine", "verbose")] <-
     .formalsList[c("engine", "verbose")]
 formals(`import,DelimFile`)[c("makeNames", "metadata", "quiet")] <-
     formalsList[c("import.make.names", "import.metadata", "quiet")]
+
+
+
+#' Import a Microsoft Excel worksheet (`.xlsx`)
+#'
+#' @note Updated 2021-06-04.
+#' @noRd
+`import,ExcelFile` <-  # nolint
+    function(
+        file,
+        sheet = 1L,
+        rownames = TRUE,
+        colnames = TRUE,
+        skip = 0L,
+        nMax = Inf,
+        metadata,
+        quiet
+    ) {
+        requireNamespaces("readxl")
+        assert(
+            isString(file),
+            isScalar(sheet),
+            isFlag(rownames),
+            isFlag(colnames) || isCharacter(colnames),
+            isInt(skip), isNonNegative(skip),
+            isPositive(nMax),
+            isFlag(metadata),
+            isFlag(quiet)
+        )
+        whatPkg <- "readxl"
+        whatFun <- "read_excel"
+        tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
+        if (!isTRUE(quiet)) {
+            where <- ifelse(
+                test = isAURL(file),
+                yes = dirname(file),
+                no = realpath(dirname(file))
+            )
+            alert(sprintf(
+                paste(
+                    "Importing {.file %s} at {.path %s}",
+                    "using {.pkg %s}::{.fun %s}."
+                ),
+                basename(file), where,
+                whatPkg, whatFun
+            ))
+        }
+        warn <- getOption("warn")
+        options(warn = 2L)
+        object <- readxl::read_excel(
+            path = tmpfile,
+            col_names = colnames,
+            n_max = nMax,
+            na = naStrings,
+            progress = FALSE,
+            sheet = sheet,
+            skip = skip,
+            trim_ws = TRUE,
+            .name_repair = make.names
+        )
+        options(warn = warn)
+        object <- as.data.frame(
+            x = object,
+            make.names = FALSE,
+            stringsAsFactors = FALSE
+        )
+        object <- removeNA(object)
+        .returnImport(
+            object = object,
+            file = file,
+            rownames = rownames,
+            colnames = colnames,
+            metadata = metadata,
+            whatPkg = whatPkg,
+            whatFun = whatFun,
+            quiet = quiet
+        )
+    }
+
+formals(`import,ExcelFile`)[c("metadata", "quiet")] <-
+    formalsList[c("import.metadata", "quiet")]
 
 
 
@@ -1217,6 +1297,17 @@ formals(`import,YAMLFile`)[c("metadata", "quiet")] <-
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 ## GSEA ========================================================================
 #' Internal importer for a gene matrix transposed file (`.gmt`)
 #'
@@ -1284,80 +1375,7 @@ formals(`import,YAMLFile`)[c("metadata", "quiet")] <-
 
 
 
-## Microsoft Excel =============================================================
-## FIXME This should always import colnames, no?
 
-## Note that `readxl::read_excel()` doesn't currently support automatic blank
-## lines removal, so ensure that is fixed downstream.
-
-#' Internal importer for a Microsoft Excel worksheet (`.xlsx`)
-#'
-#' @note Updated 2021-01-13.
-#' @noRd
-.importExcel <- function(
-    file,
-    rownames = TRUE,  # FIXME Need to add back support for this.
-    colnames = TRUE,
-    metadata,
-    nMax,
-    quiet,
-    sheet = 1L,
-    skip
-) {
-    requireNamespaces("readxl")
-    assert(
-        isFlag(colnames) || isCharacter(colnames),
-        isFlag(metadata),
-        isPositive(nMax),
-        isFlag(quiet),
-        isScalar(sheet),
-        isInt(skip), isNonNegative(skip)
-    )
-    tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
-    if (!isTRUE(quiet)) {
-        where <- ifelse(
-            test = isAURL(file),
-            yes = dirname(file),
-            no = realpath(dirname(file))
-        )
-        alert(sprintf(
-            "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
-            basename(file), where,
-            "readxl", "read_excel"
-        ))
-    }
-    ## Note that `tryCatch()` or `withCallingHandlers()` doesn't work here.
-    ## http://adv-r.had.co.nz/Exceptions-Debugging.html
-    warn <- getOption("warn")
-    options(warn = 2L)
-    object <- readxl::read_excel(
-        path = tmpfile,
-        col_names = colnames,
-        n_max = nMax,
-        na = naStrings,
-        progress = FALSE,
-        sheet = sheet,
-        skip = skip,
-        trim_ws = TRUE,
-        .name_repair = make.names
-    )
-    options(warn = warn)
-    ## Always return as data.frame instead of tibble at this step.
-    object <- as.data.frame(
-        x = object,
-        make.names = FALSE,
-        stringsAsFactors = FALSE
-    )
-    if (isTRUE(metadata)) {
-        object <- .slotImportMetadata(
-            object = object,
-            file = file,
-            pkg = "readxl",
-            fun = "read_excel"
-        )
-    }
-    object
-}
 
 
 
@@ -1438,6 +1456,14 @@ setMethod(
     f = "import",
     signature = signature("DelimFile"),
     definition = `import,DelimFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature("ExcelFile"),
+    definition = `import,ExcelFile`
 )
 
 #' @rdname import
