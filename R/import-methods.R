@@ -339,9 +339,9 @@ NULL
     file,
     rownames,
     colnames,
-    metadata,
-    whatPkg,
-    whatFun,
+    metadata = FALSE,
+    whatPkg = NULL,
+    whatFun = NULL,
     quiet
 ) {
     validObject(object)
@@ -419,7 +419,7 @@ NULL
 #' Allow Google Sheets import using rio, by matching the URL.
 #' Otherwise, coerce the file extension to uppercase, for easy matching.
 #'
-#' @note Updated 2021-06-03.
+#' @note Updated 2021-06-04.
 #' @noRd
 `import,character` <-  # nolint
     function(file, format = "auto", ...) {
@@ -428,7 +428,7 @@ NULL
             isString(format)
         )
         format <- tolower(format)
-        if (identical(format, "auto") || identical(format, "none")) {
+        if (isSubset(format, c("auto", "none"))) {
             ext <- str_match(basename(file), extPattern)[1L, 2L]
             if (is.na(ext)) {
                 stop(paste(
@@ -442,6 +442,13 @@ NULL
             ext <- format
         }
         class <- .extToFileClass(ext)
+        assert(
+            hasMethod(
+                f = "import",
+                signature = class,
+                where = asNamespace(.pkgName)
+            )
+        )
         file <- new(Class = class, file)
         import(file = file, ...)
     }
@@ -775,6 +782,80 @@ formals(`import,ExcelFile`)[c("metadata", "quiet")] <-
 
 
 
+#' Import a gene matrix transposed file (`.gmt`)
+#'
+#' @note Updated 2021-06-04.
+#' @noRd
+#'
+#' @seealso `fgsea::gmtPathways()`.
+`import,GMTFile` <-  # nolint
+    function(file, quiet) {
+        assert(isFlag(quiet))
+        if (!isTRUE(quiet)) {
+            where <- ifelse(
+                test = isAURL(file),
+                yes = dirname(file),
+                no = realpath(dirname(file))
+            )
+            alert(sprintf(
+                "Importing {.file %s} at {.path %s}.",
+                basename(file), where
+            ))
+        }
+        lines <- .importLines(file = file, quiet = quiet)
+        lines <- strsplit(lines, split = "\t")
+        object <- lapply(lines, tail, n = -2L)
+        names(object) <- vapply(
+            X = lines,
+            FUN = head,
+            FUN.VALUE = character(1L),
+            n = 1L
+        )
+        object
+    }
+
+formals(`import,GMTFile`)[["quiet"]] <-
+    formalsList[["quiet"]]
+
+
+
+#' Import a gene matrix file (`.gmx`)
+#'
+#' @note Updated 2021-06-04.
+#' @noRd
+`import,GMXFile` <-
+    function(file, quiet) {
+        assert(isFlag(quiet))
+        if (!isTRUE(quiet)) {
+            where <- ifelse(
+                test = isAURL(file),
+                yes = dirname(file),
+                no = realpath(dirname(file))
+            )
+            alert(sprintf(
+                "Importing {.file %s} at {.path %s}.",
+                basename(file), where
+            ))
+        }
+        lines <- .importLines(file = file, quiet = quiet)
+        object <- list(tail(lines, n = -2L))
+        names(object) <- lines[[1L]]
+        object
+    }
+
+formals(`import,GMXFile`)[["quiet"]] <-
+    formalsList[["quiet"]]
+
+
+
+#' Import a gene set file (`.grp`)
+#'
+#' @note Updated 2021-06-04.
+#' @noRd
+`import,GRPFile` <- `import,GMXFile`
+
+
+
 ## FIXME Need to support stripWhitespace (for all engines).
 ## FIXME Need to support removeBlank.
 
@@ -1038,6 +1119,67 @@ formals(`import,MTXFile`)[c("metadata", "quiet")] <-
 
 
 
+## FIXME On Corey's spreadsheet this is erroring...infinite recursion.
+
+#' Import a GraphPad Prism file (`.pzfx`)
+#'
+#' @note Updated 2021-06-04.
+#' @noRd
+#'
+#' @note This function doesn't support optional column names.
+`import,PZFXFile` <-  # nolint
+    function(
+        file,
+        sheet = 1L,
+        metadata,
+        quiet
+    ) {
+        requireNamespaces("pzfx")
+        assert(
+            isString(file),
+            isScalar(sheet),
+            isFlag(metadata),
+            isFlag(quiet)
+        )
+        whatPkg <- "pzfx"
+        whatFun <- "read_pzfx"
+        tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
+        if (!isTRUE(quiet)) {
+            where <- ifelse(
+                test = isAURL(file),
+                yes = dirname(file),
+                no = realpath(dirname(file))
+            )
+            alert(sprintf(
+                paste(
+                    "Importing {.file %s} at {.path %s}",
+                    "using {.pkg %s}::{.fun %s}."
+                ),
+                basename(file), where,
+                whatPkg, whatFun
+            ))
+        }
+        object <- pzfx::read_pzfx(
+            path = tmpfile,
+            table = sheet
+        )
+        .returnImport(
+            object = object,
+            file = file,
+            rownames = FALSE,
+            colnames = TRUE,
+            metadata = metadata,
+            whatPkg = whatPkg,
+            whatFun = whatFun,
+            quiet = quiet
+        )
+    }
+
+formals(`import,PZFXFile`)[c("metadata", "quiet")] <-
+    formalsList[c("import.metadata", "quiet")]
+
+
+
 #' Import a file using `rio::import`
 #'
 #' @note Updated 2021-06-04.
@@ -1232,24 +1374,6 @@ formals(`import,RDataFile`)[["quiet"]] <-
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #' Import a YAML file (`.yaml`, `.yml`)
 #'
 #' @note Updated 2021-06-04.
@@ -1308,133 +1432,6 @@ formals(`import,YAMLFile`)[c("metadata", "quiet")] <-
 
 
 
-## GSEA ========================================================================
-#' Internal importer for a gene matrix transposed file (`.gmt`)
-#'
-#' @note Updated 2020-08-13
-#' @noRd
-#'
-#' @seealso `fgsea::gmtPathways()`.
-.importGMT <- function(file, quiet) {
-    assert(isFlag(quiet))
-    if (!isTRUE(quiet)) {
-        where <- ifelse(
-            test = isAURL(file),
-            yes = dirname(file),
-            no = realpath(dirname(file))
-        )
-        alert(sprintf(
-            "Importing {.file %s} at {.path %s}.",
-            basename(file), where
-        ))
-    }
-    lines <- .importLines(file = file, quiet = quiet)
-    lines <- strsplit(lines, split = "\t")
-    pathways <- lapply(lines, tail, n = -2L)
-    names(pathways) <- vapply(
-        X = lines,
-        FUN = head,
-        FUN.VALUE = character(1L),
-        n = 1L
-    )
-    pathways
-}
-
-
-
-#' Internal importer for a gene matrix file (`.gmx`)
-#'
-#' @note Updated 2020-08-13.
-#' @noRd
-.importGMX <- function(file, quiet) {
-    assert(isFlag(quiet))
-    if (!isTRUE(quiet)) {
-        where <- ifelse(
-            test = isAURL(file),
-            yes = dirname(file),
-            no = realpath(dirname(file))
-        )
-        alert(sprintf(
-            "Importing {.file %s} at {.path %s}.",
-            basename(file), where
-        ))
-    }
-    lines <- .importLines(file = file, quiet = quiet)
-    pathways <- list(tail(lines, n = -2L))
-    names(pathways) <- lines[[1L]]
-    pathways
-}
-
-
-
-#' Internal importer for a gene set file (`.grp`)
-#'
-#' @note Updated 2021-01-13.
-#' @noRd
-.importGRP <- .importGMX
-
-
-
-
-
-
-
-## GraphPad Prism ==============================================================
-#' Internal importer for a GraphPad Prism file (`.pzfx`)
-#'
-#' @note Updated 2020-08-13.
-#' @noRd
-#'
-#' @note This function doesn't support optional column names.
-.importPZFX <- function(
-    file,
-    sheet = 1L,
-    metadata,
-    quiet
-) {
-    requireNamespaces("pzfx")
-    assert(
-        isScalar(sheet),
-        isFlag(metadata),
-        isFlag(quiet)
-    )
-    tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
-    if (!isTRUE(quiet)) {
-        where <- ifelse(
-            test = isAURL(file),
-            yes = dirname(file),
-            no = realpath(dirname(file))
-        )
-        alert(sprintf(
-            "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
-            basename(file), where,
-            "pzfx", "read_pzfx"
-        ))
-    }
-    object <- pzfx::read_pzfx(
-        path = tmpfile,
-        table = sheet
-    )
-    if (isTRUE(metadata)) {
-        object <- .slotImportMetadata(
-            object = object,
-            file = file,
-            pkg = "pzfx",
-            fun = "read_pzfx"
-        )
-    }
-    object
-}
-
-
-
-
-
-
-
-## Handoff =====================================================================
-
-
 
 
 
@@ -1462,22 +1459,6 @@ setMethod(
 #' @export
 setMethod(
     f = "import",
-    signature = signature("ExcelFile"),
-    definition = `import,ExcelFile`
-)
-
-#' @rdname import
-#' @export
-setMethod(
-    f = "import",
-    signature = signature("LinesFile"),
-    definition = `import,LinesFile`
-)
-
-#' @rdname import
-#' @export
-setMethod(
-    f = "import",
     signature = signature("RDSFile"),
     definition = `import,RDSFile`
 )
@@ -1494,6 +1475,46 @@ setMethod(
 #' @export
 setMethod(
     f = "import",
+    signature = signature("LinesFile"),
+    definition = `import,LinesFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature("ExcelFile"),
+    definition = `import,ExcelFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature("GMTFile"),
+    definition = `import,GMTFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature("GMXFile"),
+    definition = `import,GMXFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature("GRPFile"),
+    definition = `import,GRPFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
     signature = signature("JSONFile"),
     definition = `import,JSONFile`
 )
@@ -1504,6 +1525,14 @@ setMethod(
     f = "import",
     signature = signature("MTXFile"),
     definition = `import,MTXFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature("PZFXFile"),
+    definition = `import,PZFXFile`
 )
 
 #' @rdname import
