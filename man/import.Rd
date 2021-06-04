@@ -4,8 +4,6 @@
 \alias{import}
 \alias{import,character-method}
 \alias{import,DelimFile-method}
-\alias{import,RDSFile-method}
-\alias{import,RDataFile-method}
 \alias{import,LinesFile-method}
 \alias{import,ExcelFile-method}
 \alias{import,GMTFile-method}
@@ -15,9 +13,11 @@
 \alias{import,MTXFile-method}
 \alias{import,PZFXFile-method}
 \alias{import,YAMLFile-method}
-\alias{import,BcbioCountsFile-method}
+\alias{import,RDSFile-method}
+\alias{import,RDataFile-method}
 \alias{import,RioFile-method}
 \alias{import,RtracklayerFile-method}
+\alias{import,BcbioCountsFile-method}
 \title{Import}
 \usage{
 import(file, ...)
@@ -37,10 +37,6 @@ import(file, ...)
   quiet = getOption("acid.quiet", default = FALSE),
   verbose = getOption(x = "acid.verbose", default = FALSE)
 )
-
-\S4method{import}{RDSFile}(file, quiet = getOption("acid.quiet", default = FALSE))
-
-\S4method{import}{RDataFile}(file, quiet = getOption("acid.quiet", default = FALSE))
 
 \S4method{import}{LinesFile}(
   file,
@@ -96,11 +92,9 @@ import(file, ...)
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
-\S4method{import}{BcbioCountsFile}(
-  file,
-  metadata = getOption("acid.import.metadata", default = FALSE),
-  quiet = getOption("acid.quiet", default = FALSE)
-)
+\S4method{import}{RDSFile}(file, quiet = getOption("acid.quiet", default = FALSE))
+
+\S4method{import}{RDataFile}(file, quiet = getOption("acid.quiet", default = FALSE))
 
 \S4method{import}{RioFile}(
   file,
@@ -116,6 +110,12 @@ import(file, ...)
   metadata = getOption("acid.import.metadata", default = FALSE),
   quiet = getOption("acid.quiet", default = FALSE),
   ...
+)
+
+\S4method{import}{BcbioCountsFile}(
+  file,
+  metadata = getOption("acid.import.metadata", default = FALSE),
+  quiet = getOption("acid.quiet", default = FALSE)
 )
 }
 \arguments{
@@ -233,7 +233,7 @@ arguments. Remote URLs and compressed files are supported. If you need more
 complex import settings, just call the wrapped importer directly instead.
 }
 \note{
-Updated 2021-06-03.
+Updated 2021-06-04.
 }
 \section{Row and column names}{
 
@@ -304,7 +304,7 @@ sidecar files containing the corresponding row and column names of the sparse
 matrix.
 }
 
-\section{General feature format (GFF, GTF)}{
+\section{General feature format (GFF, GTF; \code{RtracklayerFile})}{
 
 
 The GFF (General Feature Format) format consists of one line per feature,
@@ -330,7 +330,8 @@ Refer to the Broad Institute \href{https://goo.gl/3ZkDPb}{GSEA wiki} for details
 \section{\code{BcbioCountsFile}}{
 
 
-\href{https://bcbio-nextgen.readthedocs.io/}{bcbio} count matrix and related sidecar files are natively supported.
+\href{https://bcbio-nextgen.readthedocs.io/}{bcbio} count matrix (e.g. generated from featureCounts) and related
+sidecar files are natively supported.
 \itemize{
 \item \code{COUNTS}: Counts table (e.g. RNA-seq aligned counts).
 \item \code{COLNAMES}: Sidecar file containing column names.
