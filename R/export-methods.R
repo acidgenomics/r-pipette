@@ -125,8 +125,10 @@ NULL
         }
         ## nocov end
         if (isTRUE(append)) {
+            ## nocov start
             assert(!identical(whatPkg, "base"))
             overwrite <- FALSE
+            ## nocov end
         }
         if (isTRUE(overwrite)) {
             assert(isFALSE(append))
