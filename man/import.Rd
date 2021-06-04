@@ -4,12 +4,16 @@
 \alias{import}
 \alias{import,character-method}
 \alias{import,DelimFile-method}
-\alias{import,ExcelFile-method}
-\alias{import,LinesFile-method}
 \alias{import,RDSFile-method}
 \alias{import,RDataFile-method}
+\alias{import,LinesFile-method}
+\alias{import,ExcelFile-method}
+\alias{import,GMTFile-method}
+\alias{import,GMXFile-method}
+\alias{import,GRPFile-method}
 \alias{import,JSONFile-method}
 \alias{import,MTXFile-method}
+\alias{import,PZFXFile-method}
 \alias{import,YAMLFile-method}
 \alias{import,BcbioCountsFile-method}
 \alias{import,RioFile-method}
@@ -34,16 +38,9 @@ import(file, ...)
   verbose = getOption(x = "acid.verbose", default = FALSE)
 )
 
-\S4method{import}{ExcelFile}(
-  file,
-  sheet = 1L,
-  rownames = TRUE,
-  colnames = TRUE,
-  skip = 0L,
-  nMax = Inf,
-  metadata = getOption("acid.import.metadata", default = FALSE),
-  quiet = getOption("acid.quiet", default = FALSE)
-)
+\S4method{import}{RDSFile}(file, quiet = getOption("acid.quiet", default = FALSE))
+
+\S4method{import}{RDataFile}(file, quiet = getOption("acid.quiet", default = FALSE))
 
 \S4method{import}{LinesFile}(
   file,
@@ -57,9 +54,22 @@ import(file, ...)
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
-\S4method{import}{RDSFile}(file, quiet = getOption("acid.quiet", default = FALSE))
+\S4method{import}{ExcelFile}(
+  file,
+  sheet = 1L,
+  rownames = TRUE,
+  colnames = TRUE,
+  skip = 0L,
+  nMax = Inf,
+  metadata = getOption("acid.import.metadata", default = FALSE),
+  quiet = getOption("acid.quiet", default = FALSE)
+)
 
-\S4method{import}{RDataFile}(file, quiet = getOption("acid.quiet", default = FALSE))
+\S4method{import}{GMTFile}(file, quiet = getOption("acid.quiet", default = FALSE))
+
+\S4method{import}{GMXFile}(file, quiet = getOption("acid.quiet", default = FALSE))
+
+\S4method{import}{GRPFile}(file, quiet = getOption("acid.quiet", default = FALSE))
 
 \S4method{import}{JSONFile}(
   file,
@@ -69,6 +79,13 @@ import(file, ...)
 
 \S4method{import}{MTXFile}(
   file,
+  metadata = getOption("acid.import.metadata", default = FALSE),
+  quiet = getOption("acid.quiet", default = FALSE)
+)
+
+\S4method{import}{PZFXFile}(
+  file,
+  sheet = 1L,
   metadata = getOption("acid.import.metadata", default = FALSE),
   quiet = getOption("acid.quiet", default = FALSE)
 )

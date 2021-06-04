@@ -27,8 +27,8 @@
 #'   hasValidDimnames isAFile isAURL isAny isCharacter isFlag isInstalled isInt
 #'   isMatchingRegex isNonNegative isPositive isScalar isString isSubset
 #'   validNames validate
-#' @importFrom methods as is setGeneric setValidity slotNames validObject
-#'   .hasSlot
+#' @importFrom methods as is hasMethod setGeneric setValidity slotNames
+#'   validObject .hasSlot
 #' @importFrom stringr str_extract str_match str_subset
 #' @importFrom syntactic makeNames
 "_PACKAGE"
