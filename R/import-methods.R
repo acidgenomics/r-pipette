@@ -220,6 +220,7 @@ NULL
 
 
 
+## Internal functions ==========================================================
 #' Map file extension to corresponding S4 file class
 #'
 #' @note Updated 2021-06-03.
@@ -377,6 +378,7 @@ NULL
 
 
 
+## S4 method definitions =======================================================
 #' Primary `import` method, that hands off to classed file-extension variants
 #'
 #' @details
@@ -1310,6 +1312,7 @@ formals(`import,RDataFile`)[["quiet"]] <-
 
 
 
+## S4 method exports ===========================================================
 #' @rdname import
 #' @export
 setMethod(
