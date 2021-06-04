@@ -18,10 +18,10 @@ import(file, ...)
   comment = "",
   skip = 0L,
   nMax = Inf,
-  makeNames,
-  metadata,
+  makeNames = getOption("acid.import.make.names", default = syntactic::makeNames),
+  metadata = getOption("acid.import.metadata", default = FALSE),
   engine = getOption(x = "acid.import.engine", default = "data.table"),
-  quiet,
+  quiet = getOption("acid.quiet", default = FALSE),
   verbose = getOption(x = "acid.verbose", default = FALSE)
 )
 
