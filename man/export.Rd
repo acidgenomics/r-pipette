@@ -19,6 +19,7 @@ export(object, ...)
   file = NULL,
   append = FALSE,
   overwrite = getOption("acid.overwrite", default = TRUE),
+  engine = getOption(x = "acid.export.engine", default = "base"),
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
@@ -30,6 +31,7 @@ export(object, ...)
   rownames = TRUE,
   colnames = TRUE,
   overwrite = getOption("acid.overwrite", default = TRUE),
+  engine = getOption(x = "acid.export.engine", "data.table"),
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
@@ -41,6 +43,7 @@ export(object, ...)
   rownames = TRUE,
   colnames = TRUE,
   overwrite = getOption("acid.overwrite", default = TRUE),
+  engine = getOption(x = "acid.export.engine", "data.table"),
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
@@ -52,6 +55,7 @@ export(object, ...)
   rownames = TRUE,
   colnames = TRUE,
   overwrite = getOption("acid.overwrite", default = TRUE),
+  engine = getOption(x = "acid.export.engine", "data.table"),
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
@@ -72,6 +76,7 @@ export(object, ...)
   rownames = TRUE,
   colnames = TRUE,
   overwrite = getOption("acid.overwrite", default = TRUE),
+  engine = getOption(x = "acid.export.engine", "data.table"),
   quiet = getOption("acid.quiet", default = FALSE)
 )
 }
@@ -111,6 +116,16 @@ Requires readr package to be installed.}
 
 \item{overwrite}{\code{logical(1)}.
 Overwrite existing file on disk.}
+
+\item{engine}{\code{character(1)}.
+Engine (package) to use for export.
+Currently supported:
+\itemize{
+\item base
+\item data.table
+\item readr
+\item vroom
+}}
 
 \item{quiet}{\code{logical(1)}.
 Perform command quietly, suppressing messages.}
