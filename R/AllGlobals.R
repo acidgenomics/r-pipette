@@ -3,21 +3,6 @@
 
 
 
-#' Internal formals list
-#'
-#' @note Updated 2021-06-04.
-#' @noRd
-.formalsList <- list(
-    "engine" = quote(
-        getOption(x = "acid.import.engine", default = "data.table")
-    ),
-    "verbose" = quote(
-        getOption(x = "acid.verbose", default = FALSE)
-    )
-)
-
-
-
 #' Import/export engines for parsing plain text delimited files
 #'
 #' @note Updated 2021-03-16.

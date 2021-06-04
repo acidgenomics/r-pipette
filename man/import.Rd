@@ -34,8 +34,7 @@ import(file, ...)
   makeNames = getOption("acid.import.make.names", default = syntactic::makeNames),
   engine = getOption(x = "acid.import.engine", default = "data.table"),
   metadata = getOption("acid.import.metadata", default = FALSE),
-  quiet = getOption("acid.quiet", default = FALSE),
-  verbose = getOption(x = "acid.verbose", default = FALSE)
+  quiet = getOption("acid.quiet", default = FALSE)
 )
 
 \S4method{import}{LinesFile}(
@@ -46,7 +45,7 @@ import(file, ...)
   stripWhitespace = FALSE,
   removeBlank = FALSE,
   metadata = getOption("acid.import.metadata", default = FALSE),
-  engine = getOption(x = "acid.import.engine", default = "data.table"),
+  engine = getOption(x = "acid.import.engine", default = "base"),
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
@@ -162,9 +161,6 @@ Metadata.}
 
 \item{quiet}{\code{logical(1)}.
 Perform command quietly, suppressing messages.}
-
-\item{verbose}{\code{logical(1)}.
-Run the function with verbose output.}
 
 \item{sheet}{\code{character(1)} or \code{integer(1)}.
 \emph{Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.}
