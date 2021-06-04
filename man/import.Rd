@@ -11,6 +11,7 @@
 \alias{import,MTXFile-method}
 \alias{import,YAMLFile-method}
 \alias{import,RioFile-method}
+\alias{import,RtracklayerFile-method}
 \title{Import}
 \usage{
 import(file, ...)
@@ -69,6 +70,13 @@ import(file, ...)
   file,
   rownames = TRUE,
   colnames = TRUE,
+  metadata = getOption("acid.import.metadata", default = FALSE),
+  quiet = getOption("acid.quiet", default = FALSE),
+  ...
+)
+
+\S4method{import}{RtracklayerFile}(
+  file,
   metadata = getOption("acid.import.metadata", default = FALSE),
   quiet = getOption("acid.quiet", default = FALSE),
   ...

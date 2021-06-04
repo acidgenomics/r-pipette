@@ -971,6 +971,63 @@ formals(`import,RioFile`)[c("metadata", "quiet")] <-
 
 
 
+#' Import file using `rtracklayer::import`
+#'
+#' @note Updated 2021-06-04.
+#' @noRd
+#'
+#' @note Using `tryCatch()` here to error if there are any warnings.
+`import,RtracklayerFile` <-  # nolint
+    function(file, metadata, quiet, ...) {
+        requireNamespaces("rtracklayer")
+        assert(
+            isFlag(metadata),
+            isFlag(quiet)
+        )
+        whatPkg <- "rtracklayer"
+        whatFun <- "import"
+        tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
+        if (!isTRUE(quiet)) {
+            where <- ifelse(
+                test = isAURL(file),
+                yes = dirname(file),
+                no = realpath(dirname(file))
+            )
+            alert(sprintf(
+                paste(
+                    "Importing {.file %s} at {.path %s}",
+                    "using {.pkg %s}::{.fun %s}.",
+                ),
+                basename(file), where,
+                whatPkg, whatFun
+            ))
+        }
+        object <- tryCatch(
+            expr = rtracklayer::import(con = tmpfile, ...),
+            error = function(e) {
+                stop("File failed to load.")  # nocov
+            },
+            warning = function(w) {
+                stop("File failed to load.")  # nocov
+            }
+        )
+        .returnImport(
+            object = object,
+            file = file,
+            rownames = FALSE,
+            colnames = FALSE,
+            metadata = metadata,
+            whatPkg = whatPkg,
+            whatFun = whatFun,
+            quiet = quiet
+        )
+    }
+
+formals(`import,RtracklayerFile`)[c("metadata", "quiet")] <-
+    formalsList[c("import.metadata", "quiet")]
+
+
+
 #' Import an R data serialized file (`.rds`)
 #'
 #' @note Updated 2021-06-04.
@@ -1358,50 +1415,7 @@ formals(`import,YAMLFile`)[c("metadata", "quiet")] <-
 
 
 
-#' Handoff to rtracklayer import
-#'
-#' @note Updated 2020-08-13.
-#' @noRd
-#'
-#' @note Using `tryCatch()` here to error if there are any warnings.
-.rtracklayerImport <- function(file, metadata, quiet, ...) {
-    requireNamespaces("rtracklayer")
-    assert(
-        isFlag(metadata),
-        isFlag(quiet)
-    )
-    tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
-    if (!isTRUE(quiet)) {
-        where <- ifelse(
-            test = isAURL(file),
-            yes = dirname(file),
-            no = realpath(dirname(file))
-        )
-        alert(sprintf(
-            "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
-            basename(file), where,
-            "rtracklayer", "import"
-        ))
-    }
-    object <- tryCatch(
-        expr = rtracklayer::import(con = tmpfile, ...),
-        error = function(e) {
-            stop("File failed to load.")  # nocov
-        },
-        warning = function(w) {
-            stop("File failed to load.")  # nocov
-        }
-    )
-    if (isTRUE(metadata)) {
-        object <- .slotImportMetadata(
-            object = object,
-            file = file,
-            pkg = "rtracklayer",
-            fun = "import"
-        )
-    }
-    object
-}
+
 
 
 
@@ -1476,4 +1490,12 @@ setMethod(
     f = "import",
     signature = signature("RioFile"),
     definition = `import,RioFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature("RtracklayerFile"),
+    definition = `import,RtracklayerFile`
 )
