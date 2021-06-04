@@ -103,36 +103,43 @@
 #' @note Updated 2021-06-04.
 #'
 #' @inheritParams AcidRoxygen::params
-#' @param format `character(1)`.
-#'   An optional file format type, which can be used to override the file format
-#'   inferred from `file`. Only recommended for file and URL paths that don't
-#'   contain an extension.
-#' @param rownames `logical(1)`.
-#'   Automatically assign row names, if `rowname` column is defined.
-#'   Applies to file types that return `data.frame` only.
 #' @param colnames `logical(1)` or `character`.
 #'   Automatically assign column names, using the first header row.
 #'   Applies to file types that return `data.frame` only.
 #'   Pass in a `character` vector to define the column names manually.
-#' @param sheet `character(1)` or `integer(1)`.
-#'   *Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.*
-#'   Sheet to read. Either a string (the name of a sheet), or an integer (the
-#'   position of the sheet). Defaults to the first sheet.
 #' @param comment `character(1)`.
 #'   Comment character to detect at beginning of line, which will skip when
 #'   parsing file. Use `""` to disable interpretation of comments, which is
 #'   particularly
 #'   useful when parsing lines.
 #'   *Applies to plain text delimited and source code lines only.*
-#' @param skip `integer(1)`.
-#'   *Applies to delimited file (CSV, TSV), Excel Workbook, or lines.*
-#'   Number of lines to skip.
-#' @param nMax `integer(1)` or `Inf`.
-#'   Maximum number of lines to parse.
-#'   *Applies to plain text delimited, Excel, and source code lines only.*
+#' @param engine `character(1)`.
+#'   Engine (package) to use for import.
+#'   Currently supported:
+#'   - base
+#'   - data.table
+#'   - readr
+#'   - vroom
+#' @param format `character(1)`.
+#'   An optional file format type, which can be used to override the file format
+#'   inferred from `file`. Only recommended for file and URL paths that don't
+#'   contain an extension.
 #' @param makeNames `function`.
 #'   Apply syntactic naming function to (column) names.
 #'   *Does not apply to import of R data files.*
+#' @param nMax `integer(1)` or `Inf`.
+#'   Maximum number of lines to parse.
+#'   *Applies to plain text delimited, Excel, and source code lines only.*
+#' @param rownames `logical(1)`.
+#'   Automatically assign row names, if `rowname` column is defined.
+#'   Applies to file types that return `data.frame` only.
+#' @param sheet `character(1)` or `integer(1)`.
+#'   *Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.*
+#'   Sheet to read. Either a string (the name of a sheet), or an integer (the
+#'   position of the sheet). Defaults to the first sheet.
+#' @param skip `integer(1)`.
+#'   *Applies to delimited file (CSV, TSV), Excel Workbook, or lines.*
+#'   Number of lines to skip.
 #'
 #' @return Varies, depending on the file type (format):
 #'
