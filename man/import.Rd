@@ -7,6 +7,7 @@
 \alias{import,LinesFile-method}
 \alias{import,RDSFile-method}
 \alias{import,RDataFile-method}
+\alias{import,JSONFile-method}
 \alias{import,MTXFile-method}
 \title{Import}
 \usage{
@@ -43,6 +44,12 @@ import(file, ...)
 \S4method{import}{RDSFile}(file, quiet = getOption("acid.quiet", default = FALSE))
 
 \S4method{import}{RDataFile}(file, quiet = getOption("acid.quiet", default = FALSE))
+
+\S4method{import}{JSONFile}(
+  file,
+  metadata = getOption("acid.import.metadata", default = FALSE),
+  quiet = getOption("acid.quiet", default = FALSE)
+)
 
 \S4method{import}{MTXFile}(
   file,
