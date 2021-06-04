@@ -19,13 +19,23 @@ import(file, ...)
   skip = 0L,
   nMax = Inf,
   makeNames = getOption("acid.import.make.names", default = syntactic::makeNames),
-  metadata = getOption("acid.import.metadata", default = FALSE),
   engine = getOption(x = "acid.import.engine", default = "data.table"),
+  metadata = getOption("acid.import.metadata", default = FALSE),
   quiet = getOption("acid.quiet", default = FALSE),
   verbose = getOption(x = "acid.verbose", default = FALSE)
 )
 
-\S4method{import}{LinesFile}(file, comment = "", nMax = Inf, skip = 0L, quiet)
+\S4method{import}{LinesFile}(
+  file,
+  comment = "",
+  skip = 0L,
+  nMax = Inf,
+  stripWhitespace = FALSE,
+  removeBlank = FALSE,
+  metadata = getOption("acid.import.metadata", default = FALSE),
+  engine,
+  quiet = getOption("acid.quiet", default = FALSE)
+)
 }
 \arguments{
 \item{file}{\code{character(1)}.

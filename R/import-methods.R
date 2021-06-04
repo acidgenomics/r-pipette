@@ -441,26 +441,21 @@ setMethod(
     skip = 0L,
     nMax = Inf,
     makeNames,
+    engine,
     metadata,
-    engine = getOption(
-        x = "acid.import.engine",
-        default = "data.table"
-    ),
-    quiet,  # FIXME Is this used?
-    verbose = getOption(
-        x = "acid.verbose",
-        default = FALSE
-    )
+    quiet,
+    verbose
 ) {
     assert(
+        isString(file),
         isFlag(rownames),
         isFlag(colnames) || isCharacter(colnames),
         is.character(comment) && length(comment) <= 1L,
         isInt(skip), isNonNegative(skip),
         isPositive(nMax),
         is.function(makeNames),
-        isFlag(metadata),
         isString(engine),
+        isFlag(metadata),
         isFlag(quiet),
         isFlag(verbose)
     )
@@ -474,7 +469,7 @@ setMethod(
         "TableFile" = "table",
         stop("Unsupported delim class.")
     )
-    whatPkg <- match.arg(arg = engine, choices = .delimEngines)
+    whatPkg <- match.arg(arg = engine, choices = .engines)
     if (identical(ext, "table")) {
         whatPkg <- "base"
     }
@@ -621,16 +616,9 @@ setMethod(
     )
 }
 
-## FIXME Need to add verbose to formalsList and define here.
-
-## FIXME Need to add this to formalsList global:
-## > getOption(
-## >     x = "acid.verbose",
-## >     default = FALSE
-## > )
-
-## FIXME Default the import metadata to TRUE.
-
+## FIXME Define "verbose" and "engine" in AcidBase formalsList.
+formals(`import,DelimFile`)[c("engine", "verbose")] <-
+    .formalsList[c("engine", "verbose")]
 formals(`import,DelimFile`)[c("makeNames", "metadata", "quiet")] <-
     formalsList[c("import.make.names", "import.metadata", "quiet")]
 
@@ -646,43 +634,42 @@ setMethod(
 
 
 
-## FIXME Need to ensure that whitespace isn't stripped by default.
-##       Is this only happening with data.table importer?
-## FIXME Allow the user to enable this, if they want...
+## FIXME Need to support stripWhitespace (for all engines).
+## FIXME Need to support removeBlank.
 
-#' Internal importer for (source code) lines
+#' Import source code lines
 #'
-#' @note Updated 2021-03-16.
+#' @note Updated 2021-06-04.
 #' @noRd
 `import,LinesFile` <-
     function(
         file,
         comment = "",
-        nMax = Inf,
         skip = 0L,
+        nMax = Inf,
+        stripWhitespace = FALSE,
+        removeBlank = FALSE,
+        metadata,
+        engine,
         quiet
     ) {
         assert(
-            isInt(skip),
+            isString(file),
             is.character(comment) && length(comment) <= 1L,
-            isPositive(nMax),
-            isFlag(quiet),
+            isInt(skip),
             isInt(skip), isNonNegative(skip),
-            isPositive(nMax)
+            isPositive(nMax),
+            isFlag(stripWhitespace),
+            isFlag(removeBlank),
+            isFlag(quiet)
         )
         if (isString(comment)) {
             assert(is.infinite(nMax))
         }
-        ## FIXME Need to make this user-accessible in function call.
-        whatPkg <- match.arg(
-            arg = getOption(
-                x = "acid.import.engine",
-                default = .defaultDelimEngine
-            ),
-            choices = .delimEngines
-        )
+        whatPkg <- match.arg(arg = engine, choices = .engines)
         requireNamespaces(whatPkg)
         tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
+        ## FIXME Need to support stripWhitespace, and removeBlank.
         switch(
             EXPR = whatPkg,
             "base" = {
@@ -700,7 +687,8 @@ setMethod(
                     "header" = FALSE,
                     "nrows" = nMax,
                     "sep" = "\n",
-                    "skip" = skip
+                    "skip" = skip,
+                    "strip.white" = stripWhitespace
                 )
             },
             "readr" = {
@@ -730,7 +718,10 @@ setMethod(
                 no = realpath(dirname(file))
             )
             alert(sprintf(
-                "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
+                paste(
+                    "Importing {.file %s} at {.path %s}",
+                    "using {.pkg %s}::{.fun %s}."
+                ),
                 basename(file), where,
                 whatPkg, whatFun
             ))
@@ -740,26 +731,44 @@ setMethod(
         }
         what <- get(x = whatFun, envir = asNamespace(whatPkg), inherits = TRUE)
         assert(is.function(what))
-        x <- do.call(what = what, args = args)
-        if (whatPkg == "data.table") x <- x[[1L]]
-        assert(is.character(x))
+        object <- do.call(what = what, args = args)
+        if (identical(whatPkg, "data.table")) {
+            object <- object[[1L]]
+        }
+        assert(is.character(object))
         if (isString(comment)) {
-            keep <- !grepl(pattern = paste0("^", comment), x = x)
-            x <- x[keep]
+            keep <- !grepl(pattern = paste0("^", comment), x = object)
+            object <- object[keep]
         }
         if (identical(whatPkg, "base")) {
             if (isTRUE(skip > 0L)) {
-                assert(skip < length(x))
+                assert(skip < length(object))
                 start <- skip + 1L
-                end <- length(x)
-                x <- x[start:end]
+                end <- length(object)
+                object <- object[start:end]
             }
-            if (isTRUE(nMax < length(x))) {
-                x <- x[1L:nMax]
+            if (isTRUE(nMax < length(object))) {
+                object <- object[1L:nMax]
             }
         }
-        x
+        .returnImport(
+            object = object,
+            file = file,
+            rownames = FALSE,
+            colnames = FALSE,
+            metadata = metadata,
+            whatPkg = whatPkg,
+            whatFun = whatFun,
+            quiet = quiet
+        )
     }
+
+## FIXME Define "verbose" and "engine" in AcidBase formalsList.
+formals(`import,DelimFile`)[["engine"]] <-
+    .formalsList[["engine"]]
+formals(`import,LinesFile`)[c("metadata", "quiet")] <-
+    formalsList[c("import.metadata", "quiet")]
+
 
 
 

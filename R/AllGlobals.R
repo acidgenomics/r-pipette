@@ -3,20 +3,26 @@
 
 
 
+#' Internal formals list
+#'
+#' @note Updated 2021-06-04.
+#' @noRd
+.formalsList <- list(
+    "engine" = quote(
+        getOption(x = "acid.import.engine", default = "data.table")
+    ),
+    "verbose" = quote(
+        getOption(x = "acid.verbose", default = FALSE)
+    )
+)
+
+
+
 #' Import/export engines for parsing plain text delimited files
 #'
 #' @note Updated 2021-03-16.
 #' @noRd
-.delimEngines <- c("data.table", "vroom", "readr", "base")
-
-
-
-## FIXME Declare this in formal argument instead...
-#' Default plain text engine
-#'
-#' @note Updated 2021-01-13.
-#' @noRd
-.defaultDelimEngine <- .delimEngines[[1L]]
+.engines <- c("data.table", "vroom", "readr", "base")
 
 
 
