@@ -223,7 +223,7 @@ NULL
 ## Internal functions ==========================================================
 #' Map file extension to corresponding S4 file class
 #'
-#' @note Updated 2021-06-03.
+#' @note Updated 2021-06-04.
 #' @noRd
 .extToFileClass <- function(ext) {
     ext <- tolower(ext)
@@ -271,7 +271,9 @@ NULL
         "rdata"        = "RDataFile",
         "rds"          = "RDSFile",
         "rec"          = "RioFile",
+        "rio"          = "RioFile",
         "rmd"          = "LinesFile",
+        "rtracklayer"  = "RtracklayerFile",
         "sas7bdat"     = "RioFile",
         "sav"          = "RioFile",
         "sh"           = "LinesFile",
@@ -628,6 +630,7 @@ NULL
                 stringsAsFactors = FALSE
             )
         }
+        ## FIXME Check that colnames input matches, if character.
         .returnImport(
             object = object,
             file = file,
@@ -907,6 +910,63 @@ formals(`import,JSONFile`)[c("metadata", "quiet")] <-
     }
 
 formals(`import,MTXFile`)[c("metadata", "quiet")] <-
+    formalsList[c("import.metadata", "quiet")]
+
+
+
+#' Import a file using `rio::import`
+#'
+#' @note Updated 2021-06-04.
+#' @noRd
+`import,RioFile` <-  # nolint
+    function(
+        file,
+        rownames = TRUE,
+        colnames = TRUE,
+        metadata,
+        quiet,
+        ...
+    ) {
+        requireNamespaces("rio")
+        assert(
+            isString(file),
+            isFlag(rownames),
+            isFlag(colnames) || isCharacter(colnames),
+            isFlag(metadata),
+            isFlag(quiet)
+        )
+        whatPkg <- "rio"
+        whatFun <- "import"
+        tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
+        if (!isTRUE(quiet)) {
+            where <- ifelse(
+                test = isAURL(file),
+                yes = dirname(file),
+                no = realpath(dirname(file))
+            )
+            alert(sprintf(
+                paste(
+                    "Importing {.file %s} at {.path %s}",
+                    "using {.pkg %s}::{.fun %s}."
+                ),
+                basename(file), where,
+                whatPkg, whatFun
+            ))
+        }
+        object <- rio::import(file = tmpfile, ...)
+        .returnImport(
+            object = object,
+            file = file,
+            rownames = rownames,
+            colnames = colnames,
+            metadata = metadata,
+            whatPkg = whatPkg,
+            whatFun = whatFun,
+            quiet = quiet
+        )
+    }
+
+formals(`import,RioFile`)[c("metadata", "quiet")] <-
     formalsList[c("import.metadata", "quiet")]
 
 
@@ -1294,40 +1354,7 @@ formals(`import,YAMLFile`)[c("metadata", "quiet")] <-
 
 
 ## Handoff =====================================================================
-#' Handoff to rio import
-#'
-#' @note Updated 2020-08-13.
-#' @noRd
-.rioImport <- function(file, metadata, quiet, ...) {
-    requireNamespaces("rio")
-    assert(
-        isFlag(metadata),
-        isFlag(quiet)
-    )
-    tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
-    if (!isTRUE(quiet)) {
-        where <- ifelse(
-            test = isAURL(file),
-            yes = dirname(file),
-            no = realpath(dirname(file))
-        )
-        alert(sprintf(
-            "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
-            basename(file), where,
-            "rio", "import"
-        ))
-    }
-    object <- rio::import(file = tmpfile, ...)
-    if (isTRUE(metadata)) {
-        object <- .slotImportMetadata(
-            object = object,
-            file = file,
-            pkg = "rio",
-            fun = "import"
-        )
-    }
-    object
-}
+
 
 
 
@@ -1441,4 +1468,12 @@ setMethod(
     f = "import",
     signature = signature("YAMLFile"),
     definition = `import,YAMLFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature("RioFile"),
+    definition = `import,RioFile`
 )

@@ -10,6 +10,7 @@
 \alias{import,JSONFile-method}
 \alias{import,MTXFile-method}
 \alias{import,YAMLFile-method}
+\alias{import,RioFile-method}
 \title{Import}
 \usage{
 import(file, ...)
@@ -62,6 +63,15 @@ import(file, ...)
   file,
   metadata = getOption("acid.import.metadata", default = FALSE),
   quiet = getOption("acid.quiet", default = FALSE)
+)
+
+\S4method{import}{RioFile}(
+  file,
+  rownames = TRUE,
+  colnames = TRUE,
+  metadata = getOption("acid.import.metadata", default = FALSE),
+  quiet = getOption("acid.quiet", default = FALSE),
+  ...
 )
 }
 \arguments{
