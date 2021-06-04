@@ -1,8 +1,8 @@
 Package: pipette
 Title: Pipette Biological Data In and Out of R
 Description: Input/output functions for biological data formats.
-Version: 0.5.18
-Date: 2021-05-18
+Version: 0.6.0
+Date: 2021-06-04
 Authors@R: c(
     person(
         "Michael", "Steinbaugh",
@@ -23,7 +23,7 @@ Encoding: UTF-8
 Depends: R (>= 4.0)
 Imports:
     AcidBase (>= 0.3.13),
-    AcidCLI (>= 0.1.0),
+    AcidCLI (>= 0.1.1),
     AcidGenerics (>= 0.5.17),
     GenomicRanges (>= 1.42),
     IRanges (>= 2.24),
@@ -33,23 +33,24 @@ Imports:
     goalie (>= 0.5.1),
     methods,
     stringr (>= 1.4),
-    syntactic (>= 0.4.4),
-    tibble (>= 3.1.0)
+    syntactic (>= 0.4.5),
+    tibble (>= 3.1.2)
 Suggests:
     AcidTest (>= 0.4.3),
     BiocFileCache (>= 1.14),
     digest (>= 0.6.27),
     httr (>= 1.4.2),
-    jsonlite (>= 1.7),
-    pzfx (>= 0.3),
+    jsonlite (>= 1.7.2),
+    pzfx (>= 0.3.0),
     readr (>= 1.4.0),
     readxl (>= 1.3.1),
     rio (>= 0.5.26),
     rtracklayer (>= 1.50),
+    stringi (>= 1.6.2),
     testthat,
     tools,
     vroom (>= 1.4.0),
-    yaml (>= 2.2)
+    yaml (>= 2.2.1)
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Additional_repositories: https://r.acidgenomics.com

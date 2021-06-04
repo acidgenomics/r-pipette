@@ -1,6 +1,6 @@
 #' @name export
 #' @inherit AcidGenerics::export
-#' @note Updated 2021-03-16.
+#' @note Updated 2021-06-04.
 #'
 #' @section Row names:
 #'
@@ -22,6 +22,13 @@
 #' @param object Object.
 #'   An object supporting `dim()`, or a supported class capable of being coerced
 #'   to `data.frame`, to be written to disk.
+#' @param engine `character(1)`.
+#'   Engine (package) to use for export.
+#'   Currently supported:
+#'   - base
+#'   - data.table
+#'   - readr
+#'   - vroom
 #' @param ext `character(1)`.
 #'   Output file format extension.
 #'
@@ -73,7 +80,7 @@ NULL
 
 
 
-## Updated 2021-01-13.
+## Updated 2021-06-04.
 `export,character` <-  # nolint
     function(
         object,
@@ -82,6 +89,7 @@ NULL
         file = NULL,
         append = FALSE,
         overwrite,
+        engine = getOption(x = "acid.export.engine", default = "base"),
         quiet
     ) {
         assert(
@@ -90,28 +98,32 @@ NULL
             isString(file, nullOK = TRUE),
             isFlag(overwrite),
             isFlag(append),
+            isString(engine),
             isFlag(quiet)
         )
-        whatPkg <- match.arg(
-            arg = getOption(
-                x = "acid.export.engine",
-                default = .defaultDelimEngine
-            ),
-            choices = .delimEngines
-        )
-        ## The vroom engine is currently bugging for writing lines, so fall back
+        whatPkg <- match.arg(arg = engine, choices = .engines)
+        requireNamespaces(whatPkg)
+        ## nocov start
+        ## The vroom engine is currently buggy for writing lines, so fall back
         ## to readr (if installed), and then base R. This is fixed in vroom
         ## v1.4.1, which isn't on CRAN yet.
-        ##
-        ## See related issue:
         ## https://github.com/r-lib/vroom/issues/291
-        if (identical(whatPkg, "vroom")) {
+        if (
+            identical(whatPkg, "vroom") &&
+            packageVersion("vroom") < "1.4.1"
+        ) {
             if (isInstalled("readr")) {
                 whatPkg <- "readr"
             } else {
-                whatPkg <- "base"  # nocov
+                whatPkg <- "base"
             }
+            message(sprintf(
+                "%s %s is buggy for writing lines. Switching to %s instead.",
+                "vroom", packageVersion("vroom"),
+                whatPkg
+            ))
         }
+        ## nocov end
         if (isTRUE(append)) {
             assert(!identical(whatPkg, "base"))
             overwrite <- FALSE
@@ -119,7 +131,6 @@ NULL
         if (isTRUE(overwrite)) {
             assert(isFALSE(append))
         }
-        requireNamespaces(whatPkg)
         if (is.null(file)) {
             call <- standardizeCall()
             sym <- call[["object"]]
@@ -239,7 +250,7 @@ setMethod(
 
 #' Export `matrix` method
 #'
-#' @note Updated 2021-03-16.
+#' @note Updated 2021-06-04.
 #' @noRd
 #'
 #' @details
@@ -256,24 +267,17 @@ setMethod(
         rownames = TRUE,
         colnames = TRUE,
         overwrite,
+        engine = getOption(x = "acid.export.engine", "data.table"),
         quiet
     ) {
         validObject(object)
-        whatPkg <- match.arg(
-            arg = getOption(
-                x = "acid.export.engine",
-                default = .defaultDelimEngine
-            ),
-            choices = .delimEngines
-        )
+        whatPkg <- match.arg(arg = engine, choices = .engines)
         requireNamespaces(whatPkg)
         object <- as.data.frame(object)
         verbose <- getOption("acid.verbose", default = FALSE)
+        ## Allowing export of empty objects, so don't check for length,
+        ## rows, or columns here.
         assert(
-            ## Now allowing export of empty objects (2021-03-16).
-            ## > hasLength(object),
-            ## > hasRows(object),
-            ## > hasCols(object),
             hasNoDuplicates(colnames(object)),
             isString(ext),
             isString(dir),
