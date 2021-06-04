@@ -4,6 +4,7 @@
 \alias{import}
 \alias{import,character-method}
 \alias{import,DelimFile-method}
+\alias{import,ExcelFile-method}
 \alias{import,LinesFile-method}
 \alias{import,RDSFile-method}
 \alias{import,RDataFile-method}
@@ -31,6 +32,17 @@ import(file, ...)
   metadata = getOption("acid.import.metadata", default = FALSE),
   quiet = getOption("acid.quiet", default = FALSE),
   verbose = getOption(x = "acid.verbose", default = FALSE)
+)
+
+\S4method{import}{ExcelFile}(
+  file,
+  sheet = 1L,
+  rownames = TRUE,
+  colnames = TRUE,
+  skip = 0L,
+  nMax = Inf,
+  metadata = getOption("acid.import.metadata", default = FALSE),
+  quiet = getOption("acid.quiet", default = FALSE)
 )
 
 \S4method{import}{LinesFile}(
