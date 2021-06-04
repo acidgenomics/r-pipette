@@ -1,3 +1,15 @@
+#' @rdname import
+#' @name import
+#' @export
+setGeneric(
+    name = "import",
+    def = function(file, ...) {
+        standardGeneric("import")
+    }
+)
+
+
+
 #' @rdname atomize
 #' @name atomize
 #' @importFrom AcidGenerics atomize

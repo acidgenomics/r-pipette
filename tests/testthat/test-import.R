@@ -7,7 +7,7 @@ test_that("Invalid extension", {
     file.create("file.XXX")
     expect_error(
         object = import(file = "file.XXX"),
-        regexp = "XXX"
+        regexp = "'xxx' extension"
     )
     unlink("file.XXX")
 })
