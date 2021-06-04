@@ -419,14 +419,13 @@ NULL
 #'
 #' @note Updated 2021-06-03.
 #' @noRd
-`import,character` <-
+`import,character` <-  # nolint
     function(file, format = "auto", ...) {
         assert(
             isAFile(file) || isAURL(file),
             isString(format)
         )
         format <- tolower(format)
-
         if (identical(format, "auto") || identical(format, "none")) {
             ext <- str_match(basename(file), extPattern)[1L, 2L]
             if (is.na(ext)) {
@@ -454,188 +453,192 @@ NULL
 #' Can override using `acid.import.engine` option, which also supports
 #' data.table and readr packages.
 #'
-#' @note Updated 2021-06-03.
+#' @note Updated 2021-06-04.
 #' @noRd
-`import,DelimFile` <- function(
-    file,
-    rownames = TRUE,  # FIXME Need to add back in support here.
-    colnames = TRUE,
-    comment = "",
-    skip = 0L,
-    nMax = Inf,
-    makeNames,
-    engine,
-    metadata,
-    quiet,
-    verbose
-) {
-    assert(
-        isString(file),
-        isFlag(rownames),
-        isFlag(colnames) || isCharacter(colnames),
-        is.character(comment) && length(comment) <= 1L,
-        isInt(skip), isNonNegative(skip),
-        isPositive(nMax),
-        is.function(makeNames),
-        isString(engine),
-        isFlag(metadata),
-        isFlag(quiet),
-        isFlag(verbose)
-    )
-    if (isTRUE(quiet)) {
-        assert(isFALSE(verbose))
-    }
-    ext <- switch(
-        EXPR = class(file),
-        "CSVFile" = "csv",
-        "TSVFile" = "tsv",
-        "TableFile" = "table",
-        stop("Unsupported delim class.")
-    )
-    whatPkg <- match.arg(arg = engine, choices = .engines)
-    if (identical(ext, "table")) {
-        whatPkg <- "base"
-    }
-    requireNamespaces(whatPkg)
-    tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
-    switch(
-        EXPR = whatPkg,
-        "base" = {
-            whatFun <- "read.table"
-            args <- list(
-                "file" = tmpfile,
-                "blank.lines.skip" = TRUE,
-                "comment.char" = comment,
-                "na.strings" = naStrings,
-                "nrows" = nMax,
-                "sep" = switch(
-                    EXPR = ext,
-                    "csv" = ",",
-                    "table" = "",
-                    "tsv" = "\t"
-                ),
-                "skip" = skip,
-                "stringsAsFactors" = FALSE,
-                "strip.white" = TRUE
-            )
-            if (isCharacter(colnames)) {
-                args[["header"]] <- FALSE
-                args[["col.names"]] <- colnames
-            } else {
-                args[["header"]] <- colnames
-            }
-        },
-        "data.table" = {
-            whatFun <- "fread"
-            if (isString(comment)) {
-                ## nocov start
-                stop(sprintf(
-                    paste0(
-                        "'%s::%s' does not yet support comment exclusion.\n",
-                        "See '%s' for details."
+`import,DelimFile` <-  # nolint
+    function(
+        file,
+        rownames = TRUE,
+        colnames = TRUE,
+        comment = "",
+        skip = 0L,
+        nMax = Inf,
+        makeNames,
+        engine,
+        metadata,
+        quiet,
+        verbose
+    ) {
+        assert(
+            isString(file),
+            isFlag(rownames),
+            isFlag(colnames) || isCharacter(colnames),
+            is.character(comment) && length(comment) <= 1L,
+            isInt(skip), isNonNegative(skip),
+            isPositive(nMax),
+            is.function(makeNames),
+            isString(engine),
+            isFlag(metadata),
+            isFlag(quiet),
+            isFlag(verbose)
+        )
+        if (isTRUE(quiet)) {
+            assert(isFALSE(verbose))
+        }
+        ext <- switch(
+            EXPR = class(file),
+            "CSVFile" = "csv",
+            "TSVFile" = "tsv",
+            "TableFile" = "table",
+            stop("Unsupported delim class.")
+        )
+        whatPkg <- match.arg(arg = engine, choices = .engines)
+        if (identical(ext, "table")) {
+            whatPkg <- "base"
+        }
+        requireNamespaces(whatPkg)
+        tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
+        switch(
+            EXPR = whatPkg,
+            "base" = {
+                whatFun <- "read.table"
+                args <- list(
+                    "file" = tmpfile,
+                    "blank.lines.skip" = TRUE,
+                    "comment.char" = comment,
+                    "na.strings" = naStrings,
+                    "nrows" = nMax,
+                    "sep" = switch(
+                        EXPR = ext,
+                        "csv" = ",",
+                        "table" = "",
+                        "tsv" = "\t"
                     ),
-                    whatPkg, whatFun,
-                    "https://github.com/Rdatatable/data.table/issues/856"
-                ))
-                ## nocov end
+                    "skip" = skip,
+                    "stringsAsFactors" = FALSE,
+                    "strip.white" = TRUE
+                )
+                if (isCharacter(colnames)) {
+                    args[["header"]] <- FALSE
+                    args[["col.names"]] <- colnames
+                } else {
+                    args[["header"]] <- colnames
+                }
+            },
+            "data.table" = {
+                whatFun <- "fread"
+                if (isString(comment)) {
+                    ## nocov start
+                    stop(sprintf(
+                        paste0(
+                            "'%s::%s' does not support comment exclusion.\n",
+                            "See '%s' for details."
+                        ),
+                        whatPkg, whatFun,
+                        "https://github.com/Rdatatable/data.table/issues/856"
+                    ))
+                    ## nocov end
+                }
+                args <- list(
+                    "file" = tmpfile,
+                    "blank.lines.skip" = TRUE,
+                    "check.names" = TRUE,
+                    "data.table" = FALSE,
+                    "fill" = FALSE,
+                    "na.strings" = naStrings,
+                    "nrows" = nMax,
+                    "skip" = skip,
+                    "showProgress" = FALSE,
+                    "stringsAsFactors" = FALSE,
+                    "strip.white" = TRUE,
+                    "verbose" = verbose
+                )
+                if (isCharacter(colnames)) {
+                    args[["header"]] <- FALSE
+                    args[["col.names"]] <- colnames
+                } else {
+                    args[["header"]] <- colnames
+                }
+            },
+            "readr" = {
+                whatFun <- "read_delim"
+                args <- list(
+                    "file" = tmpfile,
+                    "col_names" = colnames,
+                    "col_types" = readr::cols(),
+                    "comment" = comment,
+                    "delim" = switch(
+                        EXPR = ext,
+                        "csv" = ",",
+                        "tsv" = "\t"
+                    ),
+                    "na" = naStrings,
+                    "n_max" = nMax,
+                    "progress" = FALSE,
+                    "trim_ws" = TRUE,
+                    "show_col_types" = TRUE,
+                    "skip" = skip,
+                    "skip_empty_rows" = TRUE
+                )
+            },
+            "vroom" = {
+                whatFun <- "vroom"
+                args <- list(
+                    "file" = tmpfile,
+                    "delim" = switch(
+                        EXPR = ext,
+                        "csv" = ",",
+                        "tsv" = "\t"
+                    ),
+                    "col_names" = colnames,
+                    "col_types" = vroom::cols(),
+                    "comment" = comment,
+                    "na" = naStrings,
+                    "n_max" = nMax,
+                    "progress" = FALSE,
+                    "skip" = skip,
+                    "trim_ws" = TRUE,
+                    ".name_repair" = make.names
+                )
             }
-            args <- list(
-                "file" = tmpfile,
-                "blank.lines.skip" = TRUE,
-                "check.names" = TRUE,
-                "data.table" = FALSE,
-                "fill" = FALSE,
-                "na.strings" = naStrings,
-                "nrows" = nMax,
-                "skip" = skip,
-                "showProgress" = FALSE,
-                "stringsAsFactors" = FALSE,
-                "strip.white" = TRUE,
-                "verbose" = verbose
+        )
+        if (!isTRUE(quiet)) {
+            where <- ifelse(
+                test = isAURL(file),
+                yes = dirname(file),
+                no = realpath(dirname(file))
             )
-            if (isCharacter(colnames)) {
-                args[["header"]] <- FALSE
-                args[["col.names"]] <- colnames
-            } else {
-                args[["header"]] <- colnames
-            }
-        },
-        "readr" = {
-            whatFun <- "read_delim"
-            args <- list(
-                "file" = tmpfile,
-                "col_names" = colnames,
-                "col_types" = readr::cols(),
-                "comment" = comment,
-                "delim" = switch(
-                    EXPR = ext,
-                    "csv" = ",",
-                    "tsv" = "\t"
+            alert(sprintf(
+                paste(
+                    "Importing {.file %s} at {.path %s}",
+                    "using {.pkg %s}::{.fun %s}."
                 ),
-                "na" = naStrings,
-                "n_max" = nMax,
-                "progress" = FALSE,
-                "trim_ws" = TRUE,
-                "show_col_types" = TRUE,
-                "skip" = skip,
-                "skip_empty_rows" = TRUE
-            )
-        },
-        "vroom" = {
-            whatFun <- "vroom"
-            args <- list(
-                "file" = tmpfile,
-                "delim" = switch(
-                    EXPR = ext,
-                    "csv" = ",",
-                    "tsv" = "\t"
-                ),
-                "col_names" = colnames,
-                "col_types" = vroom::cols(),
-                "comment" = comment,
-                "na" = naStrings,
-                "n_max" = nMax,
-                "progress" = FALSE,
-                "skip" = skip,
-                "trim_ws" = TRUE,
-                ".name_repair" = make.names
+                basename(file), where,
+                whatPkg, whatFun
+            ))
+        }
+        what <- get(x = whatFun, envir = asNamespace(whatPkg), inherits = TRUE)
+        assert(is.function(what))
+        object <- do.call(what = what, args = args)
+        assert(is.data.frame(object))
+        if (!identical(class(object), "data.frame")) {
+            object <- as.data.frame(
+                x = object,
+                make.names = FALSE,
+                stringsAsFactors = FALSE
             )
         }
-    )
-    if (!isTRUE(quiet)) {
-        where <- ifelse(
-            test = isAURL(file),
-            yes = dirname(file),
-            no = realpath(dirname(file))
-        )
-        alert(sprintf(
-            "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
-            basename(file), where,
-            whatPkg, whatFun
-        ))
-    }
-    what <- get(x = whatFun, envir = asNamespace(whatPkg), inherits = TRUE)
-    assert(is.function(what))
-    object <- do.call(what = what, args = args)
-    assert(is.data.frame(object))
-    if (!identical(class(object), "data.frame")) {
-        object <- as.data.frame(
-            x = object,
-            make.names = FALSE,
-            stringsAsFactors = FALSE
+        .returnImport(
+            object = object,
+            file = file,
+            rownames = rownames,
+            colnames = colnames,
+            metadata = metadata,
+            whatPkg = whatPkg,
+            whatFun = whatFun,
+            quiet = quiet
         )
     }
-    .returnImport(
-        object = object,
-        file = file,
-        rownames = rownames,
-        colnames = colnames,
-        metadata = metadata,
-        whatPkg = whatPkg,
-        whatFun = whatFun,
-        quiet = quiet
-    )
-}
 
 ## FIXME Define "verbose" and "engine" in AcidBase formalsList.
 formals(`import,DelimFile`)[c("engine", "verbose")] <-
@@ -782,6 +785,132 @@ formals(`import,LinesFile`)[c("metadata", "quiet")] <-
 
 
 
+#' Import a JSON file (`.json`)
+#'
+#' @note Updated 2021-06-04.
+#' @noRd
+`import,JSONFile` <-  # nolint
+    function(file, metadata, quiet) {
+        requireNamespaces("jsonlite")
+        assert(
+            isFlag(metadata),
+            isFlag(quiet)
+        )
+        whatPkg <- "jsonlite"
+        whatFun <- "read_json"
+        tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
+        if (!isTRUE(quiet)) {
+            where <- ifelse(
+                test = isAURL(file),
+                yes = dirname(file),
+                no = realpath(dirname(file))
+            )
+            alert(sprintf(
+                paste(
+                    "Importing {.file %s} at {.path %s}",
+                    "using {.pkg %s}::{.fun %s}."
+                ),
+                basename(file), where,
+                "jsonlite", "read_json"
+            ))
+        }
+        object <- jsonlite::read_json(path = tmpfile)
+        .returnImport(
+            object = object,
+            file = file,
+            rownames = FALSE,
+            colnames = FALSE,
+            metadata = metadata,
+            whatPkg = whatPkg,
+            whatFun = whatFun,
+            quiet = quiet
+        )
+    }
+
+formals(`import,JSONFile`)[c("metadata", "quiet")] <-
+    formalsList[c("import.metadata", "quiet")]
+
+
+
+#' Import a sparse matrix file (`.mtx`)
+#'
+#' @note Updated 2021-06-04.
+#' @noRd
+`import,MTXFile` <-
+    function(file, metadata, quiet) {
+        assert(
+            isFlag(metadata),
+            isFlag(quiet)
+        )
+        rownames <- FALSE
+        colnames <- FALSE
+        whatPkg <- "Matrix"
+        whatFun = "readMM"
+        tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
+        if (!isTRUE(quiet)) {
+            where <- ifelse(
+                test = isAURL(file),
+                yes = dirname(file),
+                no = realpath(dirname(file))
+            )
+            alert(sprintf(
+                paste(
+                    "Importing {.file %s} at {.path %s}",
+                    "using {.pkg %s}::{.fun %s}."
+                ),
+                basename(file), where,
+                whatPkg, whatFun
+            ))
+        }
+        object <- readMM(file = tmpfile)
+        ## Add the rownames automatically using `.rownames` sidecar file.
+        rownamesFile <- tryCatch(
+            expr = localOrRemoteFile(
+                file = paste(file, "rownames", sep = "."),
+                quiet = quiet
+            ),
+            error = function(e) {
+                NULL  # nocov
+            }
+        )
+        if (!is.null(rownamesFile)) {
+            rownames <- TRUE
+            rownames(object) <-
+                .importMTXSidecar(file = rownamesFile, quiet = quiet)
+        }
+        ## Add the colnames automatically using `.colnames` sidecar file.
+        colnamesFile <-
+        colnamesFile <- tryCatch(
+            expr = localOrRemoteFile(
+                file = paste(file, "colnames", sep = "."),
+                quiet = quiet
+            ),
+            error = function(e) {
+                NULL  # nocov
+            }
+        )
+        if (!is.null(colnamesFile)) {
+            colnames <- TRUE
+            colnames(object) <-
+                .importMTXSidecar(file = colnamesFile, quiet = quiet)
+        }
+        .returnImport(
+            object = object,
+            file = file,
+            rownames = rownames,
+            colnames = colnames,
+            metadata = metadata,
+            whatPkg = whatPkg,
+            whatFun = whatFun,
+            quiet = quiet
+        )
+    }
+
+formals(`import,MTXFile`)[c("metadata", "quiet")] <-
+    formalsList[c("import.metadata", "quiet")]
+
+
+
 #' Import an R data serialized file (`.rds`)
 #'
 #' @note Updated 2021-06-04.
@@ -862,121 +991,21 @@ formals(`import,RDataFile`)[["quiet"]] <-
 
 
 
-#' Import a sparse matrix file (`.mtx`)
-#'
-#' @note Updated 2021-06-04.
-#' @noRd
-`import,MTXFile` <-
-    function(file, metadata, quiet) {
-        assert(
-            isFlag(metadata),
-            isFlag(quiet)
-        )
-        tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
-        rownames <- FALSE
-        colnames <- FALSE
-        whatPkg <- "Matrix"
-        whatFun = "readMM"
-        if (!isTRUE(quiet)) {
-            where <- ifelse(
-                test = isAURL(file),
-                yes = dirname(file),
-                no = realpath(dirname(file))
-            )
-            alert(sprintf(
-                paste(
-                    "Importing {.file %s} at {.path %s}",
-                    "using {.pkg %s}::{.fun %s}."
-                ),
-                basename(file), where,
-                whatPkg, whatFun
-            ))
-        }
-        object <- readMM(file = tmpfile)
-        ## Add the rownames automatically using `.rownames` sidecar file.
-        rownamesFile <- tryCatch(
-            expr = localOrRemoteFile(
-                file = paste(file, "rownames", sep = "."),
-                quiet = quiet
-            ),
-            error = function(e) {
-                NULL  # nocov
-            }
-        )
-        if (!is.null(rownamesFile)) {
-            rownames <- TRUE
-            rownames(object) <-
-                .importMTXSidecar(file = rownamesFile, quiet = quiet)
-        }
-        ## Add the colnames automatically using `.colnames` sidecar file.
-        colnamesFile <-
-        colnamesFile <- tryCatch(
-            expr = localOrRemoteFile(
-                file = paste(file, "colnames", sep = "."),
-                quiet = quiet
-            ),
-            error = function(e) {
-                NULL  # nocov
-            }
-        )
-        if (!is.null(colnamesFile)) {
-            colnames <- TRUE
-            colnames(object) <-
-                .importMTXSidecar(file = colnamesFile, quiet = quiet)
-        }
-        .returnImport(
-            object = object,
-            file = file,
-            rownames = rownames,
-            colnames = colnames,
-            metadata = metadata,
-            whatPkg = whatPkg,
-            whatFun = whatFun,
-            quiet = quiet
-        )
-    }
-
-formals(`import,MTXFile`)[c("metadata", "quiet")] <-
-    formalsList[c("import.metadata", "quiet")]
 
 
 
 
-## List ========================================================================
-#' Internal importer for a JSON file (`.json`)
-#'
-#' @note Updated 2020-08-13.
-#' @noRd
-.importJSON <- function(file, metadata, quiet) {
-    requireNamespaces("jsonlite")
-    assert(
-        isFlag(metadata),
-        isFlag(quiet)
-    )
-    tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
-    if (!isTRUE(quiet)) {
-        where <- ifelse(
-            test = isAURL(file),
-            yes = dirname(file),
-            no = realpath(dirname(file))
-        )
-        alert(sprintf(
-            "Importing {.file %s} at {.path %s} using {.pkg %s}::{.fun %s}.",
-            basename(file), where,
-            "jsonlite", "read_json"
-        ))
-    }
-    object <- jsonlite::read_json(path = tmpfile)
-    if (isTRUE(metadata)) {
-        object <- .slotImportMetadata(
-            object = object,
-            file = file,
-            pkg = "jsonlite",
-            fun = "read_json"
-        )
-    }
-    object
-}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1378,6 +1407,14 @@ setMethod(
     f = "import",
     signature = signature("RDataFile"),
     definition = `import,RDataFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature("JSONFile"),
+    definition = `import,JSONFile`
 )
 
 #' @rdname import
