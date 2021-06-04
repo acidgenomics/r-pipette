@@ -7,6 +7,7 @@
 \alias{import,LinesFile-method}
 \alias{import,RDSFile-method}
 \alias{import,RDataFile-method}
+\alias{import,MTXFile-method}
 \title{Import}
 \usage{
 import(file, ...)
@@ -35,13 +36,19 @@ import(file, ...)
   stripWhitespace = FALSE,
   removeBlank = FALSE,
   metadata = getOption("acid.import.metadata", default = FALSE),
-  engine,
+  engine = getOption(x = "acid.import.engine", default = "data.table"),
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
 \S4method{import}{RDSFile}(file, quiet = getOption("acid.quiet", default = FALSE))
 
 \S4method{import}{RDataFile}(file, quiet = getOption("acid.quiet", default = FALSE))
+
+\S4method{import}{MTXFile}(
+  file,
+  metadata = getOption("acid.import.metadata", default = FALSE),
+  quiet = getOption("acid.quiet", default = FALSE)
+)
 }
 \arguments{
 \item{file}{\code{character(1)}.
