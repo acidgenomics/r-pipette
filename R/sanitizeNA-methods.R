@@ -100,6 +100,9 @@ setMethod(
 ## Updated 2021-06-09.
 `sanitizeNA,data.frame` <-  # nolint
     function(object) {
+        if (!(hasCols(x) && hasRows(x))) {
+            return(x)
+        }
         assert(allAreAtomic(object))
         if (hasRownames(object)) {
             rownames <- rownames(object)  # nocov
@@ -140,12 +143,12 @@ setMethod(
 
 
 
-## FIXME Don't use `I` here...need to collapse to DataFrame instead.
-## FIXME Use our list to DataFrame method instead.
-
 ## Updated 2021-06-09.
 `sanitizeNA,DataFrame` <-  # nolint
     function(object) {
+        if (!(hasCols(x) && hasRows(x))) {
+            return(x)
+        }
         meta <- metadata(object)
         rn <- rownames(object)
         list <- lapply(
