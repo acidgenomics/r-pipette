@@ -698,6 +698,14 @@ formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
                 stringsAsFactors = FALSE
             )
         }
+        ## Enforce data.table to convert `""` to `NA`, as desired.
+        ## https://stackoverflow.com/questions/51019041/
+        if (
+            identical(engine, "data.table") &&
+            isTRUE(any(object == ""))
+        ) {
+            object <- sanitizeNA(object)
+        }
         .returnImport(
             object = object,
             file = file,

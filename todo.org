@@ -1,6 +1,7 @@
 #+TITLE: pipette
 #+STARTUP: content
 * Development
+** TODO `encode` method seems to be dropping metadata for DataFrame.
 ** TODO Consider changing `import()` to a generic, and classing file input.
 ** TODO Need to improve support for fixed width file (FWF) parsing?
 ** TODO Consider using brio package for `read_lines` and `write_lines`?
