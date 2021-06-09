@@ -700,13 +700,13 @@ formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
         }
         if (
             identical(engine, "data.table") &&
-            isTRUE(any(object == ""))
+            isTRUE(any(object == "", na.rm = TRUE))
         ) {
             object <- sanitizeNA(object)
         }
         assert(
             allAreAtomic(object),
-            isFALSE(any(object == ""))
+            isFALSE(any(object == "", na.rm = TRUE))
         )
         .returnImport(
             object = object,
