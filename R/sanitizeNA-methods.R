@@ -100,8 +100,8 @@ setMethod(
 ## Updated 2021-06-09.
 `sanitizeNA,data.frame` <-  # nolint
     function(object) {
-        if (!(hasCols(x) && hasRows(x))) {
-            return(x)
+        if (!(hasCols(object) && hasRows(object))) {
+            return(object)
         }
         assert(allAreAtomic(object))
         if (hasRownames(object)) {
@@ -146,8 +146,8 @@ setMethod(
 ## Updated 2021-06-09.
 `sanitizeNA,DataFrame` <-  # nolint
     function(object) {
-        if (!(hasCols(x) && hasRows(x))) {
-            return(x)
+        if (!(hasCols(object) && hasRows(object))) {
+            return(object)
         }
         meta <- metadata(object)
         rn <- rownames(object)
