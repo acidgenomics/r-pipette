@@ -2,7 +2,7 @@
 #'
 #' @name decode
 #' @inherit AcidGenerics::decode description return
-#' @note Updated 2021-05-18.
+#' @note Updated 2021-06-09.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
@@ -25,9 +25,10 @@ NULL
 
 
 
-## Updated 2021-05-18.
+## Updated 2021-06-09.
 `decode,DataFrame` <-  # nolint
     function(x) {
+        meta <- metadata(x)
         rn <- rownames(x)
         x <- lapply(
             X = x,
@@ -51,7 +52,9 @@ NULL
             }
         )
         args <- list(x, row.names = rn)
-        do.call(what = DataFrame, args = args)
+        out <- do.call(what = DataFrame, args = args)
+        metadata(out) <- meta
+        out
     }
 
 
