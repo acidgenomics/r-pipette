@@ -30,7 +30,7 @@ NULL
     function(x) {
         meta <- metadata(x)
         rn <- rownames(x)
-        x <- lapply(
+        list <- lapply(
             X = x,
             FUN = function(x) {
                 if (is(x, "List")) {
@@ -44,15 +44,11 @@ NULL
                 if (is.factor(x)) {
                     x <- droplevels(x)
                 }
-                if (is.atomic(x)) {
-                    return(x)
-                }
-                x <- I(x)
                 x
             }
         )
-        args <- list(x, row.names = rn)
-        out <- do.call(what = DataFrame, args = args)
+        out <- as.DataFrame(list)
+        rownames(out) <- rn
         metadata(out) <- meta
         out
     }
