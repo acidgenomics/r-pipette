@@ -203,7 +203,10 @@ NULL
 `as.DataFrame,list` <-  # nolint
     function(x, row.names = NULL) {
         if (hasLength(x)) {
-            assert(hasLength(x[[1L]]))
+            assert(
+                hasLength(x[[1L]]),
+                msg = "First element of list is empty."
+            )
             nc <- length(x)
             nr <- length(x[[1L]])
             x <- lapply(
