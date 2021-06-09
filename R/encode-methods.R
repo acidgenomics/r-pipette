@@ -27,6 +27,9 @@ NULL
 ## Updated 2021-06-09.
 `encode,DataFrame` <-  # nolint
     function(x) {
+        if (!(hasCols(x) && hasRows(x))) {
+            return(x)
+        }
         meta <- metadata(x)
         rn <- rownames(x)
         list <- lapply(
