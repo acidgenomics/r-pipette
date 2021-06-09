@@ -1,3 +1,12 @@
+## pipette 0.6.1 (2021-06-09)
+
+### Minor changes
+
+- `import`: Ensure that `data.table` engine always interprets empty strings
+  (`""`) as `NA`. The `fread` function is opinionated about this and doesn't
+  currently respect `""` input as an `NA` string.
+- `decode`/`encode`: Ensure we're not dropping metadata here.
+
 ## pipette 0.6.0 (2021-06-04)
 
 ### Major changes
