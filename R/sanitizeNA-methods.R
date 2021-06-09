@@ -97,18 +97,10 @@ setMethod(
 
 
 
-## nolint start
-##
-## Alternate dplyr method:
-## > object <- mutate_if(object, is.character, sanitizeNA)
-##
-## This requires use to import dplyr, which can be otherwise avoided.
-##
-## nolint end
-
-## Updated 2019-07-19.
+## Updated 2021-06-09.
 `sanitizeNA,data.frame` <-  # nolint
     function(object) {
+        assert(allAreAtomic(object))
         if (hasRownames(object)) {
             rownames <- rownames(object)  # nocov
         } else {
@@ -116,15 +108,19 @@ setMethod(
         }
         list <- lapply(
             X = object,
-            FUN = function(col) {
-                if (is.character(col)) {
-                    sanitizeNA(col)
+            FUN = function(x) {
+                if (is.character(x)) {
+                    sanitizeNA(x)
                 } else {
-                    I(col)  # nocov
+                    x
                 }
             }
         )
-        out <- data.frame(list, row.names = rownames, stringsAsFactors = FALSE)
+        out <- data.frame(
+            list,
+            row.names = rownames,
+            stringsAsFactors = FALSE
+        )
         ## This step ensures we keep `tbl_df`, `data.table` class, if necessary.
         if (!identical(class(object), "data.frame")) {
             out <- as(out, class(object)[[1L]])  # nocov
@@ -144,25 +140,28 @@ setMethod(
 
 
 
-## Updated 2019-07-19.
+## FIXME Don't use `I` here...need to collapse to DataFrame instead.
+## FIXME Use our list to DataFrame method instead.
+
+## Updated 2021-06-09.
 `sanitizeNA,DataFrame` <-  # nolint
     function(object) {
-        rownames <- rownames(object)
-        ## nocov start
+        meta <- metadata(object)
+        rn <- rownames(object)
         list <- lapply(
             X = object,
             FUN = function(x) {
                 if (is.character(x)) {
                     sanitizeNA(x)
-                } else if (isS4(x) || is(x, "AsIs") || !is.atomic(x))  {
-                    I(x)
                 } else {
                     x
                 }
             }
         )
-        ## nocov end
-        DataFrame(list, row.names = rownames)
+        out <- as.DataFrame(list)
+        rownames(out) <- rn
+        metadata(out) <- meta
+        out
     }
 
 
