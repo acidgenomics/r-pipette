@@ -1,3 +1,7 @@
+## FIXME Simplify the import message to use full file path. Simpler to copy.
+
+
+
 #' @name export
 #' @inherit AcidGenerics::export
 #' @note Updated 2021-06-04.
