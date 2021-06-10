@@ -4,11 +4,18 @@
 \alias{localOrRemoteFile}
 \title{Dynamically handle a local or remote file path}
 \usage{
-localOrRemoteFile(file, quiet = getOption("acid.quiet", default = FALSE))
+localOrRemoteFile(
+  file,
+  tempPrefix = "pipette",
+  quiet = getOption("acid.quiet", default = FALSE)
+)
 }
 \arguments{
 \item{file}{\code{character(1)}.
 Local file paths or remote URLs.}
+
+\item{tempPrefix}{\code{character(1)}.
+Prefix to use for temporary file basename.}
 
 \item{quiet}{\code{logical(1)}.
 Perform command quietly, suppressing messages.}
@@ -21,7 +28,7 @@ Local file path(s). Stops on a missing file.
 Dynamically handle a local or remote file path
 }
 \note{
-Updated 2020-12-10.
+Updated 2021-06-10.
 }
 \section{Vectorization}{
 
