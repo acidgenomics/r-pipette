@@ -11,11 +11,13 @@
 #' extensions are natively supported: `BZ2`, `GZ`, `XZ`, and `ZIP`.
 #'
 #' @export
-#' @note Updated 2020-12-10.
+#' @note Updated 2021-06-10.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param file `character(1)`.
 #'   Local file paths or remote URLs.
+#' @param tempPrefix `character(1)`.
+#'   Prefix to use for temporary file basename.
 #'
 #' @return `character`.
 #' Local file path(s). Stops on a missing file.
@@ -38,9 +40,10 @@
 #' )
 #' x <- localOrRemoteFile(file)
 #' basename(x)
-localOrRemoteFile <- function(file, quiet) {
+localOrRemoteFile <- function(file, tempPrefix, quiet) {
     assert(
         isCharacter(file),
+        isString(tempPrefix),
         isFlag(quiet)
     )
     file <- mapply(
@@ -79,10 +82,16 @@ localOrRemoteFile <- function(file, quiet) {
                 mode <- "w"
             }
             tmpdir <- realpath(tempdir())
+            fileext <- fileExt(file)
+            if (is.na(fileext)) {
+                fileext <- ""
+            } else {
+                fileext <- paste0(".", fileext)
+            }
             destfile <- tempfile(
-                pattern = "pipette-",
+                pattern = paste0(tempPrefix, "-"),
                 tmpdir = tmpdir,
-                fileext = paste0(".", fileExt(file))
+                fileext = fileext
             )
             download(
                 url = file,
@@ -98,7 +107,8 @@ localOrRemoteFile <- function(file, quiet) {
     realpath(.autoDecompress(file))
 }
 
-formals(localOrRemoteFile)[["quiet"]] <- formalsList[["quiet"]]
+formals(localOrRemoteFile)[c("tempPrefix", "quiet")] <-
+    list(.pkgName, formalsList[["quiet"]])
 
 
 
