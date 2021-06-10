@@ -1,10 +1,6 @@
-## FIXME Simplify the import message to use full file path. Simpler to copy.
-
-
-
 #' @name export
 #' @inherit AcidGenerics::export
-#' @note Updated 2021-06-04.
+#' @note Updated 2021-06-10.
 #'
 #' @section Row names:
 #'
@@ -151,18 +147,14 @@ NULL
         } else {
             dir <- initDir(dirname(file))
         }
-        whatFile <- basename(file)
-        whatDir <- realpath(dirname(file))
+        whatFile <- file
         match <- str_match(string = file, pattern = extPattern)
         compressExt <- match[1L, 4L]
         compress <- !is.na(compressExt)
         if (isAFile(file)) {
             file <- realpath(file)
             if (isTRUE(overwrite) && !isTRUE(quiet)) {
-                alertWarning(sprintf(
-                    fmt = "Overwriting {.file %s} at {.path %s}.",
-                    whatFile, whatDir
-                ))
+                alertWarning(sprintf("Overwriting {.file %s}.", file))
             } else {
                 stop(sprintf("File exists: '%s'", file))
             }
@@ -216,12 +208,8 @@ NULL
         )
         if (!isTRUE(quiet)) {
             alert(sprintf(
-                fmt = paste(
-                    "Exporting {.file %s} at {.path %s}",
-                    "using {.pkg %s}::{.fun %s}."
-                ),
-                whatFile, whatDir,
-                whatPkg, whatFun
+                "Exporting {.file %s} using {.pkg %s}::{.fun %s}.",
+                whatFile, whatPkg, whatFun
             ))
         }
         what <- get(x = whatFun, envir = asNamespace(whatPkg), inherits = TRUE)
@@ -256,7 +244,7 @@ setMethod(
 
 #' Export `matrix` method
 #'
-#' @note Updated 2021-06-04.
+#' @note Updated 2021-06-10.
 #' @noRd
 #'
 #' @details
@@ -304,9 +292,7 @@ setMethod(
             ext <- fileExt(file)
             dir <- initDir(dirname(file))
         }
-        ## These are used in CLI messages.
-        whatFile <- basename(file)
-        whatDir <- realpath(dirname(file))
+        whatFile <- file
         ext <- match.arg(
             arg = ext,
             choices = c(
@@ -348,10 +334,7 @@ setMethod(
             file <- realpath(file)
             if (isTRUE(overwrite)) {
                 if (!isTRUE(quiet)) {
-                    alertWarning(sprintf(
-                        fmt = "Overwriting {.file %s} at {.path %s}.",
-                        whatFile, whatDir
-                    ))
+                    alertWarning(sprintf("Overwriting {.file %s}.", whatFile))
                 }
                 file.remove(file)
             } else {
@@ -459,12 +442,8 @@ setMethod(
         )
         if (!isTRUE(quiet)) {
             alert(sprintf(
-                fmt = paste(
-                    "Exporting {.file %s} at {.path %s}",
-                    "using {.pkg %s}::{.fun %s}."
-                ),
-                whatFile, whatDir,
-                whatPkg, whatFun
+                "Exporting {.file %s} using {.pkg %s}::{.fun %s}.",
+                whatFile, whatPkg, whatFun
             ))
         }
         what <- get(x = whatFun, envir = asNamespace(whatPkg), inherits = TRUE)
@@ -591,12 +570,8 @@ setMethod(
         }
         if (!isTRUE(quiet)) {
             alert(sprintf(
-                fmt = paste(
-                    "Exporting {.file %s} at {.path %s}",
-                    "using {.pkg %s}::{.fun %s}."
-                ),
-                basename(file), realpath(dirname(file)),
-                "Matrix", "writeMM"
+                "Exporting {.file %s} using {.pkg %s}::{.fun %s}.",
+                file, "Matrix", "writeMM"
             ))
         }
         writeMM(obj = object, file = file)
