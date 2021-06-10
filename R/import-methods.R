@@ -323,7 +323,7 @@ NULL
 
 #' Internal importer for a sparse matrix sidecar file (e.g. `.rownames`)
 #'
-#' @note Updated 2021-06-04.
+#' @note Updated 2021-06-10.
 #' @noRd
 .importMTXSidecar <- function(file, quiet) {
     assert(
@@ -331,15 +331,7 @@ NULL
         isFlag(quiet)
     )
     if (!isTRUE(quiet)) {
-        where <- ifelse(
-            test = isAURL(file),
-            yes = dirname(file),
-            no = realpath(dirname(file))
-        )
-        alert(sprintf(
-            "Importing sidecar {.file %s} at {.path %s}.",
-            basename(file), where
-        ))
+        alert(sprintf("Importing sidecar {.file %s}.", file))
     }
     object <- import(
         file = as.character(file),
@@ -529,7 +521,7 @@ formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
 #' Can override using `acid.import.engine` option, which also supports
 #' data.table and readr packages.
 #'
-#' @note Updated 2021-06-04.
+#' @note Updated 2021-06-10.
 #' @noRd
 `import,DelimFile` <-  # nolint
     function(
@@ -677,18 +669,9 @@ formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
             }
         )
         if (!isTRUE(quiet)) {
-            where <- ifelse(
-                test = isAURL(file),
-                yes = dirname(file),
-                no = realpath(dirname(file))
-            )
             alert(sprintf(
-                paste(
-                    "Importing {.file %s} at {.path %s}",
-                    "using {.pkg %s}::{.fun %s}."
-                ),
-                basename(file), where,
-                whatPkg, whatFun
+                "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
+                file, whatPkg, whatFun
             ))
         }
         what <- get(x = whatFun, envir = asNamespace(whatPkg), inherits = TRUE)
@@ -731,7 +714,7 @@ formals(`import,DelimFile`)[c("makeNames", "metadata", "quiet")] <-
 
 #' Import a Microsoft Excel worksheet (`.xlsx`)
 #'
-#' @note Updated 2021-06-04.
+#' @note Updated 2021-06-10.
 #' @noRd
 `import,ExcelFile` <-  # nolint
     function(
@@ -744,7 +727,6 @@ formals(`import,DelimFile`)[c("makeNames", "metadata", "quiet")] <-
         metadata,
         quiet
     ) {
-        requireNamespaces("readxl")
         assert(
             isString(file),
             isScalar(sheet),
@@ -757,20 +739,12 @@ formals(`import,DelimFile`)[c("makeNames", "metadata", "quiet")] <-
         )
         whatPkg <- "readxl"
         whatFun <- "read_excel"
+        requireNamespaces(whatPkg)
         tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
         if (!isTRUE(quiet)) {
-            where <- ifelse(
-                test = isAURL(file),
-                yes = dirname(file),
-                no = realpath(dirname(file))
-            )
             alert(sprintf(
-                paste(
-                    "Importing {.file %s} at {.path %s}",
-                    "using {.pkg %s}::{.fun %s}."
-                ),
-                basename(file), where,
-                whatPkg, whatFun
+                "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
+                file, whatPkg, whatFun
             ))
         }
         warn <- getOption("warn")
@@ -812,7 +786,7 @@ formals(`import,ExcelFile`)[c("metadata", "quiet")] <-
 
 #' Import a gene matrix transposed file (`.gmt`)
 #'
-#' @note Updated 2021-06-04.
+#' @note Updated 2021-06-10.
 #' @noRd
 #'
 #' @seealso `fgsea::gmtPathways()`.
@@ -820,15 +794,7 @@ formals(`import,ExcelFile`)[c("metadata", "quiet")] <-
     function(file, quiet) {
         assert(isFlag(quiet))
         if (!isTRUE(quiet)) {
-            where <- ifelse(
-                test = isAURL(file),
-                yes = dirname(file),
-                no = realpath(dirname(file))
-            )
-            alert(sprintf(
-                "Importing {.file %s} at {.path %s}.",
-                basename(file), where
-            ))
+            alert(sprintf("Importing {.file %s}.", file))
         }
         lines <- import(
             file = as.character(file),
@@ -853,21 +819,13 @@ formals(`import,GMTFile`)[["quiet"]] <-
 
 #' Import a gene matrix file (`.gmx`)
 #'
-#' @note Updated 2021-06-04.
+#' @note Updated 2021-06-10.
 #' @noRd
 `import,GMXFile` <-  # nolint
     function(file, quiet) {
         assert(isFlag(quiet))
         if (!isTRUE(quiet)) {
-            where <- ifelse(
-                test = isAURL(file),
-                yes = dirname(file),
-                no = realpath(dirname(file))
-            )
-            alert(sprintf(
-                "Importing {.file %s} at {.path %s}.",
-                basename(file), where
-            ))
+            alert(sprintf("Importing {.file %s}.", file))
         }
         lines <- import(
             file = as.character(file),
@@ -972,18 +930,9 @@ formals(`import,GMXFile`)[["quiet"]] <-
             }
         )
         if (!isTRUE(quiet)) {
-            where <- ifelse(
-                test = isAURL(file),
-                yes = dirname(file),
-                no = realpath(dirname(file))
-            )
             alert(sprintf(
-                paste(
-                    "Importing {.file %s} at {.path %s}",
-                    "using {.pkg %s}::{.fun %s}."
-                ),
-                basename(file), where,
-                whatPkg, whatFun
+                "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
+                file, whatPkg, whatFun
             ))
         }
         if (isTRUE(file.size(tmpfile) == 0L)) {
@@ -1046,31 +995,22 @@ formals(`import,LinesFile`)[c("metadata", "quiet")] <-
 
 #' Import a JSON file (`.json`)
 #'
-#' @note Updated 2021-06-04.
+#' @note Updated 2021-06-10.
 #' @noRd
 `import,JSONFile` <-  # nolint
     function(file, metadata, quiet) {
-        requireNamespaces("jsonlite")
         assert(
             isFlag(metadata),
             isFlag(quiet)
         )
         whatPkg <- "jsonlite"
         whatFun <- "read_json"
+        requireNamespaces(whatPkg)
         tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
         if (!isTRUE(quiet)) {
-            where <- ifelse(
-                test = isAURL(file),
-                yes = dirname(file),
-                no = realpath(dirname(file))
-            )
             alert(sprintf(
-                paste(
-                    "Importing {.file %s} at {.path %s}",
-                    "using {.pkg %s}::{.fun %s}."
-                ),
-                basename(file), where,
-                "jsonlite", "read_json"
+                "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
+                file, whatPkg, whatFun
             ))
         }
         object <- jsonlite::read_json(path = tmpfile)
@@ -1107,18 +1047,9 @@ formals(`import,JSONFile`)[c("metadata", "quiet")] <-
         whatFun <- "readMM"
         tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
         if (!isTRUE(quiet)) {
-            where <- ifelse(
-                test = isAURL(file),
-                yes = dirname(file),
-                no = realpath(dirname(file))
-            )
             alert(sprintf(
-                paste(
-                    "Importing {.file %s} at {.path %s}",
-                    "using {.pkg %s}::{.fun %s}."
-                ),
-                basename(file), where,
-                whatPkg, whatFun
+                "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
+                file, whatPkg, whatFun
             ))
         }
         object <- readMM(file = tmpfile)
@@ -1172,7 +1103,7 @@ formals(`import,MTXFile`)[c("metadata", "quiet")] <-
 
 #' Import a GraphPad Prism file (`.pzfx`)
 #'
-#' @note Updated 2021-06-04.
+#' @note Updated 2021-06-10.
 #' @noRd
 #'
 #' @note This function doesn't support optional column names.
@@ -1183,7 +1114,6 @@ formals(`import,MTXFile`)[c("metadata", "quiet")] <-
         metadata,
         quiet
     ) {
-        requireNamespaces("pzfx")
         assert(
             isString(file),
             isScalar(sheet),
@@ -1192,20 +1122,12 @@ formals(`import,MTXFile`)[c("metadata", "quiet")] <-
         )
         whatPkg <- "pzfx"
         whatFun <- "read_pzfx"
+        requireNamespaces(whatPkg)
         tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
         if (!isTRUE(quiet)) {
-            where <- ifelse(
-                test = isAURL(file),
-                yes = dirname(file),
-                no = realpath(dirname(file))
-            )
             alert(sprintf(
-                paste(
-                    "Importing {.file %s} at {.path %s}",
-                    "using {.pkg %s}::{.fun %s}."
-                ),
-                basename(file), where,
-                whatPkg, whatFun
+                "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
+                file, whatPkg, whatFun
             ))
         }
         object <- pzfx::read_pzfx(
@@ -1232,7 +1154,7 @@ formals(`import,PZFXFile`)[c("metadata", "quiet")] <-
 
 #' Import a file using `rio::import`
 #'
-#' @note Updated 2021-06-04.
+#' @note Updated 2021-06-10.
 #' @noRd
 `import,RioFile` <-  # nolint
     function(
@@ -1243,7 +1165,6 @@ formals(`import,PZFXFile`)[c("metadata", "quiet")] <-
         quiet,
         ...
     ) {
-        requireNamespaces("rio")
         assert(
             isString(file),
             isFlag(rownames),
@@ -1253,20 +1174,12 @@ formals(`import,PZFXFile`)[c("metadata", "quiet")] <-
         )
         whatPkg <- "rio"
         whatFun <- "import"
+        requireNamespaces(whatPkg)
         tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
         if (!isTRUE(quiet)) {
-            where <- ifelse(
-                test = isAURL(file),
-                yes = dirname(file),
-                no = realpath(dirname(file))
-            )
             alert(sprintf(
-                paste(
-                    "Importing {.file %s} at {.path %s}",
-                    "using {.pkg %s}::{.fun %s}."
-                ),
-                basename(file), where,
-                whatPkg, whatFun
+                "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
+                file, whatPkg, whatFun
             ))
         }
         object <- rio::import(file = tmpfile, ...)
@@ -1289,33 +1202,24 @@ formals(`import,RioFile`)[c("metadata", "quiet")] <-
 
 #' Import file using `rtracklayer::import`
 #'
-#' @note Updated 2021-06-04.
+#' @note Updated 2021-06-10.
 #' @noRd
 #'
 #' @note Using `tryCatch()` here to error if there are any warnings.
 `import,RtracklayerFile` <-  # nolint
     function(file, metadata, quiet, ...) {
-        requireNamespaces("rtracklayer")
         assert(
             isFlag(metadata),
             isFlag(quiet)
         )
         whatPkg <- "rtracklayer"
         whatFun <- "import"
+        requireNamespaces(whatPkg)
         tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
         if (!isTRUE(quiet)) {
-            where <- ifelse(
-                test = isAURL(file),
-                yes = dirname(file),
-                no = realpath(dirname(file))
-            )
             alert(sprintf(
-                paste(
-                    "Importing {.file %s} at {.path %s}",
-                    "using {.pkg %s}::{.fun %s}."
-                ),
-                basename(file), where,
-                whatPkg, whatFun
+                "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
+                file, whatPkg, whatFun
             ))
         }
         object <- tryCatch(
@@ -1346,7 +1250,7 @@ formals(`import,RtracklayerFile`)[c("metadata", "quiet")] <-
 
 #' Import an R data serialized file (`.rds`)
 #'
-#' @note Updated 2021-06-04.
+#' @note Updated 2021-06-10.
 #' @noRd
 `import,RDSFile` <-  # nolint
     function(file, quiet) {
@@ -1356,18 +1260,9 @@ formals(`import,RtracklayerFile`)[c("metadata", "quiet")] <-
         )
         tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
         if (!isTRUE(quiet)) {
-            where <- ifelse(
-                test = isAURL(file),
-                yes = dirname(file),
-                no = realpath(dirname(file))
-            )
             alert(sprintf(
-                paste(
-                    "Importing {.file %s} at {.path %s}",
-                    "using {.pkg %s}::{.fun %s}."
-                ),
-                basename(file), where,
-                "base", "readRDS"
+                "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
+                file, "base", "readRDS"
             ))
         }
         object <- readRDS(file = tmpfile)
@@ -1389,7 +1284,7 @@ formals(`import,RDSFile`)[["quiet"]] <-
 
 #' Import an R data file containing multiple objects (`.rda`)
 #'
-#' @note Updated 2021-06-04.
+#' @note Updated 2021-06-10.
 #' @noRd
 `import,RDataFile` <-  # nolint
     function(file, quiet) {
@@ -1399,18 +1294,9 @@ formals(`import,RDSFile`)[["quiet"]] <-
         )
         tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
         if (!isTRUE(quiet)) {
-            where <- ifelse(
-                test = isAURL(file),
-                yes = dirname(file),
-                no = realpath(dirname(file))
-            )
             alert(sprintf(
-                paste(
-                    "Importing {.file %s} at {.path %s}",
-                    "using {.pkg %s}::{.fun %s}."
-                ),
-                basename(file), where,
-                "base", "load"
+                "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
+                file, "base", "load"
             ))
         }
         safe <- new.env()
@@ -1440,31 +1326,22 @@ formals(`import,RDataFile`)[["quiet"]] <-
 
 #' Import a YAML file (`.yaml`, `.yml`)
 #'
-#' @note Updated 2021-06-04.
+#' @note Updated 2021-06-10.
 #' @noRd
 `import,YAMLFile` <-  # nolint
     function(file, metadata, quiet) {
-        requireNamespaces("yaml")
         assert(
             isFlag(metadata),
             isFlag(quiet)
         )
         whatPkg <- "yaml"
         whatFun <- "yaml.load_file"
+        requireNamespaces(whatPkg)
         tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
         if (!isTRUE(quiet)) {
-            where <- ifelse(
-                test = isAURL(file),
-                yes = dirname(file),
-                no = realpath(dirname(file))
-            )
             alert(sprintf(
-                paste(
-                    "Importing {.file %s} at {.path %s}",
-                    "using {.pkg %s}::{.fun %s}."
-                ),
-                basename(file), where,
-                whatPkg, whatFun
+                "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
+                file, whatPkg, whatFun
             ))
         }
         object <- yaml::yaml.load_file(input = tmpfile)
