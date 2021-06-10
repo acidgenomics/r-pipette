@@ -1,7 +1,3 @@
-## FIXME Simplify the import message to use full file path. Simpler to copy.
-
-
-
 #' Import
 #'
 #' Read file by extension into R.
