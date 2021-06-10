@@ -1,3 +1,11 @@
+## pipette 0.6.2 (2021-06-10)
+
+### Minor changes
+
+- `localOrRemoteFile`: Improved handling of URLs without a file extension.
+- `import`/`export`: Simplified the appearance of file variables, making them
+  easier to copy directly from the console for debugging.
+
 ## pipette 0.6.1 (2021-06-09)
 
 ### Minor changes
