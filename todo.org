@@ -1,8 +1,7 @@
 #+TITLE: pipette
 #+STARTUP: content
 * Development
-** TODO Consider changing `import()` to a generic, and classing file input.
+** TODO Test support for readr v2.0.0 update.
 ** TODO Need to improve support for fixed width file (FWF) parsing?
-** TODO Consider using brio package for `read_lines` and `write_lines`?
 ** TODO importMTX: MTX import: look for "barcodes.tsv.gz", "genes.tsv.gz",
    "features.tsv.gz", which are output by CellRanger.
