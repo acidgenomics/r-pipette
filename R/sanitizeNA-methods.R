@@ -74,13 +74,18 @@ setMethod(
 
 
 
-## Updated 2019-07-19.
+## Don't use `as.factor()` and then reset levels using a separate `levels()`
+## call here. It can cause a single value to flip to the first element in the
+## levels vector.
+##
+## Updated 2021-08-05.
 `sanitizeNA,factor` <-  # nolint
     function(object) {
-        x <- as.character(object)
+        x <- object
+        levels <- unique(sanitizeNA(levels(x)))
+        x <- as.character(x)
         x <- sanitizeNA(x)
-        x <- as.factor(x)
-        levels(x) <- unique(sanitizeNA(levels(object)))
+        x <- factor(x = x, levels = levels)
         names(x) <- names(object)
         x
     }
