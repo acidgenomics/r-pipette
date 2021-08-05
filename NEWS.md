@@ -1,3 +1,12 @@
+## pipette 0.6.3 (2021-08-05)
+
+### Minor changes
+
+- `sanitizeNA()`: Reworked internal call to use `factor` instead of `as.factor`
+  followed by a separate `levels` call. This can result in an unwanted value
+  swap for factors with a single value. Added code coverage to check for this.
+- Updated package dependency versions.
+
 ## pipette 0.6.2 (2021-06-10)
 
 ### Minor changes
