@@ -46,6 +46,26 @@ test_that("sanitizeNA", {
     )
 })
 
+test_that("Harden against unexpected factor level swap", {
+    object <- factor(
+        x = rep(x = "transcript", times = 5L),
+        levels = c(
+            "gene",
+            "transcript",
+            "exon",
+            "CDS",
+            "three_prime_utr",
+            "start_codon",
+            "five_prime_utr",
+            "stop_codon"
+        )
+    )
+    expect_identical(
+        object = sanitizeNA(object),
+        expected = object
+    )
+})
+
 test_that("Named factor", {
     x <- rep(c("a", "b", "NA"), times = 2L, each = 2L)
     x <- as.factor(x)
