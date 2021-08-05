@@ -1,7 +1,9 @@
 ## nolint start
 
-options("acid.export.engine" = NULL)
-options("acid.import.engine" = NULL)
+options(
+    "acid.export.engine" = NULL,
+    "acid.import.engine" = NULL
+)
 
 data(
     DFrame,
@@ -38,7 +40,6 @@ sparse <- sparseMatrix
 tbl <- tbl_df
 
 DataFrame <- AcidGenerics::DataFrame
-Rle <- structure("Rle", package = "S4Vectors")
 data.table <- data.table::data.table
 hasInternet <- goalie::hasInternet
 isSubset <- goalie::isSubset
