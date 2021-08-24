@@ -89,6 +89,8 @@ import(file, ...)
 
 \S4method{import}{MTXFile}(
   file,
+  rownamesFile = paste0(file, ".rownames"),
+  colnamesFile = paste0(file, ".colnames"),
   metadata = getOption("acid.import.metadata", default = FALSE),
   quiet = getOption("acid.quiet", default = FALSE)
 )
