@@ -566,7 +566,7 @@ NULL
                     validObject(object)
                 },
                 error = function(e) {
-                    conditionMessage(e)
+                    conditionMessage(e)  # nocov
                 }
             )
         }
@@ -617,7 +617,7 @@ formals(`import,RDSFile`)[["quiet"]] <-
                     validObject(object)
                 },
                 error = function(e) {
-                    conditionMessage(e)
+                    conditionMessage(e)  # nocov
                 }
             )
         }
@@ -806,7 +806,7 @@ formals(`import,RDataFile`)[["quiet"]] <-
             identical(engine, "data.table") &&
             isTRUE(any(object == "", na.rm = TRUE))
         ) {
-            object <- sanitizeNA(object)
+            object <- sanitizeNA(object)  # nocov
         }
         assert(
             allAreAtomic(object),
