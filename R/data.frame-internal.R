@@ -6,7 +6,7 @@
 ## Not exporting this method because we don't want to mask the default
 ## conventions currently used by Bioconductor.
 ##
-## Updated 2019-08-08.
+## Updated 2021-08-24.
 `.coerce,DataFrame,data.frame` <-  # nolint
     function(x) {
         ## Decode Rle columns, which can be coerced.
@@ -29,13 +29,14 @@
                 FUN.VALUE = character(1L)
             )
             invalid <- sprintf("%s (%s)", names(invalid), invalid)
-            stop(
-                "Only atomic and list columns are supported.\n",
-                sprintf(
+            abort(sprintf(
+                fmt = paste(
+                    "Only atomic and list columns are supported.",
                     "Invalid columns: %s.",
-                    toString(invalid, width = 100L)
-                )
-            )
+                    sep = "\n"
+                ),
+                toInlineString(invalid, n = 10L)
+            ))
         }
         ## Don't use `as.data.frame()` here. It can unexpectedly sanitize row
         ## names (e.g. gene symbols), whereas the `as()` method does not.

@@ -5,7 +5,7 @@
 #' The data.table package uses "rn" by default, whereas tibble uses "rowname".
 #'
 #' @name matchRownameColumn
-#' @note Updated 2020-01-18.
+#' @note Updated 2021-08-24.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param choices `character`.
@@ -59,9 +59,9 @@ NULL
             col
         } else if (length(match) > 1L) {
             fail <- colnames(object)[match]
-            stop(sprintf(
+            abort(sprintf(
                 "Multiple row names columns detected: %s.",
-                toString(fail, width = 100L)
+                toInlineString(fail, n = 10L)
             ))
         }
     }

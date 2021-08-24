@@ -289,8 +289,8 @@ setMethod(
             ## This is used to handle rowData with nested entrez identifiers.
             fail <- names(keep)[!keep]
             alertWarning(sprintf(
-                "Dropping non-atomic columns: {.var %s}.",
-                toString(fail, width = 200L)
+                "Dropping non-atomic columns: %s.",
+                toInlineString(fail, n = 10L)
             ))
             object <- object[, keep, drop = FALSE]
             ## nocov end
