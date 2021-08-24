@@ -359,7 +359,7 @@ NULL
         isString(f),
         isString(pkg)
     )
-    x <- get(x = f, envir = asNamespace(pkg), inherits = FALSE)
+    x <- get(x = f, envir = asNamespace(pkg), inherits = TRUE)
     assert(is.function(x))
     x
 }
@@ -564,14 +564,16 @@ NULL
         args <- list("file" = tmpfile)
         what <- .getFunction(f = whatFun, pkg = whatPkg)
         object <- do.call(what = what, args = args)
-        tryCatch(
-            expr = {
-                validObject(object)
-            },
-            error = function(e) {
-                conditionMessage(e)
-            }
-        )
+        if (isFALSE(quiet)) {
+            tryCatch(
+                expr = {
+                    validObject(object)
+                },
+                error = function(e) {
+                    conditionMessage(e)
+                }
+            )
+        }
         object
     }
 
@@ -582,7 +584,7 @@ formals(`import,RDSFile`)[["quiet"]] <-
 
 #' Import an R data file containing multiple objects (`.rda`)
 #'
-#' @note Updated 2021-06-10.
+#' @note Updated 2021-08-24.
 #' @noRd
 `import,RDataFile` <-  # nolint
     function(file, quiet) {
@@ -590,30 +592,39 @@ formals(`import,RDSFile`)[["quiet"]] <-
             isString(file),
             isFlag(quiet)
         )
+        whatPkg <- "base"
+        whatFun <- "load"
         tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
         if (isFALSE(quiet)) {
             alert(sprintf(
                 "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
-                file, "base", "load"
+                file, whatPkg, whatFun
             ))
         }
-        safe <- new.env()
-        object <- load(file = tmpfile, envir = safe)
-        if (isFALSE(hasLength(safe, n = 1L))) {
+        saveEnv <- new.env()
+        args <- list(
+            "file" = tmpfile,
+            "envir" = saveEnv
+        )
+        what <- .getFunction(f = whatFun, pkg = whatPkg)
+        object <- do.call(what = what, args = args)
+        if (isFALSE(hasLength(saveEnv, n = 1L))) {
             abort(sprintf(
                 "{.file %s} does not contain a single object.",
                 basename(file)
             ))
         }
-        object <- get(object, envir = safe, inherits = FALSE)
-        tryCatch(
-            expr = {
-                validObject(object)
-            },
-            error = function(e) {
-                conditionMessage(e)
-            }
-        )
+        object <- get(object, envir = saveEnv, inherits = FALSE)
+        if (isFALSE(quiet)) {
+            tryCatch(
+                expr = {
+                    validObject(object)
+                },
+                error = function(e) {
+                    conditionMessage(e)
+                }
+            )
+        }
         object
     }
 
