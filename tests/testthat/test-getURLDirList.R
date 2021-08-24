@@ -1,6 +1,5 @@
 context("getURLDirList")
 
-skip_on_appveyor()
 skip_on_docker()
 
 test_that("NCBI FTP", {

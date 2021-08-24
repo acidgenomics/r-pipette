@@ -1,7 +1,5 @@
 context("loadData")
 
-skip_if_not(hasInternet())
-
 dir <- "cache"
 
 test_that("R data", {
