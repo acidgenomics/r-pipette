@@ -8,6 +8,10 @@ files <- c(
     "example.csv",
     "example.csv.gz",
     "example.csv.zip",
+    ## Subset of transcripts from `gencode.v38.transcripts.fa.gz` file.
+    "example.fa.gz",
+    ## Klein Lab inDrops R3 FASTQ file (from bcbio-nextgen unit tests).
+    "example.fq.gz",
     "example.gtf",
     "example.gff3",
     "example.json",
