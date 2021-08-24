@@ -21,12 +21,15 @@
 
 #' R data load error
 #'
-#' @note Updated 2020-10-07.
+#' @note Updated 2021-08-24.
 #' @noRd
-.rdataLoadError <- paste(
-    "Failed to load data.",
-    "R data files must contain '.rda', '.rds', or '.RData' extension.",
-    sep = "\n"
+.rdataLoadError <- sprintf(
+    fmt = paste0(
+        "Failed to load data.\n",
+        "R data files must contain ",
+        "{.var %s}, {.var %s}, or {.var %s} extension."
+    ),
+    "rda", "rds", "RData"
 )
 
 

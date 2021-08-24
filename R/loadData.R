@@ -118,6 +118,7 @@ formals(loadData)[c("dir", "overwrite")] <-
 
 
 
+## Updated 2021-08-24.
 .listData <- function(names, dir) {
     assert(isCharacter(names))
     dir <- realpath(dir)
@@ -130,21 +131,14 @@ formals(loadData)[c("dir", "overwrite")] <-
                 full.names = TRUE,
                 ignore.case = TRUE
             ))
-            ## Add error checking here.
-            if (length(files) == 0L) {
-                stop(sprintf(
-                    fmt = paste(
-                        "'%s' is missing.", "dir: '%s'", "%s",
-                        sep = "\n"
-                    ),
+            if (!hasLength(files)) {
+                abort(sprintf(
+                    "{.file %s} is missing in %{.path %s}.\n%s",
                     name, dir, .rdataLoadError
                 ))
             } else if (length(files) > 1L) {
-                stop(sprintf(
-                    fmt = paste(
-                        "'%s' is not unique on disk.", "dir: '%s'", "%s",
-                        sep = "\n"
-                    ),
+                abort(sprintf(
+                    "{.file %s} is not unique at {.path %s}.\n%s",
                     name, dir, .rdataLoadError
                 ))
             }
