@@ -10,6 +10,8 @@
 \alias{RtracklayerFile-class}
 \alias{BcbioCountsFile-class}
 \alias{CSVFile-class}
+\alias{FASTAFile-class}
+\alias{FASTQFile-class}
 \alias{GMTFile-class}
 \alias{GMXFile-class}
 \alias{GRPFile-class}
@@ -88,6 +90,10 @@ File extension group supporting:
 \item \code{BcbioCountsFile-class}: bcbio-nextgen counts file.
 
 \item \code{CSVFile-class}: Comma-separated values file (CSV).
+
+\item \code{FASTAFile-class}: FASTA file.
+
+\item \code{FASTQFile-class}: FASTQ file.
 
 \item \code{GMTFile-class}: Gene matrix transposed file (GMT).
 

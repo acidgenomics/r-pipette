@@ -233,7 +233,7 @@ NULL
 ## Internal functions ==========================================================
 #' Map file extension to corresponding S4 file class
 #'
-#' @note Updated 2021-06-04.
+#' @note Updated 2021-08-24.
 #' @noRd
 .extToFileClass <- function(ext) {
     ext <- tolower(ext)
@@ -262,6 +262,8 @@ NULL
         "dif"          = "RioFile",
         "dta"          = "RioFile",
         "excel"        = "ExcelFile",
+        "fastq"        = "FASTQFile",
+        "fq"           = "FASTQFile",
         "fwf"          = "RioFile",
         "gff"          = "RtracklayerFile",
         "gff1"         = "RtracklayerFile",
@@ -776,6 +778,55 @@ formals(`import,DelimFile`)[c("makeNames", "metadata", "quiet")] <-
     }
 
 formals(`import,ExcelFile`)[c("metadata", "quiet")] <-
+    formalsList[c("import.metadata", "quiet")]
+
+
+
+#' Import a FASTQ file
+#'
+#' @note Updated 2021-08-24.
+#' @noRd
+#'
+#' @seealso `Biostrings::readDNAStringSet()`.
+`import,FASTQFile` <-  # nolint
+    function(file, metadata, quiet) {
+        requireNamespaces("Biostrings")
+        assert(
+            isFlag(quiet)
+        )
+        whatPkg <- "Biostrings"
+        whatFun <- "readDNAStringSet"
+        requireNamespaces(whatPkg)
+        tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
+        if (!isTRUE(quiet)) {
+            alert(sprintf(
+                "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
+                file, whatPkg, whatFun
+            ))
+        }
+        object <- Biostrings::readDNAStringSet(
+            filepath = tmpfile,
+            format = "fastq",
+            nrec = -1L,
+            skip = 0L,
+            seek.first.rec = TRUE,
+            use.names = FALSE,
+            with.qualities = FALSE
+        )
+        assert(is(object, "DNAStringSet"))
+        .returnImport(
+            object = object,
+            file = file,
+            rownames = FALSE,
+            colnames = FALSE,
+            metadata = metadata,
+            whatPkg = whatPkg,
+            whatFun = whatFun,
+            quiet = quiet
+        )
+    }
+
+formals(`import,FASTQFile`)[c("metadata", "quiet")] <-
     formalsList[c("import.metadata", "quiet")]
 
 
@@ -1389,6 +1440,14 @@ setMethod(
     f = "import",
     signature = signature("ExcelFile"),
     definition = `import,ExcelFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature("FASTQFile"),
+    definition = `import,FASTQFile`
 )
 
 #' @rdname import
