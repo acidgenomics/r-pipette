@@ -39,7 +39,7 @@ loadRemoteData <- function(
             grepl(pattern = .rdataExtPattern, x = x, ignore.case = TRUE)
         }
     ))) {
-        stop(.rdataLoadError)
+        abort(.rdataLoadError)
     }
     names <- gsub(
         pattern = .rdataExtPattern,
