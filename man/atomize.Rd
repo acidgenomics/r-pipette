@@ -27,8 +27,18 @@ Non-atomic columns (e.g. \code{list} or complex S4 classes) will be dropped.
 \description{
 Ensure all columns in the object are \code{atomic}.
 }
+\details{
+Keep only atomic columns. Complex columns won't write to disk as CSVs or work
+with R Markdown functions, in some cases.
+}
+\note{
+Updated 2021-08-24.
+}
 \examples{
-df <- DataFrame(a = "a", b = list(a = seq_len(3)))
+df <- DataFrame(
+    "a" = "a",
+    "b" = I(list("a" = seq_len(3L)))
+)
 lapply(df, is.atomic)
 x <- atomize(df)
 }
