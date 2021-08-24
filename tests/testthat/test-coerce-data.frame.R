@@ -19,3 +19,16 @@ test_that("Ranges", {
     expect_true(isSubset(colnames(mcols(gr)), colnames(as.data.frame(gr))))
     expect_true(isSubset(colnames(mcols(ir)), colnames(as.data.frame(ir))))
 })
+
+test_that("DataFrame with complex S4 columns", {
+    ## Note that this method is used internally but not currently exported, so
+    ## we don't collide with coercion methods defined by Bioconductor.
+    x <- DataFrame(
+        "a" = seq(from = 1L, to = 2L),
+        "b" = SimpleList("aa" = 1L, "bb" = 2L)
+    )
+    expect_error(
+        object = `.coerce,DataFrame,data.frame`(x),
+        regexp = "SimpleList"
+    )
+})
