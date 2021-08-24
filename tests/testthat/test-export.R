@@ -26,7 +26,7 @@ test_that("'ext' argument", {
 
 test_that("'engine' argument", {
     object <- c("hello", "world")
-    file <- "vec.txt.gz"
+    file <- file.path(tempdir(), "vec.txt.gz")
     for (engine in c(
         "base",
         "data.table",
@@ -45,8 +45,8 @@ test_that("'engine' argument", {
             object = readLines(file),
             expected = vec
         )
-        file.remove(file)
     }
+    file.remove(file)
 })
 
 
