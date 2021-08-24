@@ -2,6 +2,7 @@
 ## Need to test `stripWhitespace`, `removeBlank`, `comment`, and `skip`
 ## arguments here.
 ## FIXME Need to test empty file import support of source code lines.
+## FIXME Check for expected error of `comment` usage with data.table.
 
 
 
