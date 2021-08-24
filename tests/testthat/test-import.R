@@ -78,7 +78,10 @@ test_that("Custom engine support", {
 context("import : rtracklayer (GFF/GTF)")
 
 test_that("GFF3", {
-    object <- import(file = file.path("cache", "example.gff3"))
+    object <- import(
+        file = file.path("cache", "example.gff3"),
+        metadata = TRUE
+    )
     expect_s4_class(object, "GenomicRanges")
     expect_identical(
         object = levels(seqnames(object)),
@@ -123,7 +126,10 @@ test_that("GFF3", {
 })
 
 test_that("GTF", {
-    object <- import(file = file.path("cache", "example.gtf"))
+    object <- import(
+        file = file.path("cache", "example.gtf"),
+        metadata = TRUE
+    )
     expect_s4_class(object, "GenomicRanges")
     expect_identical(
         object = levels(seqnames(object)),
@@ -167,7 +173,10 @@ test_that("GTF", {
 context("import : MTX")
 
 test_that("MTX", {
-    object <- import(file = file.path("cache", "single_cell_counts.mtx.gz"))
+    object <- import(
+        file = file.path("cache", "single_cell_counts.mtx.gz"),
+        metadata = TRUE
+    )
     expect_s4_class(object, "sparseMatrix")
     expect_identical(
         object = lapply(dimnames(object), head, n = 2L),
@@ -215,7 +224,7 @@ test_that("R data serialized", {
 test_that("Error on RDA containing multiple objects.", {
     expect_error(
         object = import(file = file.path("cache", "multi.rda")),
-        regexp = "'multi.rda' does not contain a single object"
+        regexp = "single"
     )
 })
 
@@ -271,7 +280,8 @@ context("import : JSON/YAML")
 
 test_that("JSON/YAML", {
     for (ext in c("json", "yml")) {
-        object <- import(file = file.path("cache", paste0("example.", ext)))
+        file <- file.path("cache", paste0("example.", ext))
+        object <- import(file)
         expect_is(object, "list")
     }
 })
@@ -293,10 +303,9 @@ test_that("'rio::import()', e.g. Stata DTA file", {
 context("import : PZFX")
 
 skip_if_not_installed(pkg = "pzfx")
-file <- system.file("extdata", "exponential_decay.pzfx", package = "pzfx")
-stopifnot(file.exists(file))
 
 test_that("PZFX", {
+    file <- system.file("extdata", "exponential_decay.pzfx", package = "pzfx")
     x <- import(file, sheet = 1L)
     colnames(x)
     expect_identical(
