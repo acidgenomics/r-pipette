@@ -420,3 +420,43 @@ test_that("bcbio counts", {
         )
     )
 })
+
+
+
+context("import : FASTA / FASTQ")
+
+test_that("FASTA", {
+    file <- file.path("cache", "example.fa.gz")
+    object <- import(
+        file = file,
+        moleculeType = "DNA",
+        metadata = TRUE
+    )
+    expect_is(object, "DNAStringSet")
+    expect_identical(
+        object = names(object)[[1L]],
+        expected = "ENST00000456328.2"
+    )
+    expect_length(object[[1L]], 1657L)
+    expect_is(metadata(object)[["attributes"]], "SimpleList")
+    expect_identical(
+        object = names(object),
+        expected = names(metadata(object)[["attributes"]])
+    )
+
+})
+
+test_that("FASTQ", {
+    file <- file.path("cache", "example.fq.gz")
+    object <- import(
+        file = file,
+        moleculeType = "DNA",
+        metadata = TRUE
+    )
+    expect_is(object, "DNAStringSet")
+    expect_identical(
+        object = names(object)[[1L]],
+        expected = "NS500233:572:H25VKBGX2:1:11101:16195:1041 3:N:0:1"
+    )
+    expect_length(object[[1L]], 8L)
+})
