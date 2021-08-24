@@ -17,3 +17,13 @@ test_that("GRanges", {
     expect_s4_class(object, "GRanges")
     expect_true(hasNames(object))
 })
+
+test_that("Drop non-automic column", {
+    object <- DataFrame(
+        "a" = "a",
+        "b" = I(list("a" = seq_len(3L)))
+    )
+    expect_identical(colnames(object), c("a", "b"))
+    object <- atomize(object)
+    expect_identical(colnames(object), "a")
+})

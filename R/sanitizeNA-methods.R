@@ -106,7 +106,7 @@ setMethod(
 `sanitizeNA,data.frame` <-  # nolint
     function(object) {
         if (!(hasCols(object) && hasRows(object))) {
-            return(object)
+            return(object)  # nocov
         }
         assert(allAreAtomic(object))
         if (hasRownames(object)) {
@@ -120,7 +120,7 @@ setMethod(
                 if (is.character(x)) {
                     sanitizeNA(x)
                 } else {
-                    x
+                    x  # nocov
                 }
             }
         )

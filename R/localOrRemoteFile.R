@@ -84,7 +84,7 @@ localOrRemoteFile <- function(file, tempPrefix, quiet) {
             tmpdir <- realpath(tempdir())
             fileext <- fileExt(file)
             if (is.na(fileext)) {
-                fileext <- ""
+                fileext <- ""  # nocov
             } else {
                 fileext <- paste0(".", fileext)
             }

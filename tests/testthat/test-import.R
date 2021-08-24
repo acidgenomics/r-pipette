@@ -27,8 +27,8 @@ test_that("No extension", {
 context("import : data frame")
 
 test_that("Delimited files", {
-    file <- file.path(file = "cache", paste0("example.", ext))
     for (ext in c("csv", "csv.gz", "tsv")) {
+        file <- file.path(file = "cache", paste0("example.", ext))
         object <- import(
             file = file,
             metadata = TRUE
