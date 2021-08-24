@@ -375,7 +375,7 @@ NULL
         isString(file),
         isFlag(quiet)
     )
-    if (!isTRUE(quiet)) {
+    if (isFALSE(quiet)) {
         alert(sprintf("Importing sidecar {.file %s}.", file))
     }
     object <- import(
@@ -402,6 +402,7 @@ NULL
     file,
     rownames,
     colnames,
+    makeNames,
     metadata = FALSE,
     whatPkg = NULL,
     whatFun = NULL,
@@ -413,12 +414,17 @@ NULL
         isString(file),
         isFlag(rownames),
         isFlag(colnames) || isCharacter(colnames),
+        isString(makeNames, nullOK = TRUE),
         isFlag(metadata),
         isString(whatPkg, nullOK = TRUE),
         isString(whatFun, nullOK = TRUE),
         isFlag(quiet)
     )
+
+
+
     ## Check that manual column names are correct.
+    ## FIXME Don't run makeNames in this situation.
     if (isCharacter(colnames)) {
         assert(identical(colnames(object), colnames))  # nocov
     }
@@ -430,7 +436,7 @@ NULL
     if (is.data.frame(object)) {
         ## Set row names automatically.
         if (isTRUE(rownames) && isSubset("rowname", colnames(object))) {
-            if (!isTRUE(quiet)) {
+            if (isFALSE(quiet)) {
                 alertInfo("Setting row names from {.var rowname} column.")
             }
             rownames(object) <- object[["rowname"]]
@@ -538,7 +544,7 @@ NULL
 ## R data importers ============================================================
 #' Import an R data serialized file (`.rds`)
 #'
-#' @note Updated 2021-06-10.
+#' @note Updated 2021-08-24.
 #' @noRd
 `import,RDSFile` <-  # nolint
     function(file, quiet) {
@@ -546,14 +552,18 @@ NULL
             isString(file),
             isFlag(quiet)
         )
+        whatPkg <- "base"
+        whatFun <- "readRDS"
         tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
-        if (!isTRUE(quiet)) {
+        if (isFALSE(quiet)) {
             alert(sprintf(
                 "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
-                file, "base", "readRDS"
+                file, whatPkg, whatFun
             ))
         }
-        object <- readRDS(file = tmpfile)
+        args <- list("file" = tmpfile)
+        what <- .getFunction(f = whatFun, pkg = whatPkg)
+        object <- do.call(what = what, args = args)
         tryCatch(
             expr = {
                 validObject(object)
@@ -581,7 +591,7 @@ formals(`import,RDSFile`)[["quiet"]] <-
             isFlag(quiet)
         )
         tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
-        if (!isTRUE(quiet)) {
+        if (isFALSE(quiet)) {
             alert(sprintf(
                 "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
                 file, "base", "load"
@@ -589,7 +599,7 @@ formals(`import,RDSFile`)[["quiet"]] <-
         }
         safe <- new.env()
         object <- load(file = tmpfile, envir = safe)
-        if (!isTRUE(hasLength(safe, n = 1L))) {
+        if (isFALSE(hasLength(safe, n = 1L))) {
             abort(sprintf(
                 "{.file %s} does not contain a single object.",
                 basename(file)
@@ -772,7 +782,7 @@ formals(`import,RDataFile`)[["quiet"]] <-
                 )
             }
         )
-        if (!isTRUE(quiet)) {
+        if (isFALSE(quiet)) {
             alert(sprintf(
                 "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
                 file, whatPkg, whatFun
@@ -849,7 +859,7 @@ formals(`import,DelimFile`)[c("makeNames", "metadata", "quiet")] <-
         whatFun <- "read_excel"
         requireNamespaces(whatPkg)
         tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
-        if (!isTRUE(quiet)) {
+        if (isFALSE(quiet)) {
             alert(sprintf(
                 "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
                 file, whatPkg, whatFun
@@ -975,7 +985,7 @@ formals(`import,ExcelFile`)[c("metadata", "quiet")] <-
                 )
             }
         )
-        if (!isTRUE(quiet)) {
+        if (isFALSE(quiet)) {
             alert(sprintf(
                 "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
                 file, whatPkg, whatFun
@@ -1066,7 +1076,7 @@ formals(`import,LinesFile`)[c("metadata", "quiet")] <-
         whatPkg <- "Matrix"
         whatFun <- "readMM"
         tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
-        if (!isTRUE(quiet)) {
+        if (isFALSE(quiet)) {
             alert(sprintf(
                 "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
                 file, whatPkg, whatFun
@@ -1150,7 +1160,7 @@ formals(`import,MTXFile`)[c("metadata", "quiet")] <-
         whatFun <- "read_pzfx"
         requireNamespaces(whatPkg)
         tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
-        if (!isTRUE(quiet)) {
+        if (isFALSE(quiet)) {
             alert(sprintf(
                 "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
                 file, whatPkg, whatFun
@@ -1241,7 +1251,7 @@ formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
         whatFun <- "read_json"
         requireNamespaces(whatPkg)
         tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
-        if (!isTRUE(quiet)) {
+        if (isFALSE(quiet)) {
             alert(sprintf(
                 "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
                 file, whatPkg, whatFun
@@ -1280,7 +1290,7 @@ formals(`import,JSONFile`)[c("metadata", "quiet")] <-
         whatFun <- "yaml.load_file"
         requireNamespaces(whatPkg)
         tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
-        if (!isTRUE(quiet)) {
+        if (isFALSE(quiet)) {
             alert(sprintf(
                 "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
                 file, whatPkg, whatFun
@@ -1338,7 +1348,7 @@ formals(`import,YAMLFile`)[c("metadata", "quiet")] <-
         whatFun <- paste0("read", moleculeType, "StringSet")
         requireNamespaces(whatPkg)
         tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
-        if (!isTRUE(quiet)) {
+        if (isFALSE(quiet)) {
             alert(sprintf(
                 "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
                 file, whatPkg, whatFun
@@ -1427,7 +1437,7 @@ formals(`import,FASTAFile`)[c("metadata", "quiet")] <-
         whatFun <- paste0("read", moleculeType, "StringSet")
         requireNamespaces(whatPkg)
         tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
-        if (!isTRUE(quiet)) {
+        if (isFALSE(quiet)) {
             alert(sprintf(
                 "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
                 file, whatPkg, whatFun
@@ -1473,7 +1483,7 @@ formals(`import,FASTQFile`)[c("metadata", "quiet")] <-
 `import,GMTFile` <-  # nolint
     function(file, quiet) {
         assert(isFlag(quiet))
-        if (!isTRUE(quiet)) {
+        if (isFALSE(quiet)) {
             alert(sprintf("Importing {.file %s}.", file))
         }
         lines <- import(
@@ -1504,7 +1514,7 @@ formals(`import,GMTFile`)[["quiet"]] <-
 `import,GMXFile` <-  # nolint
     function(file, quiet) {
         assert(isFlag(quiet))
-        if (!isTRUE(quiet)) {
+        if (isFALSE(quiet)) {
             alert(sprintf("Importing {.file %s}.", file))
         }
         lines <- import(
@@ -1555,7 +1565,7 @@ formals(`import,GMXFile`)[["quiet"]] <-
         whatFun <- "import"
         requireNamespaces(whatPkg)
         tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
-        if (!isTRUE(quiet)) {
+        if (isFALSE(quiet)) {
             alert(sprintf(
                 "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
                 file, whatPkg, whatFun
@@ -1596,7 +1606,7 @@ formals(`import,RioFile`)[c("metadata", "quiet")] <-
         whatFun <- "import"
         requireNamespaces(whatPkg)
         tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
-        if (!isTRUE(quiet)) {
+        if (isFALSE(quiet)) {
             alert(sprintf(
                 "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
                 file, whatPkg, whatFun

@@ -17,7 +17,7 @@
 #' @examples
 #' url <- "ftp://ftp.ncbi.nlm.nih.gov/genomes/"
 #' if (
-#'     !isTRUE(nzchar(Sys.getenv("CI"))) &&
+#'     isFALSE(nzchar(Sys.getenv("CI"))) &&
 #'     goalie::hasInternet(url)
 #' ) {
 #'     x <- getURLDirList(url)
@@ -28,7 +28,7 @@ getURLDirList <- function(url, pattern = NULL) {
         isAURL(url),
         isString(pattern, nullOK = TRUE)
     )
-    if (!isTRUE(grepl("/$", url))) {
+    if (isFALSE(grepl("/$", url))) {
         url <- paste0(url, "/")  # nocov
     }
     x <- getURL(url = url, dirlistonly = TRUE)

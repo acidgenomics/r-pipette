@@ -35,8 +35,8 @@ loadDataAsName <- function(
     ## Check to see if any of the new names already exist in environment.
     names <- names(dots)
     if (
-        !isTRUE(overwrite) &&
-        !isTRUE(allAreNonExisting(names, envir = envir, inherits = FALSE))
+        isFALSE(overwrite) &&
+        isFALSE(allAreNonExisting(names, envir = envir, inherits = FALSE))
     ) {
         .loadExistsError(names)
     }
