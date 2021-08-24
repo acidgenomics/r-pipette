@@ -192,6 +192,11 @@ Remove blank lines.
 Sheet to read. Either a string (the name of a sheet), or an integer (the
 position of the sheet). Defaults to the first sheet.
 \emph{Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.}}
+
+\item{moleculeType}{\code{character(1)}.
+Molecule type, either DNA or RNA.
+Most RNA-seq FASTQ files contain complementary DNA (cDNA) sequences, not
+direct sequencing of the RNA molecules.}
 }
 \value{
 Varies, depending on the file type (format):
@@ -255,7 +260,7 @@ arguments. Remote URLs and compressed files are supported. If you need more
 complex import settings, just call the wrapped importer directly instead.
 }
 \note{
-Updated 2021-06-04.
+Updated 2021-08-24.
 }
 \section{Row and column names}{
 
