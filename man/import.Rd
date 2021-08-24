@@ -208,6 +208,10 @@ position of the sheet). Defaults to the first sheet.
 Molecule type, either DNA or RNA.
 Most RNA-seq FASTQ files contain complementary DNA (cDNA) sequences, not
 direct sequencing of the RNA molecules.}
+
+\item{rownamesFile, colnamesFile}{\code{character(1)} or \code{NULL}.
+Row names and/or column names sidecare file.
+Applies primarily to MatrixMarket Exchange files (e.g. \code{MTXFile}).}
 }
 \value{
 Varies, depending on the file type (format):

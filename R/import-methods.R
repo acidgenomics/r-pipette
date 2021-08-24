@@ -152,6 +152,9 @@
 #' @param rownames `logical(1)`.
 #'   Automatically assign row names, if `rowname` column is defined.
 #'   Applies to file types that return a data frame only.
+#' @param rownamesFile,colnamesFile `character(1)` or `NULL`.
+#'   Row names and/or column names sidecare file.
+#'   Applies primarily to MatrixMarket Exchange files (e.g. `MTXFile`).
 #' @param sheet `character(1)` or `integer(1)`.
 #'   Sheet to read. Either a string (the name of a sheet), or an integer (the
 #'   position of the sheet). Defaults to the first sheet.
@@ -414,7 +417,9 @@ NULL
         isString(file),
         isFlag(rownames),
         isFlag(colnames) || isCharacter(colnames),
-        is.function(makeNames) || is.null(makeNames),
+        is.function(makeNames) ||
+            is.null(makeNames) ||
+            isFALSE(makeNames),
         isFlag(metadata),
         isString(whatPkg, nullOK = TRUE),
         isString(whatFun, nullOK = TRUE),
@@ -442,10 +447,10 @@ NULL
             object[[rnCol]] <- NULL
         }
     }
-    if (
-        hasNames(object) &&
-        is.function(makeNames)
-    ) {
+    if (hasRownames(object)) {
+        assert(hasNoDuplicates(rownames(object)))
+    }
+    if (hasNames(object)) {
         if (isTRUE(any(duplicated(names(object))))) {
             ## nocov start
             dupes <- sort(names(object)[duplicated(names(object))])
@@ -455,17 +460,21 @@ NULL
             ))
             ## nocov end
         }
-        ## Harden against any object classes that don't support names
-        ## assignment, to prevent unwanted error on this step.
-        tryCatch(
-            expr = {
-                names(object) <- makeNames(names(object))
-            },
-            error = function(e) NULL
-        )
+        ## Ensure names are syntactically valid, when applicable.
+        if (is.function(makeNames)) {
+            ## Harden against any object classes that don't support names
+            ## assignment, to prevent unwanted error on this step.
+            tryCatch(
+                expr = {
+                    names(object) <- makeNames(names(object))
+                },
+                error = function(e) NULL
+            )
+        }
         if (isFALSE(hasValidNames(object))) {
             alertWarning("Invalid names detected.")  # nocov
         }
+        assert(hasNoDuplicates(names(object)))
     }
     if (isTRUE(metadata)) {
         metadata2(object, which = "import") <-
@@ -659,7 +668,9 @@ formals(`import,RDataFile`)[["quiet"]] <-
             is.character(comment) && length(comment) <= 1L,
             isInt(skip), isNonNegative(skip),
             isPositive(nMax),
-            is.function(makeNames) || is.null(makeNames),
+            is.function(makeNames) ||
+                is.null(makeNames) ||
+                isFALSE(makeNames),
             isString(engine),
             isFlag(metadata),
             isFlag(quiet)
@@ -856,7 +867,9 @@ formals(`import,DelimFile`)[c("makeNames", "metadata", "quiet")] <-
             isFlag(colnames) || isCharacter(colnames),
             isInt(skip), isNonNegative(skip),
             isPositive(nMax),
-            is.function(makeNames) || is.null(makeNames),
+            is.function(makeNames) ||
+                is.null(makeNames) ||
+                isFALSE(makeNames),
             isFlag(metadata),
             isFlag(quiet)
         )
@@ -910,6 +923,184 @@ formals(`import,ExcelFile`)[c("makeNames", "metadata", "quiet")] <-
 
 
 
+#' Import a sparse matrix file (`.mtx`)
+#'
+#' @note Updated 2021-08-24.
+#' @noRd
+`import,MTXFile` <-  # nolint
+    function(
+        file,
+        rownamesFile = paste0(file, ".rownames"),
+        colnamesFile = paste0(file, ".colnames"),
+        metadata,
+        quiet
+    ) {
+        assert(
+            isString(rownamesFile, nullOK = TRUE),
+            isString(colnamesFile, nullOK = TRUE),
+            isFlag(metadata),
+            isFlag(quiet)
+        )
+        whatPkg <- "Matrix"
+        whatFun <- "readMM"
+        tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
+        if (isFALSE(quiet)) {
+            alert(sprintf(
+                "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
+                file, whatPkg, whatFun
+            ))
+        }
+        object <- readMM(file = tmpfile)
+        ## Add the rownames automatically using `.rownames` sidecar file.
+        rownamesFile <- tryCatch(
+            expr = localOrRemoteFile(
+                file = rownamesFile,
+                quiet = quiet
+            ),
+            error = function(e) {
+                ## FIXME Inform the user about this.
+                NULL  # nocov
+            }
+        )
+        if (isAFile(rownamesFile)) {
+            rownames(object) <-
+                .importMTXSidecar(file = rownamesFile, quiet = quiet)
+        }
+        ## Add the colnames automatically using `.colnames` sidecar file.
+        colnamesFile <- tryCatch(
+            expr = localOrRemoteFile(
+                file = colnamesFile,
+                quiet = quiet
+            ),
+            error = function(e) {
+                ## FIXME Inform the user about this.
+                NULL  # nocov
+            }
+        )
+        if (isAFile(colnamesFile)) {
+            colnames(object) <-
+                .importMTXSidecar(file = colnamesFile, quiet = quiet)
+        }
+        .returnImport(
+            object = object,
+            file = file,
+            rownames = FALSE,
+            colnames = FALSE,
+            makeNames = FALSE,
+            metadata = metadata,
+            whatPkg = whatPkg,
+            whatFun = whatFun,
+            quiet = quiet
+        )
+    }
+
+formals(`import,MTXFile`)[c("metadata", "quiet")] <-
+    formalsList[c("import.metadata", "quiet")]
+
+
+
+## FIXME Need to pass makeNames here.
+
+#' Import a GraphPad Prism file (`.pzfx`)
+#'
+#' @note Updated 2021-08-24.
+#' @noRd
+#'
+#' @note This function doesn't support optional column names.
+`import,PZFXFile` <-  # nolint
+    function(
+        file,
+        sheet = 1L,
+        metadata,
+        quiet
+    ) {
+        assert(
+            isString(file),
+            isScalar(sheet),
+            isFlag(metadata),
+            isFlag(quiet)
+        )
+        whatPkg <- "pzfx"
+        whatFun <- "read_pzfx"
+        requireNamespaces(whatPkg)
+        tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
+        if (isFALSE(quiet)) {
+            alert(sprintf(
+                "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
+                file, whatPkg, whatFun
+            ))
+        }
+        args <- list(
+            "path" = tmpfile,
+            "table" = sheet
+        )
+        what <- .getFunction(f = whatFun, pkg = whatPkg)
+        object <- do.call(what = what, args = args)
+        object <- removeNA(object)
+        ## FIXME Rework this.
+        .returnImport(
+            object = object,
+            file = file,
+            rownames = FALSE,
+            colnames = TRUE,
+            metadata = metadata,
+            whatPkg = whatPkg,
+            whatFun = whatFun,
+            quiet = quiet
+        )
+    }
+
+formals(`import,PZFXFile`)[c("metadata", "quiet")] <-
+    formalsList[c("import.metadata", "quiet")]
+
+
+
+#' Import bcbio count matrix generated by featureCounts
+#'
+#' @details
+#' Internal importer for a bcbio count matrix file (`.counts`).
+#' These files contain an `"id"` column that we need to coerce to row names.
+#'
+#' @note Updated 2021-08-24.
+#' @noRd
+`import,BcbioCountsFile` <-  # nolint
+    function(file, metadata, quiet) {
+        assert(
+            isString(file),
+            isFlag(metadata),
+            isFlag(quiet)
+        )
+        object <- import(
+            file = as.character(file),
+            format = "tsv",
+            metadata = metadata,
+            quiet = quiet
+        )
+        assert(
+            is.data.frame(object),
+            isSubset("id", colnames(object)),
+            hasNoDuplicates(object[["id"]])
+        )
+        ## Keep track of metadata after matrix coercion, when applicable.
+        if (isTRUE(metadata)) {
+            m <- metadata2(object, which = "import")
+        }
+        rownames(object) <- object[["id"]]
+        object[["id"]] <- NULL
+        object <- as.matrix(object)
+        mode(object) <- "integer"
+        if (isTRUE(metadata)) {
+            metadata2(object, which = "import") <- m
+        }
+        object
+    }
+
+formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
+    formalsList[c("import.metadata", "quiet")]
+
+
+
+## Non-array importers =========================================================
 #' Import source code lines
 #'
 #' @note Updated 2021-06-04.
@@ -1053,194 +1244,6 @@ formals(`import,LinesFile`)[c("metadata", "quiet")] <-
 
 
 
-## FIXME Need to document rownamesFile and colnamesFile
-## FIXME Allow the user to pass in NULL as well.
-
-#' Import a sparse matrix file (`.mtx`)
-#'
-#' @note Updated 2021-08-24.
-#' @noRd
-`import,MTXFile` <-  # nolint
-    function(
-        file,
-        rownamesFile = paste0(file, ".rownames"),
-        colnamesFile = paste0(file, ".colnames"),
-        metadata,
-        quiet
-    ) {
-        assert(
-            isString(rownamesFile, nullOK = TRUE),
-            isString(colnamesFile, nullOK = TRUE),
-            isFlag(metadata),
-            isFlag(quiet)
-        )
-        ## FIXME Can I rework this?
-        rownames <- FALSE
-        colnames <- FALSE
-        whatPkg <- "Matrix"
-        whatFun <- "readMM"
-        tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
-        if (isFALSE(quiet)) {
-            alert(sprintf(
-                "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
-                file, whatPkg, whatFun
-            ))
-        }
-        object <- readMM(file = tmpfile)
-        ## Add the rownames automatically using `.rownames` sidecar file.
-        rownamesFile <- tryCatch(
-            expr = localOrRemoteFile(
-                file = rownamesFile,
-                quiet = quiet
-            ),
-            error = function(e) {
-                ## FIXME Inform the user about this.
-                NULL  # nocov
-            }
-        )
-        if (isAFile(rownamesFile)) {
-            rownames <- TRUE
-            rownames(object) <-
-                .importMTXSidecar(file = rownamesFile, quiet = quiet)
-        }
-        ## Add the colnames automatically using `.colnames` sidecar file.
-        colnamesFile <- tryCatch(
-            expr = localOrRemoteFile(
-                file = colnamesFile,
-                quiet = quiet
-            ),
-            error = function(e) {
-                ## FIXME Inform the user about this.
-                NULL  # nocov
-            }
-        )
-        if (isAFile(colnamesFile)) {
-            colnames <- TRUE
-            colnames(object) <-
-                .importMTXSidecar(file = colnamesFile, quiet = quiet)
-        }
-        ## FIXME Rework this.
-        ## FIXME Need to pass `makeNames` here, disabled by default.
-        .returnImport(
-            object = object,
-            file = file,
-            ## FIXME Rethink the passthrough here.
-            rownames = rownames,
-            colnames = colnames,
-            metadata = metadata,
-            whatPkg = whatPkg,
-            whatFun = whatFun,
-            quiet = quiet
-        )
-    }
-
-formals(`import,MTXFile`)[c("metadata", "quiet")] <-
-    formalsList[c("import.metadata", "quiet")]
-
-
-
-## FIXME Need to pass makeNames here.
-
-#' Import a GraphPad Prism file (`.pzfx`)
-#'
-#' @note Updated 2021-08-24.
-#' @noRd
-#'
-#' @note This function doesn't support optional column names.
-`import,PZFXFile` <-  # nolint
-    function(
-        file,
-        sheet = 1L,
-        metadata,
-        quiet
-    ) {
-        assert(
-            isString(file),
-            isScalar(sheet),
-            isFlag(metadata),
-            isFlag(quiet)
-        )
-        whatPkg <- "pzfx"
-        whatFun <- "read_pzfx"
-        requireNamespaces(whatPkg)
-        tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
-        if (isFALSE(quiet)) {
-            alert(sprintf(
-                "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
-                file, whatPkg, whatFun
-            ))
-        }
-        args <- list(
-            "path" = tmpfile,
-            "table" = sheet
-        )
-        what <- .getFunction(f = whatFun, pkg = whatPkg)
-        object <- do.call(what = what, args = args)
-        object <- removeNA(object)
-        ## FIXME Rework this.
-        .returnImport(
-            object = object,
-            file = file,
-            rownames = FALSE,
-            colnames = TRUE,
-            metadata = metadata,
-            whatPkg = whatPkg,
-            whatFun = whatFun,
-            quiet = quiet
-        )
-    }
-
-formals(`import,PZFXFile`)[c("metadata", "quiet")] <-
-    formalsList[c("import.metadata", "quiet")]
-
-
-
-#' Import bcbio count matrix generated by featureCounts
-#'
-#' @details
-#' Internal importer for a bcbio count matrix file (`.counts`).
-#' These files contain an `"id"` column that we need to coerce to row names.
-#'
-#' @note Updated 2021-08-24.
-#' @noRd
-`import,BcbioCountsFile` <-  # nolint
-    function(file, metadata, quiet) {
-        assert(
-            isString(file),
-            isFlag(metadata),
-            isFlag(quiet)
-        )
-        object <- import(
-            file = as.character(file),
-            format = "tsv",
-            metadata = metadata,
-            quiet = quiet
-        )
-        assert(
-            is.data.frame(object),
-            isSubset("id", colnames(object)),
-            hasNoDuplicates(object[["id"]])
-        )
-        ## Keep track of metadata after matrix coercion, when applicable.
-        if (isTRUE(metadata)) {
-            m <- metadata2(object, which = "import")
-        }
-        rownames(object) <- object[["id"]]
-        object[["id"]] <- NULL
-        object <- as.matrix(object)
-        mode(object) <- "integer"
-        if (isTRUE(metadata)) {
-            metadata2(object, which = "import") <- m
-        }
-        object
-    }
-
-formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
-    formalsList[c("import.metadata", "quiet")]
-
-
-
-## Non-array importers ===================================================
 #' Import a JSON file (`.json`)
 #'
 #' @note Updated 2021-06-10.
