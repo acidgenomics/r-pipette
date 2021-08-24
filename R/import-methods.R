@@ -461,9 +461,9 @@ NULL
                 },
                 error = function(e) NULL
             )
-        }
-        if (isFALSE(hasValidNames(object))) {
-            alertWarning("Invalid names detected.")  # nocov
+            if (isFALSE(hasValidNames(object))) {
+                alertWarning("Invalid names detected.")  # nocov
+            }
         }
         assert(hasNoDuplicates(names(object)))
     }
