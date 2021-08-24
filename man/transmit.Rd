@@ -44,11 +44,8 @@ FTP server. Also enables on-the-fly file renaming and compression.
 Updated 2021-02-02.
 }
 \examples{
-remoteDir <- "ftp://ftp.ncbi.nlm.nih.gov/genomes/"
-if (
-    isFALSE(nzchar(Sys.getenv("CI"))) &&
-    goalie::hasInternet(remoteDir)
-) {
+try({
+    remoteDir <- "ftp://ftp.ncbi.nlm.nih.gov/genomes/"
     readme <- transmit(
         remoteDir = remoteDir,
         pattern = "^README\\\\.txt$",
@@ -58,5 +55,5 @@ if (
     basename(readme)
     file.exists(readme)
     unlink(readme)
-}
+})
 }
