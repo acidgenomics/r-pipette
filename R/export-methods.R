@@ -135,7 +135,7 @@ NULL
             if (isTRUE(overwrite) && !isTRUE(quiet)) {
                 alertWarning(sprintf("Overwriting {.file %s}.", file))
             } else {
-                stop(sprintf("File exists: '%s'", file))
+                abort(sprintf("File exists: {.file %s}.", file))
             }
         }
         if (isTRUE(compress)) {
@@ -317,7 +317,7 @@ setMethod(
                 }
                 file.remove(file)
             } else {
-                stop(sprintf("File exists: '%s'", file))
+                abort(sprintf("File exists: {.file %s}.", file))
             }
         }
         if (isTRUE(compress)) {
@@ -537,7 +537,7 @@ setMethod(
                     basename(file), realpath(dirname(file))
                 ))
             } else {
-                stop(sprintf("File exists: %s", file))
+                abort(sprintf("File exists: {.file %s}.", file))
             }
         }
         if (isTRUE(compress)) {
