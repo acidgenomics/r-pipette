@@ -1,4 +1,4 @@
-## FIXME Split out documentation into separate files per format.
+## FIXME Need to improve FASTA / FASTQ documentation here.
 
 
 
@@ -104,7 +104,7 @@
 #' `DOC`, `DOCX`, `PDF`, `PPT`, `PPTX`.
 #'
 #' @name import
-#' @note Updated 2021-06-04.
+#' @note Updated 2021-08-24.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param colnames `logical(1)` or `character`.
@@ -131,6 +131,10 @@
 #' @param makeNames `function`.
 #'   Apply syntactic naming function to (column) names.
 #'   *Does not apply to import of R data files.*
+#' @param moleculeType `character(1)`.
+#'   Molecule type, either DNA or RNA.
+#'   Most RNA-seq FASTQ files contain complementary DNA (cDNA) sequences, not
+#'   direct sequencing of the RNA molecules.
 #' @param nMax `integer(1)` or `Inf`.
 #'   Maximum number of lines to parse.
 #'   *Applies to plain text delimited, Excel, and source code lines only.*
@@ -785,8 +789,6 @@ formals(`import,ExcelFile`)[c("metadata", "quiet")] <-
     formalsList[c("import.metadata", "quiet")]
 
 
-
-## FIXME Need to document "type" here.
 
 #' Import a FASTQ file
 #'
