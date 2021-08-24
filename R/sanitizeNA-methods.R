@@ -152,7 +152,7 @@ setMethod(
 `sanitizeNA,DataFrame` <-  # nolint
     function(object) {
         if (!(hasCols(object) && hasRows(object))) {
-            return(object)
+            return(object)  # nocov
         }
         meta <- metadata(object)
         rn <- rownames(object)
@@ -162,7 +162,7 @@ setMethod(
                 if (is.character(x)) {
                     sanitizeNA(x)
                 } else {
-                    x
+                    x  # nocov
                 }
             }
         )
