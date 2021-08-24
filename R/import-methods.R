@@ -1,4 +1,5 @@
 ## FIXME Need to improve FASTA / FASTQ documentation here.
+## FIXME Need to add code coverage for FASTA and FASTQ files.
 
 
 
@@ -270,6 +271,8 @@ NULL
         "dif"          = "RioFile",
         "dta"          = "RioFile",
         "excel"        = "ExcelFile",
+        "fa"           = "FASTAFile",
+        "fasta"        = "FASTAFile",
         "fastq"        = "FASTQFile",
         "fq"           = "FASTQFile",
         "fwf"          = "RioFile",
@@ -790,17 +793,22 @@ formals(`import,ExcelFile`)[c("metadata", "quiet")] <-
 
 
 
+## FIXME Work on adding this.
+`import,FASTAFile` <-  # nolint
+    function(...) {
+        stop("FIXME Need to add this.")
+    }
+
+
+
 #' Import a FASTQ file
-#'
-#' @details
-#' Most RNA-seq FASTQ files contain DNA sequence.
 #'
 #' @note Updated 2021-08-24.
 #' @noRd
 #'
 #' @seealso `Biostrings::readDNAStringSet()`.
 #'
-#' @return Varies, depending on the `type` argument:
+#' @return Varies, depending on the `moleculeType` argument:
 #' - `"DNA"`: `DNAStringSet`.
 #' - `"RNA"`: `RNAStringSet`.
 `import,FASTQFile` <-  # nolint
