@@ -60,11 +60,12 @@
 #'
 #' Note that `stringsAsFactors` is always disabled for import.
 #'
-#' @section Matrix Market Exchange (`MTXFile`):
+#' @section FASTA and FASTQ files (`FASTAFile`, `FASTQFile`):
 #'
-#' Reading a Matrix Market Exchange file requires `ROWNAMES` and `COLNAMES`
-#' sidecar files containing the corresponding row and column names of the sparse
-#' matrix.
+#' FASTA and FASTQ files are currently managed internally by the Biostrings
+#' package. Refer to `readDNAStringSet` and `readRNAStringSet` for details.
+#' Import of these files will return `DNAStringSet` or `RNAStringSet` depending
+#' on the input, defined by `moleculeType` argument.
 #'
 #' @section General feature format (GFF, GTF; `RtracklayerFile`):
 #'
@@ -88,7 +89,13 @@
 #'
 #' [GSEA wiki]: https://goo.gl/3ZkDPb
 #'
-#' @section `BcbioCountsFile`:
+#' @section Matrix Market Exchange (`MTXFile`):
+#'
+#' Reading a Matrix Market Exchange file requires `ROWNAMES` and `COLNAMES`
+#' sidecar files containing the corresponding row and column names of the sparse
+#' matrix.
+#'
+#' @section bcbio-nextgen count matrix (`BcbioCountsFile`):
 #'
 #' [bcbio][] count matrix (e.g. generated from featureCounts) and related
 #' sidecar files are natively supported.
