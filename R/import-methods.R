@@ -541,7 +541,7 @@ NULL
 #' Internal importer for a bcbio count matrix file (`.counts`).
 #' These files contain an `"id"` column that we need to coerce to row names.
 #'
-#' @note Updated 2021-06-04.
+#' @note Updated 2021-08-24.
 #' @noRd
 `import,BcbioCountsFile` <-  # nolint
     function(file, metadata, quiet) {
@@ -561,6 +561,7 @@ NULL
             isSubset("id", colnames(object)),
             hasNoDuplicates(object[["id"]])
         )
+        ## Keep track of metadata after matrix coercion, when applicable.
         if (isTRUE(metadata)) {
             m <- metadata2(object, which = "import")
         }
@@ -578,6 +579,11 @@ formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
     formalsList[c("import.metadata", "quiet")]
 
 
+
+
+## FIXME Just sanitize the rownames and colnames here....
+## FIXME Consider passing makeNames through internally.
+## FIXME Need to improve `makeNames` handling here.
 
 #' Import a delimited file (e.g. `.csv`, `.tsv`).
 #'
@@ -761,7 +767,7 @@ formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
             isFALSE(any(object == "", na.rm = TRUE))
         )
         ## FIXME Rework this.
-        ## FIXME Need to pass `makeNames` through here more
+        ## FIXME Need to pass `makeNames` through here.
         .returnImport(
             object = object,
             file = file,
@@ -779,15 +785,18 @@ formals(`import,DelimFile`)[c("makeNames", "metadata", "quiet")] <-
 
 
 
+## FIXME Excel worksheets should never have rownames, so disregard here?
+## FIXME Take out the rownames support here.
+## FIXME Need to pass in makeNames support here.
+
 #' Import a Microsoft Excel worksheet (`.xlsx`)
 #'
-#' @note Updated 2021-06-10.
+#' @note Updated 2021-08-24.
 #' @noRd
 `import,ExcelFile` <-  # nolint
     function(
         file,
         sheet = 1L,
-        rownames = TRUE,
         colnames = TRUE,
         skip = 0L,
         nMax = Inf,
@@ -840,7 +849,8 @@ formals(`import,DelimFile`)[c("makeNames", "metadata", "quiet")] <-
         .returnImport(
             object = object,
             file = file,
-            rownames = rownames,
+            ## FIXME Rework this step.
+            rownames = FALSE,
             colnames = colnames,
             metadata = metadata,
             whatPkg = whatPkg,
