@@ -49,7 +49,7 @@ localOrRemoteFile <- function(file, tempPrefix, quiet) {
     file <- mapply(
         file = file,
         FUN = function(file) {
-            if (!isTRUE(isAURL(file))) {
+            if (isFALSE(isAURL(file))) {
                 return(file)
             }
             ## Remote file mode.
@@ -126,7 +126,7 @@ formals(localOrRemoteFile)[c("tempPrefix", "quiet")] <-
                 return(file)
             }
             tmpdir <- realpath(tempdir())
-            if (!isTRUE(grepl(pattern = tmpdir, x = file))) {
+            if (isFALSE(grepl(pattern = tmpdir, x = file))) {
                 tmpfile <- tempfile(
                     pattern = "pipette-",
                     tmpdir = tmpdir,
