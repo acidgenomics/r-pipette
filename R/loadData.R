@@ -133,7 +133,7 @@ formals(loadData)[c("dir", "overwrite")] <-
             ))
             if (!hasLength(files)) {
                 abort(sprintf(
-                    "{.file %s} is missing in %{.path %s}.\n%s",
+                    "{.file %s} is missing in {.path %s}.\n%s",
                     name, dir, .rdataLoadError
                 ))
             } else if (length(files) > 1L) {

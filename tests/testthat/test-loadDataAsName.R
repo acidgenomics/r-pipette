@@ -4,7 +4,6 @@ dir <- "cache"
 
 test_that("RDS, overwrite mode", {
     envir <- new.env()
-
     x <- loadDataAsName(
         new = serialized,
         dir = dir,
@@ -14,7 +13,6 @@ test_that("RDS, overwrite mode", {
     expect_identical(names(x), "new")
     ## We're defaulting to global environment.
     expect_true(exists("new", envir = envir, inherits = FALSE))
-
     expect_error(
         object = loadDataAsName(
             new = serialized,
@@ -41,14 +39,14 @@ test_that("Standard evaluation", {
 test_that("Missing files", {
     expect_error(
         object = loadDataAsName(data = XXX, dir = dir),
-        regexp = .rdataLoadError
+        regexp = "missing"
     )
 })
 
 test_that("Multiple objects in single file", {
     expect_error(
         object = loadDataAsName(data = multi, dir = dir),
-        regexp = "'multi.rda' contains multiple objects: x, y"
+        regexp = "multiple"
     )
 })
 

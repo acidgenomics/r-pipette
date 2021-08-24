@@ -1,13 +1,15 @@
 context("matchRownameColumn")
 
 test_that("NULL return", {
-    expect_null(matchRownameColumn(data.frame()))
+    df <- data.frame()
+    expect_null(matchRownameColumn(df))
 })
 
 test_that("Match failure", {
+    df <- data.frame(rn = "a", rowname = "b")
     expect_error(
-        object = matchRownameColumn(data.frame(rn = "a", rowname = "b")),
-        regexp = "Multiple row names columns detected: rn, rowname."
+        object = matchRownameColumn(df),
+        regexp = "Multiple"
     )
 })
 
