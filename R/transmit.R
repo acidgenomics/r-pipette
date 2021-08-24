@@ -23,11 +23,8 @@
 #' Local file paths.
 #'
 #' @examples
-#' remoteDir <- "ftp://ftp.ncbi.nlm.nih.gov/genomes/"
-#' if (
-#'     isFALSE(nzchar(Sys.getenv("CI"))) &&
-#'     goalie::hasInternet(remoteDir)
-#' ) {
+#' try({
+#'     remoteDir <- "ftp://ftp.ncbi.nlm.nih.gov/genomes/"
 #'     readme <- transmit(
 #'         remoteDir = remoteDir,
 #'         pattern = "^README\\.txt$",
@@ -37,7 +34,7 @@
 #'     basename(readme)
 #'     file.exists(readme)
 #'     unlink(readme)
-#' }
+#' })
 transmit <- function(
     remoteDir,
     localDir = ".",

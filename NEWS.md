@@ -1,8 +1,18 @@
-## pipette 0.7.0 (UNRELEASED)
+## pipette 0.7.0 (2021-08-24)
 
 ### Major changes
 
 - Updated minimum Bioconductor release to 3.13.
+- `import`: Added support for FASTA and FASTQ files, which are loaded via
+  Biostrings package internally. Refer to `readDNAStringSet` for details.
+- `import`: Improved `makeNames` consistency for methods that import
+  two-dimension arrays (e.g. `data.frame`).
+
+### Minor changes
+
+- Improved package error messages and other alerts with AcidCLI update. Instead
+  of calling `stop` internally, now using `abort`, which supports stylized
+  messages (via cli package).
 
 ## pipette 0.6.3 (2021-08-05)
 
