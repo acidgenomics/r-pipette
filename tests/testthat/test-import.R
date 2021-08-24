@@ -1,3 +1,7 @@
+## FIXME Need to add code coverage for FASTA and FASTQ files.
+
+
+
 context("import : invalid input")
 
 ## As of v0.3.17, file metadata is disabled by default.

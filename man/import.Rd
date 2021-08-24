@@ -323,12 +323,13 @@ Supported return types:
 Note that \code{stringsAsFactors} is always disabled for import.
 }
 
-\section{Matrix Market Exchange (\code{MTXFile})}{
+\section{FASTA and FASTQ files (\code{FASTAFile}, \code{FASTQFile})}{
 
 
-Reading a Matrix Market Exchange file requires \code{ROWNAMES} and \code{COLNAMES}
-sidecar files containing the corresponding row and column names of the sparse
-matrix.
+FASTA and FASTQ files are currently managed internally by the Biostrings
+package. Refer to \code{readDNAStringSet} and \code{readRNAStringSet} for details.
+Import of these files will return \code{DNAStringSet} or \code{RNAStringSet} depending
+on the input, defined by \code{moleculeType} argument.
 }
 
 \section{General feature format (GFF, GTF; \code{RtracklayerFile})}{
@@ -354,7 +355,15 @@ See also:
 Refer to the Broad Institute \href{https://goo.gl/3ZkDPb}{GSEA wiki} for details.
 }
 
-\section{\code{BcbioCountsFile}}{
+\section{Matrix Market Exchange (\code{MTXFile})}{
+
+
+Reading a Matrix Market Exchange file requires \code{ROWNAMES} and \code{COLNAMES}
+sidecar files containing the corresponding row and column names of the sparse
+matrix.
+}
+
+\section{bcbio-nextgen count matrix (\code{BcbioCountsFile})}{
 
 
 \href{https://bcbio-nextgen.readthedocs.io/}{bcbio} count matrix (e.g. generated from featureCounts) and related
