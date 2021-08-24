@@ -500,12 +500,16 @@ NULL
         if (isSubset(format, c("auto", "none"))) {
             ext <- str_match(basename(file), extPattern)[1L, 2L]
             if (is.na(ext)) {
-                ## FIXME Switch to abort here.
-                stop(paste(
-                    "'file' argument does not contain file type extension.",
-                    "Set the file format manually using the 'format' argument.",
-                    "Refer to 'pipette::import()' documentation for details.",
-                    sep = "\n"
+                abort(sprintf(
+                    fmt = paste(
+                        "{.arg %s} ({.file %s}) doesn't contain extension.",
+                        "Set the file format manually using {.arg %s}.",
+                        "Refer to {.pkg %s}::{.fun %s} for details.",
+                        sep = "\n"
+                    ),
+                    "file", basename(file),
+                    "format",
+                    "pipette", "import"
                 ))
             }
         } else {
