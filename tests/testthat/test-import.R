@@ -35,8 +35,6 @@ test_that("No extension", {
 
 context("import : data frame")
 
-skip_if_not(hasInternet())
-
 test_that("Delimited files", {
     for (ext in c("csv", "csv.gz", "tsv")) {
         file <- file.path(file = "cache", paste0("example.", ext))
@@ -76,8 +74,6 @@ test_that("acid.import.engine override", {
 
 
 context("import : rtracklayer (GFF/GTF)")
-
-skip_if_not(hasInternet())
 
 test_that("GFF3", {
     object <- import(file = file.path("cache", "example.gff3"))
@@ -168,8 +164,6 @@ test_that("GTF", {
 
 context("import : MTX")
 
-skip_if_not(hasInternet())
-
 test_that("MTX", {
     object <- import(file = file.path("cache", "single_cell_counts.mtx.gz"))
     expect_s4_class(object, "sparseMatrix")
@@ -191,8 +185,6 @@ test_that("MTX", {
 
 context("import : R script")
 
-skip_if_not(hasInternet())
-
 test_that("R script", {
     expect_is(
         object = import(file = file.path("cache", "example.R")),
@@ -204,14 +196,7 @@ test_that("R script", {
 
 context("import : R data")
 
-skip_if_not(hasInternet())
-
-## AppVeyor has a cryptic failure here.
-## cannot read workspace version 167772160 written by R 512.3.5;
-## need R 256.2.3 or newer
-
 test_that("R data", {
-    skip_on_appveyor()
     object <- import(file = file.path("cache", "example.rda"))
     expect_s4_class(object, "DataFrame")
     expect_null(metadata(object)[["import"]])
@@ -219,7 +204,6 @@ test_that("R data", {
 })
 
 test_that("R data serialized", {
-    skip_on_appveyor()
     object <- import(file = file.path("cache", "example.rds"))
     expect_s4_class(object, "DataFrame")
     expect_null(metadata(object)[["import"]])
@@ -236,8 +220,6 @@ test_that("Error on RDA containing multiple objects.", {
 
 
 context("import : GSEA")
-
-skip_if_not(hasInternet())
 
 test_that("MSigDB hallmark", {
     mapply(
@@ -285,8 +267,6 @@ test_that("T_CELL_ACTIVATION", {
 
 context("import : JSON/YAML")
 
-skip_if_not(hasInternet())
-
 test_that("JSON/YAML", {
     for (ext in c("json", "yml")) {
         object <- import(file = file.path("cache", paste0("example.", ext)))
@@ -295,8 +275,8 @@ test_that("JSON/YAML", {
 })
 
 test_that("'rio::import()', e.g. Stata DTA file", {
-    skip_if_not_installed("haven")
-    skip_if_not_installed("rio")
+    skip_if_not_installed(pkg = "haven")
+    skip_if_not_installed(pkg = "rio")
     file <- system.file("examples/iris.dta", package = "haven")
     x <- import(file)
     expect_is(x, "data.frame")
@@ -311,8 +291,6 @@ test_that("'rio::import()', e.g. Stata DTA file", {
 context("import : PZFX")
 
 skip_if_not_installed(pkg = "pzfx")
-skip_if_not(hasInternet())
-
 file <- system.file("extdata", "exponential_decay.pzfx", package = "pzfx")
 stopifnot(file.exists(file))
 
@@ -333,7 +311,6 @@ test_that("PZFX", {
 
 context("import : Excel")
 
-skip_if_not(hasInternet())
 skip_if_not_installed(pkg = "readxl")
 
 test_that("XLSX", {
@@ -403,8 +380,6 @@ test_that("XLS", {
 
 
 context("import : bcbio files")
-
-skip_if_not(hasInternet())
 
 test_that("bcbio counts", {
     object <- import(file = file.path("cache", "example.counts"))
