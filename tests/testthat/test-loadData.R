@@ -5,7 +5,10 @@ dir <- "cache"
 test_that("R data", {
     envir <- new.env()
     x <- loadData(gr, dir = dir, envir = envir)
-    expect_identical(x, c(gr = realpath(file.path(dir, "gr.rda"))))
+    expect_identical(
+        object = x,
+        expected = c("gr" = realpath(file.path(dir, "gr.rda")))
+    )
     expect_true(exists("gr", envir = envir, inherits = FALSE))
 })
 
@@ -14,14 +17,16 @@ test_that("R data serialized", {
     x <- loadData(serialized, dir = dir, envir = envir)
     expect_identical(
         object = x,
-        expected = c(serialized = realpath(file.path(dir, "serialized.rds")))
+        expected = c(
+            "serialized" = realpath(file.path(dir, "serialized.rds"))
+        )
     )
 })
 
 test_that("Error on mixed extensions (no RDS/RDA soup).", {
     expect_error(
-        object = basename(loadData(gr, serialized, dir = dir)),
-        regexp = "RDS, RDA, and/or RDATA"
+        object = loadData(gr, serialized, dir = dir),
+        regexp = "mix"
     )
 })
 
@@ -42,7 +47,6 @@ test_that("Overwrite mode", {
     envir <- new.env()
     envir[["gr"]] <- TRUE
     envir[["serialized"]] <- TRUE
-
     ## RDS
     expect_error(
         object = loadData(
@@ -62,7 +66,6 @@ test_that("Overwrite mode", {
         ),
         type = "character"
     )
-
     ## RDA
     expect_error(
         object = loadData(gr, dir = dir, envir = envir, overwrite = FALSE),
@@ -77,21 +80,21 @@ test_that("Overwrite mode", {
 test_that("Multiple objects in single file", {
     expect_error(
         object = loadData(multi, dir = dir),
-        regexp = "'multi.rda' contains multiple objects: x, y"
+        regexp = "multiple"
     )
 })
 
 test_that("Renamed file", {
     expect_error(
         object = loadData(renamed, dir = dir),
-        regexp = "'renamed.rda' file has been renamed."
+        regexp = "renamed"
     )
 })
 
 test_that("Duplicate RDA and RDS files", {
     expect_error(
         object = loadData(example, dir = dir),
-        regexp = "'example' is not unique on disk."
+        regexp = "unique"
     )
 })
 
