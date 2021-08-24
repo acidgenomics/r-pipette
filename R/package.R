@@ -15,7 +15,8 @@
 #'   decompress dots download download.file extPattern fileExt formalsList
 #'   initDir packageName packageVersion pasteURL realpath requireNamespaces
 #'   standardizeCall
-#' @importFrom AcidCLI alert alertInfo alertSuccess alertWarning toInlineString
+#' @importFrom AcidCLI abort alert alertInfo alertSuccess alertWarning
+#'   toInlineString
 #' @importFrom AcidGenerics DataFrame Rle SimpleList end head mcols mcols<-
 #'   metadata metadata<- na.omit start tail width
 #' @importFrom Matrix readMM writeMM
