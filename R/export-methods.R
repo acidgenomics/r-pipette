@@ -103,27 +103,6 @@ NULL
         )
         whatPkg <- match.arg(arg = engine, choices = .engines)
         requireNamespaces(whatPkg)
-        ## nocov start
-        ## The vroom engine is currently buggy for writing lines, so fall back
-        ## to readr (if installed), and then base R. This is fixed in vroom
-        ## v1.4.1, which isn't on CRAN yet.
-        ## https://github.com/r-lib/vroom/issues/291
-        if (
-            identical(whatPkg, "vroom") &&
-            packageVersion("vroom") < "1.4.1"
-        ) {
-            if (isInstalled("readr")) {
-                whatPkg <- "readr"
-            } else {
-                whatPkg <- "base"
-            }
-            message(sprintf(
-                "%s %s is buggy for writing lines. Switching to %s instead.",
-                "vroom", packageVersion("vroom"),
-                whatPkg
-            ))
-        }
-        ## nocov end
         if (isTRUE(append)) {
             ## nocov start
             assert(!identical(whatPkg, "base"))
