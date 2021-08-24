@@ -146,7 +146,7 @@ contain an extension.}
 
 \item{rownames}{\code{logical(1)}.
 Automatically assign row names, if \code{rowname} column is defined.
-Applies to file types that return \code{data.frame} only.}
+Applies to file types that return a data frame only.}
 
 \item{colnames}{\code{logical(1)} or \code{character}.
 Automatically assign column names, using the first header row.
@@ -170,7 +170,7 @@ Maximum number of lines to parse.
 
 \item{makeNames}{\code{function}.
 Apply syntactic naming function to (column) names.
-\emph{Does not apply to import of R data files.}}
+Function is never applied to row names, when they are defined in object.}
 
 \item{engine}{\code{character(1)}.
 Engine (package) to use for import.
