@@ -28,7 +28,7 @@ Updated 2021-02-02.
 \examples{
 url <- "ftp://ftp.ncbi.nlm.nih.gov/genomes/"
 if (
-    !isTRUE(nzchar(Sys.getenv("CI"))) &&
+    isFALSE(nzchar(Sys.getenv("CI"))) &&
     goalie::hasInternet(url)
 ) {
     x <- getURLDirList(url)
