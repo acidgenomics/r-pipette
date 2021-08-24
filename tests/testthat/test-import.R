@@ -10,22 +10,25 @@ context("import : invalid input")
 options("acid.import.metadata" = TRUE)
 
 test_that("Invalid extension", {
-    file.create("file.XXX")
+    file <- file.path(tempdir(), "file.XXX")
+    unlink(file, recursive = TRUE)
+    file.create(file)
     expect_error(
-        object = import(file = "file.XXX"),
-        regexp = "'xxx' extension"
+        object = import(file = file),
+        regexp = "xxx"
     )
-    unlink("file.XXX")
+    unlink(file, recursive = TRUE)
 })
 
 test_that("No extension", {
-    unlink("example", recursive = TRUE)
-    file.create("example")
+    file <- file.path(tempdir(), "example")
+    unlink(file, recursive = TRUE)
+    file.create(file)
     expect_error(
-        object = import("example"),
-        regexp = "does not contain file type extension"
+        object = import(file),
+        regexp = "extension"
     )
-    unlink("example")
+    unlink(file, recursive = TRUE)
 })
 
 
@@ -332,18 +335,69 @@ context("import : Excel")
 
 skip_if_not(hasInternet())
 skip_if_not_installed(pkg = "readxl")
-skip_on_appveyor()
 
 test_that("XLSX", {
     file <- file.path("cache", "example.xlsx")
-    object <- import(file)
-    expect_is(object, "data.frame")
+    expect_identical(
+        object = import(
+            file = file,
+            rownames = TRUE,
+            colnames = TRUE,
+            metadata = FALSE
+        ),
+        expected = data.frame(
+            "genotype" = c(
+                "wildtype",
+                "knockout",
+                "wildtype",
+                "knockout"
+            ),
+            "treatment" = c(
+                "control",
+                "control",
+                "treated",
+                "treated"
+            ),
+            row.names = c(
+                "sample1",
+                "sample2",
+                "sample3",
+                "sample4"
+            )
+        )
+    )
 })
 
 test_that("XLS", {
     file <- file.path("cache", "example.xls")
-    object <- import(file)
-    expect_is(object, "data.frame")
+    expect_identical(
+        object = import(
+            file = file,
+            rownames = TRUE,
+            colnames = TRUE,
+            metadata = FALSE
+        ),
+        expected = data.frame(
+            "genotype" = c(
+                "wildtype",
+                "knockout",
+                "wildtype",
+                "knockout"
+            ),
+            "treatment" = c(
+                "control",
+                "control",
+                "treated",
+                "treated"
+            ),
+            row.names = c(
+                "sample1",
+                "sample2",
+                "sample3",
+                "sample4"
+            )
+        )
+    )
 })
 
 

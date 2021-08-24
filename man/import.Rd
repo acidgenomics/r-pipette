@@ -54,9 +54,11 @@ import(file, ...)
 \S4method{import}{ExcelFile}(
   file,
   sheet = 1L,
+  rownames = TRUE,
   colnames = TRUE,
   skip = 0L,
   nMax = Inf,
+  makeNames = getOption("acid.import.make.names", default = syntactic::makeNames),
   metadata = getOption("acid.import.metadata", default = FALSE),
   quiet = getOption("acid.quiet", default = FALSE)
 )

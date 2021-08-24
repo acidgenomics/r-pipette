@@ -414,36 +414,38 @@ NULL
         isString(file),
         isFlag(rownames),
         isFlag(colnames) || isCharacter(colnames),
-        isString(makeNames, nullOK = TRUE),
+        is.function(makeNames) || is.null(makeNames),
         isFlag(metadata),
         isString(whatPkg, nullOK = TRUE),
         isString(whatFun, nullOK = TRUE),
         isFlag(quiet)
     )
-
-
-
     ## Check that manual column names are correct.
-    ## FIXME Don't run makeNames in this situation.
     if (isCharacter(colnames)) {
         assert(identical(colnames(object), colnames))  # nocov
     }
-
-
-
-
-    ## Data frame-specific operations.
-    if (is.data.frame(object)) {
-        ## Set row names automatically.
-        if (isTRUE(rownames) && isSubset("rowname", colnames(object))) {
+    ## Attempt to set row names automatically for data frames, when applicable.
+    if (
+        is.data.frame(object) &&
+        isTRUE(rownames) &&
+        !hasRownames(object)
+    ) {
+        rnCol <- matchRownameColumn(object)
+        if (!is.null(rnCol)) {
             if (isFALSE(quiet)) {
-                alertInfo("Setting row names from {.var rowname} column.")
+                alertInfo(sprintf(
+                    "Setting row names from {.var %s} column.",
+                    rnCol
+                ))
             }
-            rownames(object) <- object[["rowname"]]
-            object[["rowname"]] <- NULL
+            rownames(object) <- object[[rnCol]]
+            object[[rnCol]] <- NULL
         }
     }
-    if (hasNames(object)) {
+    if (
+        hasNames(object) &&
+        is.function(makeNames)
+    ) {
         if (isTRUE(any(duplicated(names(object))))) {
             ## nocov start
             dupes <- sort(names(object)[duplicated(names(object))])
@@ -461,16 +463,10 @@ NULL
             },
             error = function(e) NULL
         )
-
-
         if (isFALSE(hasValidNames(object))) {
             alertWarning("Invalid names detected.")  # nocov
         }
     }
-
-
-
-
     if (isTRUE(metadata)) {
         metadata2(object, which = "import") <-
             SimpleList(
@@ -634,10 +630,6 @@ formals(`import,RDataFile`)[["quiet"]] <-
 
 
 ## Array importers =============================================================
-## FIXME Just sanitize the rownames and colnames here....
-## FIXME Consider passing makeNames through internally.
-## FIXME Need to improve `makeNames` handling here.
-
 #' Import a delimited file (e.g. `.csv`, `.tsv`).
 #'
 #' @details
@@ -645,7 +637,7 @@ formals(`import,RDataFile`)[["quiet"]] <-
 #' Can override using `acid.import.engine` option, which also supports
 #' data.table and readr packages.
 #'
-#' @note Updated 2021-06-10.
+#' @note Updated 2021-08-24.
 #' @noRd
 `import,DelimFile` <-  # nolint
     function(
@@ -667,7 +659,7 @@ formals(`import,RDataFile`)[["quiet"]] <-
             is.character(comment) && length(comment) <= 1L,
             isInt(skip), isNonNegative(skip),
             isPositive(nMax),
-            is.function(makeNames),
+            is.function(makeNames) || is.null(makeNames),
             isString(engine),
             isFlag(metadata),
             isFlag(quiet)
@@ -819,13 +811,12 @@ formals(`import,RDataFile`)[["quiet"]] <-
             allAreAtomic(object),
             isFALSE(any(object == "", na.rm = TRUE))
         )
-        ## FIXME Rework this.
-        ## FIXME Need to pass `makeNames` through here.
         .returnImport(
             object = object,
             file = file,
             rownames = rownames,
             colnames = colnames,
+            makeNames = makeNames,
             metadata = metadata,
             whatPkg = whatPkg,
             whatFun = whatFun,
@@ -850,19 +841,22 @@ formals(`import,DelimFile`)[c("makeNames", "metadata", "quiet")] <-
     function(
         file,
         sheet = 1L,
+        rownames = TRUE,
         colnames = TRUE,
         skip = 0L,
         nMax = Inf,
+        makeNames,
         metadata,
         quiet
     ) {
         assert(
             isString(file),
             isScalar(sheet),
-            isFlag(rownames),
+            isFlag(rownames) || isCharacter(rownames),
             isFlag(colnames) || isCharacter(colnames),
             isInt(skip), isNonNegative(skip),
             isPositive(nMax),
+            is.function(makeNames) || is.null(makeNames),
             isFlag(metadata),
             isFlag(quiet)
         )
@@ -898,13 +892,12 @@ formals(`import,DelimFile`)[c("makeNames", "metadata", "quiet")] <-
             stringsAsFactors = FALSE
         )
         object <- removeNA(object)
-        ## FIXME Rework this.
         .returnImport(
             object = object,
             file = file,
-            ## FIXME Rework this step.
-            rownames = FALSE,
+            rownames = rownames,
             colnames = colnames,
+            makeNames = makeNames,
             metadata = metadata,
             whatPkg = whatPkg,
             whatFun = whatFun,
@@ -912,8 +905,8 @@ formals(`import,DelimFile`)[c("makeNames", "metadata", "quiet")] <-
         )
     }
 
-formals(`import,ExcelFile`)[c("metadata", "quiet")] <-
-    formalsList[c("import.metadata", "quiet")]
+formals(`import,ExcelFile`)[c("makeNames", "metadata", "quiet")] <-
+    formalsList[c("import.make.names", "import.metadata", "quiet")]
 
 
 
