@@ -72,7 +72,7 @@ transmit <- function(
         is.character(remoteTxt),
         length(remoteTxt) > 0L
     )) {
-        stop("Failed to list directory contents.")  # nocov
+        abort("Failed to list directory contents.")  # nocov
     }
     ## Match the `-` at begining for file.
     ## `-rwxrwxr-x`: File

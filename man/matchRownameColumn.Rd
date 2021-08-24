@@ -43,7 +43,7 @@ Automatically detect row names column, if defined.
 The data.table package uses "rn" by default, whereas tibble uses "rowname".
 }
 \note{
-Updated 2020-01-18.
+Updated 2021-08-24.
 }
 \examples{
 data(data.table, tbl_df, package = "AcidTest")
