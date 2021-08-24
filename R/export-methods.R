@@ -393,8 +393,7 @@ setMethod(
                 whatFun <- "vroom_write"
                 args <- list(
                     "x" = object,
-                    ## "path" has been renamed to "file" in vroom 1.4.1.
-                    ## > "file" = file,
+                    "file" = file,
                     "append" = FALSE,
                     "col_names" = colnames,
                     "delim" = switch(
@@ -408,11 +407,6 @@ setMethod(
                     "progress" = FALSE,
                     "quote" = "needed"
                 )
-                if (isTRUE(packageVersion("vroom") <= "1.4.0")) {
-                    args[["path"]] <- file
-                } else {
-                    args[["file"]] <- file
-                }
             }
         )
         if (isFALSE(quiet)) {
