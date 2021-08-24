@@ -359,9 +359,13 @@ NULL
 
 
 
+## FIXME Rework the colnames handling here?
+## FIXME Should we pass in the method here?
+## FIXME How to handle `rownames` and `colnames` sanitization?
+
 #' Return standardized import object
 #'
-#' @note Updated 2021-06-04.
+#' @note Updated 2021-08-24.
 #' @noRd
 .returnImport <- function(
     object,
@@ -388,6 +392,10 @@ NULL
     if (isCharacter(colnames)) {
         assert(identical(colnames(object), colnames))  # nocov
     }
+
+
+
+
     ## Data frame-specific operations.
     if (is.data.frame(object)) {
         ## Set row names automatically.
@@ -405,7 +413,7 @@ NULL
             dupes <- sort(names(object)[duplicated(names(object))])
             alertWarning(sprintf(
                 "Duplicate names: {.var %s}.",
-                toString(dupes, width = 100L)
+                toInlineString(dupes, n = 5L)
             ))
             ## nocov end
         }
@@ -417,13 +425,19 @@ NULL
             },
             error = function(e) NULL
         )
+
+
         if (isFALSE(hasValidNames(object))) {
             alertWarning("Invalid names detected.")  # nocov
         }
     }
+
+
+
+
     if (isTRUE(metadata)) {
         metadata2(object, which = "import") <-
-            list(
+            SimpleList(
                 "date" = Sys.Date(),
                 "file" = ifelse(
                     test = isTRUE(isAFile(file)),
@@ -711,6 +725,7 @@ formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
             allAreAtomic(object),
             isFALSE(any(object == "", na.rm = TRUE))
         )
+        ## FIXME Rework this.
         .returnImport(
             object = object,
             file = file,
@@ -783,6 +798,7 @@ formals(`import,DelimFile`)[c("makeNames", "metadata", "quiet")] <-
             stringsAsFactors = FALSE
         )
         object <- removeNA(object)
+        ## FIXME Rework this.
         .returnImport(
             object = object,
             file = file,
@@ -800,11 +816,97 @@ formals(`import,ExcelFile`)[c("metadata", "quiet")] <-
 
 
 
-## FIXME Work on adding this.
+#' Import a FASTA file
+#'
+#' @note Updated 2021-08-24.
+#' @noRd
+#'
+#' @seealso
+#' - `Biostrings::readDNAStringSet()`.
+#'
+#' @return Varies, depending on the `moleculeType` argument:
+#' - `"DNA"`: `DNAStringSet`.
+#' - `"RNA"`: `RNAStringSet`.
 `import,FASTAFile` <-  # nolint
-    function(...) {
-        stop("FIXME Need to add this.")
+    function(
+        file,
+        moleculeType = c("DNA", "RNA"),
+        metadata,
+        quiet
+    ) {
+        requireNamespaces("Biostrings")
+        assert(
+            isFlag(metadata),
+            isFlag(quiet)
+        )
+        moleculeType <- match.arg(moleculeType)
+        whatPkg <- "Biostrings"
+        whatFun <- paste0("read", moleculeType, "StringSet")
+        requireNamespaces(whatPkg)
+        tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
+        if (!isTRUE(quiet)) {
+            alert(sprintf(
+                "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
+                file, whatPkg, whatFun
+            ))
+        }
+        what <- get(
+            x = whatFun,
+            envir = asNamespace(whatPkg),
+            inherits = FALSE
+        )
+        assert(is.function(what))
+        args <- list(
+            filepath = tmpfile,
+            format = "fasta",
+            nrec = -1L,
+            skip = 0L,
+            seek.first.rec = TRUE,
+            use.names = metadata
+        )
+        object <- do.call(what = what, args = args)
+        assert(is(object, paste0(moleculeType, "StringSet")))
+        if (
+            hasNames(object) &&
+            any(grepl(
+                pattern = "|",
+                x = head(names(object)),
+                fixed = TRUE
+            ))
+        ) {
+            attributes <- strsplit(
+                x = names(object),
+                split = "|",
+                fixed = TRUE
+            )
+            attributes <- SimpleList(attributes)
+            names <- vapply(
+                X = attributes,
+                FUN = `[[`,
+                1L,
+                FUN.VALUE = character(1L),
+                USE.NAMES = FALSE
+            )
+            names(object) <- names
+            names(attributes) <- names
+            metadata(object)[["attributes"]] <- attributes
+        }
+        ## FIXME Don't sanitize the names here...
+        ## FIXME Rework this.
+        .returnImport(
+            object = object,
+            file = file,
+            rownames = FALSE,
+            colnames = FALSE,
+            metadata = metadata,
+            whatPkg = whatPkg,
+            whatFun = whatFun,
+            quiet = quiet
+        )
     }
+
+formals(`import,FASTAFile`)[c("metadata", "quiet")] <-
+    formalsList[c("import.metadata", "quiet")]
 
 
 
@@ -813,7 +915,8 @@ formals(`import,ExcelFile`)[c("metadata", "quiet")] <-
 #' @note Updated 2021-08-24.
 #' @noRd
 #'
-#' @seealso `Biostrings::readDNAStringSet()`.
+#' @seealso
+#' - `Biostrings::readDNAStringSet()`.
 #'
 #' @return Varies, depending on the `moleculeType` argument:
 #' - `"DNA"`: `DNAStringSet`.
@@ -858,6 +961,7 @@ formals(`import,ExcelFile`)[c("metadata", "quiet")] <-
         )
         object <- do.call(what = what, args = args)
         assert(is(object, paste0(moleculeType, "StringSet")))
+        ## FIXME Rework this.
         .returnImport(
             object = object,
             file = file,
@@ -1067,6 +1171,7 @@ formals(`import,GMXFile`)[["quiet"]] <-
                 object <- object[1L:nMax]
             }
         }
+        ## FIXME Rework this.
         .returnImport(
             object = object,
             file = file,
@@ -1105,6 +1210,7 @@ formals(`import,LinesFile`)[c("metadata", "quiet")] <-
             ))
         }
         object <- jsonlite::read_json(path = tmpfile)
+        ## FIXME Rework this.
         .returnImport(
             object = object,
             file = file,
@@ -1175,6 +1281,7 @@ formals(`import,JSONFile`)[c("metadata", "quiet")] <-
             colnames(object) <-
                 .importMTXSidecar(file = colnamesFile, quiet = quiet)
         }
+        ## FIXME Rework this.
         .returnImport(
             object = object,
             file = file,
@@ -1226,6 +1333,7 @@ formals(`import,MTXFile`)[c("metadata", "quiet")] <-
             table = sheet
         )
         object <- removeNA(object)
+        ## FIXME Rework this.
         .returnImport(
             object = object,
             file = file,
@@ -1274,6 +1382,7 @@ formals(`import,PZFXFile`)[c("metadata", "quiet")] <-
             ))
         }
         object <- rio::import(file = tmpfile, ...)
+        ## FIXME Rework this.
         .returnImport(
             object = object,
             file = file,
@@ -1322,6 +1431,7 @@ formals(`import,RioFile`)[c("metadata", "quiet")] <-
                 stop("File failed to load.")  # nocov
             }
         )
+        ## FIXME Rework this.
         .returnImport(
             object = object,
             file = file,
@@ -1436,6 +1546,7 @@ formals(`import,RDataFile`)[["quiet"]] <-
             ))
         }
         object <- yaml::yaml.load_file(input = tmpfile)
+        ## FIXME Rework this.
         .returnImport(
             object = object,
             file = file,
@@ -1484,6 +1595,14 @@ setMethod(
     f = "import",
     signature = signature("ExcelFile"),
     definition = `import,ExcelFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature("FASTAFile"),
+    definition = `import,FASTAFile`
 )
 
 #' @rdname import
