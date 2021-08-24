@@ -63,6 +63,7 @@ import(file, ...)
 
 \S4method{import}{FASTQFile}(
   file,
+  type = c("DNA", "RNA"),
   metadata = getOption("acid.import.metadata", default = FALSE),
   quiet = getOption("acid.quiet", default = FALSE)
 )

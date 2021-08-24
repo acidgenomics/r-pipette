@@ -1,3 +1,7 @@
+## FIXME Split out documentation into separate files per format.
+
+
+
 #' Import
 #'
 #' Read file by extension into R.
@@ -782,20 +786,36 @@ formals(`import,ExcelFile`)[c("metadata", "quiet")] <-
 
 
 
+## FIXME Need to document "type" here.
+
 #' Import a FASTQ file
+#'
+#' @details
+#' Most RNA-seq FASTQ files contain DNA sequence.
 #'
 #' @note Updated 2021-08-24.
 #' @noRd
 #'
 #' @seealso `Biostrings::readDNAStringSet()`.
+#'
+#' @return Varies, depending on the `type` argument:
+#' - `"DNA"`: `DNAStringSet`.
+#' - `"RNA"`: `RNAStringSet`.
 `import,FASTQFile` <-  # nolint
-    function(file, metadata, quiet) {
+    function(
+        file,
+        type = c("DNA", "RNA"),
+        metadata,
+        quiet
+    ) {
         requireNamespaces("Biostrings")
         assert(
+            isFlag(metadata),
             isFlag(quiet)
         )
+        type <- match.arg(type)
         whatPkg <- "Biostrings"
-        whatFun <- "readDNAStringSet"
+        whatFun <- paste0("read", type, "StringSet")
         requireNamespaces(whatPkg)
         tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
         if (!isTRUE(quiet)) {
@@ -804,7 +824,13 @@ formals(`import,ExcelFile`)[c("metadata", "quiet")] <-
                 file, whatPkg, whatFun
             ))
         }
-        object <- Biostrings::readDNAStringSet(
+        what <- get(
+            x = whatFun,
+            envir = asNamespace(whatPkg),
+            inherits = FALSE
+        )
+        assert(is.function(what))
+        args <- list(
             filepath = tmpfile,
             format = "fastq",
             nrec = -1L,
@@ -813,7 +839,8 @@ formals(`import,ExcelFile`)[c("metadata", "quiet")] <-
             use.names = FALSE,
             with.qualities = FALSE
         )
-        assert(is(object, "DNAStringSet"))
+        object <- do.call(what = what, args = args)
+        assert(is(object, paste0(type, "StringSet")))
         .returnImport(
             object = object,
             file = file,
