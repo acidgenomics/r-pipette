@@ -255,9 +255,15 @@ NULL
     ext <- tolower(ext)
     if (identical(ext, "txt")) {
         ## nocov start
-        stop(paste(
-            "Automatic import of 'txt' extension is not supported.",
-            "Specify using 'format' argument (e.g. 'lines', 'table')."
+        abort(sprintf(
+            fmt = paste(
+                "Automatic import of {.var %s} file is not supported.",
+                "Specify using {.arg %s} (e.g. {.var %s}, {.var %s}).",
+                sep = "\n"
+            ),
+            "txt",
+            "format",
+            "lines", "table"
         ))
         ## nocov end
     }
