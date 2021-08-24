@@ -6,6 +6,7 @@
 \alias{import,DelimFile-method}
 \alias{import,LinesFile-method}
 \alias{import,ExcelFile-method}
+\alias{import,FASTAFile-method}
 \alias{import,FASTQFile-method}
 \alias{import,GMTFile-method}
 \alias{import,GMXFile-method}
@@ -57,6 +58,13 @@ import(file, ...)
   colnames = TRUE,
   skip = 0L,
   nMax = Inf,
+  metadata = getOption("acid.import.metadata", default = FALSE),
+  quiet = getOption("acid.quiet", default = FALSE)
+)
+
+\S4method{import}{FASTAFile}(
+  file,
+  moleculeType = c("DNA", "RNA"),
   metadata = getOption("acid.import.metadata", default = FALSE),
   quiet = getOption("acid.quiet", default = FALSE)
 )
