@@ -1,8 +1,7 @@
 context("export : character")
 
-vec <- c("hello", "world")
-
 test_that("'ext' argument", {
+    vec <- c("hello", "world")
     for (ext in eval(formals(`export,character`)[["ext"]])) {
         file <- paste0("vec", ".", ext)
         x <- export(object = vec, ext = ext)
@@ -20,6 +19,31 @@ test_that("'ext' argument", {
         expect_message(
             export(vec, ext = ext, overwrite = TRUE),
             "Overwriting"
+        )
+        file.remove(file)
+    }
+})
+
+test_that("'engine' argument", {
+    object <- c("hello", "world")
+    file <- "vec.txt.gz"
+    for (engine in c(
+        "base",
+        "data.table",
+        "readr",
+        "vroom"
+    )) {
+        x <- export(
+            object = object,
+            file = file,
+            engine = engine,
+            overwrite = TRUE
+        )
+        expect_identical(x, realpath(file))
+        expect_true(file.exists(file))
+        expect_identical(
+            object = readLines(file),
+            expected = vec
         )
         file.remove(file)
     }
