@@ -13,7 +13,6 @@ test_that("Match failure", {
     )
 })
 
-
 test_that("data.table", {
     expect_identical(
         object = matchRownameColumn(dt),

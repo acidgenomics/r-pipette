@@ -27,8 +27,8 @@ test_that("No extension", {
 context("import : data frame")
 
 test_that("Delimited files", {
+    file <- file.path(file = "cache", paste0("example.", ext))
     for (ext in c("csv", "csv.gz", "tsv")) {
-        file <- file.path(file = "cache", paste0("example.", ext))
         object <- import(
             file = file,
             metadata = TRUE
@@ -42,29 +42,26 @@ test_that("Delimited files", {
 })
 
 test_that("Custom engine support", {
-    lapply(
-        X = c(
-            "base::read.table",
-            "data.table::fread",
-            "readr::read_delim",
-            "vroom::vroom"
-        ),
-        FUN = function(x) {
-            split <- strsplit(x = x, split = "::", fixed = TRUE)[[1L]]
-            whatPkg <- split[[1L]]
-            file <- file.path("cache", "example.csv.gz")
-            object <- import(
-                file = file,
-                engine = whatPkg,
-                metadata = TRUE
-            )
-            expect_is(object, "data.frame")
-            expect_identical(
-                object = attributes(object)[["import"]][["importerName"]],
-                expected = x
-            )
-        }
-    )
+    file <- file.path("cache", "example.csv.gz")
+    for (x in c(
+        "base::read.table",
+        "data.table::fread",
+        "readr::read_delim",
+        "vroom::vroom"
+    )) {
+        split <- strsplit(x = x, split = "::", fixed = TRUE)[[1L]]
+        whatPkg <- split[[1L]]
+        object <- import(
+            file = file,
+            engine = whatPkg,
+            metadata = TRUE
+        )
+        expect_is(object, "data.frame")
+        expect_identical(
+            object = attributes(object)[["import"]][["importerName"]],
+            expected = x
+        )
+    }
 })
 
 
@@ -188,13 +185,27 @@ test_that("MTX", {
 
 
 
-context("import : R script")
+context("import : Source code lines")
 
 test_that("R script", {
+    file <- file.path("cache", "example.R")
     expect_is(
-        object = import(file = file.path("cache", "example.R")),
+        object = import(file),
         class = "character"
     )
+})
+
+test_that("Custom engine support", {
+    file <- file.path("cache", "example.R")
+    for (engine in c(
+        "base",
+        "data.table",
+        "readr",
+        "vroom"
+    )) {
+        object <- import(file = file, engine = engine)
+        expect_is(object, "character")
+    }
 })
 
 
@@ -387,7 +398,10 @@ test_that("XLS", {
 context("import : bcbio files")
 
 test_that("bcbio counts", {
-    object <- import(file = file.path("cache", "example.counts"))
+    object <- import(
+        file = file.path("cache", "example.counts"),
+        metadata = TRUE
+    )
     expect_is(object, "matrix")
     expect_true(is.integer(object))
     expect_identical(
