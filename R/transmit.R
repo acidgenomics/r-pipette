@@ -94,8 +94,8 @@ transmit <- function(
     match <- str_subset(remoteFiles, pattern)
     assert(hasLength(match))
     alertInfo(sprintf(
-        "Files matching pattern: {.file %s}",
-        toString(match, width = 200L)
+        "Files matching pattern: %s.",
+        toInlineString(match, n = 10L, class = "file")
     ))
     remotePaths <- pasteURL(remoteDir, match, protocol = "none")
     if (isFALSE(download)) {
@@ -119,8 +119,8 @@ transmit <- function(
         exists <- file.exists(files)
         skip <- files[exists]
         alertWarning(sprintf(
-            "Skipped: {.file %s}.",
-            toString(basename(skip), width = 200L)
+            "Skipped: %s.",
+            toInlineString(basename(skip), n = 10L, class = "file")
         ))
         localPaths <- localPaths[!exists]
     }
@@ -133,8 +133,8 @@ transmit <- function(
     }
     ## Download and return file paths.
     alert(sprintf(
-        "Downloading {.file %s}.",
-        toString(basename(files), width = 200L)
+        "Downloading %s.",
+        toInlineString(basename(files), n = 10L, class = "file")
     ))
     files <- mapply(
         FUN = function(url, destfile, compress = FALSE) {

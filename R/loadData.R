@@ -18,7 +18,7 @@
 #' @export
 #' @note This function is desired for interactive use and interprets object
 #'   names using non-standard evaluation.
-#' @note Updated 2020-08-11.
+#' @note Updated 2021-08-24.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ... Object names.
@@ -93,13 +93,14 @@ loadData <- function(
     ))) {
         fun <- .loadRDA
     } else {
-        stop(sprintf(
+        abort(sprintf(
             fmt = paste(
-                "File extension error: '%s'.",
-                "Don't mix RDS, RDA, and/or RDATA files in a directory.",
+                "File extension error: %s.",
+                "Don't mix %s files in a directory.",
                 sep = "\n"
             ),
-            toString(basename(files), width = 100L)
+            toInlineString(basename(files), n = 5L),
+            toInlineString(c("RDS", "RDA", "RDATA"))
         ))
     }
     lapply(
@@ -153,23 +154,24 @@ formals(loadData)[c("dir", "overwrite")] <-
         USE.NAMES = TRUE
     )
     alert(sprintf(
-        "Loading {.file %s} from {.path %s}.",
-        toString(basename(files), width = 100L), dir
+        "Loading %s from {.path %s}.",
+        toInlineString(basename(files), n = 10L, class = "file"),
+        dir
     ))
     files
 }
 
 
 
-## Updated 2019-08-13.
+## Updated 2021-08-24.
 .loadExistsError <- function(name) {
-    stop(sprintf(
+    abort(sprintf(
         fmt = paste(
-            "'%s' exists in environment.",
-            "Set 'overwrite = TRUE' to disable this check.",
+            "{.var %s} exists in environment.",
+            "Set {.code %s} to disable this check.",
             sep = "\n"
         ),
-        name
+        name, "overwrite = TRUE"
     ))
 }
 
@@ -228,25 +230,24 @@ formals(loadData)[c("dir", "overwrite")] <-
     loaded <- load(file, envir = tmpEnvir)
     ## Ensure that the loaded name is identical to the file name.
     if (!isString(loaded)) {
-        stop(sprintf(
-            "'%s' contains multiple objects: %s.",
-            basename(file), toString(loaded, width = 100L)
+        abort(sprintf(
+            "{.file %s} contains multiple objects: %s.",
+            basename(file),
+            toInlineString(loaded, n = 5L)
         ))
     }
     if (!identical(name, loaded)) {
-        stop(sprintf(
+        abort(sprintf(
             fmt = paste(
-                "'%s' file has been renamed.",
+                "{.file %s} file has been renamed.",
                 "The object name inside the file doesn't match.",
-                "  - expected: '%s'",
-                "  - actual:   '%s'",
+                "  - expected: {.var %s}",
+                "  - actual:   {.var %s}",
                 "Avoid renaming R data files.",
                 "This can lead to accidental object replacement.",
                 sep = "\n"
             ),
-            basename(file),
-            name,
-            loaded
+            basename(file), name, loaded
         ))
     }
     assert(identical(name, loaded))
