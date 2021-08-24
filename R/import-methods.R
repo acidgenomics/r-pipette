@@ -1456,10 +1456,20 @@ formals(`import,RioFile`)[c("metadata", "quiet")] <-
         object <- tryCatch(
             expr = rtracklayer::import(con = tmpfile, ...),
             error = function(e) {
-                stop("File failed to load.")  # nocov
+                ## nocov start
+                abort(sprintf(
+                    "File failed to load: {.file %s}.",
+                    basename(file)
+                ))
+                ## nocov end
             },
             warning = function(w) {
-                stop("File failed to load.")  # nocov
+                ## nocov start
+                abort(sprintf(
+                    "File failed to load: {.file %s}.",
+                    basename(file)
+                ))
+                ## nocov end
             }
         )
         ## FIXME Rework this.
@@ -1534,8 +1544,8 @@ formals(`import,RDSFile`)[["quiet"]] <-
         safe <- new.env()
         object <- load(file = tmpfile, envir = safe)
         if (!isTRUE(hasLength(safe, n = 1L))) {
-            stop(sprintf(
-                "'%s' does not contain a single object.",
+            abort(sprintf(
+                "{.file %s} does not contain a single object.",
                 basename(file)
             ))
         }
