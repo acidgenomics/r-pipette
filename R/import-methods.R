@@ -1,8 +1,3 @@
-## FIXME Need to improve FASTA / FASTQ documentation here.
-## FIXME Need to add code coverage for FASTA and FASTQ files.
-
-
-
 #' Import
 #'
 #' Read file by extension into R.
@@ -362,6 +357,7 @@ NULL
         isString(f),
         isString(pkg)
     )
+    requireNamespaces(pkg)
     x <- get(x = f, envir = asNamespace(pkg), inherits = TRUE)
     assert(is.function(x))
     x
@@ -391,11 +387,6 @@ NULL
 
 
 
-## FIXME Rework the colnames handling here?
-## FIXME Should we pass in the method here?
-## FIXME How to handle `rownames` and `colnames` sanitization?
-## FIXME The colnames handling is confusing here.
-
 #' Return standardized import object
 #'
 #' @note Updated 2021-08-24.
@@ -403,9 +394,9 @@ NULL
 .returnImport <- function(
     object,
     file,
-    rownames,
-    colnames,
-    makeNames,
+    rownames = FALSE,
+    colnames = FALSE,
+    makeNames = FALSE,
     metadata = FALSE,
     whatPkg = NULL,
     whatFun = NULL,
@@ -686,7 +677,6 @@ formals(`import,RDataFile`)[["quiet"]] <-
         if (identical(ext, "table")) {
             whatPkg <- "base"  # nocov
         }
-        requireNamespaces(whatPkg)
         tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
         switch(
             EXPR = whatPkg,
@@ -840,10 +830,6 @@ formals(`import,DelimFile`)[c("makeNames", "metadata", "quiet")] <-
 
 
 
-## FIXME Excel worksheets should never have rownames, so disregard here?
-## FIXME Take out the rownames support here.
-## FIXME Need to pass in makeNames support here.
-
 #' Import a Microsoft Excel worksheet (`.xlsx`)
 #'
 #' @note Updated 2021-08-24.
@@ -875,7 +861,6 @@ formals(`import,DelimFile`)[c("makeNames", "metadata", "quiet")] <-
         )
         whatPkg <- "readxl"
         whatFun <- "read_excel"
-        requireNamespaces(whatPkg)
         tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
         if (isFALSE(quiet)) {
             alert(sprintf(
@@ -950,7 +935,9 @@ formals(`import,ExcelFile`)[c("makeNames", "metadata", "quiet")] <-
                 file, whatPkg, whatFun
             ))
         }
-        object <- readMM(file = tmpfile)
+        args <- list("file" = tmpfile)
+        what <- .getFunction(f = whatFun, pkg = whatPkg)
+        object <- do.call(what = what, args = args)
         ## Add the rownames automatically using `.rownames` sidecar file.
         rownamesFile <- tryCatch(
             expr = localOrRemoteFile(
@@ -958,7 +945,6 @@ formals(`import,ExcelFile`)[c("makeNames", "metadata", "quiet")] <-
                 quiet = quiet
             ),
             error = function(e) {
-                ## FIXME Inform the user about this.
                 NULL  # nocov
             }
         )
@@ -973,7 +959,6 @@ formals(`import,ExcelFile`)[c("makeNames", "metadata", "quiet")] <-
                 quiet = quiet
             ),
             error = function(e) {
-                ## FIXME Inform the user about this.
                 NULL  # nocov
             }
         )
@@ -984,9 +969,6 @@ formals(`import,ExcelFile`)[c("makeNames", "metadata", "quiet")] <-
         .returnImport(
             object = object,
             file = file,
-            rownames = FALSE,
-            colnames = FALSE,
-            makeNames = FALSE,
             metadata = metadata,
             whatPkg = whatPkg,
             whatFun = whatFun,
@@ -999,8 +981,6 @@ formals(`import,MTXFile`)[c("metadata", "quiet")] <-
 
 
 
-## FIXME Need to pass makeNames here.
-
 #' Import a GraphPad Prism file (`.pzfx`)
 #'
 #' @note Updated 2021-08-24.
@@ -1011,18 +991,21 @@ formals(`import,MTXFile`)[c("metadata", "quiet")] <-
     function(
         file,
         sheet = 1L,
+        makeNames,
         metadata,
         quiet
     ) {
         assert(
             isString(file),
             isScalar(sheet),
+            is.function(makeNames) ||
+                is.null(makeNames) ||
+                isFALSE(makeNames),
             isFlag(metadata),
             isFlag(quiet)
         )
         whatPkg <- "pzfx"
         whatFun <- "read_pzfx"
-        requireNamespaces(whatPkg)
         tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
         if (isFALSE(quiet)) {
             alert(sprintf(
@@ -1037,12 +1020,12 @@ formals(`import,MTXFile`)[c("metadata", "quiet")] <-
         what <- .getFunction(f = whatFun, pkg = whatPkg)
         object <- do.call(what = what, args = args)
         object <- removeNA(object)
-        ## FIXME Rework this.
         .returnImport(
             object = object,
             file = file,
             rownames = FALSE,
             colnames = TRUE,
+            makeNames = makeNames,
             metadata = metadata,
             whatPkg = whatPkg,
             whatFun = whatFun,
@@ -1050,8 +1033,8 @@ formals(`import,MTXFile`)[c("metadata", "quiet")] <-
         )
     }
 
-formals(`import,PZFXFile`)[c("metadata", "quiet")] <-
-    formalsList[c("import.metadata", "quiet")]
+formals(`import,PZFXFile`)[c("makeNames", "metadata", "quiet")] <-
+    formalsList[c("import.make.names", "import.metadata", "quiet")]
 
 
 
@@ -1073,6 +1056,9 @@ formals(`import,PZFXFile`)[c("metadata", "quiet")] <-
         object <- import(
             file = as.character(file),
             format = "tsv",
+            rownames = FALSE,
+            colnames = TRUE,
+            makeNames = FALSE,
             metadata = metadata,
             quiet = quiet
         )
@@ -1136,7 +1122,6 @@ formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
             ## nocov end
         }
         whatPkg <- match.arg(arg = engine, choices = .engines)
-        requireNamespaces(whatPkg)
         tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
         switch(
             EXPR = whatPkg,
@@ -1226,12 +1211,9 @@ formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
                 object <- object[1L:nMax]
             }
         }
-        ## FIXME Rework this.
         .returnImport(
             object = object,
             file = file,
-            rownames = FALSE,
-            colnames = FALSE,
             metadata = metadata,
             whatPkg = whatPkg,
             whatFun = whatFun,
@@ -1246,7 +1228,7 @@ formals(`import,LinesFile`)[c("metadata", "quiet")] <-
 
 #' Import a JSON file (`.json`)
 #'
-#' @note Updated 2021-06-10.
+#' @note Updated 2021-08-24.
 #' @noRd
 `import,JSONFile` <-  # nolint
     function(file, metadata, quiet) {
@@ -1256,7 +1238,6 @@ formals(`import,LinesFile`)[c("metadata", "quiet")] <-
         )
         whatPkg <- "jsonlite"
         whatFun <- "read_json"
-        requireNamespaces(whatPkg)
         tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
         if (isFALSE(quiet)) {
             alert(sprintf(
@@ -1264,13 +1245,12 @@ formals(`import,LinesFile`)[c("metadata", "quiet")] <-
                 file, whatPkg, whatFun
             ))
         }
-        object <- jsonlite::read_json(path = tmpfile)
-        ## FIXME Rework this.
+        args <- list("path" = "tmpfile")
+        what <- .getFunction(f = whatFun, pkg = whatPkg)
+        object <- do.call(what = what, args = args)
         .returnImport(
             object = object,
             file = file,
-            rownames = FALSE,
-            colnames = FALSE,
             metadata = metadata,
             whatPkg = whatPkg,
             whatFun = whatFun,
@@ -1295,7 +1275,6 @@ formals(`import,JSONFile`)[c("metadata", "quiet")] <-
         )
         whatPkg <- "yaml"
         whatFun <- "yaml.load_file"
-        requireNamespaces(whatPkg)
         tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
         if (isFALSE(quiet)) {
             alert(sprintf(
@@ -1303,17 +1282,12 @@ formals(`import,JSONFile`)[c("metadata", "quiet")] <-
                 file, whatPkg, whatFun
             ))
         }
-        args <- list(
-            "input" = tmpfile
-        )
+        args <- list("input" = tmpfile)
         what <- .getFunction(f = whatFun, pkg = whatPkg)
         object <- do.call(what = what, args = args)
-        ## FIXME Rework this.
         .returnImport(
             object = object,
             file = file,
-            rownames = FALSE,
-            colnames = FALSE,
             metadata = metadata,
             whatPkg = whatPkg,
             whatFun = whatFun,
@@ -1345,7 +1319,6 @@ formals(`import,YAMLFile`)[c("metadata", "quiet")] <-
         metadata,
         quiet
     ) {
-        requireNamespaces("Biostrings")
         assert(
             isFlag(metadata),
             isFlag(quiet)
@@ -1353,7 +1326,6 @@ formals(`import,YAMLFile`)[c("metadata", "quiet")] <-
         moleculeType <- match.arg(moleculeType)
         whatPkg <- "Biostrings"
         whatFun <- paste0("read", moleculeType, "StringSet")
-        requireNamespaces(whatPkg)
         tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
         if (isFALSE(quiet)) {
             alert(sprintf(
@@ -1397,13 +1369,9 @@ formals(`import,YAMLFile`)[c("metadata", "quiet")] <-
             names(attributes) <- names
             metadata(object)[["attributes"]] <- attributes
         }
-        ## FIXME Don't sanitize the names here...
-        ## FIXME Rework this.
         .returnImport(
             object = object,
             file = file,
-            rownames = FALSE,
-            colnames = FALSE,
             metadata = metadata,
             whatPkg = whatPkg,
             whatFun = whatFun,
@@ -1434,7 +1402,6 @@ formals(`import,FASTAFile`)[c("metadata", "quiet")] <-
         metadata,
         quiet
     ) {
-        requireNamespaces("Biostrings")
         assert(
             isFlag(metadata),
             isFlag(quiet)
@@ -1442,7 +1409,6 @@ formals(`import,FASTAFile`)[c("metadata", "quiet")] <-
         moleculeType <- match.arg(moleculeType)
         whatPkg <- "Biostrings"
         whatFun <- paste0("read", moleculeType, "StringSet")
-        requireNamespaces(whatPkg)
         tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
         if (isFALSE(quiet)) {
             alert(sprintf(
@@ -1462,13 +1428,9 @@ formals(`import,FASTAFile`)[c("metadata", "quiet")] <-
         what <- .getFunction(f = whatFun, pkg = whatPkg)
         object <- do.call(what = what, args = args)
         assert(is(object, paste0(moleculeType, "StringSet")))
-        ## FIXME Rework this.
-        ## FIXME Ensure names don't get modified here.
         .returnImport(
             object = object,
             file = file,
-            rownames = FALSE,
-            colnames = FALSE,
             metadata = metadata,
             whatPkg = whatPkg,
             whatFun = whatFun,
@@ -1483,7 +1445,7 @@ formals(`import,FASTQFile`)[c("metadata", "quiet")] <-
 
 #' Import a gene matrix transposed file (`.gmt`)
 #'
-#' @note Updated 2021-06-10.
+#' @note Updated 2021-08-24.
 #' @noRd
 #'
 #' @seealso `fgsea::gmtPathways()`.
@@ -1496,6 +1458,7 @@ formals(`import,FASTQFile`)[c("metadata", "quiet")] <-
         lines <- import(
             file = as.character(file),
             format = "lines",
+            metadata = FALSE,
             quiet = quiet
         )
         lines <- strsplit(lines, split = "\t")
@@ -1516,7 +1479,7 @@ formals(`import,GMTFile`)[["quiet"]] <-
 
 #' Import a gene matrix file (`.gmx`)
 #'
-#' @note Updated 2021-06-10.
+#' @note Updated 2021-08-24.
 #' @noRd
 `import,GMXFile` <-  # nolint
     function(file, quiet) {
@@ -1527,6 +1490,7 @@ formals(`import,GMTFile`)[["quiet"]] <-
         lines <- import(
             file = as.character(file),
             format = "lines",
+            metadata = FALSE,
             quiet = quiet
         )
         object <- list(tail(lines, n = -2L))
@@ -1550,13 +1514,14 @@ formals(`import,GMXFile`)[["quiet"]] <-
 ## Handoff methods =============================================================
 #' Import a file using `rio::import`
 #'
-#' @note Updated 2021-06-10.
+#' @note Updated 2021-08-24.
 #' @noRd
 `import,RioFile` <-  # nolint
     function(
         file,
         rownames = TRUE,
         colnames = TRUE,
+        makeNames,
         metadata,
         quiet,
         ...
@@ -1565,12 +1530,14 @@ formals(`import,GMXFile`)[["quiet"]] <-
             isString(file),
             isFlag(rownames),
             isFlag(colnames) || isCharacter(colnames),
+            is.function(makeNames) ||
+                is.null(makeNames) ||
+                isFALSE(makeNames),
             isFlag(metadata),
             isFlag(quiet)
         )
         whatPkg <- "rio"
         whatFun <- "import"
-        requireNamespaces(whatPkg)
         tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
         if (isFALSE(quiet)) {
             alert(sprintf(
@@ -1578,13 +1545,15 @@ formals(`import,GMXFile`)[["quiet"]] <-
                 file, whatPkg, whatFun
             ))
         }
-        object <- rio::import(file = tmpfile, ...)
-        ## FIXME Rework this.
+        args <- list("file" = tmpfile, ...)
+        what <- .getFunction(f = whatFun, pkg = whatPkg)
+        object <- do.call(what = what, args = args)
         .returnImport(
             object = object,
             file = file,
             rownames = rownames,
             colnames = colnames,
+            makeNames = makeNames,
             metadata = metadata,
             whatPkg = whatPkg,
             whatFun = whatFun,
@@ -1592,14 +1561,16 @@ formals(`import,GMXFile`)[["quiet"]] <-
         )
     }
 
-formals(`import,RioFile`)[c("metadata", "quiet")] <-
-    formalsList[c("import.metadata", "quiet")]
+formals(`import,RioFile`)[c("makeNames", "metadata", "quiet")] <-
+    formalsList[c("import.make.names", "import.metadata", "quiet")]
+
+
 
 
 
 #' Import file using `rtracklayer::import`
 #'
-#' @note Updated 2021-06-10.
+#' @note Updated 2021-08-24.
 #' @noRd
 #'
 #' @note Using `tryCatch()` here to error if there are any warnings.
@@ -1619,8 +1590,12 @@ formals(`import,RioFile`)[c("metadata", "quiet")] <-
                 file, whatPkg, whatFun
             ))
         }
-        object <- tryCatch(
-            expr = rtracklayer::import(con = tmpfile, ...),
+        args <- list("con" = tmpfile, ...)
+        what <- .getFunction(f = whatFun, pkg = whatPkg)
+        tryCatch(
+            expr = {
+                object <- do.call(what = what, args = args)
+            },
             error = function(e) {
                 ## nocov start
                 abort(sprintf(
@@ -1638,12 +1613,9 @@ formals(`import,RioFile`)[c("metadata", "quiet")] <-
                 ## nocov end
             }
         )
-        ## FIXME Rework this.
         .returnImport(
             object = object,
             file = file,
-            rownames = FALSE,
-            colnames = FALSE,
             metadata = metadata,
             whatPkg = whatPkg,
             whatFun = whatFun,
