@@ -334,7 +334,7 @@ NULL
         "zsh"          = "LinesFile"
     )
     if (!isSubset(ext, names(dict))) {
-        stop(sprintf("Import failure. '%s' extension is not supported.", ext))
+        abort(sprintf("{.var %s} extension is not supported.", ext))
     }
     class <- dict[[ext]]
     assert(isString(class))
@@ -618,7 +618,7 @@ formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
             "CSVFile" = "csv",
             "TSVFile" = "tsv",
             "TableFile" = "table",
-            stop("Unsupported delim class.")
+            abort("Unsupported delim class.")
         )
         whatPkg <- match.arg(arg = engine, choices = .engines)
         if (identical(ext, "table")) {
@@ -659,10 +659,11 @@ formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
                 whatFun <- "fread"
                 if (isString(comment)) {
                     ## nocov start
-                    stop(sprintf(
+                    abort(sprintf(
                         paste0(
-                            "'%s::%s' does not support comment exclusion.\n",
-                            "See '%s' for details."
+                            "{.pkg %s}::{.fun %s} does not support ",
+                            "comment exclusion.\n",
+                            "See also: {.url %s}."
                         ),
                         whatPkg, whatFun,
                         "https://github.com/Rdatatable/data.table/issues/856"
