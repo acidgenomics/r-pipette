@@ -1,9 +1,3 @@
-## FIXME Need to add code coverage for FASTA and FASTQ files.
-## FIXME Need to check `rownames`, `colnames`, `makeNames`, and `metadata`
-## handling here consistently.
-
-
-
 context("import : invalid input")
 
 test_that("Invalid extension", {
