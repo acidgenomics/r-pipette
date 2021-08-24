@@ -132,6 +132,24 @@ setClass(
 
 
 #' @describeIn PipetteFile-class
+#' FASTA file.
+setClass(
+    Class = "FASTAFile",
+    contains = "PipetteFile"
+)
+
+
+
+#' @describeIn PipetteFile-class
+#' FASTQ file.
+setClass(
+    Class = "FASTQFile",
+    contains = "PipetteFile"
+)
+
+
+
+#' @describeIn PipetteFile-class
 #' Gene matrix transposed file (GMT).
 setClass(
     Class = "GMTFile",
