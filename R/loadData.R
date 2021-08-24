@@ -1,7 +1,3 @@
-## FIXME Can we simplify these by passing to our main `import` function?
-
-
-
 #' Load data
 #'
 #' Load R data files from a directory using symbols rather than complete file
