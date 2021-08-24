@@ -6,9 +6,6 @@
 
 context("import : invalid input")
 
-## As of v0.3.17, file metadata is disabled by default.
-options("acid.import.metadata" = TRUE)
-
 test_that("Invalid extension", {
     file <- file.path(tempdir(), "file.XXX")
     unlink(file, recursive = TRUE)
@@ -38,7 +35,10 @@ context("import : data frame")
 test_that("Delimited files", {
     for (ext in c("csv", "csv.gz", "tsv")) {
         file <- file.path(file = "cache", paste0("example.", ext))
-        object <- import(file)
+        object <- import(
+            file = file,
+            metadata = TRUE
+        )
         expect_is(object, "data.frame")
         expect_is(
             object = attributes(object)[["import"]][["file"]],
@@ -47,7 +47,7 @@ test_that("Delimited files", {
     }
 })
 
-test_that("acid.import.engine override", {
+test_that("Custom engine support", {
     lapply(
         X = c(
             "base::read.table",
@@ -58,9 +58,12 @@ test_that("acid.import.engine override", {
         FUN = function(x) {
             split <- strsplit(x = x, split = "::", fixed = TRUE)[[1L]]
             whatPkg <- split[[1L]]
-            options("acid.import.engine" = whatPkg)
             file <- file.path("cache", "example.csv.gz")
-            object <- import(file)
+            object <- import(
+                file = file,
+                engine = whatPkg,
+                metadata = TRUE
+            )
             expect_is(object, "data.frame")
             expect_identical(
                 object = attributes(object)[["import"]][["importerName"]],
@@ -68,7 +71,6 @@ test_that("acid.import.engine override", {
             )
         }
     )
-    options("acid.import.engine" = NULL)
 })
 
 

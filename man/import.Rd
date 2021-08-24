@@ -100,6 +100,7 @@ import(file, ...)
 \S4method{import}{PZFXFile}(
   file,
   sheet = 1L,
+  makeNames = getOption("acid.import.make.names", default = syntactic::makeNames),
   metadata = getOption("acid.import.metadata", default = FALSE),
   quiet = getOption("acid.quiet", default = FALSE)
 )
@@ -118,6 +119,7 @@ import(file, ...)
   file,
   rownames = TRUE,
   colnames = TRUE,
+  makeNames = getOption("acid.import.make.names", default = syntactic::makeNames),
   metadata = getOption("acid.import.metadata", default = FALSE),
   quiet = getOption("acid.quiet", default = FALSE),
   ...
