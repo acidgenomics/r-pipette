@@ -138,7 +138,7 @@
 #'   contain an extension.
 #' @param makeNames `function`.
 #'   Apply syntactic naming function to (column) names.
-#'   *Does not apply to import of R data files.*
+#'   Function is never applied to row names, when they are defined in object.
 #' @param moleculeType `character(1)`.
 #'   Molecule type, either DNA or RNA.
 #'   Most RNA-seq FASTQ files contain complementary DNA (cDNA) sequences, not
@@ -151,7 +151,7 @@
 #'   *Applies to source code lines*.
 #' @param rownames `logical(1)`.
 #'   Automatically assign row names, if `rowname` column is defined.
-#'   Applies to file types that return `data.frame` only.
+#'   Applies to file types that return a data frame only.
 #' @param sheet `character(1)` or `integer(1)`.
 #'   Sheet to read. Either a string (the name of a sheet), or an integer (the
 #'   position of the sheet). Defaults to the first sheet.
@@ -337,6 +337,29 @@ NULL
 
 
 
+#' Get function
+#'
+#' @note Updated 2021-08-24.
+#' @noRd
+#'
+#' @param f `character(1)`.
+#'   Function name.
+#' @param pkg `character(1)`.
+#'   Package name.
+#'
+#' @return `function`.
+.getFunction <- function(f, pkg) {
+    assert(
+        isString(f),
+        isString(pkg)
+    )
+    x <- get(x = f, envir = asNamespace(pkg), inherits = FALSE)
+    assert(is.function(x))
+    x
+}
+
+
+
 #' Internal importer for a sparse matrix sidecar file (e.g. `.rownames`)
 #'
 #' @note Updated 2021-06-10.
@@ -362,6 +385,7 @@ NULL
 ## FIXME Rework the colnames handling here?
 ## FIXME Should we pass in the method here?
 ## FIXME How to handle `rownames` and `colnames` sanitization?
+## FIXME The colnames handling is confusing here.
 
 #' Return standardized import object
 #'
@@ -476,6 +500,7 @@ NULL
         if (isSubset(format, c("auto", "none"))) {
             ext <- str_match(basename(file), extPattern)[1L, 2L]
             if (is.na(ext)) {
+                ## FIXME Switch to abort here.
                 stop(paste(
                     "'file' argument does not contain file type extension.",
                     "Set the file format manually using the 'format' argument.",
@@ -704,8 +729,7 @@ formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
                 file, whatPkg, whatFun
             ))
         }
-        what <- get(x = whatFun, envir = asNamespace(whatPkg), inherits = TRUE)
-        assert(is.function(what))
+        what <- .getFunction(f = whatFun, pkg = whatPkg)
         object <- do.call(what = what, args = args)
         assert(is.data.frame(object))
         if (!identical(class(object), "data.frame")) {
@@ -726,6 +750,7 @@ formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
             isFALSE(any(object == "", na.rm = TRUE))
         )
         ## FIXME Rework this.
+        ## FIXME Need to pass `makeNames` through here more
         .returnImport(
             object = object,
             file = file,
@@ -779,18 +804,20 @@ formals(`import,DelimFile`)[c("makeNames", "metadata", "quiet")] <-
             ))
         }
         warn <- getOption("warn")
-        options(warn = 2L)
-        object <- readxl::read_excel(
-            path = tmpfile,
-            col_names = colnames,
-            n_max = nMax,
-            na = naStrings,
-            progress = FALSE,
-            sheet = sheet,
-            skip = skip,
-            trim_ws = TRUE,
-            .name_repair = make.names
+        args <- list(
+            "path" = tmpfile,
+            "col_names" = colnames,
+            "n_max" = nMax,
+            "na" = naStrings,
+            "progress" = FALSE,
+            "sheet" = sheet,
+            "skip" = skip,
+            "trim_ws" = TRUE,
+            ".name_repair" = make.names
         )
+        what <- .getFunction(f = whatFun, pkg = whatPkg)
+        options(warn = 2L)
+        object <- do.call(what = what, args = args)
         options(warn = warn)
         object <- as.data.frame(
             x = object,
@@ -850,20 +877,15 @@ formals(`import,ExcelFile`)[c("metadata", "quiet")] <-
                 file, whatPkg, whatFun
             ))
         }
-        what <- get(
-            x = whatFun,
-            envir = asNamespace(whatPkg),
-            inherits = FALSE
-        )
-        assert(is.function(what))
         args <- list(
-            filepath = tmpfile,
-            format = "fasta",
-            nrec = -1L,
-            skip = 0L,
-            seek.first.rec = TRUE,
-            use.names = metadata
+            "filepath" = tmpfile,
+            "format" = "fasta",
+            "nrec" = -1L,
+            "skip" = 0L,
+            "seek.first.rec" = TRUE,
+            "use.names" = metadata
         )
+        what <- .getFunction(f = whatFun, pkg = whatPkg)
         object <- do.call(what = what, args = args)
         assert(is(object, paste0(moleculeType, "StringSet")))
         if (
@@ -944,24 +966,20 @@ formals(`import,FASTAFile`)[c("metadata", "quiet")] <-
                 file, whatPkg, whatFun
             ))
         }
-        what <- get(
-            x = whatFun,
-            envir = asNamespace(whatPkg),
-            inherits = FALSE
-        )
-        assert(is.function(what))
         args <- list(
-            filepath = tmpfile,
-            format = "fastq",
-            nrec = -1L,
-            skip = 0L,
-            seek.first.rec = TRUE,
-            use.names = FALSE,
-            with.qualities = FALSE
+            "filepath" = tmpfile,
+            "format" = "fastq",
+            "nrec" = -1L,
+            "skip" = 0L,
+            "seek.first.rec" = TRUE,
+            "use.names" = metadata,
+            "with.qualities" = metadata
         )
+        what <- .getFunction(f = whatFun, pkg = whatPkg)
         object <- do.call(what = what, args = args)
         assert(is(object, paste0(moleculeType, "StringSet")))
         ## FIXME Rework this.
+        ## FIXME Ensure names don't get modified here.
         .returnImport(
             object = object,
             file = file,
@@ -1133,8 +1151,7 @@ formals(`import,GMXFile`)[["quiet"]] <-
         if (isTRUE(file.size(tmpfile) == 0L)) {
             return(character())
         }
-        what <- get(x = whatFun, envir = asNamespace(whatPkg), inherits = TRUE)
-        assert(is.function(what))
+        what <- .getFunction(f = whatFun, pkg = whatPkg)
         object <- do.call(what = what, args = args)
         if (identical(whatPkg, "data.table")) {
             object <- object[[1L]]
@@ -1238,6 +1255,7 @@ formals(`import,JSONFile`)[c("metadata", "quiet")] <-
             isFlag(metadata),
             isFlag(quiet)
         )
+        ## FIXME Can I rework this?
         rownames <- FALSE
         colnames <- FALSE
         whatPkg <- "Matrix"
@@ -1251,12 +1269,14 @@ formals(`import,JSONFile`)[c("metadata", "quiet")] <-
         }
         object <- readMM(file = tmpfile)
         ## Add the rownames automatically using `.rownames` sidecar file.
+        ## FIXME Move the sidecar file up first, so we can inform.
         rownamesFile <- tryCatch(
             expr = localOrRemoteFile(
                 file = paste(file, "rownames", sep = "."),
                 quiet = quiet
             ),
             error = function(e) {
+                ## FIXME Inform the user about this.
                 NULL  # nocov
             }
         )
@@ -1266,13 +1286,13 @@ formals(`import,JSONFile`)[c("metadata", "quiet")] <-
                 .importMTXSidecar(file = rownamesFile, quiet = quiet)
         }
         ## Add the colnames automatically using `.colnames` sidecar file.
-        colnamesFile <-
         colnamesFile <- tryCatch(
             expr = localOrRemoteFile(
                 file = paste(file, "colnames", sep = "."),
                 quiet = quiet
             ),
             error = function(e) {
+                ## FIXME Inform the user about this.
                 NULL  # nocov
             }
         )
@@ -1545,7 +1565,11 @@ formals(`import,RDataFile`)[["quiet"]] <-
                 file, whatPkg, whatFun
             ))
         }
-        object <- yaml::yaml.load_file(input = tmpfile)
+        args <- list(
+            "input" = tmpfile
+        )
+        what <- .getFunction(f = whatFun, pkg = whatPkg)
+        object <- do.call(what = what, args = args)
         ## FIXME Rework this.
         .returnImport(
             object = object,
