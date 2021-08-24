@@ -804,7 +804,7 @@ formals(`import,ExcelFile`)[c("metadata", "quiet")] <-
 `import,FASTQFile` <-  # nolint
     function(
         file,
-        type = c("DNA", "RNA"),
+        moleculeType = c("DNA", "RNA"),
         metadata,
         quiet
     ) {
@@ -813,9 +813,9 @@ formals(`import,ExcelFile`)[c("metadata", "quiet")] <-
             isFlag(metadata),
             isFlag(quiet)
         )
-        type <- match.arg(type)
+        moleculeType <- match.arg(moleculeType)
         whatPkg <- "Biostrings"
-        whatFun <- paste0("read", type, "StringSet")
+        whatFun <- paste0("read", moleculeType, "StringSet")
         requireNamespaces(whatPkg)
         tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
         if (!isTRUE(quiet)) {
@@ -840,7 +840,7 @@ formals(`import,ExcelFile`)[c("metadata", "quiet")] <-
             with.qualities = FALSE
         )
         object <- do.call(what = what, args = args)
-        assert(is(object, paste0(type, "StringSet")))
+        assert(is(object, paste0(moleculeType, "StringSet")))
         .returnImport(
             object = object,
             file = file,
