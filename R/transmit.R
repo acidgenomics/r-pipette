@@ -25,7 +25,7 @@
 #' @examples
 #' remoteDir <- "ftp://ftp.ncbi.nlm.nih.gov/genomes/"
 #' if (
-#'     !isTRUE(nzchar(Sys.getenv("CI"))) &&
+#'     isFALSE(nzchar(Sys.getenv("CI"))) &&
 #'     goalie::hasInternet(remoteDir)
 #' ) {
 #'     readme <- transmit(

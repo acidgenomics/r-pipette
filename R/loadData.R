@@ -185,7 +185,7 @@ formals(loadData)[c("dir", "overwrite")] <-
     data <- readRDS(file)
     ## Error if the object is already assigned in environment.
     if (
-        !isTRUE(overwrite) &&
+        isFALSE(overwrite) &&
         exists(x = name, envir = envir, inherits = FALSE)
     ) {
         .loadExistsError(name)
@@ -213,7 +213,7 @@ formals(loadData)[c("dir", "overwrite")] <-
     }
     ## Error if the object is already assigned in environment.
     if (
-        !isTRUE(overwrite) &&
+        isFALSE(overwrite) &&
         exists(x = name, envir = envir, inherits = FALSE)
     ) {
         .loadExistsError(name)

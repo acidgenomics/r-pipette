@@ -132,7 +132,7 @@ NULL
         compress <- !is.na(compressExt)
         if (isAFile(file)) {
             file <- realpath(file)
-            if (isTRUE(overwrite) && !isTRUE(quiet)) {
+            if (isTRUE(overwrite) && isFALSE(quiet)) {
                 alertWarning(sprintf("Overwriting {.file %s}.", file))
             } else {
                 abort(sprintf("File exists: {.file %s}.", file))
@@ -185,7 +185,7 @@ NULL
                 )
             }
         )
-        if (!isTRUE(quiet)) {
+        if (isFALSE(quiet)) {
             alert(sprintf(
                 "Exporting {.file %s} using {.pkg %s}::{.fun %s}.",
                 whatFile, whatPkg, whatFun
@@ -312,7 +312,7 @@ setMethod(
         if (isAFile(file)) {
             file <- realpath(file)
             if (isTRUE(overwrite)) {
-                if (!isTRUE(quiet)) {
+                if (isFALSE(quiet)) {
                     alertWarning(sprintf("Overwriting {.file %s}.", whatFile))
                 }
                 file.remove(file)
@@ -419,7 +419,7 @@ setMethod(
                 }
             }
         )
-        if (!isTRUE(quiet)) {
+        if (isFALSE(quiet)) {
             alert(sprintf(
                 "Exporting {.file %s} using {.pkg %s}::{.fun %s}.",
                 whatFile, whatPkg, whatFun
@@ -531,7 +531,7 @@ setMethod(
         compress <- !is.na(compressExt)
         if (isAFile(file)) {
             file <- realpath(file)
-            if (isTRUE(overwrite) && !isTRUE(quiet)) {
+            if (isTRUE(overwrite) && isFALSE(quiet)) {
                 alertWarning(sprintf(
                     fmt = "Overwriting {.file %s} at {.path %s}.",
                     basename(file), realpath(dirname(file))
@@ -547,7 +547,7 @@ setMethod(
                 x = file
             )
         }
-        if (!isTRUE(quiet)) {
+        if (isFALSE(quiet)) {
             alert(sprintf(
                 "Exporting {.file %s} using {.pkg %s}::{.fun %s}.",
                 file, "Matrix", "writeMM"

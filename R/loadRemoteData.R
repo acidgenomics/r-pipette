@@ -50,8 +50,8 @@ loadRemoteData <- function(
     names(url) <- names
     ## Check to make sure the objects don't already exist.
     if (
-        !isTRUE(overwrite) &&
-        !isTRUE(allAreNonExisting(names, envir = envir, inherits = FALSE))
+        isFALSE(overwrite) &&
+        isFALSE(allAreNonExisting(names, envir = envir, inherits = FALSE))
     ) {
         .loadExistsError(names)
     }
