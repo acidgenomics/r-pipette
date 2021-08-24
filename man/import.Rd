@@ -54,7 +54,6 @@ import(file, ...)
 \S4method{import}{ExcelFile}(
   file,
   sheet = 1L,
-  rownames = TRUE,
   colnames = TRUE,
   skip = 0L,
   nMax = Inf,
