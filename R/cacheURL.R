@@ -50,6 +50,7 @@ cacheURL <- function(
         exact = TRUE
     )
     rid <- query[["rid"]]
+    ## nocov start
     if (!hasLength(rid)) {
         if (isTRUE(verbose)) {
             alert(sprintf(
@@ -73,6 +74,7 @@ cacheURL <- function(
             BiocFileCache::bfcdownload(x = bfc, rid = rid, ask = ask)
         }
     }
+    ## nocov end
     rpath <- BiocFileCache::bfcrpath(x = bfc, rids = rid)
     assert(isAFile(rpath))
     out <- unname(rpath)
