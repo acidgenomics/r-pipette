@@ -27,6 +27,7 @@
 #'     remoteDir <- "ftp://ftp.ncbi.nlm.nih.gov/genomes/"
 #'     readme <- transmit(
 #'         remoteDir = remoteDir,
+#'         localDir = tempdir(),
 #'         pattern = "^README\\.txt$",
 #'         rename = "ncbi-readme.txt",
 #'         compress = FALSE

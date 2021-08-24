@@ -13,6 +13,7 @@
 - Improved package error messages and other alerts with AcidCLI update. Instead
   of calling `stop` internally, now using `abort`, which supports stylized
   messages (via cli package).
+- `transmit`: Hardened working example against NCBI FTP server failure.
 
 ## pipette 0.6.3 (2021-08-05)
 
