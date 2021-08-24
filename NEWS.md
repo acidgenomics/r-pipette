@@ -1,3 +1,9 @@
+## pipette 0.7.0 (UNRELEASED)
+
+### Major changes
+
+- Updated minimum Bioconductor release to 3.13.
+
 ## pipette 0.6.3 (2021-08-05)
 
 ### Minor changes
