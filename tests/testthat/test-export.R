@@ -25,7 +25,7 @@ test_that("'ext' argument", {
 })
 
 test_that("'engine' argument", {
-    object <- c("hello", "world")
+    vec <- c("hello", "world")
     file <- file.path(tempdir(), "vec.txt.gz")
     for (engine in c(
         "base",
@@ -34,7 +34,7 @@ test_that("'engine' argument", {
         "vroom"
     )) {
         x <- export(
-            object = object,
+            object = vec,
             file = file,
             engine = engine,
             overwrite = TRUE

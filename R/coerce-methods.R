@@ -221,8 +221,10 @@ NULL
                 }
             )
         } else {
+            ## nocov start
             nc <- 0L
             nr <- 0L
+            ## nocov end
         }
         args <- list(
             x,

@@ -37,7 +37,7 @@ NULL
             X = x,
             FUN = function(x) {
                 if (is(x, "List")) {
-                    return(x)
+                    return(x)  # nocov
                 }
                 ## Decode Rle, if necessary.
                 if (is(x, "Rle")) {
