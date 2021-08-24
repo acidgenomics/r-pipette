@@ -1245,7 +1245,7 @@ formals(`import,LinesFile`)[c("metadata", "quiet")] <-
                 file, whatPkg, whatFun
             ))
         }
-        args <- list("path" = "tmpfile")
+        args <- list("path" = tmpfile)
         what <- .getFunction(f = whatFun, pkg = whatPkg)
         object <- do.call(what = what, args = args)
         .returnImport(
