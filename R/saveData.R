@@ -92,37 +92,47 @@ saveData <- function(
     files <- file.path(dir, paste(names(objects), ext, sep = "."))
     names(files) <- names(objects)
     alert(sprintf(
-        "Saving {.file %s} to {.path %s}.",
-        toString(basename(files), width = 100L), dir
+        "Saving %s to {.path %s}.",
+        toInlineString(basename(files), n = 10L, class = "file"),
+        dir
     ))
     if (identical(overwrite, FALSE) && any(file.exists(files))) {
         skip <- files[file.exists(files)]
-        alertWarning(sprintf("Skipped %s.", toString(basename(skip))))
+        alertWarning(sprintf(
+            "Skipped %s.",
+            toInlineString(basename(skip), n = 10L, class = "file")
+        ))
         files <- files[!file.exists(files)]
-        if (length(files) == 0L) {
+        if (!hasLength(files)) {
             alertWarning("No files were saved.")
             return(invisible(NULL))
         }
         objects <- objects[!file.exists(files)]  # nocov
     }
-    if (ext == "rds") {
-        mapply(
-            FUN = saveRDS,
-            object = objects,
-            file = files,
-            MoreArgs = list(compress = compress)
-        )
-    } else {
-        mapply(
-            FUN = save,
-            list = names(files),
-            file = files,
-            MoreArgs = list(
-                envir = parent.frame(),
-                compress = compress
+    switch(
+        EXPR = ext,
+        "rds" = {
+            mapply(
+                FUN = saveRDS,
+                object = objects,
+                file = files,
+                MoreArgs = list(
+                    "compress" = compress
+                )
             )
-        )
-    }
+        },
+        {
+            mapply(
+                FUN = save,
+                list = names(files),
+                file = files,
+                MoreArgs = list(
+                    "envir" = parent.frame(),
+                    "compress" = compress
+                )
+            )
+        }
+    )
     invisible(files)
 }
 
