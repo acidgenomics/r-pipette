@@ -1,3 +1,7 @@
+## FIXME Need to test compression handling for matrix method.
+
+
+
 context("export : character")
 
 test_that("'ext' argument", {
