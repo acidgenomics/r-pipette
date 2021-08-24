@@ -173,10 +173,6 @@ NULL
                 )
             },
             "vroom" = {
-                ## Support for this added in vroom 1.4.0, but is buggy.
-                ## Only allow this to be enabled in 1.4.1+.
-                ## Note that "path" has been renamed to "file".
-                assert(isTRUE(packageVersion("vroom") >= "1.4.1"))
                 whatFun <- "vroom_write_lines"
                 args <- list(
                     "x" = object,
