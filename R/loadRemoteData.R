@@ -1,7 +1,3 @@
-## FIXME Can we simplify these by passing to our main `import` function?
-
-
-
 #' Load remote data
 #'
 #' Load a remote R binary file. This function is vectorized and supports
@@ -65,7 +61,7 @@ loadRemoteData <- function(
         url = url,
         MoreArgs = list(envir = envir),
         FUN = function(name, url, envir) {
-            data <- import(url)
+            data <- import(file = url)
             assign(x = name, value = data, envir = envir)
         }
     ))
