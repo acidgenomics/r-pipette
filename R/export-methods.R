@@ -491,7 +491,7 @@ setMethod(
 `export,Matrix` <-  # nolint
     function(
         object,
-        ext = c("mtx.gz", "mtx.bz2","mtx.xz", "mtx.zip", "mtx"),
+        ext = c("mtx.gz", "mtx.bz2", "mtx.xz", "mtx.zip", "mtx"),
         dir,
         file = NULL,
         overwrite,
