@@ -14,7 +14,7 @@ export(object, ...)
 
 \S4method{export}{character}(
   object,
-  ext = "txt",
+  ext = c("txt", "txt.bz2", "txt.gz", "txt.xz", "txt.zip"),
   dir = getOption("acid.export.dir", default = "."),
   file = NULL,
   append = FALSE,
@@ -61,7 +61,7 @@ export(object, ...)
 
 \S4method{export}{Matrix}(
   object,
-  ext = "mtx",
+  ext = c("mtx.gz", "mtx.bz2", "mtx.xz", "mtx.zip", "mtx"),
   dir = getOption("acid.export.dir", default = "."),
   file = NULL,
   overwrite = getOption("acid.overwrite", default = TRUE),

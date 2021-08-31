@@ -53,12 +53,16 @@ test_that("'engine' argument", {
     file.remove(file)
 })
 
+test_that("'append' argument", {
+    ## FIXME
+})
+
 
 
 context("export : matrix")
 
 test_that("'ext' argument", {
-    for (ext in eval(formals(`export,matrix`)[["ext"]])) {
+    for (ext in .exportMatrixChoices) {
         file <- paste0("mat", ".", ext)
         x <- export(object = mat, ext = ext)
         expect_identical(x, realpath(file))
@@ -146,7 +150,7 @@ test_that("Invalid input", {
 
 context("export : sparseMatrix")
 
-test_that("'ext' argument, using gzip compression (default)", {
+test_that("'ext' argument, using gzip compression", {
     x <- export(sparse, ext = "mtx.gz")
     expect_identical(
         x,
