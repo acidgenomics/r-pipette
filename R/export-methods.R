@@ -104,7 +104,13 @@ NULL
         whatPkg <- match.arg(arg = engine, choices = .engines)
         requireNamespaces(whatPkg)
         if (isTRUE(append)) {
-            assert(!identical(whatPkg, "base"))
+            assert(
+                !identical(whatPkg, "base"),
+                msg = sprintf(
+                    "'%s' engine not supported when '%s' is enabled.",
+                    "base", "append"
+                )
+            )
             overwrite <- FALSE
         }
         if (isTRUE(overwrite)) {
@@ -126,7 +132,12 @@ NULL
         compress <- !is.na(compressExt)
         if (isAFile(file)) {
             file <- realpath(file)
-            if (isTRUE(overwrite) && isFALSE(quiet)) {
+            if (isTRUE(append) && isFALSE(quiet)) {
+                alertInfo(sprintf(
+                    "Appending content in {.file %s}.",
+                    basename(file)
+                ))
+            } else if (isTRUE(overwrite) && isFALSE(quiet)) {
                 alertWarning(sprintf("Overwriting {.file %s}.", file))
             } else {
                 abort(sprintf("File exists: {.file %s}.", file))
