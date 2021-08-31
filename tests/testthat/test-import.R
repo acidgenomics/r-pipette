@@ -1,11 +1,3 @@
-## FIXME Need to improve coverage of source code lines import:
-## Need to test `stripWhitespace`, `removeBlank`, `comment`, and `skip`
-## arguments here.
-## FIXME Need to test empty file import support of source code lines.
-## FIXME Check for expected error of `comment` usage with data.table.
-
-
-
 context("import : invalid input")
 
 test_that("Invalid extension", {
