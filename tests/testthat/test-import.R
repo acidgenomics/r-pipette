@@ -216,6 +216,131 @@ test_that("Custom engine support", {
     }
 })
 
+test_that("Empty file", {
+    file <- file.path(tempdir(), "lines.txt")
+    unlink(file, recursive = FALSE)
+    file.create(file)
+    expect_identical(
+        object = import(file, format = "lines"),
+        expected = character(0L)
+    )
+    unlink(file, recursive = FALSE)
+})
+
+test_that("'comment' argument", {
+    file <- file.path(tempdir(), "lines.txt")
+    unlink(file, recursive = FALSE)
+    vec <- c(
+        "# comment 1",
+        "aaa",
+        "## comment 2",
+        "bbb",
+        "# comment 3",
+        "ccc"
+    )
+    writeLines(text = vec, con = file)
+    expect_identical(
+        object = import(
+            file = file,
+            format = "lines",
+            comment = ""
+        ),
+        expected = vec
+    )
+    expect_identical(
+        object = import(
+            file = file,
+            format = "lines",
+            comment = "#"
+        ),
+        expected = c(
+            "aaa",
+            "bbb",
+            "ccc"
+        )
+    )
+    expect_identical(
+        object = import(
+            file = file,
+            format = "lines",
+            comment = "# "
+        ),
+        expected = c(
+            "aaa",
+            "## comment 2",
+            "bbb",
+            "ccc"
+        )
+    )
+    expect_identical(
+        object = import(
+            file = file,
+            format = "lines",
+            comment = "##"
+        ),
+        expected = c(
+            "# comment 1",
+            "aaa",
+            "bbb",
+            "# comment 3",
+            "ccc"
+        )
+    )
+    unlink(file, recursive = FALSE)
+})
+
+test_that("'nMax' argument", {
+    ## FIXME
+})
+
+test_that("'removeBlank' argument", {
+    ## FIXME
+})
+
+test_that("'skip' argument", {
+    ## FIXME
+})
+
+test_that("Both 'skip' and 'nMax' arguments enabled", {
+    ## FIXME
+})
+
+test_that("'stripWhitespace' argument", {
+    file <- file.path(tempdir(), "lines.txt")
+    unlink(file, recursive = FALSE)
+    vec <- c(
+        "  aaa",
+        "bbb  ",
+        " ccc ",
+        "  ddd  ",
+        "eee"
+    )
+    writeLines(text = vec, con = file)
+    expect_identical(
+        object = import(
+            file = file,
+            format = "lines",
+            stripWhitespace = FALSE
+        ),
+        expected = vec
+    )
+    expect_identical(
+        object = import(
+            file = file,
+            format = "lines",
+            stripWhitespace = TRUE
+        ),
+        expected = c(
+            "aaa",
+            "bbb",
+            "ccc",
+            "ddd",
+            "eee"
+        )
+    )
+    unlink(file, recursive = FALSE)
+})
+
 
 
 context("import : R data")
