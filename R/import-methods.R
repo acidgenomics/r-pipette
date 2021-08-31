@@ -1181,6 +1181,7 @@ formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
         }
         assert(is.character(object))
         if (isTRUE(stripWhitespace)) {
+            ## FIXME Need to cover start
             object <- gsub(
                 pattern = "^[[:space:]]+",
                 replacement = "",
@@ -1191,16 +1192,22 @@ formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
                 replacement = "",
                 x = object
             )
+            ## FIXME Need to cover end
         }
         if (isTRUE(removeBlank)) {
+            ## FIXME Need to cover start
             requireNamespaces("stringi")
             object <- stringi::stri_remove_empty(object)
+            ## FIXME Need to cover end
         }
         if (isString(comment)) {
+            ## FIXME Need to cover start
             keep <- !grepl(pattern = paste0("^", comment), x = object)
             object <- object[keep]
+            ## FIXME Need to cover end
         }
         if (identical(whatPkg, "base")) {
+            ## FIXME Need to cover start
             if (isTRUE(skip > 0L)) {
                 assert(skip < length(object))
                 start <- skip + 1L
@@ -1210,6 +1217,7 @@ formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
             if (isTRUE(nMax < length(object))) {
                 object <- object[1L:nMax]
             }
+            ## FIXME Need to cover end
         }
         .returnImport(
             object = object,

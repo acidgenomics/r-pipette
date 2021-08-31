@@ -317,6 +317,7 @@ setMethod(
             }
         }
         if (isTRUE(compress)) {
+            ## FIXME Need to cover start
             file <- sub(
                 pattern = paste0("\\.", compressExt, "$"),
                 replacement = "",
@@ -326,6 +327,7 @@ setMethod(
                 arg = fileExt(file),
                 choices = c("csv", "tsv")
             )
+            ## FIXME Need to cover end
         }
         switch(
             EXPR = whatPkg,
@@ -419,12 +421,14 @@ setMethod(
         assert(is.function(what))
         do.call(what = what, args = args)
         if (isTRUE(compress)) {
+            ## FIXME Need to cover start
             file <- compress(
                 file = file,
                 ext = compressExt,
                 remove = TRUE,
                 overwrite = TRUE
             )
+            ## FIXME Need to cover end
         }
         file <- realpath(file)
         invisible(file)
