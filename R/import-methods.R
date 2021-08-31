@@ -1117,7 +1117,15 @@ formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
             ## nocov start
             assert(
                 identical(nMax, eval(formals()[["nMax"]])),
-                identical(skip, eval(formals()[["skip"]]))
+                identical(skip, eval(formals()[["skip"]])),
+                msg = sprintf(
+                    fmt = paste0(
+                        "'%s' or '%s' arguments are not supported when ",
+                        "either '%s' or '%s' are enabled."
+                    ),
+                    "nMax", "skip",
+                    "comment", "removeBlank"
+                )
             )
             ## nocov end
         }
