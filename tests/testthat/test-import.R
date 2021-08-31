@@ -290,7 +290,35 @@ test_that("'comment' argument", {
 })
 
 test_that("'nMax' argument", {
-    ## FIXME
+    file <- file.path(tempdir(), "lines.txt")
+    unlink(file, recursive = FALSE)
+    vec <- c("aaa", "bbb", "ccc")
+    writeLines(text = vec, con = file)
+    expect_identical(
+        object = import(
+            file = file,
+            format = "lines",
+            nMax = Inf
+        ),
+        expected = vec
+    )
+    expect_identical(
+        object = import(
+            file = file,
+            format = "lines",
+            nMax = 2L
+        ),
+        expected = vec[seq_len(2L)]
+    )
+    expect_identical(
+        object = import(
+            file = file,
+            format = "lines",
+            nMax = 1L
+        ),
+        expected = vec[[1L]]
+    )
+    unlink(file, recursive = FALSE)
 })
 
 test_that("'removeBlank' argument", {
