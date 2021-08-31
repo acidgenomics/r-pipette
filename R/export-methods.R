@@ -80,11 +80,11 @@ NULL
 
 
 
-## Updated 2021-06-04.
+## Updated 2021-08-31.
 `export,character` <-  # nolint
     function(
         object,
-        ext = "txt",
+        ext = c("txt", "txt.bz2", "txt.gz", "txt.xz", "txt.zip"),
         dir,
         file = NULL,
         append = FALSE,
@@ -93,7 +93,6 @@ NULL
         quiet
     ) {
         assert(
-            isString(ext),
             isString(dir),
             isString(file, nullOK = TRUE),
             isFlag(overwrite),
@@ -101,13 +100,12 @@ NULL
             isString(engine),
             isFlag(quiet)
         )
+        ext <- match.arg(ext)
         whatPkg <- match.arg(arg = engine, choices = .engines)
         requireNamespaces(whatPkg)
         if (isTRUE(append)) {
-            ## nocov start
             assert(!identical(whatPkg, "base"))
             overwrite <- FALSE
-            ## nocov end
         }
         if (isTRUE(overwrite)) {
             assert(isFALSE(append))
@@ -117,10 +115,6 @@ NULL
             sym <- call[["object"]]
             assert(is.symbol(sym), msg = .symError)
             name <- as.character(sym)
-            ext <- match.arg(
-                arg = ext,
-                choices = c("txt", "txt.bz2", "txt.gz", "txt.xz", "txt.zip")
-            )
             dir <- initDir(dir)
             file <- file.path(dir, paste0(name, ".", ext))
         } else {
@@ -164,7 +158,6 @@ NULL
                 )
             },
             "readr" = {
-                ## readr v1.4 changed "path" to "file".
                 whatFun <- "write_lines"
                 args <- list(
                     "x" = object,
@@ -217,9 +210,16 @@ setMethod(
 
 
 
+.exportMatrixChoices <- c(
+    "csv", "csv.bz2", "csv.gz", "csv.xz", "csv.zip",
+    "tsv", "tsv.bz2", "tsv.gz", "tsv.xz", "tsv.zip"
+)
+
+
+
 #' Export `matrix` method
 #'
-#' @note Updated 2021-06-10.
+#' @note Updated 2021-08-31.
 #' @noRd
 #'
 #' @details
@@ -242,13 +242,13 @@ setMethod(
         validObject(object)
         whatPkg <- match.arg(arg = engine, choices = .engines)
         requireNamespaces(whatPkg)
+        ext <- match.arg(arg = ext, choices = .exportMatrixChoices)
         object <- as.data.frame(object)
         verbose <- getOption("acid.verbose", default = FALSE)
         ## Allowing export of empty objects, so don't check for length,
         ## rows, or columns here.
         assert(
             hasNoDuplicates(colnames(object)),
-            isString(ext),
             isString(dir),
             isString(file, nullOK = TRUE),
             isFlag(rownames),
@@ -267,14 +267,8 @@ setMethod(
             ext <- fileExt(file)
             dir <- initDir(dirname(file))
         }
+        ext <- match.arg(arg = ext, choices = .exportMatrixChoices)
         whatFile <- file
-        ext <- match.arg(
-            arg = ext,
-            choices = c(
-                "csv", "csv.bz2", "csv.gz", "csv.xz", "csv.zip",
-                "tsv", "tsv.bz2", "tsv.gz", "tsv.xz", "tsv.zip"
-            )
-        )
         match <- str_match(string = file, pattern = extPattern)
         compressExt <- match[1L, 4L]
         compress <- !is.na(compressExt)
@@ -317,7 +311,6 @@ setMethod(
             }
         }
         if (isTRUE(compress)) {
-            ## FIXME Need to cover start
             file <- sub(
                 pattern = paste0("\\.", compressExt, "$"),
                 replacement = "",
@@ -327,7 +320,6 @@ setMethod(
                 arg = fileExt(file),
                 choices = c("csv", "tsv")
             )
-            ## FIXME Need to cover end
         }
         switch(
             EXPR = whatPkg,
@@ -421,14 +413,12 @@ setMethod(
         assert(is.function(what))
         do.call(what = what, args = args)
         if (isTRUE(compress)) {
-            ## FIXME Need to cover start
             file <- compress(
                 file = file,
                 ext = compressExt,
                 remove = TRUE,
                 overwrite = TRUE
             )
-            ## FIXME Need to cover end
         }
         file <- realpath(file)
         invisible(file)
@@ -480,7 +470,7 @@ setMethod(
 
 #' Export `Matrix` (e.g. `sparseMatrix`) method
 #'
-#' @note Updated 2021-02-02.
+#' @note Updated 2021-08-31.
 #' @noRd
 #'
 #' @details
@@ -490,16 +480,16 @@ setMethod(
 `export,Matrix` <-  # nolint
     function(
         object,
-        ext = "mtx",
+        ext = c("mtx.gz", "mtx.bz2","mtx.xz", "mtx.zip", "mtx"),
         dir,
         file = NULL,
         overwrite,
         quiet
     ) {
         validObject(object)
+        ext <- match.arg(ext)
         assert(
             hasLength(object),
-            isString(ext),
             isString(dir),
             isString(file, nullOK = TRUE),
             isFlag(overwrite),
@@ -516,10 +506,7 @@ setMethod(
             ext <- fileExt(file)
             dir <- initDir(dirname(file))
         }
-        ext <- match.arg(
-            arg = ext,
-            choices = c("mtx", "mtx.bz2", "mtx.gz", "mtx.xz", "mtx.zip")
-        )
+        ext <- match.arg(ext)
         match <- str_match(string = file, pattern = extPattern)
         compressExt <- match[1L, 4L]
         compress <- !is.na(compressExt)
