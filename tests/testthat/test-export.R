@@ -92,34 +92,35 @@ context("export : matrix")
 
 test_that("'ext' argument", {
     for (ext in .exportMatrixChoices) {
-        file <- paste0("mat", ".", ext)
-        x <- export(object = mat, ext = ext)
-        expect_identical(x, realpath(file))
-        expect_true(file.exists(file))
-        ## Check that row names stay intact.
+        mat1 <- mat
+        file1 <- paste0("mat1", ".", ext)
+        x <- export(object = mat1, ext = ext)
+        expect_identical(x, realpath(file1))
+        expect_true(file.exists(file1))
         expect_true(grepl(
             pattern = "rowname",
-            x = head(readLines(file), n = 1L)
+            x = head(import(file1, format = "lines"), n = 1L)
         ))
         ## Check accidental overwrite support.
         expect_error(
-            export(mat, ext = ext, overwrite = FALSE),
+            export(mat1, ext = ext, overwrite = FALSE),
             "File exists"
         )
         expect_message(
-            export(mat, ext = ext, overwrite = TRUE),
+            export(mat1, ext = ext, overwrite = TRUE),
             "Overwriting"
         )
         ## Now strip the names, and confirm that export still works.
-        mat <- unname(mat)
-        x <- export(object = mat, ext = ext)
-        expect_identical(x, realpath(file))
-        expect_true(file.exists(file))
+        mat2 <- unname(mat1)
+        file2 <- paste0("mat2", ".", ext)
+        x <- export(object = mat2, ext = ext)
+        expect_identical(x, realpath(file2))
+        expect_true(file.exists(file2))
         expect_true(grepl(
             pattern = "V1",
-            x = head(readLines(file), n = 1L)
+            x = head(import(file2, format = "lines"), n = 1L)
         ))
-        file.remove(file)
+        file.remove(file1, file2)
     }
 })
 
@@ -146,7 +147,7 @@ test_that("Invalid input", {
 context("export : DataFrame")
 
 test_that("'ext' argument", {
-    for (ext in eval(formals(`export,DataFrame`)[["ext"]])) {
+    for (ext in .exportMatrixChoices) {
         file <- paste0("df", ".", ext)
         x <- export(df, ext = ext)
         expect_identical(x, realpath(file))
@@ -154,7 +155,7 @@ test_that("'ext' argument", {
         ## Check that row names stay intact.
         expect_true(grepl(
             pattern = "rowname",
-            x = head(readLines(file), n = 1L)
+            x = head(import(file, format = "lines"), n = 1L)
         ))
         file.remove(file)
     }
