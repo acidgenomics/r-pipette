@@ -1,7 +1,3 @@
-## FIXME Need to test compression handling for matrix method.
-
-
-
 context("export : character")
 
 test_that("'ext' argument", {
@@ -12,7 +8,7 @@ test_that("'ext' argument", {
         expect_identical(x, realpath(file))
         expect_true(file.exists(file))
         expect_identical(
-            object = readLines(file),
+            object = import(file, format = "lines"),
             expected = vec
         )
         ## Check accidental overwrite support.
@@ -46,7 +42,7 @@ test_that("'engine' argument", {
         expect_identical(x, realpath(file))
         expect_true(file.exists(file))
         expect_identical(
-            object = readLines(file),
+            object = import(file, format = "lines"),
             expected = vec
         )
     }
@@ -54,7 +50,40 @@ test_that("'engine' argument", {
 })
 
 test_that("'append' argument", {
-    ## FIXME
+    file <- file.path(tempdir(), "lines.txt")
+    unlink(file, recursive = FALSE)
+    vec1 <- c("aaa", "bbb")
+    vec2 <- c("ccc", "ddd")
+    engine <- "data.table"
+    export(
+        object = vec1,
+        file = file,
+        engine = engine
+    )
+    expect_identical(
+        object = import(file, format = "lines"),
+        expected = vec1
+    )
+    export(
+        object = vec2,
+        file = file,
+        append = TRUE,
+        engine = engine
+    )
+    expect_identical(
+        object = import(file, format = "lines"),
+        expected = c(vec1, vec2)
+    )
+    expect_error(
+        object = export(
+            object = vec2,
+            file = file,
+            append = TRUE,
+            engine = "base"
+        ),
+        regexp = "base"
+    )
+    unlink(file, recursive = FALSE)
 })
 
 
