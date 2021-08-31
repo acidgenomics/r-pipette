@@ -14,6 +14,8 @@
   of calling `stop` internally, now using `abort`, which supports stylized
   messages (via cli package).
 - `transmit`: Hardened working example against NCBI FTP server failure.
+- Package is now back to 100% code coverage, with improved coverage of primary
+  `import` and `export` functions.
 
 ## pipette 0.6.3 (2021-08-05)
 
