@@ -322,15 +322,100 @@ test_that("'nMax' argument", {
 })
 
 test_that("'removeBlank' argument", {
-    ## FIXME
+    file <- file.path(tempdir(), "lines.txt")
+    unlink(file, recursive = FALSE)
+    vec <- c(
+        "  aaa",
+        "bbb  ",
+        "   ",
+        ""
+    )
+    writeLines(text = vec, con = file)
+    expect_identical(
+        object = import(
+            file = file,
+            format = "lines",
+            removeBlank = FALSE
+        ),
+        expected = vec
+    )
+    expect_identical(
+        object = import(
+            file = file,
+            format = "lines",
+            removeBlank = TRUE,
+            stripWhitespace = FALSE
+        ),
+        expected = c(
+            "  aaa",
+            "bbb  ",
+            "   "
+        )
+    )
+    expect_identical(
+        object = import(
+            file = file,
+            format = "lines",
+            removeBlank = TRUE,
+            stripWhitespace = TRUE
+        ),
+        expected = c(
+            "aaa",
+            "bbb"
+        )
+    )
+    unlink(file, recursive = FALSE)
 })
 
 test_that("'skip' argument", {
-    ## FIXME
-})
-
-test_that("Both 'skip' and 'nMax' arguments enabled", {
-    ## FIXME
+    file <- file.path(tempdir(), "lines.txt")
+    unlink(file, recursive = FALSE)
+    vec <- c("aaa", "bbb", "ccc", "ddd")
+    writeLines(text = vec, con = file)
+    expect_identical(
+        object = import(
+            file = file,
+            format = "lines",
+            skip = 0L
+        ),
+        expected = vec
+    )
+    expect_identical(
+        object = import(
+            file = file,
+            format = "lines",
+            skip = length(vec) - 1L
+        ),
+        expected = vec[[length(vec)]]
+    )
+    expect_identical(
+        object = import(
+            file = file,
+            format = "lines",
+            skip = 2L,
+            nMax = 1L
+        ),
+        expected = vec[[3L]]
+    )
+    expect_error(
+        object = import(
+            file = file,
+            format = "lines",
+            skip = 1L,
+            comment = "#"
+        ),
+        regexp = "comment"
+    )
+    expect_error(
+        object = import(
+            file = file,
+            format = "lines",
+            skip = 1L,
+            removeBlank = TRUE
+        ),
+        regexp = "removeBlank"
+    )
+    unlink(file, recursive = FALSE)
 })
 
 test_that("'stripWhitespace' argument", {
@@ -341,7 +426,8 @@ test_that("'stripWhitespace' argument", {
         "bbb  ",
         " ccc ",
         "  ddd  ",
-        "eee"
+        "eee",
+        "   "
     )
     writeLines(text = vec, con = file)
     expect_identical(
@@ -363,7 +449,8 @@ test_that("'stripWhitespace' argument", {
             "bbb",
             "ccc",
             "ddd",
-            "eee"
+            "eee",
+            ""
         )
     )
     unlink(file, recursive = FALSE)

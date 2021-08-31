@@ -1114,7 +1114,6 @@ formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
             isFlag(quiet)
         )
         if (isString(comment) || isTRUE(removeBlank)) {
-            ## nocov start
             assert(
                 identical(nMax, eval(formals()[["nMax"]])),
                 identical(skip, eval(formals()[["skip"]])),
@@ -1127,7 +1126,6 @@ formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
                     "comment", "removeBlank"
                 )
             )
-            ## nocov end
         }
         whatPkg <- match.arg(arg = engine, choices = .engines)
         tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
