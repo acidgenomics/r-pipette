@@ -1,4 +1,4 @@
-## pipette 0.7.0 (2021-08-31)
+## pipette 0.7.0 (2021-09-01)
 
 ### Major changes
 
