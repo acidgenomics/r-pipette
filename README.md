@@ -6,6 +6,8 @@ Pipette biological data in and out of R.
 
 ## Installation
 
+Requirements: [R][] >= 4.0, [Bioconductor][] >= 3.13.
+
 ### [R][] method
 
 ```r
@@ -47,6 +49,7 @@ docker run -it \
 ```
 
 [bioconda]: https://bioconda.github.io/
+[bioconductor]: https://bioconductor.org/
 [conda]: https://conda.io/
 [docker]: https://www.docker.com/
 [r]: https://www.r-project.org/
