@@ -11,9 +11,9 @@
 #'
 #' @importMethodsFrom IRanges end start width
 #'
-#' @importFrom AcidBase basenameSansExt bapply compress compressExtPattern
-#'   decompress dots download download.file extPattern fileExt formalsList
-#'   initDir packageName packageVersion pasteURL realpath requireNamespaces
+#' @importFrom AcidBase basenameSansExt compress compressExtPattern decompress
+#'   dots download download.file extPattern fileExt formalsList initDir
+#'   packageName packageVersion pasteURL realpath requireNamespaces
 #'   standardizeCall
 #' @importFrom AcidCLI abort alert alertInfo alertSuccess alertWarning
 #'   toInlineString
@@ -23,11 +23,11 @@
 #' @importFrom RCurl getURL
 #' @importFrom goalie assert allAreAtomic allAreExisting allAreFiles
 #'   allAreNonExisting allAreURLs allHaveAccess areDisjointSets areSameLength
-#'   areSetEqual formalCompress hasColnames hasCols hasDimnames hasInternet
-#'   hasLength hasNames hasNoDuplicates hasRownames hasRows hasValidNames
-#'   hasValidDimnames isAFile isAURL isAny isCharacter isFlag isInstalled isInt
-#'   isMatchingRegex isNonNegative isPositive isScalar isString isSubset
-#'   validNames validate
+#'   areSetEqual bapply formalCompress hasColnames hasCols hasDimnames
+#'   hasInternet hasLength hasNames hasNoDuplicates hasRownames hasRows
+#'   hasValidNames hasValidDimnames isAFile isAURL isAny isCharacter isFlag
+#'   isInstalled isInt isMatchingRegex isNonNegative isPositive isScalar
+#'   isString isSubset validNames validate
 #' @importFrom methods as is hasMethod new setGeneric setValidity slotNames
 #'   validObject .hasSlot
 #' @importFrom stringr str_extract str_match str_subset
