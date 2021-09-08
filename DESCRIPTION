@@ -53,5 +53,5 @@ Suggests:
     vroom (>= 1.5.4),
     yaml (>= 2.2.1)
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Additional_repositories: https://r.acidgenomics.com

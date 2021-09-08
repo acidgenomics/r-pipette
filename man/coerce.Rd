@@ -126,7 +126,7 @@ strips metadata in \code{mcols()}. However, GenomicRanges preserves this
 information, so we're adding a tweaked coercion method here to improve
 consistency.
 
-Relevant methods:\if{html}{\out{<div class="r">}}\preformatted{getMethod(
+Relevant methods:\if{html}{\out{<div class="sourceCode r">}}\preformatted{getMethod(
     f = "as.data.frame",
     signature = "GenomicRanges",
     where = asNamespace("GenomicRanges")
