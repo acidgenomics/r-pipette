@@ -1,3 +1,11 @@
+## pipette 0.7.1 (2021-09-08)
+
+### Major changes
+
+- Switched `bapply` import from AcidBase to goalie.
+- Updated internal basejump dependencies.
+- Improved installation instructions.
+
 ## pipette 0.7.0 (2021-09-01)
 
 ### Major changes
