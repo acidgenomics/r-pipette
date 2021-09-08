@@ -7,6 +7,7 @@
 #'
 #' Currently intended for use with `import` function.
 #'
+#' @keywords internal
 #' @note Updated 2021-06-03.
 #'
 #' @seealso
