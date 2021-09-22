@@ -426,6 +426,9 @@ NULL
         isString(whatFun, nullOK = TRUE),
         isFlag(quiet)
     )
+    if (!is.null(rownameCol)) {
+        rownames <- TRUE
+    }
     ## Check that manual column names are correct.
     if (isCharacter(colnames)) {
         assert(identical(colnames(object), colnames))  # nocov
