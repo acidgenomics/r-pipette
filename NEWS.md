@@ -1,3 +1,12 @@
+## pipette 0.7.2 (2021-09-22)
+
+### Minor changes
+
+- `import`: Added `rownameCol` argument for import of delimited files, such
+  as CSV, TSV, and Excel. This is a non-breaking change that enables the
+  user to manually define the rowname column upon import, which can be useful
+  when working with files from public databases such as GEO.
+
 ## pipette 0.7.1 (2021-09-08)
 
 ### Major changes
