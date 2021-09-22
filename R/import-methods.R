@@ -107,9 +107,17 @@
 #' `DOC`, `DOCX`, `PDF`, `PPT`, `PPTX`.
 #'
 #' @name import
-#' @note Updated 2021-08-24.
+#' @note Updated 2021-09-22.
 #'
 #' @inheritParams AcidRoxygen::params
+#' @param rownameCol `NULL`, `character(1)`, or `integer(1)`.
+#'   *Applies only when `rownames = TRUE`.*
+#'   Column name to use for row names assignment.
+#'   If left `NULL` (default), the function will call `matchRownameCol()`
+#'   internally to attempt to automatically match the row name column (e.g.
+#'   `"rowname"` or `"rn"`).
+#'   Otherwise, can manually define using a scalar argument, either the name
+#'   directly or position in the column names.
 #' @param colnames `logical(1)` or `character`.
 #'   Automatically assign column names, using the first header row.
 #'   Applies to file types that return `data.frame` only.
@@ -389,12 +397,13 @@ NULL
 
 #' Return standardized import object
 #'
-#' @note Updated 2021-08-24.
+#' @note Updated 2021-09-22.
 #' @noRd
 .returnImport <- function(
     object,
     file,
     rownames = FALSE,
+    rownameCol = NULL,
     colnames = FALSE,
     makeNames = FALSE,
     metadata = FALSE,
@@ -407,6 +416,7 @@ NULL
     assert(
         isString(file),
         isFlag(rownames),
+        isScalar(rownameCol) || is.null(rownameCol),
         isFlag(colnames) || isCharacter(colnames),
         is.function(makeNames) ||
             is.null(makeNames) ||
@@ -426,16 +436,26 @@ NULL
         isTRUE(rownames) &&
         !hasRownames(object)
     ) {
-        rnCol <- matchRownameColumn(object)
-        if (!is.null(rnCol)) {
+        if (is.null(rownameCol)) {
+            rownameCol <- matchRownameColumn(object)
+        }
+        if (!is.null(rownameCol)) {
+            assert(isScalar(rownameCol))
+            if (!isString(rownameCol)) {
+                rownameCol <- colnames(object)[[rownameCol]]
+            }
+            assert(
+                isString(rownameCol),
+                isSubset(rownameCol, colnames(object))
+            )
             if (isFALSE(quiet)) {
                 alertInfo(sprintf(
                     "Setting row names from {.var %s} column.",
-                    rnCol
+                    rownameCol
                 ))
             }
-            rownames(object) <- object[[rnCol]]
-            object[[rnCol]] <- NULL
+            rownames(object) <- object[[rownameCol]]
+            object[[rownameCol]] <- NULL
         }
     }
     if (hasRownames(object)) {
@@ -637,12 +657,13 @@ formals(`import,RDataFile`)[["quiet"]] <-
 #' Can override using `acid.import.engine` option, which also supports
 #' data.table and readr packages.
 #'
-#' @note Updated 2021-08-24.
+#' @note Updated 2021-09-22.
 #' @noRd
 `import,DelimFile` <-  # nolint
     function(
         file,
         rownames = TRUE,
+        rownameCol = NULL,
         colnames = TRUE,
         comment = "",
         skip = 0L,
@@ -655,6 +676,7 @@ formals(`import,RDataFile`)[["quiet"]] <-
         assert(
             isString(file),
             isFlag(rownames),
+            isScalar(rownameCol) || is.null(rownameCol),
             isFlag(colnames) || isCharacter(colnames),
             is.character(comment) && length(comment) <= 1L,
             isInt(skip), isNonNegative(skip),
@@ -816,6 +838,7 @@ formals(`import,RDataFile`)[["quiet"]] <-
             object = object,
             file = file,
             rownames = rownames,
+            rownameCol = rownameCol,
             colnames = colnames,
             makeNames = makeNames,
             metadata = metadata,
@@ -832,13 +855,14 @@ formals(`import,DelimFile`)[c("makeNames", "metadata", "quiet")] <-
 
 #' Import a Microsoft Excel worksheet (`.xlsx`)
 #'
-#' @note Updated 2021-08-24.
+#' @note Updated 2021-09-22.
 #' @noRd
 `import,ExcelFile` <-  # nolint
     function(
         file,
         sheet = 1L,
         rownames = TRUE,
+        rownameCol = NULL,
         colnames = TRUE,
         skip = 0L,
         nMax = Inf,
@@ -850,6 +874,7 @@ formals(`import,DelimFile`)[c("makeNames", "metadata", "quiet")] <-
             isString(file),
             isScalar(sheet),
             isFlag(rownames) || isCharacter(rownames),
+            isScalar(rownameCol) || is.null(rownameCol),
             isFlag(colnames) || isCharacter(colnames),
             isInt(skip), isNonNegative(skip),
             isPositive(nMax),
@@ -894,6 +919,7 @@ formals(`import,DelimFile`)[c("makeNames", "metadata", "quiet")] <-
             object = object,
             file = file,
             rownames = rownames,
+            rownameCol = rownameCol,
             colnames = colnames,
             makeNames = makeNames,
             metadata = metadata,
@@ -1520,12 +1546,13 @@ formals(`import,GMXFile`)[["quiet"]] <-
 ## Handoff methods =============================================================
 #' Import a file using `rio::import`
 #'
-#' @note Updated 2021-08-24.
+#' @note Updated 2021-09-22.
 #' @noRd
 `import,RioFile` <-  # nolint
     function(
         file,
         rownames = TRUE,
+        rownameCol = NULL,
         colnames = TRUE,
         makeNames,
         metadata,
@@ -1535,6 +1562,7 @@ formals(`import,GMXFile`)[["quiet"]] <-
         assert(
             isString(file),
             isFlag(rownames),
+            isScalar(rownameCol) || is.null(rownameCol),
             isFlag(colnames) || isCharacter(colnames),
             is.function(makeNames) ||
                 is.null(makeNames) ||
@@ -1558,6 +1586,7 @@ formals(`import,GMXFile`)[["quiet"]] <-
             object = object,
             file = file,
             rownames = rownames,
+            rownameCol = rownameCol,
             colnames = colnames,
             makeNames = makeNames,
             metadata = metadata,

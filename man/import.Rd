@@ -29,6 +29,7 @@ import(file, ...)
 \S4method{import}{DelimFile}(
   file,
   rownames = TRUE,
+  rownameCol = NULL,
   colnames = TRUE,
   comment = "",
   skip = 0L,
@@ -55,6 +56,7 @@ import(file, ...)
   file,
   sheet = 1L,
   rownames = TRUE,
+  rownameCol = NULL,
   colnames = TRUE,
   skip = 0L,
   nMax = Inf,
@@ -118,6 +120,7 @@ import(file, ...)
 \S4method{import}{RioFile}(
   file,
   rownames = TRUE,
+  rownameCol = NULL,
   colnames = TRUE,
   makeNames = getOption("acid.import.make.names", default = syntactic::makeNames),
   metadata = getOption("acid.import.metadata", default = FALSE),
@@ -152,6 +155,15 @@ contain an extension.}
 \item{rownames}{\code{logical(1)}.
 Automatically assign row names, if \code{rowname} column is defined.
 Applies to file types that return a data frame only.}
+
+\item{rownameCol}{\code{NULL}, \code{character(1)}, or \code{integer(1)}.
+\emph{Applies only when \code{rownames = TRUE}.}
+Column name to use for row names assignment.
+If left \code{NULL} (default), the function will call \code{matchRownameCol()}
+internally to attempt to automatically match the row name column (e.g.
+\code{"rowname"} or \code{"rn"}).
+Otherwise, can manually define using a scalar argument, either the name
+directly or position in the column names.}
 
 \item{colnames}{\code{logical(1)} or \code{character}.
 Automatically assign column names, using the first header row.
@@ -277,7 +289,7 @@ arguments. Remote URLs and compressed files are supported. If you need more
 complex import settings, just call the wrapped importer directly instead.
 }
 \note{
-Updated 2021-08-24.
+Updated 2021-09-22.
 }
 \section{Row and column names}{
 
