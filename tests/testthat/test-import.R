@@ -29,15 +29,14 @@ context("import : data frame")
 test_that("Delimited files", {
     for (ext in c("csv", "csv.gz", "tsv")) {
         file <- file.path(file = "cache", paste0("example.", ext))
-        object <- import(
-            file = file,
-            metadata = TRUE
-        )
+        object <- import(file = file, metadata = TRUE)
         expect_is(object, "data.frame")
+        expect_true(hasRownames(object))
         expect_is(
             object = attributes(object)[["import"]][["file"]],
             class = "character"
         )
+        expect_true(hasRownames(import(file = file, rownameCol = "rowname")))
     }
 })
 
@@ -599,6 +598,7 @@ test_that("XLSX", {
             )
         )
     )
+    expect_true(hasRownames(import(file = file, rownameCol = "rowname")))
 })
 
 test_that("XLS", {
@@ -631,6 +631,7 @@ test_that("XLS", {
             )
         )
     )
+    expect_true(hasRownames(import(file = file, rownameCol = "rowname")))
 })
 
 
