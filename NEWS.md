@@ -6,6 +6,8 @@
   as CSV, TSV, and Excel. This is a non-breaking change that enables the
   user to manually define the rowname column upon import, which can be useful
   when working with files from public databases such as GEO.
+- Updated suggested readr and vroom versions, now that they're available on
+  Bioconda.
 
 ## pipette 0.7.1 (2021-09-08)
 
