@@ -1,15 +1,3 @@
-#' @rdname import
-#' @name import
-#' @export
-setGeneric(
-    name = "import",
-    def = function(file, ...) {
-        standardGeneric("import")
-    }
-)
-
-
-
 #' @rdname atomize
 #' @name atomize
 #' @importFrom AcidGenerics atomize
@@ -84,7 +72,7 @@ NULL
 #' @rdname export
 #' @name export
 #' @importFrom AcidGenerics export
-#' @usage export(object, ...)
+#' @usage export(object, con, format, ...)
 #' @export
 NULL
 
@@ -94,6 +82,15 @@ NULL
 #' @name factorize
 #' @importFrom AcidGenerics factorize
 #' @usage factorize(object, ...)
+#' @export
+NULL
+
+
+
+#' @rdname import
+#' @name import
+#' @importFrom AcidGenerics import
+#' @usage export(con, format, text, ...)
 #' @export
 NULL
 
