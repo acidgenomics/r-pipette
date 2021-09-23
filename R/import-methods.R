@@ -1,3 +1,7 @@
+## FIXME Rework using BiocIO generic approach.
+
+
+
 #' Import
 #'
 #' Read file by extension into R.
