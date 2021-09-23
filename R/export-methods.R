@@ -1,3 +1,7 @@
+## FIXME Rework using BiocIO generic approach.
+
+
+
 #' @name export
 #' @inherit AcidGenerics::export
 #' @note Updated 2021-06-10.
