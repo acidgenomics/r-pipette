@@ -8,7 +8,7 @@
 #'
 #' @keywords internal
 #'
-#' @importClassesFrom AcidGenerics DataFrame List SimpleList
+#' @importClassesFrom AcidGenerics DataFrame List SimpleList missingOrNULL
 #' @importClassesFrom BiocIO BiocFile CompressedFile
 #' @importClassesFrom GenomicRanges GenomicRanges
 #' @importClassesFrom IRanges IRanges Ranges

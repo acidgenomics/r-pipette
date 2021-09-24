@@ -227,13 +227,17 @@ setClass(
 
 
 
-#' @describeIn PipetteFile-class
-#' R data file containing a single, serialized object (RDS).
-#' @export
-setClass(
+.RDSFile <- setClass(
     Class = "RDSFile",
     contains = "PipetteFile"
 )
+
+#' @describeIn PipetteFile-class
+#' R data file containing a single, serialized object (RDS).
+#' @export
+RDSFile <- function(resource) {
+    .RDSFile(resource = resource)
+}
 
 
 
