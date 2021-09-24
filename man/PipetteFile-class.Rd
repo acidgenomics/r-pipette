@@ -27,6 +27,9 @@
 \description{
 Currently intended for use with \code{import} function.
 }
+\details{
+Extends \code{BiocFile} defined in BiocIO package.
+}
 \section{Functions}{
 \itemize{
 \item \code{DelimFile-class}: Delimited file.\cr

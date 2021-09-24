@@ -14,6 +14,8 @@ export(object, con, format, ...)
 
 \S4method{export}{character,ANY,ANY}(
   object,
+  con,
+  format,
   ext = c("txt", "txt.bz2", "txt.gz", "txt.xz", "txt.zip"),
   dir = getOption("acid.export.dir", default = "."),
   file = NULL,
@@ -25,6 +27,8 @@ export(object, con, format, ...)
 
 \S4method{export}{matrix,ANY,ANY}(
   object,
+  con,
+  format,
   ext = getOption("acid.export.ext", default = "csv"),
   dir = getOption("acid.export.dir", default = "."),
   file = NULL,
@@ -37,6 +41,8 @@ export(object, con, format, ...)
 
 \S4method{export}{data.frame,ANY,ANY}(
   object,
+  con,
+  format,
   ext = getOption("acid.export.ext", default = "csv"),
   dir = getOption("acid.export.dir", default = "."),
   file = NULL,
@@ -49,6 +55,8 @@ export(object, con, format, ...)
 
 \S4method{export}{DataFrame,ANY,ANY}(
   object,
+  con,
+  format,
   ext = getOption("acid.export.ext", default = "csv"),
   dir = getOption("acid.export.dir", default = "."),
   file = NULL,
@@ -61,6 +69,8 @@ export(object, con, format, ...)
 
 \S4method{export}{Matrix,ANY,ANY}(
   object,
+  con,
+  format,
   ext = c("mtx.gz", "mtx.bz2", "mtx.xz", "mtx.zip", "mtx"),
   dir = getOption("acid.export.dir", default = "."),
   file = NULL,
@@ -70,6 +80,8 @@ export(object, con, format, ...)
 
 \S4method{export}{GenomicRanges,ANY,ANY}(
   object,
+  con,
+  format,
   ext = getOption("acid.export.ext", default = "csv"),
   dir = getOption("acid.export.dir", default = "."),
   file = NULL,
@@ -84,6 +96,10 @@ export(object, con, format, ...)
 \item{object}{Object.
 An object supporting \code{dim()}, or a supported class capable of being coerced
 to \code{data.frame}, to be written to disk.}
+
+\item{con}{FIXME}
+
+\item{format}{FIXME}
 
 \item{ext}{\code{character(1)}.
 Output file format extension.
