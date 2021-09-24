@@ -563,7 +563,8 @@ NULL
         assert(is(con, "BiocFile"))
 
 
-        decompress(
+        ## FIXME
+        xxx <- BiocIO::decompress(
             manager = BiocIO:::manager(),
             con = con
         )
