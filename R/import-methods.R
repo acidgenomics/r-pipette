@@ -8,6 +8,7 @@
 ## FIXME Need to rethink RTLFile / RtracklayerFile handling
 ##       Some genomics files are already supported...how to prioritize?
 ## FIXME Add back Google Sheets support as "GoogleSheetsFile"
+## FIXME We need to have GoogleSheetsFile inherit as RioFile.
 
 
 
@@ -724,12 +725,6 @@ formals(.localOrRemoteFile)[c("tempPrefix", "quiet")] <-
 
 
 ## Primary S4 method ===========================================================
-## FIXME This method gets ignored in our package, preferred by BiocIO...argh.
-
-## FIXME Need to rethink how we handle file paths / tmpfile here...
-## FIXME Can we assign this into metadata, and then pull back out?
-## FIXME That would be very useful in downstream calls.
-
 #' Primary `import` method, that hands off to classed file-extension variants
 #'
 #' @details
@@ -1168,7 +1163,6 @@ formals(`import,DelimFile`)[c("makeNames", "metadata", "quiet")] <-
         con,
         format = NULL,
         text = NULL,
-        file,
         sheet = 1L,
         rownames = TRUE,
         rownameCol = NULL,
@@ -1206,7 +1200,7 @@ formals(`import,DelimFile`)[c("makeNames", "metadata", "quiet")] <-
         }
         warn <- getOption("warn")
         args <- list(
-            "path" = tmpfile,
+            "path" = file,
             "col_names" = colnames,
             "n_max" = nMax,
             "na" = naStrings,
@@ -1247,21 +1241,21 @@ formals(`import,ExcelFile`)[c("makeNames", "metadata", "quiet")] <-
 
 #' Import a sparse matrix file (`.mtx`)
 #'
-#' @note Updated 2021-08-24.
+#' @note Updated 2021-09-24.
 #' @noRd
 `import,MTXFile` <-  # nolint
     function(
-        ## FIXME Need to update support for these.
         con,
-        format,
-        text,
-        file,
+        format = NULL,
+        text = NULL,
         rownamesFile = paste0(file, ".rownames"),
         colnamesFile = paste0(file, ".colnames"),
         metadata,
         quiet
     ) {
         assert(
+            is.null(format),
+            is.null(text),
             isString(rownamesFile, nullOK = TRUE),
             isString(colnamesFile, nullOK = TRUE),
             isFlag(metadata),
@@ -1331,18 +1325,17 @@ formals(`import,MTXFile`)[c("metadata", "quiet")] <-
 #' @note This function doesn't support optional column names.
 `import,PZFXFile` <-  # nolint
     function(
-        ## FIXME Need to update support for these.
         con,
-        format,
-        text,
-        file,
+        format = NULL,
+        text = NULL,
         sheet = 1L,
         makeNames,
         metadata,
         quiet
     ) {
         assert(
-            isString(file),
+            is.null(format),
+            is.null(text),
             isScalar(sheet),
             is.function(makeNames) ||
                 is.null(makeNames) ||
@@ -1395,16 +1388,15 @@ formals(`import,PZFXFile`)[c("makeNames", "metadata", "quiet")] <-
 #' @noRd
 `import,BcbioCountsFile` <-  # nolint
     function(
-        ## FIXME Need to update support for these.
         con,
-        format,
-        text,
-        file,
+        format = NULL,
+        text = NULL,
         metadata,
         quiet
     ) {
         assert(
-            isString(file),
+            is.null(format),
+            is.null(text),
             isFlag(metadata),
             isFlag(quiet)
         )
@@ -1444,15 +1436,13 @@ formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
 ## Non-array importers =========================================================
 #' Import source code lines
 #'
-#' @note Updated 2021-06-04.
+#' @note Updated 2021-09-24.
 #' @noRd
 `import,LinesFile` <-  # nolint
     function(
-        ## FIXME Need to update support for these.
         con,
-        format,
-        text,
-        file,
+        format = NULL,
+        text = NULL,
         comment = "",
         skip = 0L,
         nMax = Inf,
@@ -1463,7 +1453,8 @@ formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
         quiet
     ) {
         assert(
-            isString(file),
+            is.null(format),
+            is.null(text),
             is.character(comment) && length(comment) <= 1L,
             isInt(skip),
             isInt(skip), isNonNegative(skip),
@@ -1577,6 +1568,8 @@ formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
                 object <- object[1L:nMax]
             }
         }
+        ## FIXME Need to improve the metadata extraction in the return here.
+        ## FIXME Don't use file in this...
         .returnImport(
             object = object,
             file = file,
@@ -1598,14 +1591,15 @@ formals(`import,LinesFile`)[c("metadata", "quiet")] <-
 #' @noRd
 `import,JSONFile` <-  # nolint
     function(
-        ## FIXME Need to update support for these.
         con,
-        format,
-        text,
-        file,
+        format = NULL,
+        text = NULL,
         metadata,
-        quiet) {
+        quiet
+    ) {
         assert(
+            is.null(format),
+            is.null(text),
             isFlag(metadata),
             isFlag(quiet)
         )
@@ -1622,6 +1616,7 @@ formals(`import,LinesFile`)[c("metadata", "quiet")] <-
         args <- list("path" = file)
         what <- .getFunction(f = whatFun, pkg = whatPkg)
         object <- do.call(what = what, args = args)
+        ## FIXME Rework this, passing con through instead.
         .returnImport(
             object = object,
             file = file,
@@ -1643,15 +1638,15 @@ formals(`import,JSONFile`)[c("metadata", "quiet")] <-
 #' @noRd
 `import,YAMLFile` <-  # nolint
     function(
-        ## FIXME Need to update support for these.
         con,
-        format,
-        text,
-        file,
+        format = NULL,
+        text = NULL,
         metadata,
         quiet
     ) {
         assert(
+            is.null(format),
+            is.null(text),
             isFlag(metadata),
             isFlag(quiet)
         )
@@ -1668,6 +1663,7 @@ formals(`import,JSONFile`)[c("metadata", "quiet")] <-
         args <- list("input" = file)
         what <- .getFunction(f = whatFun, pkg = whatPkg)
         object <- do.call(what = what, args = args)
+        ## FIXME Rework this, passing "con" through.
         .returnImport(
             object = object,
             file = file,
@@ -1697,16 +1693,16 @@ formals(`import,YAMLFile`)[c("metadata", "quiet")] <-
 #' - `"RNA"`: `RNAStringSet`.
 `import,FASTAFile` <-  # nolint
     function(
-        ## FIXME Need to update support for these.
         con,
-        format,
-        text,
-        file,
+        format = NULL,
+        text = NULL,
         moleculeType = c("DNA", "RNA"),
         metadata,
         quiet
     ) {
         assert(
+            is.null(format),
+            is.null(text),
             isFlag(metadata),
             isFlag(quiet)
         )
@@ -1757,6 +1753,7 @@ formals(`import,YAMLFile`)[c("metadata", "quiet")] <-
             names(attributes) <- names
             metadata(object)[["attributes"]] <- attributes
         }
+        ## FIXME Rework this, passing "con" through.
         .returnImport(
             object = object,
             file = file,
@@ -1785,16 +1782,16 @@ formals(`import,FASTAFile`)[c("metadata", "quiet")] <-
 #' - `"RNA"`: `RNAStringSet`.
 `import,FASTQFile` <-  # nolint
     function(
-        ## FIXME Need to update support for these.
         con,
-        format,
-        text,
-        file,
+        format = NULL,
+        text = NULL,
         moleculeType = c("DNA", "RNA"),
         metadata,
         quiet
     ) {
         assert(
+            is.null(format),
+            is.null(text),
             isFlag(metadata),
             isFlag(quiet)
         )
@@ -1821,6 +1818,7 @@ formals(`import,FASTAFile`)[c("metadata", "quiet")] <-
         what <- .getFunction(f = whatFun, pkg = whatPkg)
         object <- do.call(what = what, args = args)
         assert(is(object, paste0(moleculeType, "StringSet")))
+        ## FIXME Rework this, passing "con" through.
         .returnImport(
             object = object,
             file = file,
@@ -1838,25 +1836,25 @@ formals(`import,FASTQFile`)[c("metadata", "quiet")] <-
 
 #' Import a gene matrix transposed file (`.gmt`)
 #'
-#' @note Updated 2021-08-24.
+#' @note Updated 2021-09-24.
 #' @noRd
 #'
 #' @seealso `fgsea::gmtPathways()`.
 `import,GMTFile` <-  # nolint
     function(
-        ## FIXME Need to update support for these.
         con,
-        format,
-        text,
+        format = NULL,
+        text = NULL,
         file,
         quiet
     ) {
-        assert(isFlag(quiet))
-        if (isFALSE(quiet)) {
-            alert(sprintf("Importing {.file %s}.", file))
-        }
+        assert(
+            is.null(format),
+            is.null(text),
+            isFlag(quiet)
+        )
         lines <- import(
-            file = as.character(file),
+            file = resource(con),
             format = "lines",
             metadata = FALSE,
             quiet = quiet
@@ -1879,23 +1877,22 @@ formals(`import,GMTFile`)[["quiet"]] <-
 
 #' Import a gene matrix file (`.gmx`)
 #'
-#' @note Updated 2021-08-24.
+#' @note Updated 2021-09-24.
 #' @noRd
 `import,GMXFile` <-  # nolint
     function(
-        ## FIXME Need to update support for these.
         con,
-        format,
-        text,
-        file,
+        format = NULL,
+        text = NULL,
         quiet
     ) {
-        assert(isFlag(quiet))
-        if (isFALSE(quiet)) {
-            alert(sprintf("Importing {.file %s}.", file))
-        }
+        assert(
+            is.null(format),
+            is.null(text),
+            isFlag(quiet)
+        )
         lines <- import(
-            file = as.character(file),
+            file = resource(con),
             format = "lines",
             metadata = FALSE,
             quiet = quiet
@@ -1919,17 +1916,15 @@ formals(`import,GMXFile`)[["quiet"]] <-
 
 
 ## Handoff methods =============================================================
-#' Import a file using `rio::import`
+#' Import a file using `rio::import()`
 #'
-#' @note Updated 2021-09-22.
+#' @note Updated 2021-09-24.
 #' @noRd
 `import,RioFile` <-  # nolint
     function(
-        ## FIXME Need to update support for these.
         con,
-        format,
-        text,
-        file,
+        format = NULL,
+        text = NULL,
         rownames = TRUE,
         rownameCol = NULL,
         colnames = TRUE,
@@ -1981,27 +1976,24 @@ formals(`import,RioFile`)[c("makeNames", "metadata", "quiet")] <-
 
 
 
-## FIXME What's the correct way to hand off to rtracklayer?
-## FIXME Note that `RTLFile` class is deprecated (see BiocIO vignette).
-
-#' Import file using `rtracklayer::import`
+#' Import file using `rtracklayer::import()`
 #'
-#' @note Updated 2021-08-24.
+#' @note Updated 2021-09-24.
 #' @noRd
 #'
 #' @note Using `tryCatch()` here to error if there are any warnings.
 `import,RtracklayerFile` <-  # nolint
     function(
-        ## FIXME Need to update support for these.
         con,
-        format,
-        text,
-        file,
+        format = NULL,
+        text = NULL,
         metadata,
         quiet,
         ...
     ) {
         assert(
+            is.null(format),
+            is.null(text),
             isFlag(metadata),
             isFlag(quiet)
         )
@@ -2038,6 +2030,7 @@ formals(`import,RioFile`)[c("makeNames", "metadata", "quiet")] <-
                 ## nocov end
             }
         )
+        ## FIXME Rework, passing through con here instead.
         .returnImport(
             object = object,
             file = file,
