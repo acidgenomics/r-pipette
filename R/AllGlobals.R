@@ -11,6 +11,53 @@
 
 
 
+## FIXME This might be OK to remove.
+
+#' Shared list of optional default formals
+#'
+#' @note Updated 2021-09-24.
+#' @noRd
+.formalsList <- list(
+    "export.compress" = quote(
+        getOption("acid.export.compress", default = FALSE)
+    ),
+    "export.dir" = quote(
+        getOption("acid.export.dir", default = ".")
+    ),
+    "export.ext" = quote(
+        getOption("acid.export.ext", default = "csv")
+    ),
+    "export.sparse.ext" = quote(
+        getOption("acid.export.sparse.ext", default = "mtx")
+    ),
+    "export.quiet" = quote(
+        getOption("acid.export.quiet", default = FALSE)
+    ),
+    "import.make.names" = quote(
+        getOption("acid.import.make.names", default = syntactic::makeNames)
+    ),
+    "import.metadata" = quote(
+        getOption("acid.import.metadata", default = FALSE)
+    ),
+    "load.dir" = quote(
+        getOption("acid.load.dir", default = ".")
+    ),
+    ## FIXME Consider removing this.
+    "save.compress" = quote(
+        getOption("acid.save.compress", default = TRUE)
+    ),
+    ## FIXME Move this to pipette?
+    "save.dir" = quote(
+        getOption("acid.save.dir", default = ".")
+    ),
+    ## FIXME Move this to pipette?
+    "save.ext" = quote(
+        getOption("acid.save.ext", default = "rds")
+    )
+)
+
+
+
 #' R data extension pattern
 #'
 #' @note Updated 2020-10-07.

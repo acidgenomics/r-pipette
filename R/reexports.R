@@ -18,9 +18,10 @@ Matrix::Matrix
 #' @export
 tibble::column_to_rownames
 
-#' @importFrom AcidBase compress
+# FIXME Move this to pipette.
+#' @importFrom goalie compressExtPattern
 #' @export
-AcidBase::compress
+goalie::compressExtPattern
 
 #' @importFrom data.table data.table
 #' @export
