@@ -96,6 +96,7 @@ NULL
         ## FIXME Rework these.
         con,
         format,
+        ## FIXME Need to rethink "ext" and "dir" in favor of "format"?
         ext = c("txt", "txt.bz2", "txt.gz", "txt.xz", "txt.zip"),
         dir,
         file = NULL,
@@ -256,6 +257,7 @@ setMethod(
         ## FIXME Rework these.
         con,
         format,
+        ## FIXME Need to rethink "ext" and "dir" in favor of "format"?
         ext,
         dir,
         file = NULL,
@@ -509,6 +511,7 @@ setMethod(
         ## FIXME Rework these.
         con,
         format,
+        ## FIXME Need to rethink "ext" and "dir" in favor of "format"?
         ext = c("mtx.gz", "mtx.bz2", "mtx.xz", "mtx.zip", "mtx"),
         dir,
         file = NULL,

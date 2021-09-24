@@ -1,3 +1,7 @@
+## FIXME Ensure BiocIO imports are minimal.
+
+
+
 #' pipette
 #'
 #' Input/output functions for biological data formats.
@@ -20,7 +24,8 @@
 #'   toInlineString
 #' @importFrom AcidGenerics DataFrame Rle SimpleList end head mcols mcols<-
 #'   metadata metadata<- na.omit start tail width
-#' @importFrom BiocIO resource
+#' @importFrom BiocIO FileForFormat bestFileFormat decompress path
+#'   resource resource<-
 #' @importFrom Matrix readMM writeMM
 #' @importFrom RCurl getURL
 #' @importFrom goalie assert allAreAtomic allAreExisting allAreFiles

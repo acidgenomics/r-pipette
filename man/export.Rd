@@ -169,7 +169,7 @@ below to see their documentation.
 }
 }
 \note{
-Updated 2021-06-10.
+Updated 2021-09-24.
 }
 \section{Row names}{
 
