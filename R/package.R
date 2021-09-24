@@ -1,7 +1,3 @@
-## FIXME Ensure BiocIO imports are minimal.
-
-
-
 #' pipette
 #'
 #' Input/output functions for biological data formats.
@@ -9,7 +5,7 @@
 #' @keywords internal
 #'
 #' @importClassesFrom AcidGenerics DataFrame List SimpleList missingOrNULL
-#' @importClassesFrom BiocIO BiocFile CompressedFile
+#' @importClassesFrom BiocIO BiocFile
 #' @importClassesFrom GenomicRanges GenomicRanges
 #' @importClassesFrom IRanges IRanges Ranges
 #' @importClassesFrom Matrix Matrix
