@@ -23,6 +23,7 @@
 \alias{TableFile-class}
 \alias{TSVFile-class}
 \alias{YAMLFile-class}
+\alias{GoogleSheetsFile-class}
 \title{File extension classes}
 \description{
 Currently intended for use with \code{import} function.
@@ -81,7 +82,7 @@ File extension group supporting:
 \item XPT: SASS
 }
 
-\item \code{RtracklayerFile-class}: File extension supported by \code{rtracklayer::import}.\cr
+\item \code{RtracklayerFile-class}: File extension supported by \code{rtracklayer::import()}.\cr
 File extension group supporting:
 \itemize{
 \item BED, BED15, BEDGRAPH, BEDPE
@@ -119,6 +120,8 @@ File extension group supporting:
 \item \code{TSVFile-class}: Tab-separated values file (TSV).
 
 \item \code{YAMLFile-class}: YAML file.
+
+\item \code{GoogleSheetsFile-class}: Google Sheets file.
 }}
 
 \note{
@@ -129,4 +132,3 @@ Updated 2021-09-24.
 \item \code{getGeneric}.
 }
 }
-\keyword{internal}

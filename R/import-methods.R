@@ -279,24 +279,22 @@ NULL
 
 
 ## Internal functions ==========================================================
-
-
-
-
-## FIXME Consider reworking this, thinking about BiocIO conventions.
-## FIXME Need to look for CompressedFile and decompress automatically.
-
-## FIXME Rethink this, using BiocFile approach.
-
-## Auto decompress, if necessary. Note that `data.table::fread()` still doesn't
-## natively support compressed files. R on Windows can run into `tempdir()`
-## write permission issues, unless R is running as administrator. Ensure that
-## decompressed is removed manually before attempting to overwrite, otherwise
-## this step can error out.
-## Updated 2020-07-24.
+#' Auto-decompress a file, if necessary
+#'
+#' @note Updated 2021-09-24.
+#' @noRd
+#'
+#' @details
+#' Note that `data.table::fread()` still doesn't natively support compressed
+#' files. R on Windows can run into `tempdir()` write permission issues, unless
+#' R is running as administrator. Ensure that decompressed file is removed
+#' manually before attempting to overwrite, otherwise this step can error out.
+#'
+#' Alternatively, can check for BiocIO "CompressedFile" class.
 .autoDecompress <- function(file) {
-    vapply(
-        X = realpath(file),
+    file <- realpath(file)
+    out <- vapply(
+        X = file,
         FUN = function(file) {
             if (!grepl(compressExtPattern, file)) {
                 return(file)
@@ -311,8 +309,6 @@ NULL
                 file.copy(from = file, to = tmpfile)
                 file <- tmpfile
             }
-            ## FIXME Need to rethink this approach.
-            stop("FIXME Need to rework decompress")
             destfile <- decompress(
                 file = file,
                 remove = FALSE,
@@ -324,9 +320,13 @@ NULL
         FUN.VALUE = character(1L),
         USE.NAMES = FALSE
     )
+    out <- realpath(out)
+    out
 }
 
 
+
+## FIXME Need to rework this.
 
 #' Map file extension to corresponding S4 file class
 #'
@@ -513,8 +513,6 @@ NULL
 #' x <- .localOrRemoteFile(file)
 #' basename(x)
 .localOrRemoteFile <- function(file, tempPrefix, quiet) {
-    ## FIXME Can we switch to a BiocFile approach here?
-    ## FIXME Then we can check for CompressedFile instead.
     assert(
         isCharacter(file),
         isString(tempPrefix),
@@ -578,7 +576,6 @@ NULL
         SIMPLIFY = TRUE,
         USE.NAMES = FALSE
     )
-    ## FIXME Rethink this approach, checking if CompressedFile from BiocIO.
     realpath(.autoDecompress(file))
 }
 
@@ -703,6 +700,11 @@ formals(.localOrRemoteFile)[c("tempPrefix", "quiet")] <-
 
 
 ## Primary S4 method ===========================================================
+
+## FIXME Need to rethink how we handle file paths / tmpfile here...
+## FIXME Can we assign this into metadata, and then pull back out?
+## FIXME That would be very useful in downstream calls.
+
 #' Primary `import` method, that hands off to classed file-extension variants
 #'
 #' @details
@@ -711,6 +713,9 @@ formals(.localOrRemoteFile)[c("tempPrefix", "quiet")] <-
 #' Allow Google Sheets import using rio, by matching the URL.
 #' Otherwise, coerce the file extension to uppercase, for easy matching.
 #'
+#' @seealso
+#' - `BiocIO::FileForFormat()`.
+#'
 #' @note Updated 2021-09-24.
 #' @noRd
 `import,character` <-  # nolint
@@ -718,60 +723,55 @@ formals(.localOrRemoteFile)[c("tempPrefix", "quiet")] <-
         con,
         format,
         text,
-        file,
+        file,  # soft deprecated
         ...
     ) {
-        ## Soft deprecating "file" in favor of primary "con" argument.
         if (!missing(file)) {
+            assert(isString(file))
             con <- file
         }
-
-        ## FIXME Need to call localOrRemoteFile here to support URLs, no?
-        ## FIXME Rethink the initial step here.
-
-        con <- FileForFormat(con)
-        assert(is(con, "BiocFile"))
-
-        path(con)
-        resource(con)
-
-        if (is(con, "CompressedFile")) {
-            ## FIXME This will open a connection that we need to close.
-            con <- BiocIO::decompress(
-                manager = BiocIO:::manager(),
-                con = con
+        if (missing(format) || identical(format, "none")) {
+            format <- "auto"
+        }
+        assert(isString(format))
+        format <- tolower(format)
+        if (grepl(
+            pattern = "^https://docs\\.google\\.com/spreadsheets",
+            x = con
+        )) {
+            con <- new(Class = "GoogleSheetsFile", con)
+        } else {
+            if (identical(format, "auto")) {
+                format <- str_match(
+                    string = basename(con),
+                    pattern = extPattern
+                )[1L, 2L]
+                if (is.na(format)) {
+                    abort(sprintf(
+                        fmt = paste(
+                            "{.arg %s} ({.file %s}) doesn't contain extension.",
+                            "Set the file format manually using {.arg %s}.",
+                            "Refer to {.pkg %s}::{.fun %s} for details.",
+                            sep = "\n"
+                        ),
+                        "con", basename(con),
+                        "format",
+                        "pipette", "import"
+                    ))
+                }
+            }
+            origResource <- con
+            con <- new(
+                Class = .extToFileClass(format),
+                resource = .localOrRemoteFile(con)
+            )
+            attr(con, which = "origResource") <- origResource
+            validObject(con)
+            assert(
+                is(con, "PipetteFile"),
+                is(con, "BiocFile")
             )
         }
-
-
-
-        ## FIXME Rework `format` to be missing by default.
-        ## FIXME Need to provide legacy support for "auto" format.
-        ## FIXME Need to provide support for direct "text" import.
-        assert(
-            isAFile(file) || isAURL(file),
-            isString(format)
-        )
-        format <- tolower(format)
-        if (isSubset(format, c("auto", "none"))) {
-            ext <- str_match(basename(file), extPattern)[1L, 2L]
-            if (is.na(ext)) {
-                abort(sprintf(
-                    fmt = paste(
-                        "{.arg %s} ({.file %s}) doesn't contain extension.",
-                        "Set the file format manually using {.arg %s}.",
-                        "Refer to {.pkg %s}::{.fun %s} for details.",
-                        sep = "\n"
-                    ),
-                    "file", basename(file),
-                    "format",
-                    "pipette", "import"
-                ))
-            }
-        } else {
-            ext <- format
-        }
-        class <- .extToFileClass(ext)
         assert(
             hasMethod(
                 f = "import",
@@ -779,8 +779,12 @@ formals(.localOrRemoteFile)[c("tempPrefix", "quiet")] <-
                 where = asNamespace(.pkgName)
             )
         )
-        file <- new(Class = class, file)
-        import(file = file, ...)
+        import(
+            con = con,
+            format = format,
+            text = text,
+            ...
+        )
     }
 
 
