@@ -1,5 +1,10 @@
+## FIXME Need to fix the documentation to not link to reexports here.
+
 ## FIXME Rework using BiocIO generic approach.
 ## FIXME Need to figure out how to deprecate / rework ext approach.
+## FIXME Need to improve documentation consistency with import.
+## FIXME Need to rethink our con, ext, dir, file handling here.
+##       Now this is too confusing when using BiocIO method.
 
 
 
@@ -24,13 +29,10 @@
 #' for exporting `data.frame` and `matrix` class objects.
 #'
 #' @inheritParams AcidRoxygen::params
+#' @inheritParams import
 #' @param object Object.
 #'   An object supporting `dim()`, or a supported class capable of being coerced
 #'   to `data.frame`, to be written to disk.
-#' @param con
-#'   FIXME
-#' @param format
-#'   FIXME
 #' @param engine `character(1)`.
 #'   Engine (package) to use for export.
 #'   Currently supported:
@@ -73,6 +75,7 @@
 #'
 #' Export functions:
 #'
+#' - `BiocIO::export()`.
 #' - `data.table::fwrite()`.
 #' - `readr::write_csv()`.
 #' - `rio::export()`.
@@ -95,7 +98,7 @@ NULL
         object,
         ## FIXME Rework these.
         con,
-        format,
+        format = NULL,
         ## FIXME Need to rethink "ext" and "dir" in favor of "format"?
         ext = c("txt", "txt.bz2", "txt.gz", "txt.xz", "txt.zip"),
         dir,
@@ -106,6 +109,7 @@ NULL
         quiet
     ) {
         assert(
+            is.null(format),
             isString(dir),
             isString(file, nullOK = TRUE),
             isFlag(overwrite),
@@ -221,16 +225,6 @@ NULL
 
 formals(`export,character`)[c("dir", "overwrite", "quiet")] <-
     .formalsList[c("export.dir", "overwrite", "quiet")]
-
-
-
-#' @rdname export
-#' @export
-setMethod(
-    f = "export",
-    signature = signature("character"),
-    definition = `export,character`
-)
 
 
 
@@ -432,6 +426,8 @@ setMethod(
             }
         )
         if (isFALSE(quiet)) {
+            ## FIXME Standardize this into a single function, similar to the
+            ## new approach used for `import()`.
             alert(sprintf(
                 "Exporting {.file %s} using {.pkg %s}::{.fun %s}.",
                 whatFile, whatPkg, whatFun
@@ -458,41 +454,11 @@ formals(`export,matrix`)[
 
 
 
-#' @rdname export
-#' @export
-setMethod(
-    f = "export",
-    signature = signature("matrix"),
-    definition = `export,matrix`
-)
-
-
-
 `export,data.frame` <- `export,matrix`  # nolint
 
 
 
-#' @rdname export
-#' @export
-setMethod(
-    f = "export",
-    signature = signature("data.frame"),
-    definition = `export,data.frame`
-)
-
-
-
 `export,DataFrame` <- `export,data.frame`  # nolint
-
-
-
-#' @rdname export
-#' @export
-setMethod(
-    f = "export",
-    signature = signature("DataFrame"),
-    definition = `export,DataFrame`
-)
 
 
 
@@ -609,24 +575,69 @@ formals(`export,Matrix`)[
 
 
 
-#' @rdname export
-#' @export
-setMethod(
-    f = "export",
-    signature = signature("Matrix"),
-    definition = `export,Matrix`
-)
-
-
-
 `export,GenomicRanges` <- `export,DataFrame`  # nolint
 
 
 
+## S4 method exports ===========================================================
+
 #' @rdname export
 #' @export
 setMethod(
     f = "export",
-    signature = signature("GenomicRanges"),
+    signature = signature("DataFrame"),
+    definition = `export,DataFrame`
+)
+
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "GenomicRanges",
+        con = "ANY",
+        format = "missingOrNULL"
+    ),
     definition = `export,GenomicRanges`
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "Matrix",
+        con = "ANY",
+        format = "missingOrNULL"
+    ),
+    definition = `export,Matrix`
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "character",
+        con = "ANY",
+        format = "missingOrNULL"
+    ),
+    definition = `export,character`
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature("data.frame"),
+    definition = `export,data.frame`
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature("matrix"),
+    definition = `export,matrix`
 )
