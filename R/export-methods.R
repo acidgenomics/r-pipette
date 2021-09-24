@@ -1,10 +1,11 @@
 ## FIXME Rework using BiocIO generic approach.
+## FIXME Need to figure out how to deprecate / rework ext approach.
 
 
 
 #' @name export
 #' @inherit AcidGenerics::export
-#' @note Updated 2021-06-10.
+#' @note Updated 2021-09-24.
 #'
 #' @section Row names:
 #'
@@ -26,6 +27,10 @@
 #' @param object Object.
 #'   An object supporting `dim()`, or a supported class capable of being coerced
 #'   to `data.frame`, to be written to disk.
+#' @param con
+#'   FIXME
+#' @param format
+#'   FIXME
 #' @param engine `character(1)`.
 #'   Engine (package) to use for export.
 #'   Currently supported:
@@ -84,10 +89,13 @@ NULL
 
 
 
-## Updated 2021-08-31.
+## Updated 2021-09-24.
 `export,character` <-  # nolint
     function(
         object,
+        ## FIXME Rework these.
+        con,
+        format,
         ext = c("txt", "txt.bz2", "txt.gz", "txt.xz", "txt.zip"),
         dir,
         file = NULL,
@@ -245,6 +253,9 @@ setMethod(
 `export,matrix` <-  # nolint
     function(
         object,
+        ## FIXME Rework these.
+        con,
+        format,
         ext,
         dir,
         file = NULL,
@@ -495,6 +506,9 @@ setMethod(
 `export,Matrix` <-  # nolint
     function(
         object,
+        ## FIXME Rework these.
+        con,
+        format,
         ext = c("mtx.gz", "mtx.bz2", "mtx.xz", "mtx.zip", "mtx"),
         dir,
         file = NULL,
