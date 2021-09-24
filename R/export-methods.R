@@ -8,8 +8,9 @@
 
 
 
+#' Export
+#'
 #' @name export
-#' @inherit AcidGenerics::export
 #' @note Updated 2021-09-24.
 #'
 #' @section Row names:
