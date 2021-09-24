@@ -709,3 +709,16 @@ test_that("FASTQ", {
     )
     expect_length(object[[1L]], 8L)
 })
+
+test_that("Google Sheets", {
+    url <- pasteURL(
+        "docs.google.com",
+        "spreadsheets",
+        "d",
+        "1U6Cf_qEOhiR9AZqTqS3mbMF3zt2db48ZP5v3rkrAEJY",
+        "edit#gid=780868077",
+        protocol = "https"
+    )
+    object <- import(url)
+    expect_is(object, "data.frame")
+})
