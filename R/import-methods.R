@@ -277,18 +277,23 @@ NULL
     whatPkg,
     whatFun
 ) {
-    resource <- attr(x = con, which = "origResource")
-    if (is.null(resource)) {
-        resource <- resource(con)
+    assert(
+        is(con, "PipetteFile"),
+        isString(whatPkg),
+        isString(whatFun)
+    )
+    file <- attr(x = con, which = "origResource")
+    if (is.null(file)) {
+        file <- resource(con)
     }
     alert(sprintf(
         "Importing {.%s %s} using {.pkg %s}::{.fun %s}.",
         ifelse(
-            test = isAURL(resource),
+            test = isAURL(file),
             yes = "url",
             no = "file"
         ),
-        resource,
+        file,
         whatPkg, whatFun
     ))
     invisible(TRUE)
@@ -604,11 +609,11 @@ formals(.localOrRemoteFile)[c("tempPrefix", "quiet")] <-
 
 #' Return standardized import object
 #'
-#' @note Updated 2021-09-22.
+#' @note Updated 2021-09-24.
 #' @noRd
 .returnImport <- function(
     object,
-    file,
+    con,
     rownames = FALSE,
     rownameCol = NULL,
     colnames = FALSE,
@@ -619,9 +624,8 @@ formals(.localOrRemoteFile)[c("tempPrefix", "quiet")] <-
     quiet
 ) {
     validObject(object)
-    file <- as.character(file)
     assert(
-        isString(file),
+        is(con, "PipetteFile"),
         isFlag(rownames),
         isScalar(rownameCol) || is.null(rownameCol),
         isFlag(colnames) || isCharacter(colnames),
@@ -633,6 +637,10 @@ formals(.localOrRemoteFile)[c("tempPrefix", "quiet")] <-
         isString(whatFun, nullOK = TRUE),
         isFlag(quiet)
     )
+    file <- attr(x = con, which = "origResource")
+    if (is.null(file)) {
+        file <- resource(con)
+    }
     if (!is.null(rownameCol)) {
         rownames <- TRUE
     }
@@ -1141,7 +1149,7 @@ formals(`import,RDataFile`)[["quiet"]] <-
         )
         .returnImport(
             object = object,
-            file = file,
+            con = con,
             rownames = rownames,
             rownameCol = rownameCol,
             colnames = colnames,
@@ -1226,7 +1234,7 @@ formals(`import,DelimFile`)[c("makeNames", "metadata", "quiet")] <-
         object <- removeNA(object)
         .returnImport(
             object = object,
-            file = file,
+            con = con,
             rownames = rownames,
             rownameCol = rownameCol,
             colnames = colnames,
@@ -1308,7 +1316,7 @@ formals(`import,ExcelFile`)[c("makeNames", "metadata", "quiet")] <-
         }
         .returnImport(
             object = object,
-            file = file,
+            con = con,
             metadata = metadata,
             whatPkg = whatPkg,
             whatFun = whatFun,
@@ -1366,7 +1374,7 @@ formals(`import,MTXFile`)[c("metadata", "quiet")] <-
         object <- removeNA(object)
         .returnImport(
             object = object,
-            file = file,
+            con = con,
             rownames = FALSE,
             colnames = TRUE,
             makeNames = makeNames,
@@ -1573,11 +1581,9 @@ formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
                 object <- object[1L:nMax]
             }
         }
-        ## FIXME Need to improve the metadata extraction in the return here.
-        ## FIXME Don't use file in this...
         .returnImport(
             object = object,
-            file = file,
+            con = con,
             metadata = metadata,
             whatPkg = whatPkg,
             whatFun = whatFun,
@@ -1621,10 +1627,9 @@ formals(`import,LinesFile`)[c("metadata", "quiet")] <-
         args <- list("path" = file)
         what <- .getFunction(f = whatFun, pkg = whatPkg)
         object <- do.call(what = what, args = args)
-        ## FIXME Rework this, passing con through instead.
         .returnImport(
             object = object,
-            file = file,
+            con = con,
             metadata = metadata,
             whatPkg = whatPkg,
             whatFun = whatFun,
@@ -1668,10 +1673,9 @@ formals(`import,JSONFile`)[c("metadata", "quiet")] <-
         args <- list("input" = file)
         what <- .getFunction(f = whatFun, pkg = whatPkg)
         object <- do.call(what = what, args = args)
-        ## FIXME Rework this, passing "con" through.
         .returnImport(
             object = object,
-            file = file,
+            con = con,
             metadata = metadata,
             whatPkg = whatPkg,
             whatFun = whatFun,
@@ -1759,10 +1763,9 @@ formals(`import,YAMLFile`)[c("metadata", "quiet")] <-
             names(attributes) <- names
             metadata(object)[["attributes"]] <- attributes
         }
-        ## FIXME Rework this, passing "con" through.
         .returnImport(
             object = object,
-            file = file,
+            con = con,
             metadata = metadata,
             whatPkg = whatPkg,
             whatFun = whatFun,
@@ -1824,10 +1827,9 @@ formals(`import,FASTAFile`)[c("metadata", "quiet")] <-
         what <- .getFunction(f = whatFun, pkg = whatPkg)
         object <- do.call(what = what, args = args)
         assert(is(object, paste0(moleculeType, "StringSet")))
-        ## FIXME Rework this, passing "con" through.
         .returnImport(
             object = object,
-            file = file,
+            con = con,
             metadata = metadata,
             whatPkg = whatPkg,
             whatFun = whatFun,
@@ -1967,7 +1969,7 @@ formals(`import,GMXFile`)[["quiet"]] <-
         object <- do.call(what = what, args = args)
         .returnImport(
             object = object,
-            file = file,
+            con = con,
             rownames = rownames,
             rownameCol = rownameCol,
             colnames = colnames,
@@ -2038,10 +2040,9 @@ formals(`import,RioFile`)[c("makeNames", "metadata", "quiet")] <-
                 ## nocov end
             }
         )
-        ## FIXME Rework, passing through con here instead.
         .returnImport(
             object = object,
-            file = file,
+            con = con,
             metadata = metadata,
             whatPkg = whatPkg,
             whatFun = whatFun,
