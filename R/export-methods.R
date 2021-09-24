@@ -97,13 +97,16 @@ NULL
 `export,character` <-  # nolint
     function(
         object,
-        ## FIXME Rework these.
-        con,
-        format = NULL,
-        ## FIXME Need to rethink "ext" and "dir" in favor of "format"?
+        con,  # FIXME
+        format,  # FIXME
+
+
+        ## FIXME Rename "ext" in favor of "format"?
         ext = c("txt", "txt.bz2", "txt.gz", "txt.xz", "txt.zip"),
         dir,
         file = NULL,
+
+
         append = FALSE,
         overwrite,
         engine = getOption(x = "acid.export.engine", default = "base"),
@@ -249,13 +252,17 @@ formals(`export,character`)[c("dir", "overwrite", "quiet")] <-
 `export,matrix` <-  # nolint
     function(
         object,
-        ## FIXME Rework these.
-        con,
-        format,
+        con,  # FIXME
+        format,  # FIXME
+
+
         ## FIXME Need to rethink "ext" and "dir" in favor of "format"?
+        ## FIXME Rename "ext" in favor of "format"? Not sure here yet.
         ext,
         dir,
         file = NULL,
+
+
         rownames = TRUE,
         colnames = TRUE,
         overwrite,
