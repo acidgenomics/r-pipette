@@ -3,6 +3,7 @@
 \name{import}
 \alias{import}
 \alias{import,character,missingOrNULL,missingOrNULL-method}
+\alias{import,missingOrNULL,missingOrNULL,missingOrNULL-method}
 \alias{import,DelimFile,missingOrNULL,missingOrNULL-method}
 \alias{import,LinesFile,missingOrNULL,missingOrNULL-method}
 \alias{import,ExcelFile,missingOrNULL,missingOrNULL-method}
@@ -24,7 +25,9 @@
 \usage{
 export(con, format, text, ...)
 
-\S4method{import}{character,missingOrNULL,missingOrNULL}(con, format, text, file, ...)
+\S4method{import}{character,missingOrNULL,missingOrNULL}(con, format, text, ...)
+
+\S4method{import}{missingOrNULL,missingOrNULL,missingOrNULL}(file, con = NULL, format = NULL, text = NULL, ...)
 
 \S4method{import}{DelimFile,missingOrNULL,missingOrNULL}(
   con,
@@ -223,11 +226,11 @@ contain an extension.}
 If \code{con} is missing, this can be a character vector directly providing the
 string data to import.}
 
+\item{...}{Additional arguments.}
+
 \item{file}{\code{character(1)} or \code{missing}.
 Deprecated in favor of primary \code{con} argument, defined in BiocIO
 package. This argument likely will be removed in a future update.}
-
-\item{...}{Additional arguments.}
 
 \item{rownames}{\code{logical(1)}.
 Automatically assign row names, if \code{rowname} column is defined.
