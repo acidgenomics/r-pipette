@@ -5,7 +5,7 @@ test_that("Invalid extension", {
     unlink(file, recursive = TRUE)
     file.create(file)
     expect_error(
-        object = import(file = file),
+        object = import(file),
         regexp = "xxx"
     )
     unlink(file, recursive = TRUE)
@@ -28,8 +28,8 @@ context("import : data frame")
 
 test_that("Delimited files", {
     for (ext in c("csv", "csv.gz", "tsv")) {
-        file <- file.path(file = "cache", paste0("example.", ext))
-        object <- import(file = file, metadata = TRUE)
+        file <- file.path("cache", paste0("example.", ext))
+        object <- import(file, metadata = TRUE)
         expect_is(object, "data.frame")
         expect_true(hasRownames(object))
         expect_is(
@@ -69,7 +69,7 @@ context("import : rtracklayer (GFF/GTF)")
 
 test_that("GFF3", {
     object <- import(
-        file = file.path("cache", "example.gff3"),
+        con = file.path("cache", "example.gff3"),
         metadata = TRUE
     )
     expect_s4_class(object, "GenomicRanges")
@@ -698,7 +698,7 @@ test_that("FASTA", {
 test_that("FASTQ", {
     file <- file.path("cache", "example.fq.gz")
     object <- import(
-        file = file,
+        con = file,
         moleculeType = "DNA",
         metadata = TRUE
     )
