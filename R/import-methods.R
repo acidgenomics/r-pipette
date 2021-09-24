@@ -1,4 +1,6 @@
 ## FIXME Rework using BiocIO generic approach.
+## FIXME Define method for CompressedFile, that handles file extraction first.
+## FIXME Need to ensure that `path` and `resource` arguments are supported.
 
 
 
@@ -129,7 +131,8 @@
 #'   inferred from `con`. Only recommended for file and URL paths that don't
 #'   contain an extension.
 #' @param file `character(1)` or `missing`.
-#'   Deprecated in favor of primary `con` argument, defined in BiocIO package.
+#'   Deprecated in favor of primary `con` argument, defined in BiocIO
+#'   package. This argument likely will be removed in a future update.
 #' @param rownameCol `NULL`, `character(1)`, or `integer(1)`.
 #'   *Applies only when `rownames = TRUE`.*
 #'   Column name to use for row names assignment.
@@ -538,7 +541,35 @@ NULL
 #' @note Updated 2021-09-24.
 #' @noRd
 `import,character` <-  # nolint
-    function(file, format = "auto", ...) {
+    function(
+        ## FIXME Need to update support for these.
+        con,
+        format,
+        text,
+        file,
+        ...
+    ) {
+        if (!missing(file)) {
+            .Deprecated(msg = sprintf(
+                "'%s' is deprecated in favor of '%s'.",
+                "file", "con"
+            ))
+            con <- file
+        }
+        ## FIXME Might need to improve the error message handling here.
+        con <- FileForFormat(con)
+
+        ## FIXME Consider using:
+        ## - FileForFormat
+        ## - bestFileFormat
+        ## - decompress (for CompressedFile).
+
+
+
+        ## FIXME Need to class this into BiocFile.
+        ## ## FIXME This doens't work, no slots.
+        con <- resource(con)
+
         ## FIXME Rework `format` to be missing by default.
         ## FIXME Need to provide legacy support for "auto" format.
         ## FIXME Need to provide support for direct "text" import.
@@ -582,20 +613,20 @@ NULL
 ## R data importers ============================================================
 #' Import an R data serialized file (`.rds`)
 #'
-#' @note Updated 2021-08-24.
+#' @note Updated 2021-09-24.
 #' @noRd
 `import,RDSFile` <-  # nolint
     function(
         con,
-        format,
-        text,
-        file,
+        format = NA,
+        text = NA,
         quiet
     ) {
-
-
         assert(
+            ## FIXME Rework this check.
             isString(con),
+            identical(format, NA),
+            identical(text, NA),
             isFlag(quiet)
         )
 
@@ -633,10 +664,16 @@ formals(`import,RDSFile`)[["quiet"]] <-
 
 #' Import an R data file containing multiple objects (`.rda`)
 #'
-#' @note Updated 2021-08-24.
+#' @note Updated 2021-09-24.
 #' @noRd
 `import,RDataFile` <-  # nolint
-    function(file, quiet) {
+    function(
+        ## FIXME Need to update support for these.
+        con,
+        format,
+        text,
+        file,
+        quiet) {
         assert(
             isString(file),
             isFlag(quiet)
@@ -690,10 +727,14 @@ formals(`import,RDataFile`)[["quiet"]] <-
 #' Can override using `acid.import.engine` option, which also supports
 #' data.table and readr packages.
 #'
-#' @note Updated 2021-09-22.
+#' @note Updated 2021-09-24.
 #' @noRd
 `import,DelimFile` <-  # nolint
     function(
+        ## FIXME Need to update support for these.
+        con,
+        format,
+        text,
         file,
         rownames = TRUE,
         rownameCol = NULL,
@@ -888,10 +929,14 @@ formals(`import,DelimFile`)[c("makeNames", "metadata", "quiet")] <-
 
 #' Import a Microsoft Excel worksheet (`.xlsx`)
 #'
-#' @note Updated 2021-09-22.
+#' @note Updated 2021-09-24.
 #' @noRd
 `import,ExcelFile` <-  # nolint
     function(
+        ## FIXME Need to update support for these.
+        con,
+        format,
+        text,
         file,
         sheet = 1L,
         rownames = TRUE,
@@ -973,6 +1018,10 @@ formals(`import,ExcelFile`)[c("makeNames", "metadata", "quiet")] <-
 #' @noRd
 `import,MTXFile` <-  # nolint
     function(
+        ## FIXME Need to update support for these.
+        con,
+        format,
+        text,
         file,
         rownamesFile = paste0(file, ".rownames"),
         colnamesFile = paste0(file, ".colnames"),
@@ -1042,12 +1091,16 @@ formals(`import,MTXFile`)[c("metadata", "quiet")] <-
 
 #' Import a GraphPad Prism file (`.pzfx`)
 #'
-#' @note Updated 2021-08-24.
+#' @note Updated 2021-09-24.
 #' @noRd
 #'
 #' @note This function doesn't support optional column names.
 `import,PZFXFile` <-  # nolint
     function(
+        ## FIXME Need to update support for these.
+        con,
+        format,
+        text,
         file,
         sheet = 1L,
         makeNames,
@@ -1103,10 +1156,18 @@ formals(`import,PZFXFile`)[c("makeNames", "metadata", "quiet")] <-
 #' Internal importer for a bcbio count matrix file (`.counts`).
 #' These files contain an `"id"` column that we need to coerce to row names.
 #'
-#' @note Updated 2021-08-24.
+#' @note Updated 2021-09-24.
 #' @noRd
 `import,BcbioCountsFile` <-  # nolint
-    function(file, metadata, quiet) {
+    function(
+        ## FIXME Need to update support for these.
+        con,
+        format,
+        text,
+        file,
+        metadata,
+        quiet
+    ) {
         assert(
             isString(file),
             isFlag(metadata),
@@ -1152,6 +1213,10 @@ formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
 #' @noRd
 `import,LinesFile` <-  # nolint
     function(
+        ## FIXME Need to update support for these.
+        con,
+        format,
+        text,
         file,
         comment = "",
         skip = 0L,
@@ -1293,10 +1358,17 @@ formals(`import,LinesFile`)[c("metadata", "quiet")] <-
 
 #' Import a JSON file (`.json`)
 #'
-#' @note Updated 2021-08-24.
+#' @note Updated 2021-09-24.
 #' @noRd
 `import,JSONFile` <-  # nolint
-    function(file, metadata, quiet) {
+    function(
+        ## FIXME Need to update support for these.
+        con,
+        format,
+        text,
+        file,
+        metadata,
+        quiet) {
         assert(
             isFlag(metadata),
             isFlag(quiet)
@@ -1330,10 +1402,18 @@ formals(`import,JSONFile`)[c("metadata", "quiet")] <-
 
 #' Import a YAML file (`.yaml`, `.yml`)
 #'
-#' @note Updated 2021-06-10.
+#' @note Updated 2021-09-24.
 #' @noRd
 `import,YAMLFile` <-  # nolint
-    function(file, metadata, quiet) {
+    function(
+        ## FIXME Need to update support for these.
+        con,
+        format,
+        text,
+        file,
+        metadata,
+        quiet
+    ) {
         assert(
             isFlag(metadata),
             isFlag(quiet)
@@ -1368,7 +1448,7 @@ formals(`import,YAMLFile`)[c("metadata", "quiet")] <-
 ## Bioinformatics importers ====================================================
 #' Import a FASTA file
 #'
-#' @note Updated 2021-08-24.
+#' @note Updated 2021-09-24.
 #' @noRd
 #'
 #' @seealso
@@ -1379,6 +1459,10 @@ formals(`import,YAMLFile`)[c("metadata", "quiet")] <-
 #' - `"RNA"`: `RNAStringSet`.
 `import,FASTAFile` <-  # nolint
     function(
+        ## FIXME Need to update support for these.
+        con,
+        format,
+        text,
         file,
         moleculeType = c("DNA", "RNA"),
         metadata,
@@ -1451,7 +1535,7 @@ formals(`import,FASTAFile`)[c("metadata", "quiet")] <-
 
 #' Import a FASTQ file
 #'
-#' @note Updated 2021-08-24.
+#' @note Updated 2021-09-24.
 #' @noRd
 #'
 #' @seealso
@@ -1462,6 +1546,10 @@ formals(`import,FASTAFile`)[c("metadata", "quiet")] <-
 #' - `"RNA"`: `RNAStringSet`.
 `import,FASTQFile` <-  # nolint
     function(
+        ## FIXME Need to update support for these.
+        con,
+        format,
+        text,
         file,
         moleculeType = c("DNA", "RNA"),
         metadata,
@@ -1515,7 +1603,14 @@ formals(`import,FASTQFile`)[c("metadata", "quiet")] <-
 #'
 #' @seealso `fgsea::gmtPathways()`.
 `import,GMTFile` <-  # nolint
-    function(file, quiet) {
+    function(
+        ## FIXME Need to update support for these.
+        con,
+        format,
+        text,
+        file,
+        quiet
+    ) {
         assert(isFlag(quiet))
         if (isFALSE(quiet)) {
             alert(sprintf("Importing {.file %s}.", file))
@@ -1547,7 +1642,14 @@ formals(`import,GMTFile`)[["quiet"]] <-
 #' @note Updated 2021-08-24.
 #' @noRd
 `import,GMXFile` <-  # nolint
-    function(file, quiet) {
+    function(
+        ## FIXME Need to update support for these.
+        con,
+        format,
+        text,
+        file,
+        quiet
+    ) {
         assert(isFlag(quiet))
         if (isFALSE(quiet)) {
             alert(sprintf("Importing {.file %s}.", file))
@@ -1583,6 +1685,10 @@ formals(`import,GMXFile`)[["quiet"]] <-
 #' @noRd
 `import,RioFile` <-  # nolint
     function(
+        ## FIXME Need to update support for these.
+        con,
+        format,
+        text,
         file,
         rownames = TRUE,
         rownameCol = NULL,
@@ -1634,7 +1740,8 @@ formals(`import,RioFile`)[c("makeNames", "metadata", "quiet")] <-
 
 
 
-
+## FIXME What's the correct way to hand off to rtracklayer?
+## FIXME Note that `RTLFile` class is deprecated (see BiocIO vignette).
 
 #' Import file using `rtracklayer::import`
 #'
@@ -1643,7 +1750,16 @@ formals(`import,RioFile`)[c("makeNames", "metadata", "quiet")] <-
 #'
 #' @note Using `tryCatch()` here to error if there are any warnings.
 `import,RtracklayerFile` <-  # nolint
-    function(file, metadata, quiet, ...) {
+    function(
+        ## FIXME Need to update support for these.
+        con,
+        format,
+        text,
+        file,
+        metadata,
+        quiet,
+        ...
+    ) {
         assert(
             isFlag(metadata),
             isFlag(quiet)

@@ -2,17 +2,17 @@
 % Please edit documentation in R/AllGenerics.R, R/export-methods.R
 \name{export}
 \alias{export}
-\alias{export,character-method}
-\alias{export,matrix-method}
-\alias{export,data.frame-method}
-\alias{export,DataFrame-method}
-\alias{export,Matrix-method}
-\alias{export,GenomicRanges-method}
-\title{Export}
+\alias{export,character,ANY,ANY-method}
+\alias{export,matrix,ANY,ANY-method}
+\alias{export,data.frame,ANY,ANY-method}
+\alias{export,DataFrame,ANY,ANY-method}
+\alias{export,Matrix,ANY,ANY-method}
+\alias{export,GenomicRanges,ANY,ANY-method}
+\title{Objects exported from other packages}
 \usage{
-export(object, ...)
+export(object, con, format, ...)
 
-\S4method{export}{character}(
+\S4method{export}{character,ANY,ANY}(
   object,
   ext = c("txt", "txt.bz2", "txt.gz", "txt.xz", "txt.zip"),
   dir = getOption("acid.export.dir", default = "."),
@@ -23,7 +23,7 @@ export(object, ...)
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
-\S4method{export}{matrix}(
+\S4method{export}{matrix,ANY,ANY}(
   object,
   ext = getOption("acid.export.ext", default = "csv"),
   dir = getOption("acid.export.dir", default = "."),
@@ -35,7 +35,7 @@ export(object, ...)
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
-\S4method{export}{data.frame}(
+\S4method{export}{data.frame,ANY,ANY}(
   object,
   ext = getOption("acid.export.ext", default = "csv"),
   dir = getOption("acid.export.dir", default = "."),
@@ -47,7 +47,7 @@ export(object, ...)
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
-\S4method{export}{DataFrame}(
+\S4method{export}{DataFrame,ANY,ANY}(
   object,
   ext = getOption("acid.export.ext", default = "csv"),
   dir = getOption("acid.export.dir", default = "."),
@@ -59,7 +59,7 @@ export(object, ...)
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
-\S4method{export}{Matrix}(
+\S4method{export}{Matrix,ANY,ANY}(
   object,
   ext = c("mtx.gz", "mtx.bz2", "mtx.xz", "mtx.zip", "mtx"),
   dir = getOption("acid.export.dir", default = "."),
@@ -68,7 +68,7 @@ export(object, ...)
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
-\S4method{export}{GenomicRanges}(
+\S4method{export}{GenomicRanges,ANY,ANY}(
   object,
   ext = getOption("acid.export.ext", default = "csv"),
   dir = getOption("acid.export.dir", default = "."),
@@ -143,7 +143,14 @@ Invisible \code{character}.
 File path(s).
 }
 \description{
-Export data out of R and write to disk.
+These objects are imported from other packages. Follow the links
+below to see their documentation.
+
+\describe{
+  \item{IRanges}{\code{\link[IRanges:AtomicList-class]{CharacterList}}, \code{\link[IRanges:DataFrameList-class]{DataFrameList}}, \code{\link[IRanges:AtomicList-class]{FactorList}}, \code{\link[IRanges:IRanges-constructor]{IRanges}}, \code{\link[IRanges:AtomicList-class]{IntegerList}}, \code{\link[IRanges:AtomicList-class]{LogicalList}}, \code{\link[IRanges:AtomicList-class]{NumericList}}, \code{\link[IRanges:AtomicList-class]{RleList}}, \code{\link[IRanges:DataFrameList-class]{SplitDataFrameList}}}
+
+  \item{S4Vectors}{\code{\link[S4Vectors:DataFrame-class]{DataFrame}}, \code{\link[S4Vectors:Factor-class]{Factor}}, \code{\link[S4Vectors:LLint-class]{LLint}}, \code{\link[S4Vectors:List-class]{List}}, \code{\link[S4Vectors:Rle-class]{Rle}}, \code{\link[S4Vectors:SimpleList-class]{SimpleList}}}
+}
 }
 \note{
 Updated 2021-06-10.

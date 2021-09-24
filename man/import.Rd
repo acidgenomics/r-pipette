@@ -2,31 +2,34 @@
 % Please edit documentation in R/AllGenerics.R, R/import-methods.R
 \name{import}
 \alias{import}
-\alias{import,character-method}
-\alias{import,DelimFile-method}
-\alias{import,LinesFile-method}
-\alias{import,ExcelFile-method}
-\alias{import,FASTAFile-method}
-\alias{import,FASTQFile-method}
-\alias{import,GMTFile-method}
-\alias{import,GMXFile-method}
-\alias{import,GRPFile-method}
-\alias{import,JSONFile-method}
-\alias{import,MTXFile-method}
-\alias{import,PZFXFile-method}
-\alias{import,YAMLFile-method}
-\alias{import,RDSFile-method}
-\alias{import,RDataFile-method}
-\alias{import,RioFile-method}
-\alias{import,RtracklayerFile-method}
-\alias{import,BcbioCountsFile-method}
+\alias{import,character,ANY,ANY-method}
+\alias{import,DelimFile,ANY,ANY-method}
+\alias{import,LinesFile,ANY,ANY-method}
+\alias{import,ExcelFile,ANY,ANY-method}
+\alias{import,FASTAFile,ANY,ANY-method}
+\alias{import,FASTQFile,ANY,ANY-method}
+\alias{import,GMTFile,ANY,ANY-method}
+\alias{import,GMXFile,ANY,ANY-method}
+\alias{import,GRPFile,ANY,ANY-method}
+\alias{import,JSONFile,ANY,ANY-method}
+\alias{import,MTXFile,ANY,ANY-method}
+\alias{import,PZFXFile,ANY,ANY-method}
+\alias{import,YAMLFile,ANY,ANY-method}
+\alias{import,RDSFile,ANY,ANY-method}
+\alias{import,RDataFile,ANY,ANY-method}
+\alias{import,RioFile,ANY,ANY-method}
+\alias{import,RtracklayerFile,ANY,ANY-method}
+\alias{import,BcbioCountsFile,ANY,ANY-method}
 \title{Import}
 \usage{
-import(file, ...)
+export(con, format, text, ...)
 
-\S4method{import}{character}(file, format = "auto", ...)
+\S4method{import}{character,ANY,ANY}(con, format, text, file, ...)
 
-\S4method{import}{DelimFile}(
+\S4method{import}{DelimFile,ANY,ANY}(
+  con,
+  format,
+  text,
   file,
   rownames = TRUE,
   rownameCol = NULL,
@@ -40,7 +43,10 @@ import(file, ...)
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
-\S4method{import}{LinesFile}(
+\S4method{import}{LinesFile,ANY,ANY}(
+  con,
+  format,
+  text,
   file,
   comment = "",
   skip = 0L,
@@ -52,7 +58,10 @@ import(file, ...)
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
-\S4method{import}{ExcelFile}(
+\S4method{import}{ExcelFile,ANY,ANY}(
+  con,
+  format,
+  text,
   file,
   sheet = 1L,
   rownames = TRUE,
@@ -65,33 +74,63 @@ import(file, ...)
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
-\S4method{import}{FASTAFile}(
+\S4method{import}{FASTAFile,ANY,ANY}(
+  con,
+  format,
+  text,
   file,
   moleculeType = c("DNA", "RNA"),
   metadata = getOption("acid.import.metadata", default = FALSE),
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
-\S4method{import}{FASTQFile}(
+\S4method{import}{FASTQFile,ANY,ANY}(
+  con,
+  format,
+  text,
   file,
   moleculeType = c("DNA", "RNA"),
   metadata = getOption("acid.import.metadata", default = FALSE),
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
-\S4method{import}{GMTFile}(file, quiet = getOption("acid.quiet", default = FALSE))
+\S4method{import}{GMTFile,ANY,ANY}(
+  con,
+  format,
+  text,
+  file,
+  quiet = getOption("acid.quiet", default = FALSE)
+)
 
-\S4method{import}{GMXFile}(file, quiet = getOption("acid.quiet", default = FALSE))
+\S4method{import}{GMXFile,ANY,ANY}(
+  con,
+  format,
+  text,
+  file,
+  quiet = getOption("acid.quiet", default = FALSE)
+)
 
-\S4method{import}{GRPFile}(file, quiet = getOption("acid.quiet", default = FALSE))
+\S4method{import}{GRPFile,ANY,ANY}(
+  con,
+  format,
+  text,
+  file,
+  quiet = getOption("acid.quiet", default = FALSE)
+)
 
-\S4method{import}{JSONFile}(
+\S4method{import}{JSONFile,ANY,ANY}(
+  con,
+  format,
+  text,
   file,
   metadata = getOption("acid.import.metadata", default = FALSE),
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
-\S4method{import}{MTXFile}(
+\S4method{import}{MTXFile,ANY,ANY}(
+  con,
+  format,
+  text,
   file,
   rownamesFile = paste0(file, ".rownames"),
   colnamesFile = paste0(file, ".colnames"),
@@ -99,7 +138,10 @@ import(file, ...)
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
-\S4method{import}{PZFXFile}(
+\S4method{import}{PZFXFile,ANY,ANY}(
+  con,
+  format,
+  text,
   file,
   sheet = 1L,
   makeNames = getOption("acid.import.make.names", default = syntactic::makeNames),
@@ -107,17 +149,34 @@ import(file, ...)
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
-\S4method{import}{YAMLFile}(
+\S4method{import}{YAMLFile,ANY,ANY}(
+  con,
+  format,
+  text,
   file,
   metadata = getOption("acid.import.metadata", default = FALSE),
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
-\S4method{import}{RDSFile}(file, quiet = getOption("acid.quiet", default = FALSE))
+\S4method{import}{RDSFile,ANY,ANY}(
+  con,
+  format = NA,
+  text = NA,
+  quiet = getOption("acid.quiet", default = FALSE)
+)
 
-\S4method{import}{RDataFile}(file, quiet = getOption("acid.quiet", default = FALSE))
+\S4method{import}{RDataFile,ANY,ANY}(
+  con,
+  format,
+  text,
+  file,
+  quiet = getOption("acid.quiet", default = FALSE)
+)
 
-\S4method{import}{RioFile}(
+\S4method{import}{RioFile,ANY,ANY}(
+  con,
+  format,
+  text,
   file,
   rownames = TRUE,
   rownameCol = NULL,
@@ -128,29 +187,48 @@ import(file, ...)
   ...
 )
 
-\S4method{import}{RtracklayerFile}(
+\S4method{import}{RtracklayerFile,ANY,ANY}(
+  con,
+  format,
+  text,
   file,
   metadata = getOption("acid.import.metadata", default = FALSE),
   quiet = getOption("acid.quiet", default = FALSE),
   ...
 )
 
-\S4method{import}{BcbioCountsFile}(
+\S4method{import}{BcbioCountsFile,ANY,ANY}(
+  con,
+  format,
+  text,
   file,
   metadata = getOption("acid.import.metadata", default = FALSE),
   quiet = getOption("acid.quiet", default = FALSE)
 )
 }
 \arguments{
-\item{file}{\code{character(1)}.
-File path.}
+\item{con}{\code{character(1)}, \code{connection}, or \code{missing}.
+The connection from which data is loaded or to which data is saved. If this
+is a character vector, it is assumed to be a filename, and a corresponding
+file connection is created and then closed after exporting the object. If a
+\code{BiocFile} derivative, the data is loaded from or saved to the underlying
+resource.  If missing, the function will return the output as a character
+vector, rather than writing to a connection.}
+
+\item{format}{\code{character(1)} or \code{missing}.
+An optional file format type, which can be used to override the file format
+inferred from \code{con}. Only recommended for file and URL paths that don't
+contain an extension.}
+
+\item{text}{\code{character} or \code{missing}.
+If \code{con} is missing, this can be a character vector directly providing the
+string data to import.}
+
+\item{file}{\code{character(1)} or \code{missing}.
+Deprecated in favor of primary \code{con} argument, defined in BiocIO
+package. This argument likely will be removed in a future update.}
 
 \item{...}{Additional arguments.}
-
-\item{format}{\code{character(1)}.
-An optional file format type, which can be used to override the file format
-inferred from \code{file}. Only recommended for file and URL paths that don't
-contain an extension.}
 
 \item{rownames}{\code{logical(1)}.
 Automatically assign row names, if \code{rowname} column is defined.
@@ -289,7 +367,7 @@ arguments. Remote URLs and compressed files are supported. If you need more
 complex import settings, just call the wrapped importer directly instead.
 }
 \note{
-Updated 2021-09-22.
+Updated 2021-09-24.
 }
 \section{Row and column names}{
 
