@@ -5,6 +5,7 @@
 #' @keywords internal
 #'
 #' @importClassesFrom AcidGenerics DataFrame List SimpleList
+#' @importClassesFrom BiocIO BiocFile CompressedFile
 #' @importClassesFrom GenomicRanges GenomicRanges
 #' @importClassesFrom IRanges IRanges Ranges
 #' @importClassesFrom Matrix Matrix
@@ -19,6 +20,7 @@
 #'   toInlineString
 #' @importFrom AcidGenerics DataFrame Rle SimpleList end head mcols mcols<-
 #'   metadata metadata<- na.omit start tail width
+#' @importFrom BiocIO resource
 #' @importFrom Matrix readMM writeMM
 #' @importFrom RCurl getURL
 #' @importFrom goalie assert allAreAtomic allAreExisting allAreFiles
