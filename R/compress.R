@@ -2,6 +2,9 @@
 ## FIXME Move this to pipette?
 ## FIXME Update the documentation for just compress.
 ## FIXME Rework using 'con' argument, similar to BiocIO decompress?
+## FIXME Save to remove decompress code in favor of just using BiocIO methods?
+## FIXME Should `compress` return `CompressedFile`?
+## FIXME BiocIO decompress method doesn't support overwrite or remove options.
 
 
 
@@ -12,7 +15,7 @@
 #' @name compress
 #' @export
 #' @note For ZIP files, refer to `zip` and `unzip` in the utils package.
-#' @note Updated 2021-01-06.
+#' @note Updated 2021-09-24.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ext `character(1)`.
