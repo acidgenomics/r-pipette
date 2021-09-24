@@ -874,28 +874,29 @@ formals(`import,RDSFile`)[["quiet"]] <-
 #' @noRd
 `import,RDataFile` <-  # nolint
     function(
-        ## FIXME Need to update support for these.
         con,
-        format,
-        text,
-        file,
-        quiet) {
+        format = NULL,
+        text = NULL,
+        quiet
+    ) {
         assert(
-            isString(file),
+            is.null(format),
+            is.null(text),
             isFlag(quiet)
         )
         whatPkg <- "base"
         whatFun <- "load"
-        tmpfile <- .localOrRemoteFile(file = file, quiet = quiet)
         if (isFALSE(quiet)) {
-            alert(sprintf(
-                "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
-                file, whatPkg, whatFun
-            ))
+            .alertImport(
+                con = con,
+                whatPkg = whatPkg,
+                whatFun = whatFun
+            )
         }
+        file <- resource(con)
         saveEnv <- new.env()
         args <- list(
-            "file" = tmpfile,
+            "file" = file,
             "envir" = saveEnv
         )
         what <- .getFunction(f = whatFun, pkg = whatPkg)
