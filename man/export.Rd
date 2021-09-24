@@ -8,7 +8,7 @@
 \alias{export,character,ANY,missingOrNULL-method}
 \alias{export,data.frame,ANY,ANY-method}
 \alias{export,matrix,ANY,ANY-method}
-\title{Objects exported from other packages}
+\title{Export}
 \usage{
 export(object, con, format, ...)
 
@@ -168,14 +168,7 @@ Invisible \code{character}.
 File path(s).
 }
 \description{
-These objects are imported from other packages. Follow the links
-below to see their documentation.
-
-\describe{
-  \item{IRanges}{\code{\link[IRanges:AtomicList-class]{CharacterList}}, \code{\link[IRanges:DataFrameList-class]{DataFrameList}}, \code{\link[IRanges:AtomicList-class]{FactorList}}, \code{\link[IRanges:IRanges-constructor]{IRanges}}, \code{\link[IRanges:AtomicList-class]{IntegerList}}, \code{\link[IRanges:AtomicList-class]{LogicalList}}, \code{\link[IRanges:AtomicList-class]{NumericList}}, \code{\link[IRanges:AtomicList-class]{RleList}}, \code{\link[IRanges:DataFrameList-class]{SplitDataFrameList}}}
-
-  \item{S4Vectors}{\code{\link[S4Vectors:DataFrame-class]{DataFrame}}, \code{\link[S4Vectors:Factor-class]{Factor}}, \code{\link[S4Vectors:LLint-class]{LLint}}, \code{\link[S4Vectors:List-class]{List}}, \code{\link[S4Vectors:Rle-class]{Rle}}, \code{\link[S4Vectors:SimpleList-class]{SimpleList}}}
-}
+Export
 }
 \note{
 Updated 2021-09-24.
