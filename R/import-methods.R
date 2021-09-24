@@ -1,17 +1,3 @@
-## FIXME Rework using BiocIO generic approach.
-## FIXME How to switch to "con" approach instead of "file"?
-## FIXME Define method for CompressedFile, that handles file extraction first.
-## FIXME Need to ensure that `path` and `resource` arguments are supported.
-## FIXME Can we use localOrRemoteFile more up front? Or should we delete this
-##       internal code?
-## FIXME Pass "format" and "text" arguments to rtracklayer
-## FIXME Need to rethink RTLFile / RtracklayerFile handling
-##       Some genomics files are already supported...how to prioritize?
-## FIXME Add back Google Sheets support as "GoogleSheetsFile"
-## FIXME We need to have GoogleSheetsFile inherit as RioFile.
-
-
-
 #' Import
 #'
 #' Read file by extension into R.
