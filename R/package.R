@@ -23,7 +23,7 @@
 #'   toInlineString
 #' @importFrom AcidGenerics DataFrame Rle SimpleList end head mcols mcols<-
 #'   metadata metadata<- na.omit start tail width
-#' @importFrom BiocIO FileForFormat decompress path resource resource<-
+#' @importFrom BiocIO FileForFormat resource
 #' @importFrom Matrix readMM writeMM
 #' @importFrom RCurl getURL
 #' @importFrom goalie assert allAreAtomic allAreExisting allAreFiles

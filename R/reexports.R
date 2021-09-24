@@ -18,9 +18,17 @@ Matrix::Matrix
 #' @export
 tibble::column_to_rownames
 
+#' @importFrom AcidBase compress
+#' @export
+AcidBase::compress
+
 #' @importFrom data.table data.table
 #' @export
 data.table::data.table
+
+#' @importFrom AcidBase decompress
+#' @export
+AcidBase::decompress
 
 #' @importFrom AcidBase download
 #' @export
