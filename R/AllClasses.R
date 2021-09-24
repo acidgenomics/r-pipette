@@ -10,17 +10,18 @@
 #' Currently intended for use with `import` function.
 #'
 #' @keywords internal
-#' @note Updated 2021-06-03.
+#' @note Updated 2021-09-24.
 #'
 #' @seealso
 #' - `getGeneric`.
 setClass(
     Class = "PipetteFile",
-    contains = "character"
+    contains = "BiocFile"
 )
 setValidity(
     Class = "PipetteFile",
     method = function(object) {
+        ## FIXME Update the validity checks here.
         ok <- validate(
             isString(object)
         )
