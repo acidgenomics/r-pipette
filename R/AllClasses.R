@@ -1,15 +1,10 @@
-## NOTE Not currently exporting these, since they are only used for `import`
-## function, and do not need to be made accessible to other packages.
-
-
-
 #' File extension classes
 #'
 #' Currently intended for use with `import` function.
 #'
 #' Extends `BiocFile` defined in BiocIO package.
 #'
-#' @keywords internal
+#' @export
 #' @note Updated 2021-09-24.
 #'
 #' @seealso
@@ -21,9 +16,8 @@ setClass(
 setValidity(
     Class = "PipetteFile",
     method = function(object) {
-        ## FIXME Update the validity checks here.
         ok <- validate(
-            isString(object)
+            isAFile(resource(object))
         )
         if (!isTRUE(ok)) return(ok)
         TRUE
@@ -39,6 +33,7 @@ setValidity(
 #' - CSV: Comma-separated values
 #' - TSV: Tab-separated values
 #' - Base R table (TXT)
+#' @export
 setClass(
     Class = "DelimFile",
     contains = "PipetteFile"
@@ -52,6 +47,7 @@ setClass(
 #' - XLS
 #' - XLSB
 #' - XLSX
+#' @export
 setClass(
     Class = "ExcelFile",
     contains = "PipetteFile"
@@ -70,6 +66,7 @@ setClass(
 #' - RMD: R Markdown file
 #' - SH: Shell script (e.g. Bash, POSIX)
 #' - ZSH: Zsh shell script
+#' @export
 setClass(
     Class = "LinesFile",
     contains = "PipetteFile"
@@ -95,6 +92,7 @@ setClass(
 #' - SYD: Systat
 #' - REC: Epi Info
 #' - XPT: SASS
+#' @export
 setClass(
     Class = "RioFile",
     contains = "PipetteFile"
@@ -102,13 +100,15 @@ setClass(
 
 
 
+## FIXME Rework the handoff to rtracklayer.
 #' @describeIn PipetteFile-class
-#' File extension supported by `rtracklayer::import`.\cr
+#' File extension supported by `rtracklayer::import()`.\cr
 #' File extension group supporting:
 #' - BED, BED15, BEDGRAPH, BEDPE
 #' - BIGWIG, BW, WIG
 #' - GFF, GFF1, GFF2, GFF3, GTF
 #' - BROADPEAK, NARROWPEAK
+#' @export
 setClass(
     Class = "RtracklayerFile",
     contains = "PipetteFile"
@@ -119,6 +119,7 @@ setClass(
 ## File extensions =============================================================
 #' @describeIn PipetteFile-class
 #' bcbio-nextgen counts file.
+#' @export
 setClass(
     Class = "BcbioCountsFile",
     contains = "PipetteFile"
@@ -128,6 +129,7 @@ setClass(
 
 #' @describeIn PipetteFile-class
 #' Comma-separated values file (CSV).
+#' @export
 setClass(
     Class = "CSVFile",
     contains = "DelimFile"
@@ -137,6 +139,7 @@ setClass(
 
 #' @describeIn PipetteFile-class
 #' FASTA file.
+#' @export
 setClass(
     Class = "FASTAFile",
     contains = "PipetteFile"
@@ -146,6 +149,7 @@ setClass(
 
 #' @describeIn PipetteFile-class
 #' FASTQ file.
+#' @export
 setClass(
     Class = "FASTQFile",
     contains = "PipetteFile"
@@ -155,6 +159,7 @@ setClass(
 
 #' @describeIn PipetteFile-class
 #' Gene matrix transposed file (GMT).
+#' @export
 setClass(
     Class = "GMTFile",
     contains = "PipetteFile"
@@ -164,6 +169,7 @@ setClass(
 
 #' @describeIn PipetteFile-class
 #' Gene matrix file (GMX).
+#' @export
 setClass(
     Class = "GMXFile",
     contains = "PipetteFile"
@@ -173,6 +179,7 @@ setClass(
 
 #' @describeIn PipetteFile-class
 #' Gene set file (GRP).
+#' @export
 setClass(
     Class = "GRPFile",
     contains = "PipetteFile"
@@ -182,6 +189,7 @@ setClass(
 
 #' @describeIn PipetteFile-class
 #' JSON file.
+#' @export
 setClass(
     Class = "JSONFile",
     contains = "PipetteFile"
@@ -191,6 +199,7 @@ setClass(
 
 #' @describeIn PipetteFile-class
 #' MatrixMarket exchange file (MTX).
+#' @export
 setClass(
     Class = "MTXFile",
     contains = "PipetteFile"
@@ -200,6 +209,7 @@ setClass(
 
 #' @describeIn PipetteFile-class
 #' GraphPad Prism file (PZFX).
+#' @export
 setClass(
     Class = "PZFXFile",
     contains = "PipetteFile"
@@ -209,6 +219,7 @@ setClass(
 
 #' @describeIn PipetteFile-class
 #' R Data file containing multiple objects (RData/RDA).
+#' @export
 setClass(
     Class = "RDataFile",
     contains = "PipetteFile"
@@ -218,6 +229,7 @@ setClass(
 
 #' @describeIn PipetteFile-class
 #' R data file containing a single, serialized object (RDS).
+#' @export
 setClass(
     Class = "RDSFile",
     contains = "PipetteFile"
@@ -227,6 +239,7 @@ setClass(
 
 #' @describeIn PipetteFile-class
 #' Base R table file (TXT).
+#' @export
 setClass(
     Class = "TableFile",
     contains = "DelimFile"
@@ -236,6 +249,7 @@ setClass(
 
 #' @describeIn PipetteFile-class
 #' Tab-separated values file (TSV).
+#' @export
 setClass(
     Class = "TSVFile",
     contains = "DelimFile"
@@ -245,7 +259,19 @@ setClass(
 
 #' @describeIn PipetteFile-class
 #' YAML file.
+#' @export
 setClass(
     Class = "YAMLFile",
     contains = "PipetteFile"
+)
+
+
+
+## URL-based formats ==========================================================
+#' @describeIn PipetteFile-class
+#' Google Sheets file.
+#' @export
+setClass(
+    Class = "GoogleSheetsFile",
+    contains = "character"
 )
