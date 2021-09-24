@@ -112,7 +112,7 @@
     realpath(.autoDecompress(file))
 }
 
-formals(localOrRemoteFile)[c("tempPrefix", "quiet")] <-
+formals(.localOrRemoteFile)[c("tempPrefix", "quiet")] <-
     list(.pkgName, .formalsList[["quiet"]])
 
 
