@@ -111,9 +111,25 @@
 #' `DOC`, `DOCX`, `PDF`, `PPT`, `PPTX`.
 #'
 #' @name import
-#' @note Updated 2021-09-22.
+#' @note Updated 2021-09-24.
 #'
 #' @inheritParams AcidRoxygen::params
+#' @param con `character(1)`, `connection`, or `missing`.
+#'   The connection from which data is loaded or to which data is saved. If this
+#'   is a character vector, it is assumed to be a filename, and a corresponding
+#'   file connection is created and then closed after exporting the object. If a
+#'   `BiocFile` derivative, the data is loaded from or saved to the underlying
+#'   resource.  If missing, the function will return the output as a character
+#'   vector, rather than writing to a connection.
+#' @param text `character` or `missing`.
+#'   If `con` is missing, this can be a character vector directly providing the
+#'   string data to import.
+#' @param format `character(1)` or `missing`.
+#'   An optional file format type, which can be used to override the file format
+#'   inferred from `con`. Only recommended for file and URL paths that don't
+#'   contain an extension.
+#' @param file `character(1)` or `missing`.
+#'   Deprecated in favor of primary `con` argument, defined in BiocIO package.
 #' @param rownameCol `NULL`, `character(1)`, or `integer(1)`.
 #'   *Applies only when `rownames = TRUE`.*
 #'   Column name to use for row names assignment.
@@ -139,10 +155,6 @@
 #'   - data.table
 #'   - readr
 #'   - vroom
-#' @param format `character(1)`.
-#'   An optional file format type, which can be used to override the file format
-#'   inferred from `file`. Only recommended for file and URL paths that don't
-#'   contain an extension.
 #' @param makeNames `function`.
 #'   Apply syntactic naming function to (column) names.
 #'   Function is never applied to row names, when they are defined in object.
@@ -523,10 +535,13 @@ NULL
 #' Allow Google Sheets import using rio, by matching the URL.
 #' Otherwise, coerce the file extension to uppercase, for easy matching.
 #'
-#' @note Updated 2021-06-04.
+#' @note Updated 2021-09-24.
 #' @noRd
 `import,character` <-  # nolint
     function(file, format = "auto", ...) {
+        ## FIXME Rework `format` to be missing by default.
+        ## FIXME Need to provide legacy support for "auto" format.
+        ## FIXME Need to provide support for direct "text" import.
         assert(
             isAFile(file) || isAURL(file),
             isString(format)
@@ -570,11 +585,22 @@ NULL
 #' @note Updated 2021-08-24.
 #' @noRd
 `import,RDSFile` <-  # nolint
-    function(file, quiet) {
+    function(
+        con,
+        format,
+        text,
+        file,
+        quiet
+    ) {
+
+
         assert(
-            isString(file),
+            isString(con),
             isFlag(quiet)
         )
+
+        ## FIXME text, format not supported.
+
         whatPkg <- "base"
         whatFun <- "readRDS"
         tmpfile <- localOrRemoteFile(file = file, quiet = quiet)
