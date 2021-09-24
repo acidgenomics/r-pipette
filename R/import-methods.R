@@ -745,13 +745,8 @@ formals(.localOrRemoteFile)[c("tempPrefix", "quiet")] <-
         con,
         format,
         text,
-        file,  # soft deprecated
         ...
     ) {
-        if (!missing(file)) {
-            assert(isString(file))
-            con <- file
-        }
         if (
             missing(format) ||
             is.null(format) ||
@@ -815,6 +810,34 @@ formals(.localOrRemoteFile)[c("tempPrefix", "quiet")] <-
             con = con,
             format = NULL,
             text = NULL,
+            ...
+        )
+    }
+
+
+
+#' Soft deprecated legacy handler for primary "file" argument
+#'
+#' @note Updated 2021-09-24.
+#' @noRd
+`import,character,file` <-  # nolint
+    function(
+        file,
+        con = NULL,
+        format = NULL,
+        text = NULL,
+        ...
+    ) {
+        if (missing(format)) {
+            format <- NULL
+        }
+        if (missing(text)) {
+            text <- NULL
+        }
+        import(
+            con = file,
+            format = format,
+            text = text,
             ...
         )
     }
@@ -2030,6 +2053,18 @@ setMethod(
         text = "missingOrNULL"
     ),
     definition = `import,character`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(
+        con = "missingOrNULL",
+        format = "missingOrNULL",
+        text = "missingOrNULL"
+    ),
+    definition = `import,character,file`
 )
 
 #' @rdname import
