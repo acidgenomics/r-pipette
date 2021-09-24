@@ -2,31 +2,31 @@
 % Please edit documentation in R/AllGenerics.R, R/import-methods.R
 \name{import}
 \alias{import}
-\alias{import,character,ANY,ANY-method}
-\alias{import,DelimFile,ANY,ANY-method}
-\alias{import,LinesFile,ANY,ANY-method}
-\alias{import,ExcelFile,ANY,ANY-method}
-\alias{import,FASTAFile,ANY,ANY-method}
-\alias{import,FASTQFile,ANY,ANY-method}
-\alias{import,GMTFile,ANY,ANY-method}
-\alias{import,GMXFile,ANY,ANY-method}
-\alias{import,GRPFile,ANY,ANY-method}
-\alias{import,JSONFile,ANY,ANY-method}
-\alias{import,MTXFile,ANY,ANY-method}
-\alias{import,PZFXFile,ANY,ANY-method}
-\alias{import,YAMLFile,ANY,ANY-method}
-\alias{import,RDSFile,ANY,ANY-method}
-\alias{import,RDataFile,ANY,ANY-method}
-\alias{import,RioFile,ANY,ANY-method}
-\alias{import,RtracklayerFile,ANY,ANY-method}
-\alias{import,BcbioCountsFile,ANY,ANY-method}
+\alias{import,character,missingOrNULL,missingOrNULL-method}
+\alias{import,DelimFile,missingOrNULL,missingOrNULL-method}
+\alias{import,LinesFile,missingOrNULL,missingOrNULL-method}
+\alias{import,ExcelFile,missingOrNULL,missingOrNULL-method}
+\alias{import,FASTAFile,missingOrNULL,missingOrNULL-method}
+\alias{import,FASTQFile,missingOrNULL,missingOrNULL-method}
+\alias{import,GMTFile,missingOrNULL,missingOrNULL-method}
+\alias{import,GMXFile,missingOrNULL,missingOrNULL-method}
+\alias{import,GRPFile,missingOrNULL,missingOrNULL-method}
+\alias{import,JSONFile,missingOrNULL,missingOrNULL-method}
+\alias{import,MTXFile,missingOrNULL,missingOrNULL-method}
+\alias{import,PZFXFile,missingOrNULL,missingOrNULL-method}
+\alias{import,YAMLFile,missingOrNULL,missingOrNULL-method}
+\alias{import,RDSFile,missingOrNULL,missingOrNULL-method}
+\alias{import,RDataFile,missingOrNULL,missingOrNULL-method}
+\alias{import,RioFile,missingOrNULL,missingOrNULL-method}
+\alias{import,RtracklayerFile,missingOrNULL,missingOrNULL-method}
+\alias{import,BcbioCountsFile,missingOrNULL,missingOrNULL-method}
 \title{Import}
 \usage{
 export(con, format, text, ...)
 
-\S4method{import}{character,ANY,ANY}(con, format, text, file, ...)
+\S4method{import}{character,missingOrNULL,missingOrNULL}(con, format, text, file, ...)
 
-\S4method{import}{DelimFile,ANY,ANY}(
+\S4method{import}{DelimFile,missingOrNULL,missingOrNULL}(
   con,
   format,
   text,
@@ -43,7 +43,7 @@ export(con, format, text, ...)
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
-\S4method{import}{LinesFile,ANY,ANY}(
+\S4method{import}{LinesFile,missingOrNULL,missingOrNULL}(
   con,
   format,
   text,
@@ -58,7 +58,7 @@ export(con, format, text, ...)
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
-\S4method{import}{ExcelFile,ANY,ANY}(
+\S4method{import}{ExcelFile,missingOrNULL,missingOrNULL}(
   con,
   format,
   text,
@@ -74,7 +74,7 @@ export(con, format, text, ...)
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
-\S4method{import}{FASTAFile,ANY,ANY}(
+\S4method{import}{FASTAFile,missingOrNULL,missingOrNULL}(
   con,
   format,
   text,
@@ -84,7 +84,7 @@ export(con, format, text, ...)
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
-\S4method{import}{FASTQFile,ANY,ANY}(
+\S4method{import}{FASTQFile,missingOrNULL,missingOrNULL}(
   con,
   format,
   text,
@@ -94,7 +94,7 @@ export(con, format, text, ...)
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
-\S4method{import}{GMTFile,ANY,ANY}(
+\S4method{import}{GMTFile,missingOrNULL,missingOrNULL}(
   con,
   format,
   text,
@@ -102,7 +102,7 @@ export(con, format, text, ...)
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
-\S4method{import}{GMXFile,ANY,ANY}(
+\S4method{import}{GMXFile,missingOrNULL,missingOrNULL}(
   con,
   format,
   text,
@@ -110,7 +110,7 @@ export(con, format, text, ...)
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
-\S4method{import}{GRPFile,ANY,ANY}(
+\S4method{import}{GRPFile,missingOrNULL,missingOrNULL}(
   con,
   format,
   text,
@@ -118,7 +118,7 @@ export(con, format, text, ...)
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
-\S4method{import}{JSONFile,ANY,ANY}(
+\S4method{import}{JSONFile,missingOrNULL,missingOrNULL}(
   con,
   format,
   text,
@@ -127,7 +127,7 @@ export(con, format, text, ...)
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
-\S4method{import}{MTXFile,ANY,ANY}(
+\S4method{import}{MTXFile,missingOrNULL,missingOrNULL}(
   con,
   format,
   text,
@@ -138,7 +138,7 @@ export(con, format, text, ...)
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
-\S4method{import}{PZFXFile,ANY,ANY}(
+\S4method{import}{PZFXFile,missingOrNULL,missingOrNULL}(
   con,
   format,
   text,
@@ -149,7 +149,7 @@ export(con, format, text, ...)
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
-\S4method{import}{YAMLFile,ANY,ANY}(
+\S4method{import}{YAMLFile,missingOrNULL,missingOrNULL}(
   con,
   format,
   text,
@@ -158,14 +158,14 @@ export(con, format, text, ...)
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
-\S4method{import}{RDSFile,ANY,ANY}(
+\S4method{import}{RDSFile,missingOrNULL,missingOrNULL}(
   con,
-  format = NA,
-  text = NA,
+  format = NULL,
+  text = NULL,
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
-\S4method{import}{RDataFile,ANY,ANY}(
+\S4method{import}{RDataFile,missingOrNULL,missingOrNULL}(
   con,
   format,
   text,
@@ -173,7 +173,7 @@ export(con, format, text, ...)
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
-\S4method{import}{RioFile,ANY,ANY}(
+\S4method{import}{RioFile,missingOrNULL,missingOrNULL}(
   con,
   format,
   text,
@@ -187,7 +187,7 @@ export(con, format, text, ...)
   ...
 )
 
-\S4method{import}{RtracklayerFile,ANY,ANY}(
+\S4method{import}{RtracklayerFile,missingOrNULL,missingOrNULL}(
   con,
   format,
   text,
@@ -197,7 +197,7 @@ export(con, format, text, ...)
   ...
 )
 
-\S4method{import}{BcbioCountsFile,ANY,ANY}(
+\S4method{import}{BcbioCountsFile,missingOrNULL,missingOrNULL}(
   con,
   format,
   text,
@@ -513,6 +513,7 @@ Packages:
 
 Import functions:
 \itemize{
+\item \code{BiocIO::import()}.
 \item \code{data.table::fread()}.
 \item \code{readr::read_csv()}.
 \item \code{rio::import()}.
