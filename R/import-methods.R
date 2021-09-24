@@ -1,4 +1,5 @@
 ## FIXME Rework using BiocIO generic approach.
+## FIXME How to switch to "con" approach instead of "file"?
 ## FIXME Define method for CompressedFile, that handles file extraction first.
 ## FIXME Need to ensure that `path` and `resource` arguments are supported.
 ## FIXME Can we use localOrRemoteFile more up front? Or should we delete this
@@ -283,120 +284,6 @@ NULL
 
 
 
-#' Dynamically handle a local or remote file path
-#'
-#' @section Vectorization:
-#'
-#' This function is vectorized and supports mixed local and remote paths. Remote
-#' files are downloaded locally to a temporary directory.
-#'
-#' @section Compressed files:
-#'
-#' Compressed files will automatically be decompressed. Currently, these file
-#' extensions are natively supported: `BZ2`, `GZ`, `XZ`, and `ZIP`.
-#'
-#' @note Updated 2021-09-24.
-#' @noRd
-#'
-#' @inheritParams AcidRoxygen::params
-#' @param file `character(1)`.
-#'   Local file paths or remote URLs.
-#' @param tempPrefix `character(1)`.
-#'   Prefix to use for temporary file basename.
-#'
-#' @return `character`.
-#' Local file path(s). Stops on a missing file.
-#'
-#' @seealso
-#' - `tempfile()`.
-#' - `tempdir()`.
-#'
-#' @examples
-#' ## Local
-#' file <- system.file("extdata/example.csv", package = "pipette")
-#' x <- localOrRemoteFile(file)
-#' basename(x)
-#'
-#' ## Remote
-#' file <- AcidBase::pasteURL(
-#'     pipetteTestsURL,
-#'     "hgnc.txt.gz",
-#'     protocol = "none"
-#' )
-#' x <- .localOrRemoteFile(file)
-#' basename(x)
-.localOrRemoteFile <- function(file, tempPrefix, quiet) {
-    assert(
-        isCharacter(file),
-        isString(tempPrefix),
-        isFlag(quiet)
-    )
-    file <- mapply(
-        file = file,
-        FUN = function(file) {
-            if (isFALSE(isAURL(file))) {
-                return(file)
-            }
-            ## Remote file mode.
-            assert(hasInternet())
-            ## Note that for `.gtf.gz` we want to return only `.gz` here.
-            ## This behavor differs from matching using `extPattern` global.
-            ext <- str_match(
-                string = basename(file),
-                pattern = "\\.([a-zA-Z0-9]+)$"
-            )
-            ext <- na.omit(ext[1L, 2L])
-            ## Write mode for binary files.
-            ## Note that files without extension will use default.
-            ## https://github.com/tidyverse/readxl/issues/374
-            binary <- c(
-                "bz2",
-                "gz",
-                "rda",
-                "rds",
-                "xls",
-                "xlsx",
-                "xz",
-                "zip"
-            )
-            if (isSubset(ext, binary)) {
-                ## Write binary.
-                mode <- "wb"
-            } else {
-                ## Write (default).
-                mode <- "w"
-            }
-            tmpdir <- realpath(tempdir())
-            fileext <- fileExt(file)
-            if (is.na(fileext)) {
-                fileext <- ""  # nocov
-            } else {
-                fileext <- paste0(".", fileext)
-            }
-            destfile <- tempfile(
-                pattern = paste0(tempPrefix, "-"),
-                tmpdir = tmpdir,
-                fileext = fileext
-            )
-            download(
-                url = file,
-                destfile = destfile,
-                quiet = quiet,
-                mode = mode
-            )
-            destfile
-        },
-        SIMPLIFY = TRUE,
-        USE.NAMES = FALSE
-    )
-    realpath(.autoDecompress(file))
-}
-
-formals(.localOrRemoteFile)[c("tempPrefix", "quiet")] <-
-    list(.pkgName, .formalsList[["quiet"]])
-
-
-
 ## Auto decompress, if necessary. Note that `data.table::fread()` still doesn't
 ## natively support compressed files. R on Windows can run into `tempdir()`
 ## write permission issues, unless R is running as administrator. Ensure that
@@ -434,14 +321,6 @@ formals(.localOrRemoteFile)[c("tempPrefix", "quiet")] <-
         USE.NAMES = FALSE
     )
 }
-
-
-
-
-
-
-
-
 
 
 
@@ -587,6 +466,122 @@ formals(.localOrRemoteFile)[c("tempPrefix", "quiet")] <-
 
 
 
+#' Dynamically handle a local or remote file path
+#'
+#' @section Vectorization:
+#'
+#' This function is vectorized and supports mixed local and remote paths. Remote
+#' files are downloaded locally to a temporary directory.
+#'
+#' @section Compressed files:
+#'
+#' Compressed files will automatically be decompressed. Currently, these file
+#' extensions are natively supported: `BZ2`, `GZ`, `XZ`, and `ZIP`.
+#'
+#' @note Updated 2021-09-24.
+#' @noRd
+#'
+#' @inheritParams AcidRoxygen::params
+#' @param file `character(1)`.
+#'   Local file paths or remote URLs.
+#' @param tempPrefix `character(1)`.
+#'   Prefix to use for temporary file basename.
+#'
+#' @return `character`.
+#' Local file path(s). Stops on a missing file.
+#'
+#' @seealso
+#' - `tempfile()`.
+#' - `tempdir()`.
+#'
+#' @examples
+#' ## Local
+#' file <- system.file("extdata/example.csv", package = "pipette")
+#' x <- localOrRemoteFile(file)
+#' basename(x)
+#'
+#' ## Remote
+#' file <- AcidBase::pasteURL(
+#'     pipetteTestsURL,
+#'     "hgnc.txt.gz",
+#'     protocol = "none"
+#' )
+#' x <- .localOrRemoteFile(file)
+#' basename(x)
+.localOrRemoteFile <- function(file, tempPrefix, quiet) {
+    ## FIXME Can we switch to a BiocFile approach here?
+    ## FIXME Then we can check for CompressedFile instead.
+    assert(
+        isCharacter(file),
+        isString(tempPrefix),
+        isFlag(quiet)
+    )
+    file <- mapply(
+        file = file,
+        FUN = function(file) {
+            if (isFALSE(isAURL(file))) {
+                return(file)
+            }
+            ## Remote file mode.
+            assert(hasInternet())
+            ## Note that for `.gtf.gz` we want to return only `.gz` here.
+            ## This behavor differs from matching using `extPattern` global.
+            ext <- str_match(
+                string = basename(file),
+                pattern = "\\.([a-zA-Z0-9]+)$"
+            )
+            ext <- na.omit(ext[1L, 2L])
+            ## Write mode for binary files.
+            ## Note that files without extension will use default.
+            ## https://github.com/tidyverse/readxl/issues/374
+            binary <- c(
+                "bz2",
+                "gz",
+                "rda",
+                "rds",
+                "xls",
+                "xlsx",
+                "xz",
+                "zip"
+            )
+            if (isSubset(ext, binary)) {
+                ## Write binary.
+                mode <- "wb"
+            } else {
+                ## Write (default).
+                mode <- "w"
+            }
+            tmpdir <- realpath(tempdir())
+            fileext <- fileExt(file)
+            if (is.na(fileext)) {
+                fileext <- ""  # nocov
+            } else {
+                fileext <- paste0(".", fileext)
+            }
+            destfile <- tempfile(
+                pattern = paste0(tempPrefix, "-"),
+                tmpdir = tmpdir,
+                fileext = fileext
+            )
+            download(
+                url = file,
+                destfile = destfile,
+                quiet = quiet,
+                mode = mode
+            )
+            destfile
+        },
+        SIMPLIFY = TRUE,
+        USE.NAMES = FALSE
+    )
+    realpath(.autoDecompress(file))
+}
+
+formals(.localOrRemoteFile)[c("tempPrefix", "quiet")] <-
+    list(.pkgName, .formalsList[["quiet"]])
+
+
+
 #' Return standardized import object
 #'
 #' @note Updated 2021-09-22.
@@ -715,34 +710,35 @@ formals(.localOrRemoteFile)[c("tempPrefix", "quiet")] <-
 #' @noRd
 `import,character` <-  # nolint
     function(
-        file,
         con,
         format,
         text,
+        file,
         ...
     ) {
-        ## FIXME This step should handle compression, no?
-        file <- localOrRemoteFile(file)
+        ## Soft deprecating "file" in favor of primary "con" argument.
+        if (!missing(file)) {
+            con <- file
+        }
+
+        ## FIXME Need to call localOrRemoteFile here to support URLs, no?
+        ## FIXME Rethink the initial step here.
 
         con <- FileForFormat(con)
         assert(is(con, "BiocFile"))
+
+        path(con)
+        resource(con)
+
         if (is(con, "CompressedFile")) {
+            ## FIXME This will open a connection that we need to close.
             con <- BiocIO::decompress(
                 manager = BiocIO:::manager(),
                 con = con
             )
         }
 
-        ## FIXME Can use this:
-        ## is(con, "CompressedFile")
 
-        ## - decompress (for CompressedFile).
-
-
-
-        ## FIXME Need to class this into BiocFile.
-        ## ## FIXME This doens't work, no slots.
-        con <- resource(con)
 
         ## FIXME Rework `format` to be missing by default.
         ## FIXME Need to provide legacy support for "auto" format.
@@ -1991,7 +1987,11 @@ formals(`import,RtracklayerFile`)[c("metadata", "quiet")] <-
 #' @export
 setMethod(
     f = "import",
-    signature = signature("character"),
+    signature = signature(
+        con = "character",
+        format = "ANY",
+        text = "ANY"
+    ),
     definition = `import,character`
 )
 
