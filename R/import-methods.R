@@ -257,6 +257,7 @@
 #'
 #' Import functions:
 #'
+#' - `BiocIO::import()`.
 #' - `data.table::fread()`.
 #' - `readr::read_csv()`.
 #' - `rio::import()`.
@@ -279,6 +280,29 @@ NULL
 
 
 ## Internal functions ==========================================================
+#' Inform the user about start of file import
+#'
+#' @note Updated 2021-09-24.
+#' @noRd
+.alertImport <- function(
+    con,
+    whatPkg,
+    whatFun
+) {
+    resource <- attr(x = con, which = "origResource")
+    if (is.null(resource)) {
+        resource <- resource(con)
+    }
+    assert(isAFile(resource))
+    alert(sprintf(
+        "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
+        resource, whatPkg, whatFun
+    ))
+    invisible(TRUE)
+}
+
+
+
 #' Auto-decompress a file, if necessary
 #'
 #' @note Updated 2021-09-24.
@@ -700,6 +724,7 @@ formals(.localOrRemoteFile)[c("tempPrefix", "quiet")] <-
 
 
 ## Primary S4 method ===========================================================
+## FIXME This method gets ignored in our package, preferred by BiocIO...argh.
 
 ## FIXME Need to rethink how we handle file paths / tmpfile here...
 ## FIXME Can we assign this into metadata, and then pull back out?
@@ -712,9 +737,6 @@ formals(.localOrRemoteFile)[c("tempPrefix", "quiet")] <-
 #'
 #' Allow Google Sheets import using rio, by matching the URL.
 #' Otherwise, coerce the file extension to uppercase, for easy matching.
-#'
-#' @seealso
-#' - `BiocIO::FileForFormat()`.
 #'
 #' @note Updated 2021-09-24.
 #' @noRd
@@ -730,7 +752,11 @@ formals(.localOrRemoteFile)[c("tempPrefix", "quiet")] <-
             assert(isString(file))
             con <- file
         }
-        if (missing(format) || identical(format, "none")) {
+        if (
+            missing(format) ||
+            is.null(format) ||
+            identical(format, "none")
+        ) {
             format <- "auto"
         }
         assert(isString(format))
@@ -760,11 +786,24 @@ formals(.localOrRemoteFile)[c("tempPrefix", "quiet")] <-
                     ))
                 }
             }
-            origResource <- con
-            con <- new(
-                Class = .extToFileClass(format),
-                resource = .localOrRemoteFile(con)
+            class <- .extToFileClass(format)
+            assert(
+                hasMethod(
+                    f = "import",
+                    signature = signature(
+                        con = class,
+                        format = "missingOrNULL",
+                        text = "missingOrNULL"
+                    ),
+                    where = asNamespace(.pkgName)
+                )
             )
+            origResource <- con
+            if (isAFile(origResource)) {
+                origResource <- realpath(origResource)
+            }
+            resource <- .localOrRemoteFile(con)
+            con <- new(Class = class, resource = resource)
             attr(con, which = "origResource") <- origResource
             validObject(con)
             assert(
@@ -772,17 +811,10 @@ formals(.localOrRemoteFile)[c("tempPrefix", "quiet")] <-
                 is(con, "BiocFile")
             )
         }
-        assert(
-            hasMethod(
-                f = "import",
-                signature = class,
-                where = asNamespace(.pkgName)
-            )
-        )
         import(
             con = con,
-            format = format,
-            text = text,
+            format = NULL,
+            text = NULL,
             ...
         )
     }
@@ -797,30 +829,25 @@ formals(.localOrRemoteFile)[c("tempPrefix", "quiet")] <-
 `import,RDSFile` <-  # nolint
     function(
         con,
-        format = NA,
-        text = NA,
+        format = NULL,
+        text = NULL,
         quiet
     ) {
         assert(
-            ## FIXME Rework this check.
-            isString(con),
-            identical(format, NA),
-            identical(text, NA),
+            is.null(format),
+            is.null(text),
             isFlag(quiet)
         )
-
-        ## FIXME text, format not supported.
-
         whatPkg <- "base"
         whatFun <- "readRDS"
-        tmpfile <- .localOrRemoteFile(file = file, quiet = quiet)
         if (isFALSE(quiet)) {
-            alert(sprintf(
-                "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
-                file, whatPkg, whatFun
-            ))
+            .alertImport(
+                con = con,
+                whatPkg = whatPkg,
+                whatFun = whatFun
+            )
         }
-        args <- list("file" = tmpfile)
+        args <- list("file" = resource(con))
         what <- .getFunction(f = whatFun, pkg = whatPkg)
         object <- do.call(what = what, args = args)
         if (isFALSE(quiet)) {
@@ -1998,8 +2025,8 @@ setMethod(
     f = "import",
     signature = signature(
         con = "character",
-        format = "ANY",
-        text = "ANY"
+        format = "missingOrNULL",
+        text = "missingOrNULL"
     ),
     definition = `import,character`
 )
@@ -2008,7 +2035,11 @@ setMethod(
 #' @export
 setMethod(
     f = "import",
-    signature = signature("DelimFile"),
+    signature = signature(
+        con = "DelimFile",
+        format = "missingOrNULL",
+        text = "missingOrNULL"
+    ),
     definition = `import,DelimFile`
 )
 
@@ -2016,7 +2047,11 @@ setMethod(
 #' @export
 setMethod(
     f = "import",
-    signature = signature("LinesFile"),
+    signature = signature(
+        con = "LinesFile",
+        format = "missingOrNULL",
+        text = "missingOrNULL"
+    ),
     definition = `import,LinesFile`
 )
 
@@ -2024,7 +2059,11 @@ setMethod(
 #' @export
 setMethod(
     f = "import",
-    signature = signature("ExcelFile"),
+    signature = signature(
+        con = "ExcelFile",
+        format = "missingOrNULL",
+        text = "missingOrNULL"
+    ),
     definition = `import,ExcelFile`
 )
 
@@ -2032,7 +2071,11 @@ setMethod(
 #' @export
 setMethod(
     f = "import",
-    signature = signature("FASTAFile"),
+    signature = signature(
+        con = "FASTAFile",
+        format = "missingOrNULL",
+        text = "missingOrNULL"
+    ),
     definition = `import,FASTAFile`
 )
 
@@ -2040,7 +2083,11 @@ setMethod(
 #' @export
 setMethod(
     f = "import",
-    signature = signature("FASTQFile"),
+    signature = signature(
+        con = "FASTQFile",
+        format = "missingOrNULL",
+        text = "missingOrNULL"
+    ),
     definition = `import,FASTQFile`
 )
 
@@ -2048,7 +2095,11 @@ setMethod(
 #' @export
 setMethod(
     f = "import",
-    signature = signature("GMTFile"),
+    signature = signature(
+        con = "GMTFile",
+        format = "missingOrNULL",
+        text = "missingOrNULL"
+    ),
     definition = `import,GMTFile`
 )
 
@@ -2056,7 +2107,11 @@ setMethod(
 #' @export
 setMethod(
     f = "import",
-    signature = signature("GMXFile"),
+    signature = signature(
+        con = "GMXFile",
+        format = "missingOrNULL",
+        text = "missingOrNULL"
+    ),
     definition = `import,GMXFile`
 )
 
@@ -2064,7 +2119,11 @@ setMethod(
 #' @export
 setMethod(
     f = "import",
-    signature = signature("GRPFile"),
+    signature = signature(
+        con = "GRPFile",
+        format = "missingOrNULL",
+        text = "missingOrNULL"
+    ),
     definition = `import,GRPFile`
 )
 
@@ -2072,7 +2131,11 @@ setMethod(
 #' @export
 setMethod(
     f = "import",
-    signature = signature("JSONFile"),
+    signature = signature(
+        con = "JSONFile",
+        format = "missingOrNULL",
+        text = "missingOrNULL"
+    ),
     definition = `import,JSONFile`
 )
 
@@ -2080,7 +2143,11 @@ setMethod(
 #' @export
 setMethod(
     f = "import",
-    signature = signature("MTXFile"),
+    signature = signature(
+        con = "MTXFile",
+        format = "missingOrNULL",
+        text = "missingOrNULL"
+    ),
     definition = `import,MTXFile`
 )
 
@@ -2088,7 +2155,11 @@ setMethod(
 #' @export
 setMethod(
     f = "import",
-    signature = signature("PZFXFile"),
+    signature = signature(
+        con = "PZFXFile",
+        format = "missingOrNULL",
+        text = "missingOrNULL"
+    ),
     definition = `import,PZFXFile`
 )
 
@@ -2096,7 +2167,11 @@ setMethod(
 #' @export
 setMethod(
     f = "import",
-    signature = signature("YAMLFile"),
+    signature = signature(
+        con = "YAMLFile",
+        format = "missingOrNULL",
+        text = "missingOrNULL"
+    ),
     definition = `import,YAMLFile`
 )
 
@@ -2104,7 +2179,11 @@ setMethod(
 #' @export
 setMethod(
     f = "import",
-    signature = signature("RDSFile"),
+    signature = signature(
+        con = "RDSFile",
+        format = "missingOrNULL",
+        text = "missingOrNULL"
+    ),
     definition = `import,RDSFile`
 )
 
@@ -2112,7 +2191,11 @@ setMethod(
 #' @export
 setMethod(
     f = "import",
-    signature = signature("RDataFile"),
+    signature = signature(
+        con = "RDataFile",
+        format = "missingOrNULL",
+        text = "missingOrNULL"
+    ),
     definition = `import,RDataFile`
 )
 
@@ -2120,7 +2203,11 @@ setMethod(
 #' @export
 setMethod(
     f = "import",
-    signature = signature("RioFile"),
+    signature = signature(
+        con = "RioFile",
+        format = "missingOrNULL",
+        text = "missingOrNULL"
+    ),
     definition = `import,RioFile`
 )
 
@@ -2128,7 +2215,11 @@ setMethod(
 #' @export
 setMethod(
     f = "import",
-    signature = signature("RtracklayerFile"),
+    signature = signature(
+        con = "RtracklayerFile",
+        format = "missingOrNULL",
+        text = "missingOrNULL"
+    ),
     definition = `import,RtracklayerFile`
 )
 
@@ -2136,6 +2227,10 @@ setMethod(
 #' @export
 setMethod(
     f = "import",
-    signature = signature("BcbioCountsFile"),
+    signature = signature(
+        con = "BcbioCountsFile",
+        format = "missingOrNULL",
+        text = "missingOrNULL"
+    ),
     definition = `import,BcbioCountsFile`
 )
