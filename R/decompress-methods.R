@@ -1,3 +1,5 @@
+## FIXME Take this out, now that decompress is defined in BiocIO.
+
 ## Modified version of:
 ## > getS3method(
 ## >     f = "decompressFile",
@@ -130,7 +132,7 @@ decompress <- function(
 }
 
 formals(decompress)[c("remove", "overwrite")] <-
-    formalsList[c(
+    .formalsList[c(
         "decompress.remove",
         "overwrite"
     )]

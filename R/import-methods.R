@@ -658,7 +658,7 @@ NULL
     }
 
 formals(`import,RDSFile`)[["quiet"]] <-
-    formalsList[["quiet"]]
+    .formalsList[["quiet"]]
 
 
 
@@ -715,7 +715,7 @@ formals(`import,RDSFile`)[["quiet"]] <-
     }
 
 formals(`import,RDataFile`)[["quiet"]] <-
-    formalsList[["quiet"]]
+    .formalsList[["quiet"]]
 
 
 
@@ -923,7 +923,7 @@ formals(`import,RDataFile`)[["quiet"]] <-
     }
 
 formals(`import,DelimFile`)[c("makeNames", "metadata", "quiet")] <-
-    formalsList[c("import.make.names", "import.metadata", "quiet")]
+    .formalsList[c("import.make.names", "import.metadata", "quiet")]
 
 
 
@@ -1008,7 +1008,7 @@ formals(`import,DelimFile`)[c("makeNames", "metadata", "quiet")] <-
     }
 
 formals(`import,ExcelFile`)[c("makeNames", "metadata", "quiet")] <-
-    formalsList[c("import.make.names", "import.metadata", "quiet")]
+    .formalsList[c("import.make.names", "import.metadata", "quiet")]
 
 
 
@@ -1085,7 +1085,7 @@ formals(`import,ExcelFile`)[c("makeNames", "metadata", "quiet")] <-
     }
 
 formals(`import,MTXFile`)[c("metadata", "quiet")] <-
-    formalsList[c("import.metadata", "quiet")]
+    .formalsList[c("import.metadata", "quiet")]
 
 
 
@@ -1146,7 +1146,7 @@ formals(`import,MTXFile`)[c("metadata", "quiet")] <-
     }
 
 formals(`import,PZFXFile`)[c("makeNames", "metadata", "quiet")] <-
-    formalsList[c("import.make.names", "import.metadata", "quiet")]
+    .formalsList[c("import.make.names", "import.metadata", "quiet")]
 
 
 
@@ -1202,7 +1202,7 @@ formals(`import,PZFXFile`)[c("makeNames", "metadata", "quiet")] <-
     }
 
 formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
-    formalsList[c("import.metadata", "quiet")]
+    .formalsList[c("import.metadata", "quiet")]
 
 
 
@@ -1352,7 +1352,7 @@ formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
     }
 
 formals(`import,LinesFile`)[c("metadata", "quiet")] <-
-    formalsList[c("import.metadata", "quiet")]
+    .formalsList[c("import.metadata", "quiet")]
 
 
 
@@ -1396,7 +1396,7 @@ formals(`import,LinesFile`)[c("metadata", "quiet")] <-
     }
 
 formals(`import,JSONFile`)[c("metadata", "quiet")] <-
-    formalsList[c("import.metadata", "quiet")]
+    .formalsList[c("import.metadata", "quiet")]
 
 
 
@@ -1441,7 +1441,7 @@ formals(`import,JSONFile`)[c("metadata", "quiet")] <-
     }
 
 formals(`import,YAMLFile`)[c("metadata", "quiet")] <-
-    formalsList[c("import.metadata", "quiet")]
+    .formalsList[c("import.metadata", "quiet")]
 
 
 
@@ -1529,7 +1529,7 @@ formals(`import,YAMLFile`)[c("metadata", "quiet")] <-
     }
 
 formals(`import,FASTAFile`)[c("metadata", "quiet")] <-
-    formalsList[c("import.metadata", "quiet")]
+    .formalsList[c("import.metadata", "quiet")]
 
 
 
@@ -1592,7 +1592,7 @@ formals(`import,FASTAFile`)[c("metadata", "quiet")] <-
     }
 
 formals(`import,FASTQFile`)[c("metadata", "quiet")] <-
-    formalsList[c("import.metadata", "quiet")]
+    .formalsList[c("import.metadata", "quiet")]
 
 
 
@@ -1633,7 +1633,7 @@ formals(`import,FASTQFile`)[c("metadata", "quiet")] <-
     }
 
 formals(`import,GMTFile`)[["quiet"]] <-
-    formalsList[["quiet"]]
+    .formalsList[["quiet"]]
 
 
 
@@ -1666,7 +1666,7 @@ formals(`import,GMTFile`)[["quiet"]] <-
     }
 
 formals(`import,GMXFile`)[["quiet"]] <-
-    formalsList[["quiet"]]
+    .formalsList[["quiet"]]
 
 
 
@@ -1736,7 +1736,7 @@ formals(`import,GMXFile`)[["quiet"]] <-
     }
 
 formals(`import,RioFile`)[c("makeNames", "metadata", "quiet")] <-
-    formalsList[c("import.make.names", "import.metadata", "quiet")]
+    .formalsList[c("import.make.names", "import.metadata", "quiet")]
 
 
 
@@ -1808,7 +1808,7 @@ formals(`import,RioFile`)[c("makeNames", "metadata", "quiet")] <-
     }
 
 formals(`import,RtracklayerFile`)[c("metadata", "quiet")] <-
-    formalsList[c("import.metadata", "quiet")]
+    .formalsList[c("import.metadata", "quiet")]
 
 
 

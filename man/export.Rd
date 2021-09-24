@@ -20,7 +20,7 @@ export(object, con, format, ...)
   dir = getOption("acid.export.dir", default = "."),
   file = NULL,
   append = FALSE,
-  overwrite = getOption("acid.overwrite", default = TRUE),
+  overwrite = NULL,
   engine = getOption(x = "acid.export.engine", default = "base"),
   quiet = getOption("acid.quiet", default = FALSE)
 )
@@ -34,7 +34,7 @@ export(object, con, format, ...)
   file = NULL,
   rownames = TRUE,
   colnames = TRUE,
-  overwrite = getOption("acid.overwrite", default = TRUE),
+  overwrite = NULL,
   engine = getOption(x = "acid.export.engine", "data.table"),
   quiet = getOption("acid.quiet", default = FALSE)
 )
@@ -48,7 +48,7 @@ export(object, con, format, ...)
   file = NULL,
   rownames = TRUE,
   colnames = TRUE,
-  overwrite = getOption("acid.overwrite", default = TRUE),
+  overwrite = NULL,
   engine = getOption(x = "acid.export.engine", "data.table"),
   quiet = getOption("acid.quiet", default = FALSE)
 )
@@ -62,7 +62,7 @@ export(object, con, format, ...)
   file = NULL,
   rownames = TRUE,
   colnames = TRUE,
-  overwrite = getOption("acid.overwrite", default = TRUE),
+  overwrite = NULL,
   engine = getOption(x = "acid.export.engine", "data.table"),
   quiet = getOption("acid.quiet", default = FALSE)
 )
@@ -74,7 +74,7 @@ export(object, con, format, ...)
   ext = c("mtx.gz", "mtx.bz2", "mtx.xz", "mtx.zip", "mtx"),
   dir = getOption("acid.export.dir", default = "."),
   file = NULL,
-  overwrite = getOption("acid.overwrite", default = TRUE),
+  overwrite = NULL,
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
@@ -87,7 +87,7 @@ export(object, con, format, ...)
   file = NULL,
   rownames = TRUE,
   colnames = TRUE,
-  overwrite = getOption("acid.overwrite", default = TRUE),
+  overwrite = NULL,
   engine = getOption(x = "acid.export.engine", "data.table"),
   quiet = getOption("acid.quiet", default = FALSE)
 )

@@ -86,4 +86,4 @@ loadDataAsName <- function(
 }
 
 formals(loadDataAsName)[c("dir", "overwrite")] <-
-    formalsList[c("load.dir", "overwrite")]
+    .formalsList[c("load.dir", "overwrite")]
