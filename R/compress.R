@@ -5,6 +5,7 @@
 ## FIXME Save to remove decompress code in favor of just using BiocIO methods?
 ## FIXME Should `compress` return `CompressedFile`?
 ## FIXME BiocIO decompress method doesn't support overwrite or remove options.
+## FIXME Need to update the working example here in `decompress` call.
 
 
 
