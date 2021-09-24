@@ -2,30 +2,17 @@
 % Please edit documentation in R/AllGenerics.R, R/export-methods.R
 \name{export}
 \alias{export}
-\alias{export,character,ANY,ANY-method}
-\alias{export,matrix,ANY,ANY-method}
-\alias{export,data.frame,ANY,ANY-method}
 \alias{export,DataFrame,ANY,ANY-method}
-\alias{export,Matrix,ANY,ANY-method}
-\alias{export,GenomicRanges,ANY,ANY-method}
+\alias{export,GenomicRanges,ANY,missingOrNULL-method}
+\alias{export,Matrix,ANY,missingOrNULL-method}
+\alias{export,character,ANY,missingOrNULL-method}
+\alias{export,data.frame,ANY,ANY-method}
+\alias{export,matrix,ANY,ANY-method}
 \title{Objects exported from other packages}
 \usage{
 export(object, con, format, ...)
 
-\S4method{export}{character,ANY,ANY}(
-  object,
-  con,
-  format,
-  ext = c("txt", "txt.bz2", "txt.gz", "txt.xz", "txt.zip"),
-  dir = getOption("acid.export.dir", default = "."),
-  file = NULL,
-  append = FALSE,
-  overwrite = NULL,
-  engine = getOption(x = "acid.export.engine", default = "base"),
-  quiet = getOption("acid.quiet", default = FALSE)
-)
-
-\S4method{export}{matrix,ANY,ANY}(
+\S4method{export}{DataFrame,ANY,ANY}(
   object,
   con,
   format,
@@ -36,6 +23,44 @@ export(object, con, format, ...)
   colnames = TRUE,
   overwrite = NULL,
   engine = getOption(x = "acid.export.engine", "data.table"),
+  quiet = getOption("acid.quiet", default = FALSE)
+)
+
+\S4method{export}{GenomicRanges,ANY,missingOrNULL}(
+  object,
+  con,
+  format,
+  ext = getOption("acid.export.ext", default = "csv"),
+  dir = getOption("acid.export.dir", default = "."),
+  file = NULL,
+  rownames = TRUE,
+  colnames = TRUE,
+  overwrite = NULL,
+  engine = getOption(x = "acid.export.engine", "data.table"),
+  quiet = getOption("acid.quiet", default = FALSE)
+)
+
+\S4method{export}{Matrix,ANY,missingOrNULL}(
+  object,
+  con,
+  format,
+  ext = c("mtx.gz", "mtx.bz2", "mtx.xz", "mtx.zip", "mtx"),
+  dir = getOption("acid.export.dir", default = "."),
+  file = NULL,
+  overwrite = NULL,
+  quiet = getOption("acid.quiet", default = FALSE)
+)
+
+\S4method{export}{character,ANY,missingOrNULL}(
+  object,
+  con,
+  format = NULL,
+  ext = c("txt", "txt.bz2", "txt.gz", "txt.xz", "txt.zip"),
+  dir = getOption("acid.export.dir", default = "."),
+  file = NULL,
+  append = FALSE,
+  overwrite = NULL,
+  engine = getOption(x = "acid.export.engine", default = "base"),
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
@@ -53,32 +78,7 @@ export(object, con, format, ...)
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
-\S4method{export}{DataFrame,ANY,ANY}(
-  object,
-  con,
-  format,
-  ext = getOption("acid.export.ext", default = "csv"),
-  dir = getOption("acid.export.dir", default = "."),
-  file = NULL,
-  rownames = TRUE,
-  colnames = TRUE,
-  overwrite = NULL,
-  engine = getOption(x = "acid.export.engine", "data.table"),
-  quiet = getOption("acid.quiet", default = FALSE)
-)
-
-\S4method{export}{Matrix,ANY,ANY}(
-  object,
-  con,
-  format,
-  ext = c("mtx.gz", "mtx.bz2", "mtx.xz", "mtx.zip", "mtx"),
-  dir = getOption("acid.export.dir", default = "."),
-  file = NULL,
-  overwrite = NULL,
-  quiet = getOption("acid.quiet", default = FALSE)
-)
-
-\S4method{export}{GenomicRanges,ANY,ANY}(
+\S4method{export}{matrix,ANY,ANY}(
   object,
   con,
   format,
@@ -97,9 +97,18 @@ export(object, con, format, ...)
 An object supporting \code{dim()}, or a supported class capable of being coerced
 to \code{data.frame}, to be written to disk.}
 
-\item{con}{FIXME}
+\item{con}{\code{character(1)}, \code{connection}, or \code{missing}.
+The connection from which data is loaded or to which data is saved. If this
+is a character vector, it is assumed to be a filename, and a corresponding
+file connection is created and then closed after exporting the object. If a
+\code{BiocFile} derivative, the data is loaded from or saved to the underlying
+resource.  If missing, the function will return the output as a character
+vector, rather than writing to a connection.}
 
-\item{format}{FIXME}
+\item{format}{\code{character(1)} or \code{missing}.
+An optional file format type, which can be used to override the file format
+inferred from \code{con}. Only recommended for file and URL paths that don't
+contain an extension.}
 
 \item{ext}{\code{character(1)}.
 Output file format extension.
@@ -125,10 +134,11 @@ Directory path.}
 File path. When left unset (default), the \code{ext} and \code{dir} arguments will
 be used instead.}
 
-\item{append}{\code{logical(1)}.
-Append to output file.
-When enabled, automatically sets \code{overwrite} argument to \code{FALSE}.
-Requires readr package to be installed.}
+\item{rownames}{\code{logical(1)}.
+Apply to row names.}
+
+\item{colnames}{\code{logical(1)}.
+Apply to column names.}
 
 \item{overwrite}{\code{logical(1)}.
 Overwrite existing file on disk.}
@@ -146,11 +156,10 @@ Currently supported:
 \item{quiet}{\code{logical(1)}.
 Perform command quietly, suppressing messages.}
 
-\item{rownames}{\code{logical(1)}.
-Apply to row names.}
-
-\item{colnames}{\code{logical(1)}.
-Apply to column names.}
+\item{append}{\code{logical(1)}.
+Append to output file.
+When enabled, automatically sets \code{overwrite} argument to \code{FALSE}.
+Requires readr package to be installed.}
 
 \item{...}{Additional arguments.}
 }
@@ -208,6 +217,7 @@ Packages:
 
 Export functions:
 \itemize{
+\item \code{BiocIO::export()}.
 \item \code{data.table::fwrite()}.
 \item \code{readr::write_csv()}.
 \item \code{rio::export()}.

@@ -267,6 +267,7 @@ NULL
 
 
 ## Internal functions ==========================================================
+
 #' Inform the user about start of file import
 #'
 #' @note Updated 2021-09-24.
@@ -717,6 +718,7 @@ formals(.localOrRemoteFile)[c("tempPrefix", "quiet")] <-
 
 
 ## Primary S4 method ===========================================================
+
 #' Primary `import` method, that hands off to classed file-extension variants
 #'
 #' @details
@@ -841,6 +843,7 @@ formals(.localOrRemoteFile)[c("tempPrefix", "quiet")] <-
 
 
 ## R data importers ============================================================
+
 #' Import an R data serialized file (`.rds`)
 #'
 #' @note Updated 2021-09-24.
@@ -947,6 +950,7 @@ formals(`import,RDataFile`)[["quiet"]] <-
 
 
 ## Array importers =============================================================
+
 #' Import a delimited file (e.g. `.csv`, `.tsv`).
 #'
 #' @details
@@ -1434,6 +1438,7 @@ formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
 
 
 ## Non-array importers =========================================================
+
 #' Import source code lines
 #'
 #' @note Updated 2021-09-24.
@@ -1680,6 +1685,7 @@ formals(`import,YAMLFile`)[c("metadata", "quiet")] <-
 
 
 ## Bioinformatics importers ====================================================
+
 #' Import a FASTA file
 #'
 #' @note Updated 2021-09-24.
@@ -1916,6 +1922,7 @@ formals(`import,GMXFile`)[["quiet"]] <-
 
 
 ## Handoff methods =============================================================
+
 #' Import a file using `rio::import()`
 #'
 #' @note Updated 2021-09-24.
@@ -2048,6 +2055,7 @@ formals(`import,RtracklayerFile`)[c("metadata", "quiet")] <-
 
 
 ## S4 method exports ===========================================================
+
 #' @rdname import
 #' @export
 setMethod(
