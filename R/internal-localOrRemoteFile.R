@@ -1,4 +1,5 @@
 ## FIXME Consider reworking this, thinking about BiocIO conventions.
+## FIXME Need to look for CompressedFile and decompress automatically.
 
 
 
@@ -14,8 +15,8 @@
 #' Compressed files will automatically be decompressed. Currently, these file
 #' extensions are natively supported: `BZ2`, `GZ`, `XZ`, and `ZIP`.
 #'
-#' @export
-#' @note Updated 2021-06-10.
+#' @note Updated 2021-09-24.
+#' @noRd
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param file `character(1)`.
@@ -42,9 +43,9 @@
 #'     "hgnc.txt.gz",
 #'     protocol = "none"
 #' )
-#' x <- localOrRemoteFile(file)
+#' x <- .localOrRemoteFile(file)
 #' basename(x)
-localOrRemoteFile <- function(file, tempPrefix, quiet) {
+.localOrRemoteFile <- function(file, tempPrefix, quiet) {
     assert(
         isCharacter(file),
         isString(tempPrefix),
