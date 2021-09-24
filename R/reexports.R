@@ -22,10 +22,6 @@ tibble::column_to_rownames
 #' @export
 data.table::data.table
 
-#' @importFrom AcidGenerics decompress
-#' @export
-AcidGenerics::decompress
-
 #' @importFrom AcidBase download
 #' @export
 AcidBase::download

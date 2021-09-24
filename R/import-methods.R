@@ -1,6 +1,8 @@
 ## FIXME Rework using BiocIO generic approach.
 ## FIXME Define method for CompressedFile, that handles file extraction first.
 ## FIXME Need to ensure that `path` and `resource` arguments are supported.
+## FIXME Can we use localOrRemoteFile more up front? Or should we delete this
+##       internal code?
 
 
 
@@ -551,17 +553,26 @@ NULL
     ) {
         if (!missing(file)) {
             .Deprecated(msg = sprintf(
-                "'%s' is deprecated in favor of '%s'.",
+                "'%s' argument is deprecated in favor of '%s'.",
                 "file", "con"
             ))
             con <- file
         }
         ## FIXME Might need to improve the error message handling here.
         con <- FileForFormat(con)
+        assert(is(con, "BiocFile"))
 
-        ## FIXME Consider using:
-        ## - FileForFormat
-        ## - bestFileFormat
+
+        decompress(
+            manager = BiocIO:::manager(),
+            con = con
+        )
+
+
+
+        ## FIXME Can use this:
+        ## is(con, "CompressedFile")
+
         ## - decompress (for CompressedFile).
 
 

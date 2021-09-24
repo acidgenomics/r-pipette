@@ -9,7 +9,6 @@
 \alias{Matrix}
 \alias{column_to_rownames}
 \alias{data.table}
-\alias{decompress}
 \alias{download}
 \alias{getURL}
 \alias{makeNames}
@@ -37,7 +36,7 @@ below to see their documentation.
 \describe{
   \item{AcidBase}{\code{\link[AcidBase]{download}}, \code{\link[AcidBase]{pasteURL}}, \code{\link[AcidBase:reexports]{tar}}, \code{\link[AcidBase:reexports]{untar}}}
 
-  \item{AcidGenerics}{\code{\link[AcidGenerics:reexports]{DataFrame}}, \code{\link[AcidGenerics:reexports]{decompress}}, \code{\link[AcidGenerics:reexports]{metadata}}, \code{\link[AcidGenerics:reexports]{metadata<-}}}
+  \item{AcidGenerics}{\code{\link[AcidGenerics:reexports]{DataFrame}}, \code{\link[AcidGenerics:reexports]{metadata}}, \code{\link[AcidGenerics:reexports]{metadata<-}}}
 
   \item{data.table}{\code{\link[data.table]{data.table}}, \code{\link[data.table]{rbindlist}}}
 
