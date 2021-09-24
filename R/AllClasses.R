@@ -13,16 +13,6 @@ setClass(
     Class = "PipetteFile",
     contains = "BiocFile"
 )
-setValidity(
-    Class = "PipetteFile",
-    method = function(object) {
-        ok <- validate(
-            isAFile(resource(object))
-        )
-        if (!isTRUE(ok)) return(ok)
-        TRUE
-    }
-)
 
 
 
@@ -263,15 +253,4 @@ setClass(
 setClass(
     Class = "YAMLFile",
     contains = "PipetteFile"
-)
-
-
-
-## URL-based formats ==========================================================
-#' @describeIn PipetteFile-class
-#' Google Sheets file.
-#' @export
-setClass(
-    Class = "GoogleSheetsFile",
-    contains = "character"
 )
