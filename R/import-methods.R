@@ -4,6 +4,10 @@
 ## FIXME Need to ensure that `path` and `resource` arguments are supported.
 ## FIXME Can we use localOrRemoteFile more up front? Or should we delete this
 ##       internal code?
+## FIXME Pass "format" and "text" arguments to rtracklayer
+## FIXME Need to rethink RTLFile / RtracklayerFile handling
+##       Some genomics files are already supported...how to prioritize?
+## FIXME Add back Google Sheets support as "GoogleSheetsFile"
 
 
 
@@ -282,7 +286,7 @@ NULL
 ## FIXME Consider reworking this, thinking about BiocIO conventions.
 ## FIXME Need to look for CompressedFile and decompress automatically.
 
-
+## FIXME Rethink this, using BiocFile approach.
 
 ## Auto decompress, if necessary. Note that `data.table::fread()` still doesn't
 ## natively support compressed files. R on Windows can run into `tempdir()`
@@ -574,6 +578,7 @@ NULL
         SIMPLIFY = TRUE,
         USE.NAMES = FALSE
     )
+    ## FIXME Rethink this approach, checking if CompressedFile from BiocIO.
     realpath(.autoDecompress(file))
 }
 
