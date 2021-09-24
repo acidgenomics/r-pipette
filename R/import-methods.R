@@ -294,10 +294,15 @@ NULL
     if (is.null(resource)) {
         resource <- resource(con)
     }
-    assert(isAFile(resource))
     alert(sprintf(
-        "Importing {.file %s} using {.pkg %s}::{.fun %s}.",
-        resource, whatPkg, whatFun
+        "Importing {.%s %s} using {.pkg %s}::{.fun %s}.",
+        ifelse(
+            test = isAURL(resource),
+            yes = "url",
+            no = "file"
+        ),
+        resource,
+        whatPkg, whatFun
     ))
     invisible(TRUE)
 }
@@ -402,6 +407,7 @@ NULL
         "gmt"          = "GMTFile",
         "gmx"          = "GMXFile",
         "grp"          = "GRPFile",
+        "gsheet"       = "RioFile",  # Google Sheets
         "gtf"          = "RtracklayerFile",
         "json"         = "JSONFile",
         "lines"        = "LinesFile",
@@ -744,63 +750,71 @@ formals(.localOrRemoteFile)[c("tempPrefix", "quiet")] <-
     ) {
         if (
             missing(format) ||
-            is.null(format) ||
+            identical(format, "auto") ||
             identical(format, "none")
         ) {
-            format <- "auto"
+            format <- NULL
         }
-        assert(isString(format))
-        format <- tolower(format)
         if (grepl(
             pattern = "^https://docs\\.google\\.com/spreadsheets",
             x = con
         )) {
-            con <- new(Class = "GoogleSheetsFile", con)
-        } else {
-            if (identical(format, "auto")) {
-                format <- str_match(
-                    string = basename(con),
-                    pattern = extPattern
-                )[1L, 2L]
-                if (is.na(format)) {
-                    abort(sprintf(
-                        fmt = paste(
-                            "{.arg %s} ({.file %s}) doesn't contain extension.",
-                            "Set the file format manually using {.arg %s}.",
-                            "Refer to {.pkg %s}::{.fun %s} for details.",
-                            sep = "\n"
-                        ),
-                        "con", basename(con),
-                        "format",
-                        "pipette", "import"
-                    ))
-                }
-            }
-            class <- .extToFileClass(format)
-            assert(
-                hasMethod(
-                    f = "import",
-                    signature = signature(
-                        con = class,
-                        format = "missingOrNULL",
-                        text = "missingOrNULL"
-                    ),
-                    where = asNamespace(.pkgName)
-                )
-            )
-            origResource <- con
-            if (isAFile(origResource)) {
-                origResource <- realpath(origResource)
-            }
-            resource <- .localOrRemoteFile(con)
-            con <- new(Class = class, resource = resource)
-            attr(con, which = "origResource") <- origResource
-            validObject(con)
-            assert(
-                is(con, "PipetteFile"),
-                is(con, "BiocFile")
-            )
+            format <- "gsheet"
         }
+        if (is.null(format)) {
+            format <- str_match(
+                string = basename(con),
+                pattern = extPattern
+            )[1L, 2L]
+            if (is.na(format)) {
+                abort(sprintf(
+                    fmt = paste(
+                        "{.arg %s} ({.file %s}) doesn't contain extension.",
+                        "Set the file format manually using {.arg %s}.",
+                        "Refer to {.pkg %s}::{.fun %s} for details.",
+                        sep = "\n"
+                    ),
+                    "con", basename(con),
+                    "format",
+                    "pipette", "import"
+                ))
+            }
+        }
+        assert(isString(format))
+        class <- .extToFileClass(format)
+        assert(
+            hasMethod(
+                f = "import",
+                signature = signature(
+                    con = class,
+                    format = "missingOrNULL",
+                    text = "missingOrNULL"
+                ),
+                where = asNamespace(.pkgName)
+            )
+        )
+
+        ## FIXME Need to rethink this approach for Google Sheets.
+        switch(
+            EXPR = format,
+            "gsheet" = {
+                con <- new(Class = class, resource = con)
+            },
+            {
+                origResource <- con
+                if (isAFile(origResource)) {
+                    origResource <- realpath(origResource)
+                }
+                resource <- .localOrRemoteFile(con)
+                con <- new(Class = class, resource = resource)
+                attr(con, which = "origResource") <- origResource
+            }
+        )
+        validObject(con)
+        assert(
+            is(con, "PipetteFile"),
+            is(con, "BiocFile")
+        )
         import(
             con = con,
             format = NULL,
@@ -1934,7 +1948,8 @@ formals(`import,GMXFile`)[["quiet"]] <-
         ...
     ) {
         assert(
-            isString(file),
+            is.null(format),
+            is.null(text),
             isFlag(rownames),
             isScalar(rownameCol) || is.null(rownameCol),
             isFlag(colnames) || isCharacter(colnames),
