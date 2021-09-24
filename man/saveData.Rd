@@ -8,7 +8,7 @@ saveData(
   ...,
   dir = getOption("acid.save.dir", default = "."),
   ext = getOption("acid.save.ext", default = "rds"),
-  overwrite = getOption("acid.overwrite", default = TRUE),
+  overwrite = NULL,
   compress = getOption("acid.save.compress", default = TRUE),
   list = NULL,
   envir = parent.frame()

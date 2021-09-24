@@ -4,11 +4,7 @@
 \alias{loadRemoteData}
 \title{Load remote data}
 \usage{
-loadRemoteData(
-  url,
-  envir = globalenv(),
-  overwrite = getOption("acid.overwrite", default = TRUE)
-)
+loadRemoteData(url, envir = globalenv())
 }
 \arguments{
 \item{url}{\code{character}.
@@ -16,9 +12,6 @@ Remote URL file path(s) to R data.}
 
 \item{envir}{\code{environment}.
 Environment.}
-
-\item{overwrite}{\code{logical(1)}.
-Overwrite existing file on disk.}
 }
 \value{
 Invisible named \code{character}.

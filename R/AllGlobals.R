@@ -12,6 +12,7 @@
 
 
 ## FIXME This might be OK to remove.
+## FIXME Remove elements that aren't used here.
 
 #' Shared list of optional default formals
 #'
@@ -41,6 +42,9 @@
     ),
     "load.dir" = quote(
         getOption("acid.load.dir", default = ".")
+    ),
+    "quiet" = quote(
+        getOption("acid.quiet", default = FALSE)
     ),
     ## FIXME Consider removing this.
     "save.compress" = quote(
