@@ -18,18 +18,13 @@ Matrix::Matrix
 #' @export
 tibble::column_to_rownames
 
-# FIXME Move this to pipette.
-#' @importFrom goalie compressExtPattern
-#' @export
-goalie::compressExtPattern
-
 #' @importFrom data.table data.table
 #' @export
 data.table::data.table
 
-#' @importFrom AcidBase decompress
+#' @importFrom AcidGenerics decompress
 #' @export
-AcidBase::decompress
+AcidGenerics::decompress
 
 #' @importFrom AcidBase download
 #' @export
@@ -74,9 +69,17 @@ NULL
 #' @export
 Matrix::sparseMatrix
 
+#' @importFrom AcidBase tar
+#' @export
+AcidBase::tar
+
 #' @importFrom tibble tibble
 #' @export
 tibble::tibble
+
+#' @importFrom AcidBase untar
+#' @export
+AcidBase::untar
 
 
 

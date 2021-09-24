@@ -69,4 +69,5 @@ loadRemoteData <- function(
     invisible(url)
 }
 
-formals(loadRemoteData)[["overwrite"]] <- formalsList[["overwrite"]]
+formals(loadRemoteData)[["overwrite"]] <-
+    .formalsList[["overwrite"]]

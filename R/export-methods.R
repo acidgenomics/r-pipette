@@ -220,7 +220,7 @@ NULL
     }
 
 formals(`export,character`)[c("dir", "overwrite", "quiet")] <-
-    formalsList[c("export.dir", "overwrite", "quiet")]
+    .formalsList[c("export.dir", "overwrite", "quiet")]
 
 
 
@@ -454,7 +454,7 @@ setMethod(
 
 formals(`export,matrix`)[
     c("dir", "ext", "overwrite", "quiet")] <-
-    formalsList[c("export.dir", "export.ext", "overwrite", "quiet")]
+    .formalsList[c("export.dir", "export.ext", "overwrite", "quiet")]
 
 
 
@@ -605,7 +605,7 @@ setMethod(
 
 formals(`export,Matrix`)[
     c("dir", "overwrite", "quiet")] <-
-    formalsList[c("export.dir", "overwrite", "quiet")]
+    .formalsList[c("export.dir", "overwrite", "quiet")]
 
 
 

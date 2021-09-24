@@ -138,7 +138,7 @@ saveData <- function(
 
 formals(saveData)[
     c("compress", "dir", "ext", "overwrite")] <-
-    formalsList[c("save.compress", "save.dir", "save.ext", "overwrite")]
+    .formalsList[c("save.compress", "save.dir", "save.ext", "overwrite")]
 
 
 

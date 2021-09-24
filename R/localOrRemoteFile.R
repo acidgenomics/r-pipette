@@ -1,3 +1,7 @@
+## FIXME Consider reworking this, thinking about BiocIO conventions.
+
+
+
 #' Dynamically handle a local or remote file path
 #'
 #' @section Vectorization:
@@ -108,7 +112,7 @@ localOrRemoteFile <- function(file, tempPrefix, quiet) {
 }
 
 formals(localOrRemoteFile)[c("tempPrefix", "quiet")] <-
-    list(.pkgName, formalsList[["quiet"]])
+    list(.pkgName, .formalsList[["quiet"]])
 
 
 
@@ -135,6 +139,8 @@ formals(localOrRemoteFile)[c("tempPrefix", "quiet")] <-
                 file.copy(from = file, to = tmpfile)
                 file <- tmpfile
             }
+            ## FIXME Need to rethink this approach.
+            stop("FIXME Need to rework decompress")
             destfile <- decompress(
                 file = file,
                 remove = FALSE,
