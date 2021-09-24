@@ -19,15 +19,12 @@
 \alias{MTXFile-class}
 \alias{PZFXFile-class}
 \alias{RDataFile-class}
-\alias{RDSFile}
+\alias{RDSFile-class}
 \alias{TableFile-class}
 \alias{TSVFile-class}
 \alias{YAMLFile-class}
 \alias{GoogleSheetsFile-class}
 \title{File extension classes}
-\usage{
-RDSFile(resource)
-}
 \description{
 Currently intended for use with \code{import} function.
 }
@@ -116,7 +113,7 @@ File extension group supporting:
 
 \item \code{RDataFile-class}: R Data file containing multiple objects (RData/RDA).
 
-\item \code{RDSFile}: R data file containing a single, serialized object (RDS).
+\item \code{RDSFile-class}: R data file containing a single, serialized object (RDS).
 
 \item \code{TableFile-class}: Base R table file (TXT).
 

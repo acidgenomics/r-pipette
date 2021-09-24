@@ -167,9 +167,8 @@ export(con, format, text, ...)
 
 \S4method{import}{RDataFile,missingOrNULL,missingOrNULL}(
   con,
-  format,
-  text,
-  file,
+  format = NULL,
+  text = NULL,
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
