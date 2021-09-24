@@ -24,7 +24,7 @@
 \usage{
 export(con, format, text, ...)
 
-\S4method{import}{character,ANY,ANY}(file, con, format, text, ...)
+\S4method{import}{character,ANY,ANY}(con, format, text, file, ...)
 
 \S4method{import}{DelimFile,ANY,ANY}(
   con,
@@ -207,10 +207,6 @@ export(con, format, text, ...)
 )
 }
 \arguments{
-\item{file}{\code{character(1)} or \code{missing}.
-Deprecated in favor of primary \code{con} argument, defined in BiocIO
-package. This argument likely will be removed in a future update.}
-
 \item{con}{\code{character(1)}, \code{connection}, or \code{missing}.
 The connection from which data is loaded or to which data is saved. If this
 is a character vector, it is assumed to be a filename, and a corresponding
@@ -227,6 +223,10 @@ contain an extension.}
 \item{text}{\code{character} or \code{missing}.
 If \code{con} is missing, this can be a character vector directly providing the
 string data to import.}
+
+\item{file}{\code{character(1)} or \code{missing}.
+Deprecated in favor of primary \code{con} argument, defined in BiocIO
+package. This argument likely will be removed in a future update.}
 
 \item{...}{Additional arguments.}
 
