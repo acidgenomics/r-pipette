@@ -1,6 +1,8 @@
 ## NOTE Not currently exporting these, since they are only used for `import`
 ## function, and do not need to be made accessible to other packages.
 
+## FIXME PipetteFile should inherit from BiocFile.
+
 
 
 #' File extension classes
