@@ -1402,7 +1402,7 @@ formals(`import,PZFXFile`)[c("makeNames", "metadata", "quiet")] <-
 #' Internal importer for a bcbio count matrix file (`.counts`).
 #' These files contain an `"id"` column that we need to coerce to row names.
 #'
-#' @note Updated 2021-09-24.
+#' @note Updated 2021-09-25.
 #' @noRd
 `import,BcbioCountsFile` <-  # nolint
     function(
@@ -1418,8 +1418,9 @@ formals(`import,PZFXFile`)[c("makeNames", "metadata", "quiet")] <-
             isFlag(metadata),
             isFlag(quiet)
         )
+        file <- resource(con)
         object <- import(
-            file = as.character(file),
+            file = file,
             format = "tsv",
             rownames = FALSE,
             colnames = TRUE,
