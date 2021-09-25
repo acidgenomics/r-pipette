@@ -348,8 +348,6 @@ NULL
 
 
 
-## FIXME Need to rework this.
-
 #' Map file extension to corresponding S4 file class
 #'
 #' @note Updated 2021-08-24.
@@ -473,7 +471,7 @@ NULL
 
 #' Internal importer for a sparse matrix sidecar file (e.g. `.rownames`)
 #'
-#' @note Updated 2021-06-10.
+#' @note Updated 2021-09-25.
 #' @noRd
 .importMTXSidecar <- function(file, quiet) {
     assert(
@@ -484,7 +482,7 @@ NULL
         alert(sprintf("Importing sidecar {.file %s}.", file))
     }
     object <- import(
-        file = as.character(file),
+        con = as.character(file),
         format = "lines",
         quiet = quiet
     )
@@ -1251,18 +1249,29 @@ formals(`import,ExcelFile`)[c("makeNames", "metadata", "quiet")] <-
 
 #' Import a sparse matrix file (`.mtx`)
 #'
-#' @note Updated 2021-09-24.
+#' @note Updated 2021-09-25.
 #' @noRd
 `import,MTXFile` <-  # nolint
     function(
         con,
         format = NULL,
         text = NULL,
-        rownamesFile = paste0(file, ".rownames"),
-        colnamesFile = paste0(file, ".colnames"),
+        rownamesFile,
+        colnamesFile,
         metadata,
         quiet
     ) {
+        file <- resource(con)
+        origFile <- attr(con, which = "origResource")
+        if (is.null(origFile)) {
+            origFile <- file
+        }
+        if (missing(rownamesFile)) {
+            rownamesFile <- paste0(origFile, ".rownames")
+        }
+        if (missing(colnamesFile)) {
+            colnamesFile <- paste0(origFile, ".colnames")
+        }
         assert(
             is.null(format),
             is.null(text),
@@ -1271,7 +1280,6 @@ formals(`import,ExcelFile`)[c("makeNames", "metadata", "quiet")] <-
             isFlag(metadata),
             isFlag(quiet)
         )
-        file <- resource(con)
         whatPkg <- "Matrix"
         whatFun <- "readMM"
         if (isFALSE(quiet)) {
@@ -1984,9 +1992,6 @@ formals(`import,RioHandoffFile`)[c("makeNames", "metadata", "quiet")] <-
 
 
 
-## FIXME Do we need to rename this object class?
-## Does it conflict with current rtracklayer conventions?
-
 #' Import file using `rtracklayer::import()`
 #'
 #' @note Updated 2021-09-25.
@@ -2071,8 +2076,32 @@ setMethod(
 setMethod(
     f = "import",
     signature = signature(
+        con = "character",
+        format = "character",
+        text = "missingOrNULL"
+    ),
+    definition = `import,character,con`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(
         con = "missingOrNULL",
         format = "missingOrNULL",
+        text = "missingOrNULL"
+    ),
+    definition = `import,character,file`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(
+        con = "missingOrNULL",
+        format = "character",
         text = "missingOrNULL"
     ),
     definition = `import,character,file`
