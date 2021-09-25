@@ -54,7 +54,7 @@ export(object, con, format, ...)
 \S4method{export}{character,ANY,missingOrNULL}(
   object,
   con,
-  format = NULL,
+  format,
   ext = c("txt", "txt.bz2", "txt.gz", "txt.xz", "txt.zip"),
   dir = getOption("acid.export.dir", default = "."),
   file = NULL,
