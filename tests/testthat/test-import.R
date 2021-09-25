@@ -67,7 +67,6 @@ test_that("Custom engine support", {
 
 context("import : rtracklayer (GFF/GTF)")
 
-## FIXME This is causing a circular code failure, need to rethink.
 test_that("GFF3", {
     object <- import(
         con = file.path("cache", "example.gff3"),
@@ -163,6 +162,7 @@ test_that("GTF", {
 
 context("import : MTX")
 
+## FIXME This test is now failing.
 test_that("MTX", {
     object <- import(
         file = file.path("cache", "single_cell_counts.mtx.gz"),

@@ -3,7 +3,9 @@
 \name{import}
 \alias{import}
 \alias{import,character,missingOrNULL,missingOrNULL-method}
+\alias{import,character,character,missingOrNULL-method}
 \alias{import,missingOrNULL,missingOrNULL,missingOrNULL-method}
+\alias{import,missingOrNULL,character,missingOrNULL-method}
 \alias{import,DelimFile,missingOrNULL,missingOrNULL-method}
 \alias{import,LinesFile,missingOrNULL,missingOrNULL-method}
 \alias{import,ExcelFile,missingOrNULL,missingOrNULL-method}
@@ -27,7 +29,11 @@ export(con, format, text, ...)
 
 \S4method{import}{character,missingOrNULL,missingOrNULL}(con, format, text, ...)
 
+\S4method{import}{character,character,missingOrNULL}(con, format, text, ...)
+
 \S4method{import}{missingOrNULL,missingOrNULL,missingOrNULL}(file, con = NULL, format = NULL, text = NULL, ...)
+
+\S4method{import}{missingOrNULL,character,missingOrNULL}(file, con = NULL, format = NULL, text = NULL, ...)
 
 \S4method{import}{DelimFile,missingOrNULL,missingOrNULL}(
   con,
@@ -126,8 +132,8 @@ export(con, format, text, ...)
   con,
   format = NULL,
   text = NULL,
-  rownamesFile = paste0(file, ".rownames"),
-  colnamesFile = paste0(file, ".colnames"),
+  rownamesFile,
+  colnamesFile,
   metadata = getOption("acid.import.metadata", default = FALSE),
   quiet = getOption("acid.quiet", default = FALSE)
 )
