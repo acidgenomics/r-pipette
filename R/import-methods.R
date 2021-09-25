@@ -62,7 +62,7 @@
 #' Import of these files will return `DNAStringSet` or `RNAStringSet` depending
 #' on the input, defined by `moleculeType` argument.
 #'
-#' @section General feature format (GFF, GTF; `RtracklayerFile`):
+#' @section General feature format (GFF, GTF; `RtracklayerHandoffFile`):
 #'
 #' The GFF (General Feature Format) format consists of one line per feature,
 #' each containing 9 columns of data, plus optional track definition lines. The
@@ -371,68 +371,68 @@ NULL
         ## nocov end
     }
     dict <- list(
-        "arff"         = "RioFile",
+        "arff"         = "RioHandoffFile",
         "bash"         = "LinesFile",
         "bcbio-counts" = "BcbioCountsFile",
-        "bed"          = "RtracklayerFile",
-        "bed15"        = "RtracklayerFile",
-        "bedgraph"     = "RtracklayerFile",
-        "bedpe"        = "RtracklayerFile",
-        "bigwig"       = "RtracklayerFile",
-        "broadpeak"    = "RtracklayerFile",
-        "bw"           = "RtracklayerFile",
+        "bed"          = "RtracklayerHandoffFile",
+        "bed15"        = "RtracklayerHandoffFile",
+        "bedgraph"     = "RtracklayerHandoffFile",
+        "bedpe"        = "RtracklayerHandoffFile",
+        "bigwig"       = "RtracklayerHandoffFile",
+        "broadpeak"    = "RtracklayerHandoffFile",
+        "bw"           = "RtracklayerHandoffFile",
         "counts"       = "BcbioCountsFile",
         "csv"          = "CSVFile",
-        "dbf"          = "RioFile",
-        "dif"          = "RioFile",
-        "dta"          = "RioFile",
+        "dbf"          = "RioHandoffFile",
+        "dif"          = "RioHandoffFile",
+        "dta"          = "RioHandoffFile",
         "excel"        = "ExcelFile",
         "fa"           = "FASTAFile",
         "fasta"        = "FASTAFile",
         "fastq"        = "FASTQFile",
         "fq"           = "FASTQFile",
-        "fwf"          = "RioFile",
-        "gff"          = "RtracklayerFile",
-        "gff1"         = "RtracklayerFile",
-        "gff2"         = "RtracklayerFile",
-        "gff3"         = "RtracklayerFile",
+        "fwf"          = "RioHandoffFile",
+        "gff"          = "RtracklayerHandoffFile",
+        "gff1"         = "RtracklayerHandoffFile",
+        "gff2"         = "RtracklayerHandoffFile",
+        "gff3"         = "RtracklayerHandoffFile",
         "gmt"          = "GMTFile",
         "gmx"          = "GMXFile",
         "grp"          = "GRPFile",
-        "gsheet"       = "RioFile",  # Google Sheets
-        "gtf"          = "RtracklayerFile",
+        "gsheet"       = "RioHandoffFile",  # Google Sheets
+        "gtf"          = "RtracklayerHandoffFile",
         "json"         = "JSONFile",
         "lines"        = "LinesFile",
         "log"          = "LinesFile",
-        "mat"          = "RioFile",
+        "mat"          = "RioHandoffFile",
         "md"           = "LinesFile",
-        "mtp"          = "RioFile",
+        "mtp"          = "RioHandoffFile",
         "mtx"          = "MTXFile",
-        "narrowpeak"   = "RtracklayerFile",
-        "ods"          = "RioFile",
-        "por"          = "RioFile",
-        "psv"          = "RioFile",
+        "narrowpeak"   = "RtracklayerHandoffFile",
+        "ods"          = "RioHandoffFile",
+        "por"          = "RioHandoffFile",
+        "psv"          = "RioHandoffFile",
         "py"           = "LinesFile",
         "pzfx"         = "PZFXFile",
         "r"            = "LinesFile",
         "rda"          = "RDataFile",
         "rdata"        = "RDataFile",
         "rds"          = "RDSFile",
-        "rec"          = "RioFile",
-        "rio"          = "RioFile",
+        "rec"          = "RioHandoffFile",
+        "rio"          = "RioHandoffFile",
         "rmd"          = "LinesFile",
-        "rtracklayer"  = "RtracklayerFile",
-        "sas7bdat"     = "RioFile",
-        "sav"          = "RioFile",
+        "rtracklayer"  = "RtracklayerHandoffFile",
+        "sas7bdat"     = "RioHandoffFile",
+        "sav"          = "RioHandoffFile",
         "sh"           = "LinesFile",
-        "syd"          = "RioFile",
+        "syd"          = "RioHandoffFile",
         "table"        = "TableFile",
         "tsv"          = "TSVFile",
-        "wig"          = "RtracklayerFile",
+        "wig"          = "RtracklayerHandoffFile",
         "xls"          = "ExcelFile",
         "xlsb"         = "ExcelFile",
         "xlsx"         = "ExcelFile",
-        "xpt"          = "RioFile",
+        "xpt"          = "RioHandoffFile",
         "yaml"         = "YAMLFile",
         "yml"          = "YAMLFile",
         "zsh"          = "LinesFile"
@@ -725,7 +725,7 @@ formals(.localOrRemoteFile)[c("tempPrefix", "quiet")] <-
 
 
 
-## Primary S4 method ===========================================================
+## Primary S4 methods ==========================================================
 
 #' Primary `import` method, that hands off to classed file-extension variants
 #'
@@ -789,8 +789,6 @@ formals(.localOrRemoteFile)[c("tempPrefix", "quiet")] <-
                 where = asNamespace(.pkgName)
             )
         )
-
-        ## FIXME Need to rethink this approach for Google Sheets.
         switch(
             EXPR = format,
             "gsheet" = {
@@ -1002,7 +1000,7 @@ formals(`import,RDataFile`)[["quiet"]] <-
         )
         file <- resource(con)
         ext <- switch(
-            EXPR = class(file),
+            EXPR = class(con),
             "CSVFile" = "csv",
             "TSVFile" = "tsv",
             "TableFile" = "table",
@@ -1929,7 +1927,7 @@ formals(`import,GMXFile`)[["quiet"]] <-
 #'
 #' @note Updated 2021-09-24.
 #' @noRd
-`import,RioFile` <-  # nolint
+`import,RioHandoffFile` <-  # nolint
     function(
         con,
         format = NULL,
@@ -1981,18 +1979,21 @@ formals(`import,GMXFile`)[["quiet"]] <-
         )
     }
 
-formals(`import,RioFile`)[c("makeNames", "metadata", "quiet")] <-
+formals(`import,RioHandoffFile`)[c("makeNames", "metadata", "quiet")] <-
     .formalsList[c("import.make.names", "import.metadata", "quiet")]
 
 
 
+## FIXME Do we need to rename this object class?
+## Does it conflict with current rtracklayer conventions?
+
 #' Import file using `rtracklayer::import()`
 #'
-#' @note Updated 2021-09-24.
+#' @note Updated 2021-09-25.
 #' @noRd
 #'
 #' @note Using `tryCatch()` here to error if there are any warnings.
-`import,RtracklayerFile` <-  # nolint
+`import,RtracklayerHandoffFile` <-  # nolint
     function(
         con,
         format = NULL,
@@ -2017,8 +2018,20 @@ formals(`import,RioFile`)[c("makeNames", "metadata", "quiet")] <-
                 whatFun = whatFun
             )
         }
-        args <- list("con" = file, ...)
+
+
+
+        ## FIXME Need to rethink this.
+        ## FIXME This creates a circular argument since we're using the same
+        ## generic here now. Need to rethink.
+        args <- list(
+            "con" = file,
+            ...
+        )
         what <- .getFunction(f = whatFun, pkg = whatPkg)
+
+
+
         tryCatch(
             expr = {
                 object <- do.call(what = what, args = args)
@@ -2050,7 +2063,7 @@ formals(`import,RioFile`)[c("makeNames", "metadata", "quiet")] <-
         )
     }
 
-formals(`import,RtracklayerFile`)[c("metadata", "quiet")] <-
+formals(`import,RtracklayerHandoffFile`)[c("metadata", "quiet")] <-
     .formalsList[c("import.metadata", "quiet")]
 
 
@@ -2254,11 +2267,11 @@ setMethod(
 setMethod(
     f = "import",
     signature = signature(
-        con = "RioFile",
+        con = "RioHandoffFile",
         format = "missingOrNULL",
         text = "missingOrNULL"
     ),
-    definition = `import,RioFile`
+    definition = `import,RioHandoffFile`
 )
 
 #' @rdname import
@@ -2266,11 +2279,11 @@ setMethod(
 setMethod(
     f = "import",
     signature = signature(
-        con = "RtracklayerFile",
+        con = "RtracklayerHandoffFile",
         format = "missingOrNULL",
         text = "missingOrNULL"
     ),
-    definition = `import,RtracklayerFile`
+    definition = `import,RtracklayerHandoffFile`
 )
 
 #' @rdname import
