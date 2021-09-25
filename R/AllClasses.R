@@ -17,6 +17,7 @@ setClass(
 
 
 ## File extension groups =======================================================
+
 #' @describeIn PipetteFile-class
 #' Delimited file.\cr
 #' File extension group supporting:
@@ -29,8 +30,6 @@ setClass(
     contains = "PipetteFile"
 )
 
-
-
 #' @describeIn PipetteFile-class
 #' Microsoft Excel file.\cr
 #' File extension group supporting:
@@ -42,8 +41,6 @@ setClass(
     Class = "ExcelFile",
     contains = "PipetteFile"
 )
-
-
 
 #' @describeIn PipetteFile-class
 #' Source code lines file.\cr
@@ -63,6 +60,8 @@ setClass(
 )
 
 
+
+## Handoff classes =============================================================
 
 #' @describeIn PipetteFile-class
 #' File extension supported by `rio::import`.\cr
@@ -84,11 +83,9 @@ setClass(
 #' - XPT: SASS
 #' @export
 setClass(
-    Class = "RioFile",
+    Class = "RioHandoffFile",
     contains = "PipetteFile"
 )
-
-
 
 ## FIXME Rework the handoff to rtracklayer.
 #' @describeIn PipetteFile-class
@@ -100,13 +97,14 @@ setClass(
 #' - BROADPEAK, NARROWPEAK
 #' @export
 setClass(
-    Class = "RtracklayerFile",
+    Class = "RtracklayerHandoffFile",
     contains = "PipetteFile"
 )
 
 
 
 ## File extensions =============================================================
+
 #' @describeIn PipetteFile-class
 #' bcbio-nextgen counts file.
 #' @export
@@ -114,8 +112,6 @@ setClass(
     Class = "BcbioCountsFile",
     contains = "PipetteFile"
 )
-
-
 
 #' @describeIn PipetteFile-class
 #' Comma-separated values file (CSV).
@@ -125,8 +121,6 @@ setClass(
     contains = "DelimFile"
 )
 
-
-
 #' @describeIn PipetteFile-class
 #' FASTA file.
 #' @export
@@ -134,8 +128,6 @@ setClass(
     Class = "FASTAFile",
     contains = "PipetteFile"
 )
-
-
 
 #' @describeIn PipetteFile-class
 #' FASTQ file.
@@ -145,8 +137,6 @@ setClass(
     contains = "PipetteFile"
 )
 
-
-
 #' @describeIn PipetteFile-class
 #' Gene matrix transposed file (GMT).
 #' @export
@@ -154,8 +144,6 @@ setClass(
     Class = "GMTFile",
     contains = "PipetteFile"
 )
-
-
 
 #' @describeIn PipetteFile-class
 #' Gene matrix file (GMX).
@@ -165,8 +153,6 @@ setClass(
     contains = "PipetteFile"
 )
 
-
-
 #' @describeIn PipetteFile-class
 #' Gene set file (GRP).
 #' @export
@@ -174,8 +160,6 @@ setClass(
     Class = "GRPFile",
     contains = "PipetteFile"
 )
-
-
 
 #' @describeIn PipetteFile-class
 #' JSON file.
@@ -185,8 +169,6 @@ setClass(
     contains = "PipetteFile"
 )
 
-
-
 #' @describeIn PipetteFile-class
 #' MatrixMarket exchange file (MTX).
 #' @export
@@ -194,8 +176,6 @@ setClass(
     Class = "MTXFile",
     contains = "PipetteFile"
 )
-
-
 
 #' @describeIn PipetteFile-class
 #' GraphPad Prism file (PZFX).
@@ -205,8 +185,6 @@ setClass(
     contains = "PipetteFile"
 )
 
-
-
 #' @describeIn PipetteFile-class
 #' R Data file containing multiple objects (RData/RDA).
 #' @export
@@ -214,8 +192,6 @@ setClass(
     Class = "RDataFile",
     contains = "PipetteFile"
 )
-
-
 
 #' @describeIn PipetteFile-class
 #' R data file containing a single, serialized object (RDS).
@@ -225,8 +201,6 @@ setClass(
     contains = "PipetteFile"
 )
 
-
-
 #' @describeIn PipetteFile-class
 #' Base R table file (TXT).
 #' @export
@@ -235,8 +209,6 @@ setClass(
     contains = "DelimFile"
 )
 
-
-
 #' @describeIn PipetteFile-class
 #' Tab-separated values file (TSV).
 #' @export
@@ -244,8 +216,6 @@ setClass(
     Class = "TSVFile",
     contains = "DelimFile"
 )
-
-
 
 #' @describeIn PipetteFile-class
 #' YAML file.

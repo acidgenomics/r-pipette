@@ -18,8 +18,8 @@
 \alias{import,YAMLFile,missingOrNULL,missingOrNULL-method}
 \alias{import,RDSFile,missingOrNULL,missingOrNULL-method}
 \alias{import,RDataFile,missingOrNULL,missingOrNULL-method}
-\alias{import,RioFile,missingOrNULL,missingOrNULL-method}
-\alias{import,RtracklayerFile,missingOrNULL,missingOrNULL-method}
+\alias{import,RioHandoffFile,missingOrNULL,missingOrNULL-method}
+\alias{import,RtracklayerHandoffFile,missingOrNULL,missingOrNULL-method}
 \alias{import,BcbioCountsFile,missingOrNULL,missingOrNULL-method}
 \title{Import}
 \usage{
@@ -164,7 +164,7 @@ export(con, format, text, ...)
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
-\S4method{import}{RioFile,missingOrNULL,missingOrNULL}(
+\S4method{import}{RioHandoffFile,missingOrNULL,missingOrNULL}(
   con,
   format = NULL,
   text = NULL,
@@ -177,7 +177,7 @@ export(con, format, text, ...)
   ...
 )
 
-\S4method{import}{RtracklayerFile,missingOrNULL,missingOrNULL}(
+\S4method{import}{RtracklayerHandoffFile,missingOrNULL,missingOrNULL}(
   con,
   format = NULL,
   text = NULL,
@@ -427,7 +427,7 @@ Import of these files will return \code{DNAStringSet} or \code{RNAStringSet} dep
 on the input, defined by \code{moleculeType} argument.
 }
 
-\section{General feature format (GFF, GTF; \code{RtracklayerFile})}{
+\section{General feature format (GFF, GTF; \code{RtracklayerHandoffFile})}{
 
 
 The GFF (General Feature Format) format consists of one line per feature,

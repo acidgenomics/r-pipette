@@ -6,8 +6,8 @@
 \alias{DelimFile-class}
 \alias{ExcelFile-class}
 \alias{LinesFile-class}
-\alias{RioFile-class}
-\alias{RtracklayerFile-class}
+\alias{RioHandoffFile-class}
+\alias{RtracklayerHandoffFile-class}
 \alias{BcbioCountsFile-class}
 \alias{CSVFile-class}
 \alias{FASTAFile-class}
@@ -61,7 +61,7 @@ File extension group supporting:
 \item ZSH: Zsh shell script
 }
 
-\item \code{RioFile-class}: File extension supported by \code{rio::import}.\cr
+\item \code{RioHandoffFile-class}: File extension supported by \code{rio::import}.\cr
 File extension group supporting:
 \itemize{
 \item ARFF: Weka Attribute-Relation File Format
@@ -81,7 +81,7 @@ File extension group supporting:
 \item XPT: SASS
 }
 
-\item \code{RtracklayerFile-class}: File extension supported by \code{rtracklayer::import()}.\cr
+\item \code{RtracklayerHandoffFile-class}: File extension supported by \code{rtracklayer::import()}.\cr
 File extension group supporting:
 \itemize{
 \item BED, BED15, BEDGRAPH, BEDPE

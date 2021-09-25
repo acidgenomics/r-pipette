@@ -67,6 +67,7 @@ test_that("Custom engine support", {
 
 context("import : rtracklayer (GFF/GTF)")
 
+## FIXME This is causing a circular code failure, need to rethink.
 test_that("GFF3", {
     object <- import(
         con = file.path("cache", "example.gff3"),
