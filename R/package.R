@@ -13,8 +13,8 @@
 #' @importMethodsFrom IRanges end start width
 #'
 #' @importFrom AcidBase basenameSansExt dots download download.file fileExt
-#'   initDir packageName packageVersion pasteURL realpath requireNamespaces
-#'   standardizeCall
+#'   initDir methodFunction packageName packageVersion pasteURL realpath
+#'   requireNamespaces standardizeCall
 #' @importFrom AcidCLI abort alert alertInfo alertSuccess alertWarning
 #'   toInlineString
 #' @importFrom AcidGenerics DataFrame Rle SimpleList end head mcols mcols<-
