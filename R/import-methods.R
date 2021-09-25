@@ -2018,39 +2018,23 @@ formals(`import,RioHandoffFile`)[c("makeNames", "metadata", "quiet")] <-
                 whatFun = whatFun
             )
         }
-
-
-
-        ## FIXME Need to rethink this.
-        ## FIXME This creates a circular argument since we're using the same
-        ## generic here now. Need to rethink.
-        args <- list(
-            "con" = file,
-            ...
+        args <- list("con" = file, ...)
+        requireNamespaces(whatPkg)
+        what <- methodFunction(
+            f = whatFun,
+            signature = signature(
+                "con" = "character",
+                "format" = "missing",
+                "text" = "ANY"
+            ),
+            package = whatPkg
         )
-        what <- .getFunction(f = whatFun, pkg = whatPkg)
-
-
-
         tryCatch(
             expr = {
                 object <- do.call(what = what, args = args)
             },
-            error = function(e) {
-                ## nocov start
-                abort(sprintf(
-                    "File failed to load: {.file %s}.",
-                    basename(file)
-                ))
-                ## nocov end
-            },
             warning = function(w) {
-                ## nocov start
-                abort(sprintf(
-                    "File failed to load: {.file %s}.",
-                    basename(file)
-                ))
-                ## nocov end
+                abort(w)  # nocov
             }
         )
         .returnImport(
