@@ -819,7 +819,7 @@ formals(.localOrRemoteFile)[c("tempPrefix", "quiet")] <-
 
 #' Soft deprecated legacy handler for primary "file" argument
 #'
-#' @note Updated 2021-09-24.
+#' @note Updated 2021-09-25.
 #' @noRd
 `import,character,file` <-  # nolint
     function(
@@ -829,6 +829,7 @@ formals(.localOrRemoteFile)[c("tempPrefix", "quiet")] <-
         text = NULL,
         ...
     ) {
+        assert(isString(file))
         con <- file
         if (missing(format)) {
             format <- NULL
