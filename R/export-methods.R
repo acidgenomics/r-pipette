@@ -92,84 +92,65 @@ NULL
 
 
 
-## character ===================================================================
+## Updated 2021-09-27.
+.alertExport <- function(whatFile, whatPkg, whatFun) {
+    assert(
+        isString(whatFile),
+        isString(whatPkg),
+        isString(whatFun)
+    )
+    alert(sprintf(
+        "Exporting {.file %s} using {.pkg %s}::{.fun %s}.",
+        whatFile, whatPkg, whatFun
+    ))
+}
 
-## FIXME Need to define these methods:
-## con = character, format = missing
-## con = missing, format = character
 
-## Updated 2021-09-27
+
+## This method sets "con" argument automatically from "format" and "dir".
+## Updated 2021-09-27.
 `export,character,format` <-
     function(
         object,
         con = NULL,
-        format,
-        dir
+        format = c("txt", "txt.bz2", "txt.gz", "txt.xz", "txt.zip"),
+        dir,
+        ...
     ) {
-        ## FIXME Define the connection here internally.
+        assert(isString(dir))
+        format <- match.arg(format)
+        call <- standardizeCall()
+        sym <- call[["object"]]
+        assert(is.symbol(sym), msg = .symError)
+        name <- as.character(sym)
+        dir <- initDir(dir)
+        con <- file.path(dir, paste0(name, ".", format))
+        export(object = object, con = con, ...)
     }
 
+formals(`export,character,format`)[["dir"]] <-
+    .formalsList[["export.dir"]]
+
+## This is the primary character method that uses "con" for file path.
 ## Updated 2021-09-27.
-`export,character` <-  # nolint
+`export,character,con` <-  # nolint
     function(
         object,
-        con,  # FIXME
-        ## FIXME Rework this, using missing by default.
-        ## FIXME Define these as choices internally.
-        format = c("txt", "txt.bz2", "txt.gz", "txt.xz", "txt.zip"),
-
-
-
+        con,
+        format = NULL,
         append = FALSE,
         overwrite,
         engine = getOption(x = "acid.export.engine", default = "base"),
-        quiet,
-
-
-        ## Deprecated in favor of "con".
-        file,
-        ## Deprecated in favor of "format".
-        ext,
-        ## Defunct in favor of "con".
-        dir
+        quiet
     ) {
-        if (!missing(dir)) {
-            .Defunct(sprintf(
-                "'%s' is defunct in favor of '%s'.",
-                "dir", "con"
-            ))
-        }
-        if (!missing(ext)) {
-            .Deprecated(sprintf(
-                "'%s' is deprecated in favor of '%s'.",
-                "ext", "format"
-            ))
-            format <- ext
-        }
-        if (!missing(file)) {
-            .Deprecated(sprintf(
-                "'%s' is deprecated in favor of '%s'.",
-                "file", "con"
-            ))
-            con <- file
-        }
-
-
-        if (missing(con)) {
-            ## FIXME Rework this approach, requiring ext.
-            ## FIXME Add assert requiring either dir or ext.
-        }
-
         assert(
+            isString(con),
             is.null(format),
-            isString(dir),
-            isString(file, nullOK = TRUE),
             isFlag(overwrite),
             isFlag(append),
             isString(engine),
             isFlag(quiet)
         )
-        ext <- match.arg(ext)
         whatPkg <- match.arg(arg = engine, choices = .engines)
         requireNamespaces(whatPkg)
         if (isTRUE(append)) {
@@ -184,16 +165,6 @@ NULL
         }
         if (isTRUE(overwrite)) {
             assert(isFALSE(append))
-        }
-        if (is.null(file)) {
-            call <- standardizeCall()
-            sym <- call[["object"]]
-            assert(is.symbol(sym), msg = .symError)
-            name <- as.character(sym)
-            dir <- initDir(dir)
-            file <- file.path(dir, paste0(name, ".", ext))
-        } else {
-            dir <- initDir(dirname(file))
         }
         whatFile <- file
         match <- str_match(string = file, pattern = extPattern)
@@ -255,10 +226,11 @@ NULL
             }
         )
         if (isFALSE(quiet)) {
-            alert(sprintf(
-                "Exporting {.file %s} using {.pkg %s}::{.fun %s}.",
-                whatFile, whatPkg, whatFun
-            ))
+            .alertExport(
+                whatFile = whatFile,
+                whatPkg = whatPkg,
+                whatFun = whatFun
+            )
         }
         what <- get(x = whatFun, envir = asNamespace(whatPkg), inherits = TRUE)
         assert(is.function(what))
@@ -275,8 +247,8 @@ NULL
         invisible(file)
     }
 
-formals(`export,character`)[c("dir", "overwrite", "quiet")] <-
-    .formalsList[c("export.dir", "overwrite", "quiet")]
+formals(`export,character,con`)[c("overwrite", "quiet")] <-
+    .formalsList[c("overwrite", "quiet")]
 
 
 
@@ -680,10 +652,22 @@ setMethod(
     f = "export",
     signature = signature(
         object = "character",
-        con = "ANY",
+        con = "character",
         format = "missingOrNULL"
     ),
-    definition = `export,character`
+    definition = `export,character,con`
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "character",
+        con = "missingOrNULL",
+        format = "character"
+    ),
+    definition = `export,character,format`
 )
 
 #' @rdname export
