@@ -372,7 +372,6 @@ formals(`export,matrix,format`)[["dir"]] <-
             object <- object[, keep, drop = FALSE]
             ## nocov end
         }
-        assert(allAreAtomic(object))
         if (isFALSE(rownames)) {
             rownames(object) <- NULL  # nocov
         }
@@ -424,7 +423,7 @@ formals(`export,matrix,format`)[["dir"]] <-
                     "quote" = TRUE,
                     "row.names" = FALSE,
                     "sep" = switch(
-                        EXPR = ext,
+                        EXPR = format,
                         "csv" = ",",
                         "tsv" = "\t"
                     )
@@ -445,7 +444,7 @@ formals(`export,matrix,format`)[["dir"]] <-
                     "quote" = TRUE,
                     "row.names" = FALSE,
                     "sep" = switch(
-                        EXPR = ext,
+                        EXPR = format,
                         "csv" = ",",
                         "tsv" = "\t"
                     ),
@@ -461,7 +460,7 @@ formals(`export,matrix,format`)[["dir"]] <-
                     "append" = FALSE,
                     "col_names" = colnames,
                     "delim" = switch(
-                        EXPR = ext,
+                        EXPR = format,
                         "csv" = ",",
                         "tsv" = "\t"
                     ),
@@ -478,7 +477,7 @@ formals(`export,matrix,format`)[["dir"]] <-
                     "append" = FALSE,
                     "col_names" = colnames,
                     "delim" = switch(
-                        EXPR = ext,
+                        EXPR = format,
                         "csv" = ",",
                         "tsv" = "\t"
                     ),
@@ -674,6 +673,18 @@ setMethod(
     signature = signature(
         object = "DataFrame",
         con = "character",
+        format = "character"
+    ),
+    definition = `export,DataFrame,con`
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "DataFrame",
+        con = "character",
         format = "missingOrNULL"
     ),
     definition = `export,DataFrame,con`
@@ -701,6 +712,18 @@ setMethod(
         format = "character"
     ),
     definition = `export,DataFrame,format`
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "GenomicRanges",
+        con = "character",
+        format = "character"
+    ),
+    definition = `export,GenomicRanges,con`
 )
 
 #' @rdname export
@@ -746,6 +769,18 @@ setMethod(
     signature = signature(
         object = "Matrix",
         con = "character",
+        format = "character"
+    ),
+    definition = `export,Matrix,con`
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "Matrix",
+        con = "character",
         format = "missingOrNULL"
     ),
     definition = `export,Matrix,con`
@@ -773,6 +808,18 @@ setMethod(
         format = "character"
     ),
     definition = `export,Matrix,format`
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "character",
+        con = "character",
+        format = "character"
+    ),
+    definition = `export,character,con`
 )
 
 #' @rdname export
@@ -818,6 +865,18 @@ setMethod(
     signature = signature(
         object = "data.frame",
         con = "character",
+        format = "character"
+    ),
+    definition = `export,data.frame,con`
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "data.frame",
+        con = "character",
         format = "missingOrNULL"
     ),
     definition = `export,data.frame,con`
@@ -845,6 +904,18 @@ setMethod(
         format = "character"
     ),
     definition = `export,data.frame,format`
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "matrix",
+        con = "character",
+        format = "character"
+    ),
+    definition = `export,matrix,con`
 )
 
 #' @rdname export

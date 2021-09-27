@@ -2,27 +2,44 @@
 % Please edit documentation in R/AllGenerics.R, R/export-methods.R
 \name{export}
 \alias{export}
+\alias{export,DataFrame,character,character-method}
 \alias{export,DataFrame,character,missingOrNULL-method}
 \alias{export,DataFrame,missingOrNULL,missingOrNULL-method}
 \alias{export,DataFrame,missingOrNULL,character-method}
+\alias{export,GenomicRanges,character,character-method}
 \alias{export,GenomicRanges,character,missingOrNULL-method}
 \alias{export,GenomicRanges,missingOrNULL,missingOrNULL-method}
 \alias{export,GenomicRanges,missingOrNULL,character-method}
+\alias{export,Matrix,character,character-method}
 \alias{export,Matrix,character,missingOrNULL-method}
 \alias{export,Matrix,missingOrNULL,missingOrNULL-method}
 \alias{export,Matrix,missingOrNULL,character-method}
+\alias{export,character,character,character-method}
 \alias{export,character,character,missingOrNULL-method}
 \alias{export,character,missingOrNULL,missingOrNULL-method}
 \alias{export,character,missingOrNULL,character-method}
+\alias{export,data.frame,character,character-method}
 \alias{export,data.frame,character,missingOrNULL-method}
 \alias{export,data.frame,missingOrNULL,missingOrNULL-method}
 \alias{export,data.frame,missingOrNULL,character-method}
+\alias{export,matrix,character,character-method}
 \alias{export,matrix,character,missingOrNULL-method}
 \alias{export,matrix,missingOrNULL,missingOrNULL-method}
 \alias{export,matrix,missingOrNULL,character-method}
 \title{Export}
 \usage{
 export(object, con, format, ...)
+
+\S4method{export}{DataFrame,character,character}(
+  object,
+  con,
+  format,
+  rownames = TRUE,
+  colnames = TRUE,
+  overwrite = getOption("acid.overwrite", default = TRUE),
+  engine = getOption(x = "acid.export.engine", "data.table"),
+  quiet = getOption("acid.quiet", default = FALSE)
+)
 
 \S4method{export}{DataFrame,character,missingOrNULL}(
   object,
@@ -49,6 +66,17 @@ export(object, con, format, ...)
   format,
   dir = getOption("acid.export.dir", default = "."),
   ...
+)
+
+\S4method{export}{GenomicRanges,character,character}(
+  object,
+  con,
+  format,
+  rownames = TRUE,
+  colnames = TRUE,
+  overwrite = getOption("acid.overwrite", default = TRUE),
+  engine = getOption(x = "acid.export.engine", "data.table"),
+  quiet = getOption("acid.quiet", default = FALSE)
 )
 
 \S4method{export}{GenomicRanges,character,missingOrNULL}(
@@ -78,6 +106,17 @@ export(object, con, format, ...)
   ...
 )
 
+\S4method{export}{Matrix,character,character}(
+  object,
+  con,
+  format,
+  ext = c("mtx.gz", "mtx.bz2", "mtx.xz", "mtx.zip", "mtx"),
+  dir = getOption("acid.export.dir", default = "."),
+  file = NULL,
+  overwrite = getOption("acid.overwrite", default = TRUE),
+  quiet = getOption("acid.quiet", default = FALSE)
+)
+
 \S4method{export}{Matrix,character,missingOrNULL}(
   object,
   con,
@@ -92,6 +131,16 @@ export(object, con, format, ...)
 \S4method{export}{Matrix,missingOrNULL,missingOrNULL}(object, con, format)
 
 \S4method{export}{Matrix,missingOrNULL,character}(object, con, format)
+
+\S4method{export}{character,character,character}(
+  object,
+  con,
+  format,
+  append = FALSE,
+  overwrite = getOption("acid.overwrite", default = TRUE),
+  engine = getOption(x = "acid.export.engine", default = "base"),
+  quiet = getOption("acid.quiet", default = FALSE)
+)
 
 \S4method{export}{character,character,missingOrNULL}(
   object,
@@ -119,6 +168,17 @@ export(object, con, format, ...)
   ...
 )
 
+\S4method{export}{data.frame,character,character}(
+  object,
+  con,
+  format,
+  rownames = TRUE,
+  colnames = TRUE,
+  overwrite = getOption("acid.overwrite", default = TRUE),
+  engine = getOption(x = "acid.export.engine", "data.table"),
+  quiet = getOption("acid.quiet", default = FALSE)
+)
+
 \S4method{export}{data.frame,character,missingOrNULL}(
   object,
   con,
@@ -144,6 +204,17 @@ export(object, con, format, ...)
   format,
   dir = getOption("acid.export.dir", default = "."),
   ...
+)
+
+\S4method{export}{matrix,character,character}(
+  object,
+  con,
+  format,
+  rownames = TRUE,
+  colnames = TRUE,
+  overwrite = getOption("acid.overwrite", default = TRUE),
+  engine = getOption(x = "acid.export.engine", "data.table"),
+  quiet = getOption("acid.quiet", default = FALSE)
 )
 
 \S4method{export}{matrix,character,missingOrNULL}(
