@@ -5,7 +5,8 @@
 \alias{export,DataFrame,ANY,ANY-method}
 \alias{export,GenomicRanges,ANY,missingOrNULL-method}
 \alias{export,Matrix,ANY,missingOrNULL-method}
-\alias{export,character,ANY,missingOrNULL-method}
+\alias{export,character,character,missingOrNULL-method}
+\alias{export,character,missingOrNULL,character-method}
 \alias{export,data.frame,ANY,ANY-method}
 \alias{export,matrix,ANY,ANY-method}
 \title{Export}
@@ -51,17 +52,22 @@ export(object, con, format, ...)
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
-\S4method{export}{character,ANY,missingOrNULL}(
+\S4method{export}{character,character,missingOrNULL}(
   object,
   con,
-  format,
-  ext = c("txt", "txt.bz2", "txt.gz", "txt.xz", "txt.zip"),
-  dir = getOption("acid.export.dir", default = "."),
-  file = NULL,
+  format = NULL,
   append = FALSE,
   overwrite = NULL,
   engine = getOption(x = "acid.export.engine", default = "base"),
   quiet = getOption("acid.quiet", default = FALSE)
+)
+
+\S4method{export}{character,missingOrNULL,character}(
+  object,
+  con = NULL,
+  format = c("txt", "txt.bz2", "txt.gz", "txt.xz", "txt.zip"),
+  dir = getOption("acid.export.dir", default = "."),
+  ...
 )
 
 \S4method{export}{data.frame,ANY,ANY}(
@@ -171,7 +177,7 @@ File path(s).
 Export
 }
 \note{
-Updated 2021-09-24.
+Updated 2021-09-27.
 }
 \section{Row names}{
 
