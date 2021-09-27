@@ -109,10 +109,31 @@ NULL
 
 ## Updated 2021-09-27.
 .exportFormatChoices <- list(
-    "character" = c("txt", "txt.bz2", "txt.gz", "txt.xz", "txt.zip"),
+    "Matrix" = c(
+        "mtx.gz",
+        "mtx.bz2",
+        "mtx.xz",
+        "mtx.zip",
+        "mtx"
+    ),
+    "character" = c(
+        "txt",
+        "txt.bz2",
+        "txt.gz",
+        "txt.xz",
+        "txt.zip"
+    ),
     "matrix" = c(
-        "csv", "csv.bz2", "csv.gz", "csv.xz", "csv.zip",
-        "tsv", "tsv.bz2", "tsv.gz", "tsv.xz", "tsv.zip"
+        "csv",
+        "csv.bz2",
+        "csv.gz",
+        "csv.xz",
+        "csv.zip",
+        "tsv",
+        "tsv.bz2",
+        "tsv.gz",
+        "tsv.xz",
+        "tsv.zip"
     )
 )
 
@@ -193,28 +214,28 @@ formals(`export,character,format`)[["dir"]] <-
         if (isTRUE(overwrite)) {
             assert(isFALSE(append))
         }
-        whatFile <- con
-        match <- str_match(string = con, pattern = extPattern)
+        file <- con; whatFile <- con
+        match <- str_match(string = file, pattern = extPattern)
         compressExt <- match[1L, 4L]
         compress <- !is.na(compressExt)
-        if (isAFile(con)) {
-            con <- realpath(con)
+        if (isAFile(file)) {
+            file <- realpath(file)
             if (isTRUE(append) && isFALSE(quiet)) {
                 alertInfo(sprintf(
                     "Appending content in {.file %s}.",
-                    basename(con)
+                    basename(file)
                 ))
             } else if (isTRUE(overwrite) && isFALSE(quiet)) {
-                alertWarning(sprintf("Overwriting {.file %s}.", con))
+                alertWarning(sprintf("Overwriting {.file %s}.", file))
             } else {
-                abort(sprintf("File exists: {.file %s}.", con))
+                abort(sprintf("File exists: {.file %s}.", file))
             }
         }
         if (isTRUE(compress)) {
-            con <- sub(
+            file <- sub(
                 pattern = paste0("\\.", compressExt, "$"),
                 replacement = "",
-                x = con
+                x = file
             )
         }
         switch(
@@ -223,14 +244,14 @@ formals(`export,character,format`)[["dir"]] <-
                 whatFun <- "writeLines"
                 args <- list(
                     "text" = object,
-                    "con" = con
+                    "con" = file
                 )
             },
             "data.table" = {
                 whatFun <- "fwrite"
                 args <- list(
                     "x" = as.list(object),
-                    "file" = con,
+                    "file" = file,
                     "append" = append,
                     "sep" = "\n"
                 )
@@ -239,7 +260,7 @@ formals(`export,character,format`)[["dir"]] <-
                 whatFun <- "write_lines"
                 args <- list(
                     "x" = object,
-                    "file" = con,
+                    "file" = file,
                     "append" = append
                 )
             },
@@ -247,7 +268,7 @@ formals(`export,character,format`)[["dir"]] <-
                 whatFun <- "vroom_write_lines"
                 args <- list(
                     "x" = object,
-                    "file" = con,
+                    "file" = file,
                     "append" = append
                 )
             }
@@ -263,15 +284,15 @@ formals(`export,character,format`)[["dir"]] <-
         assert(is.function(what))
         do.call(what = what, args = args)
         if (isTRUE(compress)) {
-            con <- compress(
-                file = con,
+            file <- compress(
+                file = file,
                 ext = compressExt,
                 remove = TRUE,
                 overwrite = TRUE
             )
         }
-        con <- realpath(con)
-        invisible(con)
+        file <- realpath(file)
+        invisible(file)
     }
 
 formals(`export,character,con`)[c("overwrite", "quiet")] <-
@@ -355,8 +376,8 @@ formals(`export,matrix,format`)[["dir"]] <-
         format <- match.arg(arg = format, choices = formatChoices)
         whatPkg <- match.arg(arg = engine, choices = .engines)
         requireNamespaces(whatPkg)
-        whatFile <- con
-        match <- str_match(string = con, pattern = extPattern)
+        file <- con; whatFile <- con
+        match <- str_match(string = file, pattern = extPattern)
         compressExt <- match[1L, 4L]
         compress <- !is.na(compressExt)
         ## Drop non-atomic columns automatically, if necessary.
@@ -385,25 +406,25 @@ formals(`export,matrix,format`)[["dir"]] <-
                 drop = FALSE
             ]
         }
-        if (isAFile(con)) {
-            con <- realpath(con)
+        if (isAFile(file)) {
+            file <- realpath(file)
             if (isTRUE(overwrite)) {
                 if (isFALSE(quiet)) {
-                    alertWarning(sprintf("Overwriting {.file %s}.", whatFile))
+                    alertWarning(sprintf("Overwriting {.file %s}.", file))
                 }
-                file.remove(con)
+                file.remove(file)
             } else {
-                abort(sprintf("File exists: {.file %s}.", whatFile))
+                abort(sprintf("File exists: {.file %s}.", file))
             }
         }
         if (isTRUE(compress)) {
-            con <- sub(
+            file <- sub(
                 pattern = paste0("\\.", compressExt, "$"),
                 replacement = "",
-                x = con
+                x = file
             )
             format <- match.arg(
-                arg = fileExt(con),
+                arg = fileExt(file),
                 choices = c("csv", "tsv")
             )
         }
@@ -413,7 +434,7 @@ formals(`export,matrix,format`)[["dir"]] <-
                 whatFun <- "write.table"
                 args <- list(
                     "x" = object,
-                    "file" = con,
+                    "file" = file,
                     "append" = FALSE,
                     "col.names" = colnames,
                     "dec" = ".",
@@ -433,7 +454,7 @@ formals(`export,matrix,format`)[["dir"]] <-
                 whatFun <- "fwrite"
                 args <- list(
                     "x" = object,
-                    "file" = con,
+                    "file" = file,
                     "append" = FALSE,
                     "col.names" = colnames,
                     "compress" = "none",
@@ -456,7 +477,7 @@ formals(`export,matrix,format`)[["dir"]] <-
                 whatFun <- "write_delim"
                 args <- list(
                     "x" = object,
-                    "file" = con,
+                    "file" = file,
                     "append" = FALSE,
                     "col_names" = colnames,
                     "delim" = switch(
@@ -473,7 +494,7 @@ formals(`export,matrix,format`)[["dir"]] <-
                 whatFun <- "vroom_write"
                 args <- list(
                     "x" = object,
-                    "file" = con,
+                    "file" = file,
                     "append" = FALSE,
                     "col_names" = colnames,
                     "delim" = switch(
@@ -500,15 +521,15 @@ formals(`export,matrix,format`)[["dir"]] <-
         assert(is.function(what))
         do.call(what = what, args = args)
         if (isTRUE(compress)) {
-            con <- compress(
-                file = con,
+            file <- compress(
+                file = file,
                 ext = compressExt,
                 remove = TRUE,
                 overwrite = TRUE
             )
         }
-        con <- realpath(con)
-        invisible(con)
+        file <- realpath(file)
+        invisible(file)
     }
 
 formals(`export,matrix,con`)[c("overwrite", "quiet")] <-
@@ -540,20 +561,43 @@ formals(`export,matrix,con`)[c("overwrite", "quiet")] <-
 
 
 
-
+## Updated 2021-09-27.
 `export,Matrix,format` <-  # nolint
     function(
         object,
-        con,
-        format
+        con = NULL,
+        format,
+        dir,
+        ...
     ) {
-        stop("FIXME")
+        assert(isString(dir))
+        formatChoices <- .exportFormatChoices[["Matrix"]]
+        if (missing(format)) {
+            format <- formatChoices[[1L]]
+        }
+        format <- match.arg(arg = format, choices = formatChoices)
+        call <- standardizeCall()
+        sym <- call[["object"]]
+        assert(is.symbol(sym), msg = .symError)
+        name <- as.character(sym)
+        dir <- initDir(dir)
+        con <- file.path(dir, paste0(name, ".", format))
+        export(
+            object = object,
+            con = con,
+            format = format,
+            ...
+        )
     }
+
+formals(`export,Matrix,format`)[["dir"]] <-
+    .formalsList[["export.dir"]]
+
 
 
 #' Export `Matrix` (e.g. `sparseMatrix`) method
 #'
-#' @note Updated 2021-08-31.
+#' @note Updated 2021-09-27.
 #' @noRd
 #'
 #' @details
@@ -563,37 +607,27 @@ formals(`export,matrix,con`)[c("overwrite", "quiet")] <-
 `export,Matrix,con` <-  # nolint
     function(
         object,
-        ## FIXME Rework these.
         con,
         format,
-        ## FIXME Need to rethink "ext" and "dir" in favor of "format"?
-        ext = c("mtx.gz", "mtx.bz2", "mtx.xz", "mtx.zip", "mtx"),
-        dir,
-        file = NULL,
         overwrite,
         quiet
     ) {
         validObject(object)
-        ext <- match.arg(ext)
         assert(
             hasLength(object),
-            isString(dir),
-            isString(file, nullOK = TRUE),
+            isString(con),
             isFlag(overwrite),
             isFlag(quiet)
         )
-        if (is.null(file)) {
-            call <- standardizeCall()
-            sym <- call[["object"]]
-            assert(is.symbol(sym), msg = .symError)
-            name <- as.character(sym)
-            dir <- initDir(dir)
-            file <- file.path(dir, paste0(name, ".", ext))
-        } else {
-            ext <- fileExt(file)
-            dir <- initDir(dirname(file))
+        formatChoices <- .exportFormatChoices[["Matrix"]]
+        if (missing(format)) {
+            format <- fileExt(con)
         }
-        ext <- match.arg(ext)
+        format <- match.arg(arg = format, choices = formatChoices)
+        file <- con; whatFile <- con
+        whatPkg <- "Matrix"
+        whatFun <- "readMM"
+        requireNamespaces(whatPkg)
         match <- str_match(string = file, pattern = extPattern)
         compressExt <- match[1L, 4L]
         compress <- !is.na(compressExt)
@@ -616,12 +650,16 @@ formals(`export,matrix,con`)[c("overwrite", "quiet")] <-
             )
         }
         if (isFALSE(quiet)) {
-            alert(sprintf(
-                "Exporting {.file %s} using {.pkg %s}::{.fun %s}.",
-                file, "Matrix", "writeMM"
-            ))
+            .alertExport(
+                whatFile = whatFile,
+                whatPkg = whatPkg,
+                whatFun = whatFun
+            )
         }
-        writeMM(obj = object, file = file)
+        args <- list("obj" = object, "file" = file)
+        what <- get(x = whatFun, envir = asNamespace(whatPkg), inherits = TRUE)
+        assert(is.function(what))
+        do.call(what = what, args = args)
         if (isTRUE(compress)) {
             file <- compress(
                 file = file,
@@ -650,17 +688,17 @@ formals(`export,matrix,con`)[c("overwrite", "quiet")] <-
             quiet = quiet
         )
         files <- c(
-            matrix = file,
-            barcodes = barcodesFile,
-            genes = featuresFile
+            "matrix" = file,
+            "barcodes" = barcodesFile,
+            "genes" = featuresFile
         )
         assert(allAreFiles(files))
         invisible(files)
     }
 
 formals(`export,Matrix,con`)[
-    c("dir", "overwrite", "quiet")] <-
-    .formalsList[c("export.dir", "overwrite", "quiet")]
+    c("overwrite", "quiet")] <-
+    .formalsList[c("overwrite", "quiet")]
 
 
 

@@ -110,9 +110,6 @@ export(object, con, format, ...)
   object,
   con,
   format,
-  ext = c("mtx.gz", "mtx.bz2", "mtx.xz", "mtx.zip", "mtx"),
-  dir = getOption("acid.export.dir", default = "."),
-  file = NULL,
   overwrite = getOption("acid.overwrite", default = TRUE),
   quiet = getOption("acid.quiet", default = FALSE)
 )
@@ -121,16 +118,25 @@ export(object, con, format, ...)
   object,
   con,
   format,
-  ext = c("mtx.gz", "mtx.bz2", "mtx.xz", "mtx.zip", "mtx"),
-  dir = getOption("acid.export.dir", default = "."),
-  file = NULL,
   overwrite = getOption("acid.overwrite", default = TRUE),
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
-\S4method{export}{Matrix,missingOrNULL,missingOrNULL}(object, con, format)
+\S4method{export}{Matrix,missingOrNULL,missingOrNULL}(
+  object,
+  con = NULL,
+  format,
+  dir = getOption("acid.export.dir", default = "."),
+  ...
+)
 
-\S4method{export}{Matrix,missingOrNULL,character}(object, con, format)
+\S4method{export}{Matrix,missingOrNULL,character}(
+  object,
+  con = NULL,
+  format,
+  dir = getOption("acid.export.dir", default = "."),
+  ...
+)
 
 \S4method{export}{character,character,character}(
   object,
@@ -289,6 +295,11 @@ Directory path.}
 
 \item{...}{Additional arguments.}
 
+\item{append}{\code{logical(1)}.
+Append to output file.
+When enabled, automatically sets \code{overwrite} argument to \code{FALSE}.
+Requires readr package to be installed.}
+
 \item{ext}{\code{character(1)}.
 Output file format extension.
 
@@ -309,11 +320,6 @@ Output file format extension.
 \item{file}{\code{character(1)}.
 File path. When left unset (default), the \code{ext} and \code{dir} arguments will
 be used instead.}
-
-\item{append}{\code{logical(1)}.
-Append to output file.
-When enabled, automatically sets \code{overwrite} argument to \code{FALSE}.
-Requires readr package to be installed.}
 }
 \value{
 Invisible \code{character}.
