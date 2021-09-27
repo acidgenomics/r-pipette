@@ -113,19 +113,28 @@ NULL
     function(
         object,
         con = NULL,
-        format = c("txt", "txt.bz2", "txt.gz", "txt.xz", "txt.zip"),
+        format,
         dir,
         ...
     ) {
         assert(isString(dir))
-        format <- match.arg(format)
+        formatChoices <- c("txt", "txt.bz2", "txt.gz", "txt.xz", "txt.zip")
+        if (missing(format)) {
+            format <- formatChoices[[1L]]
+        }
+        format <- match.arg(arg = format, choices = formatChoices)
         call <- standardizeCall()
         sym <- call[["object"]]
         assert(is.symbol(sym), msg = .symError)
         name <- as.character(sym)
         dir <- initDir(dir)
         con <- file.path(dir, paste0(name, ".", format))
-        export(object = object, con = con, ...)
+        export(
+            object = object,
+            con = con,
+            format = NULL,
+            ...
+        )
     }
 
 formals(`export,character,format`)[["dir"]] <-
@@ -166,28 +175,28 @@ formals(`export,character,format`)[["dir"]] <-
         if (isTRUE(overwrite)) {
             assert(isFALSE(append))
         }
-        whatFile <- file
-        match <- str_match(string = file, pattern = extPattern)
+        whatFile <- con
+        match <- str_match(string = con, pattern = extPattern)
         compressExt <- match[1L, 4L]
         compress <- !is.na(compressExt)
-        if (isAFile(file)) {
-            file <- realpath(file)
+        if (isAFile(con)) {
+            con <- realpath(con)
             if (isTRUE(append) && isFALSE(quiet)) {
                 alertInfo(sprintf(
                     "Appending content in {.file %s}.",
-                    basename(file)
+                    basename(con)
                 ))
             } else if (isTRUE(overwrite) && isFALSE(quiet)) {
-                alertWarning(sprintf("Overwriting {.file %s}.", file))
+                alertWarning(sprintf("Overwriting {.file %s}.", con))
             } else {
-                abort(sprintf("File exists: {.file %s}.", file))
+                abort(sprintf("File exists: {.file %s}.", con))
             }
         }
         if (isTRUE(compress)) {
-            file <- sub(
+            con <- sub(
                 pattern = paste0("\\.", compressExt, "$"),
                 replacement = "",
-                x = file
+                x = con
             )
         }
         switch(
@@ -196,14 +205,14 @@ formals(`export,character,format`)[["dir"]] <-
                 whatFun <- "writeLines"
                 args <- list(
                     "text" = object,
-                    "con" = file
+                    "con" = con
                 )
             },
             "data.table" = {
                 whatFun <- "fwrite"
                 args <- list(
                     "x" = as.list(object),
-                    "file" = file,
+                    "file" = con,
                     "append" = append,
                     "sep" = "\n"
                 )
@@ -212,7 +221,7 @@ formals(`export,character,format`)[["dir"]] <-
                 whatFun <- "write_lines"
                 args <- list(
                     "x" = object,
-                    "file" = file,
+                    "file" = con,
                     "append" = append
                 )
             },
@@ -220,7 +229,7 @@ formals(`export,character,format`)[["dir"]] <-
                 whatFun <- "vroom_write_lines"
                 args <- list(
                     "x" = object,
-                    "file" = file,
+                    "file" = con,
                     "append" = append
                 )
             }
@@ -236,15 +245,15 @@ formals(`export,character,format`)[["dir"]] <-
         assert(is.function(what))
         do.call(what = what, args = args)
         if (isTRUE(compress)) {
-            file <- compress(
-                file = file,
+            con <- compress(
+                file = con,
                 ext = compressExt,
                 remove = TRUE,
                 overwrite = TRUE
             )
         }
-        file <- realpath(file)
-        invisible(file)
+        con <- realpath(con)
+        invisible(con)
     }
 
 formals(`export,character,con`)[c("overwrite", "quiet")] <-
@@ -656,6 +665,18 @@ setMethod(
         format = "missingOrNULL"
     ),
     definition = `export,character,con`
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "character",
+        con = "missingOrNULL",
+        format = "missingOrNULL"
+    ),
+    definition = `export,character,format`
 )
 
 #' @rdname export
