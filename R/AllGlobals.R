@@ -43,6 +43,9 @@
     "load.dir" = quote(
         getOption("acid.load.dir", default = ".")
     ),
+    "overwrite" = quote(
+        getOption("acid.overwrite", default = TRUE)
+    ),
     "quiet" = quote(
         getOption("acid.quiet", default = FALSE)
     ),

@@ -9,7 +9,7 @@ loadData(
   dir = getOption("acid.load.dir", default = "."),
   envir = globalenv(),
   list = NULL,
-  overwrite = NULL
+  overwrite = getOption("acid.overwrite", default = TRUE)
 )
 }
 \arguments{
