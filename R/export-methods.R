@@ -1,5 +1,4 @@
 ## FIXME Need to fix the documentation to not link to reexports here.
-
 ## FIXME Rework using BiocIO generic approach.
 ## FIXME Need to figure out how to deprecate / rework ext approach.
 ## FIXME Need to improve documentation consistency with import.
@@ -11,7 +10,7 @@
 #' Export
 #'
 #' @name export
-#' @note Updated 2021-09-24.
+#' @note Updated 2021-09-27.
 #'
 #' @section Row names:
 #'
@@ -93,10 +92,11 @@ NULL
 
 
 
-## Updated 2021-09-24.
+## Updated 2021-09-27.
 `export,character` <-  # nolint
     function(
         object,
+        ## FIXME Rework this to single dir/file handling.
         con,  # FIXME
         format,  # FIXME
 
