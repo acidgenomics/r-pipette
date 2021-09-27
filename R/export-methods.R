@@ -107,6 +107,13 @@ NULL
 
 
 
+## Updated 2021-09-27.
+.exportChoices <- list(
+    "character" = c("txt", "txt.bz2", "txt.gz", "txt.xz", "txt.zip")
+)
+
+
+
 ## This method sets "con" argument automatically from "format" and "dir".
 ## Updated 2021-09-27.
 `export,character,format` <-
@@ -117,8 +124,11 @@ NULL
         dir,
         ...
     ) {
-        assert(isString(dir))
-        formatChoices <- c("txt", "txt.bz2", "txt.gz", "txt.xz", "txt.zip")
+        assert(
+            is.null(con),
+            isString(dir)
+        )
+        formatChoices <- .exportChoices[["character"]]
         if (missing(format)) {
             format <- formatChoices[[1L]]
         }
@@ -132,7 +142,7 @@ NULL
         export(
             object = object,
             con = con,
-            format = NULL,
+            format = format,
             ...
         )
     }
@@ -146,7 +156,7 @@ formals(`export,character,format`)[["dir"]] <-
     function(
         object,
         con,
-        format = NULL,
+        format,
         append = FALSE,
         overwrite,
         engine = getOption(x = "acid.export.engine", default = "base"),
@@ -154,12 +164,16 @@ formals(`export,character,format`)[["dir"]] <-
     ) {
         assert(
             isString(con),
-            is.null(format),
             isFlag(overwrite),
             isFlag(append),
             isString(engine),
             isFlag(quiet)
         )
+        formatChoices <- .exportChoices[["character"]]
+        if (missing(format)) {
+            format <- fileExt(con)
+        }
+        format <- match.arg(arg = format, choices = formatChoices)
         whatPkg <- match.arg(arg = engine, choices = .engines)
         requireNamespaces(whatPkg)
         if (isTRUE(append)) {
@@ -176,9 +190,14 @@ formals(`export,character,format`)[["dir"]] <-
             assert(isFALSE(append))
         }
         whatFile <- con
-        match <- str_match(string = con, pattern = extPattern)
+
+
+        ## FIXME Match this against format instead.
+        match <- str_match(string = format, pattern = extPattern)
         compressExt <- match[1L, 4L]
         compress <- !is.na(compressExt)
+
+
         if (isAFile(con)) {
             con <- realpath(con)
             if (isTRUE(append) && isFALSE(quiet)) {
@@ -261,18 +280,48 @@ formals(`export,character,con`)[c("overwrite", "quiet")] <-
 
 
 
-.exportMatrixChoices <- c(
-    "csv", "csv.bz2", "csv.gz", "csv.xz", "csv.zip",
-    "tsv", "tsv.bz2", "tsv.gz", "tsv.xz", "tsv.zip"
-)
+## FIXME Need to rethink the format passthrough here.
+## Updated 2021-09-27.
+`export,matrix,format` <-  # nolint
+    function(
+        object,
+        con = NULL,
+        format,
+        dir,
+        ...
+    ) {
+        assert(isString(dir))
+        formatChoices <- c(
+            "csv", "csv.bz2", "csv.gz", "csv.xz", "csv.zip",
+            "tsv", "tsv.bz2", "tsv.gz", "tsv.xz", "tsv.zip"
+        )
+        if (missing(format)) {
+            format <- formatChoices[[1L]]
+        }
+        format <- match.arg(arg = format, choices = formatChoices)
+        call <- standardizeCall()
+        sym <- call[["object"]]
+        assert(is.symbol(sym), msg = .symError)
+        name <- as.character(sym)
+        dir <- initDir(dir)
+        con <- file.path(dir, paste0(name, ".", format))
+        ## FIXME Need to rethink the format passthrough here.
+        export(
+            object = object,
+            con = con,
+            format = NULL,
+            ...
+        )
+    }
+
+formals(`export,matrix,format`)[["dir"]] <-
+    .formalsList[["export.dir"]]
 
 
-
-## matrix ======================================================================
 
 #' Export `matrix` method
 #'
-#' @note Updated 2021-08-31.
+#' @note Updated 2021-09-27.
 #' @noRd
 #'
 #' @details
@@ -280,20 +329,11 @@ formals(`export,character,con`)[c("overwrite", "quiet")] <-
 #' `data.table`, `tbl_df`, and `DataFrame` classes. Note that `rio::export()`
 #' does not preserve row names by default, so we're ensuring row names get
 #' coerced to "rowname" column consistently here.
-`export,matrix` <-  # nolint
+`export,matrix,con` <-  # nolint
     function(
         object,
-        con,  # FIXME
-        format,  # FIXME
-
-
-        ## FIXME Need to rethink "ext" and "dir" in favor of "format"?
-        ## FIXME Rename "ext" in favor of "format"? Not sure here yet.
-        ext,
-        dir,
-        file = NULL,
-
-
+        con,
+        format,
         rownames = TRUE,
         colnames = TRUE,
         overwrite,
@@ -310,8 +350,8 @@ formals(`export,character,con`)[c("overwrite", "quiet")] <-
         ## rows, or columns here.
         assert(
             hasNoDuplicates(colnames(object)),
-            isString(dir),
-            isString(file, nullOK = TRUE),
+            isString(con),
+            is.null(format),
             isFlag(rownames),
             isFlag(colnames),
             isFlag(overwrite),
@@ -487,21 +527,45 @@ formals(`export,character,con`)[c("overwrite", "quiet")] <-
         invisible(file)
     }
 
-formals(`export,matrix`)[
-    c("dir", "ext", "overwrite", "quiet")] <-
-    .formalsList[c("export.dir", "export.ext", "overwrite", "quiet")]
+formals(`export,matrix,con`)[c("overwrite", "quiet")] <-
+    .formalsList[c("overwrite", "quiet")]
 
 
 
-`export,data.frame` <- `export,matrix`  # nolint
+`export,data.frame,con` <-  # nolint
+    `export,matrix,con`
+
+`export,data.frame,format` <-  # nolint
+    `export,matrix,format`
 
 
 
-`export,DataFrame` <- `export,data.frame`  # nolint
+`export,DataFrame,con` <-
+    `export,data.frame,con`
+
+`export,DataFrame,format` <-
+    `export,data.frame,format`
 
 
 
-## Matrix ======================================================================
+`export,GenomicRanges,con` <-   # nolint
+    `export,DataFrame,con`
+
+`export,GenomicRanges,format` <-   # nolint
+    `export,DataFrame,format`
+
+
+
+
+`export,Matrix,format` <-  # nolint
+    function(
+        object,
+        con,
+        format
+    ) {
+        stop("FIXME")
+    }
+
 
 #' Export `Matrix` (e.g. `sparseMatrix`) method
 #'
@@ -512,7 +576,7 @@ formals(`export,matrix`)[
 #' Note that "file" is referring to the matrix file.
 #' The correponding column and row sidecar files are generated automatically.
 #' Consider adding HDF5 support in a future update.
-`export,Matrix` <-  # nolint
+`export,Matrix,con` <-  # nolint
     function(
         object,
         ## FIXME Rework these.
@@ -610,13 +674,9 @@ formals(`export,matrix`)[
         invisible(files)
     }
 
-formals(`export,Matrix`)[
+formals(`export,Matrix,con`)[
     c("dir", "overwrite", "quiet")] <-
     .formalsList[c("export.dir", "overwrite", "quiet")]
-
-
-
-`export,GenomicRanges` <- `export,DataFrame`  # nolint
 
 
 
@@ -626,10 +686,37 @@ formals(`export,Matrix`)[
 #' @export
 setMethod(
     f = "export",
-    signature = signature("DataFrame"),
-    definition = `export,DataFrame`
+    signature = signature(
+        object = "DataFrame",
+        con = "character",
+        format = "missingOrNULL"
+    ),
+    definition = `export,DataFrame,con`
 )
 
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "DataFrame",
+        con = "missingOrNULL",
+        format = "missingOrNULL"
+    ),
+    definition = `export,DataFrame,format`
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "DataFrame",
+        con = "missingOrNULL",
+        format = "character"
+    ),
+    definition = `export,DataFrame,format`
+)
 
 #' @rdname export
 #' @export
@@ -637,10 +724,34 @@ setMethod(
     f = "export",
     signature = signature(
         object = "GenomicRanges",
-        con = "ANY",
+        con = "character",
         format = "missingOrNULL"
     ),
-    definition = `export,GenomicRanges`
+    definition = `export,GenomicRanges,con`
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "GenomicRanges",
+        con = "missingOrNULL",
+        format = "missingOrNULL"
+    ),
+    definition = `export,GenomicRanges,format`
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "GenomicRanges",
+        con = "missingOrNULL",
+        format = "character"
+    ),
+    definition = `export,GenomicRanges,format`
 )
 
 #' @rdname export
@@ -649,10 +760,34 @@ setMethod(
     f = "export",
     signature = signature(
         object = "Matrix",
-        con = "ANY",
+        con = "character",
         format = "missingOrNULL"
     ),
-    definition = `export,Matrix`
+    definition = `export,Matrix,con`
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "Matrix",
+        con = "missingOrNULL",
+        format = "missingOrNULL"
+    ),
+    definition = `export,Matrix,format`
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "Matrix",
+        con = "missingOrNULL",
+        format = "character"
+    ),
+    definition = `export,Matrix,format`
 )
 
 #' @rdname export
@@ -695,14 +830,70 @@ setMethod(
 #' @export
 setMethod(
     f = "export",
-    signature = signature("data.frame"),
-    definition = `export,data.frame`
+    signature = signature(
+        object = "data.frame",
+        con = "character",
+        format = "missingOrNULL"
+    ),
+    definition = `export,data.frame,con`
 )
 
 #' @rdname export
 #' @export
 setMethod(
     f = "export",
-    signature = signature("matrix"),
-    definition = `export,matrix`
+    signature = signature(
+        object = "data.frame",
+        con = "missingOrNULL",
+        format = "missingOrNULL"
+    ),
+    definition = `export,data.frame,format`
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "data.frame",
+        con = "missingOrNULL",
+        format = "character"
+    ),
+    definition = `export,data.frame,format`
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "matrix",
+        con = "character",
+        format = "missingOrNULL"
+    ),
+    definition = `export,matrix,con`
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "matrix",
+        con = "missingOrNULL",
+        format = "missingOrNULL"
+    ),
+    definition = `export,matrix,format`
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "matrix",
+        con = "missingOrNULL",
+        format = "character"
+    ),
+    definition = `export,matrix,format`
 )

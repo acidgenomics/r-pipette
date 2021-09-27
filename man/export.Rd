@@ -2,25 +2,32 @@
 % Please edit documentation in R/AllGenerics.R, R/export-methods.R
 \name{export}
 \alias{export}
-\alias{export,DataFrame,ANY,ANY-method}
-\alias{export,GenomicRanges,ANY,missingOrNULL-method}
-\alias{export,Matrix,ANY,missingOrNULL-method}
+\alias{export,DataFrame,character,missingOrNULL-method}
+\alias{export,DataFrame,missingOrNULL,missingOrNULL-method}
+\alias{export,DataFrame,missingOrNULL,character-method}
+\alias{export,GenomicRanges,character,missingOrNULL-method}
+\alias{export,GenomicRanges,missingOrNULL,missingOrNULL-method}
+\alias{export,GenomicRanges,missingOrNULL,character-method}
+\alias{export,Matrix,character,missingOrNULL-method}
+\alias{export,Matrix,missingOrNULL,missingOrNULL-method}
+\alias{export,Matrix,missingOrNULL,character-method}
 \alias{export,character,character,missingOrNULL-method}
 \alias{export,character,missingOrNULL,missingOrNULL-method}
 \alias{export,character,missingOrNULL,character-method}
-\alias{export,data.frame,ANY,ANY-method}
-\alias{export,matrix,ANY,ANY-method}
+\alias{export,data.frame,character,missingOrNULL-method}
+\alias{export,data.frame,missingOrNULL,missingOrNULL-method}
+\alias{export,data.frame,missingOrNULL,character-method}
+\alias{export,matrix,character,missingOrNULL-method}
+\alias{export,matrix,missingOrNULL,missingOrNULL-method}
+\alias{export,matrix,missingOrNULL,character-method}
 \title{Export}
 \usage{
 export(object, con, format, ...)
 
-\S4method{export}{DataFrame,ANY,ANY}(
+\S4method{export}{DataFrame,character,missingOrNULL}(
   object,
   con,
   format,
-  ext = getOption("acid.export.ext", default = "csv"),
-  dir = getOption("acid.export.dir", default = "."),
-  file = NULL,
   rownames = TRUE,
   colnames = TRUE,
   overwrite = getOption("acid.overwrite", default = TRUE),
@@ -28,13 +35,26 @@ export(object, con, format, ...)
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
-\S4method{export}{GenomicRanges,ANY,missingOrNULL}(
+\S4method{export}{DataFrame,missingOrNULL,missingOrNULL}(
+  object,
+  con = NULL,
+  format,
+  dir = getOption("acid.export.dir", default = "."),
+  ...
+)
+
+\S4method{export}{DataFrame,missingOrNULL,character}(
+  object,
+  con = NULL,
+  format,
+  dir = getOption("acid.export.dir", default = "."),
+  ...
+)
+
+\S4method{export}{GenomicRanges,character,missingOrNULL}(
   object,
   con,
   format,
-  ext = getOption("acid.export.ext", default = "csv"),
-  dir = getOption("acid.export.dir", default = "."),
-  file = NULL,
   rownames = TRUE,
   colnames = TRUE,
   overwrite = getOption("acid.overwrite", default = TRUE),
@@ -42,7 +62,23 @@ export(object, con, format, ...)
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
-\S4method{export}{Matrix,ANY,missingOrNULL}(
+\S4method{export}{GenomicRanges,missingOrNULL,missingOrNULL}(
+  object,
+  con = NULL,
+  format,
+  dir = getOption("acid.export.dir", default = "."),
+  ...
+)
+
+\S4method{export}{GenomicRanges,missingOrNULL,character}(
+  object,
+  con = NULL,
+  format,
+  dir = getOption("acid.export.dir", default = "."),
+  ...
+)
+
+\S4method{export}{Matrix,character,missingOrNULL}(
   object,
   con,
   format,
@@ -53,10 +89,14 @@ export(object, con, format, ...)
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
+\S4method{export}{Matrix,missingOrNULL,missingOrNULL}(object, con, format)
+
+\S4method{export}{Matrix,missingOrNULL,character}(object, con, format)
+
 \S4method{export}{character,character,missingOrNULL}(
   object,
   con,
-  format = NULL,
+  format,
   append = FALSE,
   overwrite = getOption("acid.overwrite", default = TRUE),
   engine = getOption(x = "acid.export.engine", default = "base"),
@@ -79,13 +119,10 @@ export(object, con, format, ...)
   ...
 )
 
-\S4method{export}{data.frame,ANY,ANY}(
+\S4method{export}{data.frame,character,missingOrNULL}(
   object,
   con,
   format,
-  ext = getOption("acid.export.ext", default = "csv"),
-  dir = getOption("acid.export.dir", default = "."),
-  file = NULL,
   rownames = TRUE,
   colnames = TRUE,
   overwrite = getOption("acid.overwrite", default = TRUE),
@@ -93,18 +130,47 @@ export(object, con, format, ...)
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
-\S4method{export}{matrix,ANY,ANY}(
+\S4method{export}{data.frame,missingOrNULL,missingOrNULL}(
+  object,
+  con = NULL,
+  format,
+  dir = getOption("acid.export.dir", default = "."),
+  ...
+)
+
+\S4method{export}{data.frame,missingOrNULL,character}(
+  object,
+  con = NULL,
+  format,
+  dir = getOption("acid.export.dir", default = "."),
+  ...
+)
+
+\S4method{export}{matrix,character,missingOrNULL}(
   object,
   con,
   format,
-  ext = getOption("acid.export.ext", default = "csv"),
-  dir = getOption("acid.export.dir", default = "."),
-  file = NULL,
   rownames = TRUE,
   colnames = TRUE,
   overwrite = getOption("acid.overwrite", default = TRUE),
   engine = getOption(x = "acid.export.engine", "data.table"),
   quiet = getOption("acid.quiet", default = FALSE)
+)
+
+\S4method{export}{matrix,missingOrNULL,missingOrNULL}(
+  object,
+  con = NULL,
+  format,
+  dir = getOption("acid.export.dir", default = "."),
+  ...
+)
+
+\S4method{export}{matrix,missingOrNULL,character}(
+  object,
+  con = NULL,
+  format,
+  dir = getOption("acid.export.dir", default = "."),
+  ...
 )
 }
 \arguments{
@@ -124,30 +190,6 @@ vector, rather than writing to a connection.}
 An optional file format type, which can be used to override the file format
 inferred from \code{con}. Only recommended for file and URL paths that don't
 contain an extension.}
-
-\item{ext}{\code{character(1)}.
-Output file format extension.
-
-\code{matrix} supported arguments:
-\itemize{
-\item Comma separated values (CSV):
-\code{"csv"}, \code{"csv.bz2"}, \code{"csv.gz"}, \code{"csv.xz"}, \code{"csv.zip"}.
-\item Tab separated values (TSV):
-\code{"tsv"}, \code{"tsv.bz2"}, \code{"tsv.gz"}, \code{"tsv.xz"}, \code{"tsv.zip"}.
-}
-
-\code{Matrix} (\code{sparseMatrix}) supported arguments:
-\itemize{
-\item MatrixMarket exchange (MTX):
-\code{"mtx"}, \code{"mtx.bz2"}, \code{"mtx.gz"}, \code{"mtx.xz"}, \code{"mtx.zip"}.
-}}
-
-\item{dir}{\code{character(1)}.
-Directory path.}
-
-\item{file}{\code{character(1)}.
-File path. When left unset (default), the \code{ext} and \code{dir} arguments will
-be used instead.}
 
 \item{rownames}{\code{logical(1)}.
 Apply to row names.}
@@ -171,12 +213,36 @@ Currently supported:
 \item{quiet}{\code{logical(1)}.
 Perform command quietly, suppressing messages.}
 
+\item{dir}{\code{character(1)}.
+Directory path.}
+
+\item{...}{Additional arguments.}
+
+\item{ext}{\code{character(1)}.
+Output file format extension.
+
+\code{matrix} supported arguments:
+\itemize{
+\item Comma separated values (CSV):
+\code{"csv"}, \code{"csv.bz2"}, \code{"csv.gz"}, \code{"csv.xz"}, \code{"csv.zip"}.
+\item Tab separated values (TSV):
+\code{"tsv"}, \code{"tsv.bz2"}, \code{"tsv.gz"}, \code{"tsv.xz"}, \code{"tsv.zip"}.
+}
+
+\code{Matrix} (\code{sparseMatrix}) supported arguments:
+\itemize{
+\item MatrixMarket exchange (MTX):
+\code{"mtx"}, \code{"mtx.bz2"}, \code{"mtx.gz"}, \code{"mtx.xz"}, \code{"mtx.zip"}.
+}}
+
+\item{file}{\code{character(1)}.
+File path. When left unset (default), the \code{ext} and \code{dir} arguments will
+be used instead.}
+
 \item{append}{\code{logical(1)}.
 Append to output file.
 When enabled, automatically sets \code{overwrite} argument to \code{FALSE}.
 Requires readr package to be installed.}
-
-\item{...}{Additional arguments.}
 }
 \value{
 Invisible \code{character}.
