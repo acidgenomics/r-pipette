@@ -6,6 +6,7 @@
 \alias{export,GenomicRanges,ANY,missingOrNULL-method}
 \alias{export,Matrix,ANY,missingOrNULL-method}
 \alias{export,character,character,missingOrNULL-method}
+\alias{export,character,missingOrNULL,missingOrNULL-method}
 \alias{export,character,missingOrNULL,character-method}
 \alias{export,data.frame,ANY,ANY-method}
 \alias{export,matrix,ANY,ANY-method}
@@ -22,7 +23,7 @@ export(object, con, format, ...)
   file = NULL,
   rownames = TRUE,
   colnames = TRUE,
-  overwrite = NULL,
+  overwrite = getOption("acid.overwrite", default = TRUE),
   engine = getOption(x = "acid.export.engine", "data.table"),
   quiet = getOption("acid.quiet", default = FALSE)
 )
@@ -36,7 +37,7 @@ export(object, con, format, ...)
   file = NULL,
   rownames = TRUE,
   colnames = TRUE,
-  overwrite = NULL,
+  overwrite = getOption("acid.overwrite", default = TRUE),
   engine = getOption(x = "acid.export.engine", "data.table"),
   quiet = getOption("acid.quiet", default = FALSE)
 )
@@ -48,7 +49,7 @@ export(object, con, format, ...)
   ext = c("mtx.gz", "mtx.bz2", "mtx.xz", "mtx.zip", "mtx"),
   dir = getOption("acid.export.dir", default = "."),
   file = NULL,
-  overwrite = NULL,
+  overwrite = getOption("acid.overwrite", default = TRUE),
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
@@ -57,15 +58,23 @@ export(object, con, format, ...)
   con,
   format = NULL,
   append = FALSE,
-  overwrite = NULL,
+  overwrite = getOption("acid.overwrite", default = TRUE),
   engine = getOption(x = "acid.export.engine", default = "base"),
   quiet = getOption("acid.quiet", default = FALSE)
+)
+
+\S4method{export}{character,missingOrNULL,missingOrNULL}(
+  object,
+  con = NULL,
+  format,
+  dir = getOption("acid.export.dir", default = "."),
+  ...
 )
 
 \S4method{export}{character,missingOrNULL,character}(
   object,
   con = NULL,
-  format = c("txt", "txt.bz2", "txt.gz", "txt.xz", "txt.zip"),
+  format,
   dir = getOption("acid.export.dir", default = "."),
   ...
 )
@@ -79,7 +88,7 @@ export(object, con, format, ...)
   file = NULL,
   rownames = TRUE,
   colnames = TRUE,
-  overwrite = NULL,
+  overwrite = getOption("acid.overwrite", default = TRUE),
   engine = getOption(x = "acid.export.engine", "data.table"),
   quiet = getOption("acid.quiet", default = FALSE)
 )
@@ -93,7 +102,7 @@ export(object, con, format, ...)
   file = NULL,
   rownames = TRUE,
   colnames = TRUE,
-  overwrite = NULL,
+  overwrite = getOption("acid.overwrite", default = TRUE),
   engine = getOption(x = "acid.export.engine", "data.table"),
   quiet = getOption("acid.quiet", default = FALSE)
 )
