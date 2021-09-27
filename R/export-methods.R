@@ -108,8 +108,12 @@ NULL
 
 
 ## Updated 2021-09-27.
-.exportChoices <- list(
-    "character" = c("txt", "txt.bz2", "txt.gz", "txt.xz", "txt.zip")
+.exportFormatChoices <- list(
+    "character" = c("txt", "txt.bz2", "txt.gz", "txt.xz", "txt.zip"),
+    "matrix" = c(
+        "csv", "csv.bz2", "csv.gz", "csv.xz", "csv.zip",
+        "tsv", "tsv.bz2", "tsv.gz", "tsv.xz", "tsv.zip"
+    )
 )
 
 
@@ -128,7 +132,7 @@ NULL
             is.null(con),
             isString(dir)
         )
-        formatChoices <- .exportChoices[["character"]]
+        formatChoices <- .exportFormatChoices[["character"]]
         if (missing(format)) {
             format <- formatChoices[[1L]]
         }
@@ -169,7 +173,7 @@ formals(`export,character,format`)[["dir"]] <-
             isString(engine),
             isFlag(quiet)
         )
-        formatChoices <- .exportChoices[["character"]]
+        formatChoices <- .exportFormatChoices[["character"]]
         if (missing(format)) {
             format <- fileExt(con)
         }
@@ -190,14 +194,9 @@ formals(`export,character,format`)[["dir"]] <-
             assert(isFALSE(append))
         }
         whatFile <- con
-
-
-        ## FIXME Match this against format instead.
-        match <- str_match(string = format, pattern = extPattern)
+        match <- str_match(string = con, pattern = extPattern)
         compressExt <- match[1L, 4L]
         compress <- !is.na(compressExt)
-
-
         if (isAFile(con)) {
             con <- realpath(con)
             if (isTRUE(append) && isFALSE(quiet)) {
@@ -280,7 +279,6 @@ formals(`export,character,con`)[c("overwrite", "quiet")] <-
 
 
 
-## FIXME Need to rethink the format passthrough here.
 ## Updated 2021-09-27.
 `export,matrix,format` <-  # nolint
     function(
@@ -291,10 +289,7 @@ formals(`export,character,con`)[c("overwrite", "quiet")] <-
         ...
     ) {
         assert(isString(dir))
-        formatChoices <- c(
-            "csv", "csv.bz2", "csv.gz", "csv.xz", "csv.zip",
-            "tsv", "tsv.bz2", "tsv.gz", "tsv.xz", "tsv.zip"
-        )
+        formatChoices <- .exportFormatChoices[["matrix"]]
         if (missing(format)) {
             format <- formatChoices[[1L]]
         }
@@ -305,11 +300,10 @@ formals(`export,character,con`)[c("overwrite", "quiet")] <-
         name <- as.character(sym)
         dir <- initDir(dir)
         con <- file.path(dir, paste0(name, ".", format))
-        ## FIXME Need to rethink the format passthrough here.
         export(
             object = object,
             con = con,
-            format = NULL,
+            format = format,
             ...
         )
     }
@@ -357,6 +351,17 @@ formals(`export,matrix,format`)[["dir"]] <-
             isFlag(overwrite),
             isFlag(verbose)
         )
+
+
+
+        formatChoices <- .exportFormatChoices[["matrix"]]
+        if (missing(format)) {
+            format <- fileExt(con)
+        }
+        format <- match.arg(arg = format, choices = formatChoices)
+
+
+
         if (is.null(file)) {
             call <- standardizeCall()
             sym <- call[["object"]]
