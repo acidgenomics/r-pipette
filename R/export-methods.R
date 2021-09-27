@@ -92,26 +92,74 @@ NULL
 
 
 
+## character ===================================================================
+
+## FIXME Need to define these methods:
+## con = character, format = missing
+## con = missing, format = character
+
+## Updated 2021-09-27
+`export,character,format` <-
+    function(
+        object,
+        con = NULL,
+        format,
+        dir
+    ) {
+        ## FIXME Define the connection here internally.
+    }
+
 ## Updated 2021-09-27.
 `export,character` <-  # nolint
     function(
         object,
-        ## FIXME Rework this to single dir/file handling.
         con,  # FIXME
-        format,  # FIXME
+        ## FIXME Rework this, using missing by default.
+        ## FIXME Define these as choices internally.
+        format = c("txt", "txt.bz2", "txt.gz", "txt.xz", "txt.zip"),
 
-
-        ## FIXME Rename "ext" in favor of "format"?
-        ext = c("txt", "txt.bz2", "txt.gz", "txt.xz", "txt.zip"),
-        dir,
-        file = NULL,
 
 
         append = FALSE,
         overwrite,
         engine = getOption(x = "acid.export.engine", default = "base"),
-        quiet
+        quiet,
+
+
+        ## Deprecated in favor of "con".
+        file,
+        ## Deprecated in favor of "format".
+        ext,
+        ## Defunct in favor of "con".
+        dir
     ) {
+        if (!missing(dir)) {
+            .Defunct(sprintf(
+                "'%s' is defunct in favor of '%s'.",
+                "dir", "con"
+            ))
+        }
+        if (!missing(ext)) {
+            .Deprecated(sprintf(
+                "'%s' is deprecated in favor of '%s'.",
+                "ext", "format"
+            ))
+            format <- ext
+        }
+        if (!missing(file)) {
+            .Deprecated(sprintf(
+                "'%s' is deprecated in favor of '%s'.",
+                "file", "con"
+            ))
+            con <- file
+        }
+
+
+        if (missing(con)) {
+            ## FIXME Rework this approach, requiring ext.
+            ## FIXME Add assert requiring either dir or ext.
+        }
+
         assert(
             is.null(format),
             isString(dir),
@@ -238,6 +286,8 @@ formals(`export,character`)[c("dir", "overwrite", "quiet")] <-
 )
 
 
+
+## matrix ======================================================================
 
 #' Export `matrix` method
 #'
@@ -469,6 +519,8 @@ formals(`export,matrix`)[
 `export,DataFrame` <- `export,data.frame`  # nolint
 
 
+
+## Matrix ======================================================================
 
 #' Export `Matrix` (e.g. `sparseMatrix`) method
 #'
