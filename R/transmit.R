@@ -138,7 +138,11 @@ transmit <- function(
         FUN = function(url, destfile, compress = FALSE) {
             download(url = url, destfile = destfile)
             if (isTRUE(compress)) {
-                destfile <- compress(destfile, overwrite = TRUE)
+                destfile <- compress(
+                    file = destfile,
+                    remove = TRUE,
+                    overwrite = TRUE
+                )
             }
             realpath(destfile)
         },
