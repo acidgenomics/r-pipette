@@ -1,6 +1,6 @@
 context("atomize")
 
-test_that("DataFrame", {
+test_that("DFrame", {
     object <- encode(df)
     expect_false(any(bapply(X = object, FUN = is.atomic)))
     object <- atomize(object)

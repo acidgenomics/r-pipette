@@ -6,8 +6,8 @@
 ## Not exporting this method because we don't want to mask the default
 ## conventions currently used by Bioconductor.
 ##
-## Updated 2021-08-24.
-`.coerce,DataFrame,data.frame` <-  # nolint
+## Updated 2021-09-28.
+`.coerce,DFrame,data.frame` <-  # nolint
     function(x) {
         ## Decode Rle columns, which can be coerced.
         x <- decode(x)
