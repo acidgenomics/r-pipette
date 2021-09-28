@@ -38,11 +38,9 @@ below to see their documentation.
 \describe{
   \item{AcidBase}{\code{\link[AcidBase]{compress}}, \code{\link[AcidBase:compress]{decompress}}, \code{\link[AcidBase]{download}}, \code{\link[AcidBase]{pasteURL}}, \code{\link[AcidBase:reexports]{tar}}, \code{\link[AcidBase:reexports]{untar}}}
 
-  \item{AcidGenerics}{\code{\link[AcidGenerics:reexports]{DataFrame}}, \code{\link[AcidGenerics:reexports]{metadata}}, \code{\link[AcidGenerics:reexports]{metadata<-}}}
+  \item{AcidGenerics}{\code{\link[AcidGenerics:reexports]{DataFrame}}, \code{\link[AcidGenerics:reexports]{GRanges}}, \code{\link[AcidGenerics:reexports]{GRangesList}}, \code{\link[AcidGenerics:reexports]{metadata}}, \code{\link[AcidGenerics:reexports]{metadata<-}}}
 
   \item{data.table}{\code{\link[data.table]{data.table}}, \code{\link[data.table]{rbindlist}}}
-
-  \item{GenomicRanges}{\code{\link[GenomicRanges:GRanges-class]{GRanges}}, \code{\link[GenomicRanges:GRangesList-class]{GRangesList}}}
 
   \item{Matrix}{\code{\link[Matrix]{Matrix}}, \code{\link[Matrix]{sparseMatrix}}}
 
