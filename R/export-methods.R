@@ -1,8 +1,3 @@
-## FIXME Legacy `ext` and `dir` arguments need to work here, but inform the
-## user regarding their deprecation.
-
-
-
 #' Export
 #'
 #' @name export
@@ -33,6 +28,9 @@
 #'   Append to output file.
 #'   When enabled, automatically sets `overwrite` argument to `FALSE`.
 #'   Requires readr package to be installed.
+#' @param con `character(1)`.
+#'   File path.
+#'   Alternatively, can leave unset and use `ext` and `dir` arguments instead.
 #' @param engine `character(1)`.
 #'   Engine (package) to use for export.
 #'   Currently supported:
@@ -43,8 +41,7 @@
 #' @param ext `character(1)`.
 #'   *Deprecated in favor of `format` argument.*
 #' @param file `character(1)`.
-#'   File path. When left unset (default), the `ext` and `dir` arguments will
-#'   be used instead.
+#'   *Deprecated in favor of `con` argument.*
 #' @param format `character(1)`.
 #'   Output file format extension.
 #'
@@ -144,32 +141,42 @@ NULL
         object,
         con = NULL,
         format,
-        ext,
         dir,
-        ...
+        ...,
+        ext,
+        file
+
     ) {
+        if (!missing(file)) {
+            ## > .Deprecated(sprintf(
+            ## >     "Use '%s' instead of '%s'.",
+            ## >     "con", "file"
+            ## > ))
+            con <- file
+        }
         if (missing(con)) {
             con <- NULL
         }
         if (!missing(ext)) {
-            .Deprecated(sprintf("Use '%s' instead of '%s'.", "format", "ext"))
+            ## > .Deprecated(sprintf(
+            ## >     "Use '%s' instead of '%s'.",
+            ## >     "format", "ext"
+            ## > ))
             format <- ext
         }
-        assert(
-            is.null(con),
-            isString(dir)
-        )
+        assert(isString(dir))
         formatChoices <- .exportFormatChoices[["character"]]
         if (missing(format)) {
             format <- formatChoices[[1L]]
         }
         format <- match.arg(arg = format, choices = formatChoices)
-        call <- standardizeCall()
-        sym <- call[["object"]]
-        assert(is.symbol(sym), msg = .symError)
-        name <- as.character(sym)
-        dir <- initDir(dir)
-        con <- file.path(dir, paste0(name, ".", format))
+        if (is.null(con)) {
+            call <- standardizeCall()
+            sym <- call[["object"]]
+            assert(is.symbol(sym), msg = .symError)
+            name <- as.character(sym)
+            con <- file.path(dir, paste0(name, ".", format))
+        }
         export(
             object = object,
             con = con,
@@ -182,7 +189,7 @@ formals(`export,character,format`)[["dir"]] <-
     .formalsList[["export.dir"]]
 
 ## This is the primary character method that uses "con" for file path.
-## Updated 2021-09-27.
+## Updated 2021-09-28.
 `export,character,con` <-  # nolint
     function(
         object,
@@ -286,6 +293,7 @@ formals(`export,character,format`)[["dir"]] <-
                 whatFun = whatFun
             )
         }
+        initDir(dirname(con))
         what <- get(x = whatFun, envir = asNamespace(whatPkg), inherits = TRUE)
         assert(is.function(what))
         do.call(what = what, args = args)
@@ -312,15 +320,26 @@ formals(`export,character,con`)[c("overwrite", "quiet")] <-
         object,
         con = NULL,
         format,
-        ext,
         dir,
-        ...
+        ...,
+        ext,
+        file
     ) {
+        if (!missing(file)) {
+            ## > .Deprecated(sprintf(
+            ## >     "Use '%s' instead of '%s'.",
+            ## >     "con", "file"
+            ## > ))
+            con <- file
+        }
         if (missing(con)) {
             con <- NULL
         }
         if (!missing(ext)) {
-            .Deprecated(sprintf("Use '%s' instead of '%s'.", "format", "ext"))
+            ## > .Deprecated(sprintf(
+            ## >     "Use '%s' instead of '%s'.",
+            ## >     "format", "ext"
+            ## > ))
             format <- ext
         }
         assert(isString(dir))
@@ -329,12 +348,13 @@ formals(`export,character,con`)[c("overwrite", "quiet")] <-
             format <- formatChoices[[1L]]
         }
         format <- match.arg(arg = format, choices = formatChoices)
-        call <- standardizeCall()
-        sym <- call[["object"]]
-        assert(is.symbol(sym), msg = .symError)
-        name <- as.character(sym)
-        dir <- initDir(dir)
-        con <- file.path(dir, paste0(name, ".", format))
+        if (is.null(con)) {
+            call <- standardizeCall()
+            sym <- call[["object"]]
+            assert(is.symbol(sym), msg = .symError)
+            name <- as.character(sym)
+            con <- file.path(dir, paste0(name, ".", format))
+        }
         export(
             object = object,
             con = con,
@@ -531,6 +551,7 @@ formals(`export,matrix,format`)[["dir"]] <-
                 whatFun = whatFun
             )
         }
+        initDir(dirname(con))
         what <- get(x = whatFun, envir = asNamespace(whatPkg), inherits = TRUE)
         assert(is.function(what))
         do.call(what = what, args = args)
@@ -581,15 +602,26 @@ formals(`export,matrix,con`)[c("overwrite", "quiet")] <-
         object,
         con = NULL,
         format,
-        ext,
         dir,
-        ...
+        ...,
+        ext,
+        file
     ) {
+        if (!missing(file)) {
+            ## > .Deprecated(sprintf(
+            ## >     "Use '%s' instead of '%s'.",
+            ## >     "con", "file"
+            ## > ))
+            con <- file
+        }
         if (missing(con)) {
             con <- NULL
         }
         if (!missing(ext)) {
-            .Deprecated(sprintf("Use '%s' instead of '%s'.", "format", "ext"))
+            ## > .Deprecated(sprintf(
+            ## >     "Use '%s' instead of '%s'.",
+            ## >     "format", "ext"
+            ## > ))
             format <- ext
         }
         assert(isString(dir))
@@ -598,12 +630,13 @@ formals(`export,matrix,con`)[c("overwrite", "quiet")] <-
             format <- formatChoices[[1L]]
         }
         format <- match.arg(arg = format, choices = formatChoices)
-        call <- standardizeCall()
-        sym <- call[["object"]]
-        assert(is.symbol(sym), msg = .symError)
-        name <- as.character(sym)
-        dir <- initDir(dir)
-        con <- file.path(dir, paste0(name, ".", format))
+        if (is.null(con)) {
+            call <- standardizeCall()
+            sym <- call[["object"]]
+            assert(is.symbol(sym), msg = .symError)
+            name <- as.character(sym)
+            con <- file.path(dir, paste0(name, ".", format))
+        }
         export(
             object = object,
             con = con,
@@ -619,7 +652,7 @@ formals(`export,Matrix,format`)[["dir"]] <-
 
 #' Export `Matrix` (e.g. `sparseMatrix`) method
 #'
-#' @note Updated 2021-09-27.
+#' @note Updated 2021-09-28.
 #' @noRd
 #'
 #' @details
@@ -678,6 +711,7 @@ formals(`export,Matrix,format`)[["dir"]] <-
                 whatFun = whatFun
             )
         }
+        initDir(dirname(con))
         args <- list("obj" = object, "file" = file)
         what <- get(x = whatFun, envir = asNamespace(whatPkg), inherits = TRUE)
         assert(is.function(what))
