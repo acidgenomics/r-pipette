@@ -72,7 +72,7 @@ test_that("GFF3", {
         con = file.path("cache", "example.gff3"),
         metadata = TRUE
     )
-    expect_s4_class(object, "GenomicRanges")
+    expect_s4_class(object, "GRanges")
     expect_identical(
         object = levels(seqnames(object)),
         expected = "1"
@@ -120,7 +120,7 @@ test_that("GTF", {
         file = file.path("cache", "example.gtf"),
         metadata = TRUE
     )
-    expect_s4_class(object, "GenomicRanges")
+    expect_s4_class(object, "GRanges")
     expect_identical(
         object = levels(seqnames(object)),
         expected = "1"

@@ -4,10 +4,10 @@
 #'
 #' @keywords internal
 #'
-#' @importClassesFrom AcidGenerics DataFrame List SimpleList missingOrNULL
+#' @importClassesFrom AcidGenerics DFrame IRanges List Ranges SimpleList
+#'   missingOrNULL
 #' @importClassesFrom BiocIO BiocFile
 #' @importClassesFrom GenomicRanges GRanges
-#' @importClassesFrom IRanges IRanges Ranges
 #' @importClassesFrom Matrix Matrix
 #'
 #' @importMethodsFrom IRanges end start width
