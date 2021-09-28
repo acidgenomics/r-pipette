@@ -57,7 +57,7 @@ test_that("Invalid parameters", {
     )
     expect_error(
         object = saveData("example"),
-        regexp = "non-standard evaluation"
+        regexp = "NSE"
     )
     expect_error(
         object = saveData(object1, dir = NULL),
