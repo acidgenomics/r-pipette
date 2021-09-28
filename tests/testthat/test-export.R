@@ -2,7 +2,8 @@ context("export : character")
 
 test_that("'ext' argument", {
     vec <- c("hello", "world")
-    for (ext in eval(formals(`export,character`)[["ext"]])) {
+    formats <- .exportFormatChoices[["character"]]
+    for (ext in formats) {
         file <- paste0("vec", ".", ext)
         x <- export(object = vec, ext = ext)
         expect_identical(x, realpath(file))

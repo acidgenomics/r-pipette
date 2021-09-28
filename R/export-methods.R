@@ -1,16 +1,12 @@
-## FIXME Need to fix the documentation to not link to reexports here.
-## FIXME Rework using BiocIO generic approach.
-## FIXME Need to figure out how to deprecate / rework ext approach.
-## FIXME Need to improve documentation consistency with import.
-## FIXME Need to rethink our con, ext, dir, file handling here.
-##       Now this is too confusing when using BiocIO method.
+## FIXME Legacy `ext` and `dir` arguments need to work here, but inform the
+## user regarding their deprecation.
 
 
 
 #' Export
 #'
 #' @name export
-#' @note Updated 2021-09-27.
+#' @note Updated 2021-09-28.
 #'
 #' @section Row names:
 #'
@@ -33,6 +29,10 @@
 #' @param object Object.
 #'   An object supporting `dim()`, or a supported class capable of being coerced
 #'   to `data.frame`, to be written to disk.
+#' @param append `logical(1)`.
+#'   Append to output file.
+#'   When enabled, automatically sets `overwrite` argument to `FALSE`.
+#'   Requires readr package to be installed.
 #' @param engine `character(1)`.
 #'   Engine (package) to use for export.
 #'   Currently supported:
@@ -41,6 +41,11 @@
 #'   - readr
 #'   - vroom
 #' @param ext `character(1)`.
+#'   *Deprecated in favor of `format` argument.*
+#' @param file `character(1)`.
+#'   File path. When left unset (default), the `ext` and `dir` arguments will
+#'   be used instead.
+#' @param format `character(1)`.
 #'   Output file format extension.
 #'
 #'   `matrix` supported arguments:
@@ -52,13 +57,6 @@
 #'   `Matrix` (`sparseMatrix`) supported arguments:
 #'   - MatrixMarket exchange (MTX):
 #'     `"mtx"`, `"mtx.bz2"`, `"mtx.gz"`, `"mtx.xz"`, `"mtx.zip"`.
-#' @param file `character(1)`.
-#'   File path. When left unset (default), the `ext` and `dir` arguments will
-#'   be used instead.
-#' @param append `logical(1)`.
-#'   Append to output file.
-#'   When enabled, automatically sets `overwrite` argument to `FALSE`.
-#'   Requires readr package to be installed.
 #' @param ... Additional arguments.
 #'
 #' @return Invisible `character`.
@@ -140,15 +138,23 @@ NULL
 
 
 ## This method sets "con" argument automatically from "format" and "dir".
-## Updated 2021-09-27.
+## Updated 2021-09-28.
 `export,character,format` <-
     function(
         object,
         con = NULL,
         format,
+        ext,
         dir,
         ...
     ) {
+        if (missing(con)) {
+            con <- NULL
+        }
+        if (!missing(ext)) {
+            .Deprecated(sprintf("Use '%s' instead of '%s'.", "format", "ext"))
+            format <- ext
+        }
         assert(
             is.null(con),
             isString(dir)
@@ -300,15 +306,23 @@ formals(`export,character,con`)[c("overwrite", "quiet")] <-
 
 
 
-## Updated 2021-09-27.
+## Updated 2021-09-28.
 `export,matrix,format` <-  # nolint
     function(
         object,
         con = NULL,
         format,
+        ext,
         dir,
         ...
     ) {
+        if (missing(con)) {
+            con <- NULL
+        }
+        if (!missing(ext)) {
+            .Deprecated(sprintf("Use '%s' instead of '%s'.", "format", "ext"))
+            format <- ext
+        }
         assert(isString(dir))
         formatChoices <- .exportFormatChoices[["matrix"]]
         if (missing(format)) {
@@ -561,15 +575,23 @@ formals(`export,matrix,con`)[c("overwrite", "quiet")] <-
 
 
 
-## Updated 2021-09-27.
+## Updated 2021-09-28.
 `export,Matrix,format` <-  # nolint
     function(
         object,
         con = NULL,
         format,
+        ext,
         dir,
         ...
     ) {
+        if (missing(con)) {
+            con <- NULL
+        }
+        if (!missing(ext)) {
+            .Deprecated(sprintf("Use '%s' instead of '%s'.", "format", "ext"))
+            format <- ext
+        }
         assert(isString(dir))
         formatChoices <- .exportFormatChoices[["Matrix"]]
         if (missing(format)) {
