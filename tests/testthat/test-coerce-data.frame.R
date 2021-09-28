@@ -28,7 +28,7 @@ test_that("DataFrame with complex S4 columns", {
         "b" = SimpleList("aa" = 1L, "bb" = 2L)
     )
     expect_error(
-        object = `.coerce,DataFrame,data.frame`(x),
+        object = `.coerce,DFrame,data.frame`(x),
         regexp = "SimpleList"
     )
 })

@@ -232,7 +232,7 @@ NULL
             "row.names" = row.names,
             "check.names" = TRUE
         )
-        out <- do.call(what = DFrame, args = args)
+        out <- do.call(what = DataFrame, args = args)
         assert(identical(dim(out), c(nr, nc)))
         out
     }
@@ -334,6 +334,7 @@ NULL
 ## Updated 2021-09-28.
 as_tibble.DFrame <-  # nolint
     function(x, ..., rownames) {
+        ## FIXME Need to rename this.
         x <- `.coerce,DFrame,data.frame`(x)
         if (!hasRownames(x)) {
             rownames <- NULL
@@ -401,6 +402,7 @@ rm(.tbl_rownames)
 ## Updated 2021-09-28.
 as.data.table.DFrame <-  # nolint
     function(x, keep.rownames = TRUE, ...) {  # nolint
+        ## FIXME Need to rename this.
         x <- `.coerce,DFrame,data.frame`(x)
         if (!hasRownames(x)) {
             keep.rownames <- FALSE  # nolint
