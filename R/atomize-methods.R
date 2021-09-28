@@ -54,12 +54,12 @@ setMethod(
 
 
 ## Updated 2019-07-19.
-`atomize,DataFrame` <-  ## nolint
+`atomize,DFrame` <-  ## nolint
     function(object) {
         object <- decode(object)
         object <- as.data.frame(object)
         object <- atomize(object)
-        object <- as(object, "DataFrame")
+        object <- as(object, "DFrame")
         object
     }
 
@@ -69,8 +69,8 @@ setMethod(
 #' @export
 setMethod(
     f = "atomize",
-    signature = signature("DataFrame"),
-    definition = `atomize,DataFrame`
+    signature = signature("DFrame"),
+    definition = `atomize,DFrame`
 )
 
 
@@ -88,6 +88,6 @@ setMethod(
 #' @export
 setMethod(
     f = "atomize",
-    signature = signature("Ranges"),
+    signature = signature(object = "Ranges"),
     definition = `atomize,Ranges`
 )
