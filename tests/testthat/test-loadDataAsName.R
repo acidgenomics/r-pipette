@@ -32,7 +32,7 @@ test_that("RDA", {
 test_that("Standard evaluation", {
     expect_error(
         object = loadDataAsName(data = "gr.rda", dir = dir),
-        regexp = "non-standard evaluation"
+        regexp = "NSE"
     )
 })
 

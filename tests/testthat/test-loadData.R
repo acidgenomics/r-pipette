@@ -33,7 +33,7 @@ test_that("Error on mixed extensions (no RDS/RDA soup).", {
 test_that("Standard evaluation", {
     expect_error(
         object = loadData("gr.rda", dir = dir),
-        regexp = "non-standard evaluation"
+        regexp = "NSE"
     )
 })
 
