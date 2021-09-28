@@ -4,10 +4,8 @@
 #'
 #' @keywords internal
 #'
-#' @importClassesFrom AcidGenerics DFrame IRanges List Ranges SimpleList
-#'   missingOrNULL
-#' @importClassesFrom BiocIO BiocFile
-#' @importClassesFrom GenomicRanges GRanges
+#' @importClassesFrom AcidGenerics BiocFile DFrame GRanges IRanges List Ranges
+#'   SimpleList missingOrNULL
 #' @importClassesFrom Matrix Matrix
 #'
 #' @importMethodsFrom IRanges end start width
