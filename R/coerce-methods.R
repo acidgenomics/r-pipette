@@ -140,12 +140,12 @@ NULL
 #' x <- as_tibble(DFrame)
 #' print(x)
 #'
-#' ## `GenomicRanges` to `data.table` ====
+#' ## `GRanges` to `data.table` ====
 #' x <- as(GRanges, "data.table")
 #' x <- as.data.table(GRanges)
 #' print(x)
 #'
-#' ## `GenomicRanges` to `tbl_df` ====
+#' ## `GRanges` to `tbl_df` ====
 #' x <- as(GRanges, "tbl_df")
 #' x <- as_tibble(GRanges)
 #' print(x)
@@ -358,7 +358,7 @@ formals(as_tibble.IRanges)[["rownames"]] <- .tbl_rownames
 #' @rdname coerce
 #' @export
 ## Updated 2020-01-19.
-as_tibble.GenomicRanges <- as_tibble.IRanges  # nolint
+as_tibble.GRanges <- as_tibble.IRanges  # nolint
 
 ## Updated 2019-07-19.
 `coerce,ANY,tbl_df` <-  # nolint
@@ -375,7 +375,7 @@ as_tibble.GenomicRanges <- as_tibble.IRanges  # nolint
     `coerce,ANY,tbl_df`
 
 ## Updated 2019-07-20.
-`coerce,GenomicRanges,tbl_df` <-  # nolint
+`coerce,GRanges,tbl_df` <-  # nolint
     `coerce,ANY,tbl_df`
 
 ## Updated 2020-01-19.
@@ -414,7 +414,7 @@ as.data.table.IRanges <-  # nolint
 #' @rdname coerce
 #' @export
 ## Updated 2020-01-19.
-as.data.table.GenomicRanges <-  # nolint
+as.data.table.GRanges <-  # nolint
     as.data.table.IRanges
 
 ## Updated 2019-07-19.
@@ -436,7 +436,7 @@ as.data.table.GenomicRanges <-  # nolint
     `coerce,ANY,data.table`
 
 ## Updated 2019-07-20.
-`coerce,GenomicRanges,data.table` <-  # nolint
+`coerce,GRanges,data.table` <-  # nolint
     `coerce,ANY,data.table`
 
 
@@ -496,19 +496,19 @@ setAs(
 )
 
 #' @rdname coerce
-#' @name coerce,GenomicRanges,data.table-method
+#' @name coerce,GRanges,data.table-method
 setAs(
-    from = "GenomicRanges",
+    from = "GRanges",
     to = "data.table",
-    def = `coerce,GenomicRanges,data.table`
+    def = `coerce,GRanges,data.table`
 )
 
 #' @rdname coerce
-#' @name coerce,GenomicRanges,tbl_df-method
+#' @name coerce,GRanges,tbl_df-method
 setAs(
-    from = "GenomicRanges",
+    from = "GRanges",
     to = "tbl_df",
-    def = `coerce,GenomicRanges,tbl_df`
+    def = `coerce,GRanges,tbl_df`
 )
 
 #' @rdname coerce

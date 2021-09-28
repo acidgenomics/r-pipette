@@ -588,10 +588,10 @@ formals(`export,matrix,con`)[c("overwrite", "quiet")] <-
 
 
 
-`export,GenomicRanges,con` <-   # nolint
+`export,GRanges,con` <-   # nolint
     `export,DataFrame,con`
 
-`export,GenomicRanges,format` <-   # nolint
+`export,GRanges,format` <-   # nolint
     `export,DataFrame,format`
 
 
@@ -813,11 +813,11 @@ setMethod(
 setMethod(
     f = "export",
     signature = signature(
-        object = "GenomicRanges",
+        object = "GRanges",
         con = "character",
         format = "character"
     ),
-    definition = `export,GenomicRanges,con`
+    definition = `export,GRanges,con`
 )
 
 #' @rdname export
@@ -825,11 +825,11 @@ setMethod(
 setMethod(
     f = "export",
     signature = signature(
-        object = "GenomicRanges",
+        object = "GRanges",
         con = "character",
         format = "missingOrNULL"
     ),
-    definition = `export,GenomicRanges,con`
+    definition = `export,GRanges,con`
 )
 
 #' @rdname export
@@ -837,11 +837,11 @@ setMethod(
 setMethod(
     f = "export",
     signature = signature(
-        object = "GenomicRanges",
+        object = "GRanges",
         con = "missingOrNULL",
         format = "missingOrNULL"
     ),
-    definition = `export,GenomicRanges,format`
+    definition = `export,GRanges,format`
 )
 
 #' @rdname export
@@ -849,11 +849,11 @@ setMethod(
 setMethod(
     f = "export",
     signature = signature(
-        object = "GenomicRanges",
+        object = "GRanges",
         con = "missingOrNULL",
         format = "character"
     ),
-    definition = `export,GenomicRanges,format`
+    definition = `export,GRanges,format`
 )
 
 #' @rdname export
