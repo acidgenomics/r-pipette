@@ -37,7 +37,7 @@ test_that("Rename and compress", {
     expected <- file.path(getwd(), "readme.txt.gz")
     names(expected) <- "README.txt"
     expect_identical(object, expected)
-    unlink("readme.txt.gz")
+    file.remove(object)
 })
 
 test_that("URL return", {

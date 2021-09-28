@@ -333,7 +333,7 @@ NULL
             }
             destfile <- decompress(
                 file = file,
-                remove = FALSE,
+                remove = TRUE,
                 overwrite = TRUE
             )
             assert(isString(destfile))
