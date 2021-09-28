@@ -56,6 +56,7 @@ export(object, con, format, ...)
   object,
   con = NULL,
   format,
+  ext,
   dir = getOption("acid.export.dir", default = "."),
   ...
 )
@@ -64,6 +65,7 @@ export(object, con, format, ...)
   object,
   con = NULL,
   format,
+  ext,
   dir = getOption("acid.export.dir", default = "."),
   ...
 )
@@ -94,6 +96,7 @@ export(object, con, format, ...)
   object,
   con = NULL,
   format,
+  ext,
   dir = getOption("acid.export.dir", default = "."),
   ...
 )
@@ -102,6 +105,7 @@ export(object, con, format, ...)
   object,
   con = NULL,
   format,
+  ext,
   dir = getOption("acid.export.dir", default = "."),
   ...
 )
@@ -126,6 +130,7 @@ export(object, con, format, ...)
   object,
   con = NULL,
   format,
+  ext,
   dir = getOption("acid.export.dir", default = "."),
   ...
 )
@@ -134,6 +139,7 @@ export(object, con, format, ...)
   object,
   con = NULL,
   format,
+  ext,
   dir = getOption("acid.export.dir", default = "."),
   ...
 )
@@ -162,6 +168,7 @@ export(object, con, format, ...)
   object,
   con = NULL,
   format,
+  ext,
   dir = getOption("acid.export.dir", default = "."),
   ...
 )
@@ -170,6 +177,7 @@ export(object, con, format, ...)
   object,
   con = NULL,
   format,
+  ext,
   dir = getOption("acid.export.dir", default = "."),
   ...
 )
@@ -200,6 +208,7 @@ export(object, con, format, ...)
   object,
   con = NULL,
   format,
+  ext,
   dir = getOption("acid.export.dir", default = "."),
   ...
 )
@@ -208,6 +217,7 @@ export(object, con, format, ...)
   object,
   con = NULL,
   format,
+  ext,
   dir = getOption("acid.export.dir", default = "."),
   ...
 )
@@ -238,6 +248,7 @@ export(object, con, format, ...)
   object,
   con = NULL,
   format,
+  ext,
   dir = getOption("acid.export.dir", default = "."),
   ...
 )
@@ -246,6 +257,7 @@ export(object, con, format, ...)
   object,
   con = NULL,
   format,
+  ext,
   dir = getOption("acid.export.dir", default = "."),
   ...
 )
@@ -263,10 +275,22 @@ file connection is created and then closed after exporting the object. If a
 resource.  If missing, the function will return the output as a character
 vector, rather than writing to a connection.}
 
-\item{format}{\code{character(1)} or \code{missing}.
-An optional file format type, which can be used to override the file format
-inferred from \code{con}. Only recommended for file and URL paths that don't
-contain an extension.}
+\item{format}{\code{character(1)}.
+Output file format extension.
+
+\code{matrix} supported arguments:
+\itemize{
+\item Comma separated values (CSV):
+\code{"csv"}, \code{"csv.bz2"}, \code{"csv.gz"}, \code{"csv.xz"}, \code{"csv.zip"}.
+\item Tab separated values (TSV):
+\code{"tsv"}, \code{"tsv.bz2"}, \code{"tsv.gz"}, \code{"tsv.xz"}, \code{"tsv.zip"}.
+}
+
+\code{Matrix} (\code{sparseMatrix}) supported arguments:
+\itemize{
+\item MatrixMarket exchange (MTX):
+\code{"mtx"}, \code{"mtx.bz2"}, \code{"mtx.gz"}, \code{"mtx.xz"}, \code{"mtx.zip"}.
+}}
 
 \item{rownames}{\code{logical(1)}.
 Apply to row names.}
@@ -290,6 +314,9 @@ Currently supported:
 \item{quiet}{\code{logical(1)}.
 Perform command quietly, suppressing messages.}
 
+\item{ext}{\code{character(1)}.
+\emph{Deprecated in favor of \code{format} argument.}}
+
 \item{dir}{\code{character(1)}.
 Directory path.}
 
@@ -299,23 +326,6 @@ Directory path.}
 Append to output file.
 When enabled, automatically sets \code{overwrite} argument to \code{FALSE}.
 Requires readr package to be installed.}
-
-\item{ext}{\code{character(1)}.
-Output file format extension.
-
-\code{matrix} supported arguments:
-\itemize{
-\item Comma separated values (CSV):
-\code{"csv"}, \code{"csv.bz2"}, \code{"csv.gz"}, \code{"csv.xz"}, \code{"csv.zip"}.
-\item Tab separated values (TSV):
-\code{"tsv"}, \code{"tsv.bz2"}, \code{"tsv.gz"}, \code{"tsv.xz"}, \code{"tsv.zip"}.
-}
-
-\code{Matrix} (\code{sparseMatrix}) supported arguments:
-\itemize{
-\item MatrixMarket exchange (MTX):
-\code{"mtx"}, \code{"mtx.bz2"}, \code{"mtx.gz"}, \code{"mtx.xz"}, \code{"mtx.zip"}.
-}}
 
 \item{file}{\code{character(1)}.
 File path. When left unset (default), the \code{ext} and \code{dir} arguments will
@@ -329,7 +339,7 @@ File path(s).
 Export
 }
 \note{
-Updated 2021-09-27.
+Updated 2021-09-28.
 }
 \section{Row names}{
 
