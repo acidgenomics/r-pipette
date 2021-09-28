@@ -2,13 +2,13 @@
 #' @export
 AcidGenerics::DataFrame
 
-#' @importFrom GenomicRanges GRanges
+#' @importFrom AcidGenerics GRanges
 #' @export
-GenomicRanges::GRanges
+AcidGenerics::GRanges
 
-#' @importFrom GenomicRanges GRangesList
+#' @importFrom AcidGenerics GRangesList
 #' @export
-GenomicRanges::GRangesList
+AcidGenerics::GRangesList
 
 #' @importFrom Matrix Matrix
 #' @export
@@ -62,10 +62,9 @@ data.table::rbindlist
 #' @export
 tibble::rownames_to_column
 
-## GenomeInfoDb
 #' @rdname reexports
 #' @name seqnames
-#' @importFrom GenomicRanges seqnames
+#' @importFrom AcidGenerics seqnames
 #' @export
 NULL
 
@@ -89,19 +88,19 @@ AcidBase::untar
 
 #' @rdname reexports
 #' @name CompressedGRangesList-class
-#' @importClassesFrom GenomicRanges CompressedGRangesList
+#' @importClassesFrom AcidGenerics CompressedGRangesList
 #' @exportClass CompressedGRangesList
 NULL
 
 #' @rdname reexports
 #' @name GRanges-class
-#' @importClassesFrom GenomicRanges GRanges
+#' @importClassesFrom AcidGenerics GRanges
 #' @exportClass GRanges
 NULL
 
 #' @rdname reexports
 #' @name GRangesList-class
-#' @importClassesFrom GenomicRanges GRangesList
+#' @importClassesFrom AcidGenerics GRangesList
 #' @exportClass GRangesList
 NULL
 
