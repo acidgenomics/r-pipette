@@ -6,7 +6,7 @@
 #'
 #' @importClassesFrom AcidGenerics DataFrame List SimpleList missingOrNULL
 #' @importClassesFrom BiocIO BiocFile
-#' @importClassesFrom GenomicRanges GenomicRanges
+#' @importClassesFrom GenomicRanges GRanges
 #' @importClassesFrom IRanges IRanges Ranges
 #' @importClassesFrom Matrix Matrix
 #'
