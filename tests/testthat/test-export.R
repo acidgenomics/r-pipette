@@ -34,6 +34,7 @@ test_that("'engine' argument", {
         "readr",
         "vroom"
     )) {
+        ## FIXME This check is now failing.
         x <- export(
             object = vec,
             file = file,

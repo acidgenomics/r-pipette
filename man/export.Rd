@@ -170,6 +170,7 @@ export(object, con, format, ...)
   format,
   ext,
   dir = getOption("acid.export.dir", default = "."),
+  file,
   ...
 )
 
@@ -179,6 +180,7 @@ export(object, con, format, ...)
   format,
   ext,
   dir = getOption("acid.export.dir", default = "."),
+  file,
   ...
 )
 
@@ -267,13 +269,9 @@ export(object, con, format, ...)
 An object supporting \code{dim()}, or a supported class capable of being coerced
 to \code{data.frame}, to be written to disk.}
 
-\item{con}{\code{character(1)}, \code{connection}, or \code{missing}.
-The connection from which data is loaded or to which data is saved. If this
-is a character vector, it is assumed to be a filename, and a corresponding
-file connection is created and then closed after exporting the object. If a
-\code{BiocFile} derivative, the data is loaded from or saved to the underlying
-resource.  If missing, the function will return the output as a character
-vector, rather than writing to a connection.}
+\item{con}{\code{character(1)}.
+File path.
+Alternatively, can leave unset and use \code{ext} and \code{dir} arguments instead.}
 
 \item{format}{\code{character(1)}.
 Output file format extension.
@@ -328,8 +326,7 @@ When enabled, automatically sets \code{overwrite} argument to \code{FALSE}.
 Requires readr package to be installed.}
 
 \item{file}{\code{character(1)}.
-File path. When left unset (default), the \code{ext} and \code{dir} arguments will
-be used instead.}
+\emph{Deprecated in favor of \code{con} argument.}}
 }
 \value{
 Invisible \code{character}.
