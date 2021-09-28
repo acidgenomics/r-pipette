@@ -26,8 +26,6 @@ Imports:
     AcidCLI (>= 0.1.7),
     AcidGenerics (>= 0.5.21),
     BiocIO (>= 1.2.0),
-    GenomicRanges (>= 1.44.0),
-    IRanges (>= 2.26.0),
     Matrix (>= 1.3),
     RCurl (>= 1.98),
     data.table (>= 1.14.2),

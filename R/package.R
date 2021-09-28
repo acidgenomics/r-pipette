@@ -8,8 +8,6 @@
 #'   SimpleList missingOrNULL
 #' @importClassesFrom Matrix Matrix
 #'
-#' @importMethodsFrom IRanges end start width
-#'
 #' @importFrom AcidBase basenameSansExt dots download download.file fileExt
 #'   initDir methodFunction packageName packageVersion pasteURL realpath
 #'   requireNamespaces standardizeCall
