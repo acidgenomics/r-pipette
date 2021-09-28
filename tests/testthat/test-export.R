@@ -93,9 +93,11 @@ test_that("'append' argument", {
 context("export : matrix")
 
 test_that("'ext' argument", {
-    for (ext in .exportMatrixChoices) {
+    formats <- .exportFormatChoices[["Matrix"]]
+    for (ext in formats) {
         mat1 <- mat
         file1 <- paste0("mat1", ".", ext)
+        ## FIXME This step is erroring.
         x <- export(object = mat1, ext = ext)
         expect_identical(x, realpath(file1))
         expect_true(file.exists(file1))
