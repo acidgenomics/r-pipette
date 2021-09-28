@@ -185,7 +185,6 @@ test_that("Invalid input", {
 context("export : sparseMatrix")
 
 test_that("'ext' argument, using gzip compression", {
-    ## FIXME This step is erroring.
     x <- export(sparse, ext = "mtx.gz")
     expect_identical(
         x,

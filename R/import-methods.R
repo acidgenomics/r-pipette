@@ -322,9 +322,13 @@ NULL
                 return(file)
             }
             tmpdir <- realpath(tempdir())
-            if (isFALSE(grepl(pattern = tmpdir, x = file))) {
+            pattern <- paste0(.pkgName, "-")
+            if (isFALSE(grepl(
+                pattern = file.path(tmpdir, pattern),
+                x = file
+            ))) {
                 tmpfile <- tempfile(
-                    pattern = "pipette-",
+                    pattern = pattern,
                     tmpdir = tmpdir,
                     fileext = paste0(".", fileExt(file))
                 )
