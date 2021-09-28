@@ -6,10 +6,10 @@
 \alias{export,DataFrame,character,missingOrNULL-method}
 \alias{export,DataFrame,missingOrNULL,missingOrNULL-method}
 \alias{export,DataFrame,missingOrNULL,character-method}
-\alias{export,GenomicRanges,character,character-method}
-\alias{export,GenomicRanges,character,missingOrNULL-method}
-\alias{export,GenomicRanges,missingOrNULL,missingOrNULL-method}
-\alias{export,GenomicRanges,missingOrNULL,character-method}
+\alias{export,GRanges,character,character-method}
+\alias{export,GRanges,character,missingOrNULL-method}
+\alias{export,GRanges,missingOrNULL,missingOrNULL-method}
+\alias{export,GRanges,missingOrNULL,character-method}
 \alias{export,Matrix,character,character-method}
 \alias{export,Matrix,character,missingOrNULL-method}
 \alias{export,Matrix,missingOrNULL,missingOrNULL-method}
@@ -56,21 +56,23 @@ export(object, con, format, ...)
   object,
   con = NULL,
   format,
-  ext,
   dir = getOption("acid.export.dir", default = "."),
-  ...
+  ...,
+  ext,
+  file
 )
 
 \S4method{export}{DataFrame,missingOrNULL,character}(
   object,
   con = NULL,
   format,
-  ext,
   dir = getOption("acid.export.dir", default = "."),
-  ...
+  ...,
+  ext,
+  file
 )
 
-\S4method{export}{GenomicRanges,character,character}(
+\S4method{export}{GRanges,character,character}(
   object,
   con,
   format,
@@ -81,7 +83,7 @@ export(object, con, format, ...)
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
-\S4method{export}{GenomicRanges,character,missingOrNULL}(
+\S4method{export}{GRanges,character,missingOrNULL}(
   object,
   con,
   format,
@@ -92,22 +94,24 @@ export(object, con, format, ...)
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
-\S4method{export}{GenomicRanges,missingOrNULL,missingOrNULL}(
+\S4method{export}{GRanges,missingOrNULL,missingOrNULL}(
   object,
   con = NULL,
   format,
-  ext,
   dir = getOption("acid.export.dir", default = "."),
-  ...
+  ...,
+  ext,
+  file
 )
 
-\S4method{export}{GenomicRanges,missingOrNULL,character}(
+\S4method{export}{GRanges,missingOrNULL,character}(
   object,
   con = NULL,
   format,
-  ext,
   dir = getOption("acid.export.dir", default = "."),
-  ...
+  ...,
+  ext,
+  file
 )
 
 \S4method{export}{Matrix,character,character}(
@@ -130,18 +134,20 @@ export(object, con, format, ...)
   object,
   con = NULL,
   format,
-  ext,
   dir = getOption("acid.export.dir", default = "."),
-  ...
+  ...,
+  ext,
+  file
 )
 
 \S4method{export}{Matrix,missingOrNULL,character}(
   object,
   con = NULL,
   format,
-  ext,
   dir = getOption("acid.export.dir", default = "."),
-  ...
+  ...,
+  ext,
+  file
 )
 
 \S4method{export}{character,character,character}(
@@ -168,20 +174,20 @@ export(object, con, format, ...)
   object,
   con = NULL,
   format,
-  ext,
   dir = getOption("acid.export.dir", default = "."),
-  file,
-  ...
+  ...,
+  ext,
+  file
 )
 
 \S4method{export}{character,missingOrNULL,character}(
   object,
   con = NULL,
   format,
-  ext,
   dir = getOption("acid.export.dir", default = "."),
-  file,
-  ...
+  ...,
+  ext,
+  file
 )
 
 \S4method{export}{data.frame,character,character}(
@@ -210,18 +216,20 @@ export(object, con, format, ...)
   object,
   con = NULL,
   format,
-  ext,
   dir = getOption("acid.export.dir", default = "."),
-  ...
+  ...,
+  ext,
+  file
 )
 
 \S4method{export}{data.frame,missingOrNULL,character}(
   object,
   con = NULL,
   format,
-  ext,
   dir = getOption("acid.export.dir", default = "."),
-  ...
+  ...,
+  ext,
+  file
 )
 
 \S4method{export}{matrix,character,character}(
@@ -250,18 +258,20 @@ export(object, con, format, ...)
   object,
   con = NULL,
   format,
-  ext,
   dir = getOption("acid.export.dir", default = "."),
-  ...
+  ...,
+  ext,
+  file
 )
 
 \S4method{export}{matrix,missingOrNULL,character}(
   object,
   con = NULL,
   format,
-  ext,
   dir = getOption("acid.export.dir", default = "."),
-  ...
+  ...,
+  ext,
+  file
 )
 }
 \arguments{
@@ -312,21 +322,21 @@ Currently supported:
 \item{quiet}{\code{logical(1)}.
 Perform command quietly, suppressing messages.}
 
-\item{ext}{\code{character(1)}.
-\emph{Deprecated in favor of \code{format} argument.}}
-
 \item{dir}{\code{character(1)}.
 Directory path.}
 
 \item{...}{Additional arguments.}
 
+\item{ext}{\code{character(1)}.
+\emph{Deprecated in favor of \code{format} argument.}}
+
+\item{file}{\code{character(1)}.
+\emph{Deprecated in favor of \code{con} argument.}}
+
 \item{append}{\code{logical(1)}.
 Append to output file.
 When enabled, automatically sets \code{overwrite} argument to \code{FALSE}.
 Requires readr package to be installed.}
-
-\item{file}{\code{character(1)}.
-\emph{Deprecated in favor of \code{con} argument.}}
 }
 \value{
 Invisible \code{character}.

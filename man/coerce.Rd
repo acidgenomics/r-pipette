@@ -8,18 +8,18 @@
 \alias{coerce}
 \alias{as_tibble.DataFrame}
 \alias{as_tibble.IRanges}
-\alias{as_tibble.GenomicRanges}
+\alias{as_tibble.GRanges}
 \alias{as.data.table.DataFrame}
 \alias{as.data.table.IRanges}
-\alias{as.data.table.GenomicRanges}
+\alias{as.data.table.GRanges}
 \alias{as.DataFrame,SimpleList-method}
 \alias{as.DataFrame,list-method}
 \alias{as.data.frame,IRanges-method}
 \alias{as.data.frame,Matrix-method}
 \alias{coerce,DataFrame,data.table-method}
 \alias{coerce,DataFrame,tbl_df-method}
-\alias{coerce,GenomicRanges,data.table-method}
-\alias{coerce,GenomicRanges,tbl_df-method}
+\alias{coerce,GRanges,data.table-method}
+\alias{coerce,GRanges,tbl_df-method}
 \alias{coerce,IRanges,data.frame-method}
 \alias{coerce,IRanges,data.table-method}
 \alias{coerce,IRanges,tbl_df-method}
@@ -49,7 +49,7 @@ as.data.table(x, keep.rownames = FALSE, ...)
   rownames = pkgconfig::get_config("tibble::rownames", "rowname")
 )
 
-\method{as_tibble}{GenomicRanges}(
+\method{as_tibble}{GRanges}(
   x,
   ...,
   rownames = pkgconfig::get_config("tibble::rownames", "rowname")
@@ -59,7 +59,7 @@ as.data.table(x, keep.rownames = FALSE, ...)
 
 \method{as.data.table}{IRanges}(x, keep.rownames = TRUE, ...)
 
-\method{as.data.table}{GenomicRanges}(x, keep.rownames = TRUE, ...)
+\method{as.data.table}{GRanges}(x, keep.rownames = TRUE, ...)
 
 \S4method{as.DataFrame}{SimpleList}(x, row.names = NULL)
 
@@ -221,12 +221,12 @@ x <- as(DFrame, "tbl_df")
 x <- as_tibble(DFrame)
 print(x)
 
-## `GenomicRanges` to `data.table` ====
+## `GRanges` to `data.table` ====
 x <- as(GRanges, "data.table")
 x <- as.data.table(GRanges)
 print(x)
 
-## `GenomicRanges` to `tbl_df` ====
+## `GRanges` to `tbl_df` ====
 x <- as(GRanges, "tbl_df")
 x <- as_tibble(GRanges)
 print(x)
