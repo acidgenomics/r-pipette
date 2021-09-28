@@ -93,11 +93,10 @@ test_that("'append' argument", {
 context("export : matrix")
 
 test_that("'ext' argument", {
-    formats <- .exportFormatChoices[["Matrix"]]
+    formats <- .exportFormatChoices[["matrix"]]
     for (ext in formats) {
         mat1 <- mat
         file1 <- paste0("mat1", ".", ext)
-        ## FIXME This step is erroring.
         x <- export(object = mat1, ext = ext)
         expect_identical(x, realpath(file1))
         expect_true(file.exists(file1))
@@ -151,7 +150,8 @@ test_that("Invalid input", {
 context("export : DataFrame")
 
 test_that("'ext' argument", {
-    for (ext in .exportMatrixChoices) {
+    formats <- .exportFormatChoices[["matrix"]]
+    for (ext in formats) {
         file <- paste0("df", ".", ext)
         x <- export(df, ext = ext)
         expect_identical(x, realpath(file))
@@ -185,6 +185,7 @@ test_that("Invalid input", {
 context("export : sparseMatrix")
 
 test_that("'ext' argument, using gzip compression", {
+    ## FIXME This step is erroring.
     x <- export(sparse, ext = "mtx.gz")
     expect_identical(
         x,
