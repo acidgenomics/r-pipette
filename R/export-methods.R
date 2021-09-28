@@ -681,7 +681,7 @@ formals(`export,Matrix,format`)[["dir"]] <-
         format <- match.arg(arg = format, choices = formatChoices)
         file <- con; whatFile <- con
         whatPkg <- "Matrix"
-        whatFun <- "readMM"
+        whatFun <- "writeMM"
         requireNamespaces(whatPkg)
         match <- str_match(string = file, pattern = extPattern)
         compressExt <- match[1L, 4L]
