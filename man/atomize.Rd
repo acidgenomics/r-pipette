@@ -3,7 +3,7 @@
 \name{atomize}
 \alias{atomize}
 \alias{atomize,data.frame-method}
-\alias{atomize,DataFrame-method}
+\alias{atomize,DFrame-method}
 \alias{atomize,Ranges-method}
 \title{Atomize}
 \usage{
@@ -11,7 +11,7 @@ atomize(object, ...)
 
 \S4method{atomize}{data.frame}(object)
 
-\S4method{atomize}{DataFrame}(object)
+\S4method{atomize}{DFrame}(object)
 
 \S4method{atomize}{Ranges}(object)
 }
