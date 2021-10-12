@@ -1,7 +1,3 @@
-## FIXME Inform the user about the number of non-atomic columns to drop.
-
-
-
 #' @name atomize
 #' @inherit AcidGenerics::atomize
 #'
