@@ -1,16 +1,18 @@
 context("assignAndSaveData")
 
 test_that("assignAndSaveData", {
+    dir <- tempdir()
+    file <- file.path(dir, "example.rds")
     envir <- new.env()
     x <- 1L
     out <- assignAndSaveData(
         name = "example",
         object = x,
         envir = envir,
-        dir = ".",
+        dir = dir,
         ext = "rds"
     )
-    exists("example", envir = envir, inherits = FALSE)
-    file.exists("example.rds")
-    unlink("example.rds")
+    expect_true(exists("example", envir = envir, inherits = FALSE))
+    expect_true(file.exists(file))
+    file.remove(file)
 })
