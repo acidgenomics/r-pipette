@@ -6,7 +6,7 @@
 \usage{
 loadData(
   ...,
-  dir = getOption("acid.load.dir", default = "."),
+  dir = getOption("acid.load.dir", default = getwd()),
   envir = globalenv(),
   list = NULL,
   overwrite = getOption("acid.overwrite", default = TRUE)
@@ -55,7 +55,7 @@ an object with the same name already exists in the destination \code{environment
 This function is desired for interactive use and interprets object
 names using non-standard evaluation.
 
-Updated 2021-08-24.
+Updated 2021-10-12.
 }
 \examples{
 dir <- system.file("extdata", package = "pipette")
