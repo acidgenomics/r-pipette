@@ -54,7 +54,7 @@ export(object, con, format, ...)
 
 \S4method{export}{DataFrame,missingOrNULL,missingOrNULL}(
   object,
-  con = NULL,
+  con,
   format,
   dir = getOption("acid.export.dir", default = "."),
   ...,
@@ -64,7 +64,7 @@ export(object, con, format, ...)
 
 \S4method{export}{DataFrame,missingOrNULL,character}(
   object,
-  con = NULL,
+  con,
   format,
   dir = getOption("acid.export.dir", default = "."),
   ...,
@@ -96,7 +96,7 @@ export(object, con, format, ...)
 
 \S4method{export}{GRanges,missingOrNULL,missingOrNULL}(
   object,
-  con = NULL,
+  con,
   format,
   dir = getOption("acid.export.dir", default = "."),
   ...,
@@ -106,7 +106,7 @@ export(object, con, format, ...)
 
 \S4method{export}{GRanges,missingOrNULL,character}(
   object,
-  con = NULL,
+  con,
   format,
   dir = getOption("acid.export.dir", default = "."),
   ...,
@@ -132,7 +132,7 @@ export(object, con, format, ...)
 
 \S4method{export}{Matrix,missingOrNULL,missingOrNULL}(
   object,
-  con = NULL,
+  con,
   format,
   dir = getOption("acid.export.dir", default = "."),
   ...,
@@ -142,7 +142,7 @@ export(object, con, format, ...)
 
 \S4method{export}{Matrix,missingOrNULL,character}(
   object,
-  con = NULL,
+  con,
   format,
   dir = getOption("acid.export.dir", default = "."),
   ...,
@@ -172,7 +172,7 @@ export(object, con, format, ...)
 
 \S4method{export}{character,missingOrNULL,missingOrNULL}(
   object,
-  con = NULL,
+  con,
   format,
   dir = getOption("acid.export.dir", default = "."),
   ...,
@@ -182,7 +182,7 @@ export(object, con, format, ...)
 
 \S4method{export}{character,missingOrNULL,character}(
   object,
-  con = NULL,
+  con,
   format,
   dir = getOption("acid.export.dir", default = "."),
   ...,
@@ -214,7 +214,7 @@ export(object, con, format, ...)
 
 \S4method{export}{data.frame,missingOrNULL,missingOrNULL}(
   object,
-  con = NULL,
+  con,
   format,
   dir = getOption("acid.export.dir", default = "."),
   ...,
@@ -224,7 +224,7 @@ export(object, con, format, ...)
 
 \S4method{export}{data.frame,missingOrNULL,character}(
   object,
-  con = NULL,
+  con,
   format,
   dir = getOption("acid.export.dir", default = "."),
   ...,
@@ -256,7 +256,7 @@ export(object, con, format, ...)
 
 \S4method{export}{matrix,missingOrNULL,missingOrNULL}(
   object,
-  con = NULL,
+  con,
   format,
   dir = getOption("acid.export.dir", default = "."),
   ...,
@@ -266,7 +266,7 @@ export(object, con, format, ...)
 
 \S4method{export}{matrix,missingOrNULL,character}(
   object,
-  con = NULL,
+  con,
   format,
   dir = getOption("acid.export.dir", default = "."),
   ...,

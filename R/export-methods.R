@@ -135,16 +135,16 @@ NULL
 
 
 ## This method sets "con" argument automatically from "format" and "dir".
-## Updated 2021-09-28.
+## Updated 2021-10-12.
 `export,character,format` <-
     function(
         object,
-        con = NULL,
+        con,  # NULL
         format,
         dir,
         ...,
-        ext,
-        file
+        ext,  # deprecated in favor of "format"
+        file  # deprecated in favor of "con"
 
     ) {
         if (!missing(file)) {
@@ -189,7 +189,7 @@ formals(`export,character,format`)[["dir"]] <-
     .formalsList[["export.dir"]]
 
 ## This is the primary character method that uses "con" for file path.
-## Updated 2021-09-28.
+## Updated 2021-10-12.
 `export,character,con` <-  # nolint
     function(
         object,
@@ -314,16 +314,16 @@ formals(`export,character,con`)[c("overwrite", "quiet")] <-
 
 
 
-## Updated 2021-09-28.
+## Updated 2021-10-12.
 `export,matrix,format` <-  # nolint
     function(
         object,
-        con = NULL,
+        con,  # NULL
         format,
         dir,
         ...,
-        ext,
-        file
+        ext,  # deprecated in favor of "format"
+        file  # deprecated in favor of "con"
     ) {
         if (!missing(file)) {
             ## > .Deprecated(sprintf(
@@ -596,16 +596,16 @@ formals(`export,matrix,con`)[c("overwrite", "quiet")] <-
 
 
 
-## Updated 2021-09-28.
+## Updated 2021-10-12.
 `export,Matrix,format` <-  # nolint
     function(
         object,
-        con = NULL,
+        con,  # NULL
         format,
         dir,
         ...,
-        ext,
-        file
+        ext,  # deprecated in favor of "format"
+        file  # deprecated in favor of "con"
     ) {
         if (!missing(file)) {
             ## > .Deprecated(sprintf(
