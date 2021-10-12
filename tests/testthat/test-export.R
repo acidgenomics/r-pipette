@@ -34,10 +34,9 @@ test_that("'engine' argument", {
         "readr",
         "vroom"
     )) {
-        ## FIXME This check is now failing.
         x <- export(
             object = vec,
-            file = file,
+            con = file,
             engine = engine,
             overwrite = TRUE
         )
@@ -59,7 +58,7 @@ test_that("'append' argument", {
     engine <- "data.table"
     export(
         object = vec1,
-        file = file,
+        con = file,
         engine = engine
     )
     expect_identical(
@@ -68,7 +67,7 @@ test_that("'append' argument", {
     )
     export(
         object = vec2,
-        file = file,
+        con = file,
         append = TRUE,
         engine = engine
     )
@@ -79,7 +78,7 @@ test_that("'append' argument", {
     expect_error(
         object = export(
             object = vec2,
-            file = file,
+            con = file,
             append = TRUE,
             engine = "base"
         ),
@@ -165,7 +164,7 @@ test_that("'ext' argument", {
     }
 })
 
-test_that("'file' argument", {
+test_that("Deprecated 'file' argument", {
     x <- export(df, file = "df.csv")
     expect_identical(x, realpath("df.csv"))
     expect_true(file.exists("df.csv"))
@@ -207,7 +206,7 @@ test_that("'ext' argument, using gzip compression", {
     file.remove(x)
 })
 
-test_that("'file' argument", {
+test_that("Deprecated 'file' argument", {
     x <- export(sparse, file = "sparse.mtx")
     expect_identical(
         x,
