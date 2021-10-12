@@ -318,6 +318,8 @@ NULL
     out <- vapply(
         X = file,
         FUN = function(file) {
+            ## FIXME Package now seems to be erroring because it can't locate
+            ## compressExtPattern from goalie? What's up with this?
             if (!grepl(compressExtPattern, file)) {
                 return(file)
             }
