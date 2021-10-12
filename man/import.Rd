@@ -45,10 +45,10 @@ export(con, format, text, ...)
   comment = "",
   skip = 0L,
   nMax = Inf,
-  makeNames = getOption("acid.import.make.names", default = syntactic::makeNames),
+  makeNames = getOption(x = "acid.import.make.names", default = syntactic::makeNames),
   engine = getOption(x = "acid.import.engine", default = "data.table"),
-  metadata = getOption("acid.import.metadata", default = FALSE),
-  quiet = getOption("acid.quiet", default = FALSE)
+  metadata = getOption(x = "acid.import.metadata", default = FALSE),
+  quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
 \S4method{import}{LinesFile,missingOrNULL,missingOrNULL}(
@@ -60,9 +60,9 @@ export(con, format, text, ...)
   nMax = Inf,
   stripWhitespace = FALSE,
   removeBlank = FALSE,
-  metadata = getOption("acid.import.metadata", default = FALSE),
+  metadata = getOption(x = "acid.import.metadata", default = FALSE),
   engine = getOption(x = "acid.import.engine", default = "base"),
-  quiet = getOption("acid.quiet", default = FALSE)
+  quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
 \S4method{import}{ExcelFile,missingOrNULL,missingOrNULL}(
@@ -75,9 +75,9 @@ export(con, format, text, ...)
   colnames = TRUE,
   skip = 0L,
   nMax = Inf,
-  makeNames = getOption("acid.import.make.names", default = syntactic::makeNames),
-  metadata = getOption("acid.import.metadata", default = FALSE),
-  quiet = getOption("acid.quiet", default = FALSE)
+  makeNames = getOption(x = "acid.import.make.names", default = syntactic::makeNames),
+  metadata = getOption(x = "acid.import.metadata", default = FALSE),
+  quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
 \S4method{import}{FASTAFile,missingOrNULL,missingOrNULL}(
@@ -85,8 +85,8 @@ export(con, format, text, ...)
   format,
   text,
   moleculeType = c("DNA", "RNA"),
-  metadata = getOption("acid.import.metadata", default = FALSE),
-  quiet = getOption("acid.quiet", default = FALSE)
+  metadata = getOption(x = "acid.import.metadata", default = FALSE),
+  quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
 \S4method{import}{FASTQFile,missingOrNULL,missingOrNULL}(
@@ -94,22 +94,22 @@ export(con, format, text, ...)
   format,
   text,
   moleculeType = c("DNA", "RNA"),
-  metadata = getOption("acid.import.metadata", default = FALSE),
-  quiet = getOption("acid.quiet", default = FALSE)
+  metadata = getOption(x = "acid.import.metadata", default = FALSE),
+  quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
-\S4method{import}{GMTFile,missingOrNULL,missingOrNULL}(con, format, text, quiet = getOption("acid.quiet", default = FALSE))
+\S4method{import}{GMTFile,missingOrNULL,missingOrNULL}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
 
-\S4method{import}{GMXFile,missingOrNULL,missingOrNULL}(con, format, text, quiet = getOption("acid.quiet", default = FALSE))
+\S4method{import}{GMXFile,missingOrNULL,missingOrNULL}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
 
-\S4method{import}{GRPFile,missingOrNULL,missingOrNULL}(con, format, text, quiet = getOption("acid.quiet", default = FALSE))
+\S4method{import}{GRPFile,missingOrNULL,missingOrNULL}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
 
 \S4method{import}{JSONFile,missingOrNULL,missingOrNULL}(
   con,
   format,
   text,
-  metadata = getOption("acid.import.metadata", default = FALSE),
-  quiet = getOption("acid.quiet", default = FALSE)
+  metadata = getOption(x = "acid.import.metadata", default = FALSE),
+  quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
 \S4method{import}{MTXFile,missingOrNULL,missingOrNULL}(
@@ -118,8 +118,8 @@ export(con, format, text, ...)
   text,
   rownamesFile,
   colnamesFile,
-  metadata = getOption("acid.import.metadata", default = FALSE),
-  quiet = getOption("acid.quiet", default = FALSE)
+  metadata = getOption(x = "acid.import.metadata", default = FALSE),
+  quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
 \S4method{import}{PZFXFile,missingOrNULL,missingOrNULL}(
@@ -127,22 +127,22 @@ export(con, format, text, ...)
   format,
   text,
   sheet = 1L,
-  makeNames = getOption("acid.import.make.names", default = syntactic::makeNames),
-  metadata = getOption("acid.import.metadata", default = FALSE),
-  quiet = getOption("acid.quiet", default = FALSE)
+  makeNames = getOption(x = "acid.import.make.names", default = syntactic::makeNames),
+  metadata = getOption(x = "acid.import.metadata", default = FALSE),
+  quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
 \S4method{import}{YAMLFile,missingOrNULL,missingOrNULL}(
   con,
   format,
   text,
-  metadata = getOption("acid.import.metadata", default = FALSE),
-  quiet = getOption("acid.quiet", default = FALSE)
+  metadata = getOption(x = "acid.import.metadata", default = FALSE),
+  quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
-\S4method{import}{RDSFile,missingOrNULL,missingOrNULL}(con, format, text, quiet = getOption("acid.quiet", default = FALSE))
+\S4method{import}{RDSFile,missingOrNULL,missingOrNULL}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
 
-\S4method{import}{RDataFile,missingOrNULL,missingOrNULL}(con, format, text, quiet = getOption("acid.quiet", default = FALSE))
+\S4method{import}{RDataFile,missingOrNULL,missingOrNULL}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
 
 \S4method{import}{RioHandoffFile,missingOrNULL,missingOrNULL}(
   con,
@@ -151,9 +151,9 @@ export(con, format, text, ...)
   rownames = TRUE,
   rownameCol = NULL,
   colnames = TRUE,
-  makeNames = getOption("acid.import.make.names", default = syntactic::makeNames),
-  metadata = getOption("acid.import.metadata", default = FALSE),
-  quiet = getOption("acid.quiet", default = FALSE),
+  makeNames = getOption(x = "acid.import.make.names", default = syntactic::makeNames),
+  metadata = getOption(x = "acid.import.metadata", default = FALSE),
+  quiet = getOption(x = "acid.quiet", default = FALSE),
   ...
 )
 
@@ -161,8 +161,8 @@ export(con, format, text, ...)
   con,
   format,
   text,
-  metadata = getOption("acid.import.metadata", default = FALSE),
-  quiet = getOption("acid.quiet", default = FALSE),
+  metadata = getOption(x = "acid.import.metadata", default = FALSE),
+  quiet = getOption(x = "acid.quiet", default = FALSE),
   ...
 )
 
@@ -170,8 +170,8 @@ export(con, format, text, ...)
   con,
   format,
   text,
-  metadata = getOption("acid.import.metadata", default = FALSE),
-  quiet = getOption("acid.quiet", default = FALSE)
+  metadata = getOption(x = "acid.import.metadata", default = FALSE),
+  quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 }
 \arguments{
