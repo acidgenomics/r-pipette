@@ -45,8 +45,8 @@ export(con, format, text, ...)
   comment = "",
   skip = 0L,
   nMax = Inf,
-  makeNames = getOption(x = "acid.import.make.names", default = syntactic::makeNames),
   engine = getOption(x = "acid.import.engine", default = "data.table"),
+  makeNames = getOption(x = "acid.import.make.names", default = syntactic::makeNames),
   metadata = getOption(x = "acid.import.metadata", default = FALSE),
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
@@ -231,10 +231,6 @@ Number of lines to skip.
 Maximum number of lines to parse.
 \emph{Applies to plain text delimited, Excel, and source code lines only.}}
 
-\item{makeNames}{\code{function}.
-Apply syntactic naming function to (column) names.
-Function is never applied to row names, when they are defined in object.}
-
 \item{engine}{\code{character(1)}.
 Engine (package) to use for import.
 Currently supported:
@@ -244,6 +240,10 @@ Currently supported:
 \item readr
 \item vroom
 }}
+
+\item{makeNames}{\code{function}.
+Apply syntactic naming function to (column) names.
+Function is never applied to row names, when they are defined in object.}
 
 \item{metadata}{\code{list}.
 Metadata.}
