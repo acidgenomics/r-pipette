@@ -141,7 +141,10 @@ NULL
         object,
         con,  # NULL
         format,
-        dir = getOption("acid.export.dir", default = getwd()),
+        dir = getOption(
+            x = "acid.export.dir",
+            default = getwd()
+        ),
         ...,
         ext,  # deprecated in favor of "format"
         file  # deprecated in favor of "con"
@@ -195,9 +198,18 @@ NULL
         con,
         format,
         append = FALSE,
-        overwrite = getOption("acid.overwrite", default = TRUE),
-        engine = getOption(x = "acid.export.engine", default = "base"),
-        quiet = getOption("acid.quiet", default = FALSE)
+        overwrite = getOption(
+            x = "acid.overwrite",
+            default = TRUE
+        ),
+        engine = getOption(
+            x = "acid.export.engine",
+            default = "base"
+        ),
+        quiet = getOption(
+            x = "acid.quiet",
+            default = FALSE
+        )
     ) {
         assert(
             isString(con),
@@ -316,7 +328,10 @@ NULL
         object,
         con,  # NULL
         format,
-        dir = getOption("acid.export.dir", default = getwd()),
+        dir = getOption(
+            x = "acid.export.dir",
+            default = getwd()
+        ),
         ...,
         ext,  # deprecated in favor of "format"
         file  # deprecated in favor of "con"
@@ -378,13 +393,22 @@ NULL
         format,
         rownames = TRUE,
         colnames = TRUE,
-        overwrite = getOption(x = "acid.overwrite", default = TRUE),
-        engine = getOption(x = "acid.export.engine", "data.table"),
-        quiet = getOption(x = "acid.quiet", default = FALSE)
+        overwrite = getOption(
+            x = "acid.overwrite",
+            default = TRUE
+        ),
+        engine = getOption(
+            x = "acid.export.engine",
+            default = "data.table"
+        ),
+        quiet = getOption(
+            x = "acid.quiet",
+            default = FALSE
+        )
     ) {
         validObject(object)
         object <- as.data.frame(object)
-        verbose <- getOption("acid.verbose", default = FALSE)
+        verbose <- getOption(x = "acid.verbose", default = FALSE)
         ## Allowing export of empty objects, so don't check for length,
         ## rows, or columns here.
         assert(
@@ -592,7 +616,10 @@ NULL
         object,
         con,  # NULL
         format,
-        dir = getOption("acid.export.dir", default = getwd()),
+        dir = getOption(
+            x = "acid.export.dir",
+            default = getwd()
+        ),
         ...,
         ext,  # deprecated in favor of "format"
         file  # deprecated in favor of "con"
@@ -651,8 +678,14 @@ NULL
         object,
         con,
         format,
-        overwrite = getOption(x = "acid.overwrite", default = TRUE),
-        quiet = getOption(x = "acid.quiet", default = FALSE)
+        overwrite = getOption(
+            x = "acid.overwrite",
+            default = TRUE
+        ),
+        quiet = getOption(
+            x = "acid.quiet",
+            default = FALSE
+        )
     ) {
         validObject(object)
         assert(

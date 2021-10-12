@@ -37,7 +37,7 @@ export(object, con, format, ...)
   rownames = TRUE,
   colnames = TRUE,
   overwrite = getOption(x = "acid.overwrite", default = TRUE),
-  engine = getOption(x = "acid.export.engine", "data.table"),
+  engine = getOption(x = "acid.export.engine", default = "data.table"),
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
@@ -48,7 +48,7 @@ export(object, con, format, ...)
   rownames = TRUE,
   colnames = TRUE,
   overwrite = getOption(x = "acid.overwrite", default = TRUE),
-  engine = getOption(x = "acid.export.engine", "data.table"),
+  engine = getOption(x = "acid.export.engine", default = "data.table"),
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
@@ -56,7 +56,7 @@ export(object, con, format, ...)
   object,
   con,
   format,
-  dir = getOption("acid.export.dir", default = getwd()),
+  dir = getOption(x = "acid.export.dir", default = getwd()),
   ...,
   ext,
   file
@@ -66,7 +66,7 @@ export(object, con, format, ...)
   object,
   con,
   format,
-  dir = getOption("acid.export.dir", default = getwd()),
+  dir = getOption(x = "acid.export.dir", default = getwd()),
   ...,
   ext,
   file
@@ -79,7 +79,7 @@ export(object, con, format, ...)
   rownames = TRUE,
   colnames = TRUE,
   overwrite = getOption(x = "acid.overwrite", default = TRUE),
-  engine = getOption(x = "acid.export.engine", "data.table"),
+  engine = getOption(x = "acid.export.engine", default = "data.table"),
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
@@ -90,7 +90,7 @@ export(object, con, format, ...)
   rownames = TRUE,
   colnames = TRUE,
   overwrite = getOption(x = "acid.overwrite", default = TRUE),
-  engine = getOption(x = "acid.export.engine", "data.table"),
+  engine = getOption(x = "acid.export.engine", default = "data.table"),
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
@@ -98,7 +98,7 @@ export(object, con, format, ...)
   object,
   con,
   format,
-  dir = getOption("acid.export.dir", default = getwd()),
+  dir = getOption(x = "acid.export.dir", default = getwd()),
   ...,
   ext,
   file
@@ -108,7 +108,7 @@ export(object, con, format, ...)
   object,
   con,
   format,
-  dir = getOption("acid.export.dir", default = getwd()),
+  dir = getOption(x = "acid.export.dir", default = getwd()),
   ...,
   ext,
   file
@@ -134,7 +134,7 @@ export(object, con, format, ...)
   object,
   con,
   format,
-  dir = getOption("acid.export.dir", default = getwd()),
+  dir = getOption(x = "acid.export.dir", default = getwd()),
   ...,
   ext,
   file
@@ -144,7 +144,7 @@ export(object, con, format, ...)
   object,
   con,
   format,
-  dir = getOption("acid.export.dir", default = getwd()),
+  dir = getOption(x = "acid.export.dir", default = getwd()),
   ...,
   ext,
   file
@@ -155,9 +155,9 @@ export(object, con, format, ...)
   con,
   format,
   append = FALSE,
-  overwrite = getOption("acid.overwrite", default = TRUE),
+  overwrite = getOption(x = "acid.overwrite", default = TRUE),
   engine = getOption(x = "acid.export.engine", default = "base"),
-  quiet = getOption("acid.quiet", default = FALSE)
+  quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
 \S4method{export}{character,character,missingOrNULL}(
@@ -165,16 +165,16 @@ export(object, con, format, ...)
   con,
   format,
   append = FALSE,
-  overwrite = getOption("acid.overwrite", default = TRUE),
+  overwrite = getOption(x = "acid.overwrite", default = TRUE),
   engine = getOption(x = "acid.export.engine", default = "base"),
-  quiet = getOption("acid.quiet", default = FALSE)
+  quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
 \S4method{export}{character,missingOrNULL,missingOrNULL}(
   object,
   con,
   format,
-  dir = getOption("acid.export.dir", default = getwd()),
+  dir = getOption(x = "acid.export.dir", default = getwd()),
   ...,
   ext,
   file
@@ -184,7 +184,7 @@ export(object, con, format, ...)
   object,
   con,
   format,
-  dir = getOption("acid.export.dir", default = getwd()),
+  dir = getOption(x = "acid.export.dir", default = getwd()),
   ...,
   ext,
   file
@@ -197,7 +197,7 @@ export(object, con, format, ...)
   rownames = TRUE,
   colnames = TRUE,
   overwrite = getOption(x = "acid.overwrite", default = TRUE),
-  engine = getOption(x = "acid.export.engine", "data.table"),
+  engine = getOption(x = "acid.export.engine", default = "data.table"),
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
@@ -208,7 +208,7 @@ export(object, con, format, ...)
   rownames = TRUE,
   colnames = TRUE,
   overwrite = getOption(x = "acid.overwrite", default = TRUE),
-  engine = getOption(x = "acid.export.engine", "data.table"),
+  engine = getOption(x = "acid.export.engine", default = "data.table"),
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
@@ -216,7 +216,7 @@ export(object, con, format, ...)
   object,
   con,
   format,
-  dir = getOption("acid.export.dir", default = getwd()),
+  dir = getOption(x = "acid.export.dir", default = getwd()),
   ...,
   ext,
   file
@@ -226,7 +226,7 @@ export(object, con, format, ...)
   object,
   con,
   format,
-  dir = getOption("acid.export.dir", default = getwd()),
+  dir = getOption(x = "acid.export.dir", default = getwd()),
   ...,
   ext,
   file
@@ -239,7 +239,7 @@ export(object, con, format, ...)
   rownames = TRUE,
   colnames = TRUE,
   overwrite = getOption(x = "acid.overwrite", default = TRUE),
-  engine = getOption(x = "acid.export.engine", "data.table"),
+  engine = getOption(x = "acid.export.engine", default = "data.table"),
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
@@ -250,7 +250,7 @@ export(object, con, format, ...)
   rownames = TRUE,
   colnames = TRUE,
   overwrite = getOption(x = "acid.overwrite", default = TRUE),
-  engine = getOption(x = "acid.export.engine", "data.table"),
+  engine = getOption(x = "acid.export.engine", default = "data.table"),
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
@@ -258,7 +258,7 @@ export(object, con, format, ...)
   object,
   con,
   format,
-  dir = getOption("acid.export.dir", default = getwd()),
+  dir = getOption(x = "acid.export.dir", default = getwd()),
   ...,
   ext,
   file
@@ -268,7 +268,7 @@ export(object, con, format, ...)
   object,
   con,
   format,
-  dir = getOption("acid.export.dir", default = getwd()),
+  dir = getOption(x = "acid.export.dir", default = getwd()),
   ...,
   ext,
   file

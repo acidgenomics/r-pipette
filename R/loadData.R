@@ -55,10 +55,16 @@
 #' rm(example, inherits = TRUE)
 loadData <- function(
     ...,
-    dir = getOption("acid.load.dir", default = getwd()),
+    dir = getOption(
+        x = "acid.load.dir",
+        default = getwd()
+    ),
     envir = globalenv(),
     list = NULL,
-    overwrite = getOption("acid.overwrite", default = TRUE)
+    overwrite = getOption(
+        x = "acid.overwrite",
+        default = TRUE
+    )
 ) {
     assert(
         is.environment(envir),

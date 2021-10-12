@@ -6,9 +6,9 @@
 \usage{
 loadDataAsName(
   ...,
-  dir = getOption("acid.load.dir", default = getwd()),
+  dir = getOption(x = "acid.load.dir", default = getwd()),
   envir = globalenv(),
-  overwrite = getOption("acid.overwrite", default = TRUE)
+  overwrite = getOption(x = "acid.overwrite", default = TRUE)
 )
 }
 \arguments{

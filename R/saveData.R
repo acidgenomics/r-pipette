@@ -64,10 +64,22 @@
 #' unlink(dir, recursive = TRUE)
 saveData <- function(
     ...,
-    dir = getOption("acid.save.dir", default = getwd()),
-    ext = getOption("acid.save.ext", default = "rds"),
-    overwrite = getOption("acid.overwrite", default = TRUE),
-    compress = getOption("acid.save.compress", default = TRUE),
+    dir = getOption(
+        x = "acid.save.dir",
+        default = getwd()
+    ),
+    ext = getOption(
+        x = "acid.save.ext",
+        default = "rds"
+    ),
+    overwrite = getOption(
+        x = "acid.overwrite",
+        default = TRUE
+    ),
+    compress = getOption(
+        x = "acid.save.compress",
+        default = TRUE
+    ),
     list = NULL,
     envir = parent.frame()
 ) {
