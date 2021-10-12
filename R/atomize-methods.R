@@ -1,3 +1,7 @@
+## FIXME Inform the user about the number of non-atomic columns to drop.
+
+
+
 #' @name atomize
 #' @inherit AcidGenerics::atomize
 #'
@@ -5,7 +9,7 @@
 #' Keep only atomic columns. Complex columns won't write to disk as CSVs or work
 #' with R Markdown functions, in some cases.
 #'
-#' @note Updated 2021-08-24.
+#' @note Updated 2021-10-12.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
@@ -21,6 +25,27 @@ NULL
 
 
 
+## Updated 2019-07-19.
+`atomize,DFrame` <-  ## nolint
+    function(object) {
+        object <- decode(object)
+        object <- as.data.frame(object)
+        object <- atomize(object)
+        object <- as(object, "DFrame")
+        object
+    }
+
+
+
+## Updated 2019-07-21.
+`atomize,Ranges` <-  # nolint
+    function(object) {
+        mcols(object) <- atomize(mcols(object))
+        object
+    }
+
+
+
 ## Updated 2021-08-24.
 `atomize,data.frame` <-  # nolint
     function(object) {
@@ -29,7 +54,8 @@ NULL
         drop <- names(keep)[!keep]
         if (hasLength(drop)) {
             alertInfo(sprintf(
-                "Dropping non-atomic %s: %s.",
+                "Dropping %s non-atomic %s: %s.",
+                length(drop),
                 ngettext(
                     n = length(drop),
                     msg1 = "column",
@@ -47,42 +73,9 @@ NULL
 #' @export
 setMethod(
     f = "atomize",
-    signature = signature("data.frame"),
-    definition = `atomize,data.frame`
-)
-
-
-
-## Updated 2019-07-19.
-`atomize,DFrame` <-  ## nolint
-    function(object) {
-        object <- decode(object)
-        object <- as.data.frame(object)
-        object <- atomize(object)
-        object <- as(object, "DFrame")
-        object
-    }
-
-
-
-#' @rdname atomize
-#' @export
-setMethod(
-    f = "atomize",
     signature = signature("DFrame"),
     definition = `atomize,DFrame`
 )
-
-
-
-## Updated 2019-07-21.
-`atomize,Ranges` <-  # nolint
-    function(object) {
-        mcols(object) <- atomize(mcols(object))
-        object
-    }
-
-
 
 #' @rdname atomize
 #' @export
@@ -90,4 +83,12 @@ setMethod(
     f = "atomize",
     signature = signature(object = "Ranges"),
     definition = `atomize,Ranges`
+)
+
+#' @rdname atomize
+#' @export
+setMethod(
+    f = "atomize",
+    signature = signature("data.frame"),
+    definition = `atomize,data.frame`
 )
