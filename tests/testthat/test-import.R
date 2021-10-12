@@ -36,8 +36,15 @@ test_that("Delimited files", {
             object = attributes(object)[["import"]][["file"]],
             class = "character"
         )
-        expect_true(hasRownames(import(file = file, rownameCol = "rowname")))
+        object <- import(file, rownameCol = "rowname")
+        expect_true(hasRownames(object))
     }
+})
+
+test_that("Deprecated 'file' argument", {
+    file <- file.path("cache", "example.csv")
+    object <- import(file = file)
+    expect_is(object, "data.frame")
 })
 
 test_that("Custom engine support", {
@@ -51,7 +58,7 @@ test_that("Custom engine support", {
         split <- strsplit(x = x, split = "::", fixed = TRUE)[[1L]]
         whatPkg <- split[[1L]]
         object <- import(
-            file = file,
+            con = file,
             engine = whatPkg,
             metadata = TRUE
         )
@@ -117,7 +124,7 @@ test_that("GFF3", {
 
 test_that("GTF", {
     object <- import(
-        file = file.path("cache", "example.gtf"),
+        con = file.path("cache", "example.gtf"),
         metadata = TRUE
     )
     expect_s4_class(object, "GRanges")
@@ -162,10 +169,9 @@ test_that("GTF", {
 
 context("import : MTX")
 
-## FIXME This test is now failing.
 test_that("MTX", {
     object <- import(
-        file = file.path("cache", "single_cell_counts.mtx.gz"),
+        con = file.path("cache", "single_cell_counts.mtx.gz"),
         metadata = TRUE
     )
     expect_s4_class(object, "sparseMatrix")
@@ -203,7 +209,7 @@ test_that("Custom engine support", {
         "readr",
         "vroom"
     )) {
-        object <- import(file = file, engine = engine)
+        object <- import(file, engine = engine)
         expect_is(object, "character")
     }
 })
@@ -233,7 +239,7 @@ test_that("'comment' argument", {
     writeLines(text = vec, con = file)
     expect_identical(
         object = import(
-            file = file,
+            con = file,
             format = "lines",
             comment = ""
         ),
@@ -241,7 +247,7 @@ test_that("'comment' argument", {
     )
     expect_identical(
         object = import(
-            file = file,
+            con = file,
             format = "lines",
             comment = "#"
         ),
@@ -253,7 +259,7 @@ test_that("'comment' argument", {
     )
     expect_identical(
         object = import(
-            file = file,
+            con = file,
             format = "lines",
             comment = "# "
         ),
@@ -266,7 +272,7 @@ test_that("'comment' argument", {
     )
     expect_identical(
         object = import(
-            file = file,
+            con = file,
             format = "lines",
             comment = "##"
         ),
@@ -288,7 +294,7 @@ test_that("'nMax' argument", {
     writeLines(text = vec, con = file)
     expect_identical(
         object = import(
-            file = file,
+            con = file,
             format = "lines",
             nMax = Inf
         ),
@@ -296,7 +302,7 @@ test_that("'nMax' argument", {
     )
     expect_identical(
         object = import(
-            file = file,
+            con = file,
             format = "lines",
             nMax = 2L
         ),
@@ -304,7 +310,7 @@ test_that("'nMax' argument", {
     )
     expect_identical(
         object = import(
-            file = file,
+            con = file,
             format = "lines",
             nMax = 1L
         ),
@@ -325,7 +331,7 @@ test_that("'removeBlank' argument", {
     writeLines(text = vec, con = file)
     expect_identical(
         object = import(
-            file = file,
+            con = file,
             format = "lines",
             removeBlank = FALSE
         ),
@@ -333,7 +339,7 @@ test_that("'removeBlank' argument", {
     )
     expect_identical(
         object = import(
-            file = file,
+            con = file,
             format = "lines",
             removeBlank = TRUE,
             stripWhitespace = FALSE
@@ -346,7 +352,7 @@ test_that("'removeBlank' argument", {
     )
     expect_identical(
         object = import(
-            file = file,
+            con = file,
             format = "lines",
             removeBlank = TRUE,
             stripWhitespace = TRUE
@@ -366,7 +372,7 @@ test_that("'skip' argument", {
     writeLines(text = vec, con = file)
     expect_identical(
         object = import(
-            file = file,
+            con = file,
             format = "lines",
             skip = 0L
         ),
@@ -374,7 +380,7 @@ test_that("'skip' argument", {
     )
     expect_identical(
         object = import(
-            file = file,
+            con = file,
             format = "lines",
             skip = length(vec) - 1L
         ),
@@ -382,7 +388,7 @@ test_that("'skip' argument", {
     )
     expect_identical(
         object = import(
-            file = file,
+            con = file,
             format = "lines",
             skip = 2L,
             nMax = 1L
@@ -391,7 +397,7 @@ test_that("'skip' argument", {
     )
     expect_error(
         object = import(
-            file = file,
+            con = file,
             format = "lines",
             skip = 1L,
             comment = "#"
@@ -400,7 +406,7 @@ test_that("'skip' argument", {
     )
     expect_error(
         object = import(
-            file = file,
+            con = file,
             format = "lines",
             skip = 1L,
             removeBlank = TRUE
@@ -424,7 +430,7 @@ test_that("'stripWhitespace' argument", {
     writeLines(text = vec, con = file)
     expect_identical(
         object = import(
-            file = file,
+            con = file,
             format = "lines",
             stripWhitespace = FALSE
         ),
@@ -432,7 +438,7 @@ test_that("'stripWhitespace' argument", {
     )
     expect_identical(
         object = import(
-            file = file,
+            con = file,
             format = "lines",
             stripWhitespace = TRUE
         ),
@@ -453,14 +459,14 @@ test_that("'stripWhitespace' argument", {
 context("import : R data")
 
 test_that("R data", {
-    object <- import(file = file.path("cache", "example.rda"))
+    object <- import(file.path("cache", "example.rda"))
     expect_s4_class(object, "DataFrame")
     expect_null(metadata(object)[["import"]])
     expect_null(attr(object, which = "import"))
 })
 
 test_that("R data serialized", {
-    object <- import(file = file.path("cache", "example.rds"))
+    object <- import(file.path("cache", "example.rds"))
     expect_s4_class(object, "DataFrame")
     expect_null(metadata(object)[["import"]])
     expect_null(attr(object, which = "import"))
@@ -468,7 +474,7 @@ test_that("R data serialized", {
 
 test_that("Error on RDA containing multiple objects.", {
     expect_error(
-        object = import(file = file.path("cache", "multi.rda")),
+        object = import(file.path("cache", "multi.rda")),
         regexp = "single"
     )
 })
@@ -573,7 +579,7 @@ test_that("XLSX", {
     file <- file.path("cache", "example.xlsx")
     expect_identical(
         object = import(
-            file = file,
+            con = file,
             rownames = TRUE,
             colnames = TRUE,
             metadata = FALSE
@@ -606,7 +612,7 @@ test_that("XLS", {
     file <- file.path("cache", "example.xls")
     expect_identical(
         object = import(
-            file = file,
+            con = file,
             rownames = TRUE,
             colnames = TRUE,
             metadata = FALSE
@@ -641,7 +647,7 @@ context("import : bcbio files")
 
 test_that("bcbio counts", {
     object <- import(
-        file = file.path("cache", "example.counts"),
+        con = file.path("cache", "example.counts"),
         metadata = TRUE
     )
     expect_is(object, "matrix")
@@ -678,7 +684,7 @@ context("import : FASTA / FASTQ")
 test_that("FASTA", {
     file <- file.path("cache", "example.fa.gz")
     object <- import(
-        file = file,
+        con = file,
         moleculeType = "DNA",
         metadata = TRUE
     )
