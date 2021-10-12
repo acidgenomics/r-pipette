@@ -19,9 +19,9 @@
 #' class(renamed)
 loadDataAsName <- function(
     ...,
-    dir,
+    dir = getOption("acid.load.dir", default = getwd()),
     envir = globalenv(),
-    overwrite
+    overwrite = getOption("acid.overwrite", default = TRUE)
 ) {
     assert(
         is.environment(envir),
@@ -84,6 +84,3 @@ loadDataAsName <- function(
     }
     invisible(files)
 }
-
-formals(loadDataAsName)[c("dir", "overwrite")] <-
-    .formalsList[c("load.dir", "overwrite")]

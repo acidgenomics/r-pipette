@@ -25,7 +25,7 @@
 loadRemoteData <- function(
     url,
     envir = globalenv(),
-    overwrite
+    overwrite = getOption("acid.overwrite", default = TRUE)
 ) {
     assert(
         hasInternet(),
@@ -68,6 +68,3 @@ loadRemoteData <- function(
     assert(allAreExisting(names, envir = envir, inherits = FALSE))
     invisible(url)
 }
-
-formals(loadRemoteData)[["overwrite"]] <-
-    .formalsList[["overwrite"]]

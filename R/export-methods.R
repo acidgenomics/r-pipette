@@ -141,7 +141,7 @@ NULL
         object,
         con,  # NULL
         format,
-        dir,
+        dir = getOption("acid.export.dir", default = getwd()),
         ...,
         ext,  # deprecated in favor of "format"
         file  # deprecated in favor of "con"
@@ -185,8 +185,7 @@ NULL
         )
     }
 
-formals(`export,character,format`)[["dir"]] <-
-    .formalsList[["export.dir"]]
+
 
 ## This is the primary character method that uses "con" for file path.
 ## Updated 2021-10-12.
@@ -196,9 +195,9 @@ formals(`export,character,format`)[["dir"]] <-
         con,
         format,
         append = FALSE,
-        overwrite,
+        overwrite = getOption("acid.overwrite", default = TRUE),
         engine = getOption(x = "acid.export.engine", default = "base"),
-        quiet
+        quiet = getOption("acid.quiet", default = FALSE)
     ) {
         assert(
             isString(con),
@@ -309,9 +308,6 @@ formals(`export,character,format`)[["dir"]] <-
         invisible(file)
     }
 
-formals(`export,character,con`)[c("overwrite", "quiet")] <-
-    .formalsList[c("overwrite", "quiet")]
-
 
 
 ## Updated 2021-10-12.
@@ -320,7 +316,7 @@ formals(`export,character,con`)[c("overwrite", "quiet")] <-
         object,
         con,  # NULL
         format,
-        dir,
+        dir = getOption("acid.export.dir", default = getwd()),
         ...,
         ext,  # deprecated in favor of "format"
         file  # deprecated in favor of "con"
@@ -363,9 +359,6 @@ formals(`export,character,con`)[c("overwrite", "quiet")] <-
         )
     }
 
-formals(`export,matrix,format`)[["dir"]] <-
-    .formalsList[["export.dir"]]
-
 
 
 #' Export `matrix` method
@@ -385,9 +378,9 @@ formals(`export,matrix,format`)[["dir"]] <-
         format,
         rownames = TRUE,
         colnames = TRUE,
-        overwrite,
+        overwrite = getOption(x = "acid.overwrite", default = TRUE),
         engine = getOption(x = "acid.export.engine", "data.table"),
-        quiet
+        quiet = getOption(x = "acid.quiet", default = FALSE)
     ) {
         validObject(object)
         object <- as.data.frame(object)
@@ -567,9 +560,6 @@ formals(`export,matrix,format`)[["dir"]] <-
         invisible(file)
     }
 
-formals(`export,matrix,con`)[c("overwrite", "quiet")] <-
-    .formalsList[c("overwrite", "quiet")]
-
 
 
 `export,data.frame,con` <-  # nolint
@@ -602,7 +592,7 @@ formals(`export,matrix,con`)[c("overwrite", "quiet")] <-
         object,
         con,  # NULL
         format,
-        dir,
+        dir = getOption("acid.export.dir", default = getwd()),
         ...,
         ext,  # deprecated in favor of "format"
         file  # deprecated in favor of "con"
@@ -645,9 +635,6 @@ formals(`export,matrix,con`)[c("overwrite", "quiet")] <-
         )
     }
 
-formals(`export,Matrix,format`)[["dir"]] <-
-    .formalsList[["export.dir"]]
-
 
 
 #' Export `Matrix` (e.g. `sparseMatrix`) method
@@ -664,8 +651,8 @@ formals(`export,Matrix,format`)[["dir"]] <-
         object,
         con,
         format,
-        overwrite,
-        quiet
+        overwrite = getOption(x = "acid.overwrite", default = TRUE),
+        quiet = getOption(x = "acid.quiet", default = FALSE)
     ) {
         validObject(object)
         assert(
@@ -751,10 +738,6 @@ formals(`export,Matrix,format`)[["dir"]] <-
         assert(allAreFiles(files))
         invisible(files)
     }
-
-formals(`export,Matrix,con`)[
-    c("overwrite", "quiet")] <-
-    .formalsList[c("overwrite", "quiet")]
 
 
 

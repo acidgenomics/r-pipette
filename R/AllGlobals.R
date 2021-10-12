@@ -11,55 +11,27 @@
 
 
 
-## FIXME This might be OK to remove.
-## FIXME Remove elements that aren't used here.
+## FIXME Only include parameters that are used more than 1x.
 
 #' Shared list of optional default formals
 #'
 #' @note Updated 2021-09-24.
 #' @noRd
 .formalsList <- list(
-    "export.compress" = quote(
-        getOption("acid.export.compress", default = FALSE)
-    ),
     "export.dir" = quote(
-        getOption("acid.export.dir", default = ".")
-    ),
-    "export.ext" = quote(
-        getOption("acid.export.ext", default = "csv")
-    ),
-    "export.sparse.ext" = quote(
-        getOption("acid.export.sparse.ext", default = "mtx")
-    ),
-    "export.quiet" = quote(
-        getOption("acid.export.quiet", default = FALSE)
+        getOption(x = "acid.export.dir", default = getwd())
     ),
     "import.make.names" = quote(
-        getOption("acid.import.make.names", default = syntactic::makeNames)
+        getOption(x = "acid.import.make.names", default = syntactic::makeNames)
     ),
     "import.metadata" = quote(
-        getOption("acid.import.metadata", default = FALSE)
-    ),
-    "load.dir" = quote(
-        getOption("acid.load.dir", default = ".")
+        getOption(x = "acid.import.metadata", default = FALSE)
     ),
     "overwrite" = quote(
-        getOption("acid.overwrite", default = TRUE)
+        getOption(x = "acid.overwrite", default = TRUE)
     ),
     "quiet" = quote(
-        getOption("acid.quiet", default = FALSE)
-    ),
-    ## FIXME Consider removing this.
-    "save.compress" = quote(
-        getOption("acid.save.compress", default = TRUE)
-    ),
-    ## FIXME Move this to pipette?
-    "save.dir" = quote(
-        getOption("acid.save.dir", default = ".")
-    ),
-    ## FIXME Move this to pipette?
-    "save.ext" = quote(
-        getOption("acid.save.ext", default = "rds")
+        getOption(x = "acid.quiet", default = FALSE)
     )
 )
 

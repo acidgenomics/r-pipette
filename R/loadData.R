@@ -18,7 +18,7 @@
 #' @export
 #' @note This function is desired for interactive use and interprets object
 #'   names using non-standard evaluation.
-#' @note Updated 2021-08-24.
+#' @note Updated 2021-10-12.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ... Object names.
@@ -55,10 +55,10 @@
 #' rm(example, inherits = TRUE)
 loadData <- function(
     ...,
-    dir,
+    dir = getOption("acid.load.dir", default = getwd()),
     envir = globalenv(),
     list = NULL,
-    overwrite
+    overwrite = getOption("acid.overwrite", default = TRUE)
 ) {
     assert(
         is.environment(envir),
@@ -112,9 +112,6 @@ loadData <- function(
     assert(allAreExisting(names, envir = envir, inherits = FALSE))
     invisible(files)
 }
-
-formals(loadData)[c("dir", "overwrite")] <-
-    .formalsList[c("load.dir", "overwrite")]
 
 
 
