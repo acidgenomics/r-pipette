@@ -31,9 +31,9 @@ export(con, format, text, ...)
 
 \S4method{import}{character,character,missingOrNULL}(con, format, text, ...)
 
-\S4method{import}{missingOrNULL,missingOrNULL,missingOrNULL}(file, con = NULL, format = NULL, text = NULL, ...)
+\S4method{import}{missingOrNULL,missingOrNULL,missingOrNULL}(con, format, text, file, ...)
 
-\S4method{import}{missingOrNULL,character,missingOrNULL}(file, con = NULL, format = NULL, text = NULL, ...)
+\S4method{import}{missingOrNULL,character,missingOrNULL}(con, format, text, file, ...)
 
 \S4method{import}{DelimFile,missingOrNULL,missingOrNULL}(
   con,
