@@ -6,7 +6,7 @@
 \usage{
 saveData(
   ...,
-  dir = getOption("acid.save.dir", default = "."),
+  dir = getOption("acid.save.dir", default = getwd()),
   ext = getOption("acid.save.ext", default = "rds"),
   overwrite = getOption("acid.overwrite", default = TRUE),
   compress = getOption("acid.save.compress", default = TRUE),
@@ -71,7 +71,7 @@ This function is desired for interactive use and interprets object
 names using non-standard evaluation. It will \strong{overwrite} existing files
 on disk, following the same conventions as \code{save()}.
 
-Updated 2020-08-11.
+Updated 2021-10-12.
 }
 \examples{
 dir <- "example"

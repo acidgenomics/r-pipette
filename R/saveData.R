@@ -11,7 +11,7 @@
 #'   on disk, following the same conventions as `save()`.
 #'
 #' @export
-#' @note Updated 2020-08-11.
+#' @note Updated 2021-10-12.
 #'
 #' @inheritParams loadData
 #' @inheritParams base::save
@@ -64,10 +64,10 @@
 #' unlink(dir, recursive = TRUE)
 saveData <- function(
     ...,
-    dir,
-    ext,
-    overwrite,
-    compress,
+    dir = getOption("acid.save.dir", default = getwd()),
+    ext = getOption("acid.save.ext", default = "rds"),
+    overwrite = getOption("acid.overwrite", default = TRUE),
+    compress = getOption("acid.save.compress", default = TRUE),
     list = NULL,
     envir = parent.frame()
 ) {
@@ -135,10 +135,6 @@ saveData <- function(
     )
     invisible(files)
 }
-
-formals(saveData)[
-    c("compress", "dir", "ext", "overwrite")] <-
-    .formalsList[c("save.compress", "save.dir", "save.ext", "overwrite")]
 
 
 
