@@ -1,3 +1,7 @@
+## FIXME For bcbio annotated counts, import as TSV instead.
+
+
+
 #' Import
 #'
 #' Read file by extension into R.
