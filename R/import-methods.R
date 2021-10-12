@@ -537,7 +537,11 @@ NULL
 #' )
 #' x <- .localOrRemoteFile(file)
 #' basename(x)
-.localOrRemoteFile <- function(file, tempPrefix, quiet) {
+.localOrRemoteFile <- function(
+    file,
+    tempPrefix,
+    quiet = getOption(x = "acid.quiet", default = FALSE)
+) {
     assert(
         isCharacter(file),
         isString(tempPrefix),
@@ -604,8 +608,7 @@ NULL
     realpath(.autoDecompress(file))
 }
 
-formals(.localOrRemoteFile)[c("tempPrefix", "quiet")] <-
-    list(.pkgName, .formalsList[["quiet"]])
+formals(.localOrRemoteFile)[["tmpPrefix"]] <- .pkgName
 
 
 
@@ -623,7 +626,7 @@ formals(.localOrRemoteFile)[c("tempPrefix", "quiet")] <-
     metadata = FALSE,
     whatPkg = NULL,
     whatFun = NULL,
-    quiet
+    quiet = getOption(x = "acid.quiet", default = FALSE)
 ) {
     validObject(object)
     assert(
@@ -869,7 +872,7 @@ formals(.localOrRemoteFile)[c("tempPrefix", "quiet")] <-
         con,
         format,  # NULL
         text,  # NULL
-        quiet
+        quiet = getOption(x = "acid.quiet", default = FALSE)
     ) {
         assert(
             is.null(format),
@@ -913,9 +916,6 @@ formals(.localOrRemoteFile)[c("tempPrefix", "quiet")] <-
         object
     }
 
-formals(`import,RDataFile`)[["quiet"]] <-
-    .formalsList[["quiet"]]
-
 
 
 #' Import an R data serialized file (`.rds`)
@@ -927,7 +927,7 @@ formals(`import,RDataFile`)[["quiet"]] <-
         con,
         format,  # NULL
         text,  # NULL
-        quiet
+        quiet = getOption(x = "acid.quiet", default = FALSE)
     ) {
         assert(
             is.null(format),
@@ -960,9 +960,6 @@ formals(`import,RDataFile`)[["quiet"]] <-
         object
     }
 
-formals(`import,RDSFile`)[["quiet"]] <-
-    .formalsList[["quiet"]]
-
 
 
 ## Array importers =============================================================
@@ -987,10 +984,22 @@ formals(`import,RDSFile`)[["quiet"]] <-
         comment = "",
         skip = 0L,
         nMax = Inf,
-        makeNames,
-        engine = getOption(x = "acid.import.engine", default = "data.table"),
-        metadata,
-        quiet
+        engine = getOption(
+            x = "acid.import.engine",
+            default = "data.table"
+        ),
+        makeNames = getOption(
+            x = "acid.import.make.names",
+            default = syntactic::makeNames
+        ),
+        metadata = getOption(
+            x = "acid.import.metadata",
+            default = FALSE
+        ),
+        quiet = getOption(
+            x = "acid.quiet",
+            default = FALSE
+        )
     ) {
         assert(
             is.null(format),
@@ -1001,10 +1010,10 @@ formals(`import,RDSFile`)[["quiet"]] <-
             is.character(comment) && length(comment) <= 1L,
             isInt(skip), isNonNegative(skip),
             isPositive(nMax),
+            isString(engine),
             is.function(makeNames) ||
                 is.null(makeNames) ||
                 isFALSE(makeNames),
-            isString(engine),
             isFlag(metadata),
             isFlag(quiet)
         )
@@ -1169,9 +1178,6 @@ formals(`import,RDSFile`)[["quiet"]] <-
         )
     }
 
-formals(`import,DelimFile`)[c("makeNames", "metadata", "quiet")] <-
-    .formalsList[c("import.make.names", "import.metadata", "quiet")]
-
 
 
 #' Import a Microsoft Excel worksheet (`.xlsx`)
@@ -1189,9 +1195,15 @@ formals(`import,DelimFile`)[c("makeNames", "metadata", "quiet")] <-
         colnames = TRUE,
         skip = 0L,
         nMax = Inf,
-        makeNames,
-        metadata,
-        quiet
+        makeNames = getOption(
+            x = "acid.import.make.names",
+            default = syntactic::makeNames
+        ),
+        metadata = getOption(
+            x = "acid.import.metadata",
+            default = FALSE
+        ),
+        quiet = getOption(x = "acid.quiet", default = FALSE)
     ) {
         assert(
             is.null(format),
@@ -1254,9 +1266,6 @@ formals(`import,DelimFile`)[c("makeNames", "metadata", "quiet")] <-
         )
     }
 
-formals(`import,ExcelFile`)[c("makeNames", "metadata", "quiet")] <-
-    .formalsList[c("import.make.names", "import.metadata", "quiet")]
-
 
 
 #' Import a sparse matrix file (`.mtx`)
@@ -1270,8 +1279,11 @@ formals(`import,ExcelFile`)[c("makeNames", "metadata", "quiet")] <-
         text,  # NULL
         rownamesFile,
         colnamesFile,
-        metadata,
-        quiet
+        metadata = getOption(
+            x = "acid.import.metadata",
+            default = FALSE
+        ),
+        quiet = getOption(x = "acid.quiet", default = FALSE)
     ) {
         file <- resource(con)
         origFile <- attr(con, which = "origResource")
@@ -1342,9 +1354,6 @@ formals(`import,ExcelFile`)[c("makeNames", "metadata", "quiet")] <-
         )
     }
 
-formals(`import,MTXFile`)[c("metadata", "quiet")] <-
-    .formalsList[c("import.metadata", "quiet")]
-
 
 
 #' Import a GraphPad Prism file (`.pzfx`)
@@ -1359,9 +1368,15 @@ formals(`import,MTXFile`)[c("metadata", "quiet")] <-
         format,  # NULL
         text,  # NULL
         sheet = 1L,
-        makeNames,
-        metadata,
-        quiet
+        makeNames = getOption(
+            x = "acid.import.make.names",
+            default = syntactic::makeNames
+        ),
+        metadata = getOption(
+            x = "acid.import.metadata",
+            default = FALSE
+        ),
+        quiet = getOption(x = "acid.quiet", default = FALSE)
     ) {
         assert(
             is.null(format),
@@ -1403,9 +1418,6 @@ formals(`import,MTXFile`)[c("metadata", "quiet")] <-
         )
     }
 
-formals(`import,PZFXFile`)[c("makeNames", "metadata", "quiet")] <-
-    .formalsList[c("import.make.names", "import.metadata", "quiet")]
-
 
 
 #' Import bcbio count matrix generated by featureCounts
@@ -1421,8 +1433,11 @@ formals(`import,PZFXFile`)[c("makeNames", "metadata", "quiet")] <-
         con,
         format,  # NULL
         text,  # NULL
-        metadata,
-        quiet
+        metadata = getOption(
+            x = "acid.import.metadata",
+            default = FALSE
+        ),
+        quiet = getOption(x = "acid.quiet", default = FALSE)
     ) {
         assert(
             is.null(format),
@@ -1470,9 +1485,6 @@ formals(`import,PZFXFile`)[c("makeNames", "metadata", "quiet")] <-
         object
     }
 
-formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
-    .formalsList[c("import.metadata", "quiet")]
-
 
 
 ## Non-array importers =========================================================
@@ -1491,9 +1503,12 @@ formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
         nMax = Inf,
         stripWhitespace = FALSE,
         removeBlank = FALSE,
-        metadata,
+        metadata = getOption(
+            x = "acid.import.metadata",
+            default = FALSE
+        ),
         engine = getOption(x = "acid.import.engine", default = "base"),
-        quiet
+        quiet = getOption(x = "acid.quiet", default = FALSE)
     ) {
         assert(
             is.null(format),
@@ -1621,9 +1636,6 @@ formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
         )
     }
 
-formals(`import,LinesFile`)[c("metadata", "quiet")] <-
-    .formalsList[c("import.metadata", "quiet")]
-
 
 
 #' Import a JSON file (`.json`)
@@ -1635,8 +1647,11 @@ formals(`import,LinesFile`)[c("metadata", "quiet")] <-
         con,
         format,  # NULL
         text,  # NULL
-        metadata,
-        quiet
+        metadata = getOption(
+            x = "acid.import.metadata",
+            default = FALSE
+        ),
+        quiet = getOption(x = "acid.quiet", default = FALSE)
     ) {
         assert(
             is.null(format),
@@ -1667,9 +1682,6 @@ formals(`import,LinesFile`)[c("metadata", "quiet")] <-
         )
     }
 
-formals(`import,JSONFile`)[c("metadata", "quiet")] <-
-    .formalsList[c("import.metadata", "quiet")]
-
 
 
 #' Import a YAML file (`.yaml`, `.yml`)
@@ -1681,8 +1693,11 @@ formals(`import,JSONFile`)[c("metadata", "quiet")] <-
         con,
         format,  # NULL
         text,  # NULL
-        metadata,
-        quiet
+        metadata = getOption(
+            x = "acid.import.metadata",
+            default = FALSE
+        ),
+        quiet = getOption(x = "acid.quiet", default = FALSE)
     ) {
         assert(
             is.null(format),
@@ -1713,9 +1728,6 @@ formals(`import,JSONFile`)[c("metadata", "quiet")] <-
         )
     }
 
-formals(`import,YAMLFile`)[c("metadata", "quiet")] <-
-    .formalsList[c("import.metadata", "quiet")]
-
 
 
 ## Bioinformatics importers ====================================================
@@ -1737,8 +1749,14 @@ formals(`import,YAMLFile`)[c("metadata", "quiet")] <-
         format,  # NULL
         text,  # NULL
         moleculeType = c("DNA", "RNA"),
-        metadata,
-        quiet
+        metadata = getOption(
+            x = "acid.import.metadata",
+            default = FALSE
+        ),
+        quiet = getOption(
+            x = "acid.quiet",
+            default = FALSE
+        )
     ) {
         assert(
             is.null(format),
@@ -1803,9 +1821,6 @@ formals(`import,YAMLFile`)[c("metadata", "quiet")] <-
         )
     }
 
-formals(`import,FASTAFile`)[c("metadata", "quiet")] <-
-    .formalsList[c("import.metadata", "quiet")]
-
 
 
 #' Import a FASTQ file
@@ -1825,8 +1840,14 @@ formals(`import,FASTAFile`)[c("metadata", "quiet")] <-
         format,  # NULL
         text,  # NULL
         moleculeType = c("DNA", "RNA"),
-        metadata,
-        quiet
+        metadata = getOption(
+            x = "acid.import.metadata",
+            default = FALSE
+        ),
+        quiet = getOption(
+            x = "acid.quiet",
+            default = FALSE
+        )
     ) {
         assert(
             is.null(format),
@@ -1867,9 +1888,6 @@ formals(`import,FASTAFile`)[c("metadata", "quiet")] <-
         )
     }
 
-formals(`import,FASTQFile`)[c("metadata", "quiet")] <-
-    .formalsList[c("import.metadata", "quiet")]
-
 
 
 #' Import a gene matrix transposed file (`.gmt`)
@@ -1883,7 +1901,10 @@ formals(`import,FASTQFile`)[c("metadata", "quiet")] <-
         con,
         format,  # NULL
         text,  # NULL
-        quiet
+        quiet = getOption(
+            x = "acid.quiet",
+            default = FALSE
+        )
     ) {
         assert(
             is.null(format),
@@ -1907,9 +1928,6 @@ formals(`import,FASTQFile`)[c("metadata", "quiet")] <-
         object
     }
 
-formals(`import,GMTFile`)[["quiet"]] <-
-    .formalsList[["quiet"]]
-
 
 
 #' Import a gene matrix file (`.gmx`)
@@ -1921,7 +1939,7 @@ formals(`import,GMTFile`)[["quiet"]] <-
         con,
         format,  # NULL
         text,  # NULL
-        quiet
+        quiet = getOption(x = "acid.quiet", default = FALSE)
     ) {
         assert(
             is.null(format),
@@ -1938,9 +1956,6 @@ formals(`import,GMTFile`)[["quiet"]] <-
         names(object) <- lines[[1L]]
         object
     }
-
-formals(`import,GMXFile`)[["quiet"]] <-
-    .formalsList[["quiet"]]
 
 
 
@@ -1966,9 +1981,18 @@ formals(`import,GMXFile`)[["quiet"]] <-
         rownames = TRUE,
         rownameCol = NULL,
         colnames = TRUE,
-        makeNames,
-        metadata,
-        quiet,
+        makeNames = getOption(
+            x = "acid.import.make.names",
+            default = syntactic::makeNames
+        ),
+        metadata = getOption(
+            x = "acid.import.metadata",
+            default = FALSE
+        ),
+        quiet = getOption(
+            x = "acid.quiet",
+            default = FALSE
+        ),
         ...
     ) {
         assert(
@@ -2010,9 +2034,6 @@ formals(`import,GMXFile`)[["quiet"]] <-
         )
     }
 
-formals(`import,RioHandoffFile`)[c("makeNames", "metadata", "quiet")] <-
-    .formalsList[c("import.make.names", "import.metadata", "quiet")]
-
 
 
 #' Import file using `rtracklayer::import()`
@@ -2026,8 +2047,11 @@ formals(`import,RioHandoffFile`)[c("makeNames", "metadata", "quiet")] <-
         con,
         format,  # NULL
         text,  # NULL
-        metadata,
-        quiet,
+        metadata = getOption(
+            x = "acid.import.metadata",
+            default = FALSE
+        ),
+        quiet = getOption(x = "acid.quiet", default = FALSE),
         ...
     ) {
         assert(
@@ -2074,9 +2098,6 @@ formals(`import,RioHandoffFile`)[c("makeNames", "metadata", "quiet")] <-
             quiet = quiet
         )
     }
-
-formals(`import,RtracklayerHandoffFile`)[c("metadata", "quiet")] <-
-    .formalsList[c("import.metadata", "quiet")]
 
 
 
