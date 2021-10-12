@@ -25,7 +25,7 @@
 \alias{import,BcbioCountsFile,missingOrNULL,missingOrNULL-method}
 \title{Import}
 \usage{
-export(con, format, text, ...)
+import(con, format, text, ...)
 
 \S4method{import}{character,missingOrNULL,missingOrNULL}(con, format, text, ...)
 

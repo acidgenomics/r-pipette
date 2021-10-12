@@ -539,7 +539,7 @@ NULL
 #' basename(x)
 .localOrRemoteFile <- function(
     file,
-    tempPrefix,
+    tempPrefix = .pkgName,
     quiet = getOption(
         x = "acid.quiet",
         default = FALSE
@@ -610,8 +610,6 @@ NULL
     )
     realpath(.autoDecompress(file))
 }
-
-formals(.localOrRemoteFile)[["tmpPrefix"]] <- .pkgName
 
 
 
