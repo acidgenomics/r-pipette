@@ -87,7 +87,6 @@ setClass(
     contains = "PipetteFile"
 )
 
-## FIXME Rework the handoff to rtracklayer.
 #' @describeIn PipetteFile-class
 #' File extension supported by `rtracklayer::import()`.\cr
 #' File extension group supporting:
