@@ -2,18 +2,18 @@
 % Please edit documentation in R/AllGenerics.R, R/atomize-methods.R
 \name{atomize}
 \alias{atomize}
-\alias{atomize,data.frame-method}
 \alias{atomize,DFrame-method}
 \alias{atomize,Ranges-method}
+\alias{atomize,data.frame-method}
 \title{Atomize}
 \usage{
 atomize(object, ...)
 
-\S4method{atomize}{data.frame}(object)
-
 \S4method{atomize}{DFrame}(object)
 
 \S4method{atomize}{Ranges}(object)
+
+\S4method{atomize}{data.frame}(object)
 }
 \arguments{
 \item{object}{Object.}
@@ -32,7 +32,7 @@ Keep only atomic columns. Complex columns won't write to disk as CSVs or work
 with R Markdown functions, in some cases.
 }
 \note{
-Updated 2021-08-24.
+Updated 2021-10-12.
 }
 \examples{
 df <- DataFrame(
