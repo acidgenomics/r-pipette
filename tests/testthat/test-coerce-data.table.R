@@ -31,17 +31,14 @@ test_that("Ranges", {
     for (object in list(gr, ir)) {
         expect_is(as.data.table(object), "data.table")
         expect_is(as(object, "data.table"), "data.table")
-        ## FIXME This check is now failing.
         expect_true(isSubset(
             x = "rn",
             y = colnames(as.data.table(object, keep.rownames = TRUE))
         ))
-        ## FIXME This check is now failing.
         expect_true(isSubset(
             x = "rowname",
             y = colnames(as.data.table(object, keep.rownames = "rowname"))
         ))
-        ## FIXME This check is now failing.
         expect_false(isSubset(
             x = "rowname",
             y = colnames(as.data.table(object, keep.rownames = FALSE))

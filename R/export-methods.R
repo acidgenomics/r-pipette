@@ -136,7 +136,7 @@ NULL
 
 ## This method sets "con" argument automatically from "format" and "dir".
 ## Updated 2021-10-12.
-`export,character,format` <-
+`export,character,format` <-  # nolint
     function(
         object,
         con,  # NULL
@@ -580,10 +580,10 @@ formals(`export,matrix,con`)[c("overwrite", "quiet")] <-
 
 
 
-`export,DataFrame,con` <-
+`export,DataFrame,con` <-  # nolint
     `export,data.frame,con`
 
-`export,DataFrame,format` <-
+`export,DataFrame,format` <-  # nolint
     `export,data.frame,format`
 
 
