@@ -37,8 +37,8 @@ export(con, format, text, ...)
 
 \S4method{import}{DelimFile,missingOrNULL,missingOrNULL}(
   con,
-  format = NULL,
-  text = NULL,
+  format,
+  text,
   rownames = TRUE,
   rownameCol = NULL,
   colnames = TRUE,
@@ -53,8 +53,8 @@ export(con, format, text, ...)
 
 \S4method{import}{LinesFile,missingOrNULL,missingOrNULL}(
   con,
-  format = NULL,
-  text = NULL,
+  format,
+  text,
   comment = "",
   skip = 0L,
   nMax = Inf,
@@ -67,8 +67,8 @@ export(con, format, text, ...)
 
 \S4method{import}{ExcelFile,missingOrNULL,missingOrNULL}(
   con,
-  format = NULL,
-  text = NULL,
+  format,
+  text,
   sheet = 1L,
   rownames = TRUE,
   rownameCol = NULL,
@@ -82,8 +82,8 @@ export(con, format, text, ...)
 
 \S4method{import}{FASTAFile,missingOrNULL,missingOrNULL}(
   con,
-  format = NULL,
-  text = NULL,
+  format,
+  text,
   moleculeType = c("DNA", "RNA"),
   metadata = getOption("acid.import.metadata", default = FALSE),
   quiet = getOption("acid.quiet", default = FALSE)
@@ -91,47 +91,31 @@ export(con, format, text, ...)
 
 \S4method{import}{FASTQFile,missingOrNULL,missingOrNULL}(
   con,
-  format = NULL,
-  text = NULL,
+  format,
+  text,
   moleculeType = c("DNA", "RNA"),
   metadata = getOption("acid.import.metadata", default = FALSE),
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
-\S4method{import}{GMTFile,missingOrNULL,missingOrNULL}(
-  con,
-  format = NULL,
-  text = NULL,
-  file,
-  quiet = getOption("acid.quiet", default = FALSE)
-)
+\S4method{import}{GMTFile,missingOrNULL,missingOrNULL}(con, format, text, quiet = getOption("acid.quiet", default = FALSE))
 
-\S4method{import}{GMXFile,missingOrNULL,missingOrNULL}(
-  con,
-  format = NULL,
-  text = NULL,
-  quiet = getOption("acid.quiet", default = FALSE)
-)
+\S4method{import}{GMXFile,missingOrNULL,missingOrNULL}(con, format, text, quiet = getOption("acid.quiet", default = FALSE))
 
-\S4method{import}{GRPFile,missingOrNULL,missingOrNULL}(
-  con,
-  format = NULL,
-  text = NULL,
-  quiet = getOption("acid.quiet", default = FALSE)
-)
+\S4method{import}{GRPFile,missingOrNULL,missingOrNULL}(con, format, text, quiet = getOption("acid.quiet", default = FALSE))
 
 \S4method{import}{JSONFile,missingOrNULL,missingOrNULL}(
   con,
-  format = NULL,
-  text = NULL,
+  format,
+  text,
   metadata = getOption("acid.import.metadata", default = FALSE),
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
 \S4method{import}{MTXFile,missingOrNULL,missingOrNULL}(
   con,
-  format = NULL,
-  text = NULL,
+  format,
+  text,
   rownamesFile,
   colnamesFile,
   metadata = getOption("acid.import.metadata", default = FALSE),
@@ -140,8 +124,8 @@ export(con, format, text, ...)
 
 \S4method{import}{PZFXFile,missingOrNULL,missingOrNULL}(
   con,
-  format = NULL,
-  text = NULL,
+  format,
+  text,
   sheet = 1L,
   makeNames = getOption("acid.import.make.names", default = syntactic::makeNames),
   metadata = getOption("acid.import.metadata", default = FALSE),
@@ -150,30 +134,20 @@ export(con, format, text, ...)
 
 \S4method{import}{YAMLFile,missingOrNULL,missingOrNULL}(
   con,
-  format = NULL,
-  text = NULL,
+  format,
+  text,
   metadata = getOption("acid.import.metadata", default = FALSE),
   quiet = getOption("acid.quiet", default = FALSE)
 )
 
-\S4method{import}{RDSFile,missingOrNULL,missingOrNULL}(
-  con,
-  format = NULL,
-  text = NULL,
-  quiet = getOption("acid.quiet", default = FALSE)
-)
+\S4method{import}{RDSFile,missingOrNULL,missingOrNULL}(con, format, text, quiet = getOption("acid.quiet", default = FALSE))
 
-\S4method{import}{RDataFile,missingOrNULL,missingOrNULL}(
-  con,
-  format = NULL,
-  text = NULL,
-  quiet = getOption("acid.quiet", default = FALSE)
-)
+\S4method{import}{RDataFile,missingOrNULL,missingOrNULL}(con, format, text, quiet = getOption("acid.quiet", default = FALSE))
 
 \S4method{import}{RioHandoffFile,missingOrNULL,missingOrNULL}(
   con,
-  format = NULL,
-  text = NULL,
+  format,
+  text,
   rownames = TRUE,
   rownameCol = NULL,
   colnames = TRUE,
@@ -185,8 +159,8 @@ export(con, format, text, ...)
 
 \S4method{import}{RtracklayerHandoffFile,missingOrNULL,missingOrNULL}(
   con,
-  format = NULL,
-  text = NULL,
+  format,
+  text,
   metadata = getOption("acid.import.metadata", default = FALSE),
   quiet = getOption("acid.quiet", default = FALSE),
   ...
@@ -194,8 +168,8 @@ export(con, format, text, ...)
 
 \S4method{import}{BcbioCountsFile,missingOrNULL,missingOrNULL}(
   con,
-  format = NULL,
-  text = NULL,
+  format,
+  text,
   metadata = getOption("acid.import.metadata", default = FALSE),
   quiet = getOption("acid.quiet", default = FALSE)
 )
