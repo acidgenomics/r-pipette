@@ -1,7 +1,3 @@
-## FIXME For bcbio annotated counts, import as TSV instead.
-
-
-
 #' Import
 #'
 #' Read file by extension into R.
@@ -741,13 +737,13 @@ formals(.localOrRemoteFile)[c("tempPrefix", "quiet")] <-
 #' Allow Google Sheets import using rio, by matching the URL.
 #' Otherwise, coerce the file extension to uppercase, for easy matching.
 #'
-#' @note Updated 2021-09-24.
+#' @note Updated 2021-10-12.
 #' @noRd
 `import,character,con` <-  # nolint
     function(
         con,
         format,
-        text,
+        text,  # NULL
         ...
     ) {
         if (
@@ -757,6 +753,13 @@ formals(.localOrRemoteFile)[c("tempPrefix", "quiet")] <-
         ) {
             format <- NULL
         }
+        if (missing(text)) {
+            text <- NULL
+        }
+        assert(
+            isString(format, nullOK = TRUE),
+            is.null(text)
+        )
         if (grepl(
             pattern = "^https://docs\\.google\\.com/spreadsheets",
             x = con
@@ -827,14 +830,14 @@ formals(.localOrRemoteFile)[c("tempPrefix", "quiet")] <-
 
 #' Soft deprecated legacy handler for primary "file" argument
 #'
-#' @note Updated 2021-09-25.
+#' @note Updated 2021-10-12.
 #' @noRd
 `import,character,file` <-  # nolint
     function(
-        file,
-        con = NULL,
-        format = NULL,
-        text = NULL,
+        con,
+        format,  # NULL
+        text,  # NULL
+        file,  # deprecated
         ...
     ) {
         assert(isString(file))
@@ -857,62 +860,15 @@ formals(.localOrRemoteFile)[c("tempPrefix", "quiet")] <-
 
 ## R data importers ============================================================
 
-#' Import an R data serialized file (`.rds`)
-#'
-#' @note Updated 2021-09-24.
-#' @noRd
-`import,RDSFile` <-  # nolint
-    function(
-        con,
-        format = NULL,
-        text = NULL,
-        quiet
-    ) {
-        assert(
-            is.null(format),
-            is.null(text),
-            isFlag(quiet)
-        )
-        file <- resource(con)
-        whatPkg <- "base"
-        whatFun <- "readRDS"
-        if (isFALSE(quiet)) {
-            .alertImport(
-                con = con,
-                whatPkg = whatPkg,
-                whatFun = whatFun
-            )
-        }
-        args <- list("file" = file)
-        what <- .getFunction(f = whatFun, pkg = whatPkg)
-        object <- do.call(what = what, args = args)
-        if (isFALSE(quiet)) {
-            tryCatch(
-                expr = {
-                    validObject(object)
-                },
-                error = function(e) {
-                    conditionMessage(e)  # nocov
-                }
-            )
-        }
-        object
-    }
-
-formals(`import,RDSFile`)[["quiet"]] <-
-    .formalsList[["quiet"]]
-
-
-
 #' Import an R data file containing multiple objects (`.rda`)
 #'
-#' @note Updated 2021-09-24.
+#' @note Updated 2021-10-12.
 #' @noRd
 `import,RDataFile` <-  # nolint
     function(
         con,
-        format = NULL,
-        text = NULL,
+        format,  # NULL
+        text,  # NULL
         quiet
     ) {
         assert(
@@ -962,6 +918,53 @@ formals(`import,RDataFile`)[["quiet"]] <-
 
 
 
+#' Import an R data serialized file (`.rds`)
+#'
+#' @note Updated 2021-10-12.
+#' @noRd
+`import,RDSFile` <-  # nolint
+    function(
+        con,
+        format,  # NULL
+        text,  # NULL
+        quiet
+    ) {
+        assert(
+            is.null(format),
+            is.null(text),
+            isFlag(quiet)
+        )
+        file <- resource(con)
+        whatPkg <- "base"
+        whatFun <- "readRDS"
+        if (isFALSE(quiet)) {
+            .alertImport(
+                con = con,
+                whatPkg = whatPkg,
+                whatFun = whatFun
+            )
+        }
+        args <- list("file" = file)
+        what <- .getFunction(f = whatFun, pkg = whatPkg)
+        object <- do.call(what = what, args = args)
+        if (isFALSE(quiet)) {
+            tryCatch(
+                expr = {
+                    validObject(object)
+                },
+                error = function(e) {
+                    conditionMessage(e)  # nocov
+                }
+            )
+        }
+        object
+    }
+
+formals(`import,RDSFile`)[["quiet"]] <-
+    .formalsList[["quiet"]]
+
+
+
 ## Array importers =============================================================
 
 #' Import a delimited file (e.g. `.csv`, `.tsv`).
@@ -971,13 +974,13 @@ formals(`import,RDataFile`)[["quiet"]] <-
 #' Can override using `acid.import.engine` option, which also supports
 #' data.table and readr packages.
 #'
-#' @note Updated 2021-09-24.
+#' @note Updated 2021-10-12.
 #' @noRd
 `import,DelimFile` <-  # nolint
     function(
         con,
-        format = NULL,
-        text = NULL,
+        format,  # NULL
+        text,  # NULL
         rownames = TRUE,
         rownameCol = NULL,
         colnames = TRUE,
@@ -1173,13 +1176,13 @@ formals(`import,DelimFile`)[c("makeNames", "metadata", "quiet")] <-
 
 #' Import a Microsoft Excel worksheet (`.xlsx`)
 #'
-#' @note Updated 2021-09-24.
+#' @note Updated 2021-10-12.
 #' @noRd
 `import,ExcelFile` <-  # nolint
     function(
         con,
-        format = NULL,
-        text = NULL,
+        format,  # NULL
+        text,  # NULL
         sheet = 1L,
         rownames = TRUE,
         rownameCol = NULL,
@@ -1258,13 +1261,13 @@ formals(`import,ExcelFile`)[c("makeNames", "metadata", "quiet")] <-
 
 #' Import a sparse matrix file (`.mtx`)
 #'
-#' @note Updated 2021-09-25.
+#' @note Updated 2021-10-12.
 #' @noRd
 `import,MTXFile` <-  # nolint
     function(
         con,
-        format = NULL,
-        text = NULL,
+        format,  # NULL
+        text,  # NULL
         rownamesFile,
         colnamesFile,
         metadata,
@@ -1346,15 +1349,15 @@ formals(`import,MTXFile`)[c("metadata", "quiet")] <-
 
 #' Import a GraphPad Prism file (`.pzfx`)
 #'
-#' @note Updated 2021-09-24.
+#' @note Updated 2021-10-12.
 #' @noRd
 #'
 #' @note This function doesn't support optional column names.
 `import,PZFXFile` <-  # nolint
     function(
         con,
-        format = NULL,
-        text = NULL,
+        format,  # NULL
+        text,  # NULL
         sheet = 1L,
         makeNames,
         metadata,
@@ -1411,13 +1414,13 @@ formals(`import,PZFXFile`)[c("makeNames", "metadata", "quiet")] <-
 #' Internal importer for a bcbio count matrix file (`.counts`).
 #' These files contain an `"id"` column that we need to coerce to row names.
 #'
-#' @note Updated 2021-09-25.
+#' @note Updated 2021-10-12.
 #' @noRd
 `import,BcbioCountsFile` <-  # nolint
     function(
         con,
-        format = NULL,
-        text = NULL,
+        format,  # NULL
+        text,  # NULL
         metadata,
         quiet
     ) {
@@ -1442,14 +1445,25 @@ formals(`import,PZFXFile`)[c("makeNames", "metadata", "quiet")] <-
             isSubset("id", colnames(object)),
             hasNoDuplicates(object[["id"]])
         )
-        ## Keep track of metadata after matrix coercion, when applicable.
         if (isTRUE(metadata)) {
             m <- metadata2(object, which = "import")
         }
         rownames(object) <- object[["id"]]
         object[["id"]] <- NULL
-        object <- as.matrix(object)
-        mode(object) <- "integer"
+        ## Don't attempt to coerce `"annotated_combined.counts"` file to matrix.
+        if (isSubset("symbol", colnames(object))) {
+            if (isFALSE(quiet)) {
+                alertInfo("Annotated counts detected.")
+            }
+            object <- object[
+                ,
+                c("symbol", setdiff(colnames(object), "symbol")),
+                drop = FALSE
+            ]
+        } else {
+            object <- as.matrix(object)
+            mode(object) <- "integer"
+        }
         if (isTRUE(metadata)) {
             metadata2(object, which = "import") <- m
         }
@@ -1465,13 +1479,13 @@ formals(`import,BcbioCountsFile`)[c("metadata", "quiet")] <-
 
 #' Import source code lines
 #'
-#' @note Updated 2021-09-24.
+#' @note Updated 2021-10-12.
 #' @noRd
 `import,LinesFile` <-  # nolint
     function(
         con,
-        format = NULL,
-        text = NULL,
+        format,  # NULL
+        text,  # NULL
         comment = "",
         skip = 0L,
         nMax = Inf,
@@ -1614,13 +1628,13 @@ formals(`import,LinesFile`)[c("metadata", "quiet")] <-
 
 #' Import a JSON file (`.json`)
 #'
-#' @note Updated 2021-09-24.
+#' @note Updated 2021-10-12.
 #' @noRd
 `import,JSONFile` <-  # nolint
     function(
         con,
-        format = NULL,
-        text = NULL,
+        format,  # NULL
+        text,  # NULL
         metadata,
         quiet
     ) {
@@ -1660,13 +1674,13 @@ formals(`import,JSONFile`)[c("metadata", "quiet")] <-
 
 #' Import a YAML file (`.yaml`, `.yml`)
 #'
-#' @note Updated 2021-09-24.
+#' @note Updated 2021-10-12.
 #' @noRd
 `import,YAMLFile` <-  # nolint
     function(
         con,
-        format = NULL,
-        text = NULL,
+        format,  # NULL
+        text,  # NULL
         metadata,
         quiet
     ) {
@@ -1720,8 +1734,8 @@ formals(`import,YAMLFile`)[c("metadata", "quiet")] <-
 `import,FASTAFile` <-  # nolint
     function(
         con,
-        format = NULL,
-        text = NULL,
+        format,  # NULL
+        text,  # NULL
         moleculeType = c("DNA", "RNA"),
         metadata,
         quiet
@@ -1808,8 +1822,8 @@ formals(`import,FASTAFile`)[c("metadata", "quiet")] <-
 `import,FASTQFile` <-  # nolint
     function(
         con,
-        format = NULL,
-        text = NULL,
+        format,  # NULL
+        text,  # NULL
         moleculeType = c("DNA", "RNA"),
         metadata,
         quiet
@@ -1860,16 +1874,15 @@ formals(`import,FASTQFile`)[c("metadata", "quiet")] <-
 
 #' Import a gene matrix transposed file (`.gmt`)
 #'
-#' @note Updated 2021-09-24.
+#' @note Updated 2021-10-12.
 #' @noRd
 #'
 #' @seealso `fgsea::gmtPathways()`.
 `import,GMTFile` <-  # nolint
     function(
         con,
-        format = NULL,
-        text = NULL,
-        file,
+        format,  # NULL
+        text,  # NULL
         quiet
     ) {
         assert(
@@ -1901,13 +1914,13 @@ formals(`import,GMTFile`)[["quiet"]] <-
 
 #' Import a gene matrix file (`.gmx`)
 #'
-#' @note Updated 2021-09-24.
+#' @note Updated 2021-10-12.
 #' @noRd
 `import,GMXFile` <-  # nolint
     function(
         con,
-        format = NULL,
-        text = NULL,
+        format,  # NULL
+        text,  # NULL
         quiet
     ) {
         assert(
@@ -1943,13 +1956,13 @@ formals(`import,GMXFile`)[["quiet"]] <-
 
 #' Import a file using `rio::import()`
 #'
-#' @note Updated 2021-09-24.
+#' @note Updated 2021-10-24.
 #' @noRd
 `import,RioHandoffFile` <-  # nolint
     function(
         con,
-        format = NULL,
-        text = NULL,
+        format,  # NULL
+        text,  # NULL
         rownames = TRUE,
         rownameCol = NULL,
         colnames = TRUE,
@@ -2004,15 +2017,15 @@ formals(`import,RioHandoffFile`)[c("makeNames", "metadata", "quiet")] <-
 
 #' Import file using `rtracklayer::import()`
 #'
-#' @note Updated 2021-09-25.
+#' @note Updated 2021-10-12.
 #' @noRd
 #'
 #' @note Using `tryCatch()` here to error if there are any warnings.
 `import,RtracklayerHandoffFile` <-  # nolint
     function(
         con,
-        format = NULL,
-        text = NULL,
+        format,  # NULL
+        text,  # NULL
         metadata,
         quiet,
         ...
