@@ -8,7 +8,7 @@ assignAndSaveData(
   name,
   object,
   envir = parent.frame(),
-  dir = getOption("acid.save.dir", default = "."),
+  dir = getOption("acid.save.dir", default = getwd()),
   ext = getOption("acid.save.ext", default = "rds"),
   overwrite = getOption("acid.overwrite", default = TRUE),
   compress = getOption("acid.save.compress", default = TRUE)
