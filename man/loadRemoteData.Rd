@@ -7,7 +7,7 @@
 loadRemoteData(
   url,
   envir = globalenv(),
-  overwrite = getOption("acid.overwrite", default = TRUE)
+  overwrite = getOption(x = "acid.overwrite", default = TRUE)
 )
 }
 \arguments{

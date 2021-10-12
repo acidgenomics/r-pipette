@@ -540,7 +540,10 @@ NULL
 .localOrRemoteFile <- function(
     file,
     tempPrefix,
-    quiet = getOption(x = "acid.quiet", default = FALSE)
+    quiet = getOption(
+        x = "acid.quiet",
+        default = FALSE
+    )
 ) {
     assert(
         isCharacter(file),
@@ -626,7 +629,10 @@ formals(.localOrRemoteFile)[["tmpPrefix"]] <- .pkgName
     metadata = FALSE,
     whatPkg = NULL,
     whatFun = NULL,
-    quiet = getOption(x = "acid.quiet", default = FALSE)
+    quiet = getOption(
+        x = "acid.quiet",
+        default = FALSE
+    )
 ) {
     validObject(object)
     assert(
@@ -872,7 +878,10 @@ formals(.localOrRemoteFile)[["tmpPrefix"]] <- .pkgName
         con,
         format,  # NULL
         text,  # NULL
-        quiet = getOption(x = "acid.quiet", default = FALSE)
+        quiet = getOption(
+            x = "acid.quiet",
+            default = FALSE
+        )
     ) {
         assert(
             is.null(format),
@@ -927,7 +936,10 @@ formals(.localOrRemoteFile)[["tmpPrefix"]] <- .pkgName
         con,
         format,  # NULL
         text,  # NULL
-        quiet = getOption(x = "acid.quiet", default = FALSE)
+        quiet = getOption(
+            x = "acid.quiet",
+            default = FALSE
+        )
     ) {
         assert(
             is.null(format),
@@ -1203,7 +1215,10 @@ formals(.localOrRemoteFile)[["tmpPrefix"]] <- .pkgName
             x = "acid.import.metadata",
             default = FALSE
         ),
-        quiet = getOption(x = "acid.quiet", default = FALSE)
+        quiet = getOption(
+            x = "acid.quiet",
+            default = FALSE
+        )
     ) {
         assert(
             is.null(format),
@@ -1230,7 +1245,7 @@ formals(.localOrRemoteFile)[["tmpPrefix"]] <- .pkgName
                 whatFun = whatFun
             )
         }
-        warn <- getOption("warn")
+        warn <- getOption(x = "warn")
         args <- list(
             "path" = file,
             "col_names" = colnames,
@@ -1283,7 +1298,10 @@ formals(.localOrRemoteFile)[["tmpPrefix"]] <- .pkgName
             x = "acid.import.metadata",
             default = FALSE
         ),
-        quiet = getOption(x = "acid.quiet", default = FALSE)
+        quiet = getOption(
+            x = "acid.quiet",
+            default = FALSE
+        )
     ) {
         file <- resource(con)
         origFile <- attr(con, which = "origResource")
@@ -1376,7 +1394,10 @@ formals(.localOrRemoteFile)[["tmpPrefix"]] <- .pkgName
             x = "acid.import.metadata",
             default = FALSE
         ),
-        quiet = getOption(x = "acid.quiet", default = FALSE)
+        quiet = getOption(
+            x = "acid.quiet",
+            default = FALSE
+        )
     ) {
         assert(
             is.null(format),
@@ -1437,7 +1458,10 @@ formals(.localOrRemoteFile)[["tmpPrefix"]] <- .pkgName
             x = "acid.import.metadata",
             default = FALSE
         ),
-        quiet = getOption(x = "acid.quiet", default = FALSE)
+        quiet = getOption(
+            x = "acid.quiet",
+            default = FALSE
+        )
     ) {
         assert(
             is.null(format),
@@ -1507,8 +1531,14 @@ formals(.localOrRemoteFile)[["tmpPrefix"]] <- .pkgName
             x = "acid.import.metadata",
             default = FALSE
         ),
-        engine = getOption(x = "acid.import.engine", default = "base"),
-        quiet = getOption(x = "acid.quiet", default = FALSE)
+        engine = getOption(
+            x = "acid.import.engine",
+            default = "base"
+        ),
+        quiet = getOption(
+            x = "acid.quiet",
+            default = FALSE
+        )
     ) {
         assert(
             is.null(format),
@@ -1651,7 +1681,10 @@ formals(.localOrRemoteFile)[["tmpPrefix"]] <- .pkgName
             x = "acid.import.metadata",
             default = FALSE
         ),
-        quiet = getOption(x = "acid.quiet", default = FALSE)
+        quiet = getOption(
+            x = "acid.quiet",
+            default = FALSE
+        )
     ) {
         assert(
             is.null(format),
@@ -1697,7 +1730,10 @@ formals(.localOrRemoteFile)[["tmpPrefix"]] <- .pkgName
             x = "acid.import.metadata",
             default = FALSE
         ),
-        quiet = getOption(x = "acid.quiet", default = FALSE)
+        quiet = getOption(
+            x = "acid.quiet",
+            default = FALSE
+        )
     ) {
         assert(
             is.null(format),
@@ -1939,7 +1975,10 @@ formals(.localOrRemoteFile)[["tmpPrefix"]] <- .pkgName
         con,
         format,  # NULL
         text,  # NULL
-        quiet = getOption(x = "acid.quiet", default = FALSE)
+        quiet = getOption(
+            x = "acid.quiet",
+            default = FALSE
+        )
     ) {
         assert(
             is.null(format),
@@ -2051,7 +2090,10 @@ formals(.localOrRemoteFile)[["tmpPrefix"]] <- .pkgName
             x = "acid.import.metadata",
             default = FALSE
         ),
-        quiet = getOption(x = "acid.quiet", default = FALSE),
+        quiet = getOption(
+            x = "acid.quiet",
+            default = FALSE
+        ),
         ...
     ) {
         assert(
