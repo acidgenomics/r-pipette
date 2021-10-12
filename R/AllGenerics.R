@@ -97,7 +97,7 @@ NULL
 #' @rdname import
 #' @name import
 #' @importFrom AcidGenerics import
-#' @usage export(con, format, text, ...)
+#' @usage import(con, format, text, ...)
 #' @export
 NULL
 
