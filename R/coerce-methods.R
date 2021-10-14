@@ -232,10 +232,10 @@ NULL
 `as.DataFrame,SimpleList` <-  # nolint
     `as.DataFrame,list`
 
-## Updated 2021-09-28.
-`.coerce,ANY,DataFrame` <-  # nolint
-    function(from) {
-        to <- as.data.frame(from, stringsAsFactors = FALSE)
+## Updated 2021-10-14.
+`as.DataFrame,data.table` <-  # nolint
+    function(x) {
+        to <- as.data.frame(x, stringsAsFactors = FALSE)
         to <- as(to, "DataFrame")
         ## Move row names automatically, if defined.
         if (!hasRownames(to)) {
@@ -248,17 +248,27 @@ NULL
         to
     }
 
-## Updated 2019-07-12.
-`coerce,data.table,DataFrame` <-  # nolint
-    `.coerce,ANY,DataFrame`
+## Updated 2021-10-14.
+`as.DataFrame,tbl_df` <-  # nolint
+    `as.DataFrame,data.table`
 
-## Updated 2019-07-12.
+## Updated 2021-10-14.
+`coerce,data.table,DataFrame` <-  # nolint
+    function(from) {
+        as.DataFrame(from)
+    }
+
+## Updated 2021-10-14.
 `coerce,tbl_df,DataFrame` <-  # nolint
-    `.coerce,ANY,DataFrame`
+    `coerce,data.table,DataFrame`
 
 
 
 ## To data.frame ===============================================================
+
+## NOTE Ensure that methods are only used internally here.
+## We want to avoid any unwanted collisions with other packages that define
+## methods that dispatch onto standard data.frame class.
 
 ## Coerce an S4 DataFrame to a standard data.frame.
 ##
@@ -305,41 +315,30 @@ NULL
         as(x, "data.frame")
     }
 
-
-
-## FIXME This gets messed up due to inherited method from IPosRanges.
-## FIXME Consider renaming this, reworking...
-## FIXME Take out the row.names and optional part here?
-
 ## Updated 2021-10-14.
-`.as.data.frame,IntegerRanges` <-  # nolint
-    function(
-        x,
-        row.names = NULL,
-        optional = FALSE,
-        ...
-    ) {
-        stop("HELLO THERE FIXME")
-        if (missing(row.names)) {
-            row.names <- names(x)
-        }
-        if (!is.null(names(x))) {
-            names(x) <- NULL
-        }
-        args <- list(
+`as.DataFrame,IntegerRanges` <-  # nolint
+    function(x) {
+        DataFrame(
             "start" = start(x),
             "end" = end(x),
             "width" = width(x),
-            "row.names" = row.names,
-            "check.rows" = TRUE,
-            "check.names" = FALSE,
-            "stringsAsFactors" = FALSE
+            mcols(x, use.names = FALSE),
+            row.names = names(x)
         )
-        mcols <- mcols(x, use.names = FALSE)
-        if (!is.null(mcols)) {
-            args[["mcols"]] <- as.data.frame(mcols)
-        }
-        do.call(what = data.frame, args = args)
+    }
+
+## Updated 2021-10-14.
+`as.DataFrame,GenomicRanges` <-  # nolint
+    function(x) {
+        DataFrame(
+            "seqnames" = seqnames(x),
+            "start" = start(x),
+            "end" = end(x),
+            "width" = width(x),
+            "strand" = strand(x),
+            mcols(x, use.names = FALSE),
+            row.names = names(x)
+        )
     }
 
 
@@ -355,7 +354,7 @@ NULL
 as_tibble.DataFrame <-  # nolint
     function(x, ..., rownames) {
         ## FIXME Rework this.
-        x <- `.coerce,DataFrame,data.frame`(x)
+        x <- `.as.data.frame,DataFrame`(x)
         if (!hasRownames(x)) {
             rownames <- NULL
         }
@@ -419,11 +418,14 @@ rm(.tbl_rownames)
 
 #' @rdname coerce
 #' @export
-## Updated 2021-09-28.
+## Updated 2021-10-14.
 as.data.table.DataFrame <-  # nolint
-    function(x, keep.rownames = TRUE, ...) {  # nolint
-        ## FIXME Rework this.
-        x <- `.coerce,DataFrame,data.frame`(x)
+    function(
+        x,
+        keep.rownames = TRUE,  # nolint
+        ...
+    ) {
+        x <- `.as.data.frame,DataFrame`(x)
         if (!hasRownames(x)) {
             keep.rownames <- FALSE  # nolint
         }
@@ -434,7 +436,11 @@ as.data.table.DataFrame <-  # nolint
 #' @export
 ## Updated 2021-10-14.
 as.data.table.IntegerRanges <-  # nolint
-    function(x, keep.rownames = TRUE, ...) {  # nolint
+    function(
+        x,
+        keep.rownames = TRUE,  # nolint
+        ...
+    ) {
         stop("FIXME HELLO THERE")
         ## FIXME This internal method doesn't work the way we want...
         x <- as(x, "data.frame")
@@ -450,31 +456,47 @@ as.data.table.IntegerRanges <-  # nolint
 as.data.table.GenomicRanges <-  # nolint
     as.data.table.IntegerRanges
 
-## Updated 2019-07-19.
-`coerce,ANY,data.table` <-  # nolint
+## Updated 2021-10-14.
+`.coerce,ANY,data.table` <-  # nolint
     function(from) {
         as.data.table(from)
     }
 
 ## Updated 2019-07-19.
 `coerce,data.frame,data.table` <-  # nolint
-    `coerce,ANY,data.table`
+    `.coerce,ANY,data.table`
 
 ## Updated 2019-07-19.
 `coerce,DataFrame,data.table` <-  # nolint
-    `coerce,ANY,data.table`
+    `.coerce,ANY,data.table`
 
 ## Updated 2021-10-14.
 `coerce,IntegerRanges,data.table` <-  # nolint
-    `coerce,ANY,data.table`
+    `.coerce,ANY,data.table`
 
 ## Updated 2021-10-14.
 `coerce,GenomicRanges,data.table` <-  # nolint
-    `coerce,ANY,data.table`
+    `.coerce,ANY,data.table`
 
 
 
 ## setMethod ===================================================================
+
+#' @rdname coerce
+#' @export
+setMethod(
+    f = "as.DataFrame",
+    signature = signature(x = "GenomicRanges"),
+    definition = `as.DataFrame,GenomicRanges`
+)
+
+#' @rdname coerce
+#' @export
+setMethod(
+    f = "as.DataFrame",
+    signature = signature(x = "IntegerRanges"),
+    definition = `as.DataFrame,IntegerRanges`
+)
 
 #' @rdname coerce
 #' @export
@@ -488,8 +510,24 @@ setMethod(
 #' @export
 setMethod(
     f = "as.DataFrame",
+    signature = signature(x = "data.table"),
+    definition = `as.DataFrame,data.table`
+)
+
+#' @rdname coerce
+#' @export
+setMethod(
+    f = "as.DataFrame",
     signature = signature(x = "list"),
     definition = `as.DataFrame,list`
+)
+
+#' @rdname coerce
+#' @export
+setMethod(
+    f = "as.DataFrame",
+    signature = signature(x = "tbl_df"),
+    definition = `as.DataFrame,tbl_df`
 )
 
 
