@@ -146,7 +146,7 @@ test_that("Invalid input", {
 
 
 
-context("export : DataFrame")
+context("export : DFrame")
 
 test_that("'ext' argument", {
     formats <- .exportFormatChoices[["matrix"]]
@@ -172,10 +172,9 @@ test_that("Deprecated 'file' argument", {
 })
 
 test_that("Invalid input", {
-    ## Note that `unname()` usage will result in a DataFrame error.
     expect_error(
-        export(object = as.data.frame(df)),
-        "symbol"
+        object = export(object = as.data.frame(df)),
+        regexp = "symbol"
     )
 })
 
@@ -186,22 +185,22 @@ context("export : sparseMatrix")
 test_that("'ext' argument, using gzip compression", {
     x <- export(sparse, ext = "mtx.gz")
     expect_identical(
-        x,
-        c(
-            matrix = realpath("sparse.mtx.gz"),
-            barcodes = realpath("sparse.mtx.gz.colnames"),
-            genes = realpath("sparse.mtx.gz.rownames")
+        object = x,
+        expected = c(
+            "matrix" = realpath("sparse.mtx.gz"),
+            "barcodes" = realpath("sparse.mtx.gz.colnames"),
+            "genes" = realpath("sparse.mtx.gz.rownames")
         )
     )
     expect_true(all(file.exists(x)))
     ## Check accidental overwrite support.
     expect_error(
-        export(sparse, ext = "mtx.gz", overwrite = FALSE),
-        "File exists"
+        object = export(sparse, ext = "mtx.gz", overwrite = FALSE),
+        regexp = "File exists"
     )
     expect_message(
-        export(sparse, ext = "mtx.gz", overwrite = TRUE),
-        "Overwriting"
+        object = export(sparse, ext = "mtx.gz", overwrite = TRUE),
+        regexp = "Overwriting"
     )
     file.remove(x)
 })
@@ -209,11 +208,11 @@ test_that("'ext' argument, using gzip compression", {
 test_that("Deprecated 'file' argument", {
     x <- export(sparse, file = "sparse.mtx")
     expect_identical(
-        x,
-        c(
-            matrix = realpath("sparse.mtx"),
-            barcodes = realpath("sparse.mtx.colnames"),
-            genes = realpath("sparse.mtx.rownames")
+        object = x,
+        expected = c(
+            "matrix" = realpath("sparse.mtx"),
+            "barcodes" = realpath("sparse.mtx.colnames"),
+            "genes" = realpath("sparse.mtx.rownames")
         )
     )
     expect_true(all(file.exists(x)))
@@ -222,7 +221,7 @@ test_that("Deprecated 'file' argument", {
 
 test_that("Invalid input", {
     expect_error(
-        export(object = unname(sparse)),
-        "symbol"
+        object = export(object = unname(sparse)),
+        regexp = "symbol"
     )
 })

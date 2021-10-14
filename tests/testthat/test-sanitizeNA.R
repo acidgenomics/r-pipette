@@ -3,37 +3,37 @@ context("sanitizeNA")
 test_that("sanitizeNA", {
     mapply(
         object = list(
-            character = c(1L, "x", "", "NA"),
-            data.frame = data.frame(
+            "character" = c(1L, "x", "", "NA"),
+            "data.frame" = data.frame(
                 a = c("foo", ""),
                 b = c(NA, "bar"),
                 stringsAsFactors = FALSE
             ),
-            DataFrame1 = DataFrame(
-                a = c("foo", ""),
-                b = c(NA, "bar"),
+            "DFrame1" = DataFrame(
+                "a" = c("foo", ""),
+                "b" = c(NA, "bar"),
                 row.names = c("c", "d")
             ),
-            DataFrame2 = DataFrame(
-                a = c("foo", ""),
-                b = c(NA, "bar")
+            "DFrame2" = DataFrame(
+                "a" = c("foo", ""),
+                "b" = c(NA, "bar")
             )
         ),
         expected = list(
-            character = c("1", "x", NA, NA),
-            data.frame = data.frame(
-                a = c("foo", NA),
-                b = c(NA, "bar"),
+            "character" = c("1", "x", NA, NA),
+            "data.frame" = data.frame(
+                "a" = c("foo", NA),
+                "b" = c(NA, "bar"),
                 stringsAsFactors = FALSE
             ),
-            DataFrame1 = DataFrame(
-                a = c("foo", NA),
-                b = c(NA, "bar"),
+            "DFrame1" = DataFrame(
+                "a" = c("foo", NA),
+                "b" = c(NA, "bar"),
                 row.names = c("c", "d")
             ),
-            DataFrame2 = DataFrame(
-                a = c("foo", NA),
-                b = c(NA, "bar")
+            "DFrame2" = DataFrame(
+                "a" = c("foo", NA),
+                "b" = c(NA, "bar")
             )
         ),
         FUN = function(object, expected) {
@@ -72,7 +72,6 @@ test_that("Named factor", {
     names(x) <- letters[seq_len(length(x))]
     expect_false(anyNA(x))
     expect_s3_class(x, "factor")
-
     y <- sanitizeNA(x)
     expect_identical(names(x), names(y))
     expect_true(anyNA(y))

@@ -2,8 +2,8 @@ context("metadata2")
 
 test_that("metadata2", {
     for (x in list(
-        data.frame(),
-        DataFrame()
+        "DFrame" = DataFrame(),
+        "data.frame" = data.frame()
     )) {
         which <- "A"
         expect_null(metadata2(x, which = which))

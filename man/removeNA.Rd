@@ -50,11 +50,11 @@ print(from)
 to <- removeNA(from)
 print(to)
 
-## DataFrame ====
+## DFrame ====
 from <- DataFrame(
-    a = c("A", NA, "C"),
-    b = c(NA, NA, NA),
-    c = c("B", NA, "D")
+    "a" = c("A", NA, "C"),
+    "b" = c(NA, NA, NA),
+    "c" = c("B", NA, "D")
 )
 print(from)
 to <- removeNA(from)

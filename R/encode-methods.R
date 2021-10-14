@@ -11,11 +11,11 @@
 #' All `atomic` columns will be encoded to `Rle` S4 class.
 #'
 #' @examples
-#' ## DataFrame ====
+#' ## DFrame ====
 #' binary <- seq(from = 0L, to = 1L)
 #' df <- DataFrame(
-#'     a = rep(x = binary, times = 50L),
-#'     b = rep(x = binary, each = 50L)
+#'     "a" = rep(x = binary, times = 50L),
+#'     "b" = rep(x = binary, each = 50L)
 #' )
 #' lapply(df, class)
 #' x <- encode(df)

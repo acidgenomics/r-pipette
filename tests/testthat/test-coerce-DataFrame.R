@@ -1,4 +1,4 @@
-context("coerce : DataFrame")
+context("coerce : DFrame")
 
 test_that("S4 'as()' coercion", {
     for (object in list(dt, sparse, tbl)) {

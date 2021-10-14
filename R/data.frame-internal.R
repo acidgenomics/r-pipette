@@ -1,6 +1,6 @@
-## Coerce an S4 DataFrame to a standard data.frame.
+## Coerce an S4 DFrame to a standard data.frame.
 ##
-## This function will return an informative error if an S4 DataFrame contains
+## This function will return an informative error if an S4 DFrame contains
 ## complex columns that can't be coerced to atomic or list.
 ##
 ## Not exporting this method because we don't want to mask the default

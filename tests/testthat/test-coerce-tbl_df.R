@@ -13,13 +13,13 @@ test_that("DFrame", {
     ## Early return if already tibble.
     x <- tibble()
     expect_identical(x, as(x, "tbl_df"))
-    ## Coercion of a DataFrame containing a list column is allowed.
+    ## Coercion of a DFrame containing a list column is allowed.
     data <- DataFrame()
     data[["x"]] <- list()
     data <- as(data, "tbl_df")
     expect_is(data, "tbl_df")
     ## Check handling when rownames are NULL.
-    data <- DataFrame(a = 1L, b = "b")
+    data <- DataFrame("a" = 1L, "b" = "b")
     expect_null(rownames(data))
     data <- as(data, "tbl_df")
     expect_is(data, "tbl_df")

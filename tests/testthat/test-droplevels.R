@@ -20,12 +20,18 @@ test_that("DFrame", {
     )
 })
 
-test_that("Early return on empty DataFrame", {
-    expect_identical(droplevels(DataFrame()), DataFrame())
+test_that("Early return on empty DFrame", {
+    expect_identical(
+        object = droplevels(DataFrame()),
+        expected = DataFrame()
+    )
 })
 
 test_that("IRanges", {
-    expect_identical(droplevels(ir), ir)
+    expect_identical(
+        object = droplevels(ir),
+        expected = ir
+    )
 })
 
 test_that("GRanges", {

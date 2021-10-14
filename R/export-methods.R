@@ -383,8 +383,8 @@ NULL
 #'
 #' @details
 #' This method covers standard `matrix` but is also intended to work for
-#' `data.table`, `tbl_df`, and `DataFrame` classes. Note that `rio::export()`
-#' does not preserve row names by default, so we're ensuring row names get
+#' `data.table`, `tbl_df`, and `DFrame` classes. Note that `rio::export()`
+#' doesn't preserve row names by default, so we're ensuring row names get
 #' coerced to "rowname" column consistently here.
 `export,matrix,con` <-  # nolint
     function(

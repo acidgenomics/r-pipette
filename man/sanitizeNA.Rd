@@ -45,10 +45,10 @@ print(from)
 to <- sanitizeNA(from)
 print(to)
 
-## DataFrame ====
+## DFrame ====
 from <- DataFrame(
-    a = c("foo", ""),
-    b = c(NA, "bar"),
+    "a" = c("foo", ""),
+    "b" = c(NA, "bar"),
     row.names = c("c", "d")
 )
 print(from)
