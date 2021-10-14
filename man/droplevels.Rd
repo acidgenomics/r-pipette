@@ -28,10 +28,10 @@ The function \code{droplevels} is used to drop unused levels from a
 Updated 2021-02-03.
 }
 \examples{
-data(GRanges, package = "AcidTest")
+data(GenomicRanges, package = "AcidTest")
 
 ## Ranges ====
-object <- GRanges
+object <- GenomicRanges
 object <- droplevels(object)
 print(object)
 }
