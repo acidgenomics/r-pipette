@@ -12,7 +12,6 @@
 \alias{as.data.table.DataFrame}
 \alias{as.data.table.IntegerRanges}
 \alias{as.data.table.GenomicRanges}
-\alias{as.DataFrame,Matrix-method}
 \alias{as.DataFrame,SimpleList-method}
 \alias{as.DataFrame,list-method}
 \alias{coerce,DataFrame,data.table-method}
@@ -21,9 +20,6 @@
 \alias{coerce,GenomicRanges,tbl_df-method}
 \alias{coerce,IntegerRanges,data.table-method}
 \alias{coerce,IntegerRanges,tbl_df-method}
-\alias{coerce,Matrix,DataFrame-method}
-\alias{coerce,data.frame,data.table-method}
-\alias{coerce,data.frame,tbl_df-method}
 \alias{coerce,data.table,DataFrame-method}
 \alias{coerce,tbl_df,DataFrame-method}
 \title{Coercion methods}
@@ -57,8 +53,6 @@ as.data.table(x, keep.rownames = FALSE, ...)
 \method{as.data.table}{IntegerRanges}(x, keep.rownames = TRUE, ...)
 
 \method{as.data.table}{GenomicRanges}(x, keep.rownames = TRUE, ...)
-
-\S4method{as.DataFrame}{Matrix}(x)
 
 \S4method{as.DataFrame}{SimpleList}(x, row.names = NULL)
 
