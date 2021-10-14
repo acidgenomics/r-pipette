@@ -31,6 +31,7 @@ Updated 2021-02-11.
 df <- DataFrame(
     "a" = letters[seq_len(5L)],
     "b" = seq_len(5L)
+)
 x <- factorize(df)
 }
 \seealso{
