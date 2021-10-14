@@ -1,3 +1,7 @@
+## FIXME Move all methods down here
+
+
+
 #' @name removeNA
 #' @inherit AcidGenerics::removeNA
 #' @note Updated 2019-10-12.
@@ -48,16 +52,6 @@ NULL
 
 
 
-#' @rdname removeNA
-#' @export
-setMethod(
-    f = "removeNA",
-    signature = signature("atomic"),
-    definition = `removeNA,atomic`
-)
-
-
-
 ## Updated 2019-07-19.
 `removeNA,matrix` <-  # nolint
     function(object) {
@@ -68,55 +62,60 @@ setMethod(
 
 
 
+## Updated 2021-02-02.
+`removeNA,Matrix` <-  # nolint
+    `removeNA,matrix`
+
+
+
+## Updated 2019-07-19.
+`removeNA,data.frame` <-  # nolint
+    `removeNA,matrix`
+
+
+
+## Updated 2019-07-19.
+`removeNA,DFrame` <-  # nolint
+    `removeNA,data.frame`
+
+
+
 #' @rdname removeNA
 #' @export
 setMethod(
     f = "removeNA",
-    signature = signature("matrix"),
-    definition = `removeNA,matrix`
+    signature = signature(object = "DFrame"),
+    definition = `removeNA,DFrame`
 )
 
-
-
-## Updated 2021-02-02.
-`removeNA,Matrix` <- `removeNA,matrix`  # nolint
-
-
-
 #' @rdname removeNA
 #' @export
 setMethod(
     f = "removeNA",
-    signature = signature("Matrix"),
+    signature = signature(object = "Matrix"),
     definition = `removeNA,Matrix`
 )
 
-
-
-## Updated 2019-07-19.
-`removeNA,data.frame` <- `removeNA,matrix`  # nolint
-
-
+#' @rdname removeNA
+#' @export
+setMethod(
+    f = "removeNA",
+    signature = signature(object = "atomic"),
+    definition = `removeNA,atomic`
+)
 
 #' @rdname removeNA
 #' @export
 setMethod(
     f = "removeNA",
-    signature = signature("data.frame"),
+    signature = signature(object = "data.frame"),
     definition = `removeNA,data.frame`
 )
 
-
-
-## Updated 2019-07-19.
-`removeNA,DataFrame` <- `removeNA,data.frame`  # nolint
-
-
-
 #' @rdname removeNA
 #' @export
 setMethod(
     f = "removeNA",
-    signature = signature("DataFrame"),
-    definition = `removeNA,DataFrame`
+    signature = signature(object = "matrix"),
+    definition = `removeNA,matrix`
 )

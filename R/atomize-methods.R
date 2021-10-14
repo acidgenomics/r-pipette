@@ -69,7 +69,7 @@ NULL
 #' @export
 setMethod(
     f = "atomize",
-    signature = signature("DFrame"),
+    signature = signature(object = "DFrame"),
     definition = `atomize,DFrame`
 )
 
@@ -85,6 +85,6 @@ setMethod(
 #' @export
 setMethod(
     f = "atomize",
-    signature = signature("data.frame"),
+    signature = signature(object = "data.frame"),
     definition = `atomize,data.frame`
 )

@@ -594,19 +594,19 @@ NULL
 
 
 
-`export,DataFrame,con` <-  # nolint
+`export,DFrame,con` <-  # nolint
     `export,data.frame,con`
 
-`export,DataFrame,format` <-  # nolint
+`export,DFrame,format` <-  # nolint
     `export,data.frame,format`
 
 
 
 `export,GRanges,con` <-   # nolint
-    `export,DataFrame,con`
+    `export,DFrame,con`
 
 `export,GRanges,format` <-   # nolint
-    `export,DataFrame,format`
+    `export,DFrame,format`
 
 
 
@@ -781,11 +781,11 @@ NULL
 setMethod(
     f = "export",
     signature = signature(
-        object = "DataFrame",
+        object = "DFrame",
         con = "character",
         format = "character"
     ),
-    definition = `export,DataFrame,con`
+    definition = `export,DFrame,con`
 )
 
 #' @rdname export
@@ -793,11 +793,11 @@ setMethod(
 setMethod(
     f = "export",
     signature = signature(
-        object = "DataFrame",
+        object = "DFrame",
         con = "character",
         format = "missingOrNULL"
     ),
-    definition = `export,DataFrame,con`
+    definition = `export,DFrame,con`
 )
 
 #' @rdname export
@@ -805,11 +805,11 @@ setMethod(
 setMethod(
     f = "export",
     signature = signature(
-        object = "DataFrame",
+        object = "DFrame",
         con = "missingOrNULL",
         format = "missingOrNULL"
     ),
-    definition = `export,DataFrame,format`
+    definition = `export,DFrame,format`
 )
 
 #' @rdname export
@@ -817,11 +817,11 @@ setMethod(
 setMethod(
     f = "export",
     signature = signature(
-        object = "DataFrame",
+        object = "DFrame",
         con = "missingOrNULL",
         format = "character"
     ),
-    definition = `export,DataFrame,format`
+    definition = `export,DFrame,format`
 )
 
 #' @rdname export

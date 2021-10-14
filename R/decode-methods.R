@@ -26,7 +26,7 @@ NULL
 
 
 ## Updated 2021-06-09.
-`decode,DataFrame` <-  # nolint
+`decode,DFrame` <-  # nolint
     function(x) {
         if (!(hasCols(x) && hasRows(x))) {
             return(x)
@@ -50,21 +50,11 @@ NULL
                 x
             }
         )
-        out <- as.DataFrame(list)
+        out <- as.DFrame(list)
         rownames(out) <- rn
         metadata(out) <- meta
         out
     }
-
-
-
-#' @rdname decode
-#' @export
-setMethod(
-    f = "decode",
-    signature = signature("DataFrame"),
-    definition = `decode,DataFrame`
-)
 
 
 
@@ -83,6 +73,14 @@ setMethod(
 #' @export
 setMethod(
     f = "decode",
-    signature = signature("Ranges"),
+    signature = signature(x = "DFrame"),
+    definition = `decode,DFrame`
+)
+
+#' @rdname decode
+#' @export
+setMethod(
+    f = "decode",
+    signature = signature(x = "Ranges"),
     definition = `decode,Ranges`
 )

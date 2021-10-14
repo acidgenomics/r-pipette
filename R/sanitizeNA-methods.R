@@ -25,20 +25,37 @@ NULL
 
 
 
+## Updated 2021-10-14.
+`sanitizeNA,DFrame` <-  # nolint
+    function(object) {
+        if (!(hasCols(object) && hasRows(object))) {
+            return(object)  # nocov
+        }
+        meta <- metadata(object)
+        rn <- rownames(object)
+        list <- lapply(
+            X = object,
+            FUN = function(x) {
+                if (is.character(x)) {
+                    sanitizeNA(x)
+                } else {
+                    x  # nocov
+                }
+            }
+        )
+        out <- as.DFrame(list)
+        rownames(out) <- rn
+        metadata(out) <- meta
+        out
+    }
+
+
+
 ## Updated 2019-07-19.
 `sanitizeNA,atomic` <-  # nolint
     function(object) {
         object
     }
-
-
-#' @rdname sanitizeNA
-#' @export
-setMethod(
-    f = "sanitizeNA",
-    signature = signature("atomic"),
-    definition = `sanitizeNA,atomic`
-)
 
 
 
@@ -61,44 +78,6 @@ setMethod(
             ignore.case = TRUE
         )
     }
-
-
-
-#' @rdname sanitizeNA
-#' @export
-setMethod(
-    f = "sanitizeNA",
-    signature = signature("character"),
-    definition = `sanitizeNA,character`
-)
-
-
-
-## Don't use `as.factor()` and then reset levels using a separate `levels()`
-## call here. It can cause a single value to flip to the first element in the
-## levels vector.
-##
-## Updated 2021-08-05.
-`sanitizeNA,factor` <-  # nolint
-    function(object) {
-        x <- object
-        levels <- unique(sanitizeNA(levels(x)))
-        x <- as.character(x)
-        x <- sanitizeNA(x)
-        x <- factor(x = x, levels = levels)
-        names(x) <- names(object)
-        x
-    }
-
-
-
-#' @rdname sanitizeNA
-#' @export
-setMethod(
-    f = "sanitizeNA",
-    signature = signature("factor"),
-    definition = `sanitizeNA,factor`
-)
 
 
 
@@ -138,38 +117,20 @@ setMethod(
 
 
 
-#' @rdname sanitizeNA
-#' @export
-setMethod(
-    f = "sanitizeNA",
-    signature = signature("data.frame"),
-    definition = `sanitizeNA,data.frame`
-)
-
-
-
-## Updated 2021-06-09.
-`sanitizeNA,DataFrame` <-  # nolint
+## Don't use `as.factor()` and then reset levels using a separate `levels()`
+## call here. It can cause a single value to flip to the first element in the
+## levels vector.
+##
+## Updated 2021-08-05.
+`sanitizeNA,factor` <-  # nolint
     function(object) {
-        if (!(hasCols(object) && hasRows(object))) {
-            return(object)  # nocov
-        }
-        meta <- metadata(object)
-        rn <- rownames(object)
-        list <- lapply(
-            X = object,
-            FUN = function(x) {
-                if (is.character(x)) {
-                    sanitizeNA(x)
-                } else {
-                    x  # nocov
-                }
-            }
-        )
-        out <- as.DataFrame(list)
-        rownames(out) <- rn
-        metadata(out) <- meta
-        out
+        x <- object
+        levels <- unique(sanitizeNA(levels(x)))
+        x <- as.character(x)
+        x <- sanitizeNA(x)
+        x <- factor(x = x, levels = levels)
+        names(x) <- names(object)
+        x
     }
 
 
@@ -178,6 +139,38 @@ setMethod(
 #' @export
 setMethod(
     f = "sanitizeNA",
-    signature = signature("DataFrame"),
-    definition = `sanitizeNA,DataFrame`
+    signature = signature(object = "DFrame"),
+    definition = `sanitizeNA,DFrame`
+)
+
+#' @rdname sanitizeNA
+#' @export
+setMethod(
+    f = "sanitizeNA",
+    signature = signature(object = "atomic"),
+    definition = `sanitizeNA,atomic`
+)
+
+#' @rdname sanitizeNA
+#' @export
+setMethod(
+    f = "sanitizeNA",
+    signature = signature(object = "character"),
+    definition = `sanitizeNA,character`
+)
+
+#' @rdname sanitizeNA
+#' @export
+setMethod(
+    f = "sanitizeNA",
+    signature = signature(object = "data.frame"),
+    definition = `sanitizeNA,data.frame`
+)
+
+#' @rdname sanitizeNA
+#' @export
+setMethod(
+    f = "sanitizeNA",
+    signature = signature(object = "factor"),
+    definition = `sanitizeNA,factor`
 )

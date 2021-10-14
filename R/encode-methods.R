@@ -25,7 +25,7 @@ NULL
 
 
 ## Updated 2021-08-24.
-`encode,DataFrame` <-  # nolint
+`encode,DFrame` <-  # nolint
     function(x) {
         if (!(hasCols(x) && hasRows(x))) {
             return(x)  # nocov
@@ -53,21 +53,11 @@ NULL
                 x
             }
         )
-        out <- as.DataFrame(list)
+        out <- as.DFrame(list)
         rownames(out) <- rn
         metadata(out) <- meta
         out
     }
-
-
-
-#' @rdname encode
-#' @export
-setMethod(
-    f = "encode",
-    signature = signature("DataFrame"),
-    definition = `encode,DataFrame`
-)
 
 
 
@@ -86,6 +76,14 @@ setMethod(
 #' @export
 setMethod(
     f = "encode",
-    signature = signature("Ranges"),
+    signature = signature(x = "DataFrame"),
+    definition = `encode,DFrame`
+)
+
+#' @rdname encode
+#' @export
+setMethod(
+    f = "encode",
+    signature = signature(x = "Ranges"),
     definition = `encode,Ranges`
 )
