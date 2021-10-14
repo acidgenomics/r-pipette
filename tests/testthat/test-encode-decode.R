@@ -1,6 +1,6 @@
 context("encode/decode")
 
-test_that("DataFrame", {
+test_that("DFrame", {
     x <- encode(df)
     expect_s4_class(x[[1L]], "Rle")
     y <- decode(x)

@@ -2,24 +2,24 @@
 % Please edit documentation in R/AllGenerics.R, R/sanitizeNA-methods.R
 \name{sanitizeNA}
 \alias{sanitizeNA}
+\alias{sanitizeNA,DFrame-method}
 \alias{sanitizeNA,atomic-method}
 \alias{sanitizeNA,character-method}
-\alias{sanitizeNA,factor-method}
 \alias{sanitizeNA,data.frame-method}
-\alias{sanitizeNA,DataFrame-method}
+\alias{sanitizeNA,factor-method}
 \title{Sanitize NA values}
 \usage{
 sanitizeNA(object, ...)
+
+\S4method{sanitizeNA}{DFrame}(object)
 
 \S4method{sanitizeNA}{atomic}(object)
 
 \S4method{sanitizeNA}{character}(object)
 
-\S4method{sanitizeNA}{factor}(object)
-
 \S4method{sanitizeNA}{data.frame}(object)
 
-\S4method{sanitizeNA}{DataFrame}(object)
+\S4method{sanitizeNA}{factor}(object)
 }
 \arguments{
 \item{object}{Object.}

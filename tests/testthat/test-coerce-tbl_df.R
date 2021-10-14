@@ -4,7 +4,7 @@ test_that("S4 'as()' on empty data.frame", {
     expect_is(as(data.frame(), "tbl_df"), "tbl_df")
 })
 
-test_that("DataFrame", {
+test_that("DFrame", {
     data <- DFrame
     x <- as(data, "tbl_df")
     expect_is(x, "tbl_df")

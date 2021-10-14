@@ -16,29 +16,24 @@
 \alias{as.data.table.IRanges}
 \alias{as.data.table.GRanges}
 \alias{as.DFrame,SimpleList-method}
-\alias{as.DataFrame,SimpleList-method}
 \alias{as.DFrame,list-method}
+\alias{as.DataFrame,SimpleList-method}
 \alias{as.DataFrame,list-method}
 \alias{as.data.frame,IRanges-method}
 \alias{as.data.frame,Matrix-method}
 \alias{coerce,DFrame,data.table-method}
-\alias{coerce,DataFrame,data.table-method}
 \alias{coerce,DFrame,tbl_df-method}
-\alias{coerce,DataFrame,tbl_df-method}
 \alias{coerce,GRanges,data.table-method}
 \alias{coerce,GRanges,tbl_df-method}
 \alias{coerce,IRanges,data.frame-method}
 \alias{coerce,IRanges,data.table-method}
 \alias{coerce,IRanges,tbl_df-method}
 \alias{coerce,Matrix,DFrame-method}
-\alias{coerce,Matrix,DataFrame-method}
 \alias{coerce,Matrix,data.frame-method}
 \alias{coerce,data.frame,data.table-method}
 \alias{coerce,data.frame,tbl_df-method}
 \alias{coerce,data.table,DFrame-method}
-\alias{coerce,data.table,DataFrame-method}
 \alias{coerce,tbl_df,DFrame-method}
-\alias{coerce,tbl_df,DataFrame-method}
 \title{Coercion methods}
 \usage{
 as.DFrame(x, ...)
@@ -83,9 +78,9 @@ as.data.table(x, keep.rownames = FALSE, ...)
 
 \S4method{as.DFrame}{SimpleList}(x, row.names = NULL)
 
-\S4method{as.DataFrame}{SimpleList}(x, row.names = NULL)
-
 \S4method{as.DFrame}{list}(x, row.names = NULL)
+
+\S4method{as.DataFrame}{SimpleList}(x, row.names = NULL)
 
 \S4method{as.DataFrame}{list}(x, row.names = NULL)
 
@@ -131,7 +126,7 @@ Updated 2020-05-18.
 
 
 Don't define \code{as()} coercion method for \code{list} here. It will create issues
-with \code{data.frame} coercion. Use \code{as.DataFrame()} instead to coerce a \code{list}
+with \code{data.frame} coercion. Use \code{as.DFrame()} instead to coerce a \code{list}
 to \code{DFrame}.
 
 Wrapping the columns in an \code{I()} works when passing to \code{DataFrame()}.
@@ -280,12 +275,12 @@ to <- as(from, "DFrame")
 head(to)
 
 ## `list` to `DFrame` ====
-## Use `as.DataFrame()` instead of `as()` for `list` class.
+## Use `as.DFrame()` instead of `as()` for `list` class.
 from <- list(
     a = list(c(1, 2), c(3, 4)),
     b = list(NULL, NULL)
 )
-to <- as.DataFrame(from)
+to <- as.DFrame(from)
 to
 
 ## `tbl_df` to `DFrame` ====
