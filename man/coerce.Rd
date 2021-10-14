@@ -2,23 +2,18 @@
 % Please edit documentation in R/AllGenerics.R, R/coerce-methods.R
 \name{as.DFrame}
 \alias{as.DFrame}
-\alias{as.DataFrame}
 \alias{as.data.frame}
 \alias{as.data.table}
 \alias{as_tibble}
 \alias{coerce}
 \alias{as_tibble.DFrame}
-\alias{as_tibble.DataFrame}
 \alias{as_tibble.IRanges}
 \alias{as_tibble.GRanges}
 \alias{as.data.table.DFrame}
-\alias{as.data.table.DataFrame}
 \alias{as.data.table.IRanges}
 \alias{as.data.table.GRanges}
 \alias{as.DFrame,SimpleList-method}
 \alias{as.DFrame,list-method}
-\alias{as.DataFrame,SimpleList-method}
-\alias{as.DataFrame,list-method}
 \alias{as.data.frame,IRanges-method}
 \alias{as.data.frame,Matrix-method}
 \alias{coerce,DFrame,data.table-method}
@@ -38,19 +33,11 @@
 \usage{
 as.DFrame(x, ...)
 
-as.DataFrame(x, ...)
-
 as.data.frame(x, row.names = NULL, optional = FALSE, ...)
 
 as.data.table(x, keep.rownames = FALSE, ...)
 
 \method{as_tibble}{DFrame}(
-  x,
-  ...,
-  rownames = pkgconfig::get_config("tibble::rownames", "rowname")
-)
-
-\method{as_tibble}{DataFrame}(
   x,
   ...,
   rownames = pkgconfig::get_config("tibble::rownames", "rowname")
@@ -70,8 +57,6 @@ as.data.table(x, keep.rownames = FALSE, ...)
 
 \method{as.data.table}{DFrame}(x, keep.rownames = TRUE, ...)
 
-\method{as.data.table}{DataFrame}(x, keep.rownames = TRUE, ...)
-
 \method{as.data.table}{IRanges}(x, keep.rownames = TRUE, ...)
 
 \method{as.data.table}{GRanges}(x, keep.rownames = TRUE, ...)
@@ -79,10 +64,6 @@ as.data.table(x, keep.rownames = FALSE, ...)
 \S4method{as.DFrame}{SimpleList}(x, row.names = NULL)
 
 \S4method{as.DFrame}{list}(x, row.names = NULL)
-
-\S4method{as.DataFrame}{SimpleList}(x, row.names = NULL)
-
-\S4method{as.DataFrame}{list}(x, row.names = NULL)
 
 \S4method{as.data.frame}{IRanges}(x, row.names = NULL, optional = FALSE, ...)
 
@@ -120,9 +101,9 @@ popular tabular formats in R, including \code{data.frame}, \code{data.table}, \c
 and the Bioconductor \code{DFrame} classes.
 }
 \note{
-Updated 2020-05-18.
+Updated 2021-10-14.
 }
-\section{\code{DataFrame} / \code{DFrame} (Bioconductor) coercion}{
+\section{\code{DFrame} (Bioconductor) coercion}{
 
 
 Don't define \code{as()} coercion method for \code{list} here. It will create issues
