@@ -9,12 +9,12 @@ test_that("DataFrame", {
     expect_true(hasRownames(object))
 })
 
-test_that("GRanges", {
+test_that("GenomicRanges", {
     object <- encode(gr)
     expect_false(any(bapply(X = mcols(object), FUN = is.atomic)))
     object <- atomize(gr)
     expect_true(all(bapply(X = mcols(object), FUN = is.atomic)))
-    expect_s4_class(object, "GRanges")
+    expect_s4_class(object, "GenomicRanges")
     expect_true(hasNames(object))
 })
 

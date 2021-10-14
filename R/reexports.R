@@ -77,3 +77,17 @@ tibble::tibble
 #' @importFrom AcidBase untar
 #' @export
 AcidBase::untar
+
+
+
+#' @rdname reexports
+#' @name Matrix-class
+#' @importClassesFrom Matrix Matrix
+#' @exportClass Matrix
+NULL
+
+#' @rdname reexports
+#' @name sparseMatrix-class
+#' @importClassesFrom Matrix sparseMatrix
+#' @exportClass sparseMatrix
+NULL
