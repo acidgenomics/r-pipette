@@ -10,7 +10,7 @@ test_that("loadRemoteData", {
     expect_is(object, "character")
     expect_identical(object, c(example = url))
     ## Check that the object loaded correctly.
-    expect_is(envir[["example"]], "DFrame")
+    expect_is(envir[["example"]], "DataFrame")
 })
 
 test_that("Overwrite mode", {

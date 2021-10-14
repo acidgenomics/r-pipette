@@ -1,4 +1,4 @@
-## Coerce an S4 DFrame to a standard data.frame.
+## Coerce an S4 DataFrame to a standard data.frame.
 ##
 ## This function will return an informative error if an S4 DFrame contains
 ## complex columns that can't be coerced to atomic or list.
@@ -7,7 +7,7 @@
 ## conventions currently used by Bioconductor.
 ##
 ## Updated 2021-09-28.
-`.coerce,DFrame,data.frame` <-  # nolint
+`.coerce,DataFrame,data.frame` <-  # nolint
     function(x) {
         ## Decode Rle columns, which can be coerced.
         x <- decode(x)

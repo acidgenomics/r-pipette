@@ -20,7 +20,7 @@
 #' to <- removeNA(from)
 #' print(to)
 #'
-#' ## DFrame ====
+#' ## DataFrame ====
 #' from <- DataFrame(
 #'     "a" = c("A", NA, "C"),
 #'     "b" = c(NA, NA, NA),
@@ -59,7 +59,7 @@ NULL
 
 
 ## Updated 2021-10-14.
-`removeNA,DFrame` <-  # nolint
+`removeNA,DataFrame` <-  # nolint
     `removeNA,matrix`
 
 ## Updated 2021-02-02.
@@ -76,8 +76,8 @@ NULL
 #' @export
 setMethod(
     f = "removeNA",
-    signature = signature(object = "DFrame"),
-    definition = `removeNA,DFrame`
+    signature = signature(object = "DataFrame"),
+    definition = `removeNA,DataFrame`
 )
 
 #' @rdname removeNA

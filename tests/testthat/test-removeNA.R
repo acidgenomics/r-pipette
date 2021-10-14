@@ -7,7 +7,7 @@ test_that("removeNA", {
         object = list(
             "character" = c("hello", "world", NA),
             "numeric" = c(1L, 2L, NA),
-            "DFrame" = DataFrame(
+            "DataFrame" = DataFrame(
                 "a" = c("A", NA, "C"),
                 "b" = c(NA, NA, NA),
                 "c" = c("B", NA, "D"),
@@ -23,7 +23,7 @@ test_that("removeNA", {
                 .Data = c(1L, 2L),
                 na.action = structure(3L, class = "omit")
             ),
-            "DFrame" = DataFrame(
+            "DataFrame" = DataFrame(
                 "a" = c("A", "C"),
                 "c" = c("B", "D"),
                 row.names = c("x", "z")

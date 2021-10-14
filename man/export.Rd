@@ -2,10 +2,10 @@
 % Please edit documentation in R/AllGenerics.R, R/export-methods.R
 \name{export}
 \alias{export}
-\alias{export,DFrame,character,character-method}
-\alias{export,DFrame,character,missingOrNULL-method}
-\alias{export,DFrame,missingOrNULL,missingOrNULL-method}
-\alias{export,DFrame,missingOrNULL,character-method}
+\alias{export,DataFrame,character,character-method}
+\alias{export,DataFrame,character,missingOrNULL-method}
+\alias{export,DataFrame,missingOrNULL,missingOrNULL-method}
+\alias{export,DataFrame,missingOrNULL,character-method}
 \alias{export,GRanges,character,character-method}
 \alias{export,GRanges,character,missingOrNULL-method}
 \alias{export,GRanges,missingOrNULL,missingOrNULL-method}
@@ -30,7 +30,7 @@
 \usage{
 export(object, con, format, ...)
 
-\S4method{export}{DFrame,character,character}(
+\S4method{export}{DataFrame,character,character}(
   object,
   con,
   format,
@@ -41,7 +41,7 @@ export(object, con, format, ...)
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
-\S4method{export}{DFrame,character,missingOrNULL}(
+\S4method{export}{DataFrame,character,missingOrNULL}(
   object,
   con,
   format,
@@ -52,7 +52,7 @@ export(object, con, format, ...)
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
-\S4method{export}{DFrame,missingOrNULL,missingOrNULL}(
+\S4method{export}{DataFrame,missingOrNULL,missingOrNULL}(
   object,
   con,
   format,
@@ -62,7 +62,7 @@ export(object, con, format, ...)
   file
 )
 
-\S4method{export}{DFrame,missingOrNULL,character}(
+\S4method{export}{DataFrame,missingOrNULL,character}(
   object,
   con,
   format,

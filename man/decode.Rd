@@ -2,13 +2,13 @@
 % Please edit documentation in R/AllGenerics.R, R/decode-methods.R
 \name{decode}
 \alias{decode}
-\alias{decode,DFrame-method}
+\alias{decode,DataFrame-method}
 \alias{decode,Ranges-method}
 \title{Decode column data that uses run-length encoding}
 \usage{
 decode(x, ...)
 
-\S4method{decode}{DFrame}(x)
+\S4method{decode}{DataFrame}(x)
 
 \S4method{decode}{Ranges}(x)
 }
@@ -25,18 +25,20 @@ Columns will be decoded and no longer \code{Rle} class.
 Decode (run-length encoding)
 }
 \note{
-Updated 2021-06-09.
+Updated 2021-10-14.
 }
 \examples{
-data(DFrame, package = "AcidTest")
-df <- DFrame
+data(DataFrame, package = "AcidTest")
 
-## DFrame ====
-df <- encode(df)
-lapply(df, class)
-x <- decode(df)
-lapply(x, class)
+## DataFrame ====
+object <- DataFrame
+object <- encode(object)
+lapply(object, class)
+object <- decode(object)
+lapply(object, class)
 }
 \seealso{
-\code{S4Vectors::decode()}.
+\itemize{
+\item \code{S4Vectors::decode()}.
+}
 }
