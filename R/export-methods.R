@@ -1,7 +1,7 @@
 #' Export
 #'
 #' @name export
-#' @note Updated 2021-09-28.
+#' @note Updated 2021-10-14.
 #'
 #' @section Row names:
 #'
