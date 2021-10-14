@@ -1,4 +1,4 @@
-## FIXME Revert changes that dispatch on DFrame back to DataFrame.
+## FIXME Update methods on '.IRanges', '.GRanges', etc here.
 
 
 
@@ -19,18 +19,18 @@ NULL
 #' @details
 #' These conversion methods are primarily intended to interconvert between
 #' popular tabular formats in R, including `data.frame`, `data.table`, `tbl_df`,
-#' and the Bioconductor `DFrame` classes.
+#' and the Bioconductor `DataFrame` classes.
 #'
-#' @section `DFrame` (Bioconductor) coercion:
+#' @section `DataFrame` (Bioconductor) coercion:
 #'
 #' Don't define `as()` coercion method for `list` here. It will create issues
 #' with `data.frame` coercion. Use `as.DataFrame()` instead to coerce a `list`
-#' to `DFrame`.
+#' to `DataFrame`.
 #'
 #' Wrapping the columns in an `I()` should work when passing to `DataFrame()`.
 #' See also `as_tibble()` for easy list to data frame coercion.
 #'
-#' `as()` method definition causes issues with `data.frame` to `DFrame`
+#' `as()` method definition causes issues with `data.frame` to `DataFrame`
 #' coercion when defined, because `data.frame` inherits from list.
 #'
 #' @section `data.frame` coercion:
@@ -74,8 +74,8 @@ NULL
 #'
 #' The package extends `as.data.table()` method support for these S4 classes:
 #'
-#' - `DFrame` (from S4Vectors package).
-#' - `GRanges` (from GenomicRanges package).
+#' - `DataFrame` (from S4Vectors package).
+#' - `GenomicRanges` (from GenomicRanges package).
 #'
 #' ## S4 methods: `as()`
 #'
@@ -98,8 +98,8 @@ NULL
 #'
 #' The package extends `as_tibble()` method support for these S4 classes:
 #'
-#' - `DFrame` (from S4Vectors package).
-#' - `GRanges` (from GenomicRanges package).
+#' - `DataFrame` (from S4Vectors package).
+#' - `GenomicRanges` (from GenomicRanges package).
 #'
 #' ## S4 methods: `as()`
 #'
@@ -119,91 +119,112 @@ NULL
 #' - `as.data.frame()`.
 #' - `as.data.table()`.
 #' - `as_tibble()`.
-#' - `getClass("DFrame")`.
+#' - `getClass("DataFrame")`.
 #' - `getClass("data.table")`.
 #' - `getClass("tbl_df")`.
 #'
 #' @examples
 #' data(
-#'     DFrame,
-#'     GRanges,
-#'     IRanges,
+#'     DataFrame,
+#'     GenomicRanges,
+#'     IntegerRanges,
 #'     data.table,
 #'     sparseMatrix,
-#'     tbl_df,
+#'     tibble,  # FIXME
 #'     package = "AcidTest"
 #' )
 #'
-#' ## `DFrame` to `data.table` ====
-#' x <- as(DFrame, "data.table")
-#' x <- as.data.table(DFrame)
-#' print(x)
+#' ## `DataFrame` to `data.table` ====
+#' from <- DataFrame
+#' to <- as.data.table(from)
+#' print(to)
+#' to <- as(from, "data.table")
+#' print(to)
 #'
-#' ## `DFrame` to `tbl_df` ====
-#' x <- as(DFrame, "tbl_df")
-#' x <- as_tibble(DFrame)
-#' print(x)
+#' ## `DataFrame` to `tbl_df` (tibble) ====
+#' from <- DataFrame
+#' to <- as_tibble(from)
+#' print(to)
+#' to <- as(from, "tbl_df")
+#' print(to)
 #'
-#' ## `GRanges` to `data.table` ====
-#' x <- as(GRanges, "data.table")
-#' x <- as.data.table(GRanges)
-#' print(x)
+#' ## `GenomicRanges` to `data.table` ====
+#' from <- GenomicRanges
+#' to <- as.data.table(from)
+#' print(to)
+#' to <- as(from, "data.table")
+#' print(to)
 #'
-#' ## `GRanges` to `tbl_df` ====
-#' x <- as(GRanges, "tbl_df")
-#' x <- as_tibble(GRanges)
-#' print(x)
+#' ## `GenomicRanges` to `tbl_df` (tibble) ====
+#' from <- GenomicRanges
+#' to <- as_tibble(from)
+#' print(to)
+#' to <- as(from, "tbl_df")
+#' print(to)
 #'
-#' ## `IRanges` to `data.table` ====
-#' x <- as(IRanges, "data.table")
-#' x <- as.data.table(IRanges)
-#' print(x)
+#' ## `IntegerRanges` to `data.table` ====
+#' from <- IntegerRanges
+#' to <- as.data.table(from)
+#' print(to)
+#' to <- as(from, "data.table")
+#' print(to)
 #'
-#' ## `IRanges` to `tbl_df` ====
-#' x <- as(IRanges, "tbl_df")
-#' x <- as_tibble(IRanges)
-#' print(x)
+#' ## `IntegerRanges` to `tbl_df` (tibble) ====
+#' from <- IntegerRanges
+#' to <- as_tibble(from)
+#' print(to)
+#' to <- as(from, "tbl_df")
+#' print(to)
 #'
-#' ## `Matrix` to `DFrame` ====
+#' ## `Matrix` to `DataFrame` ====
 #' from <- sparseMatrix
-#' to <- as(from, "DFrame")
+#' to <- as.DataFrame(from)
+#' print(to)
+#' to <- as(from, "DataFrame")
 #' to
 #'
 #' ## `Matrix` to `data.frame` ====
-#' x <- as(sparseMatrix, "data.frame")
-#' head(x)
-#'
-#' ## `data.table` to `DFrame` ====
-#' from <- data.table
-#' to <- as(from, "DFrame")
+#' from <- sparseMatrix
+#' to <- as.data.frame(from)
+#' head(to)
+#' to <- as(from, "data.frame")
 #' head(to)
 #'
-#' ## `list` to `DFrame` ====
+#' ## `data.table` to `DataFrame` ====
+#' from <- data.table
+#' to <- as.DataFrame(from)
+#' head(to)
+#' to <- as(from, "DataFrame")
+#' head(to)
+#'
+#' ## `list` to `DataFrame` ====
 #' ## Use `as.DataFrame()` instead of `as()` for `list` class.
 #' from <- list(
-#'     a = list(c(1, 2), c(3, 4)),
-#'     b = list(NULL, NULL)
+#'     "a" = list(c(1, 2), c(3, 4)),
+#'     "b" = list(NULL, NULL)
 #' )
 #' to <- as.DataFrame(from)
 #' to
 #'
-#' ## `tbl_df` to `DFrame` ====
-#' from <- tbl_df
-#' to <- as(from, "DFrame")
+#' ## `tbl_df` (tibble) to `DataFrame` ====
+#' from <- tibble
+#' to <- as.DataFrame(from)
+#' head(to)
+#' to <- as(from, "DataFrame")
 #' head(to)
 NULL
 
 
 
-## To DFrame ===================================================================
+## To DataFrame ================================================================
 
-#' Coerce a `list` to `DFrame`
+#' Coerce a `list` to `DataFrame`
 #'
-#' @note Updated 2021-05-18.
+#' @note Updated 2021-10-14.
 #' @noRd
 #'
 #' @details
-#' To store an object of a class that does not support coercion to `DFrame`,
+#' To store an object of a class that does not support coercion to `DataFrame`,
 #' wrap it in `I()`. The class must still have methods for `length` and `[`.
 `as.DataFrame,list` <-  # nolint
     function(x, row.names = NULL) {
@@ -217,10 +238,8 @@ NULL
             x <- lapply(
                 X = x,
                 FUN = function(x) {
-                    if (packageVersion("S4Vectors") >= 0.29) {
-                        if (isAny(x = x, classes = c("List", "Rle"))) {
-                            return(x)
-                        }
+                    if (isAny(x = x, classes = c("List", "Rle"))) {
+                        return(x)
                     }
                     I(x)
                 }
@@ -246,10 +265,10 @@ NULL
     `as.DataFrame,list`
 
 ## Updated 2021-09-28.
-`coerce,ANY,DFrame` <-  # nolint
+`coerce,ANY,DataFrame` <-  # nolint
     function(from) {
         to <- as.data.frame(from, stringsAsFactors = FALSE)
-        to <- as(to, "DFrame")
+        to <- as(to, "DataFrame")
         ## Move row names automatically, if defined.
         if (!hasRownames(to)) {
             rncol <- matchRownameColumn(to)
@@ -262,16 +281,16 @@ NULL
     }
 
 ## Updated 2019-07-12.
-`coerce,Matrix,DFrame` <-  # nolint
-    `coerce,ANY,DFrame`
+`coerce,Matrix,DataFrame` <-  # nolint
+    `coerce,ANY,DataFrame`
 
 ## Updated 2019-07-12.
-`coerce,data.table,DFrame` <-  # nolint
-    `coerce,ANY,DFrame`
+`coerce,data.table,DataFrame` <-  # nolint
+    `coerce,ANY,DataFrame`
 
 ## Updated 2019-07-12.
-`coerce,tbl_df,DFrame` <-  # nolint
-    `coerce,ANY,DFrame`
+`coerce,tbl_df,DataFrame` <-  # nolint
+    `coerce,ANY,DataFrame`
 
 
 
@@ -336,16 +355,16 @@ NULL
 #' @rdname coerce
 #' @export
 ## Updated 2021-09-28.
-as_tibble.DFrame <-  # nolint
+as_tibble.DataFrame <-  # nolint
     function(x, ..., rownames) {
-        x <- `.coerce,DFrame,data.frame`(x)
+        x <- `.coerce,DataFrame,data.frame`(x)
         if (!hasRownames(x)) {
             rownames <- NULL
         }
         as_tibble(x = x, ..., rownames = rownames)
     }
 
-formals(as_tibble.DFrame)[["rownames"]] <- .tbl_rownames
+formals(as_tibble.DataFrame)[["rownames"]] <- .tbl_rownames
 
 #' @rdname coerce
 #' @export
@@ -377,7 +396,7 @@ as_tibble.GRanges <- as_tibble.IRanges  # nolint
     `coerce,ANY,tbl_df`
 
 ## Updated 2019-07-19.
-`coerce,DFrame,tbl_df` <-  # nolint
+`coerce,DataFrame,tbl_df` <-  # nolint
     `coerce,ANY,tbl_df`
 
 ## Updated 2019-07-20.
@@ -397,9 +416,9 @@ rm(.tbl_rownames)
 #' @rdname coerce
 #' @export
 ## Updated 2021-09-28.
-as.data.table.DFrame <-  # nolint
+as.data.table.DataFrame <-  # nolint
     function(x, keep.rownames = TRUE, ...) {  # nolint
-        x <- `.coerce,DFrame,data.frame`(x)
+        x <- `.coerce,DataFrame,data.frame`(x)
         if (!hasRownames(x)) {
             keep.rownames <- FALSE  # nolint
         }
@@ -435,7 +454,7 @@ as.data.table.GRanges <-  # nolint
     `coerce,ANY,data.table`
 
 ## Updated 2019-07-19.
-`coerce,DFrame,data.table` <-  # nolint
+`coerce,DataFrame,data.table` <-  # nolint
     `coerce,ANY,data.table`
 
 ## Updated 2020-01-19.
@@ -491,19 +510,19 @@ setMethod(
 ## Ensure these are redefined in basejump, for backward compatibility.
 
 #' @rdname coerce
-#' @name coerce,DFrame,data.table-method
+#' @name coerce,DataFrame,data.table-method
 setAs(
-    from = "DFrame",
+    from = "DataFrame",
     to = "data.table",
-    def = `coerce,DFrame,data.table`
+    def = `coerce,DataFrame,data.table`
 )
 
 #' @rdname coerce
-#' @name coerce,DFrame,tbl_df-method
+#' @name coerce,DataFrame,tbl_df-method
 setAs(
-    from = "DFrame",
+    from = "DataFrame",
     to = "tbl_df",
-    def = `coerce,DFrame,tbl_df`
+    def = `coerce,DataFrame,tbl_df`
 )
 
 #' @rdname coerce
@@ -547,11 +566,11 @@ setAs(
 )
 
 #' @rdname coerce
-#' @name coerce,Matrix,DFrame-method
+#' @name coerce,Matrix,DataFrame-method
 setAs(
     from = "Matrix",
-    to = "DFrame",
-    def = `coerce,Matrix,DFrame`
+    to = "DataFrame",
+    def = `coerce,Matrix,DataFrame`
 )
 
 #' @rdname coerce
@@ -579,17 +598,17 @@ setAs(
 )
 
 #' @rdname coerce
-#' @name coerce,data.table,DFrame-method
+#' @name coerce,data.table,DataFrame-method
 setAs(
     from = "data.table",
-    to = "DFrame",
-    def = `coerce,data.table,DFrame`
+    to = "DataFrame",
+    def = `coerce,data.table,DataFrame`
 )
 
 #' @rdname coerce
-#' @name coerce,tbl_df,DFrame-method
+#' @name coerce,tbl_df,DataFrame-method
 setAs(
     from = "tbl_df",
-    to = "DFrame",
-    def = `coerce,tbl_df,DFrame`
+    to = "DataFrame",
+    def = `coerce,tbl_df,DataFrame`
 )
