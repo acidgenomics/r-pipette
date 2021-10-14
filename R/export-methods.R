@@ -3,6 +3,20 @@
 #' @name export
 #' @note Updated 2021-10-14.
 #'
+#' @section Output file format extension:
+#'
+#' `matrix` supported arguments:
+#'
+#' - Comma separated values (CSV):
+#'   `"csv"`, `"csv.bz2"`, `"csv.gz"`, `"csv.xz"`, `"csv.zip"`.
+#' - Tab separated values (TSV):
+#'   `"tsv"`, `"tsv.bz2"`, `"tsv.gz"`, `"tsv.xz"`, `"tsv.zip"`.
+#'
+#' `Matrix` (`sparseMatrix`) supported arguments:
+#'
+#' - MatrixMarket exchange (MTX):
+#'   `"mtx"`, `"mtx.bz2"`, `"mtx.gz"`, `"mtx.xz"`, `"mtx.zip"`.
+#'
 #' @section Row names:
 #'
 #' Some export utilities in R have a tendency to drop row names when writing to
@@ -28,7 +42,7 @@
 #'   Append to output file.
 #'   When enabled, automatically sets `overwrite` argument to `FALSE`.
 #'   Requires readr package to be installed.
-#' @param con `character(1)`.
+#' @param con `character(1)`, `missing`, or `NULL`.
 #'   File path.
 #'   Alternatively, can leave unset and use `ext` and `dir` arguments instead.
 #' @param engine `character(1)`.
@@ -42,18 +56,8 @@
 #'   *Deprecated in favor of `format` argument.*
 #' @param file `character(1)`.
 #'   *Deprecated in favor of `con` argument.*
-#' @param format `character(1)`.
+#' @param format `character(1)`, `missing`, or `NULL`.
 #'   Output file format extension.
-#'
-#'   `matrix` supported arguments:
-#'   - Comma separated values (CSV):
-#'     `"csv"`, `"csv.bz2"`, `"csv.gz"`, `"csv.xz"`, `"csv.zip"`.
-#'   - Tab separated values (TSV):
-#'     `"tsv"`, `"tsv.bz2"`, `"tsv.gz"`, `"tsv.xz"`, `"tsv.zip"`.
-#'
-#'   `Matrix` (`sparseMatrix`) supported arguments:
-#'   - MatrixMarket exchange (MTX):
-#'     `"mtx"`, `"mtx.bz2"`, `"mtx.gz"`, `"mtx.xz"`, `"mtx.zip"`.
 #' @param ... Additional arguments.
 #'
 #' @return Invisible `character`.
