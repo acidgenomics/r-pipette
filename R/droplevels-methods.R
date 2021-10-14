@@ -10,10 +10,10 @@
 #' @return Modified object.
 #'
 #' @examples
-#' data(GRanges, package = "AcidTest")
+#' data(GenomicRanges, package = "AcidTest")
 #'
 #' ## Ranges ====
-#' object <- GRanges
+#' object <- GenomicRanges
 #' object <- droplevels(object)
 #' print(object)
 NULL
