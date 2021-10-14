@@ -4,8 +4,8 @@
 #'
 #' @keywords internal
 #'
-#' @importClassesFrom AcidGenerics BiocFile DFrame GRanges IRanges List Ranges
-#'   SimpleList missingOrNULL
+#' @importClassesFrom AcidGenerics BiocFile DataFrame GenomicRanges
+#'   IntegerRanges List Ranges SimpleList missingOrNULL
 #' @importClassesFrom Matrix Matrix
 #'
 #' @importFrom AcidBase basenameSansExt dots download download.file fileExt
