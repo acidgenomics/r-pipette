@@ -146,7 +146,7 @@ test_that("Invalid input", {
 
 
 
-context("export : DFrame")
+context("export : DataFrame")
 
 test_that("'ext' argument", {
     formats <- .exportFormatChoices[["matrix"]]

@@ -21,7 +21,7 @@ NULL
 
 
 ## Updated 2021-02-03.
-`droplevels,DFrame` <-  # nolint
+`droplevels,DataFrame` <-  # nolint
     function(x) {
         except <- !bapply(X = decode(x), FUN = is.factor)
         if (all(except)) {
@@ -49,8 +49,8 @@ NULL
 #' @rdname droplevels
 setMethod(
     f = "droplevels",
-    signature = signature(x = "DFrame"),
-    definition = `droplevels,DFrame`
+    signature = signature(x = "DataFrame"),
+    definition = `droplevels,DataFrame`
 )
 
 #' @rdname droplevels

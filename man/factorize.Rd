@@ -2,13 +2,13 @@
 % Please edit documentation in R/AllGenerics.R, R/factorize-methods.R
 \name{factorize}
 \alias{factorize}
-\alias{factorize,DFrame-method}
+\alias{factorize,DataFrame-method}
 \alias{factorize,data.frame-method}
 \title{Factorize}
 \usage{
 factorize(object, ...)
 
-\S4method{factorize}{DFrame}(object)
+\S4method{factorize}{DataFrame}(object)
 
 \S4method{factorize}{data.frame}(object)
 }

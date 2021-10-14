@@ -2,7 +2,7 @@
 #'
 #' @name decode
 #' @inherit AcidGenerics::decode description return
-#' @note Updated 2021-06-09.
+#' @note Updated 2021-10-14.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
@@ -10,23 +10,24 @@
 #' @return Modified object.
 #' Columns will be decoded and no longer `Rle` class.
 #'
-#' @seealso `S4Vectors::decode()`.
+#' @seealso
+#' - `S4Vectors::decode()`.
 #'
 #' @examples
-#' data(DFrame, package = "AcidTest")
-#' df <- DFrame
+#' data(DataFrame, package = "AcidTest")
 #'
-#' ## DFrame ====
-#' df <- encode(df)
-#' lapply(df, class)
-#' x <- decode(df)
-#' lapply(x, class)
+#' ## DataFrame ====
+#' object <- DataFrame
+#' object <- encode(object)
+#' lapply(object, class)
+#' object <- decode(object)
+#' lapply(object, class)
 NULL
 
 
 
 ## Updated 2021-06-09.
-`decode,DFrame` <-  # nolint
+`decode,DataFrame` <-  # nolint
     function(x) {
         if (!(hasCols(x) && hasRows(x))) {
             return(x)
@@ -73,8 +74,8 @@ NULL
 #' @export
 setMethod(
     f = "decode",
-    signature = signature(x = "DFrame"),
-    definition = `decode,DFrame`
+    signature = signature(x = "DataFrame"),
+    definition = `decode,DataFrame`
 )
 
 #' @rdname decode

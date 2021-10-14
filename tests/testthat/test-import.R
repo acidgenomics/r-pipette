@@ -460,14 +460,14 @@ context("import : R data")
 
 test_that("R data", {
     object <- import(file.path("cache", "example.rda"))
-    expect_s4_class(object, "DFrame")
+    expect_s4_class(object, "DataFrame")
     expect_null(metadata(object)[["import"]])
     expect_null(attr(object, which = "import"))
 })
 
 test_that("R data serialized", {
     object <- import(file.path("cache", "example.rds"))
-    expect_s4_class(object, "DFrame")
+    expect_s4_class(object, "DataFrame")
     expect_null(metadata(object)[["import"]])
     expect_null(attr(object, which = "import"))
 })

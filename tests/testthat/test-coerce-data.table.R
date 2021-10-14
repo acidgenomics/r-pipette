@@ -4,7 +4,7 @@ test_that("data.frame", {
     expect_is(as(data.frame(), "data.table"), "data.table")
 })
 
-test_that("DFrame", {
+test_that("DataFrame", {
     x <- as(df, "data.table")
     expect_is(x, "data.table")
     ## Expect that rownames are automatically moved to first column.
@@ -12,7 +12,7 @@ test_that("DFrame", {
     ## Early return if already data.table.
     x <- data.table()
     expect_identical(x, as(x, "data.table"))
-    ## Coercion of a DFrame containing a list column is allowed.
+    ## Coercion of a DataFrame containing a list column is allowed.
     data <- DataFrame()
     data[["x"]] <- list()
     data <- as(data, "data.table")

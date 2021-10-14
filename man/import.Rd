@@ -280,7 +280,7 @@ Varies, depending on the file type (format):
 Data separated by commas, tabs, or visual spaces.\cr
 Note that TXT structure is amgibuous and actively discouraged.\cr
 Refer to \verb{Data frame return} section for details on how to change the
-default return type to \code{DFrame}, \code{tbl_df} or \code{data.table}.\cr
+default return type to \code{DataFrame}, \code{tbl_df} or \code{data.table}.\cr
 Imported by \code{data.table::fread()} by default.
 \item \strong{Excel workbook} (\code{XLSB}, \code{XLSX}): \code{data.frame}.\cr
 Resave in plain text delimited format instead, if possible.\cr
@@ -345,7 +345,7 @@ of differential support in base R, tidyverse, data.table, and Bioconductor.
 To maintain sanity, \code{import()} attempts to handle row names automatically.
 The function checks for a \code{rowname} column in delimited data, and moves these
 values into the object's row names, if supported by the return type (e.g.
-\code{data.frame}, \code{DFrame}). Note that \code{tbl_df} (tibble) and \code{data.table}
+\code{data.frame}, \code{DataFrame}). Note that \code{tbl_df} (tibble) and \code{data.table}
 intentionally do not support row names. When returning in this format, no
 attempt to assign the \code{rowname} column into the return object's row names is
 made. Note that \code{import()} is strict about this matching and only checks for

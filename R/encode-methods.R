@@ -11,7 +11,7 @@
 #' All `atomic` columns will be encoded to `Rle` S4 class.
 #'
 #' @examples
-#' ## DFrame ====
+#' ## DataFrame ====
 #' binary <- seq(from = 0L, to = 1L)
 #' df <- DataFrame(
 #'     "a" = rep(x = binary, times = 50L),
@@ -25,7 +25,7 @@ NULL
 
 
 ## Updated 2021-08-24.
-`encode,DFrame` <-  # nolint
+`encode,DataFrame` <-  # nolint
     function(x) {
         if (!(hasCols(x) && hasRows(x))) {
             return(x)  # nocov
@@ -76,8 +76,8 @@ NULL
 #' @export
 setMethod(
     f = "encode",
-    signature = signature(x = "DFrame"),
-    definition = `encode,DFrame`
+    signature = signature(x = "DataFrame"),
+    definition = `encode,DataFrame`
 )
 
 #' @rdname encode

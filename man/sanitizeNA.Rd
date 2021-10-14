@@ -2,7 +2,7 @@
 % Please edit documentation in R/AllGenerics.R, R/sanitizeNA-methods.R
 \name{sanitizeNA}
 \alias{sanitizeNA}
-\alias{sanitizeNA,DFrame-method}
+\alias{sanitizeNA,DataFrame-method}
 \alias{sanitizeNA,atomic-method}
 \alias{sanitizeNA,character-method}
 \alias{sanitizeNA,data.frame-method}
@@ -11,7 +11,7 @@
 \usage{
 sanitizeNA(object, ...)
 
-\S4method{sanitizeNA}{DFrame}(object)
+\S4method{sanitizeNA}{DataFrame}(object)
 
 \S4method{sanitizeNA}{atomic}(object)
 
@@ -45,7 +45,7 @@ print(from)
 to <- sanitizeNA(from)
 print(to)
 
-## DFrame ====
+## DataFrame ====
 from <- DataFrame(
     "a" = c("foo", ""),
     "b" = c(NA, "bar"),

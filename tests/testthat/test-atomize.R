@@ -1,11 +1,11 @@
 context("atomize")
 
-test_that("DFrame", {
+test_that("DataFrame", {
     object <- encode(df)
     expect_false(any(bapply(X = object, FUN = is.atomic)))
     object <- atomize(object)
     expect_true(all(bapply(X = object, FUN = is.atomic)))
-    expect_s4_class(object, "DFrame")
+    expect_s4_class(object, "DataFrame")
     expect_true(hasRownames(object))
 })
 

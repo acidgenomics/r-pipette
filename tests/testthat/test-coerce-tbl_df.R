@@ -4,8 +4,8 @@ test_that("S4 'as()' on empty data.frame", {
     expect_is(as(data.frame(), "tbl_df"), "tbl_df")
 })
 
-test_that("DFrame", {
-    data <- DFrame
+test_that("DataFrame", {
+    data <- DFrame  # FIXME
     x <- as(data, "tbl_df")
     expect_is(x, "tbl_df")
     ## Expect that rownames are automatically moved to first column.
@@ -13,7 +13,7 @@ test_that("DFrame", {
     ## Early return if already tibble.
     x <- tibble()
     expect_identical(x, as(x, "tbl_df"))
-    ## Coercion of a DFrame containing a list column is allowed.
+    ## Coercion of a DataFrame containing a list column is allowed.
     data <- DataFrame()
     data[["x"]] <- list()
     data <- as(data, "tbl_df")

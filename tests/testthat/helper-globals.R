@@ -6,13 +6,13 @@ options(
 )
 
 data(
-    DFrame,
-    GRanges,
-    IRanges,
+    DFrame,  # FIXME
+    GRanges,  # FIXME
+    IRanges,  # FIXME
     data.table,
     matrix,
     sparseMatrix,
-    tbl_df,
+    tbl_df,  # FIXME
     package = "AcidTest",
     envir = environment()
 )
@@ -22,22 +22,22 @@ data(
     envir = environment()
 )
 stopifnot(
-    is(DFrame, "DFrame"),
-    is(GRanges, "GRanges"),
-    is(IRanges, "IRanges"),
+    is(DFrame, "DataFrame"),  # FIXME
+    is(GRanges, "GRanges"),  # FIXME
+    is(IRanges, "IRanges"),  # FIXME
     is(data.table, "data.table"),
     is(sparseMatrix, "sparseMatrix"),
-    is(tbl_df, "tbl_df")
+    is(tbl_df, "tbl_df")  # FIXME
 )
 
-df <- DFrame
+df <- DFrame  # FIXME
 dt <- data.table
-gr <- GRanges
-ir <- IRanges
+gr <- GRanges  # FIXME
+ir <- IRanges  # FIXME
 mat <- matrix
-mtcars <- as(mtcars, "DFrame")
+mtcars <- as(mtcars, "DataFrame")
 sparse <- sparseMatrix
-tbl <- tbl_df
+tbl <- tbl_df  # FIXME
 
 DataFrame <- AcidGenerics::DataFrame
 data.table <- data.table::data.table

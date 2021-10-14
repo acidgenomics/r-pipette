@@ -2,7 +2,7 @@
 % Please edit documentation in R/AllGenerics.R, R/removeNA-methods.R
 \name{removeNA}
 \alias{removeNA}
-\alias{removeNA,DFrame-method}
+\alias{removeNA,DataFrame-method}
 \alias{removeNA,Matrix-method}
 \alias{removeNA,atomic-method}
 \alias{removeNA,data.frame-method}
@@ -11,7 +11,7 @@
 \usage{
 removeNA(object, ...)
 
-\S4method{removeNA}{DFrame}(object)
+\S4method{removeNA}{DataFrame}(object)
 
 \S4method{removeNA}{Matrix}(object)
 
@@ -50,7 +50,7 @@ print(from)
 to <- removeNA(from)
 print(to)
 
-## DFrame ====
+## DataFrame ====
 from <- DataFrame(
     "a" = c("A", NA, "C"),
     "b" = c(NA, NA, NA),

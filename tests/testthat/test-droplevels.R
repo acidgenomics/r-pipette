@@ -1,6 +1,6 @@
 context("droplevels")
 
-test_that("DFrame", {
+test_that("DataFrame", {
     x <- DataFrame(
         "aaa" = factor(
             x = c("a", "a", "b", "b"),
@@ -9,7 +9,7 @@ test_that("DFrame", {
         "bbb" = as.factor(c("b", "b", "c", "c"))
     )
     x <- droplevels(x)
-    expect_s4_class(x, "DFrame")
+    expect_s4_class(x, "DataFrame")
     expect_true(all(bapply(X = x, FUN = is.factor)))
     expect_identical(
         object = lapply(X = x, FUN = levels),
@@ -20,7 +20,7 @@ test_that("DFrame", {
     )
 })
 
-test_that("Early return on empty DFrame", {
+test_that("Early return on empty DataFrame", {
     expect_identical(
         object = droplevels(DataFrame()),
         expected = DataFrame()

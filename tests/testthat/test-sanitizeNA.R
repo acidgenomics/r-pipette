@@ -9,12 +9,12 @@ test_that("sanitizeNA", {
                 b = c(NA, "bar"),
                 stringsAsFactors = FALSE
             ),
-            "DFrame1" = DataFrame(
+            "DataFrame1" = DataFrame(
                 "a" = c("foo", ""),
                 "b" = c(NA, "bar"),
                 row.names = c("c", "d")
             ),
-            "DFrame2" = DataFrame(
+            "DataFrame2" = DataFrame(
                 "a" = c("foo", ""),
                 "b" = c(NA, "bar")
             )
@@ -26,12 +26,12 @@ test_that("sanitizeNA", {
                 "b" = c(NA, "bar"),
                 stringsAsFactors = FALSE
             ),
-            "DFrame1" = DataFrame(
+            "DataFrame1" = DataFrame(
                 "a" = c("foo", NA),
                 "b" = c(NA, "bar"),
                 row.names = c("c", "d")
             ),
-            "DFrame2" = DataFrame(
+            "DataFrame2" = DataFrame(
                 "a" = c("foo", NA),
                 "b" = c(NA, "bar")
             )

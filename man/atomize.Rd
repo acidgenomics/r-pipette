@@ -2,14 +2,14 @@
 % Please edit documentation in R/AllGenerics.R, R/atomize-methods.R
 \name{atomize}
 \alias{atomize}
-\alias{atomize,DFrame-method}
+\alias{atomize,DataFrame-method}
 \alias{atomize,Ranges-method}
 \alias{atomize,data.frame-method}
 \title{Atomize}
 \usage{
 atomize(object, ...)
 
-\S4method{atomize}{DFrame}(object)
+\S4method{atomize}{DataFrame}(object)
 
 \S4method{atomize}{Ranges}(object)
 

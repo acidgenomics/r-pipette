@@ -2,13 +2,13 @@
 % Please edit documentation in R/AllGenerics.R, R/droplevels-methods.R
 \name{droplevels}
 \alias{droplevels}
-\alias{droplevels,DFrame-method}
+\alias{droplevels,DataFrame-method}
 \alias{droplevels,Ranges-method}
 \title{Drop unused levels from factors}
 \usage{
 droplevels(x, ...)
 
-\S4method{droplevels}{DFrame}(x)
+\S4method{droplevels}{DataFrame}(x)
 
 \S4method{droplevels}{Ranges}(x)
 }
