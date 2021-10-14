@@ -110,7 +110,7 @@ Don't define \code{as()} coercion method for \code{list} here. It will create is
 with \code{data.frame} coercion. Use \code{as.DFrame()} instead to coerce a \code{list}
 to \code{DFrame}.
 
-Wrapping the columns in an \code{I()} works when passing to \code{DataFrame()}.
+Wrapping the columns in an \code{I()} should work when passing to \code{DataFrame()}.
 See also \code{as_tibble()} for easy list to data frame coercion.
 
 \code{as()} method definition causes issues with \code{data.frame} to \code{DFrame}

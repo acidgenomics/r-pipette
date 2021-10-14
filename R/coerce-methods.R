@@ -23,7 +23,7 @@ NULL
 #' with `data.frame` coercion. Use `as.DFrame()` instead to coerce a `list`
 #' to `DFrame`.
 #'
-#' Wrapping the columns in an `I()` works when passing to `DataFrame()`.
+#' Wrapping the columns in an `I()` should work when passing to `DataFrame()`.
 #' See also `as_tibble()` for easy list to data frame coercion.
 #'
 #' `as()` method definition causes issues with `data.frame` to `DFrame`

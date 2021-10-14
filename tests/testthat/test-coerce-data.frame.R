@@ -20,7 +20,7 @@ test_that("Ranges", {
     expect_true(isSubset(colnames(mcols(ir)), colnames(as.data.frame(ir))))
 })
 
-test_that("DataFrame with complex S4 columns", {
+test_that("DFrame with complex S4 columns", {
     ## Note that this method is used internally but not currently exported, so
     ## we don't collide with coercion methods defined by Bioconductor.
     x <- DataFrame(

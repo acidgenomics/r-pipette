@@ -6,7 +6,10 @@
 #' @param ... Additional arguments.
 #'
 #' @examples
-#' df <- DataFrame(a = letters[seq_len(5L)], b = seq_len(5L))
+#' df <- DataFrame(
+#'     "a" = letters[seq_len(5L)],
+#'     "b" = seq_len(5L)
+#" )
 #' x <- factorize(df)
 NULL
 
