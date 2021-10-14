@@ -1,7 +1,3 @@
-## FIXME Update methods on '.IRanges', '.GRanges', etc here.
-
-
-
 ## This is needed to properly declare S4 `as()` coercion methods.
 #' @name coerce
 #' @export
@@ -301,8 +297,8 @@ NULL
         as.data.frame(as.matrix(x), ...)
     }
 
-## Updated 2021-02-05.
-`as.data.frame,IRanges` <-  # nolint
+## Updated 2021-10-14.
+`as.data.frame,IntegerRanges` <-  # nolint
     function(
         x,
         row.names = NULL,
@@ -337,8 +333,53 @@ NULL
         as.data.frame(from)
     }
 
+## Coerce an S4 DataFrame to a standard data.frame.
+##
+## This function will return an informative error if an S4 DFrame contains
+## complex columns that can't be coerced to atomic or list.
+##
+## Not exporting this method because we don't want to mask the default
+## conventions currently used by Bioconductor.
+##
+## Updated 2021-09-28.
+`.coerce,DataFrame,data.frame` <-  # nolint
+    function(x) {
+        ## Decode Rle columns, which can be coerced.
+        x <- decode(x)
+        ## Check for valid columns (atomic, list).
+        valid <- vapply(
+            X = x,
+            FUN = function(x) {
+                is.atomic(x) || is.list(x)
+            },
+            FUN.VALUE = logical(1L),
+            USE.NAMES = TRUE
+        )
+        ## Error if S4 columns are nested.
+        if (!all(valid)) {
+            invalid <- x[, names(valid[!valid]), drop = FALSE]
+            invalid <- vapply(
+                X = invalid,
+                FUN = class,
+                FUN.VALUE = character(1L)
+            )
+            invalid <- sprintf("%s (%s)", names(invalid), invalid)
+            abort(sprintf(
+                fmt = paste(
+                    "Only atomic and list columns are supported.",
+                    "Invalid columns: %s.",
+                    sep = "\n"
+                ),
+                toInlineString(invalid, n = 10L)
+            ))
+        }
+        ## Don't use `as.data.frame()` here. It can unexpectedly sanitize row
+        ## names (e.g. gene symbols), whereas the `as()` method does not.
+        as(x, "data.frame")
+    }
+
 ## Updated 2019-07-19.
-`coerce,IRanges,data.frame` <-  # nolint
+`coerce,IntegerRanges,data.frame` <-  # nolint
     `coerce,ANY,data.frame`
 
 ## Updated 2019-07-20.
@@ -368,8 +409,8 @@ formals(as_tibble.DataFrame)[["rownames"]] <- .tbl_rownames
 
 #' @rdname coerce
 #' @export
-## Updated 2020-01-19.
-as_tibble.IRanges <-  # nolint
+## Updated 2021-10-14.
+as_tibble.IntegerRanges <-  # nolint
     function(x, ..., rownames) {
         x <- as(x, "data.frame")
         if (!hasRownames(x)) {
@@ -378,12 +419,13 @@ as_tibble.IRanges <-  # nolint
         as_tibble(x = x, ..., rownames = rownames)
     }
 
-formals(as_tibble.IRanges)[["rownames"]] <- .tbl_rownames
+formals(as_tibble.IntegerRanges)[["rownames"]] <- .tbl_rownames
 
 #' @rdname coerce
 #' @export
-## Updated 2020-01-19.
-as_tibble.GRanges <- as_tibble.IRanges  # nolint
+## Updated 2021-10-14.
+as_tibble.GenomicRanges <-
+    as_tibble.IntegerRanges  # nolint
 
 ## Updated 2019-07-19.
 `coerce,ANY,tbl_df` <-  # nolint
@@ -399,12 +441,12 @@ as_tibble.GRanges <- as_tibble.IRanges  # nolint
 `coerce,DataFrame,tbl_df` <-  # nolint
     `coerce,ANY,tbl_df`
 
-## Updated 2019-07-20.
-`coerce,GRanges,tbl_df` <-  # nolint
+## Updated 2021-10-14.
+`coerce,GenomicRanges,tbl_df` <-  # nolint
     `coerce,ANY,tbl_df`
 
-## Updated 2020-01-19.
-`coerce,IRanges,tbl_df` <-  # nolint
+## Updated 2021-10-14.
+`coerce,IntegerRanges,tbl_df` <-  # nolint
     `coerce,ANY,tbl_df`
 
 rm(.tbl_rownames)
@@ -427,8 +469,8 @@ as.data.table.DataFrame <-  # nolint
 
 #' @rdname coerce
 #' @export
-## Updated 2020-01-19.
-as.data.table.IRanges <-  # nolint
+## Updated 2021-10-14.
+as.data.table.IntegerRanges <-  # nolint
     function(x, keep.rownames = TRUE, ...) {  # nolint
         x <- as(x, "data.frame")
         if (!hasRownames(x)) {
@@ -439,9 +481,9 @@ as.data.table.IRanges <-  # nolint
 
 #' @rdname coerce
 #' @export
-## Updated 2020-01-19.
-as.data.table.GRanges <-  # nolint
-    as.data.table.IRanges
+## Updated 2021-10-14.
+as.data.table.GenomicRanges <-  # nolint
+    as.data.table.IntegerRanges
 
 ## Updated 2019-07-19.
 `coerce,ANY,data.table` <-  # nolint
@@ -457,12 +499,12 @@ as.data.table.GRanges <-  # nolint
 `coerce,DataFrame,data.table` <-  # nolint
     `coerce,ANY,data.table`
 
-## Updated 2020-01-19.
-`coerce,IRanges,data.table` <-  # nolint
+## Updated 2021-10-14.
+`coerce,IntegerRanges,data.table` <-  # nolint
     `coerce,ANY,data.table`
 
-## Updated 2019-07-20.
-`coerce,GRanges,data.table` <-  # nolint
+## Updated 2021-10-14.
+`coerce,GenomicRanges,data.table` <-  # nolint
     `coerce,ANY,data.table`
 
 
@@ -491,8 +533,8 @@ setMethod(
 #' @export
 setMethod(
     f = "as.data.frame",
-    signature = signature(x = "IRanges"),
-    definition = `as.data.frame,IRanges`
+    signature = signature(x = "IntegerRanges"),
+    definition = `as.data.frame,IntegerRanges`
 )
 
 #' @rdname coerce
@@ -526,43 +568,43 @@ setAs(
 )
 
 #' @rdname coerce
-#' @name coerce,GRanges,data.table-method
+#' @name coerce,GenomicRanges,data.table-method
 setAs(
-    from = "GRanges",
+    from = "GenomicRanges",
     to = "data.table",
-    def = `coerce,GRanges,data.table`
+    def = `coerce,GenomicRanges,data.table`
 )
 
 #' @rdname coerce
-#' @name coerce,GRanges,tbl_df-method
+#' @name coerce,GenomicRanges,tbl_df-method
 setAs(
-    from = "GRanges",
+    from = "GenomicRanges",
     to = "tbl_df",
-    def = `coerce,GRanges,tbl_df`
+    def = `coerce,GenomicRanges,tbl_df`
 )
 
 #' @rdname coerce
-#' @name coerce,IRanges,data.frame-method
+#' @name coerce,IntegerRanges,data.frame-method
 setAs(
-    from = "IRanges",
+    from = "IntegerRanges",
     to = "data.frame",
-    def = `coerce,IRanges,data.frame`
+    def = `coerce,IntegerRanges,data.frame`
 )
 
 #' @rdname coerce
-#' @name coerce,IRanges,data.table-method
+#' @name coerce,IntegerRanges,data.table-method
 setAs(
-    from = "IRanges",
+    from = "IntegerRanges",
     to = "data.table",
-    def = `coerce,IRanges,data.table`
+    def = `coerce,IntegerRanges,data.table`
 )
 
 #' @rdname coerce
-#' @name coerce,IRanges,tbl_df-method
+#' @name coerce,IntegerRanges,tbl_df-method
 setAs(
-    from = "IRanges",
+    from = "IntegerRanges",
     to = "tbl_df",
-    def = `coerce,IRanges,tbl_df`
+    def = `coerce,IntegerRanges,tbl_df`
 )
 
 #' @rdname coerce
