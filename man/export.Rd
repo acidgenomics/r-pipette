@@ -6,10 +6,10 @@
 \alias{export,DataFrame,character,missingOrNULL-method}
 \alias{export,DataFrame,missingOrNULL,missingOrNULL-method}
 \alias{export,DataFrame,missingOrNULL,character-method}
-\alias{export,GRanges,character,character-method}
-\alias{export,GRanges,character,missingOrNULL-method}
-\alias{export,GRanges,missingOrNULL,missingOrNULL-method}
-\alias{export,GRanges,missingOrNULL,character-method}
+\alias{export,GenomicRanges,character,character-method}
+\alias{export,GenomicRanges,character,missingOrNULL-method}
+\alias{export,GenomicRanges,missingOrNULL,missingOrNULL-method}
+\alias{export,GenomicRanges,missingOrNULL,character-method}
 \alias{export,Matrix,character,character-method}
 \alias{export,Matrix,character,missingOrNULL-method}
 \alias{export,Matrix,missingOrNULL,missingOrNULL-method}
@@ -72,7 +72,7 @@ export(object, con, format, ...)
   file
 )
 
-\S4method{export}{GRanges,character,character}(
+\S4method{export}{GenomicRanges,character,character}(
   object,
   con,
   format,
@@ -83,7 +83,7 @@ export(object, con, format, ...)
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
-\S4method{export}{GRanges,character,missingOrNULL}(
+\S4method{export}{GenomicRanges,character,missingOrNULL}(
   object,
   con,
   format,
@@ -94,7 +94,7 @@ export(object, con, format, ...)
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
-\S4method{export}{GRanges,missingOrNULL,missingOrNULL}(
+\S4method{export}{GenomicRanges,missingOrNULL,missingOrNULL}(
   object,
   con,
   format,
@@ -104,7 +104,7 @@ export(object, con, format, ...)
   file
 )
 
-\S4method{export}{GRanges,missingOrNULL,character}(
+\S4method{export}{GenomicRanges,missingOrNULL,character}(
   object,
   con,
   format,

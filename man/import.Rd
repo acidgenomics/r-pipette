@@ -276,46 +276,59 @@ Applies primarily to MatrixMarket Exchange files (e.g. \code{MTXFile}).}
 \value{
 Varies, depending on the file type (format):
 \itemize{
-\item \strong{Plain text delimited} (\code{CSV}, \code{TSV}, \code{TXT}): \code{data.frame}.\cr
+\item \strong{Plain text delimited} (\code{CSV}, \code{TSV}, \code{TXT}):
+\code{data.frame}.\cr
 Data separated by commas, tabs, or visual spaces.\cr
 Note that TXT structure is amgibuous and actively discouraged.\cr
 Refer to \verb{Data frame return} section for details on how to change the
 default return type to \code{DataFrame}, \code{tbl_df} or \code{data.table}.\cr
 Imported by \code{data.table::fread()} by default.
-\item \strong{Excel workbook} (\code{XLSB}, \code{XLSX}): \code{data.frame}.\cr
+\item \strong{Excel workbook} (\code{XLSB}, \code{XLSX}):
+\code{data.frame}.\cr
 Resave in plain text delimited format instead, if possible.\cr
 Imported by \code{readxl::read_excel()}.
-\item \strong{Legacy Excel workbook (pre-2007)} (\code{XLS}): \code{data.frame}.\cr
+\item \strong{Legacy Excel workbook (pre-2007)} (\code{XLS}):
+\code{data.frame}.\cr
 Resave in plain text delimited format instead, if possible.\cr
 Note that import of files in this format is slow.\cr
 Imported by \code{readxl::read_excel()}.
-\item \strong{GraphPad Prism project} (\code{PZFX}): \code{data.frame}.\cr
+\item \strong{GraphPad Prism project} (\code{PZFX}):
+\code{data.frame}.\cr
 Experimental. Consider resaving in CSV format instead.\cr
 Imported by \code{pzfx::read_pzfx()}.
 \item \strong{General feature format} (\code{GFF}, \code{GFF1}, \code{GFF2}, \code{GFF3}, \code{GTF}):
-\code{GRanges}.\cr
+\code{GenomicRanges}.\cr
 Imported by \code{rtracklayer::import()}.
-\item \strong{MatrixMarket exchange sparse matrix} (\code{MTX}): \code{sparseMatrix}.\cr
+\item \strong{MatrixMarket exchange sparse matrix} (\code{MTX}):
+\code{sparseMatrix}.\cr
 Imported by \code{Matrix::readMM()}.
-\item \strong{Gene sets (for GSEA)} (\code{GMT}, \code{GMX}): \code{character}.
+\item \strong{Gene sets (for GSEA)} (\code{GMT}, \code{GMX}):
+\code{character}.
 \item \strong{Browser extensible data} (\code{BED}, \code{BED15}, \code{BEDGRAPH}, \code{BEDPE}):
-\code{GRanges}.\cr
+\code{GenomicRanges}.\cr
 Imported by \code{rtracklayer::import()}.
-\item \strong{ChIP-seq peaks} (\code{BROADPEAK}, \code{NARROWPEAK}): \code{GRanges}.\cr
+\item \strong{ChIP-seq peaks} (\code{BROADPEAK}, \code{NARROWPEAK}):
+\code{GenomicRanges}.\cr
 Imported by \code{rtracklayer::import()}.
-\item \strong{Wiggle track format} (\code{BIGWIG}, \code{BW}, \code{WIG}): \code{GRanges}.\cr
+\item \strong{Wiggle track format} (\code{BIGWIG}, \code{BW}, \code{WIG}):
+\code{GenomicRanges}.\cr
 Imported by \code{rtracklayer::import()}.
-\item \strong{JSON serialization data} (\code{JSON}): \code{list}.\cr
+\item \strong{JSON serialization data} (\code{JSON}):
+\code{list}.\cr
 Imported by \code{jsonlite::read_json()}.
-\item \strong{YAML serialization data} (\code{YAML}, \code{YML}): \code{list}.\cr
+\item \strong{YAML serialization data} (\code{YAML}, \code{YML}):
+\code{list}.\cr
 Imported by \code{yaml::yaml.load_file()}.
-\item \strong{Lines} (\code{LOG}, \code{MD}, \code{PY}, \code{R}, \code{RMD}, \code{SH}): \code{character}.
+\item \strong{Lines} (\code{LOG}, \code{MD}, \code{PY}, \code{R}, \code{RMD}, \code{SH}):
+\code{character}.\cr
 Source code or log files.\cr
 Imported by \code{data.table::fread()} by default.
-\item \strong{R data serialized} (\code{RDS}): \emph{variable}.\cr
+\item \strong{R data serialized} (\code{RDS}):
+\emph{variable}.\cr
 Currently recommend over RDA, if possible.\cr
 Imported by \code{readRDS()}.
-\item \strong{R data} (\code{RDA}, \code{RDATA}): \emph{variable}.\cr
+\item \strong{R data} (\code{RDA}, \code{RDATA}):
+\emph{variable}.\cr
 Must contain a single object.
 Doesn't require internal object name to match, unlike \code{loadData()}.\cr
 Imported by \code{load()}.
@@ -374,9 +387,6 @@ on the input, defined by \code{moleculeType} argument.
 The GFF (General Feature Format) format consists of one line per feature,
 each containing 9 columns of data, plus optional track definition lines. The
 GTF (General Transfer Format) is identical to GFF version 2.
-
-\href{https://basejump.acidgenomics.com/}{basejump} exports the specialized \code{makeGRangesFromGFF()} function that
-makes GFF loading simple.
 
 See also:
 \itemize{

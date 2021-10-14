@@ -28,6 +28,7 @@ Coerce all columns in the object to \code{factor} (i.e. \code{stringsAsFactors})
 Updated 2021-02-11.
 }
 \examples{
+## DataFrame ====
 df <- DataFrame(
     "a" = letters[seq_len(5L)],
     "b" = seq_len(5L)
