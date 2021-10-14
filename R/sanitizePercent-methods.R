@@ -6,12 +6,11 @@
 #' @param ... Additional arguments.
 #'
 #' @examples
+#' ## character ====
 #' object <- c("100%", "10.0%", "1%", "0.1%", "0.01%")
+#' object <- sanitizePercent(object)
 #' class(object)
 #' print(object)
-#' x <- sanitizePercent(object)
-#' class(x)
-#' print(x)
 NULL
 
 
