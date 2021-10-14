@@ -21,24 +21,26 @@ test_that("DataFrame", {
 })
 
 test_that("Early return on empty DataFrame", {
+    x <- DataFrame()
     expect_identical(
-        object = droplevels(DataFrame()),
-        expected = DataFrame()
+        object = droplevels(x),
+        expected = x
     )
 })
 
-test_that("IRanges", {
-    expect_identical(
-        object = droplevels(ir),
-        expected = ir
-    )
-})
-
-test_that("GRanges", {
-    x <- GRanges
+test_that("GenomicRanges", {
+    x <- gr
     mcols(x)[[1L]] <- as.factor(mcols(x)[[1L]])
     expect_true(any(bapply(X = mcols(x), FUN = is.factor)))
     x <- droplevels(x)
     expect_s4_class(x, "GRanges")
     expect_true(any(bapply(X = mcols(x), FUN = is.factor)))
+})
+
+test_that("IntegerRanges", {
+    x <- ir
+    expect_identical(
+        object = droplevels(x),
+        expected = x
+    )
 })

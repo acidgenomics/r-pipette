@@ -1,13 +1,14 @@
 context("encode/decode")
 
 test_that("DataFrame", {
-    x <- encode(df)
+    x <- df
+    x <- encode(x)
     expect_s4_class(x[[1L]], "Rle")
     y <- decode(x)
-    expect_is(y[[1L]], "integer")
+    expect_is(y[[1L]], "factor")
 })
 
-test_that("GRanges", {
+test_that("GenomicRanges", {
     x <- encode(gr)
     expect_s4_class(mcols(x)[[1L]], "Rle")
     y <- decode(x)
