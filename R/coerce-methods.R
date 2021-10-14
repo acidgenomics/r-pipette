@@ -1,3 +1,7 @@
+## FIXME Don't allow coercion to data.frame anywhere here in the package...
+
+
+
 ## This is needed to properly declare S4 `as()` coercion methods.
 #' @name coerce
 #' @export
@@ -28,34 +32,6 @@ NULL
 #'
 #' `as()` method definition causes issues with `data.frame` to `DataFrame`
 #' coercion when defined, because `data.frame` inherits from list.
-#'
-#' @section `data.frame` coercion:
-#'
-#' ## To `IRanges`
-#'
-#' Default coercion of `IPosRanges` (i.e. `IRanges`) to `data.frame` currently
-#' strips metadata in `mcols()`. However, GenomicRanges preserves this
-#' information, so we're adding a tweaked coercion method here to improve
-#' consistency.
-#'
-#' Relevant methods:
-#'
-#' ```r
-#' getMethod(
-#'     f = "as.data.frame",
-#'     signature = "GenomicRanges",
-#'     where = asNamespace("GenomicRanges")
-#' )
-#' ## IRanges inherits from `IPosRanges`.
-#' getMethod(
-#'     f = "as.data.frame",
-#'     signature = "IPosRanges",
-#'     where = asNamespace("IRanges")
-#' )
-#' ```
-#'
-#' See also:
-#' - https://github.com/Bioconductor/IRanges/issues/8
 #'
 #' @section `data.table` coercion:
 #'
@@ -103,7 +79,6 @@ NULL
 #' need to define an S4 coercion method that allows us to use `as()` to coerce
 #' an object to a tibble.
 #'
-#' @inheritParams base::as.data.frame
 #' @inheritParams data.table::as.data.table
 #' @inheritParams AcidRoxygen::params
 #' @param row.names `NULL` or `character`.
@@ -112,7 +87,6 @@ NULL
 #' @return Modified object, of desired conversion class.
 #'
 #' @seealso
-#' - `as.data.frame()`.
 #' - `as.data.table()`.
 #' - `as_tibble()`.
 #' - `getClass("DataFrame")`.
@@ -162,14 +136,10 @@ NULL
 #' from <- IntegerRanges
 #' to <- as.data.table(from)
 #' print(to)
-#' to <- as(from, "data.table")
-#' print(to)
 #'
 #' ## `IntegerRanges` to `tbl_df` (tibble) ====
 #' from <- IntegerRanges
 #' to <- as_tibble(from)
-#' print(to)
-#' to <- as(from, "tbl_df")
 #' print(to)
 #'
 #' ## `Matrix` to `DataFrame` ====
@@ -297,20 +267,26 @@ NULL
 
 
 ## To data.frame ===============================================================
+## FIXME Nuke this whole section, problematic...
+
 ## Updated 2019-07-20.
-`as.data.frame,Matrix` <-  # nolint
+`.as.data.frame,Matrix` <-  # nolint
     function(x, ...) {
         as.data.frame(as.matrix(x), ...)
     }
 
+## FIXME This gets messed up due to inherited method from IPosRanges.
+## FIXME Consider renaming this, reworking...
+
 ## Updated 2021-10-14.
-`as.data.frame,IntegerRanges` <-  # nolint
+`.as.data.frame,IntegerRanges` <-  # nolint
     function(
         x,
         row.names = NULL,
         optional = FALSE,
         ...
     ) {
+        stop("HELLO THERE FIXME")
         if (missing(row.names)) {
             row.names <- names(x)
         }
@@ -333,8 +309,8 @@ NULL
         do.call(what = data.frame, args = args)
     }
 
-## Updated 2019-07-20.
-`coerce,ANY,data.frame` <-  # nolint
+## Updated 2021-10-14.
+`.coerce,ANY,data.frame` <-  # nolint
     function(from) {
         as.data.frame(from)
     }
@@ -385,12 +361,12 @@ NULL
     }
 
 ## Updated 2019-07-19.
-`coerce,IntegerRanges,data.frame` <-  # nolint
-    `coerce,ANY,data.frame`
+`.coerce,IntegerRanges,data.frame` <-  # nolint
+    `.coerce,ANY,data.frame`
 
 ## Updated 2019-07-20.
-`coerce,Matrix,data.frame` <-  # nolint
-    `coerce,ANY,data.frame`
+`.coerce,Matrix,data.frame` <-  # nolint
+    `.coerce,ANY,data.frame`
 
 
 
@@ -413,11 +389,16 @@ as_tibble.DataFrame <-  # nolint
 
 formals(as_tibble.DataFrame)[["rownames"]] <- .tbl_rownames
 
+## FIXME This isn't working due to Bioconductor inheritance.
+
 #' @rdname coerce
 #' @export
 ## Updated 2021-10-14.
 as_tibble.IntegerRanges <-  # nolint
     function(x, ..., rownames) {
+        stop("FIXME HELLO THERE")
+        ## FIXME This doesn't pick up our internal `as()` coercion correctly,
+        ## and therefore drops the rownames...argh....
         x <- as(x, "data.frame")
         if (!hasRownames(x)) {
             rownames <- NULL
@@ -478,6 +459,8 @@ as.data.table.DataFrame <-  # nolint
 ## Updated 2021-10-14.
 as.data.table.IntegerRanges <-  # nolint
     function(x, keep.rownames = TRUE, ...) {  # nolint
+        stop("FIXME HELLO THERE")
+        ## FIXME This internal method doesn't work the way we want...
         x <- as(x, "data.frame")
         if (!hasRownames(x)) {
             keep.rownames <- FALSE  # nolint
@@ -543,24 +526,6 @@ setMethod(
 
 
 
-#' @rdname coerce
-#' @export
-setMethod(
-    f = "as.data.frame",
-    signature = signature(x = "IntegerRanges"),
-    definition = `as.data.frame,IntegerRanges`
-)
-
-#' @rdname coerce
-#' @export
-setMethod(
-    f = "as.data.frame",
-    signature = signature(x = "Matrix"),
-    definition = `as.data.frame,Matrix`
-)
-
-
-
 ## setAs =======================================================================
 
 ## Ensure these are redefined in basejump, for backward compatibility.
@@ -581,8 +546,6 @@ setAs(
     def = `coerce,DataFrame,tbl_df`
 )
 
-
-
 #' @rdname coerce
 #' @name coerce,GenomicRanges,data.table-method
 setAs(
@@ -597,16 +560,6 @@ setAs(
     from = "GenomicRanges",
     to = "tbl_df",
     def = `coerce,GenomicRanges,tbl_df`
-)
-
-
-
-#' @rdname coerce
-#' @name coerce,IntegerRanges,data.frame-method
-setAs(
-    from = "IntegerRanges",
-    to = "data.frame",
-    def = `coerce,IntegerRanges,data.frame`
 )
 
 #' @rdname coerce
@@ -625,8 +578,6 @@ setAs(
     def = `coerce,IntegerRanges,tbl_df`
 )
 
-
-
 #' @rdname coerce
 #' @name coerce,Matrix,DataFrame-method
 setAs(
@@ -634,16 +585,6 @@ setAs(
     to = "DataFrame",
     def = `coerce,Matrix,DataFrame`
 )
-
-#' @rdname coerce
-#' @name coerce,Matrix,data.frame-method
-setAs(
-    from = "Matrix",
-    to = "data.frame",
-    def = `coerce,Matrix,data.frame`
-)
-
-
 
 #' @rdname coerce
 #' @name coerce,data.frame,data.table-method
@@ -661,8 +602,6 @@ setAs(
     def = `coerce,data.frame,tbl_df`
 )
 
-
-
 #' @rdname coerce
 #' @name coerce,data.table,DataFrame-method
 setAs(
@@ -670,8 +609,6 @@ setAs(
     to = "DataFrame",
     def = `coerce,data.table,DataFrame`
 )
-
-
 
 #' @rdname coerce
 #' @name coerce,tbl_df,DataFrame-method
