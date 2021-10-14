@@ -2,7 +2,7 @@ context("metadata2")
 
 test_that("metadata2", {
     for (x in list(
-        "DFrame" = DataFrame(),
+        "DataFrame" = DataFrame(),
         "data.frame" = data.frame()
     )) {
         which <- "A"

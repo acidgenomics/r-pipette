@@ -22,12 +22,12 @@ NULL
 
 
 ## Updated 2019-07-19.
-`atomize,DFrame` <-  ## nolint
+`atomize,DataFrame` <-  ## nolint
     function(object) {
         object <- decode(object)
         object <- as.data.frame(object)
         object <- atomize(object)
-        object <- as(object, "DFrame")
+        object <- as(object, "DataFrame")
         object
     }
 
@@ -69,8 +69,8 @@ NULL
 #' @export
 setMethod(
     f = "atomize",
-    signature = signature(object = "DFrame"),
-    definition = `atomize,DFrame`
+    signature = signature(object = "DataFrame"),
+    definition = `atomize,DataFrame`
 )
 
 #' @rdname atomize

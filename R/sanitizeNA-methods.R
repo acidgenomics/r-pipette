@@ -12,7 +12,7 @@
 #' to <- sanitizeNA(from)
 #' print(to)
 #'
-#' ## DFrame ====
+#' ## DataFrame ====
 #' from <- DataFrame(
 #'     "a" = c("foo", ""),
 #'     "b" = c(NA, "bar"),
@@ -26,7 +26,7 @@ NULL
 
 
 ## Updated 2021-10-14.
-`sanitizeNA,DFrame` <-  # nolint
+`sanitizeNA,DataFrame` <-  # nolint
     function(object) {
         if (!(hasCols(object) && hasRows(object))) {
             return(object)  # nocov
@@ -139,8 +139,8 @@ NULL
 #' @export
 setMethod(
     f = "sanitizeNA",
-    signature = signature(object = "DFrame"),
-    definition = `sanitizeNA,DFrame`
+    signature = signature(object = "DataFrame"),
+    definition = `sanitizeNA,DataFrame`
 )
 
 #' @rdname sanitizeNA

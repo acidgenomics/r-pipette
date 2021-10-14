@@ -6,29 +6,29 @@
 \alias{as.data.table}
 \alias{as_tibble}
 \alias{coerce}
-\alias{as_tibble.DFrame}
+\alias{as_tibble.DataFrame}
 \alias{as_tibble.IRanges}
 \alias{as_tibble.GRanges}
-\alias{as.data.table.DFrame}
+\alias{as.data.table.DataFrame}
 \alias{as.data.table.IRanges}
 \alias{as.data.table.GRanges}
 \alias{as.DataFrame,SimpleList-method}
 \alias{as.DataFrame,list-method}
 \alias{as.data.frame,IRanges-method}
 \alias{as.data.frame,Matrix-method}
-\alias{coerce,DFrame,data.table-method}
-\alias{coerce,DFrame,tbl_df-method}
+\alias{coerce,DataFrame,data.table-method}
+\alias{coerce,DataFrame,tbl_df-method}
 \alias{coerce,GRanges,data.table-method}
 \alias{coerce,GRanges,tbl_df-method}
 \alias{coerce,IRanges,data.frame-method}
 \alias{coerce,IRanges,data.table-method}
 \alias{coerce,IRanges,tbl_df-method}
-\alias{coerce,Matrix,DFrame-method}
+\alias{coerce,Matrix,DataFrame-method}
 \alias{coerce,Matrix,data.frame-method}
 \alias{coerce,data.frame,data.table-method}
 \alias{coerce,data.frame,tbl_df-method}
-\alias{coerce,data.table,DFrame-method}
-\alias{coerce,tbl_df,DFrame-method}
+\alias{coerce,data.table,DataFrame-method}
+\alias{coerce,tbl_df,DataFrame-method}
 \title{Coercion methods}
 \usage{
 as.DataFrame(x, ...)
@@ -37,7 +37,7 @@ as.data.frame(x, row.names = NULL, optional = FALSE, ...)
 
 as.data.table(x, keep.rownames = FALSE, ...)
 
-\method{as_tibble}{DFrame}(
+\method{as_tibble}{DataFrame}(
   x,
   ...,
   rownames = pkgconfig::get_config("tibble::rownames", "rowname")
@@ -55,7 +55,7 @@ as.data.table(x, keep.rownames = FALSE, ...)
   rownames = pkgconfig::get_config("tibble::rownames", "rowname")
 )
 
-\method{as.data.table}{DFrame}(x, keep.rownames = TRUE, ...)
+\method{as.data.table}{DataFrame}(x, keep.rownames = TRUE, ...)
 
 \method{as.data.table}{IRanges}(x, keep.rownames = TRUE, ...)
 
@@ -98,22 +98,22 @@ Coercion methods
 \details{
 These conversion methods are primarily intended to interconvert between
 popular tabular formats in R, including \code{data.frame}, \code{data.table}, \code{tbl_df},
-and the Bioconductor \code{DFrame} classes.
+and the Bioconductor \code{DataFrame} classes.
 }
 \note{
 Updated 2021-10-14.
 }
-\section{\code{DFrame} (Bioconductor) coercion}{
+\section{\code{DataFrame} (Bioconductor) coercion}{
 
 
 Don't define \code{as()} coercion method for \code{list} here. It will create issues
 with \code{data.frame} coercion. Use \code{as.DataFrame()} instead to coerce a \code{list}
-to \code{DFrame}.
+to \code{DataFrame}.
 
 Wrapping the columns in an \code{I()} should work when passing to \code{DataFrame()}.
 See also \code{as_tibble()} for easy list to data frame coercion.
 
-\code{as()} method definition causes issues with \code{data.frame} to \code{DFrame}
+\code{as()} method definition causes issues with \code{data.frame} to \code{DataFrame}
 coercion when defined, because \code{data.frame} inherits from list.
 }
 
@@ -159,8 +159,8 @@ Note that we're manually defining the \code{"rowname"} column instead of using
 
 The package extends \code{as.data.table()} method support for these S4 classes:
 \itemize{
-\item \code{DFrame} (from S4Vectors package).
-\item \code{GRanges} (from GenomicRanges package).
+\item \code{DataFrame} (from S4Vectors package).
+\item \code{GenomicRanges} (from GenomicRanges package).
 }
 }
 
@@ -187,8 +187,8 @@ here, allowing atomic and/or list columns only.
 
 The package extends \code{as_tibble()} method support for these S4 classes:
 \itemize{
-\item \code{DFrame} (from S4Vectors package).
-\item \code{GRanges} (from GenomicRanges package).
+\item \code{DataFrame} (from S4Vectors package).
+\item \code{GenomicRanges} (from GenomicRanges package).
 }
 }
 
@@ -202,71 +202,92 @@ an object to a tibble.
 
 \examples{
 data(
-    DFrame,
-    GRanges,
-    IRanges,
+    DataFrame,
+    GenomicRanges,
+    IntegerRanges,
     data.table,
     sparseMatrix,
-    tbl_df,
+    tibble,  # FIXME
     package = "AcidTest"
 )
 
-## `DFrame` to `data.table` ====
-x <- as(DFrame, "data.table")
-x <- as.data.table(DFrame)
-print(x)
+## `DataFrame` to `data.table` ====
+from <- DataFrame
+to <- as.data.table(from)
+print(to)
+to <- as(from, "data.table")
+print(to)
 
-## `DFrame` to `tbl_df` ====
-x <- as(DFrame, "tbl_df")
-x <- as_tibble(DFrame)
-print(x)
+## `DataFrame` to `tbl_df` (tibble) ====
+from <- DataFrame
+to <- as_tibble(from)
+print(to)
+to <- as(from, "tbl_df")
+print(to)
 
-## `GRanges` to `data.table` ====
-x <- as(GRanges, "data.table")
-x <- as.data.table(GRanges)
-print(x)
+## `GenomicRanges` to `data.table` ====
+from <- GenomicRanges
+to <- as.data.table(from)
+print(to)
+to <- as(from, "data.table")
+print(to)
 
-## `GRanges` to `tbl_df` ====
-x <- as(GRanges, "tbl_df")
-x <- as_tibble(GRanges)
-print(x)
+## `GenomicRanges` to `tbl_df` (tibble) ====
+from <- GenomicRanges
+to <- as_tibble(from)
+print(to)
+to <- as(from, "tbl_df")
+print(to)
 
-## `IRanges` to `data.table` ====
-x <- as(IRanges, "data.table")
-x <- as.data.table(IRanges)
-print(x)
+## `IntegerRanges` to `data.table` ====
+from <- IntegerRanges
+to <- as.data.table(from)
+print(to)
+to <- as(from, "data.table")
+print(to)
 
-## `IRanges` to `tbl_df` ====
-x <- as(IRanges, "tbl_df")
-x <- as_tibble(IRanges)
-print(x)
+## `IntegerRanges` to `tbl_df` (tibble) ====
+from <- IntegerRanges
+to <- as_tibble(from)
+print(to)
+to <- as(from, "tbl_df")
+print(to)
 
-## `Matrix` to `DFrame` ====
+## `Matrix` to `DataFrame` ====
 from <- sparseMatrix
-to <- as(from, "DFrame")
+to <- as.DataFrame(from)
+print(to)
+to <- as(from, "DataFrame")
 to
 
 ## `Matrix` to `data.frame` ====
-x <- as(sparseMatrix, "data.frame")
-head(x)
-
-## `data.table` to `DFrame` ====
-from <- data.table
-to <- as(from, "DFrame")
+from <- sparseMatrix
+to <- as.data.frame(from)
+head(to)
+to <- as(from, "data.frame")
 head(to)
 
-## `list` to `DFrame` ====
+## `data.table` to `DataFrame` ====
+from <- data.table
+to <- as.DataFrame(from)
+head(to)
+to <- as(from, "DataFrame")
+head(to)
+
+## `list` to `DataFrame` ====
 ## Use `as.DataFrame()` instead of `as()` for `list` class.
 from <- list(
-    a = list(c(1, 2), c(3, 4)),
-    b = list(NULL, NULL)
+    "a" = list(c(1, 2), c(3, 4)),
+    "b" = list(NULL, NULL)
 )
 to <- as.DataFrame(from)
 to
 
-## `tbl_df` to `DFrame` ====
-from <- tbl_df
-to <- as(from, "DFrame")
+## `tbl_df` (tibble) to `DataFrame` ====
+from <- tibble
+to <- as.DataFrame(from)
+head(to)
+to <- as(from, "DataFrame")
 head(to)
 }
 \seealso{
@@ -274,7 +295,7 @@ head(to)
 \item \code{as.data.frame()}.
 \item \code{as.data.table()}.
 \item \code{as_tibble()}.
-\item \code{getClass("DFrame")}.
+\item \code{getClass("DataFrame")}.
 \item \code{getClass("data.table")}.
 \item \code{getClass("tbl_df")}.
 }

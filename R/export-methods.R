@@ -387,7 +387,7 @@ NULL
 #'
 #' @details
 #' This method covers standard `matrix` but is also intended to work for
-#' `data.table`, `tbl_df`, and `DFrame` classes. Note that `rio::export()`
+#' `data.table`, `tbl_df`, and `DataFrame` classes. Note that `rio::export()`
 #' doesn't preserve row names by default, so we're ensuring row names get
 #' coerced to "rowname" column consistently here.
 `export,matrix,con` <-  # nolint
@@ -598,19 +598,19 @@ NULL
 
 
 
-`export,DFrame,con` <-  # nolint
+`export,DataFrame,con` <-  # nolint
     `export,data.frame,con`
 
-`export,DFrame,format` <-  # nolint
+`export,DataFrame,format` <-  # nolint
     `export,data.frame,format`
 
 
 
 `export,GRanges,con` <-   # nolint
-    `export,DFrame,con`
+    `export,DataFrame,con`
 
 `export,GRanges,format` <-   # nolint
-    `export,DFrame,format`
+    `export,DataFrame,format`
 
 
 
@@ -785,11 +785,11 @@ NULL
 setMethod(
     f = "export",
     signature = signature(
-        object = "DFrame",
+        object = "DataFrame",
         con = "character",
         format = "character"
     ),
-    definition = `export,DFrame,con`
+    definition = `export,DataFrame,con`
 )
 
 #' @rdname export
@@ -797,11 +797,11 @@ setMethod(
 setMethod(
     f = "export",
     signature = signature(
-        object = "DFrame",
+        object = "DataFrame",
         con = "character",
         format = "missingOrNULL"
     ),
-    definition = `export,DFrame,con`
+    definition = `export,DataFrame,con`
 )
 
 #' @rdname export
@@ -809,11 +809,11 @@ setMethod(
 setMethod(
     f = "export",
     signature = signature(
-        object = "DFrame",
+        object = "DataFrame",
         con = "missingOrNULL",
         format = "missingOrNULL"
     ),
-    definition = `export,DFrame,format`
+    definition = `export,DataFrame,format`
 )
 
 #' @rdname export
@@ -821,11 +821,11 @@ setMethod(
 setMethod(
     f = "export",
     signature = signature(
-        object = "DFrame",
+        object = "DataFrame",
         con = "missingOrNULL",
         format = "character"
     ),
-    definition = `export,DFrame,format`
+    definition = `export,DataFrame,format`
 )
 
 #' @rdname export
