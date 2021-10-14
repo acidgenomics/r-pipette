@@ -41,15 +41,10 @@
 #' each containing 9 columns of data, plus optional track definition lines. The
 #' GTF (General Transfer Format) is identical to GFF version 2.
 #'
-#' [basejump][] exports the specialized `makeGRangesFromGFF()` function that
-#' makes GFF loading simple.
-#'
 #' See also:
 #'
 #' - [Ensembl spec](http://www.ensembl.org/info/website/upload/gff.html)
 #' - [GENCODE spec](http://www.gencodegenes.org/gencodeformat.html)
-#'
-#' [basejump]: https://basejump.acidgenomics.com/
 #'
 #' @section GSEA gene set files (`GMTFile`, `GMXFile`, `GRPFile`):
 #'
@@ -157,46 +152,59 @@
 #'
 #' @return Varies, depending on the file type (format):
 #'
-#' - **Plain text delimited** (`CSV`, `TSV`, `TXT`): `data.frame`.\cr
+#' - **Plain text delimited** (`CSV`, `TSV`, `TXT`):
+#'   `data.frame`.\cr
 #'   Data separated by commas, tabs, or visual spaces.\cr
 #'   Note that TXT structure is amgibuous and actively discouraged.\cr
 #'   Refer to `Data frame return` section for details on how to change the
 #'   default return type to `DataFrame`, `tbl_df` or `data.table`.\cr
 #'   Imported by `data.table::fread()` by default.
-#' - **Excel workbook** (`XLSB`, `XLSX`): `data.frame`.\cr
+#' - **Excel workbook** (`XLSB`, `XLSX`):
+#'   `data.frame`.\cr
 #'   Resave in plain text delimited format instead, if possible.\cr
 #'   Imported by `readxl::read_excel()`.
-#' - **Legacy Excel workbook (pre-2007)** (`XLS`): `data.frame`.\cr
+#' - **Legacy Excel workbook (pre-2007)** (`XLS`):
+#'   `data.frame`.\cr
 #'   Resave in plain text delimited format instead, if possible.\cr
 #'   Note that import of files in this format is slow.\cr
 #'   Imported by `readxl::read_excel()`.
-#' - **GraphPad Prism project** (`PZFX`): `data.frame`.\cr
+#' - **GraphPad Prism project** (`PZFX`):
+#'   `data.frame`.\cr
 #'   Experimental. Consider resaving in CSV format instead.\cr
 #'   Imported by `pzfx::read_pzfx()`.
 #' - **General feature format** (`GFF`, `GFF1`, `GFF2`, `GFF3`, `GTF`):
-#'   `GRanges`.\cr
+#'   `GenomicRanges`.\cr
 #'   Imported by `rtracklayer::import()`.
-#' - **MatrixMarket exchange sparse matrix** (`MTX`): `sparseMatrix`.\cr
+#' - **MatrixMarket exchange sparse matrix** (`MTX`):
+#'   `sparseMatrix`.\cr
 #'   Imported by `Matrix::readMM()`.
-#' - **Gene sets (for GSEA)** (`GMT`, `GMX`): `character`.
+#' - **Gene sets (for GSEA)** (`GMT`, `GMX`):
+#'   `character`.
 #' - **Browser extensible data** (`BED`, `BED15`, `BEDGRAPH`, `BEDPE`):
-#'   `GRanges`.\cr
+#'   `GenomicRanges`.\cr
 #'   Imported by `rtracklayer::import()`.
-#' - **ChIP-seq peaks** (`BROADPEAK`, `NARROWPEAK`): `GRanges`.\cr
+#' - **ChIP-seq peaks** (`BROADPEAK`, `NARROWPEAK`):
+#'   `GenomicRanges`.\cr
 #'   Imported by `rtracklayer::import()`.
-#' - **Wiggle track format** (`BIGWIG`, `BW`, `WIG`): `GRanges`.\cr
+#' - **Wiggle track format** (`BIGWIG`, `BW`, `WIG`):
+#'   `GenomicRanges`.\cr
 #'   Imported by `rtracklayer::import()`.
-#' - **JSON serialization data** (`JSON`): `list`.\cr
+#' - **JSON serialization data** (`JSON`):
+#'   `list`.\cr
 #'   Imported by `jsonlite::read_json()`.
-#' - **YAML serialization data** (`YAML`, `YML`): `list`.\cr
+#' - **YAML serialization data** (`YAML`, `YML`):
+#'   `list`.\cr
 #'   Imported by `yaml::yaml.load_file()`.
-#' - **Lines** (`LOG`, `MD`, `PY`, `R`, `RMD`, `SH`): `character`.
+#' - **Lines** (`LOG`, `MD`, `PY`, `R`, `RMD`, `SH`):
+#'   `character`.\cr
 #'   Source code or log files.\cr
 #'   Imported by `data.table::fread()` by default.
-#' - **R data serialized** (`RDS`): *variable*.\cr
+#' - **R data serialized** (`RDS`):
+#'   *variable*.\cr
 #'   Currently recommend over RDA, if possible.\cr
 #'   Imported by `readRDS()`.
-#' - **R data** (`RDA`, `RDATA`): *variable*.\cr
+#' - **R data** (`RDA`, `RDATA`):
+#'   *variable*.\cr
 #'   Must contain a single object.
 #'   Doesn't require internal object name to match, unlike `loadData()`.\cr
 #'   Imported by `load()`.
