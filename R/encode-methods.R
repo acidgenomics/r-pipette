@@ -53,7 +53,7 @@ NULL
                 x
             }
         )
-        out <- as.DFrame(list)
+        out <- as.DataFrame(list)
         rownames(out) <- rn
         metadata(out) <- meta
         out

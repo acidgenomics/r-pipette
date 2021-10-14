@@ -29,7 +29,7 @@ NULL
         }
         lst <- as(x, "List")
         lst <- droplevels(x = lst, except = except)
-        out <- as.DFrame(x = lst, row.names = rownames(x))
+        out <- as.DataFrame(x = lst, row.names = rownames(x))
         out
     }
 
