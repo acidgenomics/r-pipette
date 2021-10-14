@@ -8,9 +8,9 @@ NULL
 
 
 #' @rdname coerce
-#' @name as.DFrame
-#' @importFrom AcidGenerics as.DFrame
-#' @usage as.DFrame(x, ...)
+#' @name as.DataFrame
+#' @importFrom AcidGenerics as.DataFrame
+#' @usage as.DataFrame(x, ...)
 #' @export
 NULL
 
