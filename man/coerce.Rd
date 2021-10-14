@@ -7,8 +7,8 @@
 \alias{as_tibble}
 \alias{coerce}
 \alias{as_tibble.DataFrame}
-\alias{as_tibble.IntegerRanges}
 \alias{as_tibble.GenomicRanges}
+\alias{as_tibble.IntegerRanges}
 \alias{as.data.table.DataFrame}
 \alias{as.data.table.IntegerRanges}
 \alias{as.data.table.GenomicRanges}
@@ -40,13 +40,13 @@ as.data.table(x, keep.rownames = FALSE, ...)
   rownames = pkgconfig::get_config("tibble::rownames", "rowname")
 )
 
-\method{as_tibble}{IntegerRanges}(
+\method{as_tibble}{GenomicRanges}(
   x,
   ...,
   rownames = pkgconfig::get_config("tibble::rownames", "rowname")
 )
 
-\method{as_tibble}{GenomicRanges}(
+\method{as_tibble}{IntegerRanges}(
   x,
   ...,
   rownames = pkgconfig::get_config("tibble::rownames", "rowname")
@@ -171,7 +171,7 @@ data(
     IntegerRanges,
     data.table,
     sparseMatrix,
-    tibble,  # FIXME
+    tibble,
     package = "AcidTest"
 )
 
@@ -212,20 +212,6 @@ print(to)
 from <- IntegerRanges
 to <- as_tibble(from)
 print(to)
-
-## `Matrix` to `DataFrame` ====
-from <- sparseMatrix
-to <- as.DataFrame(from)
-print(to)
-to <- as(from, "DataFrame")
-to
-
-## `Matrix` to `data.frame` ====
-from <- sparseMatrix
-to <- as.data.frame(from)
-head(to)
-to <- as(from, "data.frame")
-head(to)
 
 ## `data.table` to `DataFrame` ====
 from <- data.table

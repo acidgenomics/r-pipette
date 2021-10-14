@@ -1,23 +1,24 @@
-context("coerce : tbl_df")
-
-test_that("S4 'as()' on empty data.frame", {
-    expect_is(as(data.frame(), "tbl_df"), "tbl_df")
-})
+context("coerce : tibble")
 
 test_that("DataFrame", {
-    data <- DFrame  # FIXME
-    x <- as(data, "tbl_df")
-    expect_is(x, "tbl_df")
+    from <- df
+    to <- as_tibble(from)
+    expect_is(to, "tbl_df")
+    to <- as(from, "tbl_df")
+    expect_is(to, "tbl_df")
     ## Expect that rownames are automatically moved to first column.
-    expect_identical(colnames(x)[[1L]], "rowname")
+    expect_identical(
+        object = colnames(to)[[1L]],
+        expected = "rowname"
+    )
     ## Early return if already tibble.
-    x <- tibble()
-    expect_identical(x, as(x, "tbl_df"))
+    from <- tibble()
+    to <- as(from, "tbl_df")
+    expect_identical(from, to)
     ## Coercion of a DataFrame containing a list column is allowed.
-    data <- DataFrame()
-    data[["x"]] <- list()
-    data <- as(data, "tbl_df")
-    expect_is(data, "tbl_df")
+    from <- DataFrame("x" = I(list()))
+    to <- as(from, "tbl_df")
+    expect_is(to, "tbl_df")
     ## Check handling when rownames are NULL.
     data <- DataFrame("a" = 1L, "b" = "b")
     expect_null(rownames(data))

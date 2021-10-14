@@ -1,9 +1,3 @@
-## FIXME Don't allow coercion to data.frame anywhere here in the package...
-## FIXME Argh need to rethink the coercion methods here...dispatch and
-## compatibility with Bioconductor is such a pain.
-
-
-
 ## This is needed to properly declare S4 `as()` coercion methods.
 #' @name coerce
 #' @export
@@ -102,7 +96,7 @@ NULL
 #'     IntegerRanges,
 #'     data.table,
 #'     sparseMatrix,
-#'     tibble,  # FIXME
+#'     tibble,
 #'     package = "AcidTest"
 #' )
 #'
@@ -143,20 +137,6 @@ NULL
 #' from <- IntegerRanges
 #' to <- as_tibble(from)
 #' print(to)
-#'
-#' ## `Matrix` to `DataFrame` ====
-#' from <- sparseMatrix
-#' to <- as.DataFrame(from)
-#' print(to)
-#' to <- as(from, "DataFrame")
-#' to
-#'
-#' ## `Matrix` to `data.frame` ====
-#' from <- sparseMatrix
-#' to <- as.data.frame(from)
-#' head(to)
-#' to <- as(from, "data.frame")
-#' head(to)
 #'
 #' ## `data.table` to `DataFrame` ====
 #' from <- data.table
@@ -350,10 +330,9 @@ NULL
 
 #' @rdname coerce
 #' @export
-## Updated 2021-09-28.
+## Updated 2021-10-14.
 as_tibble.DataFrame <-  # nolint
     function(x, ..., rownames) {
-        ## FIXME Rework this.
         x <- `.as.data.frame,DataFrame`(x)
         if (!hasRownames(x)) {
             rownames <- NULL
@@ -363,54 +342,50 @@ as_tibble.DataFrame <-  # nolint
 
 formals(as_tibble.DataFrame)[["rownames"]] <- .tbl_rownames
 
-## FIXME This isn't working due to Bioconductor inheritance.
-
 #' @rdname coerce
 #' @export
 ## Updated 2021-10-14.
-as_tibble.IntegerRanges <-  # nolint
+as_tibble.GenomicRanges <-  # nolint
     function(x, ..., rownames) {
-        stop("FIXME HELLO THERE")
-        ## FIXME This doesn't pick up our internal `as()` coercion correctly,
-        ## and therefore drops the rownames...argh....
-        x <- as(x, "data.frame")
+        x <- as.DataFrame(x)
+        x <- as.data.frame(x)
         if (!hasRownames(x)) {
             rownames <- NULL
         }
         as_tibble(x = x, ..., rownames = rownames)
     }
 
-formals(as_tibble.IntegerRanges)[["rownames"]] <- .tbl_rownames
+formals(as_tibble.GenomicRanges)[["rownames"]] <- .tbl_rownames
 
 #' @rdname coerce
 #' @export
 ## Updated 2021-10-14.
-as_tibble.GenomicRanges <-
-    as_tibble.IntegerRanges  # nolint
+as_tibble.IntegerRanges <-  # nolint
+    as_tibble.GenomicRanges
 
-## Updated 2019-07-19.
-`coerce,ANY,tbl_df` <-  # nolint
+rm(.tbl_rownames)
+
+## Updated 2021-10-14.
+`.coerce,ANY,tbl_df` <-  # nolint
     function(from) {
         as_tibble(from)
     }
 
-## Updated 2019-07-19.
+## Updated 2021-10-14.
 `coerce,data.frame,tbl_df` <-  # nolint
-    `coerce,ANY,tbl_df`
+    `.coerce,ANY,tbl_df`
 
-## Updated 2019-07-19.
+## Updated 2021-10-14.
 `coerce,DataFrame,tbl_df` <-  # nolint
-    `coerce,ANY,tbl_df`
+    `.coerce,ANY,tbl_df`
 
 ## Updated 2021-10-14.
 `coerce,GenomicRanges,tbl_df` <-  # nolint
-    `coerce,ANY,tbl_df`
+    `.coerce,ANY,tbl_df`
 
 ## Updated 2021-10-14.
 `coerce,IntegerRanges,tbl_df` <-  # nolint
-    `coerce,ANY,tbl_df`
-
-rm(.tbl_rownames)
+    `.coerce,ANY,tbl_df`
 
 
 
@@ -441,9 +416,8 @@ as.data.table.IntegerRanges <-  # nolint
         keep.rownames = TRUE,  # nolint
         ...
     ) {
-        stop("FIXME HELLO THERE")
-        ## FIXME This internal method doesn't work the way we want...
-        x <- as(x, "data.frame")
+        x <- as.DataFrame(x)
+        x <- as.data.frame(x)
         if (!hasRownames(x)) {
             keep.rownames <- FALSE  # nolint
         }
