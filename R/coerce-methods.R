@@ -256,6 +256,12 @@ NULL
         out
     }
 
+## Updated 2021-10-14.
+`as.DataFrame,Matrix` <-  # nolint
+    function(x) {
+        as(x, "DataFrame")
+    }
+
 ## Updated 2021-02-19.
 `as.DataFrame,SimpleList` <-  # nolint
     `as.DataFrame,list`
@@ -515,6 +521,14 @@ as.data.table.GenomicRanges <-  # nolint
 #' @export
 setMethod(
     f = "as.DataFrame",
+    signature = signature(x = "Matrix"),
+    definition = `as.DataFrame,Matrix`
+)
+
+#' @rdname coerce
+#' @export
+setMethod(
+    f = "as.DataFrame",
     signature = signature(x = "SimpleList"),
     definition = `as.DataFrame,SimpleList`
 )
@@ -567,6 +581,8 @@ setAs(
     def = `coerce,DataFrame,tbl_df`
 )
 
+
+
 #' @rdname coerce
 #' @name coerce,GenomicRanges,data.table-method
 setAs(
@@ -582,6 +598,8 @@ setAs(
     to = "tbl_df",
     def = `coerce,GenomicRanges,tbl_df`
 )
+
+
 
 #' @rdname coerce
 #' @name coerce,IntegerRanges,data.frame-method
@@ -607,6 +625,8 @@ setAs(
     def = `coerce,IntegerRanges,tbl_df`
 )
 
+
+
 #' @rdname coerce
 #' @name coerce,Matrix,DataFrame-method
 setAs(
@@ -622,6 +642,8 @@ setAs(
     to = "data.frame",
     def = `coerce,Matrix,data.frame`
 )
+
+
 
 #' @rdname coerce
 #' @name coerce,data.frame,data.table-method
@@ -639,6 +661,8 @@ setAs(
     def = `coerce,data.frame,tbl_df`
 )
 
+
+
 #' @rdname coerce
 #' @name coerce,data.table,DataFrame-method
 setAs(
@@ -646,6 +670,8 @@ setAs(
     to = "DataFrame",
     def = `coerce,data.table,DataFrame`
 )
+
+
 
 #' @rdname coerce
 #' @name coerce,tbl_df,DataFrame-method

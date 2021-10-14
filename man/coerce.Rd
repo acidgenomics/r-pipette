@@ -12,6 +12,7 @@
 \alias{as.data.table.DataFrame}
 \alias{as.data.table.IntegerRanges}
 \alias{as.data.table.GenomicRanges}
+\alias{as.DataFrame,Matrix-method}
 \alias{as.DataFrame,SimpleList-method}
 \alias{as.DataFrame,list-method}
 \alias{as.data.frame,IntegerRanges-method}
@@ -60,6 +61,8 @@ as.data.table(x, keep.rownames = FALSE, ...)
 \method{as.data.table}{IntegerRanges}(x, keep.rownames = TRUE, ...)
 
 \method{as.data.table}{GenomicRanges}(x, keep.rownames = TRUE, ...)
+
+\S4method{as.DataFrame}{Matrix}(x)
 
 \S4method{as.DataFrame}{SimpleList}(x, row.names = NULL)
 
