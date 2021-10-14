@@ -19,7 +19,7 @@
 #' @importFrom AcidCLI abort alert alertInfo alertSuccess alertWarning
 #'   toInlineString
 #' @importFrom AcidGenerics DataFrame Rle SimpleList end head mcols mcols<-
-#'   metadata metadata<- na.omit start tail width
+#'   metadata metadata<- na.omit seqnames start strand tail width
 #' @importFrom BiocIO resource
 #' @importFrom Matrix readMM writeMM
 #' @importFrom RCurl getURL
