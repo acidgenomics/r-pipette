@@ -1,4 +1,6 @@
 ## FIXME Don't allow coercion to data.frame anywhere here in the package...
+## FIXME Argh need to rethink the coercion methods here...dispatch and
+## compatibility with Bioconductor is such a pain.
 
 
 
@@ -226,18 +228,12 @@ NULL
         out
     }
 
-## Updated 2021-10-14.
-`as.DataFrame,Matrix` <-  # nolint
-    function(x) {
-        as(x, "DataFrame")
-    }
-
 ## Updated 2021-02-19.
 `as.DataFrame,SimpleList` <-  # nolint
     `as.DataFrame,list`
 
 ## Updated 2021-09-28.
-`coerce,ANY,DataFrame` <-  # nolint
+`.coerce,ANY,DataFrame` <-  # nolint
     function(from) {
         to <- as.data.frame(from, stringsAsFactors = FALSE)
         to <- as(to, "DataFrame")
@@ -253,78 +249,27 @@ NULL
     }
 
 ## Updated 2019-07-12.
-`coerce,Matrix,DataFrame` <-  # nolint
-    `coerce,ANY,DataFrame`
-
-## Updated 2019-07-12.
 `coerce,data.table,DataFrame` <-  # nolint
-    `coerce,ANY,DataFrame`
+    `.coerce,ANY,DataFrame`
 
 ## Updated 2019-07-12.
 `coerce,tbl_df,DataFrame` <-  # nolint
-    `coerce,ANY,DataFrame`
+    `.coerce,ANY,DataFrame`
 
 
 
 ## To data.frame ===============================================================
-## FIXME Nuke this whole section, problematic...
-
-## Updated 2019-07-20.
-`.as.data.frame,Matrix` <-  # nolint
-    function(x, ...) {
-        as.data.frame(as.matrix(x), ...)
-    }
-
-## FIXME This gets messed up due to inherited method from IPosRanges.
-## FIXME Consider renaming this, reworking...
-
-## Updated 2021-10-14.
-`.as.data.frame,IntegerRanges` <-  # nolint
-    function(
-        x,
-        row.names = NULL,
-        optional = FALSE,
-        ...
-    ) {
-        stop("HELLO THERE FIXME")
-        if (missing(row.names)) {
-            row.names <- names(x)
-        }
-        if (!is.null(names(x))) {
-            names(x) <- NULL
-        }
-        args <- list(
-            "start" = start(x),
-            "end" = end(x),
-            "width" = width(x),
-            "row.names" = row.names,
-            "check.rows" = TRUE,
-            "check.names" = FALSE,
-            "stringsAsFactors" = FALSE
-        )
-        mcols <- mcols(x, use.names = FALSE)
-        if (!is.null(mcols)) {
-            args[["mcols"]] <- as.data.frame(mcols)
-        }
-        do.call(what = data.frame, args = args)
-    }
-
-## Updated 2021-10-14.
-`.coerce,ANY,data.frame` <-  # nolint
-    function(from) {
-        as.data.frame(from)
-    }
 
 ## Coerce an S4 DataFrame to a standard data.frame.
 ##
-## This function will return an informative error if an S4 DFrame contains
+## This function will return an informative error if an S4 DataFrame contains
 ## complex columns that can't be coerced to atomic or list.
 ##
 ## Not exporting this method because we don't want to mask the default
 ## conventions currently used by Bioconductor.
 ##
-## Updated 2021-09-28.
-`.coerce,DataFrame,data.frame` <-  # nolint
+## Updated 2021-10-14.
+`.as.data.frame,DataFrame` <-  # nolint
     function(x) {
         ## Decode Rle columns, which can be coerced.
         x <- decode(x)
@@ -360,13 +305,42 @@ NULL
         as(x, "data.frame")
     }
 
-## Updated 2019-07-19.
-`.coerce,IntegerRanges,data.frame` <-  # nolint
-    `.coerce,ANY,data.frame`
 
-## Updated 2019-07-20.
-`.coerce,Matrix,data.frame` <-  # nolint
-    `.coerce,ANY,data.frame`
+
+## FIXME This gets messed up due to inherited method from IPosRanges.
+## FIXME Consider renaming this, reworking...
+## FIXME Take out the row.names and optional part here?
+
+## Updated 2021-10-14.
+`.as.data.frame,IntegerRanges` <-  # nolint
+    function(
+        x,
+        row.names = NULL,
+        optional = FALSE,
+        ...
+    ) {
+        stop("HELLO THERE FIXME")
+        if (missing(row.names)) {
+            row.names <- names(x)
+        }
+        if (!is.null(names(x))) {
+            names(x) <- NULL
+        }
+        args <- list(
+            "start" = start(x),
+            "end" = end(x),
+            "width" = width(x),
+            "row.names" = row.names,
+            "check.rows" = TRUE,
+            "check.names" = FALSE,
+            "stringsAsFactors" = FALSE
+        )
+        mcols <- mcols(x, use.names = FALSE)
+        if (!is.null(mcols)) {
+            args[["mcols"]] <- as.data.frame(mcols)
+        }
+        do.call(what = data.frame, args = args)
+    }
 
 
 
@@ -380,6 +354,7 @@ NULL
 ## Updated 2021-09-28.
 as_tibble.DataFrame <-  # nolint
     function(x, ..., rownames) {
+        ## FIXME Rework this.
         x <- `.coerce,DataFrame,data.frame`(x)
         if (!hasRownames(x)) {
             rownames <- NULL
@@ -447,6 +422,7 @@ rm(.tbl_rownames)
 ## Updated 2021-09-28.
 as.data.table.DataFrame <-  # nolint
     function(x, keep.rownames = TRUE, ...) {  # nolint
+        ## FIXME Rework this.
         x <- `.coerce,DataFrame,data.frame`(x)
         if (!hasRownames(x)) {
             keep.rownames <- FALSE  # nolint
@@ -499,14 +475,6 @@ as.data.table.GenomicRanges <-  # nolint
 
 
 ## setMethod ===================================================================
-
-#' @rdname coerce
-#' @export
-setMethod(
-    f = "as.DataFrame",
-    signature = signature(x = "Matrix"),
-    definition = `as.DataFrame,Matrix`
-)
 
 #' @rdname coerce
 #' @export
@@ -576,30 +544,6 @@ setAs(
     from = "IntegerRanges",
     to = "tbl_df",
     def = `coerce,IntegerRanges,tbl_df`
-)
-
-#' @rdname coerce
-#' @name coerce,Matrix,DataFrame-method
-setAs(
-    from = "Matrix",
-    to = "DataFrame",
-    def = `coerce,Matrix,DataFrame`
-)
-
-#' @rdname coerce
-#' @name coerce,data.frame,data.table-method
-setAs(
-    from = "data.frame",
-    to = "data.table",
-    def = `coerce,data.frame,data.table`
-)
-
-#' @rdname coerce
-#' @name coerce,data.frame,tbl_df-method
-setAs(
-    from = "data.frame",
-    to = "tbl_df",
-    def = `coerce,data.frame,tbl_df`
 )
 
 #' @rdname coerce
