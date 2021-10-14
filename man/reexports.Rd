@@ -23,6 +23,8 @@
 \alias{tar}
 \alias{tibble}
 \alias{untar}
+\alias{Matrix-class}
+\alias{sparseMatrix-class}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
