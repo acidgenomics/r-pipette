@@ -7,22 +7,22 @@
 \alias{as_tibble}
 \alias{coerce}
 \alias{as_tibble.DataFrame}
-\alias{as_tibble.IRanges}
-\alias{as_tibble.GRanges}
+\alias{as_tibble.IntegerRanges}
+\alias{as_tibble.GenomicRanges}
 \alias{as.data.table.DataFrame}
-\alias{as.data.table.IRanges}
-\alias{as.data.table.GRanges}
+\alias{as.data.table.IntegerRanges}
+\alias{as.data.table.GenomicRanges}
 \alias{as.DataFrame,SimpleList-method}
 \alias{as.DataFrame,list-method}
-\alias{as.data.frame,IRanges-method}
+\alias{as.data.frame,IntegerRanges-method}
 \alias{as.data.frame,Matrix-method}
 \alias{coerce,DataFrame,data.table-method}
 \alias{coerce,DataFrame,tbl_df-method}
-\alias{coerce,GRanges,data.table-method}
-\alias{coerce,GRanges,tbl_df-method}
-\alias{coerce,IRanges,data.frame-method}
-\alias{coerce,IRanges,data.table-method}
-\alias{coerce,IRanges,tbl_df-method}
+\alias{coerce,GenomicRanges,data.table-method}
+\alias{coerce,GenomicRanges,tbl_df-method}
+\alias{coerce,IntegerRanges,data.frame-method}
+\alias{coerce,IntegerRanges,data.table-method}
+\alias{coerce,IntegerRanges,tbl_df-method}
 \alias{coerce,Matrix,DataFrame-method}
 \alias{coerce,Matrix,data.frame-method}
 \alias{coerce,data.frame,data.table-method}
@@ -43,13 +43,13 @@ as.data.table(x, keep.rownames = FALSE, ...)
   rownames = pkgconfig::get_config("tibble::rownames", "rowname")
 )
 
-\method{as_tibble}{IRanges}(
+\method{as_tibble}{IntegerRanges}(
   x,
   ...,
   rownames = pkgconfig::get_config("tibble::rownames", "rowname")
 )
 
-\method{as_tibble}{GRanges}(
+\method{as_tibble}{GenomicRanges}(
   x,
   ...,
   rownames = pkgconfig::get_config("tibble::rownames", "rowname")
@@ -57,15 +57,15 @@ as.data.table(x, keep.rownames = FALSE, ...)
 
 \method{as.data.table}{DataFrame}(x, keep.rownames = TRUE, ...)
 
-\method{as.data.table}{IRanges}(x, keep.rownames = TRUE, ...)
+\method{as.data.table}{IntegerRanges}(x, keep.rownames = TRUE, ...)
 
-\method{as.data.table}{GRanges}(x, keep.rownames = TRUE, ...)
+\method{as.data.table}{GenomicRanges}(x, keep.rownames = TRUE, ...)
 
 \S4method{as.DataFrame}{SimpleList}(x, row.names = NULL)
 
 \S4method{as.DataFrame}{list}(x, row.names = NULL)
 
-\S4method{as.data.frame}{IRanges}(x, row.names = NULL, optional = FALSE, ...)
+\S4method{as.data.frame}{IntegerRanges}(x, row.names = NULL, optional = FALSE, ...)
 
 \S4method{as.data.frame}{Matrix}(x, row.names = NULL, optional = FALSE, ...)
 }
