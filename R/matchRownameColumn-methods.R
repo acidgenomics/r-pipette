@@ -5,7 +5,7 @@
 #' The data.table package uses "rn" by default, whereas tibble uses "rowname".
 #'
 #' @name matchRownameColumn
-#' @note Updated 2021-08-24.
+#' @note Updated 2021-10-14.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param choices `character`.
@@ -21,13 +21,19 @@
 #'   - tibble: `"rowname"`.
 #'
 #' @examples
-#' data(data.table, tbl_df, package = "AcidTest")
+#' data(
+#'     data.table,
+#'     tibble,
+#'     package = "AcidTest"
+#' )
 #'
 #' ## data.table ====
-#' matchRownameColumn(data.table)
+#' object <- data.table
+#' matchRownameColumn(object)
 #'
 #' ## tbl_df ====
-#' matchRownameColumn(tbl_df)
+#' object <- tibble
+#' matchRownameColumn(object)
 NULL
 
 
