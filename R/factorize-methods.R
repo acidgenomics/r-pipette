@@ -6,6 +6,7 @@
 #' @param ... Additional arguments.
 #'
 #' @examples
+#' ## DataFrame ====
 #' df <- DataFrame(
 #'     "a" = letters[seq_len(5L)],
 #'     "b" = seq_len(5L)
