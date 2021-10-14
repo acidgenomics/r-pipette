@@ -606,10 +606,10 @@ NULL
 
 
 
-`export,GRanges,con` <-   # nolint
+`export,GenomicRanges,con` <-   # nolint
     `export,DataFrame,con`
 
-`export,GRanges,format` <-   # nolint
+`export,GenomicRanges,format` <-   # nolint
     `export,DataFrame,format`
 
 
@@ -833,11 +833,11 @@ setMethod(
 setMethod(
     f = "export",
     signature = signature(
-        object = "GRanges",
+        object = "GenomicRanges",
         con = "character",
         format = "character"
     ),
-    definition = `export,GRanges,con`
+    definition = `export,GenomicRanges,con`
 )
 
 #' @rdname export
@@ -845,11 +845,11 @@ setMethod(
 setMethod(
     f = "export",
     signature = signature(
-        object = "GRanges",
+        object = "GenomicRanges",
         con = "character",
         format = "missingOrNULL"
     ),
-    definition = `export,GRanges,con`
+    definition = `export,GenomicRanges,con`
 )
 
 #' @rdname export
@@ -857,11 +857,11 @@ setMethod(
 setMethod(
     f = "export",
     signature = signature(
-        object = "GRanges",
+        object = "GenomicRanges",
         con = "missingOrNULL",
         format = "missingOrNULL"
     ),
-    definition = `export,GRanges,format`
+    definition = `export,GenomicRanges,format`
 )
 
 #' @rdname export
@@ -869,11 +869,11 @@ setMethod(
 setMethod(
     f = "export",
     signature = signature(
-        object = "GRanges",
+        object = "GenomicRanges",
         con = "missingOrNULL",
         format = "character"
     ),
-    definition = `export,GRanges,format`
+    definition = `export,GenomicRanges,format`
 )
 
 #' @rdname export
