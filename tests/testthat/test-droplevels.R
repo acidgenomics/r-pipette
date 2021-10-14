@@ -33,7 +33,7 @@ test_that("GenomicRanges", {
     mcols(x)[[1L]] <- as.factor(mcols(x)[[1L]])
     expect_true(any(bapply(X = mcols(x), FUN = is.factor)))
     x <- droplevels(x)
-    expect_s4_class(x, "GRanges")
+    expect_s4_class(x, "GenomicRanges")
     expect_true(any(bapply(X = mcols(x), FUN = is.factor)))
 })
 
