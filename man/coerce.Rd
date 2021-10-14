@@ -15,17 +15,13 @@
 \alias{as.DataFrame,Matrix-method}
 \alias{as.DataFrame,SimpleList-method}
 \alias{as.DataFrame,list-method}
-\alias{as.data.frame,IntegerRanges-method}
-\alias{as.data.frame,Matrix-method}
 \alias{coerce,DataFrame,data.table-method}
 \alias{coerce,DataFrame,tbl_df-method}
 \alias{coerce,GenomicRanges,data.table-method}
 \alias{coerce,GenomicRanges,tbl_df-method}
-\alias{coerce,IntegerRanges,data.frame-method}
 \alias{coerce,IntegerRanges,data.table-method}
 \alias{coerce,IntegerRanges,tbl_df-method}
 \alias{coerce,Matrix,DataFrame-method}
-\alias{coerce,Matrix,data.frame-method}
 \alias{coerce,data.frame,data.table-method}
 \alias{coerce,data.frame,tbl_df-method}
 \alias{coerce,data.table,DataFrame-method}
@@ -67,13 +63,9 @@ as.data.table(x, keep.rownames = FALSE, ...)
 \S4method{as.DataFrame}{SimpleList}(x, row.names = NULL)
 
 \S4method{as.DataFrame}{list}(x, row.names = NULL)
-
-\S4method{as.data.frame}{IntegerRanges}(x, row.names = NULL, optional = FALSE, ...)
-
-\S4method{as.data.frame}{Matrix}(x, row.names = NULL, optional = FALSE, ...)
 }
 \arguments{
-\item{x}{any \R object.}
+\item{x}{An R object.}
 
 \item{...}{Additional arguments.}
 
@@ -83,14 +75,6 @@ Apply to row names.}
 \item{keep.rownames}{Default is \code{FALSE}. If \code{TRUE}, adds the input object's names as a separate column named \code{"rn"}. \code{keep.rownames = "id"} names the column \code{"id"} instead.}
 
 \item{row.names}{\code{NULL} or \code{character}.}
-
-\item{optional}{logical. If \code{TRUE}, setting row names and
-    converting column names (to syntactic names: see
-    \code{\link[base]{make.names}}) is optional.  Note that all of \R's
-    \pkg{base} package \code{as.data.frame()} methods use
-    \code{optional} only for column names treatment, basically with the
-    meaning of \code{\link[base]{data.frame}(*, check.names = !optional)}.
-    See also the \code{make.names} argument of the \code{matrix} method.}
 }
 \value{
 Modified object, of desired conversion class.
@@ -118,35 +102,6 @@ See also \code{as_tibble()} for easy list to data frame coercion.
 
 \code{as()} method definition causes issues with \code{data.frame} to \code{DataFrame}
 coercion when defined, because \code{data.frame} inherits from list.
-}
-
-\section{\code{data.frame} coercion}{
-
-\subsection{To \code{IRanges}}{
-
-Default coercion of \code{IPosRanges} (i.e. \code{IRanges}) to \code{data.frame} currently
-strips metadata in \code{mcols()}. However, GenomicRanges preserves this
-information, so we're adding a tweaked coercion method here to improve
-consistency.
-
-Relevant methods:\if{html}{\out{<div class="sourceCode r">}}\preformatted{getMethod(
-    f = "as.data.frame",
-    signature = "GenomicRanges",
-    where = asNamespace("GenomicRanges")
-)
-## IRanges inherits from `IPosRanges`.
-getMethod(
-    f = "as.data.frame",
-    signature = "IPosRanges",
-    where = asNamespace("IRanges")
-)
-}\if{html}{\out{</div>}}
-
-See also:
-\itemize{
-\item https://github.com/Bioconductor/IRanges/issues/8
-}
-}
 }
 
 \section{\code{data.table} coercion}{
@@ -246,14 +201,10 @@ print(to)
 from <- IntegerRanges
 to <- as.data.table(from)
 print(to)
-to <- as(from, "data.table")
-print(to)
 
 ## `IntegerRanges` to `tbl_df` (tibble) ====
 from <- IntegerRanges
 to <- as_tibble(from)
-print(to)
-to <- as(from, "tbl_df")
 print(to)
 
 ## `Matrix` to `DataFrame` ====
@@ -295,7 +246,6 @@ head(to)
 }
 \seealso{
 \itemize{
-\item \code{as.data.frame()}.
 \item \code{as.data.table()}.
 \item \code{as_tibble()}.
 \item \code{getClass("DataFrame")}.
