@@ -14,13 +14,6 @@ NULL
 #' @export
 NULL
 
-#' @rdname coerce
-#' @name as.DataFrame
-#' @importFrom AcidGenerics as.DataFrame
-#' @usage as.DataFrame(x, ...)
-#' @export
-NULL
-
 
 
 #' @rdname coerce

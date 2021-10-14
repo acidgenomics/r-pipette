@@ -1,8 +1,3 @@
-## FIXME Ensure that coercion methods work on both DFrame and DataFrame virtual class here.
-## FIXME Need to ensure that this is covered in unit tests.
-
-
-
 ## This is needed to properly declare S4 `as()` coercion methods.
 #' @name coerce
 #' @export
@@ -15,14 +10,14 @@ NULL
 #' Coercion methods
 #'
 #' @name coerce
-#' @note Updated 2020-05-18.
+#' @note Updated 2021-10-14.
 #'
 #' @details
 #' These conversion methods are primarily intended to interconvert between
 #' popular tabular formats in R, including `data.frame`, `data.table`, `tbl_df`,
 #' and the Bioconductor `DFrame` classes.
 #'
-#' @section `DataFrame` / `DFrame` (Bioconductor) coercion:
+#' @section `DFrame` (Bioconductor) coercion:
 #'
 #' Don't define `as()` coercion method for `list` here. It will create issues
 #' with `data.frame` coercion. Use `as.DFrame()` instead to coerce a `list`
@@ -350,12 +345,6 @@ formals(as_tibble.DFrame)[["rownames"]] <- .tbl_rownames
 
 #' @rdname coerce
 #' @export
-## Updated 2021-09-28.
-as_tibble.DataFrame <-  # nolint
-    as_tibble.DFrame
-
-#' @rdname coerce
-#' @export
 ## Updated 2020-01-19.
 as_tibble.IRanges <-  # nolint
     function(x, ..., rownames) {
@@ -412,12 +401,6 @@ as.data.table.DFrame <-  # nolint
         }
         as.data.table(x = x, keep.rownames = keep.rownames, ...)
     }
-
-#' @rdname coerce
-#' @export
-## Updated 2021-09-28.
-as.data.table.DataFrame <-  # nolint
-    as.data.table.DFrame
 
 #' @rdname coerce
 #' @export
@@ -484,24 +467,6 @@ setMethod(
 #' @rdname coerce
 #' @export
 setMethod(
-    f = "as.DataFrame",
-    signature = signature(x = "SimpleList"),
-    definition = `as.DFrame,SimpleList`
-)
-
-#' @rdname coerce
-#' @export
-setMethod(
-    f = "as.DataFrame",
-    signature = signature(x = "list"),
-    definition = `as.DFrame,list`
-)
-
-
-
-#' @rdname coerce
-#' @export
-setMethod(
     f = "as.data.frame",
     signature = signature(x = "IRanges"),
     definition = `as.data.frame,IRanges`
@@ -520,22 +485,6 @@ setMethod(
 ## setAs =======================================================================
 
 ## Ensure these are redefined in basejump, for backward compatibility.
-
-#' @rdname coerce
-#' @name coerce,DFrame,data.table-method
-setAs(
-    from = "DFrame",
-    to = "data.table",
-    def = `coerce,DFrame,data.table`
-)
-
-#' @rdname coerce
-#' @name coerce,DFrame,tbl_df-method
-setAs(
-    from = "DFrame",
-    to = "tbl_df",
-    def = `coerce,DFrame,tbl_df`
-)
 
 #' @rdname coerce
 #' @name coerce,DFrame,data.table-method
@@ -602,14 +551,6 @@ setAs(
 )
 
 #' @rdname coerce
-#' @name coerce,Matrix,DFrame-method
-setAs(
-    from = "Matrix",
-    to = "DFrame",
-    def = `coerce,Matrix,DFrame`
-)
-
-#' @rdname coerce
 #' @name coerce,Matrix,data.frame-method
 setAs(
     from = "Matrix",
@@ -639,22 +580,6 @@ setAs(
     from = "data.table",
     to = "DFrame",
     def = `coerce,data.table,DFrame`
-)
-
-#' @rdname coerce
-#' @name coerce,data.table,DFrame-method
-setAs(
-    from = "data.table",
-    to = "DFrame",
-    def = `coerce,data.table,DFrame`
-)
-
-#' @rdname coerce
-#' @name coerce,tbl_df,DFrame-method
-setAs(
-    from = "tbl_df",
-    to = "DFrame",
-    def = `coerce,tbl_df,DFrame`
 )
 
 #' @rdname coerce
