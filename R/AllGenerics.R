@@ -17,15 +17,6 @@ NULL
 
 
 #' @rdname coerce
-#' @name as.data.frame
-#' @importFrom AcidGenerics as.data.frame
-#' @usage as.data.frame(x, row.names = NULL, optional = FALSE, ...)
-#' @export
-NULL
-
-
-
-#' @rdname coerce
 #' @name as.data.table
 #' @importFrom data.table as.data.table
 #' @usage as.data.table(x, keep.rownames = FALSE, ...)
