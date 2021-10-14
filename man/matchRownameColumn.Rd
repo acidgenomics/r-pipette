@@ -43,14 +43,20 @@ Automatically detect row names column, if defined.
 The data.table package uses "rn" by default, whereas tibble uses "rowname".
 }
 \note{
-Updated 2021-08-24.
+Updated 2021-10-14.
 }
 \examples{
-data(data.table, tbl_df, package = "AcidTest")
+data(
+    data.table,
+    tibble,
+    package = "AcidTest"
+)
 
 ## data.table ====
-matchRownameColumn(data.table)
+object <- data.table
+matchRownameColumn(object)
 
 ## tbl_df ====
-matchRownameColumn(tbl_df)
+object <- tibble
+matchRownameColumn(object)
 }

@@ -30,13 +30,13 @@ Updated 2021-06-09.
 \examples{
 ## DataFrame ====
 binary <- seq(from = 0L, to = 1L)
-df <- DataFrame(
+object <- DataFrame(
     "a" = rep(x = binary, times = 50L),
     "b" = rep(x = binary, each = 50L)
 )
-lapply(df, class)
-x <- encode(df)
-lapply(x, class)
+lapply(object, class)
+object <- encode(object)
+lapply(object, class)
 }
 \seealso{
 \code{Rle()}.
