@@ -458,7 +458,6 @@ test_that("'stripWhitespace' argument", {
 
 context("import : R data")
 
-## FIXME This test is failing, need to resave example.
 test_that("R data", {
     object <- import(file.path("cache", "example.rda"))
     expect_s4_class(object, "DFrame")
@@ -466,7 +465,6 @@ test_that("R data", {
     expect_null(attr(object, which = "import"))
 })
 
-## FIXME This test is failing, need to resave example.
 test_that("R data serialized", {
     object <- import(file.path("cache", "example.rds"))
     expect_s4_class(object, "DFrame")
