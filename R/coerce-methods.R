@@ -605,7 +605,7 @@ setAs(
 #' @name coerce,Matrix,DFrame-method
 setAs(
     from = "Matrix",
-    to = "DataFrame",
+    to = "DFrame",
     def = `coerce,Matrix,DFrame`
 )
 

@@ -22,7 +22,7 @@ data(
     envir = environment()
 )
 stopifnot(
-    is(DFrame, "DataFrame"),
+    is(DFrame, "DFrame"),
     is(GRanges, "GRanges"),
     is(IRanges, "IRanges"),
     is(data.table, "data.table"),
@@ -35,7 +35,7 @@ dt <- data.table
 gr <- GRanges
 ir <- IRanges
 mat <- matrix
-mtcars <- as(mtcars, "DataFrame")
+mtcars <- as(mtcars, "DFrame")
 sparse <- sparseMatrix
 tbl <- tbl_df
 

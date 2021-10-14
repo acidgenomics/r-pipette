@@ -2,24 +2,24 @@
 % Please edit documentation in R/AllGenerics.R, R/removeNA-methods.R
 \name{removeNA}
 \alias{removeNA}
-\alias{removeNA,atomic-method}
-\alias{removeNA,matrix-method}
+\alias{removeNA,DFrame-method}
 \alias{removeNA,Matrix-method}
+\alias{removeNA,atomic-method}
 \alias{removeNA,data.frame-method}
-\alias{removeNA,DataFrame-method}
+\alias{removeNA,matrix-method}
 \title{Remove rows and columns containing only NA values}
 \usage{
 removeNA(object, ...)
 
-\S4method{removeNA}{atomic}(object)
-
-\S4method{removeNA}{matrix}(object)
+\S4method{removeNA}{DFrame}(object)
 
 \S4method{removeNA}{Matrix}(object)
 
+\S4method{removeNA}{atomic}(object)
+
 \S4method{removeNA}{data.frame}(object)
 
-\S4method{removeNA}{DataFrame}(object)
+\S4method{removeNA}{matrix}(object)
 }
 \arguments{
 \item{object}{Object.}

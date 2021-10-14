@@ -14,46 +14,19 @@
 #' To maintain sanity, `import()` attempts to handle row names automatically.
 #' The function checks for a `rowname` column in delimited data, and moves these
 #' values into the object's row names, if supported by the return type (e.g.
-#' `data.frame`, `DataFrame`). Note that `tbl_df` (tibble) and `data.table`
+#' `data.frame`, `DFrame`). Note that `tbl_df` (tibble) and `data.table`
 #' intentionally do not support row names. When returning in this format, no
 #' attempt to assign the `rowname` column into the return object's row names is
 #' made. Note that `import()` is strict about this matching and only checks for
 #' a `rowname` column, similar to the default syntax recommended in
-#' `tibble::rownames_to_column()`. To disable this behavior, set
-#' `rownames = FALSE`, and no attempt will be made to set the row names.
+#' `tibble::rownames_to_column()`. To disable this behavior, set `rownames =
+#' FALSE`, and no attempt will be made to set the row names.
 #'
 #' **Column names.** `import()` assumes that delimited files always contain
 #' column names. If you are working with a file that doesn't contain column
 #' names, either set `colnames = FALSE` or pass the names in as a `character`
 #' vector. It's strongly recommended to always define column names in a
 #' supported file type.
-#'
-#' @section Data frame return:
-#'
-#' By default, `import()` returns a standard `data.frame` for delimited/column
-#' formatted data. However, any of these desired output formats can be set
-#' globally using `options(acid.data.frame = "data.frame")`.
-#'
-#' Supported return types:
-#'
-#' - `data.frame`: Base R default. Generally recommended.
-#'   - S3 class.
-#'   - Allows rownames, but they're required and can't be set `NULL`.
-#'   - See `help(topic = "data.frame", package = "base")` for details.
-#' - `DataFrame`: Recommended when working with Bioconductor packages.
-#'   - S4 class.
-#'   - Allows rownames, but they're optional and can be set `NULL`.
-#'   - See `help(topic = "DataFrame", package = "S4Vectors")` for details.
-#' - `tbl_df` (`tibble`): Recommended when working with tidyverse packages.
-#'   - S3 class; inherits `data.frame`.
-#'   - Does not allow rownames.
-#'   - See `help(topic = "tibble", package = "tibble")` for details.
-#' - `data.table`: Recommended when working with the data.table package.
-#'   - S3 class; inherits `data.frame`.
-#'   - Does not allow rownames.
-#'   - See `help(topic = "data.table", package = "data.table")` for details.
-#'
-#' Note that `stringsAsFactors` is always disabled for import.
 #'
 #' @section FASTA and FASTQ files (`FASTAFile`, `FASTQFile`):
 #'
@@ -107,7 +80,7 @@
 #' `DOC`, `DOCX`, `PDF`, `PPT`, `PPTX`.
 #'
 #' @name import
-#' @note Updated 2021-09-24.
+#' @note Updated 2021-10-14.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param con `character(1)`, `connection`, or `missing`.
@@ -188,7 +161,7 @@
 #'   Data separated by commas, tabs, or visual spaces.\cr
 #'   Note that TXT structure is amgibuous and actively discouraged.\cr
 #'   Refer to `Data frame return` section for details on how to change the
-#'   default return type to `DataFrame`, `tbl_df` or `data.table`.\cr
+#'   default return type to `DFrame`, `tbl_df` or `data.table`.\cr
 #'   Imported by `data.table::fread()` by default.
 #' - **Excel workbook** (`XLSB`, `XLSX`): `data.frame`.\cr
 #'   Resave in plain text delimited format instead, if possible.\cr

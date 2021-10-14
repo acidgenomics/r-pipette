@@ -49,7 +49,7 @@ NULL
 #' @rdname droplevels
 setMethod(
     f = "droplevels",
-    signature = signature(x = "DataFrame"),
+    signature = signature(x = "DFrame"),
     definition = `droplevels,DFrame`
 )
 
