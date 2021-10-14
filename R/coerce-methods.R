@@ -1,3 +1,7 @@
+## FIXME Revert changes that dispatch on DFrame back to DataFrame.
+
+
+
 ## This is needed to properly declare S4 `as()` coercion methods.
 #' @name coerce
 #' @export
@@ -20,7 +24,7 @@ NULL
 #' @section `DFrame` (Bioconductor) coercion:
 #'
 #' Don't define `as()` coercion method for `list` here. It will create issues
-#' with `data.frame` coercion. Use `as.DFrame()` instead to coerce a `list`
+#' with `data.frame` coercion. Use `as.DataFrame()` instead to coerce a `list`
 #' to `DFrame`.
 #'
 #' Wrapping the columns in an `I()` should work when passing to `DataFrame()`.
@@ -175,12 +179,12 @@ NULL
 #' head(to)
 #'
 #' ## `list` to `DFrame` ====
-#' ## Use `as.DFrame()` instead of `as()` for `list` class.
+#' ## Use `as.DataFrame()` instead of `as()` for `list` class.
 #' from <- list(
 #'     a = list(c(1, 2), c(3, 4)),
 #'     b = list(NULL, NULL)
 #' )
-#' to <- as.DFrame(from)
+#' to <- as.DataFrame(from)
 #' to
 #'
 #' ## `tbl_df` to `DFrame` ====
@@ -201,7 +205,7 @@ NULL
 #' @details
 #' To store an object of a class that does not support coercion to `DFrame`,
 #' wrap it in `I()`. The class must still have methods for `length` and `[`.
-`as.DFrame,list` <-  # nolint
+`as.DataFrame,list` <-  # nolint
     function(x, row.names = NULL) {
         if (hasLength(x)) {
             assert(
@@ -238,8 +242,8 @@ NULL
     }
 
 ## Updated 2021-02-19.
-`as.DFrame,SimpleList` <-  # nolint
-    `as.DFrame,list`
+`as.DataFrame,SimpleList` <-  # nolint
+    `as.DataFrame,list`
 
 ## Updated 2021-09-28.
 `coerce,ANY,DFrame` <-  # nolint
@@ -449,17 +453,17 @@ as.data.table.GRanges <-  # nolint
 #' @rdname coerce
 #' @export
 setMethod(
-    f = "as.DFrame",
+    f = "as.DataFrame",
     signature = signature(x = "SimpleList"),
-    definition = `as.DFrame,SimpleList`
+    definition = `as.DataFrame,SimpleList`
 )
 
 #' @rdname coerce
 #' @export
 setMethod(
-    f = "as.DFrame",
+    f = "as.DataFrame",
     signature = signature(x = "list"),
-    definition = `as.DFrame,list`
+    definition = `as.DataFrame,list`
 )
 
 
