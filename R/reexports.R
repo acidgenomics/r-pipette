@@ -83,35 +83,3 @@ tibble::tibble
 #' @importFrom AcidBase untar
 #' @export
 AcidBase::untar
-
-
-
-#' @rdname reexports
-#' @name CompressedGRangesList-class
-#' @importClassesFrom AcidGenerics CompressedGRangesList
-#' @exportClass CompressedGRangesList
-NULL
-
-#' @rdname reexports
-#' @name GRanges-class
-#' @importClassesFrom AcidGenerics GRanges
-#' @exportClass GRanges
-NULL
-
-#' @rdname reexports
-#' @name GRangesList-class
-#' @importClassesFrom AcidGenerics GRangesList
-#' @exportClass GRangesList
-NULL
-
-#' @rdname reexports
-#' @name Matrix-class
-#' @importClassesFrom Matrix Matrix
-#' @exportClass Matrix
-NULL
-
-#' @rdname reexports
-#' @name sparseMatrix-class
-#' @importClassesFrom Matrix sparseMatrix
-#' @exportClass sparseMatrix
-NULL
