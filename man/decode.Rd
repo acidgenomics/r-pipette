@@ -2,13 +2,13 @@
 % Please edit documentation in R/AllGenerics.R, R/decode-methods.R
 \name{decode}
 \alias{decode}
-\alias{decode,DataFrame-method}
+\alias{decode,DFrame-method}
 \alias{decode,Ranges-method}
 \title{Decode column data that uses run-length encoding}
 \usage{
 decode(x, ...)
 
-\S4method{decode}{DataFrame}(x)
+\S4method{decode}{DFrame}(x)
 
 \S4method{decode}{Ranges}(x)
 }

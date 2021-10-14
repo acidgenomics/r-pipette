@@ -76,7 +76,7 @@ NULL
 #' @export
 setMethod(
     f = "encode",
-    signature = signature(x = "DataFrame"),
+    signature = signature(x = "DFrame"),
     definition = `encode,DFrame`
 )
 

@@ -4,7 +4,7 @@ test_that("data.frame", {
     expect_is(as(data.frame(), "data.table"), "data.table")
 })
 
-test_that("DataFrame", {
+test_that("DFrame", {
     x <- as(df, "data.table")
     expect_is(x, "data.table")
     ## Expect that rownames are automatically moved to first column.

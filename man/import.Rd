@@ -280,7 +280,7 @@ Varies, depending on the file type (format):
 Data separated by commas, tabs, or visual spaces.\cr
 Note that TXT structure is amgibuous and actively discouraged.\cr
 Refer to \verb{Data frame return} section for details on how to change the
-default return type to \code{DataFrame}, \code{tbl_df} or \code{data.table}.\cr
+default return type to \code{DFrame}, \code{tbl_df} or \code{data.table}.\cr
 Imported by \code{data.table::fread()} by default.
 \item \strong{Excel workbook} (\code{XLSB}, \code{XLSX}): \code{data.frame}.\cr
 Resave in plain text delimited format instead, if possible.\cr
@@ -335,7 +335,7 @@ arguments. Remote URLs and compressed files are supported. If you need more
 complex import settings, just call the wrapped importer directly instead.
 }
 \note{
-Updated 2021-09-24.
+Updated 2021-10-14.
 }
 \section{Row and column names}{
 
@@ -345,57 +345,18 @@ of differential support in base R, tidyverse, data.table, and Bioconductor.
 To maintain sanity, \code{import()} attempts to handle row names automatically.
 The function checks for a \code{rowname} column in delimited data, and moves these
 values into the object's row names, if supported by the return type (e.g.
-\code{data.frame}, \code{DataFrame}). Note that \code{tbl_df} (tibble) and \code{data.table}
+\code{data.frame}, \code{DFrame}). Note that \code{tbl_df} (tibble) and \code{data.table}
 intentionally do not support row names. When returning in this format, no
 attempt to assign the \code{rowname} column into the return object's row names is
 made. Note that \code{import()} is strict about this matching and only checks for
 a \code{rowname} column, similar to the default syntax recommended in
-\code{tibble::rownames_to_column()}. To disable this behavior, set
-\code{rownames = FALSE}, and no attempt will be made to set the row names.
+\code{tibble::rownames_to_column()}. To disable this behavior, set \code{rownames = FALSE}, and no attempt will be made to set the row names.
 
 \strong{Column names.} \code{import()} assumes that delimited files always contain
 column names. If you are working with a file that doesn't contain column
 names, either set \code{colnames = FALSE} or pass the names in as a \code{character}
 vector. It's strongly recommended to always define column names in a
 supported file type.
-}
-
-\section{Data frame return}{
-
-
-By default, \code{import()} returns a standard \code{data.frame} for delimited/column
-formatted data. However, any of these desired output formats can be set
-globally using \code{options(acid.data.frame = "data.frame")}.
-
-Supported return types:
-\itemize{
-\item \code{data.frame}: Base R default. Generally recommended.
-\itemize{
-\item S3 class.
-\item Allows rownames, but they're required and can't be set \code{NULL}.
-\item See \code{help(topic = "data.frame", package = "base")} for details.
-}
-\item \code{DataFrame}: Recommended when working with Bioconductor packages.
-\itemize{
-\item S4 class.
-\item Allows rownames, but they're optional and can be set \code{NULL}.
-\item See \code{help(topic = "DataFrame", package = "S4Vectors")} for details.
-}
-\item \code{tbl_df} (\code{tibble}): Recommended when working with tidyverse packages.
-\itemize{
-\item S3 class; inherits \code{data.frame}.
-\item Does not allow rownames.
-\item See \code{help(topic = "tibble", package = "tibble")} for details.
-}
-\item \code{data.table}: Recommended when working with the data.table package.
-\itemize{
-\item S3 class; inherits \code{data.frame}.
-\item Does not allow rownames.
-\item See \code{help(topic = "data.table", package = "data.table")} for details.
-}
-}
-
-Note that \code{stringsAsFactors} is always disabled for import.
 }
 
 \section{FASTA and FASTQ files (\code{FASTAFile}, \code{FASTQFile})}{

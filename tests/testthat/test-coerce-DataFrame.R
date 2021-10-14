@@ -2,8 +2,8 @@ context("coerce : DataFrame")
 
 test_that("S4 'as()' coercion", {
     for (object in list(dt, sparse, tbl)) {
-        x <- as(object, "DataFrame")
-        expect_s4_class(x, "DataFrame")
+        x <- as(object, "DFrame")
+        expect_s4_class(x, "DFrame")
         expect_true(hasRownames(x))
     }
 })
