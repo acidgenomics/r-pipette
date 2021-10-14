@@ -4,7 +4,7 @@
 #' for both S3 and S4 objects.
 #'
 #' @name metadata2
-#' @note Updated 2020-01-18.
+#' @note Updated 2021-10-14.
 #'
 #' @section S3 class:
 #'
@@ -56,6 +56,36 @@ NULL
 
 
 
+## Intended for S4 class supporting `metadata()`.
+## Updated 2019-10-24.
+`metadata2,Annotated` <-  # nolint
+    function(x, which) {
+        assert(isString(which))
+        metadata(x)[[which]]
+    }
+
+
+
+## Intended for S3 class, or S4 class that doesn't support `metadata()`.
+## Updated 2019-10-24.
+`metadata2<-,ANY,ANY` <-  # nolint
+    function(x, which, value) {
+        attr(x = x, which = which) <- value
+        x
+    }
+
+
+
+## Intended for S3 class, or S4 class that doesn't support `metadata()`.
+## Updated 2019-10-24.
+`metadata2<-,Annotated,ANY` <-  # nolint
+    function(x, which, value) {
+        metadata(x)[[which]] <- value
+        x
+    }
+
+
+
 #' @rdname metadata2
 #' @export
 setMethod(
@@ -66,18 +96,6 @@ setMethod(
     ),
     definition = `metadata2,ANY`
 )
-
-
-
-## Intended for S4 class supporting `metadata()`.
-## Updated 2019-10-24.
-`metadata2,Annotated` <-  # nolint
-    function(x, which) {
-        assert(isString(which))
-        metadata(x)[[which]]
-    }
-
-
 
 #' @rdname metadata2
 #' @export
@@ -92,16 +110,6 @@ setMethod(
 
 
 
-## Intended for S3 class, or S4 class that doesn't support `metadata()`.
-## Updated 2019-10-24.
-`metadata2<-,ANY,ANY` <-  # nolint
-    function(x, which, value) {
-        attr(x = x, which = which) <- value
-        x
-    }
-
-
-
 #' @rdname metadata2
 #' @export
 setReplaceMethod(
@@ -113,18 +121,6 @@ setReplaceMethod(
     ),
     definition = `metadata2<-,ANY,ANY`
 )
-
-
-
-## Intended for S3 class, or S4 class that doesn't support `metadata()`.
-## Updated 2019-10-24.
-`metadata2<-,Annotated,ANY` <-  # nolint
-    function(x, which, value) {
-        metadata(x)[[which]] <- value
-        x
-    }
-
-
 
 #' @rdname metadata2
 #' @export
