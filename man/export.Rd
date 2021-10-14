@@ -279,26 +279,12 @@ export(object, con, format, ...)
 An object supporting \code{dim()}, or a supported class capable of being coerced
 to \code{data.frame}, to be written to disk.}
 
-\item{con}{\code{character(1)}.
+\item{con}{\code{character(1)}, \code{missing}, or \code{NULL}.
 File path.
 Alternatively, can leave unset and use \code{ext} and \code{dir} arguments instead.}
 
-\item{format}{\code{character(1)}.
-Output file format extension.
-
-\code{matrix} supported arguments:
-\itemize{
-\item Comma separated values (CSV):
-\code{"csv"}, \code{"csv.bz2"}, \code{"csv.gz"}, \code{"csv.xz"}, \code{"csv.zip"}.
-\item Tab separated values (TSV):
-\code{"tsv"}, \code{"tsv.bz2"}, \code{"tsv.gz"}, \code{"tsv.xz"}, \code{"tsv.zip"}.
-}
-
-\code{Matrix} (\code{sparseMatrix}) supported arguments:
-\itemize{
-\item MatrixMarket exchange (MTX):
-\code{"mtx"}, \code{"mtx.bz2"}, \code{"mtx.gz"}, \code{"mtx.xz"}, \code{"mtx.zip"}.
-}}
+\item{format}{\code{character(1)}, \code{missing}, or \code{NULL}.
+Output file format extension.}
 
 \item{rownames}{\code{logical(1)}.
 Apply to row names.}
@@ -348,6 +334,24 @@ Export
 \note{
 Updated 2021-10-14.
 }
+\section{Output file format extension}{
+
+
+\code{matrix} supported arguments:
+\itemize{
+\item Comma separated values (CSV):
+\code{"csv"}, \code{"csv.bz2"}, \code{"csv.gz"}, \code{"csv.xz"}, \code{"csv.zip"}.
+\item Tab separated values (TSV):
+\code{"tsv"}, \code{"tsv.bz2"}, \code{"tsv.gz"}, \code{"tsv.xz"}, \code{"tsv.zip"}.
+}
+
+\code{Matrix} (\code{sparseMatrix}) supported arguments:
+\itemize{
+\item MatrixMarket exchange (MTX):
+\code{"mtx"}, \code{"mtx.bz2"}, \code{"mtx.gz"}, \code{"mtx.xz"}, \code{"mtx.zip"}.
+}
+}
+
 \section{Row names}{
 
 
