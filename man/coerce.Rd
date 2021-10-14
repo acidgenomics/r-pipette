@@ -12,8 +12,12 @@
 \alias{as.data.table.DataFrame}
 \alias{as.data.table.IntegerRanges}
 \alias{as.data.table.GenomicRanges}
+\alias{as.DataFrame,GenomicRanges-method}
+\alias{as.DataFrame,IntegerRanges-method}
 \alias{as.DataFrame,SimpleList-method}
+\alias{as.DataFrame,data.table-method}
 \alias{as.DataFrame,list-method}
+\alias{as.DataFrame,tbl_df-method}
 \alias{coerce,DataFrame,data.table-method}
 \alias{coerce,DataFrame,tbl_df-method}
 \alias{coerce,GenomicRanges,data.table-method}
@@ -54,9 +58,17 @@ as.data.table(x, keep.rownames = FALSE, ...)
 
 \method{as.data.table}{GenomicRanges}(x, keep.rownames = TRUE, ...)
 
+\S4method{as.DataFrame}{GenomicRanges}(x)
+
+\S4method{as.DataFrame}{IntegerRanges}(x)
+
 \S4method{as.DataFrame}{SimpleList}(x, row.names = NULL)
 
+\S4method{as.DataFrame}{data.table}(x)
+
 \S4method{as.DataFrame}{list}(x, row.names = NULL)
+
+\S4method{as.DataFrame}{tbl_df}(x)
 }
 \arguments{
 \item{x}{An R object.}

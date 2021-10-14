@@ -62,12 +62,6 @@ data.table::rbindlist
 #' @export
 tibble::rownames_to_column
 
-#' @rdname reexports
-#' @name seqnames
-#' @importFrom AcidGenerics seqnames
-#' @export
-NULL
-
 #' @importFrom Matrix sparseMatrix
 #' @export
 Matrix::sparseMatrix

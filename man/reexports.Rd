@@ -19,7 +19,6 @@
 \alias{pasteURL}
 \alias{rbindlist}
 \alias{rownames_to_column}
-\alias{seqnames}
 \alias{sparseMatrix}
 \alias{tar}
 \alias{tibble}
