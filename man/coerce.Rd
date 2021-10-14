@@ -2,7 +2,6 @@
 % Please edit documentation in R/AllGenerics.R, R/coerce-methods.R
 \name{as.DataFrame}
 \alias{as.DataFrame}
-\alias{as.data.frame}
 \alias{as.data.table}
 \alias{as_tibble}
 \alias{coerce}
@@ -29,8 +28,6 @@
 \title{Coercion methods}
 \usage{
 as.DataFrame(x, ...)
-
-as.data.frame(x, row.names = NULL, optional = FALSE, ...)
 
 as.data.table(x, keep.rownames = FALSE, ...)
 
