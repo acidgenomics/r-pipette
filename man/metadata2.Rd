@@ -45,7 +45,7 @@ Dynamically handles metadata assignment and extraction in a similar fashion
 for both S3 and S4 objects.
 }
 \note{
-Updated 2020-01-18.
+Updated 2021-10-14.
 }
 \section{S3 class}{
 

@@ -1,10 +1,6 @@
-## FIXME Move all methods down here
-
-
-
 #' @name removeNA
 #' @inherit AcidGenerics::removeNA
-#' @note Updated 2019-10-12.
+#' @note Updated 2021-10-14.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
@@ -62,21 +58,17 @@ NULL
 
 
 
+## Updated 2021-10-14.
+`removeNA,DFrame` <-  # nolint
+    `removeNA,matrix`
+
 ## Updated 2021-02-02.
 `removeNA,Matrix` <-  # nolint
     `removeNA,matrix`
 
-
-
 ## Updated 2019-07-19.
 `removeNA,data.frame` <-  # nolint
     `removeNA,matrix`
-
-
-
-## Updated 2019-07-19.
-`removeNA,DFrame` <-  # nolint
-    `removeNA,data.frame`
 
 
 

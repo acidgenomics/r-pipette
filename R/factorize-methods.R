@@ -33,10 +33,24 @@ NULL
 
 
 
+## Updated 2021-10-14.
+`factorize,data.frame` <-  # nolint
+    `factorize,DFrame`
+
+
+
 #' @rdname factorize
 #' @export
 setMethod(
     f = "factorize",
     signature = signature(object = "DFrame"),
     definition = `factorize,DFrame`
+)
+
+#' @rdname factorize
+#' @export
+setMethod(
+    f = "factorize",
+    signature = signature(object = "data.frame"),
+    definition = `factorize,data.frame`
 )

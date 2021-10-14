@@ -3,11 +3,14 @@
 \name{factorize}
 \alias{factorize}
 \alias{factorize,DFrame-method}
+\alias{factorize,data.frame-method}
 \title{Factorize}
 \usage{
 factorize(object, ...)
 
 \S4method{factorize}{DFrame}(object)
+
+\S4method{factorize}{data.frame}(object)
 }
 \arguments{
 \item{object}{Object.}

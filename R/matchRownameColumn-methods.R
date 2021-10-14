@@ -32,8 +32,8 @@ NULL
 
 
 
-## Updated 2020-08-11.
-`matchRownameColumn,data.frame` <-  # nolint
+## Updated 2021-10-14.
+`matchRownameColumn,DFrame` <-  # nolint
     function(
         object,
         choices = c(
@@ -68,8 +68,9 @@ NULL
 
 
 
-`matchRownameColumn,DFrame` <-  # nolint
-    `matchRownameColumn,data.frame`
+## Updated 2021-10-14.
+`matchRownameColumn,data.frame` <-  # nolint
+    `matchRownameColumn,DFrame`
 
 
 
