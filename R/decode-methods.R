@@ -16,7 +16,7 @@
 #' data(DFrame, package = "AcidTest")
 #' df <- DFrame
 #'
-#' ## DataFrame ====
+#' ## DFrame ====
 #' df <- encode(df)
 #' lapply(df, class)
 #' x <- decode(df)

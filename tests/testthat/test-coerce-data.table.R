@@ -12,7 +12,7 @@ test_that("DFrame", {
     ## Early return if already data.table.
     x <- data.table()
     expect_identical(x, as(x, "data.table"))
-    ## Coercion of a DataFrame containing a list column is allowed.
+    ## Coercion of a DFrame containing a list column is allowed.
     data <- DataFrame()
     data[["x"]] <- list()
     data <- as(data, "data.table")
