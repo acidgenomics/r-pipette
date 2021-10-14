@@ -1,8 +1,3 @@
-## FIXME Need to handle DFrame, GRanges, IRanges, CompressedGRanges classes
-## better in working examples...
-
-
-
 #' pipette
 #'
 #' Input/output functions for biological data formats.
