@@ -21,7 +21,7 @@ NULL
 
 
 ## Updated 2021-02-03.
-`droplevels,DataFrame` <-  # nolint
+`droplevels,DFrame` <-  # nolint
     function(x) {
         except <- !bapply(X = decode(x), FUN = is.factor)
         if (all(except)) {
@@ -29,18 +29,9 @@ NULL
         }
         lst <- as(x, "List")
         lst <- droplevels(x = lst, except = except)
-        out <- as.DataFrame(x = lst, row.names = rownames(x))
+        out <- as.DFrame(x = lst, row.names = rownames(x))
         out
     }
-
-
-
-#' @rdname droplevels
-setMethod(
-    f = "droplevels",
-    signature = signature("DataFrame"),
-    definition = `droplevels,DataFrame`
-)
 
 
 
@@ -58,6 +49,13 @@ setMethod(
 #' @rdname droplevels
 setMethod(
     f = "droplevels",
-    signature = signature("Ranges"),
+    signature = signature(x = "DataFrame"),
+    definition = `droplevels,DFrame`
+)
+
+#' @rdname droplevels
+setMethod(
+    f = "droplevels",
+    signature = signature(x = "Ranges"),
     definition = `droplevels,Ranges`
 )

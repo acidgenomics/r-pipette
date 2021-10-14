@@ -1,3 +1,8 @@
+## FIXME Ensure that coercion methods work on both DFrame and DataFrame virtual class here.
+## FIXME Need to ensure that this is covered in unit tests.
+
+
+
 ## This is needed to properly declare S4 `as()` coercion methods.
 #' @name coerce
 #' @export
@@ -20,7 +25,7 @@ NULL
 #' @section `DataFrame` / `DFrame` (Bioconductor) coercion:
 #'
 #' Don't define `as()` coercion method for `list` here. It will create issues
-#' with `data.frame` coercion. Use `as.DataFrame()` instead to coerce a `list`
+#' with `data.frame` coercion. Use `as.DFrame()` instead to coerce a `list`
 #' to `DFrame`.
 #'
 #' Wrapping the columns in an `I()` works when passing to `DataFrame()`.
@@ -175,12 +180,12 @@ NULL
 #' head(to)
 #'
 #' ## `list` to `DFrame` ====
-#' ## Use `as.DataFrame()` instead of `as()` for `list` class.
+#' ## Use `as.DFrame()` instead of `as()` for `list` class.
 #' from <- list(
 #'     a = list(c(1, 2), c(3, 4)),
 #'     b = list(NULL, NULL)
 #' )
-#' to <- as.DataFrame(from)
+#' to <- as.DFrame(from)
 #' to
 #'
 #' ## `tbl_df` to `DFrame` ====
@@ -462,15 +467,7 @@ as.data.table.GRanges <-  # nolint
 #' @export
 setMethod(
     f = "as.DFrame",
-    signature = signature("SimpleList"),
-    definition = `as.DFrame,SimpleList`
-)
-
-#' @rdname coerce
-#' @export
-setMethod(
-    f = "as.DataFrame",
-    signature = signature("SimpleList"),
+    signature = signature(x = "SimpleList"),
     definition = `as.DFrame,SimpleList`
 )
 
@@ -478,23 +475,35 @@ setMethod(
 #' @export
 setMethod(
     f = "as.DFrame",
-    signature = signature("list"),
+    signature = signature(x = "list"),
     definition = `as.DFrame,list`
+)
+
+
+
+#' @rdname coerce
+#' @export
+setMethod(
+    f = "as.DataFrame",
+    signature = signature(x = "SimpleList"),
+    definition = `as.DFrame,SimpleList`
 )
 
 #' @rdname coerce
 #' @export
 setMethod(
     f = "as.DataFrame",
-    signature = signature("list"),
+    signature = signature(x = "list"),
     definition = `as.DFrame,list`
 )
+
+
 
 #' @rdname coerce
 #' @export
 setMethod(
     f = "as.data.frame",
-    signature = signature("IRanges"),
+    signature = signature(x = "IRanges"),
     definition = `as.data.frame,IRanges`
 )
 
@@ -502,7 +511,7 @@ setMethod(
 #' @export
 setMethod(
     f = "as.data.frame",
-    signature = signature("Matrix"),
+    signature = signature(x = "Matrix"),
     definition = `as.data.frame,Matrix`
 )
 
@@ -521,14 +530,6 @@ setAs(
 )
 
 #' @rdname coerce
-#' @name coerce,DataFrame,data.table-method
-setAs(
-    from = "DataFrame",
-    to = "data.table",
-    def = `coerce,DFrame,data.table`
-)
-
-#' @rdname coerce
 #' @name coerce,DFrame,tbl_df-method
 setAs(
     from = "DFrame",
@@ -537,9 +538,17 @@ setAs(
 )
 
 #' @rdname coerce
-#' @name coerce,DataFrame,tbl_df-method
+#' @name coerce,DFrame,data.table-method
 setAs(
-    from = "DataFrame",
+    from = "DFrame",
+    to = "data.table",
+    def = `coerce,DFrame,data.table`
+)
+
+#' @rdname coerce
+#' @name coerce,DFrame,tbl_df-method
+setAs(
+    from = "DFrame",
     to = "tbl_df",
     def = `coerce,DFrame,tbl_df`
 )
@@ -593,7 +602,7 @@ setAs(
 )
 
 #' @rdname coerce
-#' @name coerce,Matrix,DataFrame-method
+#' @name coerce,Matrix,DFrame-method
 setAs(
     from = "Matrix",
     to = "DataFrame",
@@ -633,10 +642,10 @@ setAs(
 )
 
 #' @rdname coerce
-#' @name coerce,data.table,DataFrame-method
+#' @name coerce,data.table,DFrame-method
 setAs(
     from = "data.table",
-    to = "DataFrame",
+    to = "DFrame",
     def = `coerce,data.table,DFrame`
 )
 
@@ -649,9 +658,9 @@ setAs(
 )
 
 #' @rdname coerce
-#' @name coerce,tbl_df,DataFrame-method
+#' @name coerce,tbl_df,DFrame-method
 setAs(
     from = "tbl_df",
-    to = "DataFrame",
+    to = "DFrame",
     def = `coerce,tbl_df,DFrame`
 )

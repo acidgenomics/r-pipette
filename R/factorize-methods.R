@@ -13,7 +13,7 @@ NULL
 
 
 ## Updated 2019-07-19.
-`factorize,DataFrame` <-  # nolint
+`factorize,DFrame` <-  # nolint
     function(object) {
         class <- class(object)[[1L]]
         out <- lapply(
@@ -31,10 +31,12 @@ NULL
         out
     }
 
+
+
 #' @rdname factorize
 #' @export
 setMethod(
     f = "factorize",
-    signature = signature("DataFrame"),
-    definition = `factorize,DataFrame`
+    signature = signature(object = "DFrame"),
+    definition = `factorize,DFrame`
 )

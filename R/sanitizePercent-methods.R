@@ -24,16 +24,6 @@ NULL
 
 
 
-#' @rdname sanitizePercent
-#' @export
-setMethod(
-    f = "sanitizePercent",
-    signature = signature("atomic"),
-    definition = `sanitizePercent,atomic`
-)
-
-
-
 ## Updated 2019-07-19.
 `sanitizePercent,character` <-  # nolint
     function(object) {
@@ -50,6 +40,14 @@ setMethod(
 #' @export
 setMethod(
     f = "sanitizePercent",
-    signature = signature("character"),
+    signature = signature(object = "atomic"),
+    definition = `sanitizePercent,atomic`
+)
+
+#' @rdname sanitizePercent
+#' @export
+setMethod(
+    f = "sanitizePercent",
+    signature = signature(object = "character"),
     definition = `sanitizePercent,character`
 )

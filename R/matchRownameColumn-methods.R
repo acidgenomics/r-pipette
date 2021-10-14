@@ -68,24 +68,23 @@ NULL
 
 
 
+`matchRownameColumn,DFrame` <-  # nolint
+    `matchRownameColumn,data.frame`
+
+
+
 #' @rdname matchRownameColumn
 #' @export
 setMethod(
     f = "matchRownameColumn",
-    signature = signature("data.frame"),
-    definition = `matchRownameColumn,data.frame`
+    signature = signature(object = "DFrame"),
+    definition = `matchRownameColumn,DFrame`
 )
 
-
-
-`matchRownameColumn,DataFrame` <- `matchRownameColumn,data.frame`  # nolint
-
-
-
 #' @rdname matchRownameColumn
 #' @export
 setMethod(
     f = "matchRownameColumn",
-    signature = signature("DataFrame"),
-    definition = `matchRownameColumn,DataFrame`
+    signature = signature(object = "data.frame"),
+    definition = `matchRownameColumn,data.frame`
 )
