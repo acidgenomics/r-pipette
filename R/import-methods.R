@@ -1,3 +1,7 @@
+## FIXME Need to rename ',con' and ',file' internal classes here.
+
+
+
 #' Import
 #'
 #' Read file by extension into R.
@@ -158,7 +162,7 @@
 #'   Note that TXT structure is amgibuous and actively discouraged.\cr
 #'   Refer to `Data frame return` section for details on how to change the
 #'   default return type to `DataFrame`, `tbl_df` or `data.table`.\cr
-#'   Imported by `data.table::fread()` by default.
+#'   Imported by `readr::read_csv()` by default.
 #' - **Excel workbook** (`XLSB`, `XLSX`):
 #'   `data.frame`.\cr
 #'   Resave in plain text delimited format instead, if possible.\cr
@@ -198,7 +202,7 @@
 #' - **Lines** (`LOG`, `MD`, `PY`, `R`, `RMD`, `SH`):
 #'   `character`.\cr
 #'   Source code or log files.\cr
-#'   Imported by `data.table::fread()` by default.
+#'   Imported by `readr::read_csv()` by default.
 #' - **R data serialized** (`RDS`):
 #'   *variable*.\cr
 #'   Currently recommend over RDA, if possible.\cr
@@ -216,8 +220,8 @@
 #' @seealso
 #' Packages:
 #'
-#' - [data.table](http://r-datatable.com/).
 #' - [readr](http://readr.tidyverse.org).
+#' - [data.table](http://r-datatable.com/).
 #' - [readxl](http://readxl.tidyverse.org).
 #' - [rio](https://cran.r-project.org/package=rio).
 #' - [rtracklayer](http://bioconductor.org/packages/rtracklayer/).
@@ -226,8 +230,8 @@
 #' Import functions:
 #'
 #' - `BiocIO::import()`.
-#' - `data.table::fread()`.
 #' - `readr::read_csv()`.
+#' - `data.table::fread()`.
 #' - `rio::import()`.
 #' - `rtracklayer::import()`.
 #' - `utils::read.table()`.
@@ -957,12 +961,7 @@ NULL
 
 #' Import a delimited file (e.g. `.csv`, `.tsv`).
 #'
-#' @details
-#' Calls `data.table::fread()` internally by default.
-#' Can override using `acid.import.engine` option, which also supports
-#' data.table and readr packages.
-#'
-#' @note Updated 2021-10-12.
+#' @note Updated 2021-10-19.
 #' @noRd
 `import,DelimFile` <-  # nolint
     function(
@@ -977,7 +976,7 @@ NULL
         nMax = Inf,
         engine = getOption(
             x = "acid.import.engine",
-            default = "data.table"
+            default = "readr"
         ),
         makeNames = getOption(
             x = "acid.import.make.names",
