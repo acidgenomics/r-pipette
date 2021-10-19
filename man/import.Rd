@@ -282,7 +282,7 @@ Data separated by commas, tabs, or visual spaces.\cr
 Note that TXT structure is amgibuous and actively discouraged.\cr
 Refer to \verb{Data frame return} section for details on how to change the
 default return type to \code{DataFrame}, \code{tbl_df} or \code{data.table}.\cr
-Imported by \code{readr::read_csv()} by default.
+Imported by \code{readr::read_delim()} by default.
 \item \strong{Excel workbook} (\code{XLSB}, \code{XLSX}):
 \code{data.frame}.\cr
 Resave in plain text delimited format instead, if possible.\cr
@@ -322,7 +322,7 @@ Imported by \code{yaml::yaml.load_file()}.
 \item \strong{Lines} (\code{LOG}, \code{MD}, \code{PY}, \code{R}, \code{RMD}, \code{SH}):
 \code{character}.\cr
 Source code or log files.\cr
-Imported by \code{readr::read_csv()} by default.
+Imported by \code{readr::read_delim()} by default.
 \item \strong{R data serialized} (\code{RDS}):
 \emph{variable}.\cr
 Currently recommend over RDA, if possible.\cr
@@ -453,7 +453,7 @@ Packages:
 Import functions:
 \itemize{
 \item \code{BiocIO::import()}.
-\item \code{readr::read_csv()}.
+\item \code{readr::read_delim()}.
 \item \code{data.table::fread()}.
 \item \code{rio::import()}.
 \item \code{rtracklayer::import()}.
