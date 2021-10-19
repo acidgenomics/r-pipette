@@ -162,7 +162,7 @@
 #'   Note that TXT structure is amgibuous and actively discouraged.\cr
 #'   Refer to `Data frame return` section for details on how to change the
 #'   default return type to `DataFrame`, `tbl_df` or `data.table`.\cr
-#'   Imported by `readr::read_csv()` by default.
+#'   Imported by `readr::read_delim()` by default.
 #' - **Excel workbook** (`XLSB`, `XLSX`):
 #'   `data.frame`.\cr
 #'   Resave in plain text delimited format instead, if possible.\cr
@@ -202,7 +202,7 @@
 #' - **Lines** (`LOG`, `MD`, `PY`, `R`, `RMD`, `SH`):
 #'   `character`.\cr
 #'   Source code or log files.\cr
-#'   Imported by `readr::read_csv()` by default.
+#'   Imported by `readr::read_delim()` by default.
 #' - **R data serialized** (`RDS`):
 #'   *variable*.\cr
 #'   Currently recommend over RDA, if possible.\cr
@@ -230,7 +230,7 @@
 #' Import functions:
 #'
 #' - `BiocIO::import()`.
-#' - `readr::read_csv()`.
+#' - `readr::read_delim()`.
 #' - `data.table::fread()`.
 #' - `rio::import()`.
 #' - `rtracklayer::import()`.

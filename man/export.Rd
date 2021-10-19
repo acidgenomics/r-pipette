@@ -366,7 +366,7 @@ are always moved to a \code{"rowname"} column in the CSV export.
 \section{Debugging}{
 
 
-Note that this function currently wraps \code{readr::write_csv()} by default
+Note that this function currently wraps \code{readr::write_delim()} by default
 for exporting \code{DataFrame}, \code{data.frame}, and \code{matrix} class objects.
 }
 
@@ -390,7 +390,7 @@ Packages:
 Export functions:
 \itemize{
 \item \code{BiocIO::export()}.
-\item \code{readr::write_csv()}.
+\item \code{readr::write_delim()}.
 \item \code{data.table::fwrite()}.
 \item \code{rio::export()}.
 \item \code{rtracklayer::export()}.
