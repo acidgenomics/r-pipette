@@ -37,7 +37,7 @@ export(object, con, format, ...)
   rownames = TRUE,
   colnames = TRUE,
   overwrite = getOption(x = "acid.overwrite", default = TRUE),
-  engine = getOption(x = "acid.export.engine", default = "data.table"),
+  engine = getOption(x = "acid.export.engine", default = "readr"),
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
@@ -48,7 +48,7 @@ export(object, con, format, ...)
   rownames = TRUE,
   colnames = TRUE,
   overwrite = getOption(x = "acid.overwrite", default = TRUE),
-  engine = getOption(x = "acid.export.engine", default = "data.table"),
+  engine = getOption(x = "acid.export.engine", default = "readr"),
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
@@ -79,7 +79,7 @@ export(object, con, format, ...)
   rownames = TRUE,
   colnames = TRUE,
   overwrite = getOption(x = "acid.overwrite", default = TRUE),
-  engine = getOption(x = "acid.export.engine", default = "data.table"),
+  engine = getOption(x = "acid.export.engine", default = "readr"),
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
@@ -90,7 +90,7 @@ export(object, con, format, ...)
   rownames = TRUE,
   colnames = TRUE,
   overwrite = getOption(x = "acid.overwrite", default = TRUE),
-  engine = getOption(x = "acid.export.engine", default = "data.table"),
+  engine = getOption(x = "acid.export.engine", default = "readr"),
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
@@ -197,7 +197,7 @@ export(object, con, format, ...)
   rownames = TRUE,
   colnames = TRUE,
   overwrite = getOption(x = "acid.overwrite", default = TRUE),
-  engine = getOption(x = "acid.export.engine", default = "data.table"),
+  engine = getOption(x = "acid.export.engine", default = "readr"),
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
@@ -208,7 +208,7 @@ export(object, con, format, ...)
   rownames = TRUE,
   colnames = TRUE,
   overwrite = getOption(x = "acid.overwrite", default = TRUE),
-  engine = getOption(x = "acid.export.engine", default = "data.table"),
+  engine = getOption(x = "acid.export.engine", default = "readr"),
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
@@ -239,7 +239,7 @@ export(object, con, format, ...)
   rownames = TRUE,
   colnames = TRUE,
   overwrite = getOption(x = "acid.overwrite", default = TRUE),
-  engine = getOption(x = "acid.export.engine", default = "data.table"),
+  engine = getOption(x = "acid.export.engine", default = "readr"),
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
@@ -250,7 +250,7 @@ export(object, con, format, ...)
   rownames = TRUE,
   colnames = TRUE,
   overwrite = getOption(x = "acid.overwrite", default = TRUE),
-  engine = getOption(x = "acid.export.engine", default = "data.table"),
+  engine = getOption(x = "acid.export.engine", default = "readr"),
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
@@ -366,8 +366,8 @@ are always moved to a \code{"rowname"} column in the CSV export.
 \section{Debugging}{
 
 
-Note that this function currently wraps \code{data.table::fwrite()} by default
-for exporting \code{data.frame} and \code{matrix} class objects.
+Note that this function currently wraps \code{readr::write_csv()} by default
+for exporting \code{DataFrame}, \code{data.frame}, and \code{matrix} class objects.
 }
 
 \examples{
@@ -380,8 +380,8 @@ file.remove("counts.csv")
 \seealso{
 Packages:
 \itemize{
-\item \href{http://r-datatable.com/}{data.table}.
 \item \href{http://readr.tidyverse.org}{readr}.
+\item \href{http://r-datatable.com/}{data.table}.
 \item \href{https://cran.r-project.org/package=rio}{rio}.
 \item \href{http://bioconductor.org/packages/rtracklayer/}{rtracklayer}.
 \item \href{https://vroom.r-lib.org}{vroom}.
@@ -390,8 +390,8 @@ Packages:
 Export functions:
 \itemize{
 \item \code{BiocIO::export()}.
-\item \code{data.table::fwrite()}.
 \item \code{readr::write_csv()}.
+\item \code{data.table::fwrite()}.
 \item \code{rio::export()}.
 \item \code{rtracklayer::export()}.
 \item \code{vroom::vroom_write()}.

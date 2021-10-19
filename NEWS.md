@@ -4,6 +4,9 @@
 
 - `export`, `import`: Switched to recommended new BiocIO generic approaches,
   which are now used in multiple Bioconductor packages, notably rtracklayer.
+- `export`, `import`: Switched back to readr as default engine from data.table.
+  The data.table `fread` and `fwrite` functions have been shown to generate
+  stack imbalances in some edge cases that readr handles better.
 - `export`: Current default recommended method now dispatches on `"object"`,
   `"con"`, and `"format"` arguments. Previous methods that dispatch using
   `"format"`, `"dir"`, `"ext"`, and/or `"file"` (adapted from the conventions
