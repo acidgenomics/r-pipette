@@ -45,7 +45,7 @@ import(con, format, text, ...)
   comment = "",
   skip = 0L,
   nMax = Inf,
-  engine = getOption(x = "acid.import.engine", default = "data.table"),
+  engine = getOption(x = "acid.import.engine", default = "readr"),
   makeNames = getOption(x = "acid.import.make.names", default = syntactic::makeNames),
   metadata = getOption(x = "acid.import.metadata", default = FALSE),
   quiet = getOption(x = "acid.quiet", default = FALSE)
@@ -282,7 +282,7 @@ Data separated by commas, tabs, or visual spaces.\cr
 Note that TXT structure is amgibuous and actively discouraged.\cr
 Refer to \verb{Data frame return} section for details on how to change the
 default return type to \code{DataFrame}, \code{tbl_df} or \code{data.table}.\cr
-Imported by \code{data.table::fread()} by default.
+Imported by \code{readr::read_csv()} by default.
 \item \strong{Excel workbook} (\code{XLSB}, \code{XLSX}):
 \code{data.frame}.\cr
 Resave in plain text delimited format instead, if possible.\cr
@@ -322,7 +322,7 @@ Imported by \code{yaml::yaml.load_file()}.
 \item \strong{Lines} (\code{LOG}, \code{MD}, \code{PY}, \code{R}, \code{RMD}, \code{SH}):
 \code{character}.\cr
 Source code or log files.\cr
-Imported by \code{data.table::fread()} by default.
+Imported by \code{readr::read_csv()} by default.
 \item \strong{R data serialized} (\code{RDS}):
 \emph{variable}.\cr
 Currently recommend over RDA, if possible.\cr
@@ -442,8 +442,8 @@ print(head(x))
 \seealso{
 Packages:
 \itemize{
-\item \href{http://r-datatable.com/}{data.table}.
 \item \href{http://readr.tidyverse.org}{readr}.
+\item \href{http://r-datatable.com/}{data.table}.
 \item \href{http://readxl.tidyverse.org}{readxl}.
 \item \href{https://cran.r-project.org/package=rio}{rio}.
 \item \href{http://bioconductor.org/packages/rtracklayer/}{rtracklayer}.
@@ -453,8 +453,8 @@ Packages:
 Import functions:
 \itemize{
 \item \code{BiocIO::import()}.
-\item \code{data.table::fread()}.
 \item \code{readr::read_csv()}.
+\item \code{data.table::fread()}.
 \item \code{rio::import()}.
 \item \code{rtracklayer::import()}.
 \item \code{utils::read.table()}.

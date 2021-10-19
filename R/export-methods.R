@@ -30,8 +30,8 @@
 #'
 #' @section Debugging:
 #'
-#' Note that this function currently wraps `data.table::fwrite()` by default
-#' for exporting `data.frame` and `matrix` class objects.
+#' Note that this function currently wraps `readr::write_csv()` by default
+#' for exporting `DataFrame`, `data.frame`, and `matrix` class objects.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @inheritParams import
@@ -66,8 +66,8 @@
 #' @seealso
 #' Packages:
 #'
-#' - [data.table](http://r-datatable.com/).
 #' - [readr](http://readr.tidyverse.org).
+#' - [data.table](http://r-datatable.com/).
 #' - [rio](https://cran.r-project.org/package=rio).
 #' - [rtracklayer](http://bioconductor.org/packages/rtracklayer/).
 #' - [vroom](https://vroom.r-lib.org).
@@ -75,8 +75,8 @@
 #' Export functions:
 #'
 #' - `BiocIO::export()`.
-#' - `data.table::fwrite()`.
 #' - `readr::write_csv()`.
+#' - `data.table::fwrite()`.
 #' - `rio::export()`.
 #' - `rtracklayer::export()`.
 #' - `vroom::vroom_write()`.
@@ -347,7 +347,7 @@ NULL
         ),
         engine = getOption(
             x = "acid.export.engine",
-            default = "data.table"
+            default = "readr"
         ),
         quiet = getOption(
             x = "acid.quiet",
@@ -397,6 +397,9 @@ NULL
                 for (listCol in listCols) {
                     x <- tryCatch(
                         expr = {
+                            ## FIXME Note that ", " delim may be problematic
+                            ## here and cause a stack imbalance with data.table
+                            ## FIXME Should we use a paste call here instead?
                             unlist(
                                 x = lapply(
                                     X = object[[listCol]],
