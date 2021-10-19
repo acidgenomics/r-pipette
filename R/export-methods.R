@@ -30,7 +30,7 @@
 #'
 #' @section Debugging:
 #'
-#' Note that this function currently wraps `readr::write_csv()` by default
+#' Note that this function currently wraps `readr::write_delim()` by default
 #' for exporting `DataFrame`, `data.frame`, and `matrix` class objects.
 #'
 #' @inheritParams AcidRoxygen::params
@@ -75,7 +75,7 @@
 #' Export functions:
 #'
 #' - `BiocIO::export()`.
-#' - `readr::write_csv()`.
+#' - `readr::write_delim()`.
 #' - `data.table::fwrite()`.
 #' - `rio::export()`.
 #' - `rtracklayer::export()`.
@@ -397,9 +397,6 @@ NULL
                 for (listCol in listCols) {
                     x <- tryCatch(
                         expr = {
-                            ## FIXME Note that ", " delim may be problematic
-                            ## here and cause a stack imbalance with data.table
-                            ## FIXME Should we use a paste call here instead?
                             unlist(
                                 x = lapply(
                                     X = object[[listCol]],
