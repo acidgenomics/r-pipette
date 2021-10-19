@@ -1,3 +1,23 @@
+## pipette 0.8.0 (UNRELEASED)
+
+### Major changes
+
+- `export`, `import`: Switched to recommended new BiocIO generic approaches,
+  which are now used in multiple Bioconductor packages, notably rtracklayer.
+- `export`: Current default recommended method now dispatches on `"object"`,
+  `"con"`, and `"format"` arguments. Previous methods that dispatch using
+  `"format"`, `"dir"`, `"ext"`, and/or `"file"` (adapted from the conventions
+  used in rio package) arguments are soft deprecated, but should still currently
+  work. If you encounter any breaking changes here, please file an issue!
+- `import`: Current default recommended method now dispatches on `"con"`,
+  `"format"`, and `"text"` arguments. We have defined our methods to simply
+  handle the `"con"` argument as a file path. Note that the `"text"` argument
+  can be useful for passing in raw lines of a particular file format, but we
+  are not currently supporting that edge case in any of our import methods yet.
+  Such functionality may be added in a future update.
+- `export` `data.frame` / `DataFrame` methods now attempt to coerce nested
+  `list` columns to `vector` via `toString` internally when possible.
+
 ## pipette 0.7.2 (2021-09-22)
 
 ### Minor changes
