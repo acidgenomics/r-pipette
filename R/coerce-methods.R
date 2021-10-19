@@ -274,6 +274,7 @@ NULL
         )
         ## Error if S4 columns are nested.
         if (!all(valid)) {
+            ## nocov start
             invalid <- x[, names(valid[!valid]), drop = FALSE]
             invalid <- vapply(
                 X = invalid,
@@ -289,6 +290,7 @@ NULL
                 ),
                 toInlineString(invalid, n = 10L)
             ))
+            ## nocov end
         }
         ## Don't use `as.data.frame()` here. It can unexpectedly sanitize row
         ## names (e.g. gene symbols), whereas the `as()` method does not.
