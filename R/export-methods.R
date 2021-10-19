@@ -370,7 +370,7 @@ NULL
         )
         formatChoices <- .exportFormatChoices[["matrix"]]
         if (missing(format)) {
-            format <- fileExt(con)
+            format <- fileExt(con)  # nocov
         }
         format <- match.arg(arg = format, choices = formatChoices)
         whatPkg <- match.arg(arg = engine, choices = .engines)
@@ -407,7 +407,7 @@ NULL
                             )
                         },
                         error = function(e) {
-                            NULL
+                            NULL  # nocov
                         }
                     )
                     if (
@@ -658,7 +658,7 @@ NULL
         )
         formatChoices <- .exportFormatChoices[["Matrix"]]
         if (missing(format)) {
-            format <- fileExt(con)
+            format <- fileExt(con)  # nocov
         }
         format <- match.arg(arg = format, choices = formatChoices)
         file <- con; whatFile <- con
