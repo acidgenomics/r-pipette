@@ -1,8 +1,3 @@
-## FIXME Rework support for exporting list columns with toString call, if possible.
-## May need to wrap this in a tryCatch call.
-
-
-
 #' Export
 #'
 #' @name export
@@ -329,9 +324,6 @@ NULL
 
 
 
-## FIXME Attempt to unlist `list` columns here via toString.
-## This is useful for EnsemblGenes and AcidGSEA export.
-
 #' Export `matrix` method
 #'
 #' @note Updated 2021-10-19.
@@ -342,7 +334,7 @@ NULL
 #' `data.table`, `tbl_df`, and `DataFrame` classes. Note that `rio::export()`
 #' doesn't preserve row names by default, so we're ensuring row names get
 #' coerced to "rowname" column consistently here.
-`export,matrix` <-  # nolint
+`export,data.frame` <-  # nolint
     function(
         object,
         con,
@@ -387,18 +379,56 @@ NULL
         match <- str_match(string = file, pattern = extPattern)
         compressExt <- match[1L, 4L]
         compress <- !is.na(compressExt)
-        ## Drop non-atomic columns automatically, if necessary.
-        keep <- bapply(X = object, FUN = is.atomic)
-        if (!all(keep)) {
-            ## nocov start
-            ## This is used to handle rowData with nested entrez identifiers.
-            fail <- names(keep)[!keep]
-            alertWarning(sprintf(
-                "Dropping non-atomic columns: %s.",
-                toInlineString(fail, n = 10L)
+        ## Handle non-atomic columns (i.e. nested list columns).
+        nonatomicCols <- which(!bapply(
+            X = object,
+            FUN = is.atomic,
+            USE.NAMES = TRUE
+        ))
+        if (hasLength(nonatomicCols)) {
+            ## Attempt to keep simple list columns and return reformatted as
+            ## delimited character strings.
+            listCols <- which(bapply(
+                X = object,
+                FUN = is.list,
+                USE.NAMES = TRUE
             ))
-            object <- object[, keep, drop = FALSE]
-            ## nocov end
+            if (hasLength(listCols)) {
+                for (listCol in listCols) {
+                    x <- tryCatch(
+                        expr = {
+                            unlist(
+                                x = lapply(
+                                    X = object[[listCol]],
+                                    FUN = toString
+                                ),
+                                recursive = FALSE,
+                                use.names = FALSE
+                            )
+                        },
+                        error = function(e) {
+                            NULL
+                        }
+                    )
+                    if (
+                        is.vector(x) &&
+                        identical(length(x), nrow(object))
+                    ) {
+                        object[[listCol]] <- x
+                    }
+                }
+            }
+            ## Discard any remaining non-atomic columns we can't coerce.
+            keep <- bapply(X = object, FUN = is.atomic, USE.NAMES = TRUE)
+            if (!all(keep)) {
+                ## nocov start
+                alertWarning(sprintf(
+                    "Dropping non-atomic columns: %s.",
+                    toInlineString(names(keep)[!keep], n = 10L)
+                ))
+                object <- object[, keep, drop = FALSE]
+                ## nocov end
+            }
         }
         if (isFALSE(rownames)) {
             rownames(object) <- NULL  # nocov
@@ -543,7 +573,7 @@ NULL
 
 
 ## Updated 2021-10-19.
-`export,matrix,deprecated` <-  # nolint
+`export,data.frame,deprecated` <-  # nolint
     function(
         object,
         con,  # NULL
@@ -593,30 +623,6 @@ NULL
             ...
         )
     }
-
-
-
-`export,data.frame` <-  # nolint
-    `export,matrix`
-
-`export,data.frame,deprecated` <-  # nolint
-    `export,matrix,deprecated`
-
-
-
-`export,DataFrame` <-  # nolint
-    `export,data.frame`
-
-`export,DataFrame,deprecated` <-  # nolint
-    `export,data.frame,deprecated`
-
-
-
-`export,GenomicRanges` <-   # nolint
-    `export,DataFrame`
-
-`export,GenomicRanges,deprecated` <-   # nolint
-    `export,DataFrame,deprecated`
 
 
 
@@ -781,6 +787,26 @@ NULL
             ...
         )
     }
+
+
+
+`export,DataFrame` <-  # nolint
+    `export,data.frame`
+
+`export,DataFrame,deprecated` <-  # nolint
+    `export,data.frame,deprecated`
+
+`export,GenomicRanges` <-   # nolint
+    `export,data.frame`
+
+`export,GenomicRanges,deprecated` <-   # nolint
+    `export,data.frame,deprecated`
+
+`export,matrix` <-  # nolint
+    `export,data.frame`
+
+`export,matrix,deprecated` <-  # nolint
+    `export,data.frame,deprecated`
 
 
 
