@@ -564,7 +564,7 @@ NULL
                 mode <- "wb"
             } else {
                 ## Write (default).
-                mode <- "w"
+                mode <- "w"  # nocov
             }
             tmpdir <- realpath(tempdir())
             fileext <- fileExt(file)
@@ -650,7 +650,7 @@ NULL
         if (!is.null(rownameCol)) {
             assert(isScalar(rownameCol))
             if (!isString(rownameCol)) {
-                rownameCol <- colnames(object)[[rownameCol]]
+                rownameCol <- colnames(object)[[rownameCol]]  # nocov
             }
             assert(
                 isString(rownameCol),
@@ -1280,7 +1280,7 @@ NULL
         file <- resource(con)
         origFile <- attr(con, which = "origResource")
         if (is.null(origFile)) {
-            origFile <- file
+            origFile <- file  # nocov
         }
         if (missing(rownamesFile)) {
             rownamesFile <- paste0(origFile, ".rownames")
