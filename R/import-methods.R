@@ -1,7 +1,3 @@
-## FIXME Need to rename ',con' and ',file' internal classes here.
-
-
-
 #' Import
 #'
 #' Read file by extension into R.
@@ -731,7 +727,7 @@ NULL
 #'
 #' @note Updated 2021-10-12.
 #' @noRd
-`import,character,con` <-  # nolint
+`import,character` <-  # nolint
     function(
         con,
         format,
@@ -824,7 +820,7 @@ NULL
 #'
 #' @note Updated 2021-10-12.
 #' @noRd
-`import,character,file` <-  # nolint
+`import,character,deprecated` <-  # nolint
     function(
         con,
         format,  # NULL
@@ -2132,7 +2128,7 @@ setMethod(
         format = "missingOrNULL",
         text = "missingOrNULL"
     ),
-    definition = `import,character,con`
+    definition = `import,character`
 )
 
 #' @rdname import
@@ -2144,7 +2140,7 @@ setMethod(
         format = "character",
         text = "missingOrNULL"
     ),
-    definition = `import,character,con`
+    definition = `import,character`
 )
 
 #' @rdname import
@@ -2156,7 +2152,7 @@ setMethod(
         format = "missingOrNULL",
         text = "missingOrNULL"
     ),
-    definition = `import,character,file`
+    definition = `import,character,deprecated`
 )
 
 #' @rdname import
@@ -2168,7 +2164,7 @@ setMethod(
         format = "character",
         text = "missingOrNULL"
     ),
-    definition = `import,character,file`
+    definition = `import,character,deprecated`
 )
 
 #' @rdname import
