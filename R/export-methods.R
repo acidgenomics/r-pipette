@@ -647,7 +647,7 @@ NULL
             isFlag(overwrite),
             isFlag(quiet)
         )
-        formatChoices <- .exportFormatChoices[["delim"]]
+        formatChoices <- .exportFormatChoices[["Matrix"]]
         if (missing(format)) {
             format <- fileExt(con)  # nocov
         }
@@ -759,7 +759,7 @@ NULL
             format <- ext
         }
         assert(isString(dir))
-        formatChoices <- .exportFormatChoices[["delim"]]
+        formatChoices <- .exportFormatChoices[["Matrix"]]
         if (missing(format)) {
             format <- formatChoices[[1L]]
         }
