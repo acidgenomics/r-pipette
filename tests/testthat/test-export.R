@@ -189,8 +189,23 @@ for (format in .exportFormatChoices[["delim"]]) {
     }
 }
 
+test_that("Deprecated 'ext' argument", {
+    object <- df
+    expect_s4_class(object, "DataFrame")
+    testdir <- file.path(tempdir(), "export")
+    unlink(testdir, recursive = TRUE)
+    x <- export(
+        object = object,
+        ext = "csv",
+        dir = testdir
+    )
+    expect_true(file.exists(x))
+    unlink(testdir, recursive = FALSE)
+})
+
 test_that("Deprecated 'file' argument", {
     object <- df
+    expect_s4_class(object, "DataFrame")
     file <- file.path(tempdir(), "export", "test.csv")
     unlink(file, recursive = FALSE)
     x <- export(object = object, file = file)
@@ -202,50 +217,86 @@ test_that("Deprecated 'file' argument", {
 
 context("export : sparseMatrix")
 
-test_that("'ext' argument, using gzip compression", {
-    ## FIXME Ensure we write into temporary directory.
-    x <- export(
-        object = sparse,
-        ext = "mtx.gz"
+for (format in .exportFormatChoices[["Matrix"]]) {
+    test_that(
+        desc = paste("'format' argument", format, sep = " : "),
+        code = {
+            object <- sparse
+            expect_s4_class(object, "sparseMatrix")
+            testdir <- file.path(tempdir(), "export")
+            unlink(testdir, recursive = TRUE)
+            x <- export(
+                object = object,
+                format = format,
+                dir = testdir
+            )
+            expect_identical(
+                object = x,
+                expected = c(
+                    "matrix" = realpath(file.path(
+                        testdir,
+                        paste0("object", ".", format)
+                    )),
+                    "barcodes" = realpath(file.path(
+                        testdir,
+                        paste0("object", ".", format, ".", "colnames")
+                    )),
+                    "genes" = realpath(file.path(
+                        testdir,
+                        paste0("object", ".", format, ".", "rownames")
+                    ))
+                )
+            )
+            expect_true(all(file.exists(x)))
+            ## Check accidental overwrite support.
+            expect_error(
+                object = export(
+                    object = object,
+                    format = format,
+                    dir = testdir,
+                    overwrite = FALSE
+                ),
+                regexp = "File exists"
+            )
+            expect_message(
+                object = export(
+                    object = object,
+                    format = format,
+                    dir = testdir,
+                    overwrite = TRUE
+                ),
+                regexp = "Overwriting"
+            )
+            unlink(testdir, recursive = TRUE)
+        }
     )
-    expect_identical(
-        object = x,
-        expected = c(
-            "matrix" = realpath("sparse.mtx.gz"),
-            "barcodes" = realpath("sparse.mtx.gz.colnames"),
-            "genes" = realpath("sparse.mtx.gz.rownames")
-        )
-    )
-    expect_true(all(file.exists(x)))
-    ## Check accidental overwrite support.
-    expect_error(
-        object = export(sparse, ext = "mtx.gz", overwrite = FALSE),
-        regexp = "File exists"
-    )
-    expect_message(
-        object = export(sparse, ext = "mtx.gz", overwrite = TRUE),
-        regexp = "Overwriting"
-    )
-    file.remove(x)
-})
+}
 
 test_that("Deprecated 'file' argument", {
-    x <- export(sparse, file = "sparse.mtx")
+    object <- sparse
+    expect_s4_class(object, "sparseMatrix")
+    testdir <- file.path(tempdir(), "export")
+    unlink(testdir, recursive = TRUE)
+    x <- export(
+        object = object,
+        file = file.path(testdir, "sparse.mtx")
+    )
     expect_identical(
         object = x,
         expected = c(
-            "matrix" = realpath("sparse.mtx"),
-            "barcodes" = realpath("sparse.mtx.colnames"),
-            "genes" = realpath("sparse.mtx.rownames")
+            "matrix" = realpath(file.path(testdir, "sparse.mtx")),
+            "barcodes" = realpath(file.path(testdir, "sparse.mtx.colnames")),
+            "genes" = realpath(file.path(testdir, "sparse.mtx.rownames"))
         )
     )
     expect_true(all(file.exists(x)))
-    file.remove(x)
+    unlink(testdir, recursive = TRUE)
 })
 
 test_that("Invalid input", {
+    object <- sparse
     expect_error(
-        object = export(object = unname(sparse)),
+        object = export(object = unname(object)),
         regexp = "symbol"
     )
 })
