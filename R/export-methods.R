@@ -242,7 +242,7 @@ NULL
                     "verbose" = getOption(
                         x = "datatable.verbose",
                         default = verbose
-                    ))
+                    )
                 )
             },
             "readr" = {
