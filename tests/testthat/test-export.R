@@ -55,8 +55,7 @@ test_that("'engine' argument", {
     for (engine in c(
         "base",
         "data.table",
-        "readr",
-        "vroom"
+        "readr"
     )) {
         x <- export(
             object = vec,
@@ -106,7 +105,7 @@ context("export : delim (DataFrame, data.frame, matrix)")
 ## FIXME Need to migrate DataFrame duplicated checks here...
 
 test_that("'engine' argument", {
-    for (engine in c("base", "data.table", "readr", "vroom")) {
+    for (engine in c("base", "data.table", "readr")) {
         options("acid.export.engine" = engine)
         file <- export(object = mat, ext = "csv")
         expect_true(file.exists(file))
