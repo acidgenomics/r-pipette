@@ -120,11 +120,9 @@ objects <- list(
     "tbl_df" = tbl
 )
 
-## FIXME Need to cover the handling of `colnames = FALSE` here.
-
-for (engine in .engines) {
+for (format in .exportFormatChoices[["delim"]]) {
     for (class in names(objects)) {
-        for (format in .exportFormatChoices[["delim"]]) {
+        for (engine in .engines) {
             test_that(
                 desc = paste(
                     "'format' argument",
@@ -147,14 +145,8 @@ for (engine in .engines) {
                         object = basename(file),
                         expected = paste0("object", ".", format)
                     )
-                    expect_true(grepl(
-                        pattern = "rowname",
-                        x = head(import(
-                            con = file,
-                            format = "lines",
-                            engine = engine
-                        ), n = 1L)
-                    ))
+                    reimport <- import(file, engine = engine)
+                    expect_true(hasRownames(reimport))
                     ## Check the overwrite support.
                     expect_error(
                         export(
@@ -177,49 +169,33 @@ for (engine in .engines) {
                         "Overwriting"
                     )
                     unlink(testdir, recursive = TRUE)
-
-
-
-
-
-
-                    unlink(testdir, recursive = TRUE)
-                    ## FIXME Move this out to a separate unit test.
-                    ## Now strip the names, and confirm that export still works.
-                    mat2 <- unname(mat1)
-                    file2 <- paste0("mat2", ".", ext)
-                    x <- export(object = mat2, ext = ext)
-                    expect_identical(x, realpath(file2))
-                    expect_true(file.exists(file2))
-                    expect_true(grepl(
-                        pattern = "V1",
-                        x = head(import(file2, format = "lines"), n = 1L)
-                    ))
-                    file.remove(file1, file2)
-
-
-
-
-                    unlink(testdir, recursive = TRUE)
                 }
             )
         }
+        test_that(
+            desc = paste(
+                "Invalid input",
+                format, class,
+                sep = " : "
+            ),
+            code = {
+                object <- objects[[class]]
+                expect_error(
+                    export(object = as.data.frame(object)),
+                    "symbol"
+                )
+            }
+        )
     }
 }
 
-## FIXME Need to parameterize this.
 test_that("Deprecated 'file' argument", {
-    x <- export(df, file = "df.csv")
-    expect_identical(x, realpath("df.csv"))
-    expect_true(file.exists("df.csv"))
-    file.remove("df.csv")
-})
-
-test_that("Invalid input", {
-    expect_error(
-        export(object = unname(mat)),
-        "symbol"
-    )
+    object <- df
+    file <- file.path(tempdir(), "export", "test.csv")
+    unlink(file, recursive = FALSE)
+    x <- export(object = object, file = file)
+    expect_true(file.exists(x))
+    unlink(file, recursive = FALSE)
 })
 
 
