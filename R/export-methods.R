@@ -266,6 +266,8 @@ NULL
         assert(is.function(what))
         do.call(what = what, args = args)
         if (isTRUE(compress)) {
+            ## FIXME This step is failing for ZIP compression....
+            ## zip warning: name not matched: vec.txt
             file <- compress(
                 file = file,
                 ext = compressExt,
