@@ -1,6 +1,11 @@
 #+TITLE: pipette
 #+STARTUP: content
 * Development
+** TODO Do we need to improve sanitization of BiocFileCache local file names
+   for complex URLs?
+   For example:
+   /Users/mike/.cache/R/DepMapAnalysis/
+       147524e053f4a_top_correlations%3Fdataset_name%3DRNAi_merged
 ** TODO Test support for readr v2.0.0 update.
 ** TODO Need to improve support for fixed width file (FWF) parsing?
 ** TODO importMTX: MTX import: look for "barcodes.tsv.gz", "genes.tsv.gz",
