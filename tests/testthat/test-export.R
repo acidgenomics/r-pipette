@@ -1,6 +1,5 @@
 context("export : character")
 
-## FIXME data.table is not outputting correctly here, without quoting.
 for (engine in .engines) {
     test_that(
         desc = paste("'append' argument", engine, sep = " : "),
