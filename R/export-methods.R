@@ -321,7 +321,7 @@ NULL
         export(
             object = object,
             con = con,
-            format = format,
+            format = NULL,
             ...
         )
     }
