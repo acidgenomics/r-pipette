@@ -297,12 +297,12 @@ Overwrite existing file on disk.}
 
 \item{engine}{\code{character(1)}.
 Engine (package) to use for export.
+
 Currently supported:
 \itemize{
 \item base
 \item data.table
 \item readr
-\item vroom
 }}
 
 \item{quiet}{\code{logical(1)}.
@@ -332,7 +332,7 @@ File path(s).
 Export
 }
 \note{
-Updated 2021-10-19.
+Updated 2021-10-21.
 }
 \section{Output file format extension}{
 
@@ -390,8 +390,8 @@ Packages:
 Export functions:
 \itemize{
 \item \code{BiocIO::export()}.
-\item \code{readr::write_delim()}.
 \item \code{data.table::fwrite()}.
+\item \code{readr::write_delim()}.
 \item \code{rio::export()}.
 \item \code{rtracklayer::export()}.
 \item \code{vroom::vroom_write()}.

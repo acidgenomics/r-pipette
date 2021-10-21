@@ -75,7 +75,7 @@
 #' `DOC`, `DOCX`, `PDF`, `PPT`, `PPTX`.
 #'
 #' @name import
-#' @note Updated 2021-10-14.
+#' @note Updated 2021-10-21.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param con `character(1)`, `connection`, or `missing`.
@@ -115,6 +115,7 @@
 #'   *Applies to plain text delimited and source code lines only.*
 #' @param engine `character(1)`.
 #'   Engine (package) to use for import.
+#'
 #'   Currently supported:
 #'   - base
 #'   - data.table

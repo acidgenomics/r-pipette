@@ -233,6 +233,7 @@ Maximum number of lines to parse.
 
 \item{engine}{\code{character(1)}.
 Engine (package) to use for import.
+
 Currently supported:
 \itemize{
 \item base
@@ -347,7 +348,7 @@ arguments. Remote URLs and compressed files are supported. If you need more
 complex import settings, just call the wrapped importer directly instead.
 }
 \note{
-Updated 2021-10-14.
+Updated 2021-10-21.
 }
 \section{Row and column names}{
 
