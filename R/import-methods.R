@@ -284,7 +284,7 @@ NULL
 
 #' Auto-decompress a file, if necessary
 #'
-#' @note Updated 2021-09-24.
+#' @note Updated 2021-10-21.
 #' @noRd
 #'
 #' @details
