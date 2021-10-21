@@ -5,7 +5,7 @@
 #' Export
 #'
 #' @name export
-#' @note Updated 2021-10-19.
+#' @note Updated 2021-10-21.
 #'
 #' @section Output file format extension:
 #'
@@ -51,11 +51,11 @@
 #'   Alternatively, can leave unset and use `ext` and `dir` arguments instead.
 #' @param engine `character(1)`.
 #'   Engine (package) to use for export.
+#'
 #'   Currently supported:
 #'   - base
 #'   - data.table
 #'   - readr
-#'   - vroom
 #' @param ext `character(1)`.
 #'   *Deprecated in favor of `format` argument.*
 #' @param file `character(1)`.
@@ -79,8 +79,8 @@
 #' Export functions:
 #'
 #' - `BiocIO::export()`.
-#' - `readr::write_delim()`.
 #' - `data.table::fwrite()`.
+#' - `readr::write_delim()`.
 #' - `rio::export()`.
 #' - `rtracklayer::export()`.
 #' - `vroom::vroom_write()`.
@@ -233,14 +233,6 @@ NULL
             },
             "readr" = {
                 whatFun <- "write_lines"
-                args <- list(
-                    "x" = object,
-                    "file" = file,
-                    "append" = append
-                )
-            },
-            "vroom" = {
-                whatFun <- "vroom_write_lines"
                 args <- list(
                     "x" = object,
                     "file" = file,
@@ -529,25 +521,6 @@ NULL
                     "eol" = "\n",
                     "na" = "NA",
                     "quote_escape" = "double"
-                )
-            },
-            "vroom" = {
-                whatFun <- "vroom_write"
-                args <- list(
-                    "x" = object,
-                    "file" = file,
-                    "append" = FALSE,
-                    "col_names" = colnames,
-                    "delim" = switch(
-                        EXPR = format,
-                        "csv" = ",",
-                        "tsv" = "\t"
-                    ),
-                    "eol" = "\n",
-                    "escape" = "double",
-                    "na" = "NA",
-                    "progress" = FALSE,
-                    "quote" = "needed"
                 )
             }
         )
