@@ -1,5 +1,6 @@
 context("export : character")
 
+## FIXME zip step is failing here...need to rethink.
 for (engine in .engines) {
     test_that(
         desc = paste("'append' argument", engine, sep = " : "),
