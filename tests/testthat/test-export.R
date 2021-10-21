@@ -22,13 +22,14 @@ for (engine in .engines) {
                     )
                 },
                 {
-                    export(
+                    x <- export(
                         object = object1,
                         con = con,
                         append = FALSE,
-                        overwrite = TRUE,
                         engine = engine
                     )
+                    expect_identical(x, realpath(con))
+                    expect_true(file.exists(con))
                     expect_identical(
                         object = import(
                             con = con,
@@ -37,13 +38,14 @@ for (engine in .engines) {
                         ),
                         expected = object1
                     )
-                    export(
+                    x <- export(
                         object = object2,
                         con = con,
                         append = TRUE,
-                        overwrite = FALSE,
                         engine = engine
                     )
+                    expect_identical(x, realpath(con))
+                    expect_true(file.exists(con))
                     expect_identical(
                         object = import(
                             con = con,
@@ -57,67 +59,60 @@ for (engine in .engines) {
             unlink(con, recursive = FALSE)
         }
     )
+    ## FIXME This step is failing for readr txt.zip
+    ## FIXME Need to rework compression path....
+    for (format in .exportFormatChoices[["character"]]) {
+        test_that(
+            desc = paste("'format' argument", format, engine, sep = " : "),
+            code = {
+                testdir <- file.path(tempdir(), "export")
+                unlink(testdir, recursive = TRUE)
+                vec <- c("hello", "world")
+                con <- file.path(testdir, paste0("vec", ".", format))
+                x <- export(
+                    object = vec,
+                    format = format,
+                    dir = testdir,
+                    engine = engine
+                )
+                expect_identical(x, realpath(con))
+                expect_true(file.exists(con))
+                expect_identical(
+                    object = import(
+                        con = con,
+                        format = "lines",
+                        engine = engine
+                    ),
+                    expected = vec
+                )
+                expect_error(
+                    export(
+                        object = vec,
+                        format = format,
+                        dir = testdir,
+                        overwrite = FALSE,
+                        engine = engine
+                    ),
+                    "File exists"
+                )
+                expect_message(
+                    export(
+                        object = vec,
+                        format = format,
+                        dir = testdir,
+                        overwrite = TRUE,
+                        engine = engine
+                    ),
+                    "Overwriting"
+                )
+                unlink(testdir, recursive = TRUE)
+            }
+        )
+    }
 }
 
 
 
-
-
-
-
-## FIXME Need to ensure that deprecated "file" and "ext" coverage still works.
-## FIXME Need to check support for all engines except base...
-
-
-
-test_that("'engine' argument", {
-    vec <- c("hello", "world")
-    file <- file.path(tempdir(), "vec.txt.gz")
-    for (engine in c(
-        "base",
-        "data.table",
-        "readr"
-    )) {
-        x <- export(
-            object = vec,
-            con = file,
-            engine = engine,
-            overwrite = TRUE
-        )
-        expect_identical(x, realpath(file))
-        expect_true(file.exists(file))
-        expect_identical(
-            object = import(file, format = "lines"),
-            expected = vec
-        )
-    }
-    file.remove(file)
-})
-
-test_that("'format' argument", {
-    vec <- c("hello", "world")
-    formats <- .exportFormatChoices[["character"]]
-    for (format in formats) {
-        file <- paste0("vec", ".", format)
-        x <- export(object = vec, format = format)
-        expect_identical(x, realpath(file))
-        expect_true(file.exists(file))
-        expect_identical(
-            object = import(file, format = "lines"),
-            expected = vec
-        )
-        ## Check accidental overwrite support.
-        expect_error(
-            export(vec, ext = ext, overwrite = FALSE),
-            "File exists"
-        )
-        expect_message(
-            export(vec, ext = ext, overwrite = TRUE),
-            "Overwriting"
-        )
-        file.remove(file)
-    }
-})
 
 
 
