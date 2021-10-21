@@ -1,28 +1,53 @@
 context("export : character")
 
-test_that("'ext' argument", {
-    vec <- c("hello", "world")
-    formats <- .exportFormatChoices[["character"]]
-    for (ext in formats) {
-        file <- paste0("vec", ".", ext)
-        x <- export(object = vec, ext = ext)
-        expect_identical(x, realpath(file))
-        expect_true(file.exists(file))
+## FIXME Need to ensure that deprecated "file" and "ext" coverage still works.
+## FIXME Need to check support for all engines except base...
+
+test_that("'append' argument", {
+    con <- file.path(tempdir(), "lines.txt")
+    unlink(con, recursive = FALSE)
+    object1 <- c("aaa", "bbb")
+    object2 <- c("ccc", "ddd")
+    expect_error(
+        object = export(
+            object = object2,
+            con = con,
+            append = TRUE,
+            engine = "base"
+        ),
+        regexp = "base"
+    )
+
+    ## FIXME Does this work for readr???
+
+    for engine in c(
+        "data.table",
+        "readr",
+        "vroom"
+    ) {
+        unlink(con, recursive = FALSE)
+        export(
+            object = object1,
+            con = con,
+            engine = engine
+        )
         expect_identical(
-            object = import(file, format = "lines"),
-            expected = vec
+            object = import(con = con, format = "lines"),
+            expected = object1
         )
-        ## Check accidental overwrite support.
-        expect_error(
-            export(vec, ext = ext, overwrite = FALSE),
-            "File exists"
+        export(
+            object = object2,
+            con = con,
+            append = TRUE,
+            engine = engine
         )
-        expect_message(
-            export(vec, ext = ext, overwrite = TRUE),
-            "Overwriting"
+        expect_identical(
+            object = import(con = con, format = "lines"),
+            expected = c(object1, object2)
         )
-        file.remove(file)
+        unlink(con, recursive = FALSE)
     }
+    unlink(con, recursive = FALSE)
 })
 
 test_that("'engine' argument", {
@@ -50,53 +75,54 @@ test_that("'engine' argument", {
     file.remove(file)
 })
 
-test_that("'append' argument", {
-    file <- file.path(tempdir(), "lines.txt")
-    unlink(file, recursive = FALSE)
-    vec1 <- c("aaa", "bbb")
-    vec2 <- c("ccc", "ddd")
-    engine <- "data.table"
-    export(
-        object = vec1,
-        con = file,
-        engine = engine
-    )
-    expect_identical(
-        object = import(file, format = "lines"),
-        expected = vec1
-    )
-    export(
-        object = vec2,
-        con = file,
-        append = TRUE,
-        engine = engine
-    )
-    expect_identical(
-        object = import(file, format = "lines"),
-        expected = c(vec1, vec2)
-    )
-    expect_error(
-        object = export(
-            object = vec2,
-            con = file,
-            append = TRUE,
-            engine = "base"
-        ),
-        regexp = "base"
-    )
-    unlink(file, recursive = FALSE)
+test_that("'format' argument", {
+    vec <- c("hello", "world")
+    formats <- .exportFormatChoices[["character"]]
+    for (format in formats) {
+        file <- paste0("vec", ".", format)
+        x <- export(object = vec, format = format)
+        expect_identical(x, realpath(file))
+        expect_true(file.exists(file))
+        expect_identical(
+            object = import(file, format = "lines"),
+            expected = vec
+        )
+        ## Check accidental overwrite support.
+        expect_error(
+            export(vec, ext = ext, overwrite = FALSE),
+            "File exists"
+        )
+        expect_message(
+            export(vec, ext = ext, overwrite = TRUE),
+            "Overwriting"
+        )
+        file.remove(file)
+    }
 })
 
 
 
-context("export : matrix")
+context("export : delim (DataFrame, data.frame, matrix)")
 
-test_that("'ext' argument", {
+## FIXME Need to migrate DataFrame duplicated checks here...
+
+test_that("'engine' argument", {
+    for (engine in c("base", "data.table", "readr", "vroom")) {
+        options("acid.export.engine" = engine)
+        file <- export(object = mat, ext = "csv")
+        expect_true(file.exists(file))
+        expect_identical(basename(file), "mat.csv")
+        unlink(file)
+    }
+    options("acid.export.engine" = NULL)
+})
+
+test_that("'format' argument", {
     formats <- .exportFormatChoices[["matrix"]]
-    for (ext in formats) {
+    for (format in formats) {
         mat1 <- mat
-        file1 <- paste0("mat1", ".", ext)
-        x <- export(object = mat1, ext = ext)
+        file1 <- paste0("mat1", ".", format)
+        x <- export(object = mat1, format = format)
         expect_identical(x, realpath(file1))
         expect_true(file.exists(file1))
         expect_true(grepl(
@@ -126,17 +152,6 @@ test_that("'ext' argument", {
     }
 })
 
-test_that("acid.export.engine override", {
-    for (engine in c("base", "data.table", "readr", "vroom")) {
-        options("acid.export.engine" = engine)
-        file <- export(object = mat, ext = "csv")
-        expect_true(file.exists(file))
-        expect_identical(basename(file), "mat.csv")
-        unlink(file)
-    }
-    options("acid.export.engine" = NULL)
-})
-
 test_that("Invalid input", {
     expect_error(
         export(object = unname(mat)),
@@ -147,6 +162,8 @@ test_that("Invalid input", {
 
 
 context("export : DataFrame")
+
+## FIXME These seem a bit duplicated with matrix / data.frame approach above.
 
 test_that("'ext' argument", {
     formats <- .exportFormatChoices[["matrix"]]
@@ -180,7 +197,7 @@ test_that("Invalid input", {
 
 
 
-context("export : sparseMatrix")
+context("export : Matrix / sparseMatrix")
 
 test_that("'ext' argument, using gzip compression", {
     x <- export(sparse, ext = "mtx.gz")
