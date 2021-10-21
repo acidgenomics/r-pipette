@@ -1,6 +1,5 @@
 context("export : character")
 
-## FIXME zip step is failing here...need to rethink.
 for (engine in .engines) {
     test_that(
         desc = paste("'append' argument", engine, sep = " : "),
@@ -60,8 +59,6 @@ for (engine in .engines) {
             unlink(con, recursive = FALSE)
         }
     )
-    ## FIXME This step is failing for readr txt.zip
-    ## FIXME Need to rework compression path....
     for (format in .exportFormatChoices[["character"]]) {
         test_that(
             desc = paste("'format' argument", format, engine, sep = " : "),

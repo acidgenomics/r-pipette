@@ -143,7 +143,7 @@ NULL
 
 
 
-## Updated 2021-10-19.
+## Updated 2021-10-21.
 `export,character` <-  # nolint
     function(
         object,
@@ -198,28 +198,28 @@ NULL
         if (isTRUE(overwrite)) {
             assert(isFALSE(append))
         }
-        file <- con; whatFile <- con
-        match <- str_match(string = file, pattern = extPattern)
+        whatFile <- con
+        match <- str_match(string = con, pattern = extPattern)
         compressExt <- match[1L, 4L]
         compress <- !is.na(compressExt)
-        if (isAFile(file)) {
-            file <- realpath(file)
+        if (isAFile(con)) {
+            con <- realpath(con)
             if (isTRUE(append) && isFALSE(quiet)) {
                 alertInfo(sprintf(
                     "Appending content in {.file %s}.",
-                    basename(file)
+                    basename(con)
                 ))
             } else if (isTRUE(overwrite) && isFALSE(quiet)) {
-                alertWarning(sprintf("Overwriting {.file %s}.", file))
+                alertWarning(sprintf("Overwriting {.file %s}.", con))
             } else {
-                abort(sprintf("File exists: {.file %s}.", file))
+                abort(sprintf("File exists: {.file %s}.", con))
             }
         }
         if (isTRUE(compress)) {
-            file <- sub(
+            con <- sub(
                 pattern = paste0("\\.", compressExt, "$"),
                 replacement = "",
-                x = file
+                x = con
             )
         }
         switch(
@@ -228,14 +228,14 @@ NULL
                 whatFun <- "writeLines"
                 args <- list(
                     "text" = object,
-                    "con" = file
+                    "con" = con
                 )
             },
             "data.table" = {
                 whatFun <- "fwrite"
                 args <- list(
                     "x" = as.list(object),
-                    "file" = file,
+                    "file" = con,
                     "append" = append,
                     "na" = "NA",
                     "quote" = FALSE,
@@ -247,7 +247,7 @@ NULL
                 whatFun <- "write_lines"
                 args <- list(
                     "x" = object,
-                    "file" = file,
+                    "file" = con,
                     "append" = append,
                     "na" = "NA",
                     "sep" = "\n"
@@ -266,17 +266,15 @@ NULL
         assert(is.function(what))
         do.call(what = what, args = args)
         if (isTRUE(compress)) {
-            ## FIXME This step is failing for ZIP compression....
-            ## zip warning: name not matched: vec.txt
-            file <- compress(
-                file = file,
+            con <- compress(
+                file = con,
                 ext = compressExt,
                 remove = TRUE,
                 overwrite = TRUE
             )
         }
-        file <- realpath(file)
-        invisible(file)
+        con <- realpath(con)
+        invisible(con)
     }
 
 
