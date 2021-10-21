@@ -1,3 +1,8 @@
+## FIXME Add direct support for verbose mode, which should print column types
+## for readr engine...
+
+
+
 #' Import
 #'
 #' Read file by extension into R.
@@ -957,7 +962,7 @@ NULL
 
 #' Import a delimited file (e.g. `.csv`, `.tsv`).
 #'
-#' @note Updated 2021-10-19.
+#' @note Updated 2021-10-21.
 #' @noRd
 `import,DelimFile` <-  # nolint
     function(
@@ -985,6 +990,10 @@ NULL
         quiet = getOption(
             x = "acid.quiet",
             default = FALSE
+        ),
+        verbose = getOption(
+            x = "acid.verbose",
+            default = FALSE
         )
     ) {
         assert(
@@ -1001,8 +1010,12 @@ NULL
                 is.null(makeNames) ||
                 isFALSE(makeNames),
             isFlag(metadata),
-            isFlag(quiet)
+            isFlag(quiet),
+            isFlag(verbose)
         )
+        if (isTRUE(verbose)) {
+            assert(isFALSE(quiet))
+        }
         file <- resource(con)
         ext <- switch(
             EXPR = class(con),
@@ -1071,7 +1084,7 @@ NULL
                     "showProgress" = FALSE,
                     "stringsAsFactors" = FALSE,
                     "strip.white" = TRUE,
-                    "verbose" = FALSE
+                    "verbose" = verbose
                 )
                 if (isCharacter(colnames)) {
                     ## nocov start
@@ -1094,9 +1107,11 @@ NULL
                         "csv" = ",",
                         "tsv" = "\t"
                     ),
+                    "lazy" = TRUE,
                     "na" = naStrings,
                     "n_max" = nMax,
-                    "progress" = FALSE,
+                    "progress" = verbose,
+                    "show_col_types" = verbose,
                     "skip" = skip,
                     "skip_empty_rows" = TRUE,
                     "trim_ws" = TRUE
@@ -1492,6 +1507,10 @@ NULL
         quiet = getOption(
             x = "acid.quiet",
             default = FALSE
+        ),
+        verbose = getOption(
+            x = "acid.verbose",
+            default = FALSE
         )
     ) {
         assert(
@@ -1503,8 +1522,12 @@ NULL
             isPositive(nMax),
             isFlag(stripWhitespace),
             isFlag(removeBlank),
-            isFlag(quiet)
+            isFlag(quiet),
+            isFlag(verbose)
         )
+        if (isTRUE(verbose)) {
+            assert(isFALSE(quiet))
+        }
         if (isString(comment) || isTRUE(removeBlank)) {
             assert(
                 identical(nMax, eval(formals()[["nMax"]])),
@@ -1540,15 +1563,17 @@ NULL
                     "nrows" = nMax,
                     "sep" = "\n",
                     "skip" = skip,
-                    "strip.white" = stripWhitespace
+                    "strip.white" = stripWhitespace,
+                    "verbose" = verbose
                 )
             },
             "readr" = {
                 whatFun <- "read_lines"
                 args <- list(
                     "file" = file,
+                    "lazy" = TRUE,
                     "n_max" = nMax,
-                    "progress" = FALSE,
+                    "progress" = verbose,
                     "skip" = skip,
                     "skip_empty_rows" = removeBlank
                 )
