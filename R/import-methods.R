@@ -1487,7 +1487,7 @@ NULL
 
 #' Import source code lines
 #'
-#' @note Updated 2021-10-12.
+#' @note Updated 2021-10-21.
 #' @noRd
 `import,LinesFile` <-  # nolint
     function(
@@ -1581,7 +1581,8 @@ NULL
                     "n_max" = nMax,
                     "progress" = verbose,
                     "skip" = skip,
-                    "skip_empty_rows" = removeBlank
+                    ## This setting considers lines containing spaces empty.
+                    "skip_empty_rows" = FALSE
                 )
             }
         )
