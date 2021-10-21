@@ -238,7 +238,6 @@ Currently supported:
 \item base
 \item data.table
 \item readr
-\item vroom
 }}
 
 \item{makeNames}{\code{function}.
@@ -442,8 +441,8 @@ print(head(x))
 \seealso{
 Packages:
 \itemize{
-\item \href{http://readr.tidyverse.org}{readr}.
 \item \href{http://r-datatable.com/}{data.table}.
+\item \href{http://readr.tidyverse.org}{readr}.
 \item \href{http://readxl.tidyverse.org}{readxl}.
 \item \href{https://cran.r-project.org/package=rio}{rio}.
 \item \href{http://bioconductor.org/packages/rtracklayer/}{rtracklayer}.
@@ -453,8 +452,8 @@ Packages:
 Import functions:
 \itemize{
 \item \code{BiocIO::import()}.
-\item \code{readr::read_delim()}.
 \item \code{data.table::fread()}.
+\item \code{readr::read_delim()}.
 \item \code{rio::import()}.
 \item \code{rtracklayer::import()}.
 \item \code{utils::read.table()}.

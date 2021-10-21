@@ -119,7 +119,6 @@
 #'   - base
 #'   - data.table
 #'   - readr
-#'   - vroom
 #' @param makeNames `function`.
 #'   Apply syntactic naming function to (column) names.
 #'   Function is never applied to row names, when they are defined in object.
@@ -216,8 +215,8 @@
 #' @seealso
 #' Packages:
 #'
-#' - [readr](http://readr.tidyverse.org).
 #' - [data.table](http://r-datatable.com/).
+#' - [readr](http://readr.tidyverse.org).
 #' - [readxl](http://readxl.tidyverse.org).
 #' - [rio](https://cran.r-project.org/package=rio).
 #' - [rtracklayer](http://bioconductor.org/packages/rtracklayer/).
@@ -226,8 +225,8 @@
 #' Import functions:
 #'
 #' - `BiocIO::import()`.
-#' - `readr::read_delim()`.
 #' - `data.table::fread()`.
+#' - `readr::read_delim()`.
 #' - `rio::import()`.
 #' - `rtracklayer::import()`.
 #' - `utils::read.table()`.
@@ -1101,26 +1100,6 @@ NULL
                     "skip_empty_rows" = TRUE,
                     "trim_ws" = TRUE
                 )
-            },
-            "vroom" = {
-                whatFun <- "vroom"
-                args <- list(
-                    "file" = file,
-                    "delim" = switch(
-                        EXPR = ext,
-                        "csv" = ",",
-                        "tsv" = "\t"
-                    ),
-                    "col_names" = colnames,
-                    "col_types" = vroom::cols(),
-                    "comment" = comment,
-                    "na" = naStrings,
-                    "n_max" = nMax,
-                    "progress" = FALSE,
-                    "skip" = skip,
-                    "trim_ws" = TRUE,
-                    ".name_repair" = make.names
-                )
             }
         )
         if (isFALSE(quiet)) {
@@ -1571,15 +1550,6 @@ NULL
                     "progress" = FALSE,
                     "skip" = skip,
                     "skip_empty_rows" = removeBlank
-                )
-            },
-            "vroom" = {
-                whatFun <- "vroom_lines"
-                args <- list(
-                    "file" = file,
-                    "n_max" = nMax,
-                    "progress" = FALSE,
-                    "skip" = skip
                 )
             }
         )
