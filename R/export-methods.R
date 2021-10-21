@@ -1,8 +1,3 @@
-## FIXME For delimited files, `colnames = FALSE` doesn't seem to be performing
-## the way we want across engines.
-
-
-
 #' Export
 #'
 #' @name export
@@ -475,7 +470,6 @@ NULL
                 choices = c("csv", "tsv")
             )
         }
-        ## FIXME Need to improve quoting consistency here.
         switch(
             EXPR = whatPkg,
             "base" = {
