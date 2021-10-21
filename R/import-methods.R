@@ -1084,7 +1084,10 @@ NULL
                     "showProgress" = FALSE,
                     "stringsAsFactors" = FALSE,
                     "strip.white" = TRUE,
-                    "verbose" = verbose
+                    "verbose" = getOption(
+                        x = "datatable.verbose",
+                        default = verbose
+                    ))
                 )
                 if (isCharacter(colnames)) {
                     ## nocov start
@@ -1564,7 +1567,10 @@ NULL
                     "sep" = "\n",
                     "skip" = skip,
                     "strip.white" = stripWhitespace,
-                    "verbose" = verbose
+                    "verbose" = getOption(
+                        x = "datatable.verbose",
+                        default = verbose
+                    ))
                 )
             },
             "readr" = {

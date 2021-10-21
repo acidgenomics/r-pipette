@@ -1,4 +1,5 @@
 ## FIXME Sunset vroom support in favor of simply using readr.
+## FIXME Need to add support for increasing verbosity.
 
 
 
@@ -160,6 +161,10 @@ NULL
         quiet = getOption(
             x = "acid.quiet",
             default = FALSE
+        ),
+        verbose = getOption(
+            x = "acid.verbose",
+            default = FALSE
         )
     ) {
         assert(
@@ -167,8 +172,12 @@ NULL
             isFlag(overwrite),
             isFlag(append),
             isString(engine),
-            isFlag(quiet)
+            isFlag(quiet),
+            isFlag(verbose)
         )
+        if (isTRUE(verbose)) {
+            assert(isFALSE(quiet))
+        }
         formatChoices <- .exportFormatChoices[["character"]]
         if (missing(format)) {
             format <- fileExt(con)
@@ -228,7 +237,12 @@ NULL
                     "x" = as.list(object),
                     "file" = file,
                     "append" = append,
-                    "sep" = "\n"
+                    "na" = "NA",
+                    "sep" = "\n",
+                    "verbose" = getOption(
+                        x = "datatable.verbose",
+                        default = verbose
+                    ))
                 )
             },
             "readr" = {
@@ -236,7 +250,9 @@ NULL
                 args <- list(
                     "x" = object,
                     "file" = file,
-                    "append" = append
+                    "append" = append,
+                    "na" = "NA",
+                    "sep" = "\n"
                 )
             }
         )

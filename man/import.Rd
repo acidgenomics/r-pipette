@@ -63,7 +63,8 @@ import(con, format, text, ...)
   removeBlank = FALSE,
   metadata = getOption(x = "acid.import.metadata", default = FALSE),
   engine = getOption(x = "acid.import.engine", default = "base"),
-  quiet = getOption(x = "acid.quiet", default = FALSE)
+  quiet = getOption(x = "acid.quiet", default = FALSE),
+  verbose = getOption(x = "acid.verbose", default = FALSE)
 )
 
 \S4method{import}{ExcelFile,missingOrNULL,missingOrNULL}(
