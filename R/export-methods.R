@@ -1,5 +1,5 @@
-## FIXME Sunset vroom support in favor of simply using readr.
-## FIXME Need to add support for increasing verbosity.
+## FIXME For delimited files, `colnames = FALSE` doesn't seem to be performing
+## the way we want across engines.
 
 
 
