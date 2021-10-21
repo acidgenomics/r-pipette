@@ -238,6 +238,7 @@ NULL
                     "file" = file,
                     "append" = append,
                     "na" = "NA",
+                    "quote" = FALSE,
                     "sep" = "\n",
                     "verbose" = verbose
                 )
