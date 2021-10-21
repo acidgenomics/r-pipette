@@ -5,9 +5,9 @@
 
 #' Import/export engines for parsing plain text delimited files
 #'
-#' @note Updated 2021-03-16.
+#' @note Updated 2021-10-21.
 #' @noRd
-.engines <- c("data.table", "vroom", "readr", "base")
+.engines <- c("base", "data.table", "readr")
 
 
 
