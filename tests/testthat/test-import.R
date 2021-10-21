@@ -1,73 +1,365 @@
-context("import : invalid input")
+context("import : Invalid input")
 
 test_that("Invalid extension", {
-    file <- file.path(tempdir(), "file.XXX")
-    unlink(file, recursive = TRUE)
-    file.create(file)
+    con <- file.path(tempdir(), "file.XXX")
+    unlink(con, recursive = TRUE)
+    file.create(con)
     expect_error(
-        object = import(file),
+        object = import(con),
         regexp = "xxx"
     )
-    unlink(file, recursive = TRUE)
+    unlink(con, recursive = TRUE)
 })
 
 test_that("No extension", {
-    file <- file.path(tempdir(), "example")
-    unlink(file, recursive = TRUE)
-    file.create(file)
+    con <- file.path(tempdir(), "example")
+    unlink(con, recursive = TRUE)
+    file.create(con)
     expect_error(
-        object = import(file),
+        object = import(con),
         regexp = "extension"
     )
-    unlink(file, recursive = TRUE)
+    unlink(con, recursive = TRUE)
 })
 
 
 
-context("import : data frame")
+context("import : Source code lines")
 
-test_that("Delimited files", {
+for (engine in .engines) {
+    test_that(
+        desc = paste("R script", engine, sep = " : "),
+        code = {
+            con <- file.path("cache", "example.R")
+            object <- import(
+                con = con,
+                engine = engine
+            )
+            expect_is(object, "character")
+        }
+    )
+    test_that(
+        desc = paste("Empty file", engine, sep = " : "),
+        code = {
+            con <- file.path(tempdir(), "lines.txt")
+            unlink(con, recursive = FALSE)
+            file.create(con)
+            expect_identical(
+                object = import(
+                    con = con,
+                    format = "lines",
+                    engine = engine
+                ),
+                expected = character(0L)
+            )
+            unlink(con, recursive = FALSE)
+        }
+    )
+    test_that(
+        desc = paste("'comment' argument", engine, sep = " : "),
+        code = {
+            con <- file.path(tempdir(), "lines.txt")
+            unlink(con, recursive = FALSE)
+            vec <- c(
+                "# comment 1",
+                "aaa",
+                "## comment 2",
+                "bbb",
+                "# comment 3",
+                "ccc"
+            )
+            writeLines(text = vec, con = con)
+            expect_identical(
+                object = import(
+                    con = con,
+                    format = "lines",
+                    comment = "",
+                    engine = engine
+                ),
+                expected = vec
+            )
+            expect_identical(
+                object = import(
+                    con = con,
+                    format = "lines",
+                    comment = "#",
+                    engine = engine
+                ),
+                expected = c(
+                    "aaa",
+                    "bbb",
+                    "ccc"
+                )
+            )
+            expect_identical(
+                object = import(
+                    con = con,
+                    format = "lines",
+                    comment = "# ",
+                    engine = engine
+                ),
+                expected = c(
+                    "aaa",
+                    "## comment 2",
+                    "bbb",
+                    "ccc"
+                )
+            )
+            expect_identical(
+                object = import(
+                    con = con,
+                    format = "lines",
+                    comment = "##",
+                    engine = engine
+                ),
+                expected = c(
+                    "# comment 1",
+                    "aaa",
+                    "bbb",
+                    "# comment 3",
+                    "ccc"
+                )
+            )
+            unlink(con, recursive = FALSE)
+        }
+    )
+    test_that(
+        desc = paste("'nMax' argument", engine, sep = " : "),
+        code = {
+            con <- file.path(tempdir(), "lines.txt")
+            unlink(con, recursive = FALSE)
+            vec <- c("aaa", "bbb", "ccc")
+            writeLines(text = vec, con = con)
+            expect_identical(
+                object = import(
+                    con = con,
+                    format = "lines",
+                    nMax = Inf,
+                    engine = engine
+                ),
+                expected = vec
+            )
+            expect_identical(
+                object = import(
+                    con = con,
+                    format = "lines",
+                    nMax = 2L,
+                    engine = engine
+                ),
+                expected = vec[seq_len(2L)]
+            )
+            expect_identical(
+                object = import(
+                    con = con,
+                    format = "lines",
+                    nMax = 1L,
+                    engine = engine
+                ),
+                expected = vec[[1L]]
+            )
+            unlink(con, recursive = FALSE)
+        }
+    )
+    test_that(
+        desc = paste("'removeBlank' argument", engine, sep = " : "),
+        code = {
+            con <- file.path(tempdir(), "lines.txt")
+            unlink(con, recursive = FALSE)
+            vec <- c(
+                "  aaa",
+                "bbb  ",
+                "   ",
+                ""
+            )
+            writeLines(text = vec, con = con)
+            expect_identical(
+                object = import(
+                    con = con,
+                    format = "lines",
+                    removeBlank = FALSE,
+                    engine = engine
+                ),
+                expected = vec
+            )
+            expect_identical(
+                object = import(
+                    con = con,
+                    format = "lines",
+                    removeBlank = TRUE,
+                    stripWhitespace = FALSE,
+                    engine = engine
+                ),
+                expected = c(
+                    "  aaa",
+                    "bbb  ",
+                    "   "
+                )
+            )
+            expect_identical(
+                object = import(
+                    con = con,
+                    format = "lines",
+                    removeBlank = TRUE,
+                    stripWhitespace = TRUE,
+                    engine = engine
+                ),
+                expected = c(
+                    "aaa",
+                    "bbb"
+                )
+            )
+            unlink(con, recursive = FALSE)
+        }
+    )
+    test_that(
+        desc = paste("'skip' argument", engine, sep = " : "),
+        code = {
+            con <- file.path(tempdir(), "lines.txt")
+            unlink(con, recursive = FALSE)
+            vec <- c("aaa", "bbb", "ccc", "ddd")
+            writeLines(text = vec, con = con)
+            expect_identical(
+                object = import(
+                    con = con,
+                    format = "lines",
+                    skip = 0L,
+                    engine = engine
+                ),
+                expected = vec
+            )
+            expect_identical(
+                object = import(
+                    con = con,
+                    format = "lines",
+                    skip = length(vec) - 1L,
+                    engine = engine
+                ),
+                expected = vec[[length(vec)]]
+            )
+            expect_identical(
+                object = import(
+                    con = con,
+                    format = "lines",
+                    skip = 2L,
+                    nMax = 1L,
+                    engine = engine
+                ),
+                expected = vec[[3L]]
+            )
+            expect_error(
+                object = import(
+                    con = con,
+                    format = "lines",
+                    skip = 1L,
+                    comment = "#",
+                    engine = engine
+                ),
+                regexp = "comment"
+            )
+            expect_error(
+                object = import(
+                    con = con,
+                    format = "lines",
+                    skip = 1L,
+                    removeBlank = TRUE,
+                    engine = engine
+                ),
+                regexp = "removeBlank"
+            )
+            unlink(con, recursive = FALSE)
+        }
+    )
+    test_that(
+        desc = "'stripWhitespace' argument",
+        code = {
+            con <- file.path(tempdir(), "lines.txt")
+            unlink(con, recursive = FALSE)
+            vec <- c(
+                "  aaa",
+                "bbb  ",
+                " ccc ",
+                "  ddd  ",
+                "eee",
+                "   "
+            )
+            writeLines(text = vec, con = con)
+            expect_identical(
+                object = import(
+                    con = con,
+                    format = "lines",
+                    stripWhitespace = FALSE,
+                    engine = engine
+                ),
+                expected = vec
+            )
+            expect_identical(
+                object = import(
+                    con = con,
+                    format = "lines",
+                    stripWhitespace = TRUE,
+                    engine = engine
+                ),
+                expected = c(
+                    "aaa",
+                    "bbb",
+                    "ccc",
+                    "ddd",
+                    "eee",
+                    ""
+                )
+            )
+            unlink(con, recursive = FALSE)
+        }
+    )
+}
+
+
+
+
+
+
+
+## FIXME Wrap these inside for loop.
+
+
+
+
+
+context("import : Delimited files")
+
+test_that("CSV and TSV", {
     for (ext in c("csv", "csv.gz", "tsv")) {
-        file <- file.path("cache", paste0("example.", ext))
-        object <- import(file, metadata = TRUE)
-        expect_is(object, "data.frame")
-        expect_true(hasRownames(object))
-        expect_is(
-            object = attributes(object)[["import"]][["file"]],
-            class = "character"
-        )
-        object <- import(file, rownameCol = "rowname")
-        expect_true(hasRownames(object))
+        con <- file.path("cache", paste0("example.", ext))
+        ## FIXME Rework this looping at the top instead.
+        for (engine in .engines) {
+            object <- import(
+                con = con,
+                engine = engine,
+                metadata = TRUE
+            )
+            expect_is(object, "data.frame")
+            expect_true(hasRownames(object))
+            expect_is(
+                object = attributes(object)[["import"]][["file"]],
+                class = "character"
+            )
+            expect_match(
+                object = attributes(object)[["import"]][["importerName"]],
+                regexp = engine
+            )
+            object <- import(
+                con = con,
+                engine = engine,
+                rownameCol = "rowname"
+            )
+            expect_true(hasRownames(object))
+        }
     }
 })
 
 test_that("Deprecated 'file' argument", {
-    file <- file.path("cache", "example.csv")
-    object <- import(file = file)
+    object <- import(file = file.path("cache", "example.csv"))
     expect_is(object, "data.frame")
-})
-
-test_that("Custom engine support", {
-    file <- file.path("cache", "example.csv.gz")
-    for (x in c(
-        "base::read.table",
-        "data.table::fread",
-        "readr::read_delim",
-        "vroom::vroom"
-    )) {
-        split <- strsplit(x = x, split = "::", fixed = TRUE)[[1L]]
-        whatPkg <- split[[1L]]
-        object <- import(
-            con = file,
-            engine = whatPkg,
-            metadata = TRUE
-        )
-        expect_is(object, "data.frame")
-        expect_identical(
-            object = attributes(object)[["import"]][["importerName"]],
-            expected = x
-        )
-    }
 })
 
 
@@ -187,271 +479,6 @@ test_that("MTX", {
         object = attributes(object)[["import"]][["importerName"]],
         expected = "Matrix::readMM"
     )
-})
-
-
-
-context("import : Source code lines")
-
-test_that("R script", {
-    file <- file.path("cache", "example.R")
-    expect_is(
-        object = import(file),
-        class = "character"
-    )
-})
-
-test_that("Custom engine support", {
-    file <- file.path("cache", "example.R")
-    for (engine in c(
-        "base",
-        "data.table",
-        "readr",
-        "vroom"
-    )) {
-        object <- import(file, engine = engine)
-        expect_is(object, "character")
-    }
-})
-
-test_that("Empty file", {
-    file <- file.path(tempdir(), "lines.txt")
-    unlink(file, recursive = FALSE)
-    file.create(file)
-    expect_identical(
-        object = import(file, format = "lines"),
-        expected = character(0L)
-    )
-    unlink(file, recursive = FALSE)
-})
-
-test_that("'comment' argument", {
-    file <- file.path(tempdir(), "lines.txt")
-    unlink(file, recursive = FALSE)
-    vec <- c(
-        "# comment 1",
-        "aaa",
-        "## comment 2",
-        "bbb",
-        "# comment 3",
-        "ccc"
-    )
-    writeLines(text = vec, con = file)
-    expect_identical(
-        object = import(
-            con = file,
-            format = "lines",
-            comment = ""
-        ),
-        expected = vec
-    )
-    expect_identical(
-        object = import(
-            con = file,
-            format = "lines",
-            comment = "#"
-        ),
-        expected = c(
-            "aaa",
-            "bbb",
-            "ccc"
-        )
-    )
-    expect_identical(
-        object = import(
-            con = file,
-            format = "lines",
-            comment = "# "
-        ),
-        expected = c(
-            "aaa",
-            "## comment 2",
-            "bbb",
-            "ccc"
-        )
-    )
-    expect_identical(
-        object = import(
-            con = file,
-            format = "lines",
-            comment = "##"
-        ),
-        expected = c(
-            "# comment 1",
-            "aaa",
-            "bbb",
-            "# comment 3",
-            "ccc"
-        )
-    )
-    unlink(file, recursive = FALSE)
-})
-
-test_that("'nMax' argument", {
-    file <- file.path(tempdir(), "lines.txt")
-    unlink(file, recursive = FALSE)
-    vec <- c("aaa", "bbb", "ccc")
-    writeLines(text = vec, con = file)
-    expect_identical(
-        object = import(
-            con = file,
-            format = "lines",
-            nMax = Inf
-        ),
-        expected = vec
-    )
-    expect_identical(
-        object = import(
-            con = file,
-            format = "lines",
-            nMax = 2L
-        ),
-        expected = vec[seq_len(2L)]
-    )
-    expect_identical(
-        object = import(
-            con = file,
-            format = "lines",
-            nMax = 1L
-        ),
-        expected = vec[[1L]]
-    )
-    unlink(file, recursive = FALSE)
-})
-
-test_that("'removeBlank' argument", {
-    file <- file.path(tempdir(), "lines.txt")
-    unlink(file, recursive = FALSE)
-    vec <- c(
-        "  aaa",
-        "bbb  ",
-        "   ",
-        ""
-    )
-    writeLines(text = vec, con = file)
-    expect_identical(
-        object = import(
-            con = file,
-            format = "lines",
-            removeBlank = FALSE
-        ),
-        expected = vec
-    )
-    expect_identical(
-        object = import(
-            con = file,
-            format = "lines",
-            removeBlank = TRUE,
-            stripWhitespace = FALSE
-        ),
-        expected = c(
-            "  aaa",
-            "bbb  ",
-            "   "
-        )
-    )
-    expect_identical(
-        object = import(
-            con = file,
-            format = "lines",
-            removeBlank = TRUE,
-            stripWhitespace = TRUE
-        ),
-        expected = c(
-            "aaa",
-            "bbb"
-        )
-    )
-    unlink(file, recursive = FALSE)
-})
-
-test_that("'skip' argument", {
-    file <- file.path(tempdir(), "lines.txt")
-    unlink(file, recursive = FALSE)
-    vec <- c("aaa", "bbb", "ccc", "ddd")
-    writeLines(text = vec, con = file)
-    expect_identical(
-        object = import(
-            con = file,
-            format = "lines",
-            skip = 0L
-        ),
-        expected = vec
-    )
-    expect_identical(
-        object = import(
-            con = file,
-            format = "lines",
-            skip = length(vec) - 1L
-        ),
-        expected = vec[[length(vec)]]
-    )
-    expect_identical(
-        object = import(
-            con = file,
-            format = "lines",
-            skip = 2L,
-            nMax = 1L
-        ),
-        expected = vec[[3L]]
-    )
-    expect_error(
-        object = import(
-            con = file,
-            format = "lines",
-            skip = 1L,
-            comment = "#"
-        ),
-        regexp = "comment"
-    )
-    expect_error(
-        object = import(
-            con = file,
-            format = "lines",
-            skip = 1L,
-            removeBlank = TRUE
-        ),
-        regexp = "removeBlank"
-    )
-    unlink(file, recursive = FALSE)
-})
-
-test_that("'stripWhitespace' argument", {
-    file <- file.path(tempdir(), "lines.txt")
-    unlink(file, recursive = FALSE)
-    vec <- c(
-        "  aaa",
-        "bbb  ",
-        " ccc ",
-        "  ddd  ",
-        "eee",
-        "   "
-    )
-    writeLines(text = vec, con = file)
-    expect_identical(
-        object = import(
-            con = file,
-            format = "lines",
-            stripWhitespace = FALSE
-        ),
-        expected = vec
-    )
-    expect_identical(
-        object = import(
-            con = file,
-            format = "lines",
-            stripWhitespace = TRUE
-        ),
-        expected = c(
-            "aaa",
-            "bbb",
-            "ccc",
-            "ddd",
-            "eee",
-            ""
-        )
-    )
-    unlink(file, recursive = FALSE)
 })
 
 
