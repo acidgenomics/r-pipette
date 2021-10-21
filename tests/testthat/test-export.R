@@ -1,53 +1,75 @@
 context("export : character")
 
+## FIXME data.table is not outputting correctly here, without quoting.
+for (engine in .engines) {
+    test_that(
+        desc = paste("'append' argument", engine, sep = " : "),
+        code = {
+            con <- file.path(tempdir(), "lines.txt")
+            unlink(con, recursive = FALSE)
+            object1 <- c("aaa", "bbb")
+            object2 <- c("ccc", "ddd")
+            switch(
+                EXPR = engine,
+                "base" = {
+                    expect_error(
+                        object = export(
+                            object = object1,
+                            con = con,
+                            append = TRUE,
+                            engine = engine
+                        ),
+                        regexp = "base"
+                    )
+                },
+                {
+                    export(
+                        object = object1,
+                        con = con,
+                        append = FALSE,
+                        overwrite = TRUE,
+                        engine = engine
+                    )
+                    expect_identical(
+                        object = import(
+                            con = con,
+                            format = "lines",
+                            engine = engine
+                        ),
+                        expected = object1
+                    )
+                    export(
+                        object = object2,
+                        con = con,
+                        append = TRUE,
+                        overwrite = FALSE,
+                        engine = engine
+                    )
+                    expect_identical(
+                        object = import(
+                            con = con,
+                            format = "lines",
+                            engine = engine
+                        ),
+                        expected = c(object1, object2)
+                    )
+                }
+            )
+            unlink(con, recursive = FALSE)
+        }
+    )
+}
+
+
+
+
+
+
+
 ## FIXME Need to ensure that deprecated "file" and "ext" coverage still works.
 ## FIXME Need to check support for all engines except base...
 
-test_that("'append' argument", {
-    con <- file.path(tempdir(), "lines.txt")
-    unlink(con, recursive = FALSE)
-    object1 <- c("aaa", "bbb")
-    object2 <- c("ccc", "ddd")
-    expect_error(
-        object = export(
-            object = object2,
-            con = con,
-            append = TRUE,
-            engine = "base"
-        ),
-        regexp = "base"
-    )
 
-    ## FIXME Does this work for readr???
-
-    for engine in c(
-        "data.table",
-        "readr"
-    ) {
-        unlink(con, recursive = FALSE)
-        export(
-            object = object1,
-            con = con,
-            engine = engine
-        )
-        expect_identical(
-            object = import(con = con, format = "lines"),
-            expected = object1
-        )
-        export(
-            object = object2,
-            con = con,
-            append = TRUE,
-            engine = engine
-        )
-        expect_identical(
-            object = import(con = con, format = "lines"),
-            expected = c(object1, object2)
-        )
-        unlink(con, recursive = FALSE)
-    }
-    unlink(con, recursive = FALSE)
-})
 
 test_that("'engine' argument", {
     vec <- c("hello", "world")
