@@ -475,6 +475,7 @@ NULL
                 choices = c("csv", "tsv")
             )
         }
+        ## FIXME Need to improve quoting consistency here.
         switch(
             EXPR = whatPkg,
             "base" = {
@@ -533,8 +534,9 @@ NULL
                         "tsv" = "\t"
                     ),
                     "eol" = "\n",
+                    "escape" = "double",
                     "na" = "NA",
-                    "quote_escape" = "double"
+                    "quote" = "all"
                 )
             }
         )
