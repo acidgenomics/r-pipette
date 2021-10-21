@@ -189,35 +189,36 @@ for (format in .exportFormatChoices[["delim"]]) {
     }
 }
 
-test_that("Column names disabled", {
-    object <- DataFrame(
-        "txId" = c(
-            "tx0001",
-            "tx0002",
-            "tx0003",
-            "tx0004"
-        ),
-        "geneId" = c(
-            "gene0001",
-            "gene0001",
-            "gene0002",
-            "gene0002"
-        )
+for (engine in .engines) {
+    test_that(
+        desc = paste("Column names disabled", engine, sep = " : "),
+        code = {
+            object <- DataFrame(
+                "txId" = c("tx0001", "tx0002", "tx0003", "tx0004"),
+                "geneId" = c("gene0001", "gene0001", "gene0002", "gene0002")
+            )
+            con <- file.path(tempdir(), "export", "tx2gene.csv")
+            unlink(con, recursive = FALSE)
+            x <- export(
+                object = object,
+                con = con,
+                colnames = FALSE,
+                engine = engine
+            )
+            header <- import(
+                con = x,
+                format = "lines",
+                nMax = 1,
+                engine = engine
+            )
+            expect_identical(
+                object = header,
+                expected = "\"tx0001\",\"gene0001\""
+            )
+            unlink(con, recursive = FALSE)
+        }
     )
-    con <- file.path(tempdir(), "export", "tx2gene.csv")
-    unlink(con, recursive = FALSE)
-    x <- export(
-        object = object,
-        con = con,
-        colnames = FALSE
-    )
-    header <- import(con = x, format = "lines", nMax = 1)
-    expect_identical(
-        object = header,
-        expected = "tx0001,gene0001"
-    )
-    unlink(con, recursive = FALSE)
-})
+}
 
 test_that("Deprecated 'ext' argument", {
     object <- df
