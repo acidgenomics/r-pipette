@@ -162,8 +162,12 @@ NULL
             default = FALSE
         )
     ) {
+        if (missing(format)) {
+            format <- NULL
+        }
         assert(
             isString(con),
+            is.null(format),
             isFlag(overwrite),
             isFlag(append),
             isString(engine),
@@ -173,11 +177,6 @@ NULL
         if (isTRUE(verbose)) {
             assert(isFALSE(quiet))
         }
-        formatChoices <- .exportFormatChoices[["character"]]
-        if (missing(format)) {
-            format <- fileExt(con)
-        }
-        format <- match.arg(arg = format, choices = formatChoices)
         whatPkg <- match.arg(arg = engine, choices = .engines)
         requireNamespaces(whatPkg)
         if (isTRUE(append)) {
