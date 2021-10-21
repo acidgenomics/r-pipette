@@ -111,7 +111,7 @@ NULL
 
 
 
-## Updated 2021-09-27.
+## Updated 2021-10-21.
 .exportFormatChoices <- list(
     "Matrix" = c(
         "mtx.gz",
@@ -127,7 +127,7 @@ NULL
         "txt.xz",
         "txt.zip"
     ),
-    "matrix" = c(
+    "delim" = c(
         "csv",
         "csv.bz2",
         "csv.gz",
@@ -378,7 +378,7 @@ NULL
             isFlag(verbose),
             isFlag(quiet)
         )
-        formatChoices <- .exportFormatChoices[["matrix"]]
+        formatChoices <- .exportFormatChoices[["delim"]]
         if (missing(format)) {
             format <- fileExt(con)  # nocov
         }
@@ -595,7 +595,7 @@ NULL
             format <- ext
         }
         assert(isString(dir))
-        formatChoices <- .exportFormatChoices[["matrix"]]
+        formatChoices <- .exportFormatChoices[["delim"]]
         if (missing(format)) {
             format <- formatChoices[[1L]]
         }
@@ -647,7 +647,7 @@ NULL
             isFlag(overwrite),
             isFlag(quiet)
         )
-        formatChoices <- .exportFormatChoices[["Matrix"]]
+        formatChoices <- .exportFormatChoices[["delim"]]
         if (missing(format)) {
             format <- fileExt(con)  # nocov
         }
@@ -759,7 +759,7 @@ NULL
             format <- ext
         }
         assert(isString(dir))
-        formatChoices <- .exportFormatChoices[["Matrix"]]
+        formatChoices <- .exportFormatChoices[["delim"]]
         if (missing(format)) {
             format <- formatChoices[[1L]]
         }

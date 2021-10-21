@@ -111,57 +111,108 @@ for (engine in .engines) {
 
 
 
+context("export : Delimited files")
+
+objects <- list(
+    "DataFrame" = df,
+    "data.table" = dt,
+    "matrix" = mat,
+    "tbl_df" = tbl
+)
+
+## FIXME Need to cover the handling of `colnames = FALSE` here.
+
+for (engine in .engines) {
+    for (class in names(objects)) {
+        for (format in .exportFormatChoices[["delim"]]) {
+            test_that(
+                desc = paste(
+                    "'format' argument",
+                    format, class, engine,
+                    sep = " : "
+                ),
+                code = {
+                    testdir <- file.path(tempdir(), "export")
+                    unlink(testdir, recursive = TRUE)
+                    object <- objects[[class]]
+                    expect_is(object, class)
+                    file <- export(
+                        object = object,
+                        format = format,
+                        dir = testdir,
+                        engine = engine
+                    )
+                    expect_true(file.exists(file))
+                    expect_identical(
+                        object = basename(file),
+                        expected = paste0("object", ".", format)
+                    )
+                    expect_true(grepl(
+                        pattern = "rowname",
+                        x = head(import(
+                            con = file,
+                            format = "lines",
+                            engine = engine
+                        ), n = 1L)
+                    ))
+                    ## Check the overwrite support.
+                    expect_error(
+                        export(
+                            object = object,
+                            format = format,
+                            dir = testdir,
+                            overwrite = FALSE,
+                            engine = engine
+                        ),
+                        "File exists"
+                    )
+                    expect_message(
+                        export(
+                            object = object,
+                            format = format,
+                            dir = testdir,
+                            overwrite = TRUE,
+                            engine = engine
+                        ),
+                        "Overwriting"
+                    )
+                    unlink(testdir, recursive = TRUE)
 
 
 
-context("export : delim (DataFrame, data.frame, matrix)")
 
-## FIXME Need to migrate DataFrame duplicated checks here...
 
-test_that("'engine' argument", {
-    for (engine in c("base", "data.table", "readr")) {
-        options("acid.export.engine" = engine)
-        file <- export(object = mat, ext = "csv")
-        expect_true(file.exists(file))
-        expect_identical(basename(file), "mat.csv")
-        unlink(file)
+
+                    unlink(testdir, recursive = TRUE)
+                    ## FIXME Move this out to a separate unit test.
+                    ## Now strip the names, and confirm that export still works.
+                    mat2 <- unname(mat1)
+                    file2 <- paste0("mat2", ".", ext)
+                    x <- export(object = mat2, ext = ext)
+                    expect_identical(x, realpath(file2))
+                    expect_true(file.exists(file2))
+                    expect_true(grepl(
+                        pattern = "V1",
+                        x = head(import(file2, format = "lines"), n = 1L)
+                    ))
+                    file.remove(file1, file2)
+
+
+
+
+                    unlink(testdir, recursive = TRUE)
+                }
+            )
+        }
     }
-    options("acid.export.engine" = NULL)
-})
+}
 
-test_that("'format' argument", {
-    formats <- .exportFormatChoices[["matrix"]]
-    for (format in formats) {
-        mat1 <- mat
-        file1 <- paste0("mat1", ".", format)
-        x <- export(object = mat1, format = format)
-        expect_identical(x, realpath(file1))
-        expect_true(file.exists(file1))
-        expect_true(grepl(
-            pattern = "rowname",
-            x = head(import(file1, format = "lines"), n = 1L)
-        ))
-        ## Check accidental overwrite support.
-        expect_error(
-            export(mat1, ext = ext, overwrite = FALSE),
-            "File exists"
-        )
-        expect_message(
-            export(mat1, ext = ext, overwrite = TRUE),
-            "Overwriting"
-        )
-        ## Now strip the names, and confirm that export still works.
-        mat2 <- unname(mat1)
-        file2 <- paste0("mat2", ".", ext)
-        x <- export(object = mat2, ext = ext)
-        expect_identical(x, realpath(file2))
-        expect_true(file.exists(file2))
-        expect_true(grepl(
-            pattern = "V1",
-            x = head(import(file2, format = "lines"), n = 1L)
-        ))
-        file.remove(file1, file2)
-    }
+## FIXME Need to parameterize this.
+test_that("Deprecated 'file' argument", {
+    x <- export(df, file = "df.csv")
+    expect_identical(x, realpath("df.csv"))
+    expect_true(file.exists("df.csv"))
+    file.remove("df.csv")
 })
 
 test_that("Invalid input", {
@@ -173,46 +224,14 @@ test_that("Invalid input", {
 
 
 
-context("export : DataFrame")
-
-## FIXME These seem a bit duplicated with matrix / data.frame approach above.
-
-test_that("'ext' argument", {
-    formats <- .exportFormatChoices[["matrix"]]
-    for (ext in formats) {
-        file <- paste0("df", ".", ext)
-        x <- export(df, ext = ext)
-        expect_identical(x, realpath(file))
-        expect_true(file.exists(file))
-        ## Check that row names stay intact.
-        expect_true(grepl(
-            pattern = "rowname",
-            x = head(import(file, format = "lines"), n = 1L)
-        ))
-        file.remove(file)
-    }
-})
-
-test_that("Deprecated 'file' argument", {
-    x <- export(df, file = "df.csv")
-    expect_identical(x, realpath("df.csv"))
-    expect_true(file.exists("df.csv"))
-    file.remove("df.csv")
-})
-
-test_that("Invalid input", {
-    expect_error(
-        object = export(object = as.data.frame(df)),
-        regexp = "symbol"
-    )
-})
-
-
-
-context("export : Matrix / sparseMatrix")
+context("export : sparseMatrix")
 
 test_that("'ext' argument, using gzip compression", {
-    x <- export(sparse, ext = "mtx.gz")
+    ## FIXME Ensure we write into temporary directory.
+    x <- export(
+        object = sparse,
+        ext = "mtx.gz"
+    )
     expect_identical(
         object = x,
         expected = c(
