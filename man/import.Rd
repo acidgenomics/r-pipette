@@ -48,7 +48,8 @@ import(con, format, text, ...)
   engine = getOption(x = "acid.import.engine", default = "readr"),
   makeNames = getOption(x = "acid.import.make.names", default = syntactic::makeNames),
   metadata = getOption(x = "acid.import.metadata", default = FALSE),
-  quiet = getOption(x = "acid.quiet", default = FALSE)
+  quiet = getOption(x = "acid.quiet", default = FALSE),
+  verbose = getOption(x = "acid.verbose", default = FALSE)
 )
 
 \S4method{import}{LinesFile,missingOrNULL,missingOrNULL}(
@@ -250,6 +251,9 @@ Metadata.}
 
 \item{quiet}{\code{logical(1)}.
 Perform command quietly, suppressing messages.}
+
+\item{verbose}{\code{logical(1)}.
+Run the function with verbose output.}
 
 \item{stripWhitespace}{\code{logical(1)}.
 Strip leading and/or trailing whitespace.
