@@ -1,8 +1,3 @@
-## FIXME Add direct support for verbose mode, which should print column types
-## for readr engine...
-
-
-
 #' Import
 #'
 #' Read file by extension into R.
@@ -239,14 +234,14 @@
 #' - `vroom::vroom()`.
 #'
 #' @examples
-#' file <- system.file("extdata/example.csv", package = "pipette")
+#' con <- system.file("extdata/example.csv", package = "pipette")
 #'
 #' ## Row and column names enabled.
-#' x <- import(file)
+#' x <- import(con)
 #' print(head(x))
 #'
 #' ## Row and column names disabled.
-#' x <- import(file, rownames = FALSE, colnames = FALSE)
+#' x <- import(con, rownames = FALSE, colnames = FALSE)
 #' print(head(x))
 NULL
 
@@ -1084,10 +1079,7 @@ NULL
                     "showProgress" = FALSE,
                     "stringsAsFactors" = FALSE,
                     "strip.white" = TRUE,
-                    "verbose" = getOption(
-                        x = "datatable.verbose",
-                        default = verbose
-                    )
+                    "verbose" = verbose
                 )
                 if (isCharacter(colnames)) {
                     ## nocov start
@@ -1567,10 +1559,7 @@ NULL
                     "sep" = "\n",
                     "skip" = skip,
                     "strip.white" = stripWhitespace,
-                    "verbose" = getOption(
-                        x = "datatable.verbose",
-                        default = verbose
-                    )
+                    "verbose" = verbose
                 )
             },
             "readr" = {

@@ -157,7 +157,8 @@ export(object, con, format, ...)
   append = FALSE,
   overwrite = getOption(x = "acid.overwrite", default = TRUE),
   engine = getOption(x = "acid.export.engine", default = "base"),
-  quiet = getOption(x = "acid.quiet", default = FALSE)
+  quiet = getOption(x = "acid.quiet", default = FALSE),
+  verbose = getOption(x = "acid.verbose", default = FALSE)
 )
 
 \S4method{export}{character,character,missingOrNULL}(
@@ -167,7 +168,8 @@ export(object, con, format, ...)
   append = FALSE,
   overwrite = getOption(x = "acid.overwrite", default = TRUE),
   engine = getOption(x = "acid.export.engine", default = "base"),
-  quiet = getOption(x = "acid.quiet", default = FALSE)
+  quiet = getOption(x = "acid.quiet", default = FALSE),
+  verbose = getOption(x = "acid.verbose", default = FALSE)
 )
 
 \S4method{export}{character,missingOrNULL,missingOrNULL}(
@@ -323,6 +325,9 @@ Directory path.}
 Append to output file.
 When enabled, automatically sets \code{overwrite} argument to \code{FALSE}.
 Requires readr package to be installed.}
+
+\item{verbose}{\code{logical(1)}.
+Run the function with verbose output.}
 }
 \value{
 Invisible \code{character}.
