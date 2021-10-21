@@ -38,7 +38,7 @@
 #' })
 transmit <- function(
     remoteDir,
-    localDir = ".",
+    localDir = getwd(),
     pattern,
     rename = NULL,
     compress = FALSE,

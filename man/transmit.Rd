@@ -6,7 +6,7 @@
 \usage{
 transmit(
   remoteDir,
-  localDir = ".",
+  localDir = getwd(),
   pattern,
   rename = NULL,
   compress = FALSE,

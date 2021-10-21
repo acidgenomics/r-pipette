@@ -175,7 +175,7 @@ saveData <- function(
 #' assignAndSaveData(
 #'     name = "example",
 #'     object = x,
-#'     dir = ".",
+#'     dir = getwd(),
 #'     ext = "rds"
 #' )
 #' exists("example", inherits = FALSE)
