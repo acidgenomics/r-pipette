@@ -1,3 +1,7 @@
+## FIXME Sunset vroom support in favor of simply using readr.
+
+
+
 #' Export
 #'
 #' @name export
