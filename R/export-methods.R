@@ -239,10 +239,7 @@ NULL
                     "append" = append,
                     "na" = "NA",
                     "sep" = "\n",
-                    "verbose" = getOption(
-                        x = "datatable.verbose",
-                        default = verbose
-                    )
+                    "verbose" = verbose
                 )
             },
             "readr" = {
