@@ -1087,7 +1087,7 @@ NULL
                     "verbose" = getOption(
                         x = "datatable.verbose",
                         default = verbose
-                    ))
+                    )
                 )
                 if (isCharacter(colnames)) {
                     ## nocov start
@@ -1570,7 +1570,7 @@ NULL
                     "verbose" = getOption(
                         x = "datatable.verbose",
                         default = verbose
-                    ))
+                    )
                 )
             },
             "readr" = {

@@ -22,8 +22,7 @@ test_that("'append' argument", {
 
     for engine in c(
         "data.table",
-        "readr",
-        "vroom"
+        "readr"
     ) {
         unlink(con, recursive = FALSE)
         export(
