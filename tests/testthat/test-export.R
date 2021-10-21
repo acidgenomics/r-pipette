@@ -208,7 +208,7 @@ for (engine in .engines) {
             header <- import(
                 con = x,
                 format = "lines",
-                nMax = 1,
+                nMax = 1L,
                 engine = engine
             )
             expect_identical(
