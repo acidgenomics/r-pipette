@@ -315,47 +315,39 @@ for (engine in .engines) {
 
 
 
-
-
-
-
-## FIXME Wrap these inside for loop.
-
-
-
-
-
 context("import : Delimited files")
 
-test_that("CSV and TSV", {
+for (engine in .engines) {
     for (ext in c("csv", "csv.gz", "tsv")) {
-        con <- file.path("cache", paste0("example.", ext))
-        ## FIXME Rework this looping at the top instead.
-        for (engine in .engines) {
-            object <- import(
-                con = con,
-                engine = engine,
-                metadata = TRUE
-            )
-            expect_is(object, "data.frame")
-            expect_true(hasRownames(object))
-            expect_is(
-                object = attributes(object)[["import"]][["file"]],
-                class = "character"
-            )
-            expect_match(
-                object = attributes(object)[["import"]][["importerName"]],
-                regexp = engine
-            )
-            object <- import(
-                con = con,
-                engine = engine,
-                rownameCol = "rowname"
-            )
-            expect_true(hasRownames(object))
-        }
+        test_that(
+            desc = paste(ext, engine, sep = " : "),
+            code = {
+                con <- file.path("cache", paste0("example.", ext))
+                object <- import(
+                    con = con,
+                    engine = engine,
+                    metadata = TRUE
+                )
+                expect_is(object, "data.frame")
+                expect_true(hasRownames(object))
+                expect_is(
+                    object = attributes(object)[["import"]][["file"]],
+                    class = "character"
+                )
+                expect_match(
+                    object = attributes(object)[["import"]][["importerName"]],
+                    regexp = engine
+                )
+                object <- import(
+                    con = con,
+                    engine = engine,
+                    rownameCol = "rowname"
+                )
+                expect_true(hasRownames(object))
+            }
+        )
     }
-})
+}
 
 test_that("Deprecated 'file' argument", {
     object <- import(file = file.path("cache", "example.csv"))
