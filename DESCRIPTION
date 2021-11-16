@@ -26,7 +26,7 @@ Imports:
     AcidCLI (>= 0.1.8),
     AcidGenerics (>= 0.5.21),
     BiocIO (>= 1.2.0),
-    Matrix (>= 1.3),
+    Matrix (>= 1.3.4),
     RCurl (>= 1.98),
     data.table (>= 1.14.2),
     goalie (>= 0.6.0),
