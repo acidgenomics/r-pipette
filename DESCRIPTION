@@ -41,7 +41,7 @@ Suggests:
     Biostrings (>= 2.62.0),
     digest (>= 0.6.29),
     httr (>= 1.4.2),
-    jsonlite (>= 1.7.2),
+    jsonlite (>= 1.7.3),
     pzfx (>= 0.3.0),
     readxl (>= 1.3.1),
     rio (>= 0.5.29),
