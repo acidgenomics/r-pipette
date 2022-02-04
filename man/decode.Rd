@@ -4,7 +4,7 @@
 \alias{decode}
 \alias{decode,DataFrame-method}
 \alias{decode,Ranges-method}
-\title{Decode column data that uses run-length encoding}
+\title{Decode data that uses run-length encoding}
 \usage{
 decode(x, ...)
 
@@ -22,10 +22,10 @@ Modified object.
 Columns will be decoded and no longer \code{Rle} class.
 }
 \description{
-Decode (run-length encoding)
+Decode data that uses run-length encoding
 }
 \note{
-Updated 2021-10-14.
+Updated 2022-02-04.
 }
 \examples{
 data(DataFrame, package = "AcidTest")

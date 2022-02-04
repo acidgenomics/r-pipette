@@ -1,14 +1,14 @@
-#' @importFrom AcidGenerics DataFrame
+#' @importFrom S4Vectors DataFrame
 #' @export
-AcidGenerics::DataFrame
+S4Vectors::DataFrame
 
-#' @importFrom AcidGenerics GRanges
+#' @importFrom GenomicRanges GRanges
 #' @export
-AcidGenerics::GRanges
+GenomicRanges::GRanges
 
-#' @importFrom AcidGenerics GRangesList
+#' @importFrom GenomicRanges GRangesList
 #' @export
-AcidGenerics::GRangesList
+GenomicRanges::GRangesList
 
 #' @importFrom Matrix Matrix
 #' @export
@@ -42,13 +42,13 @@ RCurl::getURL
 #' @export
 syntactic::makeNames
 
-#' @importFrom AcidGenerics metadata
+#' @importFrom S4Vectors metadata
 #' @export
-AcidGenerics::metadata
+S4Vectors::metadata
 
-#' @importFrom AcidGenerics metadata<-
+#' @importFrom S4Vectors metadata<-
 #' @export
-AcidGenerics::`metadata<-`
+S4Vectors::`metadata<-`
 
 #' @importFrom AcidBase pasteURL
 #' @export
@@ -66,17 +66,17 @@ tibble::rownames_to_column
 #' @export
 Matrix::sparseMatrix
 
-#' @importFrom AcidBase tar
+#' @importFrom utils tar
 #' @export
-AcidBase::tar
+utils::tar
 
 #' @importFrom tibble tibble
 #' @export
 tibble::tibble
 
-#' @importFrom AcidBase untar
+#' @importFrom utils untar
 #' @export
-AcidBase::untar
+utils::untar
 
 
 
