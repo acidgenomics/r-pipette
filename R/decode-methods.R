@@ -1,8 +1,7 @@
-#' Decode column data that uses run-length encoding
+#' Decode data that uses run-length encoding
 #'
 #' @name decode
-#' @inherit AcidGenerics::decode description return
-#' @note Updated 2021-10-14.
+#' @note Updated 2022-02-04.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.

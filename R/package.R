@@ -4,20 +4,24 @@
 #'
 #' @keywords internal
 #'
-#' @importClassesFrom AcidGenerics BiocFile DataFrame GenomicRanges
-#'   IntegerRanges List Ranges SimpleList missingOrNULL
+#' @importClassesFrom AcidBase missingOrNULL
+#' @importClassesFrom BiocIO BiocFile
+#' @importClassesFrom GenomicRanges GenomicRanges
+#' @importClassesFrom IRanges IntegerRanges Ranges
 #' @importClassesFrom Matrix Matrix
+#' @importClassesFrom S4Vectors DataFrame List SimpleList
 #'
-#' @importFrom AcidBase basenameSansExt dots download download.file fileExt
-#'   initDir methodFunction packageName packageVersion pasteURL realpath
-#'   requireNamespaces standardizeCall
+#' @importFrom AcidBase basenameSansExt dots download fileExt initDir
+#'   methodFunction pasteURL realpath requireNamespaces standardizeCall
 #' @importFrom AcidCLI abort alert alertInfo alertSuccess alertWarning
 #'   toInlineString
-#' @importFrom AcidGenerics DataFrame Rle SimpleList as.data.frame end head
-#'   mcols mcols<- metadata metadata<- na.omit seqnames start strand tail width
+#' @importFrom BiocGenerics as.data.frame end start strand width
 #' @importFrom BiocIO resource
+#' @importFrom GenomicRanges seqnames
 #' @importFrom Matrix readMM writeMM
 #' @importFrom RCurl getURL
+#' @importFrom S4Vectors DataFrame Rle SimpleList head mcols mcols<- metadata
+#'   metadata<- na.omit tail
 #' @importFrom goalie assert allAreAtomic allAreExisting allAreFiles
 #'   allAreNonExisting allAreURLs allHaveAccess areDisjointSets areSameLength
 #'   areSetEqual bapply compressExtPattern extPattern formalCompress hasColnames
@@ -28,4 +32,5 @@
 #' @importFrom methods as is hasMethod new setGeneric signature validObject
 #' @importFrom stringr str_extract str_match str_subset
 #' @importFrom syntactic makeNames
+#' @importFrom utils download.file packageName packageVersion
 "_PACKAGE"
