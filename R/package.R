@@ -11,8 +11,9 @@
 #' @importClassesFrom Matrix Matrix
 #' @importClassesFrom S4Vectors DataFrame List SimpleList
 #'
-#' @importFrom AcidBase basenameSansExt dots download fileExt initDir
-#'   methodFunction pasteURL realpath requireNamespaces standardizeCall
+#' @importFrom AcidBase basenameSansExt compress decompress dots download
+#'   fileExt initDir methodFunction pasteURL realpath requireNamespaces
+#'   standardizeCall
 #' @importFrom AcidCLI abort alert alertInfo alertSuccess alertWarning
 #'   toInlineString
 #' @importFrom BiocGenerics as.data.frame end start strand width

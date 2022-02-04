@@ -40,7 +40,7 @@ Download and cache a file using BiocFileCache
 Updated 2021-05-18.
 }
 \examples{
-url <- pasteURL(
+url <- AcidBase::pasteURL(
     pipetteTestsURL,
     "biocfilecache-test.txt",
     protocol = "none"
