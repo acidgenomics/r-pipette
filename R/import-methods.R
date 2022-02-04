@@ -251,7 +251,7 @@ NULL
 
 #' Inform the user about start of file import
 #'
-#' @note Updated 2021-09-24.
+#' @note Updated 2022-02-04.
 #' @noRd
 .alertImport <- function(
     con,
@@ -267,14 +267,14 @@ NULL
     if (is.null(file)) {
         file <- resource(con)
     }
+    fileType <- ifelse(test = isAURL(file), yes = "url", no = "file")
+    ## Handle edge case of cleaning Google Sheets URL.
+    if (identical(fileType, "url")) {
+        file <- sub(pattern = "\\#.+$", replacement = "", x = file)
+    }
     alert(sprintf(
         "Importing {.%s %s} using {.pkg %s}::{.fun %s}.",
-        ifelse(
-            test = isAURL(file),
-            yes = "url",
-            no = "file"
-        ),
-        file,
+        fileType, file,
         whatPkg, whatFun
     ))
     invisible(TRUE)
