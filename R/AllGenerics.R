@@ -35,7 +35,7 @@ NULL
 
 #' @rdname decode
 #' @name decode
-#' @importFrom AcidGenerics decode
+#' @importFrom S4Vectors decode
 #' @usage decode(x, ...)
 #' @export
 NULL
@@ -44,7 +44,7 @@ NULL
 
 #' @rdname droplevels
 #' @name droplevels
-#' @importFrom AcidGenerics droplevels
+#' @importFrom S4Vectors droplevels
 #' @usage droplevels(x, ...)
 #' @export
 NULL
@@ -62,7 +62,7 @@ NULL
 
 #' @rdname export
 #' @name export
-#' @importFrom AcidGenerics export
+#' @importFrom BiocIO export
 #' @usage export(object, con, format, ...)
 #' @export
 NULL
@@ -80,7 +80,7 @@ NULL
 
 #' @rdname import
 #' @name import
-#' @importFrom AcidGenerics import
+#' @importFrom BiocIO import
 #' @usage import(con, format, text, ...)
 #' @export
 NULL
