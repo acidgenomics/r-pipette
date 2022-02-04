@@ -2,6 +2,7 @@
 
 ### Major changes
 
+- No longer reexporting any functions or S4 classes.
 - `export`, `import`: Switched to recommended new BiocIO generic approaches,
   which are now used in multiple Bioconductor packages, notably rtracklayer.
 - `export`, `import`: Switched back to readr as default engine from data.table.
