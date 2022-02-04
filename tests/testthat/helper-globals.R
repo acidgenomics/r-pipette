@@ -39,12 +39,12 @@ mtcars <- as(mtcars, "DataFrame")
 sparse <- sparseMatrix
 tbl <- tibble
 
-DataFrame <- AcidGenerics::DataFrame
+DataFrame <- S4Vectors::DataFrame
 data.table <- data.table::data.table
 hasInternet <- goalie::hasInternet
 isSubset <- goalie::isSubset
-mcols <- AcidGenerics::mcols
-metadata <- AcidGenerics::metadata
+mcols <- S4Vectors::mcols
+metadata <- S4Vectors::metadata
 seqnames <- GenomicRanges::seqnames
 skip_on_docker <- goalie::skip_on_docker
 tibble <- tibble::tibble
