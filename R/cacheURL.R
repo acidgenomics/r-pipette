@@ -19,7 +19,7 @@
 #' - `BiocFileCache::bfcinfo()`.
 #'
 #' @examples
-#' url <- pasteURL(
+#' url <- AcidBase::pasteURL(
 #'     pipetteTestsURL,
 #'     "biocfilecache-test.txt",
 #'     protocol = "none"
