@@ -2,8 +2,6 @@
 % Please edit documentation in R/AllGenerics.R, R/coerce-methods.R
 \name{as.DataFrame}
 \alias{as.DataFrame}
-\alias{as.data.table}
-\alias{as_tibble}
 \alias{coerce}
 \alias{as_tibble.DataFrame}
 \alias{as_tibble.GenomicRanges}
@@ -28,8 +26,6 @@
 \title{Coercion methods}
 \usage{
 as.DataFrame(x, ...)
-
-as.data.table(x, keep.rownames = FALSE, ...)
 
 \method{as_tibble}{DataFrame}(
   x,
