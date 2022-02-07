@@ -1,3 +1,5 @@
+## S4 generics =================================================================
+
 #' @rdname atomize
 #' @name atomize
 #' @usage atomize(object, ...)
@@ -7,6 +9,12 @@ NULL
 #' @rdname coerce
 #' @name as.DataFrame
 #' @usage as.DataFrame(x, ...)
+#' @export
+NULL
+
+#' @rdname coerce
+#' @name as.data.frame
+#' @usage as.data.frame(x, row.names = NULL, optional = FALSE, ...)
 #' @export
 NULL
 
@@ -79,5 +87,20 @@ NULL
 #' @rdname sanitizePercent
 #' @name sanitizePercent
 #' @usage sanitizePercent(object, ...)
+#' @export
+NULL
+
+
+
+## S3 generics =================================================================
+
+#' @rdname coerce
+#' @name as_tibble
+#' @export
+NULL
+
+#' @rdname coerce
+#' @name as.data.table
+#' @usage as.data.table(x, keep.rownames = FALSE, ...)
 #' @export
 NULL
