@@ -1,5 +1,11 @@
 ## S4 generics =================================================================
 
+#' @rdname as.DataFrame
+#' @name as.DataFrame
+#' @usage as.DataFrame(x, ...)
+#' @export
+NULL
+
 #' @rdname atomize
 #' @name atomize
 #' @usage atomize(object, ...)
@@ -7,15 +13,9 @@
 NULL
 
 #' @rdname coerce
-#' @name as.DataFrame
-#' @usage as.DataFrame(x, ...)
+#' @name coerce
 #' @export
-NULL
-
-#' @rdname coerce
-#' @name as.data.frame
-#' @usage as.data.frame(x, row.names = NULL, optional = FALSE, ...)
-#' @export
+#' @exportMethod coerce
 NULL
 
 #' @rdname decode
@@ -94,13 +94,12 @@ NULL
 
 ## S3 generics =================================================================
 
-#' @rdname coerce
+#' @rdname as_tibble
 #' @name as_tibble
 #' @export
 NULL
 
-#' @rdname coerce
+#' @rdname as.data.table
 #' @name as.data.table
-#' @usage as.data.table(x, keep.rownames = FALSE, ...)
 #' @export
 NULL
