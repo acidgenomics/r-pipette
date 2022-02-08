@@ -2,14 +2,20 @@
 
 #' @rdname as.DataFrame
 #' @name as.DataFrame
-#' @usage as.DataFrame(x, ...)
 #' @export
+#' @usage as.DataFrame(x, ...)
+NULL
+
+#' @rdname as.data.frame
+#' @name as.data.frame
+#' @export
+#' @usage as.data.frame(x, row.names = NULL, optional = FALSE, ...)
 NULL
 
 #' @rdname atomize
 #' @name atomize
-#' @usage atomize(object, ...)
 #' @export
+#' @usage atomize(object, ...)
 NULL
 
 #' @rdname coerce
@@ -20,74 +26,74 @@ NULL
 
 #' @rdname decode
 #' @name decode
-#' @usage decode(x, ...)
 #' @export
+#' @usage decode(x, ...)
 NULL
 
 #' @rdname droplevels
 #' @name droplevels
-#' @usage droplevels(x, ...)
 #' @export
+#' @usage droplevels(x, ...)
 NULL
 
 #' @rdname encode
 #' @name encode
-#' @usage encode(x, ...)
 #' @export
+#' @usage encode(x, ...)
 NULL
 
 #' @rdname export
 #' @name export
-#' @usage export(object, con, format, ...)
 #' @export
+#' @usage export(object, con, format, ...)
 NULL
 
 #' @rdname factorize
 #' @name factorize
-#' @usage factorize(object, ...)
 #' @export
+#' @usage factorize(object, ...)
 NULL
 
 #' @rdname import
 #' @name import
-#' @usage import(con, format, text, ...)
 #' @export
+#' @usage import(con, format, text, ...)
 NULL
 
 #' @rdname matchRownameColumn
 #' @name matchRownameColumn
-#' @usage matchRownameColumn(object, ...)
 #' @export
+#' @usage matchRownameColumn(object, ...)
 NULL
 
 #' @rdname metadata2
 #' @name metadata2
-#' @usage metadata2(x, which, ...)
 #' @export
+#' @usage metadata2(x, which, ...)
 NULL
 
 #' @rdname metadata2
 #' @name metadata2<-
-#' @usage metadata2(x, which, ...) <- value
 #' @export
+#' @usage metadata2(x, which, ...) <- value
 NULL
 
 #' @rdname removeNA
 #' @name removeNA
-#' @usage removeNA(object, ...)
 #' @export
+#' @usage removeNA(object, ...)
 NULL
 
 #' @rdname sanitizeNA
 #' @name sanitizeNA
-#' @usage sanitizeNA(object, ...)
 #' @export
+#' @usage sanitizeNA(object, ...)
 NULL
 
 #' @rdname sanitizePercent
 #' @name sanitizePercent
-#' @usage sanitizePercent(object, ...)
 #' @export
+#' @usage sanitizePercent(object, ...)
 NULL
 
 
@@ -97,9 +103,17 @@ NULL
 #' @rdname as_tibble
 #' @name as_tibble
 #' @export
+#' @usage as_tibble(
+#'     x,
+#'     ...,
+#'     .rows = NULL,
+#'     .name_repair = c("check_unique", "unique", "universal", "minimal"),
+#'     rownames = pkgconfig::get_config("tibble::rownames", NULL)
+#' )
 NULL
 
 #' @rdname as.data.table
 #' @name as.data.table
 #' @export
+#' @usage as.data.table(x, keep.rownames = FALSE, ...)
 NULL
