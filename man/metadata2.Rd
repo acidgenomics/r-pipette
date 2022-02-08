@@ -73,5 +73,4 @@ attr(x, which = "A")
 x <- S4Vectors::DataFrame()
 metadata2(x, which = "A") <- "B"
 metadata2(x, which = "A")
-metadata(x)[["A"]]
 }
