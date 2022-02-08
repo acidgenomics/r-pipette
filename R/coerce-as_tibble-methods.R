@@ -1,3 +1,7 @@
+## FIXME Rename example objects here.
+
+
+
 #' Coerce an object to a tibble
 #'
 #' @name as_tibble
@@ -19,9 +23,8 @@
 #' - `GenomicRanges` (from GenomicRanges package).
 #'
 #' @inheritParams AcidRoxygen::params
-#' @param rownames
-#'   How to treat existing row names.
-#'   Refer to `tibble::as_tibble` for current options.
+#' @param .rows,.name_repair,rownames
+#'   Refer to `tibble::as_tibble` usage details.
 #'
 #' @return `tbl_df` (tibble).
 #'
@@ -89,7 +92,7 @@ formals(as_tibble.GenomicRanges)[["rownames"]] <- .tbl_rownames
 #' @rdname as_tibble
 #' @export
 ## Updated 2021-10-14.
-as_tibble.IntegerRanges <-  # nolint
+as_tibble.IRanges <-  # nolint
     as_tibble.GenomicRanges
 
 rm(.tbl_rownames)
