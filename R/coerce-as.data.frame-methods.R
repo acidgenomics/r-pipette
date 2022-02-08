@@ -11,6 +11,8 @@
 #' @param row.names,optional
 #'   Refer to `base::data.frame` for usage details.
 #'
+#' @return `data.frame`.
+#'
 #' @examples
 #' data(
 #'     IntegerRanges,
