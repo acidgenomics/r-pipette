@@ -8,6 +8,8 @@
 \alias{coerce,GenomicRanges,tbl_df-method}
 \alias{coerce,IntegerRanges,data.table-method}
 \alias{coerce,IntegerRanges,tbl_df-method}
+\alias{coerce,Matrix,DataFrame-method}
+\alias{coerce,Matrix,data.frame-method}
 \alias{coerce,data.table,DataFrame-method}
 \alias{coerce,tbl_df,DataFrame-method}
 \title{Coercion methods}
@@ -45,6 +47,7 @@ data(
     GRanges,
     IRanges,
     data.table,
+    sparseMatrix,
     tbl_df,
     package = "AcidTest"
 )
@@ -77,6 +80,16 @@ print(to)
 ## `IRanges` to `tbl_df` ====
 from <- IRanges
 to <- as(from, "tbl_df")
+print(to)
+
+## `Matrix` to `DataFrame` ====
+from <- sparseMatrix
+to <- as(from, "DataFrame")
+print(to)
+
+## `Matrix` to `data.frame` ====
+from <- sparseMatrix
+to <- as(from, "data.frame")
 print(to)
 
 ## `data.table` to `DataFrame` ====
