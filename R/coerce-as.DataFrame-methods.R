@@ -97,7 +97,7 @@ NULL
     `as.DataFrame,data.table`
 
 ## Updated 2021-10-14.
-`as.DataFrame,IntegerRanges` <-  # nolint
+`as.DataFrame,IRanges` <-  # nolint
     function(x) {
         DataFrame(
             "start" = start(x),
@@ -136,8 +136,8 @@ setMethod(
 #' @export
 setMethod(
     f = "as.DataFrame",
-    signature = signature(x = "IntegerRanges"),
-    definition = `as.DataFrame,IntegerRanges`
+    signature = signature(x = "IRanges"),
+    definition = `as.DataFrame,IRanges`
 )
 
 #' @rdname as.DataFrame
