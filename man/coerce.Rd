@@ -6,10 +6,13 @@
 \alias{coerce,DataFrame,tbl_df-method}
 \alias{coerce,GenomicRanges,data.table-method}
 \alias{coerce,GenomicRanges,tbl_df-method}
+\alias{coerce,IntegerRanges,data.frame-method}
 \alias{coerce,IntegerRanges,data.table-method}
 \alias{coerce,IntegerRanges,tbl_df-method}
 \alias{coerce,Matrix,DataFrame-method}
 \alias{coerce,Matrix,data.frame-method}
+\alias{coerce,data.frame,data.table-method}
+\alias{coerce,data.frame,tbl_df-method}
 \alias{coerce,data.table,DataFrame-method}
 \alias{coerce,tbl_df,DataFrame-method}
 \title{Coercion methods}
@@ -72,6 +75,11 @@ from <- GRanges
 to <- as(from, "tbl_df")
 print(to)
 
+## `IRanges` to `data.frame` ====
+from <- IRanges
+to <- as(from, "data.frame")
+print(to)
+
 ## `IRanges` to `data.table` ====
 from <- IRanges
 to <- as(from, "data.table")
@@ -92,15 +100,25 @@ from <- sparseMatrix
 to <- as(from, "data.frame")
 print(to)
 
+## `data.frame` to `data.table` ====
+from <- data.frame
+to <- as(from, "data.table")
+print(to)
+
+## `data.frame` to `tbl_df` ====
+from <- data.frame
+to <- as(from, "tbl_df")
+print(to)
+
 ## `data.table` to `DataFrame` ====
 from <- data.table
 to <- as(from, "DataFrame")
-head(to)
+print(to)
 
 ## `tbl_df` to `DataFrame` ====
 from <- tbl_df
 to <- as(from, "DataFrame")
-head(to)
+print(to)
 }
 \seealso{
 \itemize{
