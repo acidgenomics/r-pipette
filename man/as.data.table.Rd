@@ -3,15 +3,24 @@
 \name{as.data.table}
 \alias{as.data.table}
 \alias{as.data.table.DataFrame}
-\alias{as.data.table.IntegerRanges}
+\alias{as.data.table.IRanges}
 \alias{as.data.table.GenomicRanges}
 \title{Coerce object to a data.table}
 \usage{
+as.data.table(x, keep.rownames = FALSE, ...)
+
 \method{as.data.table}{DataFrame}(x, keep.rownames = TRUE, ...)
 
-\method{as.data.table}{IntegerRanges}(x, keep.rownames = TRUE, ...)
+\method{as.data.table}{IRanges}(x, keep.rownames = TRUE, ...)
 
 \method{as.data.table}{GenomicRanges}(x, keep.rownames = TRUE, ...)
+}
+\arguments{
+\item{x}{Object.}
+
+\item{keep.rownames}{Refer to \code{data.table::as.data.table} for usage details.}
+
+\item{...}{Additional arguments.}
 }
 \value{
 \code{data.table}.
@@ -38,24 +47,24 @@ Updated 2022-02-08.
 }
 \examples{
 data(
-    DFrame,
-    GRanges,
-    IRanges,
+    DataFrame,
+    GenomicRanges,
+    IntegerRanges,
     package = "AcidTest"
 )
 
 ## `DataFrame` to `data.table` ====
-from <- DFrame
+from <- DataFrame
 to <- as.data.table(from)
 print(to)
 
 ## `GenomicRanges` to `data.table` ====
-from <- GRanges
+from <- GenomicRanges
 to <- as.data.table(from)
 print(to)
 
-## `IRanges` to `data.table` ====
-from <- IRanges
+## `IntegerRanges` to `data.table` ====
+from <- IntegerRanges
 to <- as.data.table(from)
 print(to)
 }

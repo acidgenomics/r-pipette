@@ -16,6 +16,10 @@
 #' - `DataFrame` (from S4Vectors package).
 #' - `GenomicRanges` (from GenomicRanges package).
 #'
+#' @inheritParams AcidRoxygen::params
+#' @param keep.rownames
+#'   Refer to `data.table::as.data.table` for usage details.
+#'
 #' @return `data.table`.
 #'
 #' @seealso
@@ -23,24 +27,24 @@
 #'
 #' @examples
 #' data(
-#'     DFrame,
-#'     GRanges,
-#'     IRanges,
+#'     DataFrame,
+#'     GenomicRanges,
+#'     IntegerRanges,
 #'     package = "AcidTest"
 #' )
 #'
 #' ## `DataFrame` to `data.table` ====
-#' from <- DFrame
+#' from <- DataFrame
 #' to <- as.data.table(from)
 #' print(to)
 #'
 #' ## `GenomicRanges` to `data.table` ====
-#' from <- GRanges
+#' from <- GenomicRanges
 #' to <- as.data.table(from)
 #' print(to)
 #'
-#' ## `IRanges` to `data.table` ====
-#' from <- IRanges
+#' ## `IntegerRanges` to `data.table` ====
+#' from <- IntegerRanges
 #' to <- as.data.table(from)
 #' print(to)
 NULL
@@ -66,7 +70,7 @@ as.data.table.DataFrame <-  # nolint
 #' @rdname as.data.table
 #' @export
 ## Updated 2021-10-14.
-as.data.table.IntegerRanges <-  # nolint
+as.data.table.IRanges <-  # nolint
     function(
         x,
         keep.rownames = TRUE,  # nolint
@@ -84,4 +88,4 @@ as.data.table.IntegerRanges <-  # nolint
 #' @export
 ## Updated 2021-10-14.
 as.data.table.GenomicRanges <-  # nolint
-    as.data.table.IntegerRanges
+    as.data.table.IRanges
