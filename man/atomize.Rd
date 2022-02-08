@@ -35,7 +35,7 @@ with R Markdown functions, in some cases.
 Updated 2021-10-12.
 }
 \examples{
-df <- DataFrame(
+df <- S4Vectors::DataFrame(
     "a" = "a",
     "b" = I(list("a" = seq_len(3L)))
 )
