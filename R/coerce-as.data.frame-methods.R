@@ -1,7 +1,3 @@
-## FIXME Rename example object in AcidTest to "IRanges" instead of IntegerRanges.
-
-
-
 #' Coerce object to data.frame
 #'
 #' @name as.data.frame
@@ -44,7 +40,7 @@ NULL
 #'
 #' Not exporting this method because we don't want to mask the default
 #' conventions currently used by Bioconductor.
-`.as.data.frame,DataFrame` <-  # nolint
+`as.data.frame,DataFrame` <-  # nolint
     function(x) {
         ## Decode Rle columns, which can be coerced.
         x <- decode(x)
@@ -83,7 +79,7 @@ NULL
     }
 
 ## Updated 2021-02-05.
-`as.data.frame,IRanges` <-  # nolint
+`as.data.frame,IntegerRanges` <-  # nolint
     function(
         x,
         row.names = NULL,
@@ -124,8 +120,8 @@ NULL
 #' @export
 setMethod(
     f = "as.data.frame",
-    signature = signature("IRanges"),
-    definition = `as.data.frame,IRanges`
+    signature = signature("IntegerRanges"),
+    definition = `as.data.frame,IntegerRanges`
 )
 
 #' @rdname as.data.frame

@@ -72,12 +72,8 @@ NULL
         out
     }
 
-## Updated 2021-02-19.
-`as.DataFrame,SimpleList` <-  # nolint
-    `as.DataFrame,list`
-
-## Updated 2021-10-14.
-`as.DataFrame,data.table` <-  # nolint
+## Updated 2022-02-08.
+`as.DataFrame,matrix` <-  # nolint
     function(x) {
         to <- as.data.frame(x, stringsAsFactors = FALSE)
         to <- as(to, "DataFrame")
@@ -90,22 +86,6 @@ NULL
             }
         }
         to
-    }
-
-## Updated 2021-10-14.
-`as.DataFrame,tbl_df` <-  # nolint
-    `as.DataFrame,data.table`
-
-## Updated 2021-10-14.
-`as.DataFrame,IRanges` <-  # nolint
-    function(x) {
-        DataFrame(
-            "start" = start(x),
-            "end" = end(x),
-            "width" = width(x),
-            mcols(x, use.names = FALSE),
-            row.names = names(x)
-        )
     }
 
 ## Updated 2021-10-14.
@@ -122,6 +102,46 @@ NULL
         )
     }
 
+## Updated 2021-10-14.
+`as.DataFrame,IntegerRanges` <-  # nolint
+    function(x) {
+        DataFrame(
+            "start" = start(x),
+            "end" = end(x),
+            "width" = width(x),
+            mcols(x, use.names = FALSE),
+            row.names = names(x)
+        )
+    }
+
+## Updated 2022-02-08.
+`as.DataFrame,Matrix` <-  # nolint
+    function(x) {
+        as.DataFrame(as.matrix(x))
+    }
+
+
+
+## Updated 2021-02-19.
+`as.DataFrame,SimpleList` <-  # nolint
+    `as.DataFrame,list`
+
+## Updated 2022-02-08.
+`as.DataFrame,data.frame` <-  # nolint
+    `as.DataFrame,matrix`
+
+## Updated 2022-02-08.
+`as.DataFrame,data.table` <-  # nolint
+    `as.DataFrame,matrix`
+
+## Updated 2022-02-08.
+`as.DataFrame,matrix` <-  # nolint
+    `as.DataFrame,matrix`
+
+## Updated 2022-02-08.
+`as.DataFrame,tbl_df` <-  # nolint
+    `as.DataFrame,matrix`
+
 
 
 #' @rdname as.DataFrame
@@ -136,8 +156,16 @@ setMethod(
 #' @export
 setMethod(
     f = "as.DataFrame",
-    signature = signature(x = "IRanges"),
-    definition = `as.DataFrame,IRanges`
+    signature = signature(x = "IntegerRanges"),
+    definition = `as.DataFrame,IntegerRanges`
+)
+
+#' @rdname as.DataFrame
+#' @export
+setMethod(
+    f = "as.DataFrame",
+    signature = signature(x = "Matrix"),
+    definition = `as.DataFrame,Matrix`
 )
 
 #' @rdname as.DataFrame
@@ -146,6 +174,14 @@ setMethod(
     f = "as.DataFrame",
     signature = signature(x = "SimpleList"),
     definition = `as.DataFrame,SimpleList`
+)
+
+#' @rdname as.DataFrame
+#' @export
+setMethod(
+    f = "as.DataFrame",
+    signature = signature(x = "data.frame"),
+    definition = `as.DataFrame,data.frame`
 )
 
 #' @rdname as.DataFrame
@@ -162,6 +198,14 @@ setMethod(
     f = "as.DataFrame",
     signature = signature(x = "list"),
     definition = `as.DataFrame,list`
+)
+
+#' @rdname as.DataFrame
+#' @export
+setMethod(
+    f = "as.DataFrame",
+    signature = signature(x = "matrix"),
+    definition = `as.DataFrame,matrix`
 )
 
 #' @rdname as.DataFrame

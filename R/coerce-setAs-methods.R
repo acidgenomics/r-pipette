@@ -34,7 +34,7 @@
 #' data(
 #'     DFrame,
 #'     GRanges,
-#'     IRanges,
+#'     IntegerRanges,
 #'     data.table,
 #'     sparseMatrix,
 #'     tbl_df,
@@ -61,18 +61,18 @@
 #' to <- as(from, "tbl_df")
 #' print(to)
 #'
-#' ## `IRanges` to `data.frame` ====
-#' from <- IRanges
+#' ## `IntegerRanges` to `data.frame` ====
+#' from <- IntegerRanges
 #' to <- as(from, "data.frame")
 #' print(to)
 #'
-#' ## `IRanges` to `data.table` ====
-#' from <- IRanges
+#' ## `IntegerRanges` to `data.table` ====
+#' from <- IntegerRanges
 #' to <- as(from, "data.table")
 #' print(to)
 #'
-#' ## `IRanges` to `tbl_df` ====
-#' from <- IRanges
+#' ## `IntegerRanges` to `tbl_df` ====
+#' from <- IntegerRanges
 #' to <- as(from, "tbl_df")
 #' print(to)
 #'
@@ -152,15 +152,15 @@ NULL
     `.coerce,ANY,tbl_df`
 
 ## Updated 2022-02-08.
-`coerce,IRanges,data.frame` <-  # nolint
+`coerce,IntegerRanges,data.frame` <-  # nolint
     `.coerce,ANY,data.frame`
 
 ## Updated 2022-02-08.
-`coerce,IRanges,data.table` <-  # nolint
+`coerce,IntegerRanges,data.table` <-  # nolint
     `.coerce,ANY,data.table`
 
 ## Updated 2022-02-08.
-`coerce,IRanges,tbl_df` <-  # nolint
+`coerce,IntegerRanges,tbl_df` <-  # nolint
     `.coerce,ANY,tbl_df`
 
 ## Updated 2022-02-08.
@@ -224,27 +224,27 @@ setAs(
 )
 
 #' @rdname coerce
-#' @name coerce,IRanges,data.frame-method
+#' @name coerce,IntegerRanges,data.frame-method
 setAs(
-    from = "IRanges",
+    from = "IntegerRanges",
     to = "data.frame",
-    def = `coerce,IRanges,data.frame`
+    def = `coerce,IntegerRanges,data.frame`
 )
 
 #' @rdname coerce
-#' @name coerce,IRanges,data.table-method
+#' @name coerce,IntegerRanges,data.table-method
 setAs(
-    from = "IRanges",
+    from = "IntegerRanges",
     to = "data.table",
-    def = `coerce,IRanges,data.table`
+    def = `coerce,IntegerRanges,data.table`
 )
 
 #' @rdname coerce
-#' @name coerce,IRanges,tbl_df-method
+#' @name coerce,IntegerRanges,tbl_df-method
 setAs(
-    from = "IRanges",
+    from = "IntegerRanges",
     to = "tbl_df",
-    def = `coerce,IRanges,tbl_df`
+    def = `coerce,IntegerRanges,tbl_df`
 )
 
 #' @rdname coerce

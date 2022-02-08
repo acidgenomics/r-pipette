@@ -3,7 +3,7 @@
 \name{as.data.table}
 \alias{as.data.table}
 \alias{as.data.table.DataFrame}
-\alias{as.data.table.IRanges}
+\alias{as.data.table.IntegerRanges}
 \alias{as.data.table.GenomicRanges}
 \title{Coerce object to a data.table}
 \usage{
@@ -11,7 +11,7 @@ as.data.table(x, keep.rownames = FALSE, ...)
 
 \method{as.data.table}{DataFrame}(x, keep.rownames = TRUE, ...)
 
-\method{as.data.table}{IRanges}(x, keep.rownames = TRUE, ...)
+\method{as.data.table}{IntegerRanges}(x, keep.rownames = TRUE, ...)
 
 \method{as.data.table}{GenomicRanges}(x, keep.rownames = TRUE, ...)
 }
