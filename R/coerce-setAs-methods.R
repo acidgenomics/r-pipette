@@ -152,15 +152,15 @@ NULL
     `.coerce,ANY,tbl_df`
 
 ## Updated 2022-02-08.
-`coerce,IntegerRanges,data.frame` <-  # nolint
+`coerce,IRanges,data.frame` <-  # nolint
     `.coerce,ANY,data.frame`
 
 ## Updated 2022-02-08.
-`coerce,IntegerRanges,data.table` <-  # nolint
+`coerce,IRanges,data.table` <-  # nolint
     `.coerce,ANY,data.table`
 
 ## Updated 2022-02-08.
-`coerce,IntegerRanges,tbl_df` <-  # nolint
+`coerce,IRanges,tbl_df` <-  # nolint
     `.coerce,ANY,tbl_df`
 
 ## Updated 2022-02-08.
@@ -224,27 +224,27 @@ setAs(
 )
 
 #' @rdname coerce
-#' @name coerce,IntegerRanges,data.frame-method
+#' @name coerce,IRanges,data.frame-method
 setAs(
-    from = "IntegerRanges",
+    from = "IRanges",
     to = "data.frame",
-    def = `coerce,IntegerRanges,data.frame`
+    def = `coerce,IRanges,data.frame`
 )
 
 #' @rdname coerce
-#' @name coerce,IntegerRanges,data.table-method
+#' @name coerce,IRanges,data.table-method
 setAs(
-    from = "IntegerRanges",
+    from = "IRanges",
     to = "data.table",
-    def = `coerce,IntegerRanges,data.table`
+    def = `coerce,IRanges,data.table`
 )
 
 #' @rdname coerce
-#' @name coerce,IntegerRanges,tbl_df-method
+#' @name coerce,IRanges,tbl_df-method
 setAs(
-    from = "IntegerRanges",
+    from = "IRanges",
     to = "tbl_df",
-    def = `coerce,IntegerRanges,tbl_df`
+    def = `coerce,IRanges,tbl_df`
 )
 
 #' @rdname coerce
