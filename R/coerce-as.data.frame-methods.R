@@ -1,6 +1,39 @@
+## FIXME Rename example object in AcidTest to "IRanges" instead of IntegerRanges.
+
+
+
+#' Coerce object to data.frame
+#'
+#' @name as.data.frame
+#' @note Updated 2022-02-08.
+#'
+#' @inheritParams AcidRoxygen::params
+#' @param row.names,optional
+#'   Refer to `base::data.frame` for usage details.
+#'
+#' @examples
+#' data(
+#'     IntegerRanges,
+#'     sparseMatrix,
+#'     package = "AcidTest"
+#' )
+#'
+#' ## `IntegerRanges` to `data.frame` ====
+#' from <- IntegerRanges
+#' to <- as.data.frame(from)
+#' head(to)
+#'
+#' ## `Matrix` to `data.frame` ====
+#' from <- sparseMatrix
+#' to <- as.data.frame(from)
+#' head(to)
+NULL
+
+
+
 #' Coerce an S4 DataFrame to a standard data.frame.
 #'
-#' @note Updated 2021-10-14.
+#' @note Updated 2022-02-08.
 #' @noRd
 #'
 #' @details
@@ -46,3 +79,57 @@
         ## names (e.g. gene symbols), whereas the `as()` method does not.
         as(x, "data.frame")
     }
+
+## Updated 2021-02-05.
+`as.data.frame,IRanges` <-  # nolint
+    function(
+        x,
+        row.names = NULL,
+        optional = FALSE,
+        ...
+    ) {
+        if (missing(row.names)) {
+            row.names <- names(x)
+        }
+        if (!is.null(names(x))) {
+            names(x) <- NULL
+        }
+        args <- list(
+            "start" = start(x),
+            "end" = end(x),
+            "width" = width(x),
+            "row.names" = row.names,
+            "check.rows" = TRUE,
+            "check.names" = FALSE,
+            "stringsAsFactors" = FALSE
+        )
+        mcols <- mcols(x, use.names = FALSE)
+        if (!is.null(mcols)) {
+            args[["mcols"]] <- as.data.frame(mcols)
+        }
+        do.call(what = data.frame, args = args)
+    }
+
+## Updated 2019-07-20.
+`as.data.frame,Matrix` <-  # nolint
+    function(x, ...) {
+        as.data.frame(as.matrix(x), ...)
+    }
+
+
+
+#' @rdname as.data.frame
+#' @export
+setMethod(
+    f = "as.data.frame",
+    signature = signature("IRanges"),
+    definition = `as.data.frame,IRanges`
+)
+
+#' @rdname as.data.frame
+#' @export
+setMethod(
+    f = "as.data.frame",
+    signature = signature("Matrix"),
+    definition = `as.data.frame,Matrix`
+)
