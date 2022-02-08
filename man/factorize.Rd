@@ -29,7 +29,7 @@ Updated 2021-02-11.
 }
 \examples{
 ## DataFrame ====
-df <- DataFrame(
+df <- S4Vectors::DataFrame(
     "a" = letters[seq_len(5L)],
     "b" = seq_len(5L)
 )
