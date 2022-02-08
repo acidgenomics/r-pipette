@@ -4,7 +4,7 @@
 \alias{as_tibble}
 \alias{as_tibble.DataFrame}
 \alias{as_tibble.GenomicRanges}
-\alias{as_tibble.IRanges}
+\alias{as_tibble.IntegerRanges}
 \title{Coerce an object to a tibble}
 \usage{
 as_tibble(
@@ -27,7 +27,7 @@ as_tibble(
   rownames = pkgconfig::get_config("tibble::rownames", "rowname")
 )
 
-\method{as_tibble}{IRanges}(
+\method{as_tibble}{IntegerRanges}(
   x,
   ...,
   rownames = pkgconfig::get_config("tibble::rownames", "rowname")

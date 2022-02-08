@@ -1,7 +1,3 @@
-## FIXME Rename example objects here.
-
-
-
 #' Coerce an object to a tibble
 #'
 #' @name as_tibble
@@ -92,7 +88,7 @@ formals(as_tibble.GenomicRanges)[["rownames"]] <- .tbl_rownames
 #' @rdname as_tibble
 #' @export
 ## Updated 2021-10-14.
-as_tibble.IRanges <-  # nolint
+as_tibble.IntegerRanges <-  # nolint
     as_tibble.GenomicRanges
 
 rm(.tbl_rownames)
