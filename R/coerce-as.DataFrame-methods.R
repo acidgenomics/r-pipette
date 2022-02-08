@@ -10,7 +10,7 @@
 #' data(
 #'     data.table,
 #'     sparseMatrix,
-#'     tbl_df,
+#'     tibble,
 #'     package = "AcidTest"
 #' )
 #'
@@ -34,7 +34,7 @@
 #' print(to)
 #'
 #' ## `tbl_df` to `DataFrame` ====
-#' from <- tbl_df
+#' from <- tibble
 #' to <- as.DataFrame(from)
 #' head(to)
 NULL

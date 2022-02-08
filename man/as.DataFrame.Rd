@@ -53,7 +53,7 @@ Updated 2022-02-08.
 data(
     data.table,
     sparseMatrix,
-    tbl_df,
+    tibble,
     package = "AcidTest"
 )
 
@@ -77,7 +77,7 @@ to <- as.DataFrame(from)
 print(to)
 
 ## `tbl_df` to `DataFrame` ====
-from <- tbl_df
+from <- tibble
 to <- as.DataFrame(from)
 head(to)
 }

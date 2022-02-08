@@ -32,32 +32,33 @@
 #'
 #' @examples
 #' data(
-#'     DFrame,
-#'     GRanges,
+#'     DataFrame,
+#'     GenomicRanges,
 #'     IntegerRanges,
+#'     data.frame,
 #'     data.table,
 #'     sparseMatrix,
-#'     tbl_df,
+#'     tibble,
 #'     package = "AcidTest"
 #' )
 #'
 #' ## `DataFrame` to `data.table` ====
-#' from <- DFrame
+#' from <- DataFrame
 #' to <- as(from, "data.table")
 #' print(to)
 #'
 #' ## `DataFrame` to `tbl_df` ====
-#' from <- DFrame
+#' from <- DataFrame
 #' to <- as(from, "tbl_df")
 #' print(to)
 #'
 #' ## `GenomicRanges` to `data.table` ====
-#' from <- GRanges
+#' from <- GenomicRanges
 #' to <- as(from, "data.table")
 #' print(to)
 #'
 #' ## `GenomicRanges` to `tbl_df` ====
-#' from <- GRanges
+#' from <- GenomicRanges
 #' to <- as(from, "tbl_df")
 #' print(to)
 #'
@@ -102,7 +103,7 @@
 #' print(to)
 #'
 #' ## `tbl_df` to `DataFrame` ====
-#' from <- tbl_df
+#' from <- tibble
 #' to <- as(from, "DataFrame")
 #' print(to)
 NULL
