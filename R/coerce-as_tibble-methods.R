@@ -61,7 +61,7 @@ NULL
 ## Updated 2021-10-14.
 as_tibble.DataFrame <-  # nolint
     function(x, ..., rownames) {
-        x <- `.as.data.frame,DataFrame`(x)
+        x <- `as.data.frame,DataFrame`(x)
         if (!hasRownames(x)) {
             rownames <- NULL
         }

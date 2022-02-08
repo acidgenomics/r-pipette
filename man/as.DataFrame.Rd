@@ -3,10 +3,13 @@
 \name{as.DataFrame}
 \alias{as.DataFrame}
 \alias{as.DataFrame,GenomicRanges-method}
-\alias{as.DataFrame,IRanges-method}
+\alias{as.DataFrame,IntegerRanges-method}
+\alias{as.DataFrame,Matrix-method}
 \alias{as.DataFrame,SimpleList-method}
+\alias{as.DataFrame,data.frame-method}
 \alias{as.DataFrame,data.table-method}
 \alias{as.DataFrame,list-method}
+\alias{as.DataFrame,matrix-method}
 \alias{as.DataFrame,tbl_df-method}
 \title{Coerce object to S4 DataFrame}
 \usage{
@@ -14,13 +17,19 @@ as.DataFrame(x, ...)
 
 \S4method{as.DataFrame}{GenomicRanges}(x)
 
-\S4method{as.DataFrame}{IRanges}(x)
+\S4method{as.DataFrame}{IntegerRanges}(x)
+
+\S4method{as.DataFrame}{Matrix}(x)
 
 \S4method{as.DataFrame}{SimpleList}(x, row.names = NULL)
+
+\S4method{as.DataFrame}{data.frame}(x)
 
 \S4method{as.DataFrame}{data.table}(x)
 
 \S4method{as.DataFrame}{list}(x, row.names = NULL)
+
+\S4method{as.DataFrame}{matrix}(x)
 
 \S4method{as.DataFrame}{tbl_df}(x)
 }

@@ -2,13 +2,13 @@
 % Please edit documentation in R/AllGenerics.R, R/coerce-as.data.frame-methods.R
 \name{as.data.frame}
 \alias{as.data.frame}
-\alias{as.data.frame,IRanges-method}
+\alias{as.data.frame,IntegerRanges-method}
 \alias{as.data.frame,Matrix-method}
 \title{Coerce object to data.frame}
 \usage{
 as.data.frame(x, row.names = NULL, optional = FALSE, ...)
 
-\S4method{as.data.frame}{IRanges}(x, row.names = NULL, optional = FALSE, ...)
+\S4method{as.data.frame}{IntegerRanges}(x, row.names = NULL, optional = FALSE, ...)
 
 \S4method{as.data.frame}{Matrix}(x, row.names = NULL, optional = FALSE, ...)
 }
