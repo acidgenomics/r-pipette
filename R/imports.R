@@ -1,4 +1,5 @@
 ## Classes =====================================================================
+
 #' @importClassesFrom AcidBase missingOrNULL
 #' @importClassesFrom BiocIO BiocFile
 #' @importClassesFrom GenomicRanges GenomicRanges
@@ -10,6 +11,7 @@ NULL
 
 
 ## S3 generics and methods =====================================================
+
 #' @importFrom data.table as.data.table
 #' @importFrom tibble as_tibble
 NULL
@@ -17,6 +19,7 @@ NULL
 
 
 ## S4 generics and methods =====================================================
+
 #' @importFrom AcidGenerics as.DataFrame atomize encode factorize
 #'   matchRownameColumn metadata2 metadata2<- removeNA sanitizeNA
 #'   sanitizePercent
@@ -32,6 +35,7 @@ NULL
 
 
 ## Standard functions ==========================================================
+
 #' @importFrom AcidBase basenameSansExt compress decompress dots download
 #'   fileExt initDir methodFunction pasteURL realpath requireNamespaces
 #'   standardizeCall
