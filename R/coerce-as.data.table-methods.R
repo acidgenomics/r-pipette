@@ -60,7 +60,7 @@ as.data.table.DataFrame <-  # nolint
         keep.rownames = TRUE,  # nolint
         ...
     ) {
-        x <- `.as.data.frame,DataFrame`(x)
+        x <- `as.data.frame,DataFrame`(x)
         if (!hasRownames(x)) {
             keep.rownames <- FALSE  # nolint
         }
@@ -70,7 +70,7 @@ as.data.table.DataFrame <-  # nolint
 #' @rdname as.data.table
 #' @export
 ## Updated 2021-10-14.
-as.data.table.IRanges <-  # nolint
+as.data.table.IntegerRanges <-  # nolint
     function(
         x,
         keep.rownames = TRUE,  # nolint
@@ -88,4 +88,4 @@ as.data.table.IRanges <-  # nolint
 #' @export
 ## Updated 2021-10-14.
 as.data.table.GenomicRanges <-  # nolint
-    as.data.table.IRanges
+    as.data.table.IntegerRanges

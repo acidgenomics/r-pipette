@@ -6,9 +6,9 @@
 \alias{coerce,DataFrame,tbl_df-method}
 \alias{coerce,GenomicRanges,data.table-method}
 \alias{coerce,GenomicRanges,tbl_df-method}
-\alias{coerce,IRanges,data.frame-method}
-\alias{coerce,IRanges,data.table-method}
-\alias{coerce,IRanges,tbl_df-method}
+\alias{coerce,IntegerRanges,data.frame-method}
+\alias{coerce,IntegerRanges,data.table-method}
+\alias{coerce,IntegerRanges,tbl_df-method}
 \alias{coerce,Matrix,DataFrame-method}
 \alias{coerce,Matrix,data.frame-method}
 \alias{coerce,data.frame,data.table-method}
@@ -48,7 +48,7 @@ coercion when defined, because \code{data.frame} inherits from list.
 data(
     DFrame,
     GRanges,
-    IRanges,
+    IntegerRanges,
     data.table,
     sparseMatrix,
     tbl_df,
@@ -75,18 +75,18 @@ from <- GRanges
 to <- as(from, "tbl_df")
 print(to)
 
-## `IRanges` to `data.frame` ====
-from <- IRanges
+## `IntegerRanges` to `data.frame` ====
+from <- IntegerRanges
 to <- as(from, "data.frame")
 print(to)
 
-## `IRanges` to `data.table` ====
-from <- IRanges
+## `IntegerRanges` to `data.table` ====
+from <- IntegerRanges
 to <- as(from, "data.table")
 print(to)
 
-## `IRanges` to `tbl_df` ====
-from <- IRanges
+## `IntegerRanges` to `tbl_df` ====
+from <- IntegerRanges
 to <- as(from, "tbl_df")
 print(to)
 
