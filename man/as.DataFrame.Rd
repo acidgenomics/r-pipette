@@ -37,6 +37,8 @@ as.DataFrame(x, ...)
 \item{x}{Object.}
 
 \item{row.names}{Refer to \code{base::as.data.frame} for usage details.}
+
+\item{...}{Additional arguments.}
 }
 \value{
 \code{DataFrame}.
