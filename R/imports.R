@@ -10,7 +10,7 @@ NULL
 
 
 
-## S3 generics and methods =====================================================
+## S3 generics =================================================================
 
 #' @importFrom data.table as.data.table
 #' @importFrom tibble as_tibble
