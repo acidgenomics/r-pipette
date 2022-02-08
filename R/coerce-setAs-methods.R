@@ -61,6 +61,11 @@
 #' to <- as(from, "tbl_df")
 #' print(to)
 #'
+#' ## `IRanges` to `data.frame` ====
+#' from <- IRanges
+#' to <- as(from, "data.frame")
+#' print(to)
+#'
 #' ## `IRanges` to `data.table` ====
 #' from <- IRanges
 #' to <- as(from, "data.table")
@@ -81,15 +86,25 @@
 #' to <- as(from, "data.frame")
 #' print(to)
 #'
+#' ## `data.frame` to `data.table` ====
+#' from <- data.frame
+#' to <- as(from, "data.table")
+#' print(to)
+#'
+#' ## `data.frame` to `tbl_df` ====
+#' from <- data.frame
+#' to <- as(from, "tbl_df")
+#' print(to)
+#'
 #' ## `data.table` to `DataFrame` ====
 #' from <- data.table
 #' to <- as(from, "DataFrame")
-#' head(to)
+#' print(to)
 #'
 #' ## `tbl_df` to `DataFrame` ====
 #' from <- tbl_df
 #' to <- as(from, "DataFrame")
-#' head(to)
+#' print(to)
 NULL
 
 
@@ -137,6 +152,10 @@ NULL
     `.coerce,ANY,tbl_df`
 
 ## Updated 2022-02-08.
+`coerce,IntegerRanges,data.frame` <-  # nolint
+    `.coerce,ANY,data.frame`
+
+## Updated 2022-02-08.
 `coerce,IntegerRanges,data.table` <-  # nolint
     `.coerce,ANY,data.table`
 
@@ -152,12 +171,10 @@ NULL
 `coerce,Matrix,data.frame` <-  # nolint
     `.coerce,ANY,data.frame`
 
-## Internal only.
 ## Updated 2022-02-08.
 `coerce,data.frame,data.table` <-  # nolint
     `.coerce,ANY,data.table`
 
-## Internal only.
 ## Updated 2022-02-08.
 `coerce,data.frame,tbl_df` <-  # nolint
     `.coerce,ANY,tbl_df`
@@ -207,6 +224,14 @@ setAs(
 )
 
 #' @rdname coerce
+#' @name coerce,IntegerRanges,data.frame-method
+setAs(
+    from = "IntegerRanges",
+    to = "data.frame",
+    def = `coerce,IntegerRanges,data.frame`
+)
+
+#' @rdname coerce
 #' @name coerce,IntegerRanges,data.table-method
 setAs(
     from = "IntegerRanges",
@@ -236,6 +261,22 @@ setAs(
     from = "Matrix",
     to = "data.frame",
     def = `coerce,Matrix,data.frame`
+)
+
+#' @rdname coerce
+#' @name coerce,data.frame,data.table-method
+setAs(
+    from = "data.frame",
+    to = "data.table",
+    def = `coerce,data.frame,data.table`
+)
+
+#' @rdname coerce
+#' @name coerce,data.frame,tbl_df-method
+setAs(
+    from = "data.frame",
+    to = "tbl_df",
+    def = `coerce,data.frame,tbl_df`
 )
 
 #' @rdname coerce
