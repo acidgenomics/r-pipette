@@ -4,6 +4,7 @@
 #'
 #' @param row.names
 #'   Refer to `base::as.data.frame` for usage details.
+#' @param ... Additional arguments.
 #'
 #' @examples
 #' data(
