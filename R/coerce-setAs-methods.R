@@ -36,6 +36,7 @@
 #'     GRanges,
 #'     IRanges,
 #'     data.table,
+#'     sparseMatrix,
 #'     tbl_df,
 #'     package = "AcidTest"
 #' )
@@ -70,6 +71,16 @@
 #' to <- as(from, "tbl_df")
 #' print(to)
 #'
+#' ## `Matrix` to `DataFrame` ====
+#' from <- sparseMatrix
+#' to <- as(from, "DataFrame")
+#' print(to)
+#'
+#' ## `Matrix` to `data.frame` ====
+#' from <- sparseMatrix
+#' to <- as(from, "data.frame")
+#' print(to)
+#'
 #' ## `data.table` to `DataFrame` ====
 #' from <- data.table
 #' to <- as(from, "DataFrame")
@@ -90,6 +101,12 @@ NULL
     }
 
 ## Updated 2022-02-07.
+`.coerce,ANY,data.frame` <-  # nolint
+    function(from) {
+        as.data.frame(from)
+    }
+
+## Updated 2022-02-07.
 `.coerce,ANY,data.table` <-  # nolint
     function(from) {
         as.data.table(from)
@@ -103,45 +120,53 @@ NULL
 
 
 
-## Updated 2019-07-19.
+## Updated 2022-02-08.
 `coerce,DataFrame,data.table` <-  # nolint
     `.coerce,ANY,data.table`
 
-## Updated 2021-10-14.
+## Updated 2022-02-08.
 `coerce,DataFrame,tbl_df` <-  # nolint
     `.coerce,ANY,tbl_df`
 
-## Updated 2021-10-14.
+## Updated 2022-02-08.
 `coerce,GenomicRanges,data.table` <-  # nolint
     `.coerce,ANY,data.table`
 
-## Updated 2021-10-14.
+## Updated 2022-02-08.
 `coerce,GenomicRanges,tbl_df` <-  # nolint
     `.coerce,ANY,tbl_df`
 
-## Updated 2021-10-14.
+## Updated 2022-02-08.
 `coerce,IntegerRanges,data.table` <-  # nolint
     `.coerce,ANY,data.table`
 
-## Updated 2021-10-14.
+## Updated 2022-02-08.
 `coerce,IntegerRanges,tbl_df` <-  # nolint
     `.coerce,ANY,tbl_df`
 
+## Updated 2022-02-08.
+`coerce,Matrix,DataFrame` <-  # nolint
+    `.coerce,ANY,DataFrame`
+
+## Updated 2022-02-08.
+`coerce,Matrix,data.frame` <-  # nolint
+    `.coerce,ANY,data.frame`
+
 ## Internal only.
-## Updated 2019-07-19.
+## Updated 2022-02-08.
 `coerce,data.frame,data.table` <-  # nolint
     `.coerce,ANY,data.table`
 
 ## Internal only.
-## Updated 2021-10-14.
+## Updated 2022-02-08.
 `coerce,data.frame,tbl_df` <-  # nolint
     `.coerce,ANY,tbl_df`
 
-## Updated 2021-10-14.
+## Updated 2022-02-08.
 `coerce,data.table,DataFrame` <-  # nolint
     `.coerce,ANY,DataFrame`
 
-## Updated 2021-10-14.
+## Updated 2022-02-08.
 `coerce,tbl_df,DataFrame` <-  # nolint
     `.coerce,ANY,DataFrame`
 
@@ -195,6 +220,22 @@ setAs(
     from = "IntegerRanges",
     to = "tbl_df",
     def = `coerce,IntegerRanges,tbl_df`
+)
+
+#' @rdname coerce
+#' @name coerce,Matrix,DataFrame-method
+setAs(
+    from = "Matrix",
+    to = "DataFrame",
+    def = `coerce,Matrix,DataFrame`
+)
+
+#' @rdname coerce
+#' @name coerce,Matrix,data.frame-method
+setAs(
+    from = "Matrix",
+    to = "data.frame",
+    def = `coerce,Matrix,data.frame`
 )
 
 #' @rdname coerce
