@@ -6,9 +6,9 @@
 \alias{coerce,DataFrame,tbl_df-method}
 \alias{coerce,GenomicRanges,data.table-method}
 \alias{coerce,GenomicRanges,tbl_df-method}
-\alias{coerce,IntegerRanges,data.frame-method}
-\alias{coerce,IntegerRanges,data.table-method}
-\alias{coerce,IntegerRanges,tbl_df-method}
+\alias{coerce,IRanges,data.frame-method}
+\alias{coerce,IRanges,data.table-method}
+\alias{coerce,IRanges,tbl_df-method}
 \alias{coerce,Matrix,DataFrame-method}
 \alias{coerce,Matrix,data.frame-method}
 \alias{coerce,data.frame,data.table-method}

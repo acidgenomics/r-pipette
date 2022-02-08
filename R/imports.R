@@ -2,7 +2,7 @@
 #' @importClassesFrom AcidBase missingOrNULL
 #' @importClassesFrom BiocIO BiocFile
 #' @importClassesFrom GenomicRanges GenomicRanges
-#' @importClassesFrom IRanges IntegerRanges Ranges
+#' @importClassesFrom IRanges IRanges Ranges
 #' @importClassesFrom Matrix Matrix
 #' @importClassesFrom S4Vectors DataFrame List SimpleList
 NULL

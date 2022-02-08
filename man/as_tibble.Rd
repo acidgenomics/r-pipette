@@ -4,9 +4,17 @@
 \alias{as_tibble}
 \alias{as_tibble.DataFrame}
 \alias{as_tibble.GenomicRanges}
-\alias{as_tibble.IntegerRanges}
+\alias{as_tibble.IRanges}
 \title{Coerce an object to a tibble}
 \usage{
+as_tibble(
+    x,
+    ...,
+    .rows = NULL,
+    .name_repair = c("check_unique", "unique", "universal", "minimal"),
+    rownames = pkgconfig::get_config("tibble::rownames", NULL)
+)
+
 \method{as_tibble}{DataFrame}(
   x,
   ...,
@@ -19,7 +27,7 @@
   rownames = pkgconfig::get_config("tibble::rownames", "rowname")
 )
 
-\method{as_tibble}{IntegerRanges}(
+\method{as_tibble}{IRanges}(
   x,
   ...,
   rownames = pkgconfig::get_config("tibble::rownames", "rowname")
@@ -30,8 +38,7 @@
 
 \item{...}{Additional arguments.}
 
-\item{rownames}{How to treat existing row names.
-Refer to \code{tibble::as_tibble} for current options.}
+\item{.rows, .name_repair, rownames}{Refer to \code{tibble::as_tibble} usage details.}
 }
 \value{
 \code{tbl_df} (tibble).
