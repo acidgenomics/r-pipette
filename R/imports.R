@@ -25,6 +25,7 @@ NULL
 #' @importFrom GenomicRanges seqnames
 #' @importFrom S4Vectors DataFrame Rle SimpleList decode droplevels head mcols
 #'   mcols<- metadata metadata<- na.omit tail
+#' @importFrom methods coerce
 #' @importFrom syntactic makeNames
 NULL
 
