@@ -11,7 +11,7 @@
 #' @param ... Additional arguments.
 #'
 #' @examples
-#' df <- DataFrame(
+#' df <- S4Vectors::DataFrame(
 #'     "a" = "a",
 #'     "b" = I(list("a" = seq_len(3L)))
 #' )

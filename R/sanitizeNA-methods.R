@@ -13,7 +13,7 @@
 #' print(to)
 #'
 #' ## DataFrame ====
-#' from <- DataFrame(
+#' from <- S4Vectors::DataFrame(
 #'     "a" = c("foo", ""),
 #'     "b" = c(NA, "bar"),
 #'     row.names = c("c", "d")
