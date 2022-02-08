@@ -2,6 +2,9 @@
 #' @inherit AcidGenerics::as.DataFrame
 #' @note Updated 2022-02-08.
 #'
+#' @param row.names
+#'   Refer to `base::as.data.frame` for usage details.
+#'
 #' @examples
 #' data(
 #'     data.table,
