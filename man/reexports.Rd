@@ -3,7 +3,9 @@
 \docType{import}
 \name{reexports}
 \alias{reexports}
+\alias{data.table}
 \alias{getURL}
+\alias{tibble}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -11,6 +13,10 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
+  \item{data.table}{\code{\link[data.table]{data.table}}}
+
   \item{RCurl}{\code{\link[RCurl]{getURL}}}
+
+  \item{tibble}{\code{\link[tibble]{tibble}}}
 }}
 
