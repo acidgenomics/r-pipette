@@ -11,6 +11,10 @@ data.table::data.table
 RCurl::getURL
 
 #' @export
+#' @importFrom data.table rbindlist
+data.table::rbindlist
+
+#' @export
 #' @importFrom tibble rownames_to_column
 tibble::rownames_to_column
 
