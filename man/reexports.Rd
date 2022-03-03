@@ -6,6 +6,7 @@
 \alias{column_to_rownames}
 \alias{data.table}
 \alias{getURL}
+\alias{rbindlist}
 \alias{rownames_to_column}
 \alias{tibble}
 \title{Objects exported from other packages}
@@ -15,7 +16,7 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{data.table}{\code{\link[data.table]{data.table}}}
+  \item{data.table}{\code{\link[data.table]{data.table}}, \code{\link[data.table]{rbindlist}}}
 
   \item{RCurl}{\code{\link[RCurl]{getURL}}}
 
