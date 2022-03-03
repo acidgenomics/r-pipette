@@ -3,8 +3,10 @@
 \docType{import}
 \name{reexports}
 \alias{reexports}
+\alias{column_to_rownames}
 \alias{data.table}
 \alias{getURL}
+\alias{rownames_to_column}
 \alias{tibble}
 \title{Objects exported from other packages}
 \keyword{internal}
@@ -17,6 +19,6 @@ below to see their documentation.
 
   \item{RCurl}{\code{\link[RCurl]{getURL}}}
 
-  \item{tibble}{\code{\link[tibble]{tibble}}}
+  \item{tibble}{\code{\link[tibble:rownames]{column_to_rownames}}, \code{\link[tibble:rownames]{rownames_to_column}}, \code{\link[tibble]{tibble}}}
 }}
 
