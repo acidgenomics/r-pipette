@@ -1,6 +1,7 @@
 #+TITLE: pipette
 #+STARTUP: content
 * Development
+** TODO `import()`: Check that we have a `tryCatch()` call for invalid YAML that will stop on warnings.
 ** TODO Do we need to improve sanitization of BiocFileCache local file names
    for complex URLs?
    For example:
@@ -10,3 +11,4 @@
 ** TODO Need to improve support for fixed width file (FWF) parsing?
 ** TODO importMTX: MTX import: look for "barcodes.tsv.gz", "genes.tsv.gz",
    "features.tsv.gz", which are output by CellRanger.
+** TODO Add `sanitizePercentage()` function?
