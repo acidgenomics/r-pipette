@@ -26,13 +26,13 @@ reference:
     contents:
       - cacheURL
       - checksums
-      - download
       - getJSON
       - getURLDirList
-      - localOrRemoteFile
       - transmit
   - title: Coercion
     contents:
+      - starts_with("as.")
+      - starts_with("as_")
       - starts_with("coerce")
   - title: Data modification and sanitization
     contents:
@@ -46,6 +46,9 @@ reference:
       - naStrings
       - removeNA
       - starts_with("sanitize")
+  - title: S4 classes
+    contents:
+      - ends_with("-class")
 template:
   bootstrap: 5
 url: https://r.acidgenomics.com/packages/pipette
