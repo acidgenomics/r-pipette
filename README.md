@@ -6,9 +6,7 @@ Pipette biological data in and out of R.
 
 ## Installation
 
-Requirements: [R][] >= 4.0, [Bioconductor][] >= 3.13.
-
-### [R][] method
+This is an [R][] package.
 
 ```r
 if (!requireNamespace("BiocManager", quietly = TRUE)) {
