@@ -1,4 +1,4 @@
-# pipette 0.8.0 (UNRELEASED)
+# pipette 0.8.0 (2022-03-11)
 
 ## Major changes
 
