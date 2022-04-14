@@ -1,5 +1,15 @@
 ## FIXME Simplify and improve error message when local file doesn't exist.
+## FIXME Consider converting any warnings to errors here.
+## FIXME Need to show the user `readr::problems()` return when appropriate.
 
+
+## FIXME Need to debug this further:
+## url <- "https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSE85107&format=file&file=GSE85107%5FTable%5FOCI2%5FOCI3%5Freadcounts%2Etxt%2Egz"
+## This doesn't show the warning, which stinks.
+## import(url, format = "tsv", engine = "readr")
+## This shows the warning we want...
+## readr::read_csv(url)
+## FIXME What about readr::read_delim showing a warning?
 
 
 #' Import
