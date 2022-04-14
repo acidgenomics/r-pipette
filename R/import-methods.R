@@ -1,3 +1,7 @@
+## FIXME Simplify and improve error message when local file doesn't exist.
+
+
+
 #' Import
 #'
 #' Read file by extension into R.
