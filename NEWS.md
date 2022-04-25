@@ -1,3 +1,10 @@
+# pipette 0.8.1 (UNRELEASED)
+
+## Minor changes
+
+- Now exporting method support in `droplevels2` instead of `droplevels`, to
+  avoid method conflict with new Bioconductor 3.15 update.
+
 # pipette 0.8.0 (2022-03-11)
 
 ## Major changes
