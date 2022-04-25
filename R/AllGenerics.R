@@ -30,10 +30,10 @@ NULL
 #' @usage decode(x, ...)
 NULL
 
-#' @rdname droplevels
-#' @name droplevels
+#' @rdname droplevels2
+#' @name droplevels2
 #' @export
-#' @usage droplevels(x, ...)
+#' @usage droplevels2(x, ...)
 NULL
 
 #' @rdname encode
