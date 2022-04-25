@@ -20,7 +20,7 @@ NULL
 
 ## S4 generics and methods =====================================================
 
-#' @importFrom AcidGenerics as.DataFrame atomize encode factorize
+#' @importFrom AcidGenerics as.DataFrame atomize droplevels2 encode factorize
 #'   matchRownameColumn metadata2 metadata2<- removeNA sanitizeNA
 #'   sanitizePercent
 #' @importFrom BiocGenerics as.data.frame end start strand width
