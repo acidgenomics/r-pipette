@@ -17,7 +17,7 @@ NULL
 
 
 ## Updated 2019-07-19.
-`factorize,DataFrame` <-  # nolint
+`factorize,DataFrame` <- # nolint
     function(object) {
         class <- class(object)[[1L]]
         out <- lapply(
@@ -38,7 +38,7 @@ NULL
 
 
 ## Updated 2021-10-14.
-`factorize,data.frame` <-  # nolint
+`factorize,data.frame` <- # nolint
     `factorize,DataFrame`
 
 

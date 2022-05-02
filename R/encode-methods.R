@@ -25,10 +25,10 @@ NULL
 
 
 ## Updated 2021-08-24.
-`encode,DataFrame` <-  # nolint
+`encode,DataFrame` <- # nolint
     function(x) {
         if (!(hasCols(x) && hasRows(x))) {
-            return(x)  # nocov
+            return(x) # nocov
         }
         meta <- metadata(x)
         rn <- rownames(x)
@@ -36,7 +36,7 @@ NULL
             X = x,
             FUN = function(x) {
                 if (is(x, "List")) {
-                    return(x)  # nocov
+                    return(x) # nocov
                 }
                 ## Decode Rle, if necessary.
                 if (is(x, "Rle")) {
@@ -44,7 +44,7 @@ NULL
                 }
                 ## Adjust (drop) factor levels, if necessary.
                 if (is.factor(x)) {
-                    x <- droplevels(x)  # nocov
+                    x <- droplevels(x) # nocov
                 }
                 ## Use run-length encoding on atomics.
                 if (is.atomic(x)) {
@@ -62,7 +62,7 @@ NULL
 
 
 ## Updated 2019-07-20.
-`encode,Ranges` <-  # nolint
+`encode,Ranges` <- # nolint
     function(x) {
         if (!is.null(mcols(x))) {
             mcols(x) <- encode(mcols(x))

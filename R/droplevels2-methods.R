@@ -19,7 +19,7 @@ NULL
 
 
 ## Updated 2022-04-25.
-`droplevels2,DataFrame` <-  # nolint
+`droplevels2,DataFrame` <- # nolint
     function(x) {
         except <- !bapply(X = decode(x), FUN = is.factor)
         if (all(except)) {
@@ -34,7 +34,7 @@ NULL
 
 
 ## Updated 2021-02-03.
-`droplevels2,Ranges` <-  # nolint
+`droplevels2,Ranges` <- # nolint
     function(x) {
         if (hasCols(mcols(x))) {
             mcols(x) <- droplevels2(mcols(x))
