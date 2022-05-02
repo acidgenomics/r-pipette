@@ -1,7 +1,5 @@
 context("transmit : NCBI FTP")
 
-skip_on_docker()
-
 ## Note that only FTP is currently supported.
 remoteDir <- "ftp://ftp.ncbi.nlm.nih.gov/genomes/"
 skip_if_not(hasInternet(remoteDir))
