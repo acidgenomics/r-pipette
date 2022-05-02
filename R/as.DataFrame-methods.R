@@ -3,7 +3,7 @@
 #' @note Updated 2022-05-02.
 #'
 #' @param row.names
-#'   Refer to `base::as.data.frame` for usage details.
+#' Refer to `base::as.data.frame` for usage details.
 #' @param ... Additional arguments.
 #'
 #' @examples
@@ -42,7 +42,7 @@ NULL
 
 
 ## Updated 2022-02-07.
-`as.DataFrame,list` <-  # nolint
+`as.DataFrame,list` <- # nolint
     function(x, row.names = NULL) {
         if (hasLength(x)) {
             assert(
@@ -77,7 +77,7 @@ NULL
     }
 
 ## Updated 2022-02-08.
-`as.DataFrame,matrix` <-  # nolint
+`as.DataFrame,matrix` <- # nolint
     function(x) {
         to <- as.data.frame(x, stringsAsFactors = FALSE)
         to <- as(to, "DataFrame")
@@ -93,7 +93,7 @@ NULL
     }
 
 ## Updated 2021-10-14.
-`as.DataFrame,GenomicRanges` <-  # nolint
+`as.DataFrame,GenomicRanges` <- # nolint
     function(x) {
         DataFrame(
             "seqnames" = seqnames(x),
@@ -107,7 +107,7 @@ NULL
     }
 
 ## Updated 2021-10-14.
-`as.DataFrame,IntegerRanges` <-  # nolint
+`as.DataFrame,IntegerRanges` <- # nolint
     function(x) {
         DataFrame(
             "start" = start(x),
@@ -119,7 +119,7 @@ NULL
     }
 
 ## Updated 2022-02-08.
-`as.DataFrame,Matrix` <-  # nolint
+`as.DataFrame,Matrix` <- # nolint
     function(x) {
         as.DataFrame(as.matrix(x))
     }
@@ -127,15 +127,15 @@ NULL
 
 
 ## Updated 2021-02-19.
-`as.DataFrame,SimpleList` <-  # nolint
+`as.DataFrame,SimpleList` <- # nolint
     `as.DataFrame,list`
 
 ## Updated 2022-02-08.
-`as.DataFrame,data.frame` <-  # nolint
+`as.DataFrame,data.frame` <- # nolint
     `as.DataFrame,matrix`
 
 ## Updated 2022-02-08.
-`as.DataFrame,matrix` <-  # nolint
+`as.DataFrame,matrix` <- # nolint
     `as.DataFrame,matrix`
 
 

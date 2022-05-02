@@ -5,7 +5,7 @@
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param row.names,optional
-#'   Refer to `base::data.frame` for usage details.
+#' Refer to `base::data.frame` for usage details.
 #'
 #' @return `data.frame`.
 #'
@@ -40,7 +40,7 @@ NULL
 #'
 #' Not exporting this method because we don't want to mask the default
 #' conventions currently used by Bioconductor.
-`as.data.frame,DataFrame` <-  # nolint
+`as.data.frame,DataFrame` <- # nolint
     function(x) {
         ## Decode Rle columns, which can be coerced.
         x <- decode(x)
@@ -79,13 +79,11 @@ NULL
     }
 
 ## Updated 2021-02-05.
-`as.data.frame,IntegerRanges` <-  # nolint
-    function(
-        x,
-        row.names = NULL,
-        optional = FALSE,
-        ...
-    ) {
+`as.data.frame,IntegerRanges` <- # nolint
+    function(x,
+             row.names = NULL,
+             optional = FALSE,
+             ...) {
         if (missing(row.names)) {
             row.names <- names(x)
         }
@@ -109,7 +107,7 @@ NULL
     }
 
 ## Updated 2019-07-20.
-`as.data.frame,Matrix` <-  # nolint
+`as.data.frame,Matrix` <- # nolint
     function(x, ...) {
         as.data.frame(as.matrix(x), ...)
     }
