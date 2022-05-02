@@ -7,13 +7,13 @@
 #' @inheritParams AcidRoxygen::params
 #'
 #' @return `character`.
-#'   Simple directory contents return, including both files and subdirectories.
+#' Simple directory contents return, including both files and subdirectories.
 #'
 #' @examples
 #' url <- "ftp://ftp.ncbi.nlm.nih.gov/genomes/"
 #' if (
 #'     isFALSE(nzchar(Sys.getenv("CI"))) &&
-#'     goalie::hasInternet(url)
+#'         goalie::hasInternet(url)
 #' ) {
 #'     x <- getURLDirList(url)
 #'     tail(x)
@@ -24,7 +24,7 @@ getURLDirList <- function(url, pattern = NULL) {
         isString(pattern, nullOK = TRUE)
     )
     if (isFALSE(grepl("/$", url))) {
-        url <- paste0(url, "/")  # nocov
+        url <- paste0(url, "/") # nocov
     }
     x <- getURL(url = url, dirlistonly = TRUE)
     x <- unlist(strsplit(x, split = "\n"))
