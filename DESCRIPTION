@@ -33,7 +33,6 @@ Imports:
     S4Vectors,
     goalie,
     methods,
-    stringi,
     syntactic,
     utils
 Suggests:
@@ -50,9 +49,8 @@ Suggests:
     readxl,
     rio,
     rtracklayer,
-    stringr,
+    stringi,
     testthat,
-    tibble,
     tools,
     yaml
 Roxygen: list(markdown = TRUE)
