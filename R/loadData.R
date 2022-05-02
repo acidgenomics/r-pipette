@@ -17,16 +17,16 @@
 #'
 #' @export
 #' @note This function is desired for interactive use and interprets object
-#'   names using non-standard evaluation.
+#' names using non-standard evaluation.
 #' @note Updated 2021-10-12.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ... Object names.
-#'   Note that these arguments are interpreted as symbols using non-standard
-#'   evaluation for convenience during interactive use, and *must not be
-#'   quoted*.
+#' Note that these arguments are interpreted as symbols using non-standard
+#' evaluation for convenience during interactive use, and *must not be
+#' quoted*.
 #' @param list `character`.
-#'   A character vector containing the names of objects to be loaded.
+#' A character vector containing the names of objects to be loaded.
 #'
 #' @return Invisible `character`.
 #' File paths.
@@ -53,71 +53,70 @@
 #'
 #' ## Clean up.
 #' rm(example, inherits = TRUE)
-loadData <- function(
-    ...,
-    dir = getOption(
-        x = "acid.load.dir",
-        default = getwd()
-    ),
-    envir = globalenv(),
-    list = NULL,
-    overwrite = getOption(
-        x = "acid.overwrite",
-        default = TRUE
-    )
-) {
-    assert(
-        is.environment(envir),
-        isCharacter(list, nullOK = TRUE),
-        isFlag(overwrite)
-    )
-    if (isCharacter(list)) {
-        names <- list
-        rm(list)
-        ## By default, assume user has passed in actual file paths.
-        ## Otherwise, behave like NSE method, and attempt to add `dir`.
-        if (isTRUE(allAreFiles(names))) {
-            files <- realpath(names)  # nocov
+loadData <-
+    function(...,
+             dir = getOption(
+                 x = "acid.load.dir",
+                 default = getwd()
+             ),
+             envir = globalenv(),
+             list = NULL,
+             overwrite = getOption(
+                 x = "acid.overwrite",
+                 default = TRUE
+             )) {
+        assert(
+            is.environment(envir),
+            isCharacter(list, nullOK = TRUE),
+            isFlag(overwrite)
+        )
+        if (isCharacter(list)) {
+            names <- list
+            rm(list)
+            ## By default, assume user has passed in actual file paths.
+            ## Otherwise, behave like NSE method, and attempt to add `dir`.
+            if (isTRUE(allAreFiles(names))) {
+                files <- realpath(names) # nocov
+            } else {
+                files <- .listData(names = names, dir = dir)
+            }
         } else {
+            names <- dots(..., character = TRUE)
             files <- .listData(names = names, dir = dir)
         }
-    } else {
-        names <- dots(..., character = TRUE)
-        files <- .listData(names = names, dir = dir)
+        assert(allAreFiles(files))
+        if (all(grepl(
+            pattern = "\\.rds$",
+            x = files,
+            ignore.case = TRUE
+        ))) {
+            fun <- .loadRDS
+        } else if (all(grepl(
+            pattern = "\\.rd[a|ata]$",
+            x = files,
+            ignore.case = TRUE
+        ))) {
+            fun <- .loadRDA
+        } else {
+            abort(sprintf(
+                fmt = paste(
+                    "File extension error: %s.",
+                    "Don't mix %s files in a directory.",
+                    sep = "\n"
+                ),
+                toInlineString(basename(files), n = 5L),
+                toInlineString(c("RDS", "RDA", "RDATA"))
+            ))
+        }
+        lapply(
+            X = files,
+            FUN = fun,
+            envir = envir,
+            overwrite = overwrite
+        )
+        assert(allAreExisting(names, envir = envir, inherits = FALSE))
+        invisible(files)
     }
-    assert(allAreFiles(files))
-    if (all(grepl(
-        pattern = "\\.rds$",
-        x = files,
-        ignore.case = TRUE
-    ))) {
-        fun <- .loadRDS
-    } else if (all(grepl(
-        pattern = "\\.rd[a|ata]$",
-        x = files,
-        ignore.case = TRUE
-    ))) {
-        fun <- .loadRDA
-    } else {
-        abort(sprintf(
-            fmt = paste(
-                "File extension error: %s.",
-                "Don't mix %s files in a directory.",
-                sep = "\n"
-            ),
-            toInlineString(basename(files), n = 5L),
-            toInlineString(c("RDS", "RDA", "RDATA"))
-        ))
-    }
-    lapply(
-        X = files,
-        FUN = fun,
-        envir = envir,
-        overwrite = overwrite
-    )
-    assert(allAreExisting(names, envir = envir, inherits = FALSE))
-    invisible(files)
-}
 
 
 
@@ -189,7 +188,7 @@ loadData <- function(
     ## Error if the object is already assigned in environment.
     if (
         isFALSE(overwrite) &&
-        exists(x = name, envir = envir, inherits = FALSE)
+            exists(x = name, envir = envir, inherits = FALSE)
     ) {
         .loadExistsError(name)
     }
@@ -217,7 +216,7 @@ loadData <- function(
     ## Error if the object is already assigned in environment.
     if (
         isFALSE(overwrite) &&
-        exists(x = name, envir = envir, inherits = FALSE)
+            exists(x = name, envir = envir, inherits = FALSE)
     ) {
         .loadExistsError(name)
     }

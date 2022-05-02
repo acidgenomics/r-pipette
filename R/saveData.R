@@ -7,8 +7,8 @@
 #' combining multiple objects into a single file.
 #'
 #' @note This function is desired for interactive use and interprets object
-#'   names using non-standard evaluation. It will **overwrite** existing files
-#'   on disk, following the same conventions as `save()`.
+#' names using non-standard evaluation. It will **overwrite** existing files
+#' on disk, following the same conventions as `save()`.
 #'
 #' @export
 #' @note Updated 2021-10-12.
@@ -17,19 +17,19 @@
 #' @inheritParams base::save
 #' @inheritParams AcidRoxygen::params
 #' @param ext `character(1)`.
-#'   Output file format extension.
+#' Output file format extension.
 #'
-#'   Supported arguments:
-#'   - `"rds"`: R data serialized (RDS).
-#'   - `"rda"`: R data (RDA).
+#' Supported arguments:
+#' - `"rds"`: R data serialized (RDS).
+#' - `"rda"`: R data (RDA).
 #'
-#'   RDS is preferred when saving single objects per file, which is always the
-#'   convention of `saveData()`, regardless of the extension used.
+#' RDS is preferred when saving single objects per file, which is always the
+#' convention of `saveData()`, regardless of the extension used.
 #' @param list `character`.
-#'   A character vector containing the names of objects to be saved.
-#'   Note that this approach differs from `save()` in that the objects are saved
-#'   individually to disk, instead of inside a single R data file. Requires
-#'   objects to be defined in environment specified by `envir`. argument.
+#' A character vector containing the names of objects to be saved.
+#' Note that this approach differs from `save()` in that the objects are saved
+#' individually to disk, instead of inside a single R data file. Requires
+#' objects to be defined in environment specified by `envir`. argument.
 #'
 #' @seealso
 #' - `save()`.
@@ -62,27 +62,25 @@
 #'
 #' ## Clean up.
 #' unlink(dir, recursive = TRUE)
-saveData <- function(
-    ...,
-    dir = getOption(
-        x = "acid.save.dir",
-        default = getwd()
-    ),
-    ext = getOption(
-        x = "acid.save.ext",
-        default = "rds"
-    ),
-    overwrite = getOption(
-        x = "acid.overwrite",
-        default = TRUE
-    ),
-    compress = getOption(
-        x = "acid.save.compress",
-        default = TRUE
-    ),
-    list = NULL,
-    envir = parent.frame()
-) {
+saveData <- function(...,
+                     dir = getOption(
+                         x = "acid.save.dir",
+                         default = getwd()
+                     ),
+                     ext = getOption(
+                         x = "acid.save.ext",
+                         default = "rds"
+                     ),
+                     overwrite = getOption(
+                         x = "acid.overwrite",
+                         default = TRUE
+                     ),
+                     compress = getOption(
+                         x = "acid.save.compress",
+                         default = TRUE
+                     ),
+                     list = NULL,
+                     envir = parent.frame()) {
     assert(
         isFlag(overwrite),
         formalCompress(compress)
@@ -119,7 +117,7 @@ saveData <- function(
             alertWarning("No files were saved.")
             return(invisible(NULL))
         }
-        objects <- objects[!file.exists(files)]  # nocov
+        objects <- objects[!file.exists(files)] # nocov
     }
     switch(
         EXPR = ext,
@@ -162,10 +160,10 @@ saveData <- function(
 #' @inheritParams AcidRoxygen::params
 #' @inheritParams saveData
 #' @param name `character(1)`.
-#'   Desired variable name.
+#' Desired variable name.
 #' @param envir `environment`.
-#'   Environment to use for assignment.
-#'   Defaults to `parent.frame()`, the calling environment.
+#' Environment to use for assignment.
+#' Defaults to `parent.frame()`, the calling environment.
 #'
 #' @return Invisible named `character(1)`.
 #' File path.
