@@ -26,7 +26,7 @@ NULL
 
 
 ## Updated 2021-06-09.
-`decode,DataFrame` <-  # nolint
+`decode,DataFrame` <- # nolint
     function(x) {
         if (!(hasCols(x) && hasRows(x))) {
             return(x)
@@ -37,7 +37,7 @@ NULL
             X = x,
             FUN = function(x) {
                 if (is(x, "List")) {
-                    return(x)  # nocov
+                    return(x) # nocov
                 }
                 ## Decode Rle, if necessary.
                 if (is(x, "Rle")) {
@@ -59,7 +59,7 @@ NULL
 
 
 ## Updated 2019-07-20.
-`decode,Ranges` <-  # nolint
+`decode,Ranges` <- # nolint
     function(x) {
         if (!is.null(mcols(x))) {
             mcols(x) <- decode(mcols(x))
