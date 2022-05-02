@@ -14,20 +14,21 @@ NULL
 
 
 ## Updated 2021-04-27.
-.digest <- function(
-    file,
-    algo = c("md5", "sha256")
-) {
-    requireNamespaces("digest")
-    assert(isAFile(file))
-    x <- digest::digest(
-        object = file,
-        algo = match.arg(algo),
-        file = TRUE
-    )
-    assert(isString(x))
-    x
-}
+.digest <-
+    function(file,
+             algo = c("md5", "sha256")) {
+        assert(
+            requireNamespaces("digest"),
+            isAFile(file)
+        )
+        x <- digest::digest(
+            object = file,
+            algo = match.arg(algo),
+            file = TRUE
+        )
+        assert(isString(x))
+        x
+    }
 
 
 #' @rdname checksums
