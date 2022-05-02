@@ -54,7 +54,7 @@ naStrings <- c(
     "",
     "#N/A",
     "#n/a",
-    "-",  # Used by NCBI (e.g. gene info files).
+    "-", # Used by NCBI (e.g. gene info files).
     "N/A",
     "NA",
     "NULL",
@@ -76,5 +76,5 @@ naStrings <- c(
 #' pipetteTestsURL
 pipetteTestsURL <- paste0(
     "https://r.acidgenomics.com/testdata/pipette/",
-    "v", .pkgVersion$major, ".", .pkgVersion$minor  # nolint
+    "v", .pkgVersion$major, ".", .pkgVersion$minor # nolint
 )
