@@ -490,6 +490,8 @@ NULL
 
 
 
+## FIXME Can we just simplify this to not be parameterized?
+
 #' Dynamically handle a local or remote file path
 #'
 #' @section Vectorization:
@@ -502,12 +504,12 @@ NULL
 #' Compressed files will automatically be decompressed. Currently, these file
 #' extensions are natively supported: `BZ2`, `GZ`, `XZ`, and `ZIP`.
 #'
-#' @note Updated 2021-09-24.
+#' @note Updated 2022-05-02.
 #' @noRd
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param file `character(1)`.
-#'   Local file paths or remote URLs.
+#'   Local file path or remote URL.
 #' @param tempPrefix `character(1)`.
 #'   Prefix to use for temporary file basename.
 #'
@@ -531,80 +533,63 @@ NULL
 #'     protocol = "none"
 #' )
 #' x <- .localOrRemoteFile(file)
-#' basename(x)
-.localOrRemoteFile <- function(
-    file,
-    tempPrefix = .pkgName,
-    quiet = getOption(
-        x = "acid.quiet",
-        default = FALSE
-    )
-) {
-    assert(
-        isCharacter(file),
-        isString(tempPrefix),
-        isFlag(quiet)
-    )
-    file <- mapply(
-        file = file,
-        FUN = function(file) {
-            if (isFALSE(isAURL(file))) {
-                return(file)
-            }
-            ## Remote file mode.
+#' print(x)
+.localOrRemoteFile <-
+    function(
+        file,
+        tempPrefix = .pkgName,
+        quiet = getOption(x = "acid.quiet", default = FALSE)
+    ) {
+        assert(
+            isString(file),
+            isString(tempPrefix),
+            isFlag(quiet)
+        )
+        if (isAURL(file)) {
             assert(hasInternet())
-            ## Note that for `.gtf.gz` we want to return only `.gz` here.
-            ## This behavor differs from matching using `extPattern` global.
-            ext <- str_match(
-                string = basename(file),
-                pattern = "\\.([a-zA-Z0-9]+)$"
-            )
-            ext <- na.omit(ext[1L, 2L])
-            ## Write mode for binary files.
-            ## Note that files without extension will use default.
-            ## https://github.com/tidyverse/readxl/issues/374
-            binary <- c(
-                "bz2",
-                "gz",
-                "rda",
-                "rds",
-                "xls",
-                "xlsx",
-                "xz",
-                "zip"
-            )
-            if (isSubset(ext, binary)) {
-                ## Write binary.
-                mode <- "wb"
-            } else {
-                ## Write (default).
-                mode <- "w"  # nocov
-            }
-            tmpdir <- realpath(tempdir())
+            url <- file
             fileext <- fileExt(file)
             if (is.na(fileext)) {
                 fileext <- ""  # nocov
             } else {
                 fileext <- paste0(".", fileext)
             }
-            destfile <- tempfile(
+            file <- tempfile(
                 pattern = paste0(tempPrefix, "-"),
-                tmpdir = tmpdir,
+                tmpdir = realpath(tempdir()),
                 fileext = fileext
             )
+            if (isSubset(
+                x = fileExt(
+                    path = url,
+                    pattern = "\\.([a-zA-Z0-9]+)$"
+                ),
+                y = c(
+                    "bz2",
+                    "gz",
+                    "rda",
+                    "rds",
+                    "xls",
+                    "xlsx",
+                    "xz",
+                    "zip"
+                )
+            )) {
+                ## Write binary.
+                mode <- "wb"
+            } else {
+                ## Write (default).
+                mode <- "w"  # nocov
+            }
             download(
-                url = file,
-                destfile = destfile,
+                url = url,
+                destfile = file,
                 quiet = quiet,
                 mode = mode
             )
-            destfile
-        },
-        SIMPLIFY = TRUE,
-        USE.NAMES = FALSE
-    )
-    realpath(.autoDecompress(file))
-}
+        }
+        .autoDecompress(file)
+    }
 
 
 
@@ -769,6 +754,7 @@ NULL
             format <- "gsheet"
         }
         if (is.null(format)) {
+            ## FIXME Can we use a base method here instead?
             format <- str_match(
                 string = basename(con),
                 pattern = extPattern
