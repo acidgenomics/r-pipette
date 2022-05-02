@@ -26,10 +26,10 @@ NULL
 
 
 ## Updated 2021-10-14.
-`sanitizeNA,DataFrame` <-  # nolint
+`sanitizeNA,DataFrame` <- # nolint
     function(object) {
         if (!(hasCols(object) && hasRows(object))) {
-            return(object)  # nocov
+            return(object) # nocov
         }
         meta <- metadata(object)
         rn <- rownames(object)
@@ -39,7 +39,7 @@ NULL
                 if (is.character(x)) {
                     sanitizeNA(x)
                 } else {
-                    x  # nocov
+                    x # nocov
                 }
             }
         )
@@ -52,7 +52,7 @@ NULL
 
 
 ## Updated 2019-07-19.
-`sanitizeNA,atomic` <-  # nolint
+`sanitizeNA,atomic` <- # nolint
     function(object) {
         object
     }
@@ -61,7 +61,7 @@ NULL
 
 ## Note that names will be kept here after the gsub call.
 ## Updated 2021-01-13.
-`sanitizeNA,character` <-  # nolint
+`sanitizeNA,character` <- # nolint
     function(object) {
         patterns <- c(
             "^$",
@@ -82,14 +82,14 @@ NULL
 
 
 ## Updated 2021-06-09.
-`sanitizeNA,data.frame` <-  # nolint
+`sanitizeNA,data.frame` <- # nolint
     function(object) {
         if (!(hasCols(object) && hasRows(object))) {
-            return(object)  # nocov
+            return(object) # nocov
         }
         assert(allAreAtomic(object))
         if (hasRownames(object)) {
-            rownames <- rownames(object)  # nocov
+            rownames <- rownames(object) # nocov
         } else {
             rownames <- NULL
         }
@@ -99,7 +99,7 @@ NULL
                 if (is.character(x)) {
                     sanitizeNA(x)
                 } else {
-                    x  # nocov
+                    x # nocov
                 }
             }
         )
@@ -110,7 +110,7 @@ NULL
         )
         ## This step ensures we keep `tbl_df`, `data.table` class, if necessary.
         if (!identical(class(object), "data.frame")) {
-            out <- as(out, class(object)[[1L]])  # nocov
+            out <- as(out, class(object)[[1L]]) # nocov
         }
         out
     }
@@ -122,7 +122,7 @@ NULL
 ## levels vector.
 ##
 ## Updated 2021-08-05.
-`sanitizeNA,factor` <-  # nolint
+`sanitizeNA,factor` <- # nolint
     function(object) {
         x <- object
         levels <- unique(sanitizeNA(levels(x)))

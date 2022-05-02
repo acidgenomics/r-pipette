@@ -41,7 +41,7 @@ NULL
 
 
 ## Updated 2019-07-19.
-`removeNA,atomic` <-  # nolint
+`removeNA,atomic` <- # nolint
     function(object) {
         na.omit(object)
     }
@@ -49,7 +49,7 @@ NULL
 
 
 ## Updated 2019-07-19.
-`removeNA,matrix` <-  # nolint
+`removeNA,matrix` <- # nolint
     function(object) {
         keepRows <- apply(X = object, MARGIN = 1L, FUN = .allNonNA)
         keepCols <- apply(X = object, MARGIN = 2L, FUN = .allNonNA)
@@ -59,15 +59,15 @@ NULL
 
 
 ## Updated 2021-10-14.
-`removeNA,DataFrame` <-  # nolint
+`removeNA,DataFrame` <- # nolint
     `removeNA,matrix`
 
 ## Updated 2021-02-02.
-`removeNA,Matrix` <-  # nolint
+`removeNA,Matrix` <- # nolint
     `removeNA,matrix`
 
 ## Updated 2019-07-19.
-`removeNA,data.frame` <-  # nolint
+`removeNA,data.frame` <- # nolint
     `removeNA,matrix`
 
 
