@@ -8,17 +8,18 @@
 #' @note Updated 2021-10-14.
 #'
 #' @inheritParams AcidRoxygen::params
-#' @param choices `character`.
-#'   Column name choices to use internally for matching.
-#'   Note that case-insensitive matching is performed against `make.names()`
-#'   return internally. Either dots (".") or underscores ("_") used as word
-#'   separators will match.
 #' @param ... Additional arguments.
+#'
+#' @param choices `character`.
+#' Column name choices to use internally for matching.
+#' Note that case-insensitive matching is performed against `make.names()`
+#' return internally. Either dots (".") or underscores ("_") used as word
+#' separators will match.
 #'
 #' @return `character(1)` or `NULL`.
 #'
-#'   - data.table: `"rn"`.
-#'   - tibble: `"rowname"`.
+#' - data.table: `"rn"`.
+#' - tibble: `"rowname"`.
 #'
 #' @examples
 #' data(
@@ -39,17 +40,15 @@ NULL
 
 
 ## Updated 2021-10-14.
-`matchRownameColumn,DataFrame` <-  # nolint
-    function(
-        object,
-        choices = c(
-            "rn",
-            "row.name",
-            "row.names",
-            "rowname",
-            "rownames"
-        )
-    ) {
+`matchRownameColumn,DataFrame` <- # nolint
+    function(object,
+             choices = c(
+                 "rn",
+                 "row.name",
+                 "row.names",
+                 "rowname",
+                 "rownames"
+             )) {
         assert(!hasRownames(object))
         match <- na.omit(match(
             x = choices,
@@ -75,7 +74,7 @@ NULL
 
 
 ## Updated 2021-10-14.
-`matchRownameColumn,data.frame` <-  # nolint
+`matchRownameColumn,data.frame` <- # nolint
     `matchRownameColumn,DataFrame`
 
 
