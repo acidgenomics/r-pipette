@@ -61,6 +61,7 @@ transmit <- function(
         localDir <- initDir(localDir)
     }
     ## Get the name of the server.
+    ## FIXME Can we use a base method here instead of stringr?
     server <- str_match(remoteDir, "^.*//([^/]+)/.*$")[1L, 2L]
     assert(isString(server))
     alert(sprintf("Transmitting files from {.url %s}.", server))
@@ -86,9 +87,11 @@ transmit <- function(
     )
     remoteFiles <- remoteFiles[grepl("^-", remoteFiles)]
     ## File name is at the end, not including a space.
+    ## FIXME Can we use a base method here instead of stringr?
     remoteFiles <- str_extract(remoteFiles, "[^\\s]+$")
     assert(hasLength(remoteFiles))
     ## Apply pattern matching.
+    ## FIXME Can we use a base method here instead of stringr?
     match <- str_subset(remoteFiles, pattern)
     assert(hasLength(match))
     alertInfo(sprintf(

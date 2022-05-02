@@ -7,10 +7,8 @@
 \alias{as.DataFrame,Matrix-method}
 \alias{as.DataFrame,SimpleList-method}
 \alias{as.DataFrame,data.frame-method}
-\alias{as.DataFrame,data.table-method}
 \alias{as.DataFrame,list-method}
 \alias{as.DataFrame,matrix-method}
-\alias{as.DataFrame,tbl_df-method}
 \title{Coerce object to S4 DataFrame}
 \usage{
 as.DataFrame(x, ...)
@@ -25,13 +23,9 @@ as.DataFrame(x, ...)
 
 \S4method{as.DataFrame}{data.frame}(x)
 
-\S4method{as.DataFrame}{data.table}(x)
-
 \S4method{as.DataFrame}{list}(x, row.names = NULL)
 
 \S4method{as.DataFrame}{matrix}(x)
-
-\S4method{as.DataFrame}{tbl_df}(x)
 }
 \arguments{
 \item{x}{Object.}
@@ -47,7 +41,7 @@ as.DataFrame(x, ...)
 Coerce object to S4 DataFrame
 }
 \note{
-Updated 2022-02-08.
+Updated 2022-05-02.
 }
 \examples{
 data(

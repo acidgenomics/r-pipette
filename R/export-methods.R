@@ -193,6 +193,7 @@ NULL
             assert(isFALSE(append))
         }
         whatFile <- con
+        ## FIXME Can we use a base method instead of stringr here?
         match <- str_match(string = con, pattern = extPattern)
         compressExt <- match[1L, 4L]
         compress <- !is.na(compressExt)

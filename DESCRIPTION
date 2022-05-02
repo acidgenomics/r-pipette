@@ -1,8 +1,8 @@
 Package: pipette
 Title: Pipette Biological Data In and Out of R
 Description: Input/output functions for biological data formats.
-Version: 0.8.1.9000
-Date: 2022-04-27
+Version: 0.9.0.9000
+Date: 2022-05-02
 Authors@R: c(
     person(
         "Michael", "Steinbaugh",
@@ -30,29 +30,29 @@ Imports:
     GenomicRanges,
     IRanges,
     Matrix,
-    RCurl,
     S4Vectors,
-    data.table,
     goalie,
     methods,
-    readr,
-    stringr,
+    stringi,
     syntactic,
-    tibble,
     utils
 Suggests:
     AcidTest,
     BiocFileCache,
     Biostrings,
+    RCurl,
+    data.table,
     digest,
     httr,
     jsonlite,
     pzfx,
+    readr,
     readxl,
     rio,
     rtracklayer,
-    stringi,
+    stringr,
     testthat,
+    tibble,
     tools,
     yaml
 Roxygen: list(markdown = TRUE)

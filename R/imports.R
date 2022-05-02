@@ -10,14 +10,6 @@ NULL
 
 
 
-## S3 generics =================================================================
-
-#' @importFrom data.table as.data.table
-#' @importFrom tibble as_tibble
-NULL
-
-
-
 ## S4 generics and methods =====================================================
 
 #' @importFrom AcidGenerics as.DataFrame atomize droplevels2 encode factorize
@@ -28,7 +20,6 @@ NULL
 #' @importFrom GenomicRanges seqnames
 #' @importFrom S4Vectors DataFrame Rle SimpleList decode droplevels head mcols
 #'   mcols<- metadata metadata<- na.omit tail
-#' @importFrom methods coerce
 #' @importFrom syntactic makeNames
 NULL
 
@@ -51,6 +42,5 @@ NULL
 #'   isCharacter isFlag isInstalled isInt isMatchingRegex isNonNegative
 #'   isPositive isScalar isString isSubset validNames validate
 #' @importFrom methods as is hasMethod new setGeneric signature validObject
-#' @importFrom stringr str_extract str_match str_subset
 #' @importFrom utils download.file packageName packageVersion
 NULL
