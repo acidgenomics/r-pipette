@@ -425,8 +425,6 @@ NULL
 
 
 
-## FIXME Can we just simplify this to not be parameterized?
-
 #' Dynamically handle a local or remote file path
 #'
 #' @section Vectorization:
@@ -927,7 +925,7 @@ NULL
         nMax = Inf,
         engine = getOption(
             x = "acid.import.engine",
-            default = "readr"
+            default = "base"
         ),
         makeNames = getOption(
             x = "acid.import.make.names",
