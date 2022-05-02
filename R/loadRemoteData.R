@@ -53,7 +53,7 @@ loadRemoteData <-
         ## Check to make sure the objects don't already exist.
         if (
             isFALSE(overwrite) &&
-            isFALSE(allAreNonExisting(names, envir = envir, inherits = FALSE))
+                isFALSE(allAreNonExisting(names, envir = envir, inherits = FALSE))
         ) {
             .loadExistsError(names)
         }

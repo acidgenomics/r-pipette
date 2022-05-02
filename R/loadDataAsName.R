@@ -41,7 +41,7 @@ loadDataAsName <-
         names <- names(dots)
         if (
             isFALSE(overwrite) &&
-            isFALSE(allAreNonExisting(names, envir = envir, inherits = FALSE))
+                isFALSE(allAreNonExisting(names, envir = envir, inherits = FALSE))
         ) {
             .loadExistsError(names)
         }
