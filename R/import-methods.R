@@ -2,6 +2,10 @@
 #'
 #' Read file by extension into R.
 #'
+#' @name import
+#' @note Updated 2022-05-02.
+#'
+#' @details
 #' `import()` supports automatic loading of common file types, by wrapping
 #' popular importer functions. It intentionally designed to be simple, with few
 #' arguments. Remote URLs and compressed files are supported. If you need more
@@ -73,9 +77,6 @@
 #'
 #' These file formats are intentionally not supported:
 #' `DOC`, `DOCX`, `PDF`, `PPT`, `PPTX`.
-#'
-#' @name import
-#' @note Updated 2021-10-21.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param con `character(1)`, `connection`, or `missing`.
@@ -707,26 +708,22 @@ NULL
             format <- "gsheet"
         }
         if (is.null(format)) {
-            ## FIXME Can we use a base method here instead?
-            format <- str_match(
-                string = basename(con),
-                pattern = extPattern
-            )[1L, 2L]
-            if (is.na(format)) {
-                abort(sprintf(
-                    fmt = paste(
-                        "{.arg %s} ({.file %s}) doesn't contain extension.",
-                        "Set the file format manually using {.arg %s}.",
-                        "Refer to {.pkg %s}::{.fun %s} for details.",
-                        sep = "\n"
-                    ),
-                    "con", basename(con),
-                    "format",
-                    "pipette", "import"
-                ))
-            }
+            format <- fileExt(con)
         }
-        assert(isString(format))
+        assert(
+            isString(format),
+            msg = sprintf(
+                fmt = paste(
+                    "{.arg %s} ({.file %s}) doesn't contain extension.",
+                    "Set the file format manually using {.arg %s}.",
+                    "Refer to {.pkg %s}::{.fun %s} for details.",
+                    sep = "\n"
+                ),
+                "con", basename(con),
+                "format",
+                "pipette", "import"
+            )
+        )
         class <- .extToFileClass(format)
         assert(
             hasMethod(
@@ -910,7 +907,7 @@ NULL
 
 #' Import a delimited file (e.g. `.csv`, `.tsv`).
 #'
-#' @note Updated 2021-10-21.
+#' @note Updated 2022-05-02.
 #' @noRd
 `import,DelimFile` <-  # nolint
     function(
@@ -1557,7 +1554,7 @@ NULL
             )
         }
         if (isTRUE(removeBlank)) {
-            requireNamespaces("stringi")
+            assert(requireNamespaces("stringi"))
             object <- stringi::stri_remove_empty(object)
         }
         if (isString(comment)) {
