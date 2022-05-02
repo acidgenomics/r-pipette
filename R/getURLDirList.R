@@ -1,8 +1,3 @@
-## nocov start
-## This check can fail on Travis CI due to remove server dependency.
-
-
-
 #' Get remote URL directory listing
 #'
 #' @export
@@ -40,7 +35,3 @@ getURLDirList <- function(url, pattern = NULL) {
     x <- sort(x)
     x
 }
-
-
-
-## nocov end

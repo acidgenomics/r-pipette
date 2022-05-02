@@ -1,6 +1,6 @@
 #' @name as.DataFrame
 #' @inherit AcidGenerics::as.DataFrame
-#' @note Updated 2022-02-08.
+#' @note Updated 2022-05-02.
 #'
 #' @param row.names
 #'   Refer to `base::as.data.frame` for usage details.
@@ -135,15 +135,7 @@ NULL
     `as.DataFrame,matrix`
 
 ## Updated 2022-02-08.
-`as.DataFrame,data.table` <-  # nolint
-    `as.DataFrame,matrix`
-
-## Updated 2022-02-08.
 `as.DataFrame,matrix` <-  # nolint
-    `as.DataFrame,matrix`
-
-## Updated 2022-02-08.
-`as.DataFrame,tbl_df` <-  # nolint
     `as.DataFrame,matrix`
 
 
@@ -192,14 +184,6 @@ setMethod(
 #' @export
 setMethod(
     f = "as.DataFrame",
-    signature = signature(x = "data.table"),
-    definition = `as.DataFrame,data.table`
-)
-
-#' @rdname as.DataFrame
-#' @export
-setMethod(
-    f = "as.DataFrame",
     signature = signature(x = "list"),
     definition = `as.DataFrame,list`
 )
@@ -210,12 +194,4 @@ setMethod(
     f = "as.DataFrame",
     signature = signature(x = "matrix"),
     definition = `as.DataFrame,matrix`
-)
-
-#' @rdname as.DataFrame
-#' @export
-setMethod(
-    f = "as.DataFrame",
-    signature = signature(x = "tbl_df"),
-    definition = `as.DataFrame,tbl_df`
 )

@@ -18,12 +18,6 @@ NULL
 #' @usage atomize(object, ...)
 NULL
 
-#' @rdname coerce
-#' @name coerce
-#' @export
-#' @exportMethod coerce
-NULL
-
 #' @rdname decode
 #' @name decode
 #' @export
@@ -94,26 +88,4 @@ NULL
 #' @name sanitizePercent
 #' @export
 #' @usage sanitizePercent(object, ...)
-NULL
-
-
-
-## S3 generics =================================================================
-
-#' @rdname as_tibble
-#' @name as_tibble
-#' @export
-#' @usage as_tibble(
-#'     x,
-#'     ...,
-#'     .rows = NULL,
-#'     .name_repair = c("check_unique", "unique", "universal", "minimal"),
-#'     rownames = pkgconfig::get_config("tibble::rownames", NULL)
-#' )
-NULL
-
-#' @rdname as.data.table
-#' @name as.data.table
-#' @export
-#' @usage as.data.table(x, keep.rownames = FALSE, ...)
 NULL

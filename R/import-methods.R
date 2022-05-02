@@ -1,17 +1,3 @@
-## FIXME Simplify and improve error message when local file doesn't exist.
-## FIXME Consider converting any warnings to errors here.
-## FIXME Need to show the user `readr::problems()` return when appropriate.
-
-
-## FIXME Need to debug this further:
-## url <- "https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSE85107&format=file&file=GSE85107%5FTable%5FOCI2%5FOCI3%5Freadcounts%2Etxt%2Egz"
-## This doesn't show the warning, which stinks.
-## import(url, format = "tsv", engine = "readr")
-## This shows the warning we want...
-## readr::read_csv(url)
-## FIXME What about readr::read_delim showing a warning?
-
-
 #' Import
 #'
 #' Read file by extension into R.
@@ -296,57 +282,6 @@ NULL
 
 
 
-#' Auto-decompress a file, if necessary
-#'
-#' @note Updated 2021-10-21.
-#' @noRd
-#'
-#' @details
-#' Note that `data.table::fread()` still doesn't natively support compressed
-#' files. R on Windows can run into `tempdir()` write permission issues, unless
-#' R is running as administrator. Ensure that decompressed file is removed
-#' manually before attempting to overwrite, otherwise this step can error out.
-#'
-#' Alternatively, can check for BiocIO "CompressedFile" class.
-.autoDecompress <- function(file) {
-    file <- realpath(file)
-    out <- vapply(
-        X = file,
-        FUN = function(file) {
-            if (!grepl(compressExtPattern, file)) {
-                return(file)
-            }
-            tmpdir <- realpath(tempdir())
-            pattern <- paste0(.pkgName, "-")
-            if (isFALSE(grepl(
-                pattern = file.path(tmpdir, pattern),
-                x = file
-            ))) {
-                tmpfile <- tempfile(
-                    pattern = pattern,
-                    tmpdir = tmpdir,
-                    fileext = paste0(".", fileExt(file))
-                )
-                file.copy(from = file, to = tmpfile)
-                file <- tmpfile
-            }
-            destfile <- decompress(
-                file = file,
-                remove = TRUE,
-                overwrite = TRUE
-            )
-            assert(isString(destfile))
-            destfile
-        },
-        FUN.VALUE = character(1L),
-        USE.NAMES = FALSE
-    )
-    out <- realpath(out)
-    out
-}
-
-
-
 #' Map file extension to corresponding S4 file class
 #'
 #' @note Updated 2021-08-24.
@@ -537,27 +472,27 @@ NULL
 .localOrRemoteFile <-
     function(
         file,
-        tempPrefix = .pkgName,
         quiet = getOption(x = "acid.quiet", default = FALSE)
     ) {
         assert(
             isString(file),
-            isString(tempPrefix),
             isFlag(quiet)
+        )
+        tmpDir <- realpath(tempdir())
+        tmpPrefix <- paste0(.pkgName, "-")
+        fileExt <- fileExt(file)
+        tmpFileExt <- ifelse(
+            test = is.na(fileExt),
+            yes = "",
+            no = paste0(".", fileExt)
         )
         if (isAURL(file)) {
             assert(hasInternet())
             url <- file
-            fileext <- fileExt(file)
-            if (is.na(fileext)) {
-                fileext <- ""  # nocov
-            } else {
-                fileext <- paste0(".", fileext)
-            }
             file <- tempfile(
-                pattern = paste0(tempPrefix, "-"),
-                tmpdir = realpath(tempdir()),
-                fileext = fileext
+                pattern = tmpPrefix,
+                tmpdir = tmpDir,
+                fileext = tmpFileExt
             )
             if (isSubset(
                 x = fileExt(
@@ -588,7 +523,27 @@ NULL
                 mode = mode
             )
         }
-        .autoDecompress(file)
+        assert(isAFile(file))
+        if (isTRUE(grepl(pattern = compressExtPattern, x = file))) {
+            if (isFALSE(grepl(
+                pattern = file.path(tmpDir, tmpPrefix),
+                x = file
+            ))) {
+                tmpFile <- tempfile(
+                    pattern = tmpPrefix,
+                    tmpdir = tmpDir,
+                    fileext = tmpFilePrefix
+                )
+                file.copy(from = file, to = tmpFile)
+                file <- tmpFile
+            }
+            file <- decompress(
+                file = file,
+                remove = TRUE,
+                overwrite = TRUE
+            )
+        }
+        realpath(file)
     }
 
 
