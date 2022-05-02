@@ -718,7 +718,6 @@ test_that("FASTA", {
         object = names(object),
         expected = names(metadata(object)[["attributes"]])
     )
-
 })
 
 test_that("FASTQ", {
