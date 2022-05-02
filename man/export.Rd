@@ -37,7 +37,7 @@ export(object, con, format, ...)
   rownames = TRUE,
   colnames = TRUE,
   overwrite = getOption(x = "acid.overwrite", default = TRUE),
-  engine = getOption(x = "acid.export.engine", default = "readr"),
+  engine = getOption(x = "acid.export.engine", default = "base"),
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
@@ -48,7 +48,7 @@ export(object, con, format, ...)
   rownames = TRUE,
   colnames = TRUE,
   overwrite = getOption(x = "acid.overwrite", default = TRUE),
-  engine = getOption(x = "acid.export.engine", default = "readr"),
+  engine = getOption(x = "acid.export.engine", default = "base"),
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
@@ -79,7 +79,7 @@ export(object, con, format, ...)
   rownames = TRUE,
   colnames = TRUE,
   overwrite = getOption(x = "acid.overwrite", default = TRUE),
-  engine = getOption(x = "acid.export.engine", default = "readr"),
+  engine = getOption(x = "acid.export.engine", default = "base"),
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
@@ -90,7 +90,7 @@ export(object, con, format, ...)
   rownames = TRUE,
   colnames = TRUE,
   overwrite = getOption(x = "acid.overwrite", default = TRUE),
-  engine = getOption(x = "acid.export.engine", default = "readr"),
+  engine = getOption(x = "acid.export.engine", default = "base"),
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
@@ -199,7 +199,7 @@ export(object, con, format, ...)
   rownames = TRUE,
   colnames = TRUE,
   overwrite = getOption(x = "acid.overwrite", default = TRUE),
-  engine = getOption(x = "acid.export.engine", default = "readr"),
+  engine = getOption(x = "acid.export.engine", default = "base"),
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
@@ -210,7 +210,7 @@ export(object, con, format, ...)
   rownames = TRUE,
   colnames = TRUE,
   overwrite = getOption(x = "acid.overwrite", default = TRUE),
-  engine = getOption(x = "acid.export.engine", default = "readr"),
+  engine = getOption(x = "acid.export.engine", default = "base"),
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
@@ -241,7 +241,7 @@ export(object, con, format, ...)
   rownames = TRUE,
   colnames = TRUE,
   overwrite = getOption(x = "acid.overwrite", default = TRUE),
-  engine = getOption(x = "acid.export.engine", default = "readr"),
+  engine = getOption(x = "acid.export.engine", default = "base"),
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
@@ -252,7 +252,7 @@ export(object, con, format, ...)
   rownames = TRUE,
   colnames = TRUE,
   overwrite = getOption(x = "acid.overwrite", default = TRUE),
-  engine = getOption(x = "acid.export.engine", default = "readr"),
+  engine = getOption(x = "acid.export.engine", default = "base"),
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
@@ -337,7 +337,7 @@ File path(s).
 Export
 }
 \note{
-Updated 2021-10-21.
+Updated 2022-05-02.
 }
 \section{Output file format extension}{
 

@@ -45,7 +45,7 @@ import(con, format, text, ...)
   comment = "",
   skip = 0L,
   nMax = Inf,
-  engine = getOption(x = "acid.import.engine", default = "readr"),
+  engine = getOption(x = "acid.import.engine", default = "base"),
   makeNames = getOption(x = "acid.import.make.names", default = syntactic::makeNames),
   metadata = getOption(x = "acid.import.metadata", default = FALSE),
   quiet = getOption(x = "acid.quiet", default = FALSE),
@@ -353,7 +353,7 @@ arguments. Remote URLs and compressed files are supported. If you need more
 complex import settings, just call the wrapped importer directly instead.
 }
 \note{
-Updated 2021-10-21.
+Updated 2022-05-02.
 }
 \section{Row and column names}{
 
