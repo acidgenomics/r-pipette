@@ -22,7 +22,7 @@ NULL
 
 
 ## Updated 2019-07-19.
-`atomize,DataFrame` <-  ## nolint
+`atomize,DataFrame` <- ## nolint
     function(object) {
         object <- decode(object)
         object <- as.data.frame(object)
@@ -34,7 +34,7 @@ NULL
 
 
 ## Updated 2019-07-21.
-`atomize,Ranges` <-  # nolint
+`atomize,Ranges` <- # nolint
     function(object) {
         mcols(object) <- atomize(mcols(object))
         object
@@ -43,7 +43,7 @@ NULL
 
 
 ## Updated 2021-08-24.
-`atomize,data.frame` <-  # nolint
+`atomize,data.frame` <- # nolint
     function(object) {
         keep <- vapply(X = object, FUN = is.atomic, FUN.VALUE = logical(1L))
         assert(hasLength(keep))
