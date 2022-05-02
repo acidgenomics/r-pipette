@@ -18,16 +18,18 @@
 #' Attribute is also accessible via `metadata(object)[[which]]`.
 #'
 #' @inheritParams AcidRoxygen::params
-#' @param which `character(1)`.
-#'   A non-empty character string specifying which attribute is to be accessed.
-#'   Note that positional `numeric` arguments are currently not allowed.
-#' @param value `ANY`.
-#'   Metadata values to assign into slot, defined by `which`.
 #' @param ... Additional arguments.
+#'
+#' @param which `character(1)`.
+#' A non-empty character string specifying which attribute is to be accessed.
+#' Note that positional `numeric` arguments are currently not allowed.
+#'
+#' @param value `ANY`.
+#' Metadata values to assign into slot, defined by `which`.
 #'
 #' @return
 #' - `metadata2()`: Metadata. Returns `NULL` on `which` match failure, similar
-#'   to `attr()` and `metadata()`.
+#' to `attr()` and `metadata()`.
 #' - `metadata2<-()`: Modified object.
 #'
 #' @examples
@@ -47,7 +49,7 @@ NULL
 
 ## Intended for S3 class, or S4 class that doesn't support `metadata()`.
 ## Updated 2019-10-24.
-`metadata2,ANY` <-  # nolint
+`metadata2,ANY` <- # nolint
     function(x, which) {
         assert(isString(which))
         attr(x = x, which = which, exact = TRUE)
@@ -57,7 +59,7 @@ NULL
 
 ## Intended for S4 class supporting `metadata()`.
 ## Updated 2019-10-24.
-`metadata2,Annotated` <-  # nolint
+`metadata2,Annotated` <- # nolint
     function(x, which) {
         assert(isString(which))
         metadata(x)[[which]]
@@ -67,7 +69,7 @@ NULL
 
 ## Intended for S3 class, or S4 class that doesn't support `metadata()`.
 ## Updated 2019-10-24.
-`metadata2<-,ANY,ANY` <-  # nolint
+`metadata2<-,ANY,ANY` <- # nolint
     function(x, which, value) {
         attr(x = x, which = which) <- value
         x
@@ -77,7 +79,7 @@ NULL
 
 ## Intended for S3 class, or S4 class that doesn't support `metadata()`.
 ## Updated 2019-10-24.
-`metadata2<-,Annotated,ANY` <-  # nolint
+`metadata2<-,Annotated,ANY` <- # nolint
     function(x, which, value) {
         metadata(x)[[which]] <- value
         x

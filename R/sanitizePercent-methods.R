@@ -16,7 +16,7 @@ NULL
 
 
 ## Updated 2019-07-19.
-`sanitizePercent,atomic` <-  # nolint
+`sanitizePercent,atomic` <- # nolint
     function(object) {
         object
     }
@@ -24,7 +24,7 @@ NULL
 
 
 ## Updated 2019-07-19.
-`sanitizePercent,character` <-  # nolint
+`sanitizePercent,character` <- # nolint
     function(object) {
         if (all(grepl("%$", object))) {
             as.numeric(sub("%$", "", object)) / 100L
