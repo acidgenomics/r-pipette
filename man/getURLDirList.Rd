@@ -29,7 +29,7 @@ Updated 2021-02-02.
 url <- "ftp://ftp.ncbi.nlm.nih.gov/genomes/"
 if (
     isFALSE(nzchar(Sys.getenv("CI"))) &&
-    goalie::hasInternet(url)
+        goalie::hasInternet(url)
 ) {
     x <- getURLDirList(url)
     tail(x)
