@@ -13,8 +13,10 @@
 #' json <- getJSON(url)
 #' names(json)
 getJSON <- function(url) {
-    assert(isAURL(url))
-    requireNamespaces(c("httr", "jsonlite"))
+    assert(
+        requireNamespaces(c("httr", "jsonlite")),
+        isAURL(url)
+    )
     reponse <- httr::GET(
         url = url,
         httr::content_type("application/json")
