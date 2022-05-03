@@ -22,19 +22,19 @@
 #' - tibble: `"rowname"`.
 #'
 #' @examples
-#' data(
-#'     data.table,
-#'     tibble,
-#'     package = "AcidTest"
-#' )
-#'
 #' ## data.table ====
-#' object <- data.table
-#' matchRownameColumn(object)
+#' if (requireNamespace("data.table", quietly = TRUE)) {
+#'     data(data.table, package = "AcidTest")
+#'     object <- data.table
+#'     matchRownameColumn(object)
+#' }
 #'
 #' ## tbl_df ====
-#' object <- tibble
-#' matchRownameColumn(object)
+#' if (requireNamespace("tibble", quietly = TRUE)) {
+#'     data(tibble, package = "AcidTest")
+#'     object <- tibble
+#'     matchRownameColumn(object)
+#' }
 NULL
 
 

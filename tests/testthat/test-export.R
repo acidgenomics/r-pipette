@@ -115,9 +115,7 @@ context("export : Delimited files")
 
 objects <- list(
     "DataFrame" = df,
-    "data.table" = dt,
-    "matrix" = mat,
-    "tbl_df" = tbl
+    "matrix" = mat
 )
 
 for (format in .exportFormatChoices[["delim"]]) {

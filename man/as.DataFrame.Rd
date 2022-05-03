@@ -41,13 +41,11 @@ as.DataFrame(x, ...)
 Coerce object to S4 DataFrame
 }
 \note{
-Updated 2022-05-02.
+Updated 2022-05-03.
 }
 \examples{
 data(
-    data.table,
     sparseMatrix,
-    tibble,
     package = "AcidTest"
 )
 
@@ -55,11 +53,6 @@ data(
 from <- sparseMatrix
 to <- as.DataFrame(from)
 print(to)
-
-## `data.table` to `DataFrame` ====
-from <- data.table
-to <- as.DataFrame(from)
-head(to)
 
 ## `list` to `DataFrame` ====
 ## Use `as.DataFrame()` instead of `as()` for `list` class.
@@ -69,9 +62,4 @@ from <- list(
 )
 to <- as.DataFrame(from)
 print(to)
-
-## `tbl_df` to `DataFrame` ====
-from <- tibble
-to <- as.DataFrame(from)
-head(to)
 }
