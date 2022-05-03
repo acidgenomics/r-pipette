@@ -3,7 +3,7 @@
 #' Read file by extension into R.
 #'
 #' @name import
-#' @note Updated 2022-05-02.
+#' @note Updated 2022-05-03.
 #'
 #' @details
 #' `import()` supports automatic loading of common file types, by wrapping
@@ -79,140 +79,157 @@
 #' `DOC`, `DOCX`, `PDF`, `PPT`, `PPTX`.
 #'
 #' @inheritParams AcidRoxygen::params
-#' @param con `character(1)`, `connection`, or `missing`.
-#'   The connection from which data is loaded or to which data is saved. If this
-#'   is a character vector, it is assumed to be a filename, and a corresponding
-#'   file connection is created and then closed after exporting the object. If a
-#'   `BiocFile` derivative, the data is loaded from or saved to the underlying
-#'   resource.  If missing, the function will return the output as a character
-#'   vector, rather than writing to a connection.
-#' @param text `character` or `missing`.
-#'   If `con` is missing, this can be a character vector directly providing the
-#'   string data to import.
-#' @param format `character(1)` or `missing`.
-#'   An optional file format type, which can be used to override the file format
-#'   inferred from `con`. Only recommended for file and URL paths that don't
-#'   contain an extension.
-#' @param file `character(1)` or `missing`.
-#'   Deprecated in favor of primary `con` argument, defined in BiocIO
-#'   package. This argument likely will be removed in a future update.
-#' @param rownameCol `NULL`, `character(1)`, or `integer(1)`.
-#'   *Applies only when `rownames = TRUE`.*
-#'   Column name to use for row names assignment.
-#'   If left `NULL` (default), the function will call `matchRownameCol()`
-#'   internally to attempt to automatically match the row name column (e.g.
-#'   `"rowname"` or `"rn"`).
-#'   Otherwise, can manually define using a scalar argument, either the name
-#'   directly or position in the column names.
-#' @param colnames `logical(1)` or `character`.
-#'   Automatically assign column names, using the first header row.
-#'   Applies to file types that return `data.frame` only.
-#'   Pass in a `character` vector to define the column names manually.
-#' @param comment `character(1)`.
-#'   Comment character to detect at beginning of line, which will skip when
-#'   parsing file. Use `""` to disable interpretation of comments, which is
-#'   particularly
-#'   useful when parsing lines.
-#'   *Applies to plain text delimited and source code lines only.*
-#' @param engine `character(1)`.
-#'   Engine (package) to use for import.
 #'
-#'   Currently supported:
-#'   - base
-#'   - data.table
-#'   - readr
+#' @param con `character(1)`, `connection`, or `missing`.
+#' The connection from which data is loaded or to which data is saved. If this
+#' is a character vector, it is assumed to be a filename, and a corresponding
+#' file connection is created and then closed after exporting the object. If a
+#' `BiocFile` derivative, the data is loaded from or saved to the underlying
+#' resource.  If missing, the function will return the output as a character
+#' vector, rather than writing to a connection.
+#'
+#' @param text `character` or `missing`.
+#' If `con` is missing, this can be a character vector directly providing the
+#' string data to import.
+#'
+#' @param format `character(1)` or `missing`.
+#' An optional file format type, which can be used to override the file format
+#' inferred from `con`. Only recommended for file and URL paths that don't
+#' contain an extension.
+#'
+#' @param file `character(1)` or `missing`.
+#' Deprecated in favor of primary `con` argument, defined in BiocIO
+#' package. This argument likely will be removed in a future update.
+#'
+#' @param rownameCol `NULL`, `character(1)`, or `integer(1)`.
+#' *Applies only when `rownames = TRUE`.*
+#' Column name to use for row names assignment.
+#' If left `NULL` (default), the function will call `matchRownameCol()`
+#' internally to attempt to automatically match the row name column (e.g.
+#' `"rowname"` or `"rn"`).
+#' Otherwise, can manually define using a scalar argument, either the name
+#' directly or position in the column names.
+#'
+#' @param colnames `logical(1)` or `character`.
+#' Automatically assign column names, using the first header row.
+#' Applies to file types that return `data.frame` only.
+#' Pass in a `character` vector to define the column names manually.
+#'
+#' @param comment `character(1)`.
+#' Comment character to detect at beginning of line, which will skip when
+#' parsing file. Use `""` to disable interpretation of comments, which is
+#' particularly
+#' useful when parsing lines.
+#' *Applies to plain text delimited and source code lines only.*
+#'
+#' @param engine `character(1)`.
+#' Engine (package) to use for import.
+#'
+#' Currently supported:
+#' - base
+#' - data.table
+#' - readr
+#'
 #' @param makeNames `function`.
-#'   Apply syntactic naming function to (column) names.
-#'   Function is never applied to row names, when they are defined in object.
+#' Apply syntactic naming function to (column) names.
+#' Function is never applied to row names, when they are defined in object.
+#'
 #' @param moleculeType `character(1)`.
-#'   Molecule type, either DNA or RNA.
-#'   Most RNA-seq FASTQ files contain complementary DNA (cDNA) sequences, not
-#'   direct sequencing of the RNA molecules.
+#' Molecule type, either DNA or RNA.
+#' Most RNA-seq FASTQ files contain complementary DNA (cDNA) sequences, not
+#' direct sequencing of the RNA molecules.
+#'
 #' @param nMax `integer(1)` or `Inf`.
-#'   Maximum number of lines to parse.
-#'   *Applies to plain text delimited, Excel, and source code lines only.*
+#' Maximum number of lines to parse.
+#' *Applies to plain text delimited, Excel, and source code lines only.*
+#'
 #' @param removeBlank `logical(1)`.
-#'   Remove blank lines.
-#'   *Applies to source code lines*.
+#' Remove blank lines.
+#' *Applies to source code lines*.
+#'
 #' @param rownames `logical(1)`.
-#'   Automatically assign row names, if `rowname` column is defined.
-#'   Applies to file types that return a data frame only.
+#' Automatically assign row names, if `rowname` column is defined.
+#' Applies to file types that return a data frame only.
+#'
 #' @param rownamesFile,colnamesFile `character(1)` or `NULL`.
-#'   Row names and/or column names sidecare file.
-#'   Applies primarily to MatrixMarket Exchange files (e.g. `MTXFile`).
+#' Row names and/or column names sidecare file.
+#' Applies primarily to MatrixMarket Exchange files (e.g. `MTXFile`).
+#'
 #' @param sheet `character(1)` or `integer(1)`.
-#'   Sheet to read. Either a string (the name of a sheet), or an integer (the
-#'   position of the sheet). Defaults to the first sheet.
-#'   *Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.*
+#' Sheet to read. Either a string (the name of a sheet), or an integer (the
+#' position of the sheet). Defaults to the first sheet.
+#' *Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.*
+#'
 #' @param skip `integer(1)`.
-#'   Number of lines to skip.
-#'   *Applies to delimited file (CSV, TSV), Excel Workbook, or lines.*
+#' Number of lines to skip.
+#' *Applies to delimited file (CSV, TSV), Excel Workbook, or lines.*
+#'
 #' @param stripWhitespace `logical(1)`.
-#'   Strip leading and/or trailing whitespace.
-#'   *Applies to source code lines*.
+#' Strip leading and/or trailing whitespace.
+#' *Applies to source code lines*.
 #'
 #' @return Varies, depending on the file type (format):
 #'
 #' - **Plain text delimited** (`CSV`, `TSV`, `TXT`):
-#'   `data.frame`.\cr
-#'   Data separated by commas, tabs, or visual spaces.\cr
-#'   Note that TXT structure is amgibuous and actively discouraged.\cr
-#'   Refer to `Data frame return` section for details on how to change the
-#'   default return type to `DataFrame`, `tbl_df` or `data.table`.\cr
-#'   Imported by `readr::read_delim()` by default.
+#' `data.frame`.\cr
+#' Data separated by commas, tabs, or visual spaces.\cr
+#' Note that TXT structure is amgibuous and actively discouraged.\cr
+#' Refer to `Data frame return` section for details on how to change the
+#' default return type to `DataFrame`, `tbl_df` or `data.table`.\cr
+#' Imported by `readr::read_delim()` by default.
 #' - **Excel workbook** (`XLSB`, `XLSX`):
-#'   `data.frame`.\cr
-#'   Resave in plain text delimited format instead, if possible.\cr
-#'   Imported by `readxl::read_excel()`.
+#' `data.frame`.\cr
+#' Resave in plain text delimited format instead, if possible.\cr
+#' Imported by `readxl::read_excel()`.
 #' - **Legacy Excel workbook (pre-2007)** (`XLS`):
-#'   `data.frame`.\cr
-#'   Resave in plain text delimited format instead, if possible.\cr
-#'   Note that import of files in this format is slow.\cr
-#'   Imported by `readxl::read_excel()`.
+#' `data.frame`.\cr
+#' Resave in plain text delimited format instead, if possible.\cr
+#' Note that import of files in this format is slow.\cr
+#' Imported by `readxl::read_excel()`.
 #' - **GraphPad Prism project** (`PZFX`):
-#'   `data.frame`.\cr
-#'   Experimental. Consider resaving in CSV format instead.\cr
-#'   Imported by `pzfx::read_pzfx()`.
+#' `data.frame`.\cr
+#' Experimental. Consider resaving in CSV format instead.\cr
+#' Imported by `pzfx::read_pzfx()`.
 #' - **General feature format** (`GFF`, `GFF1`, `GFF2`, `GFF3`, `GTF`):
-#'   `GenomicRanges`.\cr
-#'   Imported by `rtracklayer::import()`.
+#' `GenomicRanges`.\cr
+#' Imported by `rtracklayer::import()`.
 #' - **MatrixMarket exchange sparse matrix** (`MTX`):
-#'   `sparseMatrix`.\cr
-#'   Imported by `Matrix::readMM()`.
+#' `sparseMatrix`.\cr
+#' Imported by `Matrix::readMM()`.
 #' - **Gene sets (for GSEA)** (`GMT`, `GMX`):
-#'   `character`.
+#' `character`.
 #' - **Browser extensible data** (`BED`, `BED15`, `BEDGRAPH`, `BEDPE`):
-#'   `GenomicRanges`.\cr
-#'   Imported by `rtracklayer::import()`.
+#' `GenomicRanges`.\cr
+#' Imported by `rtracklayer::import()`.
 #' - **ChIP-seq peaks** (`BROADPEAK`, `NARROWPEAK`):
-#'   `GenomicRanges`.\cr
-#'   Imported by `rtracklayer::import()`.
+#' `GenomicRanges`.\cr
+#' Imported by `rtracklayer::import()`.
 #' - **Wiggle track format** (`BIGWIG`, `BW`, `WIG`):
-#'   `GenomicRanges`.\cr
-#'   Imported by `rtracklayer::import()`.
+#' `GenomicRanges`.\cr
+#' Imported by `rtracklayer::import()`.
 #' - **JSON serialization data** (`JSON`):
-#'   `list`.\cr
-#'   Imported by `jsonlite::read_json()`.
+#' `list`.\cr
+#' Imported by `jsonlite::read_json()`.
 #' - **YAML serialization data** (`YAML`, `YML`):
-#'   `list`.\cr
-#'   Imported by `yaml::yaml.load_file()`.
+#' `list`.\cr
+#' Imported by `yaml::yaml.load_file()`.
 #' - **Lines** (`LOG`, `MD`, `PY`, `R`, `RMD`, `SH`):
-#'   `character`.\cr
-#'   Source code or log files.\cr
-#'   Imported by `readr::read_delim()` by default.
+#' `character`.\cr
+#' Source code or log files.\cr
+#' Imported by `readr::read_delim()` by default.
 #' - **R data serialized** (`RDS`):
-#'   *variable*.\cr
-#'   Currently recommend over RDA, if possible.\cr
-#'   Imported by `readRDS()`.
+#' *variable*.\cr
+#' Currently recommend over RDA, if possible.\cr
+#' Imported by `readRDS()`.
 #' - **R data** (`RDA`, `RDATA`):
-#'   *variable*.\cr
-#'   Must contain a single object.
-#'   Doesn't require internal object name to match, unlike `loadData()`.\cr
-#'   Imported by `load()`.
+#' *variable*.\cr
+#' Must contain a single object.
+#' Doesn't require internal object name to match, unlike `loadData()`.\cr
+#' Imported by `load()`.
 #' - **Infrequently used rio-compatible formats** (`ARFF`, `DBF`, `DIF`, `DTA`,
-#'   `MAT`, `MTP`, `ODS`, `POR`, `SAS7BDAT`, `SAV`, `SYD`, `REC`, `XPT`):
-#'   *variable*.\cr
-#'   Imported by `rio::import()`.
+#' `MAT`, `MTP`, `ODS`, `POR`, `SAS7BDAT`, `SAV`, `SYD`, `REC`, `XPT`):
+#' *variable*.\cr
+#' Imported by `rio::import()`.
 #'
 #' @seealso
 #' Packages:
@@ -254,11 +271,9 @@ NULL
 #'
 #' @note Updated 2022-02-04.
 #' @noRd
-.alertImport <- function(
-    con,
-    whatPkg,
-    whatFun
-) {
+.alertImport <- function(con,
+                         whatPkg,
+                         whatFun) {
     assert(
         is(con, "PipetteFile"),
         isString(whatPkg),
@@ -332,7 +347,7 @@ NULL
         "gmt"          = "GMTFile",
         "gmx"          = "GMXFile",
         "grp"          = "GRPFile",
-        "gsheet"       = "RioHandoffFile",  # Google Sheets
+        "gsheet"       = "RioHandoffFile", # Google Sheets
         "gtf"          = "RtracklayerHandoffFile",
         "json"         = "JSONFile",
         "lines"        = "LinesFile",
@@ -386,17 +401,17 @@ NULL
 #' @noRd
 #'
 #' @param f `character(1)`.
-#'   Function name.
+#' Function name.
 #' @param pkg `character(1)`.
-#'   Package name.
+#' Package name.
 #'
 #' @return `function`.
 .getFunction <- function(f, pkg) {
     assert(
         isString(f),
-        isString(pkg)
+        isString(pkg),
+        requireNamespaces(pkg)
     )
-    requireNamespaces(pkg)
     x <- get(x = f, envir = asNamespace(pkg), inherits = TRUE)
     assert(is.function(x))
     x
@@ -443,9 +458,9 @@ NULL
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param file `character(1)`.
-#'   Local file path or remote URL.
+#' Local file path or remote URL.
 #' @param tempPrefix `character(1)`.
-#'   Prefix to use for temporary file basename.
+#' Prefix to use for temporary file basename.
 #'
 #' @return `character`.
 #' Local file path(s). Stops on a missing file.
@@ -469,10 +484,8 @@ NULL
 #' x <- .localOrRemoteFile(file)
 #' print(x)
 .localOrRemoteFile <-
-    function(
-        file,
-        quiet = getOption(x = "acid.quiet", default = FALSE)
-    ) {
+    function(file,
+             quiet = getOption(x = "acid.quiet", default = FALSE)) {
         assert(
             isString(file),
             isFlag(quiet)
@@ -513,7 +526,7 @@ NULL
                 mode <- "wb"
             } else {
                 ## Write (default).
-                mode <- "w"  # nocov
+                mode <- "w" # nocov
             }
             download(
                 url = url,
@@ -551,21 +564,19 @@ NULL
 #'
 #' @note Updated 2021-09-24.
 #' @noRd
-.returnImport <- function(
-    object,
-    con,
-    rownames = FALSE,
-    rownameCol = NULL,
-    colnames = FALSE,
-    makeNames = FALSE,
-    metadata = FALSE,
-    whatPkg = NULL,
-    whatFun = NULL,
-    quiet = getOption(
-        x = "acid.quiet",
-        default = FALSE
-    )
-) {
+.returnImport <- function(object,
+                          con,
+                          rownames = FALSE,
+                          rownameCol = NULL,
+                          colnames = FALSE,
+                          makeNames = FALSE,
+                          metadata = FALSE,
+                          whatPkg = NULL,
+                          whatFun = NULL,
+                          quiet = getOption(
+                              x = "acid.quiet",
+                              default = FALSE
+                          )) {
     validObject(object)
     assert(
         is(con, "PipetteFile"),
@@ -589,13 +600,13 @@ NULL
     }
     ## Check that manual column names are correct.
     if (isCharacter(colnames)) {
-        assert(identical(colnames(object), colnames))  # nocov
+        assert(identical(colnames(object), colnames)) # nocov
     }
     ## Attempt to set row names automatically for data frames, when applicable.
     if (
         is.data.frame(object) &&
-        isTRUE(rownames) &&
-        !hasRownames(object)
+            isTRUE(rownames) &&
+            !hasRownames(object)
     ) {
         if (is.null(rownameCol)) {
             rownameCol <- matchRownameColumn(object)
@@ -603,7 +614,7 @@ NULL
         if (!is.null(rownameCol)) {
             assert(isScalar(rownameCol))
             if (!isString(rownameCol)) {
-                rownameCol <- colnames(object)[[rownameCol]]  # nocov
+                rownameCol <- colnames(object)[[rownameCol]] # nocov
             }
             assert(
                 isString(rownameCol),
@@ -643,7 +654,7 @@ NULL
                 error = function(e) NULL
             )
             if (isFALSE(hasValidNames(object))) {
-                alertWarning("Invalid names detected.")  # nocov
+                alertWarning("Invalid names detected.") # nocov
             }
         }
         assert(hasNoDuplicates(names(object)))
@@ -680,17 +691,15 @@ NULL
 #'
 #' @note Updated 2021-10-12.
 #' @noRd
-`import,character` <-  # nolint
-    function(
-        con,
-        format,
-        text,  # NULL
-        ...
-    ) {
+`import,character` <- # nolint
+    function(con,
+             format,
+             text, # NULL
+             ...) {
         if (
             missing(format) ||
-            identical(format, "auto") ||
-            identical(format, "none")
+                identical(format, "auto") ||
+                identical(format, "none")
         ) {
             format <- NULL
         }
@@ -770,14 +779,12 @@ NULL
 #'
 #' @note Updated 2021-10-12.
 #' @noRd
-`import,character,deprecated` <-  # nolint
-    function(
-        con,
-        format,  # NULL
-        text,  # NULL
-        file,  # deprecated
-        ...
-    ) {
+`import,character,deprecated` <- # nolint
+    function(con,
+             format, # NULL
+             text, # NULL
+             file, # deprecated
+             ...) {
         assert(isString(file))
         con <- file
         if (missing(format)) {
@@ -802,16 +809,14 @@ NULL
 #'
 #' @note Updated 2021-10-12.
 #' @noRd
-`import,RDataFile` <-  # nolint
-    function(
-        con,
-        format,  # NULL
-        text,  # NULL
-        quiet = getOption(
-            x = "acid.quiet",
-            default = FALSE
-        )
-    ) {
+`import,RDataFile` <- # nolint
+    function(con,
+             format, # NULL
+             text, # NULL
+             quiet = getOption(
+                 x = "acid.quiet",
+                 default = FALSE
+             )) {
         assert(
             is.null(format),
             is.null(text),
@@ -847,7 +852,7 @@ NULL
                     validObject(object)
                 },
                 error = function(e) {
-                    conditionMessage(e)  # nocov
+                    conditionMessage(e) # nocov
                 }
             )
         }
@@ -860,16 +865,14 @@ NULL
 #'
 #' @note Updated 2021-10-12.
 #' @noRd
-`import,RDSFile` <-  # nolint
-    function(
-        con,
-        format,  # NULL
-        text,  # NULL
-        quiet = getOption(
-            x = "acid.quiet",
-            default = FALSE
-        )
-    ) {
+`import,RDSFile` <- # nolint
+    function(con,
+             format, # NULL
+             text, # NULL
+             quiet = getOption(
+                 x = "acid.quiet",
+                 default = FALSE
+             )) {
         assert(
             is.null(format),
             is.null(text),
@@ -894,7 +897,7 @@ NULL
                     validObject(object)
                 },
                 error = function(e) {
-                    conditionMessage(e)  # nocov
+                    conditionMessage(e) # nocov
                 }
             )
         }
@@ -909,38 +912,36 @@ NULL
 #'
 #' @note Updated 2022-05-02.
 #' @noRd
-`import,DelimFile` <-  # nolint
-    function(
-        con,
-        format,  # NULL
-        text,  # NULL
-        rownames = TRUE,
-        rownameCol = NULL,
-        colnames = TRUE,
-        comment = "",
-        skip = 0L,
-        nMax = Inf,
-        engine = getOption(
-            x = "acid.import.engine",
-            default = "base"
-        ),
-        makeNames = getOption(
-            x = "acid.import.make.names",
-            default = syntactic::makeNames
-        ),
-        metadata = getOption(
-            x = "acid.import.metadata",
-            default = FALSE
-        ),
-        quiet = getOption(
-            x = "acid.quiet",
-            default = FALSE
-        ),
-        verbose = getOption(
-            x = "acid.verbose",
-            default = FALSE
-        )
-    ) {
+`import,DelimFile` <- # nolint
+    function(con,
+             format, # NULL
+             text, # NULL
+             rownames = TRUE,
+             rownameCol = NULL,
+             colnames = TRUE,
+             comment = "",
+             skip = 0L,
+             nMax = Inf,
+             engine = getOption(
+                 x = "acid.import.engine",
+                 default = "base"
+             ),
+             makeNames = getOption(
+                 x = "acid.import.make.names",
+                 default = syntactic::makeNames
+             ),
+             metadata = getOption(
+                 x = "acid.import.metadata",
+                 default = FALSE
+             ),
+             quiet = getOption(
+                 x = "acid.quiet",
+                 default = FALSE
+             ),
+             verbose = getOption(
+                 x = "acid.verbose",
+                 default = FALSE
+             )) {
         assert(
             is.null(format),
             is.null(text),
@@ -971,7 +972,7 @@ NULL
         )
         whatPkg <- match.arg(arg = engine, choices = .engines)
         if (identical(ext, "table")) {
-            whatPkg <- "base"  # nocov
+            whatPkg <- "base" # nocov
         }
         switch(
             EXPR = whatPkg,
@@ -1082,9 +1083,9 @@ NULL
         }
         if (
             identical(engine, "data.table") &&
-            isTRUE(any(object == "", na.rm = TRUE))
+                isTRUE(any(object == "", na.rm = TRUE))
         ) {
-            object <- sanitizeNA(object)  # nocov
+            object <- sanitizeNA(object) # nocov
         }
         assert(
             allAreAtomic(object),
@@ -1110,30 +1111,28 @@ NULL
 #'
 #' @note Updated 2021-10-12.
 #' @noRd
-`import,ExcelFile` <-  # nolint
-    function(
-        con,
-        format,  # NULL
-        text,  # NULL
-        sheet = 1L,
-        rownames = TRUE,
-        rownameCol = NULL,
-        colnames = TRUE,
-        skip = 0L,
-        nMax = Inf,
-        makeNames = getOption(
-            x = "acid.import.make.names",
-            default = syntactic::makeNames
-        ),
-        metadata = getOption(
-            x = "acid.import.metadata",
-            default = FALSE
-        ),
-        quiet = getOption(
-            x = "acid.quiet",
-            default = FALSE
-        )
-    ) {
+`import,ExcelFile` <- # nolint
+    function(con,
+             format, # NULL
+             text, # NULL
+             sheet = 1L,
+             rownames = TRUE,
+             rownameCol = NULL,
+             colnames = TRUE,
+             skip = 0L,
+             nMax = Inf,
+             makeNames = getOption(
+                 x = "acid.import.make.names",
+                 default = syntactic::makeNames
+             ),
+             metadata = getOption(
+                 x = "acid.import.metadata",
+                 default = FALSE
+             ),
+             quiet = getOption(
+                 x = "acid.quiet",
+                 default = FALSE
+             )) {
         assert(
             is.null(format),
             is.null(text),
@@ -1201,26 +1200,24 @@ NULL
 #'
 #' @note Updated 2021-10-12.
 #' @noRd
-`import,MTXFile` <-  # nolint
-    function(
-        con,
-        format,  # NULL
-        text,  # NULL
-        rownamesFile,
-        colnamesFile,
-        metadata = getOption(
-            x = "acid.import.metadata",
-            default = FALSE
-        ),
-        quiet = getOption(
-            x = "acid.quiet",
-            default = FALSE
-        )
-    ) {
+`import,MTXFile` <- # nolint
+    function(con,
+             format, # NULL
+             text, # NULL
+             rownamesFile,
+             colnamesFile,
+             metadata = getOption(
+                 x = "acid.import.metadata",
+                 default = FALSE
+             ),
+             quiet = getOption(
+                 x = "acid.quiet",
+                 default = FALSE
+             )) {
         file <- resource(con)
         origFile <- attr(con, which = "origResource")
         if (is.null(origFile)) {
-            origFile <- file  # nocov
+            origFile <- file # nocov
         }
         if (missing(rownamesFile)) {
             rownamesFile <- paste0(origFile, ".rownames")
@@ -1255,7 +1252,7 @@ NULL
                 quiet = quiet
             ),
             error = function(e) {
-                NULL  # nocov
+                NULL # nocov
             }
         )
         if (isAFile(rownamesFile)) {
@@ -1269,7 +1266,7 @@ NULL
                 quiet = quiet
             ),
             error = function(e) {
-                NULL  # nocov
+                NULL # nocov
             }
         )
         if (isAFile(colnamesFile)) {
@@ -1294,25 +1291,23 @@ NULL
 #' @noRd
 #'
 #' @note This function doesn't support optional column names.
-`import,PZFXFile` <-  # nolint
-    function(
-        con,
-        format,  # NULL
-        text,  # NULL
-        sheet = 1L,
-        makeNames = getOption(
-            x = "acid.import.make.names",
-            default = syntactic::makeNames
-        ),
-        metadata = getOption(
-            x = "acid.import.metadata",
-            default = FALSE
-        ),
-        quiet = getOption(
-            x = "acid.quiet",
-            default = FALSE
-        )
-    ) {
+`import,PZFXFile` <- # nolint
+    function(con,
+             format, # NULL
+             text, # NULL
+             sheet = 1L,
+             makeNames = getOption(
+                 x = "acid.import.make.names",
+                 default = syntactic::makeNames
+             ),
+             metadata = getOption(
+                 x = "acid.import.metadata",
+                 default = FALSE
+             ),
+             quiet = getOption(
+                 x = "acid.quiet",
+                 default = FALSE
+             )) {
         assert(
             is.null(format),
             is.null(text),
@@ -1363,20 +1358,18 @@ NULL
 #'
 #' @note Updated 2021-10-12.
 #' @noRd
-`import,BcbioCountsFile` <-  # nolint
-    function(
-        con,
-        format,  # NULL
-        text,  # NULL
-        metadata = getOption(
-            x = "acid.import.metadata",
-            default = FALSE
-        ),
-        quiet = getOption(
-            x = "acid.quiet",
-            default = FALSE
-        )
-    ) {
+`import,BcbioCountsFile` <- # nolint
+    function(con,
+             format, # NULL
+             text, # NULL
+             metadata = getOption(
+                 x = "acid.import.metadata",
+                 default = FALSE
+             ),
+             quiet = getOption(
+                 x = "acid.quiet",
+                 default = FALSE
+             )) {
         assert(
             is.null(format),
             is.null(text),
@@ -1431,33 +1424,31 @@ NULL
 #'
 #' @note Updated 2021-10-21.
 #' @noRd
-`import,LinesFile` <-  # nolint
-    function(
-        con,
-        format,  # NULL
-        text,  # NULL
-        comment = "",
-        skip = 0L,
-        nMax = Inf,
-        stripWhitespace = FALSE,
-        removeBlank = FALSE,
-        metadata = getOption(
-            x = "acid.import.metadata",
-            default = FALSE
-        ),
-        engine = getOption(
-            x = "acid.import.engine",
-            default = "base"
-        ),
-        quiet = getOption(
-            x = "acid.quiet",
-            default = FALSE
-        ),
-        verbose = getOption(
-            x = "acid.verbose",
-            default = FALSE
-        )
-    ) {
+`import,LinesFile` <- # nolint
+    function(con,
+             format, # NULL
+             text, # NULL
+             comment = "",
+             skip = 0L,
+             nMax = Inf,
+             stripWhitespace = FALSE,
+             removeBlank = FALSE,
+             metadata = getOption(
+                 x = "acid.import.metadata",
+                 default = FALSE
+             ),
+             engine = getOption(
+                 x = "acid.import.engine",
+                 default = "base"
+             ),
+             quiet = getOption(
+                 x = "acid.quiet",
+                 default = FALSE
+             ),
+             verbose = getOption(
+                 x = "acid.verbose",
+                 default = FALSE
+             )) {
         assert(
             is.null(format),
             is.null(text),
@@ -1588,20 +1579,18 @@ NULL
 #'
 #' @note Updated 2021-10-12.
 #' @noRd
-`import,JSONFile` <-  # nolint
-    function(
-        con,
-        format,  # NULL
-        text,  # NULL
-        metadata = getOption(
-            x = "acid.import.metadata",
-            default = FALSE
-        ),
-        quiet = getOption(
-            x = "acid.quiet",
-            default = FALSE
-        )
-    ) {
+`import,JSONFile` <- # nolint
+    function(con,
+             format, # NULL
+             text, # NULL
+             metadata = getOption(
+                 x = "acid.import.metadata",
+                 default = FALSE
+             ),
+             quiet = getOption(
+                 x = "acid.quiet",
+                 default = FALSE
+             )) {
         assert(
             is.null(format),
             is.null(text),
@@ -1637,20 +1626,18 @@ NULL
 #'
 #' @note Updated 2021-10-12.
 #' @noRd
-`import,YAMLFile` <-  # nolint
-    function(
-        con,
-        format,  # NULL
-        text,  # NULL
-        metadata = getOption(
-            x = "acid.import.metadata",
-            default = FALSE
-        ),
-        quiet = getOption(
-            x = "acid.quiet",
-            default = FALSE
-        )
-    ) {
+`import,YAMLFile` <- # nolint
+    function(con,
+             format, # NULL
+             text, # NULL
+             metadata = getOption(
+                 x = "acid.import.metadata",
+                 default = FALSE
+             ),
+             quiet = getOption(
+                 x = "acid.quiet",
+                 default = FALSE
+             )) {
         assert(
             is.null(format),
             is.null(text),
@@ -1695,21 +1682,19 @@ NULL
 #' @return Varies, depending on the `moleculeType` argument:
 #' - `"DNA"`: `DNAStringSet`.
 #' - `"RNA"`: `RNAStringSet`.
-`import,FASTAFile` <-  # nolint
-    function(
-        con,
-        format,  # NULL
-        text,  # NULL
-        moleculeType = c("DNA", "RNA"),
-        metadata = getOption(
-            x = "acid.import.metadata",
-            default = FALSE
-        ),
-        quiet = getOption(
-            x = "acid.quiet",
-            default = FALSE
-        )
-    ) {
+`import,FASTAFile` <- # nolint
+    function(con,
+             format, # NULL
+             text, # NULL
+             moleculeType = c("DNA", "RNA"),
+             metadata = getOption(
+                 x = "acid.import.metadata",
+                 default = FALSE
+             ),
+             quiet = getOption(
+                 x = "acid.quiet",
+                 default = FALSE
+             )) {
         assert(
             is.null(format),
             is.null(text),
@@ -1740,11 +1725,11 @@ NULL
         assert(is(object, paste0(moleculeType, "StringSet")))
         if (
             hasNames(object) &&
-            any(grepl(
-                pattern = "|",
-                x = head(names(object)),
-                fixed = TRUE
-            ))
+                any(grepl(
+                    pattern = "|",
+                    x = head(names(object)),
+                    fixed = TRUE
+                ))
         ) {
             attributes <- strsplit(
                 x = names(object),
@@ -1786,21 +1771,19 @@ NULL
 #' @return Varies, depending on the `moleculeType` argument:
 #' - `"DNA"`: `DNAStringSet`.
 #' - `"RNA"`: `RNAStringSet`.
-`import,FASTQFile` <-  # nolint
-    function(
-        con,
-        format,  # NULL
-        text,  # NULL
-        moleculeType = c("DNA", "RNA"),
-        metadata = getOption(
-            x = "acid.import.metadata",
-            default = FALSE
-        ),
-        quiet = getOption(
-            x = "acid.quiet",
-            default = FALSE
-        )
-    ) {
+`import,FASTQFile` <- # nolint
+    function(con,
+             format, # NULL
+             text, # NULL
+             moleculeType = c("DNA", "RNA"),
+             metadata = getOption(
+                 x = "acid.import.metadata",
+                 default = FALSE
+             ),
+             quiet = getOption(
+                 x = "acid.quiet",
+                 default = FALSE
+             )) {
         assert(
             is.null(format),
             is.null(text),
@@ -1848,16 +1831,14 @@ NULL
 #' @noRd
 #'
 #' @seealso `fgsea::gmtPathways()`.
-`import,GMTFile` <-  # nolint
-    function(
-        con,
-        format,  # NULL
-        text,  # NULL
-        quiet = getOption(
-            x = "acid.quiet",
-            default = FALSE
-        )
-    ) {
+`import,GMTFile` <- # nolint
+    function(con,
+             format, # NULL
+             text, # NULL
+             quiet = getOption(
+                 x = "acid.quiet",
+                 default = FALSE
+             )) {
         assert(
             is.null(format),
             is.null(text),
@@ -1886,16 +1867,14 @@ NULL
 #'
 #' @note Updated 2021-10-12.
 #' @noRd
-`import,GMXFile` <-  # nolint
-    function(
-        con,
-        format,  # NULL
-        text,  # NULL
-        quiet = getOption(
-            x = "acid.quiet",
-            default = FALSE
-        )
-    ) {
+`import,GMXFile` <- # nolint
+    function(con,
+             format, # NULL
+             text, # NULL
+             quiet = getOption(
+                 x = "acid.quiet",
+                 default = FALSE
+             )) {
         assert(
             is.null(format),
             is.null(text),
@@ -1918,7 +1897,7 @@ NULL
 #'
 #' @note Updated 2021-06-04.
 #' @noRd
-`import,GRPFile` <- `import,GMXFile`    # nolint
+`import,GRPFile` <- `import,GMXFile` # nolint
 
 
 
@@ -1928,28 +1907,26 @@ NULL
 #'
 #' @note Updated 2021-10-24.
 #' @noRd
-`import,RioHandoffFile` <-  # nolint
-    function(
-        con,
-        format,  # NULL
-        text,  # NULL
-        rownames = TRUE,
-        rownameCol = NULL,
-        colnames = TRUE,
-        makeNames = getOption(
-            x = "acid.import.make.names",
-            default = syntactic::makeNames
-        ),
-        metadata = getOption(
-            x = "acid.import.metadata",
-            default = FALSE
-        ),
-        quiet = getOption(
-            x = "acid.quiet",
-            default = FALSE
-        ),
-        ...
-    ) {
+`import,RioHandoffFile` <- # nolint
+    function(con,
+             format, # NULL
+             text, # NULL
+             rownames = TRUE,
+             rownameCol = NULL,
+             colnames = TRUE,
+             makeNames = getOption(
+                 x = "acid.import.make.names",
+                 default = syntactic::makeNames
+             ),
+             metadata = getOption(
+                 x = "acid.import.metadata",
+                 default = FALSE
+             ),
+             quiet = getOption(
+                 x = "acid.quiet",
+                 default = FALSE
+             ),
+             ...) {
         assert(
             is.null(format),
             is.null(text),
@@ -1997,21 +1974,19 @@ NULL
 #' @noRd
 #'
 #' @note Using `tryCatch()` here to error if there are any warnings.
-`import,RtracklayerHandoffFile` <-  # nolint
-    function(
-        con,
-        format,  # NULL
-        text,  # NULL
-        metadata = getOption(
-            x = "acid.import.metadata",
-            default = FALSE
-        ),
-        quiet = getOption(
-            x = "acid.quiet",
-            default = FALSE
-        ),
-        ...
-    ) {
+`import,RtracklayerHandoffFile` <- # nolint
+    function(con,
+             format, # NULL
+             text, # NULL
+             metadata = getOption(
+                 x = "acid.import.metadata",
+                 default = FALSE
+             ),
+             quiet = getOption(
+                 x = "acid.quiet",
+                 default = FALSE
+             ),
+             ...) {
         assert(
             is.null(format),
             is.null(text),
@@ -2029,7 +2004,7 @@ NULL
             )
         }
         args <- list("con" = file, ...)
-        requireNamespaces(whatPkg)
+        assert(requireNamespaces(whatPkg))
         what <- methodFunction(
             f = whatFun,
             signature = signature(
@@ -2044,7 +2019,7 @@ NULL
                 object <- do.call(what = what, args = args)
             },
             warning = function(w) {
-                abort(w)  # nocov
+                abort(w) # nocov
             }
         )
         .returnImport(
