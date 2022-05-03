@@ -29,9 +29,8 @@
 #'
 #' @examples
 #' try({
-#'     remoteDir <- "ftp://ftp.ncbi.nlm.nih.gov/genomes/"
 #'     readme <- transmit(
-#'         remoteDir = remoteDir,
+#'         remoteDir = "ftp://ftp.ncbi.nlm.nih.gov/genomes/",
 #'         localDir = tempdir(),
 #'         pattern = "^README\\.txt$",
 #'         rename = "ncbi-readme.txt",
@@ -44,7 +43,7 @@
 transmit <-
     function(remoteDir,
              localDir = getwd(),
-             pattern,
+             pattern = NULL,
              rename = NULL,
              compress = FALSE,
              download = TRUE) {
@@ -53,7 +52,7 @@ transmit <-
             hasInternet(),
             isString(remoteDir),
             all(isMatchingRegex(remoteDir, "^ftp\\://")),
-            isString(pattern),
+            isString(pattern, nullOK = TRUE),
             isAny(rename, classes = c("character", "NULL")),
             isFlag(compress),
             isFlag(download)
@@ -68,47 +67,65 @@ transmit <-
         alert(sprintf("Transmitting files from {.url %s}.", remoteDir))
         ## Get a list of the files in the remote directory.
         remoteTxt <- RCurl::getURL(url = remoteDir)
-        if (!all(
-            is.character(remoteTxt),
-            length(remoteTxt) > 0L
-        )) {
-            abort("Failed to list directory contents.") # nocov
-        }
+        assert(
+            isString(remoteTxt),
+            msg = "Failed to list directory contents."
+        )
         ## Match the `-` at begining for file.
         ## `-rwxrwxr-x`: File
         ## `drwxrwxr-x`: Directory
-        remoteFiles <- unlist(
-            x = strsplit(
-                x = remoteTxt,
-                split = "\n",
-                fixed = TRUE
-            ),
-            recursive = FALSE,
-            use.names = FALSE
-        )
+        remoteFiles <- strsplit(
+            x = remoteTxt,
+            split = "\n",
+            fixed = TRUE
+        )[[1L]]
+        ## Match files but not dirs (`"^d"`) or symlinks (`"^l"`).
         remoteFiles <- remoteFiles[grepl("^-", remoteFiles)]
-        ## File name is at the end, not including a space.
-        ## FIXME Can we use a base method here instead of stringr?
-        remoteFiles <- str_extract(remoteFiles, "[^\\s]+$")
+        remoteFiles <- strsplit(
+            x = remoteFiles,
+            split = "[[:space:]]+",
+            fixed = FALSE
+        )
+        remoteFiles <- do.call(what = rbind, args = remoteFiles)
+        remoteFiles <- remoteFiles[, 9L]
         assert(hasLength(remoteFiles))
         ## Apply pattern matching.
-        ## FIXME Can we use a base method here instead of stringr?
-        match <- str_subset(remoteFiles, pattern)
-        assert(hasLength(match))
-        alertInfo(sprintf(
-            "Files matching pattern: %s.",
-            toInlineString(match, n = 10L, class = "file")
-        ))
-        remotePaths <- pasteURL(remoteDir, match, protocol = "none")
+        if (!is.null(pattern)) {
+            remoteFiles <- grep(
+                pattern = pattern,
+                x = remoteFiles,
+                ignore.case = FALSE,
+                value = TRUE,
+                fixed = FALSE
+            )
+            assert(
+                hasLength(remoteFiles),
+                msg = sprintf(
+                    "No files matching pattern: {.var %s}.",
+                    pattern
+                )
+            )
+            alertInfo(sprintf(
+                "%d %s matching pattern: %s.",
+                length(remoteFiles),
+                ngettext(
+                    n = length(remoteFiles),
+                    msg1 = "file",
+                    msg2 = "files"
+                ),
+                toInlineString(remoteFiles, n = 10L, class = "file")
+            ))
+        }
+        remotePaths <- pasteURL(remoteDir, remoteFiles, protocol = "none")
         if (isFALSE(download)) {
             return(remotePaths)
         }
         ## Rename files, if desired.
-        if (is.character(rename)) {
-            assert(areSameLength(x = match, y = rename))
+        if (!is.null(rename)) {
+            assert(areSameLength(x = remoteFiles, y = rename))
             name <- rename
         } else {
-            name <- match
+            name <- remoteFiles
         }
         localPaths <- file.path(localDir, name)
         if (isTRUE(compress)) {
