@@ -1,9 +1,28 @@
-# pipette 0.8.1 (UNRELEASED)
+# pipette 0.9.0 (2022-05-03)
+
+## Major changes
+
+- Switched primary import/export engine from readr back to base, to avoid
+  strong dependency on readr package. Note that both readr and/or data.table
+  packages can optionally be used for import/export by specifying `"engine"`.
+- Removed coercion method support for `as_tibble` and `as.data.table`, to remove
+  strong dependencies on data.table and tibble packages.
+- Removed `as` coercion support in favor of simply using `as.DataFrame` S4
+  generic approach, to avoid potential conflicts with Bioconductor.
+- `as.DataFrame`: Reduced the number of supported classes, removing support of
+  non-Bioconductor classes, specifically `data.table` and `tbl_df`.
+- Removed re-exported functions: `column_to_rownames`, `getURL`, `rbindlist`,
+  `rownames_to_columns`, and `tibble`.
 
 ## Minor changes
 
+- Package code is now formatting using styler package.
 - Now exporting method support in `droplevels2` instead of `droplevels`, to
   avoid method conflict with new Bioconductor 3.15 update.
+- All `requireNamespaces` calls are now wrapped by `assert`.
+- Removed previously deprecated functions that are no longer in use. These were
+  previously defined in `deprecated.R`: `sanitizeColData`, `sanitizeRowData`,
+  `sanitizeRowRanges`, and `writeCounts`.
 
 # pipette 0.8.0 (2022-03-11)
 
