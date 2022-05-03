@@ -544,7 +544,7 @@ NULL
                 tmpFile <- tempfile(
                     pattern = tmpPrefix,
                     tmpdir = tmpDir,
-                    fileext = tmpFilePrefix
+                    fileext = tmpFileExt
                 )
                 file.copy(from = file, to = tmpFile)
                 file <- tmpFile
