@@ -353,7 +353,7 @@ arguments. Remote URLs and compressed files are supported. If you need more
 complex import settings, just call the wrapped importer directly instead.
 }
 \note{
-Updated 2022-05-02.
+Updated 2022-05-03.
 }
 \section{Row and column names}{
 
