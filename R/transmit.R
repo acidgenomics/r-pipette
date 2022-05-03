@@ -4,7 +4,7 @@
 #' FTP server. Also enables on-the-fly file renaming and compression.
 #'
 #' @export
-#' @note Updated 2022-05-02.
+#' @note Updated 2022-05-03.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @inheritParams saveData
@@ -65,11 +65,7 @@ transmit <-
         if (isTRUE(download)) {
             localDir <- initDir(localDir)
         }
-        ## Get the name of the server.
-        ## FIXME Can we use a base method here instead of stringr?
-        server <- str_match(remoteDir, "^.*//([^/]+)/.*$")[1L, 2L]
-        assert(isString(server))
-        alert(sprintf("Transmitting files from {.url %s}.", server))
+        alert(sprintf("Transmitting files from {.url %s}.", remoteDir))
         ## Get a list of the files in the remote directory.
         remoteTxt <- RCurl::getURL(url = remoteDir)
         if (!all(
