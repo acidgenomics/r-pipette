@@ -1,21 +1,21 @@
 #' Export
 #'
 #' @name export
-#' @note Updated 2021-10-21.
+#' @note Updated 2022-05-03.
 #'
 #' @section Output file format extension:
 #'
 #' `matrix` supported arguments:
 #'
 #' - Comma separated values (CSV):
-#'   `"csv"`, `"csv.bz2"`, `"csv.gz"`, `"csv.xz"`, `"csv.zip"`.
+#' `"csv"`, `"csv.bz2"`, `"csv.gz"`, `"csv.xz"`, `"csv.zip"`.
 #' - Tab separated values (TSV):
-#'   `"tsv"`, `"tsv.bz2"`, `"tsv.gz"`, `"tsv.xz"`, `"tsv.zip"`.
+#' `"tsv"`, `"tsv.bz2"`, `"tsv.gz"`, `"tsv.xz"`, `"tsv.zip"`.
 #'
 #' `Matrix` (`sparseMatrix`) supported arguments:
 #'
 #' - MatrixMarket exchange (MTX):
-#'   `"mtx"`, `"mtx.bz2"`, `"mtx.gz"`, `"mtx.xz"`, `"mtx.zip"`.
+#' `"mtx"`, `"mtx.bz2"`, `"mtx.gz"`, `"mtx.xz"`, `"mtx.zip"`.
 #'
 #' @section Row names:
 #'
@@ -35,30 +35,37 @@
 #'
 #' @inheritParams AcidRoxygen::params
 #' @inheritParams import
-#' @param object Object.
-#'   An object supporting `dim()`, or a supported class capable of being coerced
-#'   to `data.frame`, to be written to disk.
-#' @param append `logical(1)`.
-#'   Append to output file.
-#'   When enabled, automatically sets `overwrite` argument to `FALSE`.
-#'   Requires readr package to be installed.
-#' @param con `character(1)`, `missing`, or `NULL`.
-#'   File path.
-#'   Alternatively, can leave unset and use `ext` and `dir` arguments instead.
-#' @param engine `character(1)`.
-#'   Engine (package) to use for export.
-#'
-#'   Currently supported:
-#'   - base
-#'   - data.table
-#'   - readr
-#' @param ext `character(1)`.
-#'   *Deprecated in favor of `format` argument.*
-#' @param file `character(1)`.
-#'   *Deprecated in favor of `con` argument.*
-#' @param format `character(1)`, `missing`, or `NULL`.
-#'   Output file format extension.
 #' @param ... Additional arguments.
+#'
+#' @param object Object.
+#' An object supporting `dim()`, or a supported class capable of being coerced
+#' to `data.frame`, to be written to disk.
+#'
+#' @param append `logical(1)`.
+#' Append to output file.
+#' When enabled, automatically sets `overwrite` argument to `FALSE`.
+#' Requires readr package to be installed.
+#'
+#' @param con `character(1)`, `missing`, or `NULL`.
+#' File path.
+#' Alternatively, can leave unset and use `ext` and `dir` arguments instead.
+#'
+#' @param engine `character(1)`.
+#' Engine (package) to use for export.
+#'
+#' Currently supported:
+#' - base
+#' - data.table
+#' - readr
+#'
+#' @param ext `character(1)`.
+#' *Deprecated in favor of `format` argument.*
+#'
+#' @param file `character(1)`.
+#' *Deprecated in favor of `con` argument.*
+#'
+#' @param format `character(1)`, `missing`, or `NULL`.
+#' Output file format extension.
 #'
 #' @return Invisible `character`.
 #' File path(s).
@@ -138,30 +145,28 @@ NULL
 
 
 
-## Updated 2021-10-21.
-`export,character` <-  # nolint
-    function(
-        object,
-        con,
-        format,
-        append = FALSE,
-        overwrite = getOption(
-            x = "acid.overwrite",
-            default = TRUE
-        ),
-        engine = getOption(
-            x = "acid.export.engine",
-            default = "base"
-        ),
-        quiet = getOption(
-            x = "acid.quiet",
-            default = FALSE
-        ),
-        verbose = getOption(
-            x = "acid.verbose",
-            default = FALSE
-        )
-    ) {
+## Updated 2022-05-02.
+`export,character` <- # nolint
+    function(object,
+             con,
+             format,
+             append = FALSE,
+             overwrite = getOption(
+                 x = "acid.overwrite",
+                 default = TRUE
+             ),
+             engine = getOption(
+                 x = "acid.export.engine",
+                 default = "base"
+             ),
+             quiet = getOption(
+                 x = "acid.quiet",
+                 default = FALSE
+             ),
+             verbose = getOption(
+                 x = "acid.verbose",
+                 default = FALSE
+             )) {
         if (missing(format)) {
             format <- NULL
         }
@@ -178,7 +183,7 @@ NULL
             assert(isFALSE(quiet))
         }
         whatPkg <- match.arg(arg = engine, choices = .engines)
-        requireNamespaces(whatPkg)
+        assert(requireNamespaces(whatPkg))
         if (isTRUE(append)) {
             assert(
                 !identical(whatPkg, "base"),
@@ -193,9 +198,7 @@ NULL
             assert(isFALSE(append))
         }
         whatFile <- con
-        ## FIXME Can we use a base method instead of stringr here?
-        match <- str_match(string = con, pattern = extPattern)
-        compressExt <- match[1L, 4L]
+        compressExt <- fileExt(path = con, pattern = compressExtPattern)
         compress <- !is.na(compressExt)
         if (isAFile(con)) {
             con <- realpath(con)
@@ -275,19 +278,17 @@ NULL
 
 
 ## Updated 2021-10-19.
-`export,character,deprecated` <-  # nolint
-    function(
-        object,
-        con,  # NULL
-        format,
-        dir = getOption(
-            x = "acid.export.dir",
-            default = getwd()
-        ),
-        ...,
-        ext,  # deprecated in favor of "format"
-        file  # deprecated in favor of "con"
-
+`export,character,deprecated` <- # nolint
+    function(object,
+             con, # NULL
+             format,
+             dir = getOption(
+                 x = "acid.export.dir",
+                 default = getwd()
+             ),
+             ...,
+             ext, # deprecated in favor of "format"
+             file # deprecated in favor of "con"
     ) {
         if (!missing(file)) {
             ## > .Deprecated(sprintf(
@@ -331,7 +332,7 @@ NULL
 
 #' Export `matrix` method
 #'
-#' @note Updated 2021-10-19.
+#' @note Updated 2022-05-03.
 #' @noRd
 #'
 #' @details
@@ -339,26 +340,24 @@ NULL
 #' `data.table`, `tbl_df`, and `DataFrame` classes. Note that `rio::export()`
 #' doesn't preserve row names by default, so we're ensuring row names get
 #' coerced to "rowname" column consistently here.
-`export,data.frame` <-  # nolint
-    function(
-        object,
-        con,
-        format,
-        rownames = TRUE,
-        colnames = TRUE,
-        overwrite = getOption(
-            x = "acid.overwrite",
-            default = TRUE
-        ),
-        engine = getOption(
-            x = "acid.export.engine",
-            default = "readr"
-        ),
-        quiet = getOption(
-            x = "acid.quiet",
-            default = FALSE
-        )
-    ) {
+`export,data.frame` <- # nolint
+    function(object,
+             con,
+             format,
+             rownames = TRUE,
+             colnames = TRUE,
+             overwrite = getOption(
+                 x = "acid.overwrite",
+                 default = TRUE
+             ),
+             engine = getOption(
+                 x = "acid.export.engine",
+                 default = "base"
+             ),
+             quiet = getOption(
+                 x = "acid.quiet",
+                 default = FALSE
+             )) {
         validObject(object)
         object <- as.data.frame(object)
         verbose <- getOption(x = "acid.verbose", default = FALSE)
@@ -375,14 +374,14 @@ NULL
         )
         formatChoices <- .exportFormatChoices[["delim"]]
         if (missing(format)) {
-            format <- fileExt(con)  # nocov
+            format <- fileExt(con) # nocov
         }
         format <- match.arg(arg = format, choices = formatChoices)
         whatPkg <- match.arg(arg = engine, choices = .engines)
-        requireNamespaces(whatPkg)
-        file <- con; whatFile <- con
-        match <- str_match(string = file, pattern = extPattern)
-        compressExt <- match[1L, 4L]
+        assert(requireNamespaces(whatPkg))
+        file <- con
+        whatFile <- con
+        compressExt <- fileExt(path = file, pattern = compressExtPattern)
         compress <- !is.na(compressExt)
         ## Handle non-atomic columns (i.e. nested list columns).
         nonatomicCols <- which(!bapply(
@@ -412,12 +411,12 @@ NULL
                             )
                         },
                         error = function(e) {
-                            NULL  # nocov
+                            NULL # nocov
                         }
                     )
                     if (
                         is.vector(x) &&
-                        identical(length(x), nrow(object))
+                            identical(length(x), nrow(object))
                     ) {
                         object[[listCol]] <- x
                     }
@@ -436,7 +435,7 @@ NULL
             }
         }
         if (isFALSE(rownames)) {
-            rownames(object) <- NULL  # nocov
+            rownames(object) <- NULL # nocov
         }
         if (hasRownames(object)) {
             assert(areDisjointSets("rowname", colnames(object)))
@@ -560,18 +559,17 @@ NULL
 
 
 ## Updated 2021-10-19.
-`export,data.frame,deprecated` <-  # nolint
-    function(
-        object,
-        con,  # NULL
-        format,
-        dir = getOption(
-            x = "acid.export.dir",
-            default = getwd()
-        ),
-        ...,
-        ext,  # deprecated in favor of "format"
-        file  # deprecated in favor of "con"
+`export,data.frame,deprecated` <- # nolint
+    function(object,
+             con, # NULL
+             format,
+             dir = getOption(
+                 x = "acid.export.dir",
+                 default = getwd()
+             ),
+             ...,
+             ext, # deprecated in favor of "format"
+             file # deprecated in favor of "con"
     ) {
         if (!missing(file)) {
             ## > .Deprecated(sprintf(
@@ -615,27 +613,25 @@ NULL
 
 #' Export `Matrix` (e.g. `sparseMatrix`) method
 #'
-#' @note Updated 2021-09-28.
+#' @note Updated 2022-05-03.
 #' @noRd
 #'
 #' @details
 #' Note that "file" is referring to the matrix file.
 #' The correponding column and row sidecar files are generated automatically.
 #' Consider adding HDF5 support in a future update.
-`export,Matrix` <-  # nolint
-    function(
-        object,
-        con,
-        format,
-        overwrite = getOption(
-            x = "acid.overwrite",
-            default = TRUE
-        ),
-        quiet = getOption(
-            x = "acid.quiet",
-            default = FALSE
-        )
-    ) {
+`export,Matrix` <- # nolint
+    function(object,
+             con,
+             format,
+             overwrite = getOption(
+                 x = "acid.overwrite",
+                 default = TRUE
+             ),
+             quiet = getOption(
+                 x = "acid.quiet",
+                 default = FALSE
+             )) {
         validObject(object)
         assert(
             hasLength(object),
@@ -645,15 +641,15 @@ NULL
         )
         formatChoices <- .exportFormatChoices[["Matrix"]]
         if (missing(format)) {
-            format <- fileExt(con)  # nocov
+            format <- fileExt(con) # nocov
         }
         format <- match.arg(arg = format, choices = formatChoices)
-        file <- con; whatFile <- con
+        file <- con
+        whatFile <- con
         whatPkg <- "Matrix"
         whatFun <- "writeMM"
-        requireNamespaces(whatPkg)
-        match <- str_match(string = file, pattern = extPattern)
-        compressExt <- match[1L, 4L]
+        assert(requireNamespaces(whatPkg))
+        compressExt <- fileExt(path = file, pattern = compressExtPattern)
         compress <- !is.na(compressExt)
         if (isAFile(file)) {
             file <- realpath(file)
@@ -724,18 +720,17 @@ NULL
 
 
 ## Updated 2021-10-19.
-`export,Matrix,deprecated` <-  # nolint
-    function(
-        object,
-        con,  # NULL
-        format,
-        dir = getOption(
-            x = "acid.export.dir",
-            default = getwd()
-        ),
-        ...,
-        ext,  # deprecated in favor of "format"
-        file  # deprecated in favor of "con"
+`export,Matrix,deprecated` <- # nolint
+    function(object,
+             con, # NULL
+             format,
+             dir = getOption(
+                 x = "acid.export.dir",
+                 default = getwd()
+             ),
+             ...,
+             ext, # deprecated in favor of "format"
+             file # deprecated in favor of "con"
     ) {
         if (!missing(file)) {
             ## > .Deprecated(sprintf(
@@ -777,22 +772,22 @@ NULL
 
 
 
-`export,DataFrame` <-  # nolint
+`export,DataFrame` <- # nolint
     `export,data.frame`
 
-`export,DataFrame,deprecated` <-  # nolint
+`export,DataFrame,deprecated` <- # nolint
     `export,data.frame,deprecated`
 
-`export,GenomicRanges` <-   # nolint
+`export,GenomicRanges` <- # nolint
     `export,data.frame`
 
-`export,GenomicRanges,deprecated` <-   # nolint
+`export,GenomicRanges,deprecated` <- # nolint
     `export,data.frame,deprecated`
 
-`export,matrix` <-  # nolint
+`export,matrix` <- # nolint
     `export,data.frame`
 
-`export,matrix,deprecated` <-  # nolint
+`export,matrix,deprecated` <- # nolint
     `export,data.frame,deprecated`
 
 
