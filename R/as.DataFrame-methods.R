@@ -1,6 +1,6 @@
 #' @name as.DataFrame
 #' @inherit AcidGenerics::as.DataFrame
-#' @note Updated 2022-05-02.
+#' @note Updated 2022-05-03.
 #'
 #' @param row.names
 #' Refer to `base::as.data.frame` for usage details.
@@ -8,9 +8,7 @@
 #'
 #' @examples
 #' data(
-#'     data.table,
 #'     sparseMatrix,
-#'     tibble,
 #'     package = "AcidTest"
 #' )
 #'
@@ -18,11 +16,6 @@
 #' from <- sparseMatrix
 #' to <- as.DataFrame(from)
 #' print(to)
-#'
-#' ## `data.table` to `DataFrame` ====
-#' from <- data.table
-#' to <- as.DataFrame(from)
-#' head(to)
 #'
 #' ## `list` to `DataFrame` ====
 #' ## Use `as.DataFrame()` instead of `as()` for `list` class.
@@ -32,11 +25,6 @@
 #' )
 #' to <- as.DataFrame(from)
 #' print(to)
-#'
-#' ## `tbl_df` to `DataFrame` ====
-#' from <- tibble
-#' to <- as.DataFrame(from)
-#' head(to)
 NULL
 
 
