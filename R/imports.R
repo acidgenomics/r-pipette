@@ -33,7 +33,6 @@ NULL
 #' @importFrom AcidCLI abort alert alertInfo alertSuccess alertWarning
 #' toInlineString
 #' @importFrom Matrix readMM writeMM
-#' @importFrom RCurl getURL
 #' @importFrom goalie assert allAreAtomic allAreExisting allAreFiles
 #' allAreMatchingRegex allAreNonExisting allAreURLs allHaveAccess
 #' areDisjointSets areSameLength areSetEqual bapply compressExtPattern
