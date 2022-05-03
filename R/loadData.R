@@ -85,17 +85,15 @@ loadData <-
             files <- .listData(names = names, dir = dir)
         }
         assert(allAreFiles(files))
-        if (all(grepl(
+        if (allAreMatchingRegex(
+            x = tolower(basename(files)),
             pattern = "\\.rds$",
-            x = files,
-            ignore.case = TRUE
-        ))) {
+        )) {
             fun <- .loadRDS
-        } else if (all(grepl(
-            pattern = "\\.rd[a|ata]$",
-            x = files,
-            ignore.case = TRUE
-        ))) {
+        } else if (allAreMatchingRegex(
+            x = tolower(basename(files)),
+            pattern = "\\.rd[a|ata]$"
+        )) {
             fun <- .loadRDA
         } else {
             abort(sprintf(
@@ -120,7 +118,7 @@ loadData <-
 
 
 
-## Updated 2021-08-24.
+## Updated 2022-05-03.
 .listData <- function(names, dir) {
     assert(isCharacter(names))
     dir <- realpath(dir)
@@ -173,13 +171,15 @@ loadData <-
 
 
 
-## Updated 2019-06-07.
+## Updated 2022-05-03.
 .loadRDS <- function(file, envir, overwrite) {
     file <- realpath(file)
     assert(
         isAFile(file),
-        ## Allowing RDS only here.
-        grepl("\\.rds$", file, ignore.case = TRUE),
+        isMatchingRegex(
+            x = tolower(basename(file)),
+            pattern = "\\.rds$"
+        ),
         is.environment(envir),
         isFlag(overwrite)
     )
@@ -199,13 +199,15 @@ loadData <-
 
 
 
-## Last modified 2019-06-07.
+## Last modified 2022-05-03.
 .loadRDA <- function(file, name = NULL, envir, overwrite) {
     file <- realpath(file)
     assert(
         isAFile(file),
-        ## Allowing RDA or RDATA here.
-        grepl("\\.rd[a|ata]$", file, ignore.case = TRUE),
+        isMatchingRegex(
+            x = tolower(basename(file)),
+            pattern = "\\.rd[a|ata]$"
+        ),
         isString(name, nullOK = TRUE),
         is.environment(envir),
         isFlag(overwrite)

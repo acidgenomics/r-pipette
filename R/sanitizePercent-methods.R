@@ -23,10 +23,10 @@ NULL
 
 
 
-## Updated 2019-07-19.
+## Updated 2022-05-03.
 `sanitizePercent,character` <- # nolint
     function(object) {
-        if (all(grepl("%$", object))) {
+        if (allAreMatchingRegex(x = object, pattern = "%$")) {
             as.numeric(sub("%$", "", object)) / 100L
         } else {
             object

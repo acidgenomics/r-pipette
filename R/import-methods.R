@@ -542,11 +542,11 @@ NULL
             )
         }
         assert(isAFile(file))
-        if (isTRUE(grepl(pattern = compressExtPattern, x = file))) {
-            if (isFALSE(grepl(
-                pattern = file.path(tmpDir, tmpPrefix),
-                x = file
-            ))) {
+        if (isMatchingRegex(x = file, pattern = compressExtPattern)) {
+            if (!isMatchingRegex(
+                x = file,
+                pattern = file.path(tmpDir, tmpPrefix)
+            )) {
                 tmpFile <- tempfile(
                     pattern = tmpPrefix,
                     tmpdir = tmpDir,
@@ -716,9 +716,9 @@ NULL
             isString(format, nullOK = TRUE),
             is.null(text)
         )
-        if (grepl(
-            pattern = "^https://docs\\.google\\.com/spreadsheets",
-            x = con
+        if (isMatchingRegex(
+            x = con,
+            pattern = "^https://docs\\.google\\.com/spreadsheets"
         )) {
             format <- "gsheet"
         }
@@ -1555,7 +1555,10 @@ NULL
             object <- stringi::stri_remove_empty(object)
         }
         if (isString(comment)) {
-            keep <- !grepl(pattern = paste0("^", comment), x = object)
+            keep <- isFALSE(isMatchingRegex(
+                x = object,
+                pattern = paste0("^", comment)
+            ))
             object <- object[keep]
         }
         if (identical(whatPkg, "base")) {
@@ -1731,10 +1734,9 @@ NULL
         assert(is(object, paste0(moleculeType, "StringSet")))
         if (
             hasNames(object) &&
-                any(grepl(
-                    pattern = "|",
+                any(isMatchingFixed(
                     x = head(names(object)),
-                    fixed = TRUE
+                    pattern = "|"
                 ))
         ) {
             attributes <- strsplit(

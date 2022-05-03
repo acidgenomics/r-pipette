@@ -2,7 +2,7 @@
 #'
 #' @export
 #' @note Best served using FTP instead of HTTP.
-#' @note Updated 2021-02-02.
+#' @note Updated 2022-05-03.
 #'
 #' @inheritParams AcidRoxygen::params
 #'
@@ -11,10 +11,7 @@
 #'
 #' @examples
 #' url <- "ftp://ftp.ncbi.nlm.nih.gov/genomes/"
-#' if (
-#'     isFALSE(nzchar(Sys.getenv("CI"))) &&
-#'         goalie::hasInternet(url)
-#' ) {
+#' if (goalie::hasInternet(url)) {
 #'     x <- getURLDirList(url)
 #'     tail(x)
 #' }
@@ -23,13 +20,20 @@ getURLDirList <- function(url, pattern = NULL) {
         isAURL(url),
         isString(pattern, nullOK = TRUE)
     )
-    if (isFALSE(grepl("/$", url))) {
+    if (isFALSE(isMatchingRegex(x = url, pattern = "/$"))) {
         url <- paste0(url, "/") # nocov
     }
     x <- getURL(url = url, dirlistonly = TRUE)
-    x <- unlist(strsplit(x, split = "\n"))
+    x <- strsplit(x, split = "\n")[[1L]]
     if (isString(pattern)) {
-        keep <- grepl(pattern = pattern, x = x)
+        keep <- isMatchingRegex(x = x, pattern = pattern)
+        assert(
+            hasLength(keep),
+            msg = sprintf(
+                "No files matched pattern {.var %s}.",
+                pattern
+            )
+        )
         x <- x[keep]
     }
     x <- sort(x)

@@ -8,7 +8,7 @@ test_that("sanitizePercent", {
     )
 })
 
-test_that("Don't modify character if no grep match", {
+test_that("Don't modify character if no match", {
     object <- c("a", "b")
     expect_identical(sanitizePercent(object), object)
 })

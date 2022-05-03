@@ -58,7 +58,7 @@ transmit <-
             isFlag(download)
         )
         ## `RCurl::getURL()` requires a trailing slash.
-        if (!grepl(pattern = "/$", x = remoteDir)) {
+        if (!isMatchingRegex(x = remoteDir, pattern = "/$")) {
             remoteDir <- paste0(remoteDir, "/") # nocov
         }
         if (isTRUE(download)) {
@@ -80,7 +80,8 @@ transmit <-
             fixed = TRUE
         )[[1L]]
         ## Match files but not dirs (`"^d"`) or symlinks (`"^l"`).
-        remoteFiles <- remoteFiles[grepl("^-", remoteFiles)]
+        remoteFiles <-
+            remoteFiles[isMatchingRegex(x = remoteFiles, pattern = "^-")]
         remoteFiles <- strsplit(
             x = remoteFiles,
             split = "[[:space:]]+",

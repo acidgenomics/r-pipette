@@ -35,12 +35,13 @@ NULL
 #' @importFrom Matrix readMM writeMM
 #' @importFrom RCurl getURL
 #' @importFrom goalie assert allAreAtomic allAreExisting allAreFiles
-#' allAreNonExisting allAreURLs allHaveAccess areDisjointSets areSameLength
-#' areSetEqual bapply compressExtPattern extPattern formalCompress hasColnames
-#' hasCols hasDimnames hasInternet hasLength hasNames hasNoDuplicates
-#' hasRownames hasRows hasValidNames hasValidDimnames isAFile isAURL isAny
-#' isCharacter isFlag isInstalled isInt isMatchingRegex isNonNegative
-#' isPositive isScalar isString isSubset validNames validate
+#' allAreMatchingRegex allAreNonExisting allAreURLs allHaveAccess
+#' areDisjointSets areSameLength areSetEqual bapply compressExtPattern
+#' extPattern formalCompress hasColnames hasCols hasDimnames hasInternet
+#' hasLength hasNames hasNoDuplicates hasRownames hasRows hasValidNames
+#' hasValidDimnames isAFile isAURL isAny isCharacter isFlag isInstalled isInt
+#' isMatchingFixed isMatchingRegex isNonNegative isPositive isScalar isString
+#' isSubset validNames validate
 #' @importFrom methods as is hasMethod new setGeneric signature validObject
 #' @importFrom utils download.file packageName packageVersion
 NULL
