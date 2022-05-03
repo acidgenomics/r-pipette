@@ -87,7 +87,7 @@ loadData <-
         assert(allAreFiles(files))
         if (allAreMatchingRegex(
             x = tolower(basename(files)),
-            pattern = "\\.rds$",
+            pattern = "\\.rds$"
         )) {
             fun <- .loadRDS
         } else if (allAreMatchingRegex(
