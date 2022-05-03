@@ -29,7 +29,7 @@ Load a remote R binary file. This function is vectorized and supports
 multiple URLs in a single call.
 }
 \note{
-Updated 2020-01-19.
+Updated 2022-05-03.
 }
 \examples{
 url <- AcidBase::pasteURL(
