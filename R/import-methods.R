@@ -298,13 +298,19 @@ NULL
 
 
 
-#' Map file extension to corresponding S4 file class
+#' Map file format extension to corresponding S4 file class
 #'
-#' @note Updated 2021-08-24.
+#' @note Updated 2022-05-03.
 #' @noRd
-.extToFileClass <- function(ext) {
-    ext <- tolower(ext)
-    if (identical(ext, "txt")) {
+.formatToFileClass <- function(format) {
+    format <- sub(
+        pattern = compressExtPattern,
+        replacement = "",
+        x = tolower(format),
+        fixed = FALSE,
+        ignore.case = FALSE
+    )
+    if (identical(format, "txt")) {
         ## nocov start
         abort(sprintf(
             fmt = paste(
@@ -319,77 +325,77 @@ NULL
         ## nocov end
     }
     dict <- list(
-        "arff"         = "RioHandoffFile",
-        "bash"         = "LinesFile",
+        "arff" = "RioHandoffFile",
+        "bash" = "LinesFile",
         "bcbio-counts" = "BcbioCountsFile",
-        "bed"          = "RtracklayerHandoffFile",
-        "bed15"        = "RtracklayerHandoffFile",
-        "bedgraph"     = "RtracklayerHandoffFile",
-        "bedpe"        = "RtracklayerHandoffFile",
-        "bigwig"       = "RtracklayerHandoffFile",
-        "broadpeak"    = "RtracklayerHandoffFile",
-        "bw"           = "RtracklayerHandoffFile",
-        "counts"       = "BcbioCountsFile",
-        "csv"          = "CSVFile",
-        "dbf"          = "RioHandoffFile",
-        "dif"          = "RioHandoffFile",
-        "dta"          = "RioHandoffFile",
-        "excel"        = "ExcelFile",
-        "fa"           = "FASTAFile",
-        "fasta"        = "FASTAFile",
-        "fastq"        = "FASTQFile",
-        "fq"           = "FASTQFile",
-        "fwf"          = "RioHandoffFile",
-        "gff"          = "RtracklayerHandoffFile",
-        "gff1"         = "RtracklayerHandoffFile",
-        "gff2"         = "RtracklayerHandoffFile",
-        "gff3"         = "RtracklayerHandoffFile",
-        "gmt"          = "GMTFile",
-        "gmx"          = "GMXFile",
-        "grp"          = "GRPFile",
-        "gsheet"       = "RioHandoffFile", # Google Sheets
-        "gtf"          = "RtracklayerHandoffFile",
-        "json"         = "JSONFile",
-        "lines"        = "LinesFile",
-        "log"          = "LinesFile",
-        "mat"          = "RioHandoffFile",
-        "md"           = "LinesFile",
-        "mtp"          = "RioHandoffFile",
-        "mtx"          = "MTXFile",
-        "narrowpeak"   = "RtracklayerHandoffFile",
-        "ods"          = "RioHandoffFile",
-        "por"          = "RioHandoffFile",
-        "psv"          = "RioHandoffFile",
-        "py"           = "LinesFile",
-        "pzfx"         = "PZFXFile",
-        "r"            = "LinesFile",
-        "rda"          = "RDataFile",
-        "rdata"        = "RDataFile",
-        "rds"          = "RDSFile",
-        "rec"          = "RioHandoffFile",
-        "rio"          = "RioHandoffFile",
-        "rmd"          = "LinesFile",
-        "rtracklayer"  = "RtracklayerHandoffFile",
-        "sas7bdat"     = "RioHandoffFile",
-        "sav"          = "RioHandoffFile",
-        "sh"           = "LinesFile",
-        "syd"          = "RioHandoffFile",
-        "table"        = "TableFile",
-        "tsv"          = "TSVFile",
-        "wig"          = "RtracklayerHandoffFile",
-        "xls"          = "ExcelFile",
-        "xlsb"         = "ExcelFile",
-        "xlsx"         = "ExcelFile",
-        "xpt"          = "RioHandoffFile",
-        "yaml"         = "YAMLFile",
-        "yml"          = "YAMLFile",
-        "zsh"          = "LinesFile"
+        "bed" = "RtracklayerHandoffFile",
+        "bed15" = "RtracklayerHandoffFile",
+        "bedgraph" = "RtracklayerHandoffFile",
+        "bedpe" = "RtracklayerHandoffFile",
+        "bigwig" = "RtracklayerHandoffFile",
+        "broadpeak" = "RtracklayerHandoffFile",
+        "bw" = "RtracklayerHandoffFile",
+        "counts" = "BcbioCountsFile",
+        "csv" = "CSVFile",
+        "dbf" = "RioHandoffFile",
+        "dif" = "RioHandoffFile",
+        "dta" = "RioHandoffFile",
+        "excel" = "ExcelFile",
+        "fa" = "FASTAFile",
+        "fasta" = "FASTAFile",
+        "fastq" = "FASTQFile",
+        "fq" = "FASTQFile",
+        "fwf" = "RioHandoffFile",
+        "gff" = "RtracklayerHandoffFile",
+        "gff1" = "RtracklayerHandoffFile",
+        "gff2" = "RtracklayerHandoffFile",
+        "gff3" = "RtracklayerHandoffFile",
+        "gmt" = "GMTFile",
+        "gmx" = "GMXFile",
+        "grp" = "GRPFile",
+        "gsheet" = "RioHandoffFile",
+        "gtf" = "RtracklayerHandoffFile",
+        "json" = "JSONFile",
+        "lines" = "LinesFile",
+        "log" = "LinesFile",
+        "mat" = "RioHandoffFile",
+        "md" = "LinesFile",
+        "mtp" = "RioHandoffFile",
+        "mtx" = "MTXFile",
+        "narrowpeak" = "RtracklayerHandoffFile",
+        "ods" = "RioHandoffFile",
+        "por" = "RioHandoffFile",
+        "psv" = "RioHandoffFile",
+        "py" = "LinesFile",
+        "pzfx" = "PZFXFile",
+        "r" = "LinesFile",
+        "rda" = "RDataFile",
+        "rdata" = "RDataFile",
+        "rds" = "RDSFile",
+        "rec" = "RioHandoffFile",
+        "rio" = "RioHandoffFile",
+        "rmd" = "LinesFile",
+        "rtracklayer" = "RtracklayerHandoffFile",
+        "sas7bdat" = "RioHandoffFile",
+        "sav" = "RioHandoffFile",
+        "sh" = "LinesFile",
+        "syd" = "RioHandoffFile",
+        "table" = "TableFile",
+        "tsv" = "TSVFile",
+        "wig" = "RtracklayerHandoffFile",
+        "xls" = "ExcelFile",
+        "xlsb" = "ExcelFile",
+        "xlsx" = "ExcelFile",
+        "xpt" = "RioHandoffFile",
+        "yaml" = "YAMLFile",
+        "yml" = "YAMLFile",
+        "zsh" = "LinesFile"
     )
-    if (!isSubset(ext, names(dict))) {
-        abort(sprintf("{.var %s} extension is not supported.", ext))
-    }
-    class <- dict[[ext]]
-    assert(isString(class))
+    assert(
+        isSubset(format, names(dict)),
+        msg = sprintf("{.var %s} extension is not supported.", format)
+    )
+    class <- dict[[format]]
     class
 }
 
@@ -733,7 +739,7 @@ NULL
                 "pipette", "import"
             )
         )
-        class <- .extToFileClass(format)
+        class <- .formatToFileClass(format)
         assert(
             hasMethod(
                 f = "import",
