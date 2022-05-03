@@ -51,6 +51,7 @@ Suggests:
     rtracklayer,
     stringi,
     testthat,
+    tibble,
     tools,
     yaml
 Roxygen: list(markdown = TRUE)
