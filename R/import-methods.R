@@ -1542,12 +1542,14 @@ NULL
             object <- gsub(
                 pattern = "^[[:space:]]+",
                 replacement = "",
-                x = object
+                x = object,
+                fixed = FALSE
             )
             object <- gsub(
                 pattern = "[[:space:]]+$",
                 replacement = "",
-                x = object
+                x = object,
+                fixed = FALSE
             )
         }
         if (isTRUE(removeBlank)) {
@@ -1555,10 +1557,7 @@ NULL
             object <- stringi::stri_remove_empty(object)
         }
         if (isString(comment)) {
-            keep <- isFALSE(isMatchingRegex(
-                x = object,
-                pattern = paste0("^", comment)
-            ))
+            keep <- !isMatchingRegex(x = object, pattern = paste0("^", comment))
             object <- object[keep]
         }
         if (identical(whatPkg, "base")) {
