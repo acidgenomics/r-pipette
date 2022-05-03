@@ -14,15 +14,21 @@ test_that("Match failure", {
 })
 
 test_that("data.table", {
+    skip_if_not_installed("data.table")
+    data(data.table, package = "AcidTest", envir = environment())
+    object <- data.table
     expect_identical(
-        object = matchRownameColumn(dt),
+        object = matchRownameColumn(object),
         expected = "rn"
     )
 })
 
 test_that("tbl_df", {
+    skip_if_not_installed("tibble")
+    data(tibble, package = "AcidTest", envir = environment())
+    object <- tibble
     expect_identical(
-        object = matchRownameColumn(tbl),
+        object = matchRownameColumn(object),
         expected = "rowname"
     )
 })
