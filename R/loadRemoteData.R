@@ -4,7 +4,7 @@
 #' multiple URLs in a single call.
 #'
 #' @export
-#' @note Updated 2020-01-19.
+#' @note Updated 2022-05-03.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param url `character`.
@@ -35,14 +35,13 @@ loadRemoteData <-
             is.environment(envir),
             isFlag(overwrite)
         )
-        if (!all(bapply(
-            X = url,
-            FUN = function(x) {
-                grepl(pattern = .rdataExtPattern, x = x, ignore.case = TRUE)
-            }
-        ))) {
-            abort(.rdataLoadError)
-        }
+        assert(
+            allAreMatchingRegex(
+                x = tolower(basename(x)),
+                pattern = .rdataExtPattern
+            ),
+            msg = .rdataLoadError
+        )
         names <- gsub(
             pattern = .rdataExtPattern,
             replacement = "",

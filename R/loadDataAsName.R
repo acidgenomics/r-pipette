@@ -41,13 +41,20 @@ loadDataAsName <-
         names <- names(dots)
         if (
             isFALSE(overwrite) &&
-                isFALSE(allAreNonExisting(names, envir = envir, inherits = FALSE))
+                isFALSE(allAreNonExisting(
+                    x = names,
+                    envir = envir,
+                    inherits = FALSE
+                ))
         ) {
             .loadExistsError(names)
         }
-        ## Note that we can skip safe loading here because we have already checked
-        ## for existing names in environment outside of the loop call.
-        if (any(grepl("\\.rds$", files))) {
+        ## Note that we can skip safe loading here because we have already
+        ## checked for existing names in environment outside of the loop call.
+        if (any(isMatchingRegex(
+            x = tolower(basename(files)),
+            pattern = "\\.rds$"
+        ))) {
             ## R data serialized: assign directly.
             invisible(mapply(
                 name = names(files),
