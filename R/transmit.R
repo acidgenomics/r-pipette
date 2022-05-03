@@ -58,7 +58,7 @@ transmit <-
             isFlag(download)
         )
         ## `RCurl::getURL()` requires a trailing slash.
-        if (!grepl("/$", remoteDir)) {
+        if (!grepl(pattern = "/$", x = remoteDir)) {
             remoteDir <- paste0(remoteDir, "/") # nocov
         }
         if (isTRUE(download)) {
@@ -147,7 +147,7 @@ transmit <-
         if (!hasLength(localPaths)) {
             alertSuccess("All files are already downloaded.")
             files <- realpath(files)
-            names(files) <- match
+            names(files) <- remoteFiles
             return(invisible(files))
         }
         ## Download and return file paths.
@@ -173,6 +173,6 @@ transmit <-
             SIMPLIFY = TRUE,
             USE.NAMES = FALSE
         )
-        names(files) <- match
+        names(files) <- remoteFiles
         invisible(files)
     }

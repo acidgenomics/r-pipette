@@ -4,19 +4,24 @@ context("transmit : NCBI FTP")
 remoteDir <- "ftp://ftp.ncbi.nlm.nih.gov/genomes/"
 skip_if_not(hasInternet(remoteDir))
 
+tmpdir <- realpath(tempdir())
+
 test_that("Get README file", {
+    expected <- file.path(tmpdir, "README.txt")
+    unlink(expected)
     object <- transmit(
         remoteDir = remoteDir,
+        localDir = tmpdir,
         pattern = "^README\\.txt$",
         compress = FALSE
     )
-    expected <- file.path(getwd(), "README.txt")
     names(expected) <- "README.txt"
     expect_identical(object, expected)
     ## Check that function skips on existing files.
     expect_message(
         object = transmit(
             remoteDir = remoteDir,
+            localDir = tmpdir,
             pattern = "^README\\.txt$",
             compress = FALSE
         ),
@@ -26,16 +31,18 @@ test_that("Get README file", {
 })
 
 test_that("Rename and compress", {
+    expected <- file.path(tmpdir, "readme.txt.gz")
+    unlink(expected)
     object <- transmit(
         remoteDir = remoteDir,
+        localDir = tmpdir,
         pattern = "^README\\.txt$",
         rename = "readme.txt",
         compress = TRUE
     )
-    expected <- file.path(getwd(), "readme.txt.gz")
     names(expected) <- "README.txt"
     expect_identical(object, expected)
-    file.remove(object)
+    unlink(object)
 })
 
 test_that("URL return", {
