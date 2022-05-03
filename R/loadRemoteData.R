@@ -37,7 +37,7 @@ loadRemoteData <-
         )
         assert(
             allAreMatchingRegex(
-                x = tolower(basename(x)),
+                x = tolower(basename(url)),
                 pattern = .rdataExtPattern
             ),
             msg = .rdataLoadError
