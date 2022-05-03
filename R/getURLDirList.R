@@ -17,13 +17,14 @@
 #' }
 getURLDirList <- function(url, pattern = NULL) {
     assert(
+        requireNamespaces("RCurl"),
         isAURL(url),
         isString(pattern, nullOK = TRUE)
     )
-    if (isFALSE(isMatchingRegex(x = url, pattern = "/$"))) {
+    if (!isMatchingRegex(x = url, pattern = "/$")) {
         url <- paste0(url, "/") # nocov
     }
-    x <- getURL(url = url, dirlistonly = TRUE)
+    x <- RCurl::getURL(url = url, dirlistonly = TRUE)
     x <- strsplit(x, split = "\n")[[1L]]
     if (isString(pattern)) {
         keep <- isMatchingRegex(x = x, pattern = pattern)
