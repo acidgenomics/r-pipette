@@ -3,7 +3,7 @@
 #' @export
 #' @note This function is intended for interactive use and interprets object
 #' names using non-standard evaluation.
-#' @note Updated 2020-01-19.
+#' @note Updated 2022-05-04.
 #'
 #' @inheritParams loadData
 #' @param ... Key value pairs, defining the name mappings. For example,
@@ -51,9 +51,9 @@ loadDataAsName <-
         }
         ## Note that we can skip safe loading here because we have already
         ## checked for existing names in environment outside of the loop call.
-        if (any(isMatchingRegex(
-            x = tolower(basename(files)),
-            pattern = "\\.rds$"
+        if (any(grepl(
+            pattern = "\\.rds$",
+            x = tolower(basename(files))
         ))) {
             ## R data serialized: assign directly.
             invisible(mapply(
