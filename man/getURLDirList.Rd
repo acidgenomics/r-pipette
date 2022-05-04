@@ -23,7 +23,7 @@ Get remote URL directory listing
 \note{
 Best served using FTP instead of HTTP.
 
-Updated 2022-05-03.
+Updated 2022-05-04.
 }
 \examples{
 url <- "ftp://ftp.ncbi.nlm.nih.gov/genomes/"
