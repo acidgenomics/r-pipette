@@ -51,14 +51,14 @@ transmit <-
             requireNamespaces("RCurl"),
             hasInternet(),
             isString(remoteDir),
-            all(isMatchingRegex(remoteDir, "^ftp\\://")),
+            allAreMatchingRegex(x = remoteDir, pattern = "^ftp\\://"),
             isString(pattern, nullOK = TRUE),
             isAny(rename, classes = c("character", "NULL")),
             isFlag(compress),
             isFlag(download)
         )
         ## `RCurl::getURL()` requires a trailing slash.
-        if (!isMatchingRegex(x = remoteDir, pattern = "/$")) {
+        if (!grepl(pattern = "/$", x = remoteDir)) {
             remoteDir <- paste0(remoteDir, "/") # nocov
         }
         if (isTRUE(download)) {
@@ -81,7 +81,7 @@ transmit <-
         )[[1L]]
         ## Match files but not dirs (`"^d"`) or symlinks (`"^l"`).
         remoteFiles <-
-            remoteFiles[isMatchingRegex(x = remoteFiles, pattern = "^-")]
+            remoteFiles[grepl(pattern = "^-", x = remoteFiles)]
         remoteFiles <- strsplit(
             x = remoteFiles,
             split = "[[:space:]]+",

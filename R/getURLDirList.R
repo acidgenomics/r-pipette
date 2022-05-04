@@ -2,7 +2,7 @@
 #'
 #' @export
 #' @note Best served using FTP instead of HTTP.
-#' @note Updated 2022-05-03.
+#' @note Updated 2022-05-04.
 #'
 #' @inheritParams AcidRoxygen::params
 #'
@@ -21,13 +21,13 @@ getURLDirList <- function(url, pattern = NULL) {
         isAURL(url),
         isString(pattern, nullOK = TRUE)
     )
-    if (!isMatchingRegex(x = url, pattern = "/$")) {
+    if (!grepl(pattern = "/$", x = url)) {
         url <- paste0(url, "/") # nocov
     }
     x <- RCurl::getURL(url = url, dirlistonly = TRUE)
     x <- strsplit(x, split = "\n")[[1L]]
     if (isString(pattern)) {
-        keep <- isMatchingRegex(x = x, pattern = pattern)
+        keep <- grepl(pattern = pattern, x = x)
         assert(
             hasLength(keep),
             msg = sprintf(
