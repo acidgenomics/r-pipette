@@ -443,14 +443,14 @@ These file formats are intentionally not supported:
 }
 
 \examples{
-con <- system.file("extdata/example.csv", package = "pipette")
+con <- system.file("extdata", "example.csv", package = "pipette")
 
 ## Row and column names enabled.
-x <- import(con)
+x <- import(con = con)
 print(head(x))
 
 ## Row and column names disabled.
-x <- import(con, rownames = FALSE, colnames = FALSE)
+x <- import(con = con, rownames = FALSE, colnames = FALSE)
 print(head(x))
 }
 \seealso{

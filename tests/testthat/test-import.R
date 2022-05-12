@@ -570,6 +570,19 @@ test_that("'rio::import()', e.g. Stata DTA file", {
 
 
 
+context("import : OBO")
+
+skip_if_not_installed(pkg = "ontologyIndex")
+
+test_that("OBO", {
+    file <- file.path("cache", "example.obo")
+    x <- import(file)
+    expect_is(x, "ontology_index")
+    expect_length(x, 25L)
+})
+
+
+
 context("import : PZFX")
 
 skip_if_not_installed(pkg = "pzfx")

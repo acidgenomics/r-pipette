@@ -15,6 +15,8 @@ files <- c(
     "example.gtf",
     "example.gff3",
     "example.json",
+    ## Example gene ontology OBO file from BiocSet package.
+    "example.obo",
     "example.R",
     "example.rda",
     "example.rds",
