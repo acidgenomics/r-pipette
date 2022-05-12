@@ -16,6 +16,7 @@
 \alias{import,GRPFile,missingOrNULL,missingOrNULL-method}
 \alias{import,JSONFile,missingOrNULL,missingOrNULL-method}
 \alias{import,MTXFile,missingOrNULL,missingOrNULL-method}
+\alias{import,OBOFile,missingOrNULL,missingOrNULL-method}
 \alias{import,PZFXFile,missingOrNULL,missingOrNULL-method}
 \alias{import,YAMLFile,missingOrNULL,missingOrNULL-method}
 \alias{import,RDSFile,missingOrNULL,missingOrNULL-method}
@@ -123,6 +124,8 @@ import(con, format, text, ...)
   metadata = getOption(x = "acid.import.metadata", default = FALSE),
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
+
+\S4method{import}{OBOFile,missingOrNULL,missingOrNULL}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
 
 \S4method{import}{PZFXFile,missingOrNULL,missingOrNULL}(
   con,
@@ -431,6 +434,12 @@ sidecar files are natively supported.
 
 These file formats are intentionally not supported:
 \code{DOC}, \code{DOCX}, \code{PDF}, \code{PPT}, \code{PPTX}.
+}
+
+\section{Duplicate methods}{
+
+
+\code{GMTFile} and \code{OBOFile} are also supported by BiocSet package.
 }
 
 \examples{
