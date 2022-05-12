@@ -619,8 +619,8 @@ NULL
         ## Attempt to set row names automatically for data frames.
         if (
             is.data.frame(object) &&
-            isTRUE(rownames) &&
-            !hasRownames(object)
+                isTRUE(rownames) &&
+                !hasRownames(object)
         ) {
             if (is.null(rownameCol)) {
                 rownameCol <- matchRownameColumn(object)
