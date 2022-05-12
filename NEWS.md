@@ -1,3 +1,11 @@
+# pipette 0.9.1 (2022-05-12)
+
+## Minor changes
+
+- `import`: Added support for Open Biomedical Ontologies (OBO) format.
+  This uses ontologyIndex internally. See also BiocSet for alterative import
+  method that uses `es_set` and other accessor functions.
+
 # pipette 0.9.0 (2022-05-04)
 
 ## Major changes
