@@ -273,32 +273,33 @@ NULL
 
 #' Inform the user about start of file import
 #'
-#' @note Updated 2022-02-04.
+#' @note Updated 2022-05-12.
 #' @noRd
-.alertImport <- function(con,
-                         whatPkg,
-                         whatFun) {
-    assert(
-        is(con, "PipetteFile"),
-        isString(whatPkg),
-        isString(whatFun)
-    )
-    file <- attr(x = con, which = "origResource")
-    if (is.null(file)) {
-        file <- resource(con)
+.alertImport <-
+    function(con,
+             whatPkg,
+             whatFun) {
+        assert(
+            is(con, "PipetteFile"),
+            isString(whatPkg),
+            isString(whatFun)
+        )
+        file <- attr(x = con, which = "origResource")
+        if (is.null(file)) {
+            file <- resource(con)
+        }
+        fileType <- ifelse(test = isAURL(file), yes = "url", no = "file")
+        ## Handle edge case of cleaning Google Sheets URL.
+        if (identical(fileType, "url")) {
+            file <- sub(pattern = "\\#.+$", replacement = "", x = file)
+        }
+        alert(sprintf(
+            "Importing {.%s %s} using {.pkg %s}::{.fun %s}.",
+            fileType, file,
+            whatPkg, whatFun
+        ))
+        invisible(TRUE)
     }
-    fileType <- ifelse(test = isAURL(file), yes = "url", no = "file")
-    ## Handle edge case of cleaning Google Sheets URL.
-    if (identical(fileType, "url")) {
-        file <- sub(pattern = "\\#.+$", replacement = "", x = file)
-    }
-    alert(sprintf(
-        "Importing {.%s %s} using {.pkg %s}::{.fun %s}.",
-        fileType, file,
-        whatPkg, whatFun
-    ))
-    invisible(TRUE)
-}
 
 
 
@@ -306,101 +307,102 @@ NULL
 #'
 #' @note Updated 2022-05-12.
 #' @noRd
-.formatToFileClass <- function(format) {
-    class <- switch(
-        EXPR = sub(
-            pattern = compressExtPattern,
-            replacement = "",
-            x = tolower(format),
-            fixed = FALSE,
-            ignore.case = FALSE
-        ),
-        "arff" = "RioHandoff",
-        "bash" = "Lines",
-        "bcbio-counts" = "BcbioCounts",
-        "bed" = "RtracklayerHandoff",
-        "bed15" = "RtracklayerHandoff",
-        "bedgraph" = "RtracklayerHandoff",
-        "bedpe" = "RtracklayerHandoff",
-        "bigwig" = "RtracklayerHandoff",
-        "broadpeak" = "RtracklayerHandoff",
-        "bw" = "RtracklayerHandoff",
-        "counts" = "BcbioCounts",
-        "csv" = "CSV",
-        "dbf" = "RioHandoff",
-        "dif" = "RioHandoff",
-        "dta" = "RioHandoff",
-        "excel" = "Excel",
-        "fa" = "FASTA",
-        "fasta" = "FASTA",
-        "fastq" = "FASTQ",
-        "fq" = "FASTQ",
-        "fwf" = "RioHandoff",
-        "gff" = "RtracklayerHandoff",
-        "gff1" = "RtracklayerHandoff",
-        "gff2" = "RtracklayerHandoff",
-        "gff3" = "RtracklayerHandoff",
-        "gmt" = "GMT",
-        "gmx" = "GMX",
-        "grp" = "GRP",
-        "gsheet" = "RioHandoff",
-        "gtf" = "RtracklayerHandoff",
-        "json" = "JSON",
-        "lines" = "Lines",
-        "log" = "Lines",
-        "mat" = "RioHandoff",
-        "md" = "Lines",
-        "mtp" = "RioHandoff",
-        "mtx" = "MTX",
-        "narrowpeak" = "RtracklayerHandoff",
-        "obo" = "OBO",
-        "ods" = "RioHandoff",
-        "por" = "RioHandoff",
-        "psv" = "RioHandoff",
-        "py" = "Lines",
-        "pzfx" = "PZFX",
-        "r" = "Lines",
-        "rda" = "RData",
-        "rdata" = "RData",
-        "rds" = "RDS",
-        "rec" = "RioHandoff",
-        "rio" = "RioHandoff",
-        "rmd" = "Lines",
-        "rtracklayer" = "RtracklayerHandoff",
-        "sas7bdat" = "RioHandoff",
-        "sav" = "RioHandoff",
-        "sh" = "Lines",
-        "syd" = "RioHandoff",
-        "table" = "Table",
-        "txt" = {
+.formatToFileClass <-
+    function(format) {
+        class <- switch(
+            EXPR = sub(
+                pattern = compressExtPattern,
+                replacement = "",
+                x = tolower(format),
+                fixed = FALSE,
+                ignore.case = FALSE
+            ),
+            "arff" = "RioHandoff",
+            "bash" = "Lines",
+            "bcbio-counts" = "BcbioCounts",
+            "bed" = "RtracklayerHandoff",
+            "bed15" = "RtracklayerHandoff",
+            "bedgraph" = "RtracklayerHandoff",
+            "bedpe" = "RtracklayerHandoff",
+            "bigwig" = "RtracklayerHandoff",
+            "broadpeak" = "RtracklayerHandoff",
+            "bw" = "RtracklayerHandoff",
+            "counts" = "BcbioCounts",
+            "csv" = "CSV",
+            "dbf" = "RioHandoff",
+            "dif" = "RioHandoff",
+            "dta" = "RioHandoff",
+            "excel" = "Excel",
+            "fa" = "FASTA",
+            "fasta" = "FASTA",
+            "fastq" = "FASTQ",
+            "fq" = "FASTQ",
+            "fwf" = "RioHandoff",
+            "gff" = "RtracklayerHandoff",
+            "gff1" = "RtracklayerHandoff",
+            "gff2" = "RtracklayerHandoff",
+            "gff3" = "RtracklayerHandoff",
+            "gmt" = "GMT",
+            "gmx" = "GMX",
+            "grp" = "GRP",
+            "gsheet" = "RioHandoff",
+            "gtf" = "RtracklayerHandoff",
+            "json" = "JSON",
+            "lines" = "Lines",
+            "log" = "Lines",
+            "mat" = "RioHandoff",
+            "md" = "Lines",
+            "mtp" = "RioHandoff",
+            "mtx" = "MTX",
+            "narrowpeak" = "RtracklayerHandoff",
+            "obo" = "OBO",
+            "ods" = "RioHandoff",
+            "por" = "RioHandoff",
+            "psv" = "RioHandoff",
+            "py" = "Lines",
+            "pzfx" = "PZFX",
+            "r" = "Lines",
+            "rda" = "RData",
+            "rdata" = "RData",
+            "rds" = "RDS",
+            "rec" = "RioHandoff",
+            "rio" = "RioHandoff",
+            "rmd" = "Lines",
+            "rtracklayer" = "RtracklayerHandoff",
+            "sas7bdat" = "RioHandoff",
+            "sav" = "RioHandoff",
+            "sh" = "Lines",
+            "syd" = "RioHandoff",
+            "table" = "Table",
+            "txt" = {
+                abort(sprintf(
+                    fmt = paste(
+                        "Automatic import of {.var %s} file is not supported.",
+                        "Specify using {.arg %s} (e.g. {.var %s}, {.var %s}).",
+                        sep = "\n"
+                    ),
+                    "txt",
+                    "format",
+                    "lines", "table"
+                ))
+            },
+            "tsv" = "TSV",
+            "wig" = "RtracklayerHandoff",
+            "xls" = "Excel",
+            "xlsb" = "Excel",
+            "xlsx" = "Excel",
+            "xpt" = "RioHandoff",
+            "yaml" = "YAML",
+            "yml" = "YAML",
+            "zsh" = "Lines",
             abort(sprintf(
-                fmt = paste(
-                    "Automatic import of {.var %s} file is not supported.",
-                    "Specify using {.arg %s} (e.g. {.var %s}, {.var %s}).",
-                    sep = "\n"
-                ),
-                "txt",
-                "format",
-                "lines", "table"
+                "{.pkg %s} does not support {.var %s} extension.",
+                .pkgName, format
             ))
-        },
-        "tsv" = "TSV",
-        "wig" = "RtracklayerHandoff",
-        "xls" = "Excel",
-        "xlsb" = "Excel",
-        "xlsx" = "Excel",
-        "xpt" = "RioHandoff",
-        "yaml" = "YAML",
-        "yml" = "YAML",
-        "zsh" = "Lines",
-        abort(sprintf(
-            "{.pkg %s} does not support {.var %s} extension.",
-            .pkgName, format
-        ))
-    )
-    class <- paste0(class, "File")
-    class
-}
+        )
+        class <- paste0(class, "File")
+        class
+    }
 
 
 
@@ -415,16 +417,17 @@ NULL
 #' Package name.
 #'
 #' @return `function`.
-.getFunction <- function(f, pkg) {
-    assert(
-        isString(f),
-        isString(pkg),
-        requireNamespaces(pkg)
-    )
-    x <- get(x = f, envir = asNamespace(pkg), inherits = TRUE)
-    assert(is.function(x))
-    x
-}
+.getFunction <-
+    function(f, pkg) {
+        assert(
+            isString(f),
+            isString(pkg),
+            requireNamespaces(pkg)
+        )
+        x <- get(x = f, envir = asNamespace(pkg), inherits = TRUE)
+        assert(is.function(x))
+        x
+    }
 
 
 
@@ -432,21 +435,22 @@ NULL
 #'
 #' @note Updated 2021-09-25.
 #' @noRd
-.importMTXSidecar <- function(file, quiet) {
-    assert(
-        isString(file),
-        isFlag(quiet)
-    )
-    if (isFALSE(quiet)) {
-        alert(sprintf("Importing sidecar {.file %s}.", file))
+.importMTXSidecar <-
+    function(file, quiet) {
+        assert(
+            isString(file),
+            isFlag(quiet)
+        )
+        if (isFALSE(quiet)) {
+            alert(sprintf("Importing sidecar {.file %s}.", file))
+        }
+        object <- import(
+            con = as.character(file),
+            format = "lines",
+            quiet = quiet
+        )
+        object
     }
-    object <- import(
-        con = as.character(file),
-        format = "lines",
-        quiet = quiet
-    )
-    object
-}
 
 
 
@@ -573,118 +577,119 @@ NULL
 #'
 #' @note Updated 2021-09-24.
 #' @noRd
-.returnImport <- function(object,
-                          con,
-                          rownames = FALSE,
-                          rownameCol = NULL,
-                          colnames = FALSE,
-                          makeNames = FALSE,
-                          metadata = FALSE,
-                          whatPkg = NULL,
-                          whatFun = NULL,
-                          quiet = getOption(
-                              x = "acid.quiet",
-                              default = FALSE
-                          )) {
-    validObject(object)
-    assert(
-        is(con, "PipetteFile"),
-        isFlag(rownames),
-        isScalar(rownameCol) || is.null(rownameCol),
-        isFlag(colnames) || isCharacter(colnames),
-        is.function(makeNames) ||
-            is.null(makeNames) ||
-            isFALSE(makeNames),
-        isFlag(metadata),
-        isString(whatPkg, nullOK = TRUE),
-        isString(whatFun, nullOK = TRUE),
-        isFlag(quiet)
-    )
-    file <- attr(x = con, which = "origResource")
-    if (is.null(file)) {
-        file <- resource(con)
-    }
-    if (!is.null(rownameCol)) {
-        rownames <- TRUE
-    }
-    ## Check that manual column names are correct.
-    if (isCharacter(colnames)) {
-        assert(identical(colnames(object), colnames)) # nocov
-    }
-    ## Attempt to set row names automatically for data frames, when applicable.
-    if (
-        is.data.frame(object) &&
-            isTRUE(rownames) &&
-            !hasRownames(object)
-    ) {
-        if (is.null(rownameCol)) {
-            rownameCol <- matchRownameColumn(object)
+.returnImport <-
+    function(object,
+             con,
+             rownames = FALSE,
+             rownameCol = NULL,
+             colnames = FALSE,
+             makeNames = FALSE,
+             metadata = FALSE,
+             whatPkg = NULL,
+             whatFun = NULL,
+             quiet = getOption(
+                 x = "acid.quiet",
+                 default = FALSE
+             )) {
+        validObject(object)
+        assert(
+            is(con, "PipetteFile"),
+            isFlag(rownames),
+            isScalar(rownameCol) || is.null(rownameCol),
+            isFlag(colnames) || isCharacter(colnames),
+            is.function(makeNames) ||
+                is.null(makeNames) ||
+                isFALSE(makeNames),
+            isFlag(metadata),
+            isString(whatPkg, nullOK = TRUE),
+            isString(whatFun, nullOK = TRUE),
+            isFlag(quiet)
+        )
+        file <- attr(x = con, which = "origResource")
+        if (is.null(file)) {
+            file <- resource(con)
         }
         if (!is.null(rownameCol)) {
-            assert(isScalar(rownameCol))
-            if (!isString(rownameCol)) {
-                rownameCol <- colnames(object)[[rownameCol]] # nocov
+            rownames <- TRUE
+        }
+        ## Check that manual column names are correct.
+        if (isCharacter(colnames)) {
+            assert(identical(colnames(object), colnames)) # nocov
+        }
+        ## Attempt to set row names automatically for data frames.
+        if (
+            is.data.frame(object) &&
+            isTRUE(rownames) &&
+            !hasRownames(object)
+        ) {
+            if (is.null(rownameCol)) {
+                rownameCol <- matchRownameColumn(object)
             }
-            assert(
-                isString(rownameCol),
-                isSubset(rownameCol, colnames(object))
-            )
-            if (isFALSE(quiet)) {
-                alertInfo(sprintf(
-                    "Setting row names from {.var %s} column.",
-                    rownameCol
+            if (!is.null(rownameCol)) {
+                assert(isScalar(rownameCol))
+                if (!isString(rownameCol)) {
+                    rownameCol <- colnames(object)[[rownameCol]] # nocov
+                }
+                assert(
+                    isString(rownameCol),
+                    isSubset(rownameCol, colnames(object))
+                )
+                if (isFALSE(quiet)) {
+                    alertInfo(sprintf(
+                        "Setting row names from {.var %s} column.",
+                        rownameCol
+                    ))
+                }
+                rownames(object) <- object[[rownameCol]]
+                object[[rownameCol]] <- NULL
+            }
+        }
+        if (hasRownames(object)) {
+            assert(hasNoDuplicates(rownames(object)))
+        }
+        if (hasNames(object)) {
+            if (isTRUE(any(duplicated(names(object))))) {
+                ## nocov start
+                dupes <- sort(names(object)[duplicated(names(object))])
+                alertWarning(sprintf(
+                    "Duplicate names: {.var %s}.",
+                    toInlineString(dupes, n = 5L)
                 ))
+                ## nocov end
             }
-            rownames(object) <- object[[rownameCol]]
-            object[[rownameCol]] <- NULL
-        }
-    }
-    if (hasRownames(object)) {
-        assert(hasNoDuplicates(rownames(object)))
-    }
-    if (hasNames(object)) {
-        if (isTRUE(any(duplicated(names(object))))) {
-            ## nocov start
-            dupes <- sort(names(object)[duplicated(names(object))])
-            alertWarning(sprintf(
-                "Duplicate names: {.var %s}.",
-                toInlineString(dupes, n = 5L)
-            ))
-            ## nocov end
-        }
-        ## Ensure names are syntactically valid, when applicable.
-        if (is.function(makeNames)) {
-            ## Harden against any object classes that don't support names
-            ## assignment, to prevent unwanted error on this step.
-            tryCatch(
-                expr = {
-                    names(object) <- makeNames(names(object))
-                },
-                error = function(e) NULL
-            )
-            if (isFALSE(hasValidNames(object))) {
-                alertWarning("Invalid names detected.") # nocov
+            ## Ensure names are syntactically valid, when applicable.
+            if (is.function(makeNames)) {
+                ## Harden against any object classes that don't support names
+                ## assignment, to prevent unwanted error on this step.
+                tryCatch(
+                    expr = {
+                        names(object) <- makeNames(names(object))
+                    },
+                    error = function(e) NULL
+                )
+                if (isFALSE(hasValidNames(object))) {
+                    alertWarning("Invalid names detected.") # nocov
+                }
             }
+            assert(hasNoDuplicates(names(object)))
         }
-        assert(hasNoDuplicates(names(object)))
+        if (isTRUE(metadata)) {
+            metadata2(object, which = "import") <-
+                SimpleList(
+                    "date" = Sys.Date(),
+                    "file" = ifelse(
+                        test = isTRUE(isAFile(file)),
+                        yes = realpath(file),
+                        no = file
+                    ),
+                    "importerName" = paste0(whatPkg, "::", whatFun),
+                    "importerVersion" = packageVersion(whatPkg),
+                    "packageName" = .pkgName,
+                    "packageVersion" = .pkgVersion
+                )
+        }
+        object
     }
-    if (isTRUE(metadata)) {
-        metadata2(object, which = "import") <-
-            SimpleList(
-                "date" = Sys.Date(),
-                "file" = ifelse(
-                    test = isTRUE(isAFile(file)),
-                    yes = realpath(file),
-                    no = file
-                ),
-                "importerName" = paste0(whatPkg, "::", whatFun),
-                "importerVersion" = packageVersion(whatPkg),
-                "packageName" = .pkgName,
-                "packageVersion" = .pkgVersion
-            )
-    }
-    object
-}
 
 
 
@@ -1912,7 +1917,7 @@ NULL
 
 
 
-
+## FIXME Need to add an import message here.
 
 #' Import an open biomedical ontologies file (`.obo`)
 #'
@@ -1927,19 +1932,27 @@ NULL
                  default = FALSE
              )) {
         assert(
-            requireNamespaces("ontologyIndex"),
             is.null(format),
             is.null(text),
             isFlag(quiet)
         )
-        ## Alternatively can use `get_OBO` here.
         file <- resource(con)
-        relations <- ontologyIndex::get_relation_names(file = file)
-        object <- ontologyIndex::get_ontology(
-            file = file,
-            propagate_relationships = relations,
-            extract_tags = "everything" # or "minimal".
+        whatPkg <- "ontologyIndex"
+        whatFun <- "get_ontology"
+        if (isFALSE(quiet)) {
+            .alertImport(
+                con = con,
+                whatPkg = whatPkg,
+                whatFun = whatFun
+            )
+        }
+        args <- list(
+            "file" = file,
+            "propagate_relationships" = "is_a",
+            "extract_tags" = "everything"
         )
+        what <- .getFunction(f = whatFun, pkg = whatPkg)
+        object <- do.call(what = what, args = args)
         assert(is(object, "ontology_index"))
         object
     }
