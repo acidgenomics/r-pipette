@@ -1917,8 +1917,6 @@ NULL
 
 
 
-## FIXME Need to add an import message here.
-
 #' Import an open biomedical ontologies file (`.obo`)
 #'
 #' @note Updated 2022-05-12.
