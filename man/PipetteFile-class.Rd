@@ -17,6 +17,7 @@
 \alias{GRPFile-class}
 \alias{JSONFile-class}
 \alias{MTXFile-class}
+\alias{OBOFile-class}
 \alias{PZFXFile-class}
 \alias{RDataFile-class}
 \alias{RDSFile-class}
@@ -108,6 +109,8 @@ File extension group supporting:
 
 \item \code{MTXFile-class}: MatrixMarket exchange file (MTX).
 
+\item \code{OBOFile-class}: Open Biomedical Ontologies file (OBO).
+
 \item \code{PZFXFile-class}: GraphPad Prism file (PZFX).
 
 \item \code{RDataFile-class}: R Data file containing multiple objects (RData/RDA).
@@ -122,10 +125,11 @@ File extension group supporting:
 }}
 
 \note{
-Updated 2021-09-24.
+Updated 2022-05-12.
 }
 \seealso{
 \itemize{
 \item \code{getGeneric}.
+\item \code{BiocIO::FileForFormat}.
 }
 }

@@ -78,6 +78,10 @@
 #' These file formats are intentionally not supported:
 #' `DOC`, `DOCX`, `PDF`, `PPT`, `PPTX`.
 #'
+#' @section Duplicate methods:
+#'
+#' `GMTFile` and `OBOFile` are also supported by BiocSet package.
+#'
 #' @inheritParams AcidRoxygen::params
 #'
 #' @param con `character(1)`, `connection`, or `missing`.
@@ -300,102 +304,101 @@ NULL
 
 #' Map file format extension to corresponding S4 file class
 #'
-#' @note Updated 2022-05-03.
+#' @note Updated 2022-05-12.
 #' @noRd
 .formatToFileClass <- function(format) {
-    format <- sub(
-        pattern = compressExtPattern,
-        replacement = "",
-        x = tolower(format),
-        fixed = FALSE,
-        ignore.case = FALSE
-    )
-    if (identical(format, "txt")) {
-        ## nocov start
+    class <- switch(
+        EXPR = sub(
+            pattern = compressExtPattern,
+            replacement = "",
+            x = tolower(format),
+            fixed = FALSE,
+            ignore.case = FALSE
+        ),
+        "arff" = "RioHandoff",
+        "bash" = "Lines",
+        "bcbio-counts" = "BcbioCounts",
+        "bed" = "RtracklayerHandoff",
+        "bed15" = "RtracklayerHandoff",
+        "bedgraph" = "RtracklayerHandoff",
+        "bedpe" = "RtracklayerHandoff",
+        "bigwig" = "RtracklayerHandoff",
+        "broadpeak" = "RtracklayerHandoff",
+        "bw" = "RtracklayerHandoff",
+        "counts" = "BcbioCounts",
+        "csv" = "CSV",
+        "dbf" = "RioHandoff",
+        "dif" = "RioHandoff",
+        "dta" = "RioHandoff",
+        "excel" = "Excel",
+        "fa" = "FASTA",
+        "fasta" = "FASTA",
+        "fastq" = "FASTQ",
+        "fq" = "FASTQ",
+        "fwf" = "RioHandoff",
+        "gff" = "RtracklayerHandoff",
+        "gff1" = "RtracklayerHandoff",
+        "gff2" = "RtracklayerHandoff",
+        "gff3" = "RtracklayerHandoff",
+        "gmt" = "GMT",
+        "gmx" = "GMX",
+        "grp" = "GRP",
+        "gsheet" = "RioHandoff",
+        "gtf" = "RtracklayerHandoff",
+        "json" = "JSON",
+        "lines" = "Lines",
+        "log" = "Lines",
+        "mat" = "RioHandoff",
+        "md" = "Lines",
+        "mtp" = "RioHandoff",
+        "mtx" = "MTX",
+        "narrowpeak" = "RtracklayerHandoff",
+        "obo" = "OBO",
+        "ods" = "RioHandoff",
+        "por" = "RioHandoff",
+        "psv" = "RioHandoff",
+        "py" = "Lines",
+        "pzfx" = "PZFX",
+        "r" = "Lines",
+        "rda" = "RData",
+        "rdata" = "RData",
+        "rds" = "RDS",
+        "rec" = "RioHandoff",
+        "rio" = "RioHandoff",
+        "rmd" = "Lines",
+        "rtracklayer" = "RtracklayerHandoff",
+        "sas7bdat" = "RioHandoff",
+        "sav" = "RioHandoff",
+        "sh" = "Lines",
+        "syd" = "RioHandoff",
+        "table" = "Table",
+        "txt" = {
+            abort(sprintf(
+                fmt = paste(
+                    "Automatic import of {.var %s} file is not supported.",
+                    "Specify using {.arg %s} (e.g. {.var %s}, {.var %s}).",
+                    sep = "\n"
+                ),
+                "txt",
+                "format",
+                "lines", "table"
+            ))
+        },
+        "tsv" = "TSV",
+        "wig" = "RtracklayerHandoff",
+        "xls" = "Excel",
+        "xlsb" = "Excel",
+        "xlsx" = "Excel",
+        "xpt" = "RioHandoff",
+        "yaml" = "YAML",
+        "yml" = "YAML",
+        "zsh" = "Lines",
         abort(sprintf(
-            fmt = paste(
-                "Automatic import of {.var %s} file is not supported.",
-                "Specify using {.arg %s} (e.g. {.var %s}, {.var %s}).",
-                sep = "\n"
-            ),
-            "txt",
-            "format",
-            "lines", "table"
+            "{.pkg %s} does not support {.var %s} extension.",
+            .pkgName, format
         ))
-        ## nocov end
-    }
-    dict <- list(
-        "arff" = "RioHandoffFile",
-        "bash" = "LinesFile",
-        "bcbio-counts" = "BcbioCountsFile",
-        "bed" = "RtracklayerHandoffFile",
-        "bed15" = "RtracklayerHandoffFile",
-        "bedgraph" = "RtracklayerHandoffFile",
-        "bedpe" = "RtracklayerHandoffFile",
-        "bigwig" = "RtracklayerHandoffFile",
-        "broadpeak" = "RtracklayerHandoffFile",
-        "bw" = "RtracklayerHandoffFile",
-        "counts" = "BcbioCountsFile",
-        "csv" = "CSVFile",
-        "dbf" = "RioHandoffFile",
-        "dif" = "RioHandoffFile",
-        "dta" = "RioHandoffFile",
-        "excel" = "ExcelFile",
-        "fa" = "FASTAFile",
-        "fasta" = "FASTAFile",
-        "fastq" = "FASTQFile",
-        "fq" = "FASTQFile",
-        "fwf" = "RioHandoffFile",
-        "gff" = "RtracklayerHandoffFile",
-        "gff1" = "RtracklayerHandoffFile",
-        "gff2" = "RtracklayerHandoffFile",
-        "gff3" = "RtracklayerHandoffFile",
-        "gmt" = "GMTFile",
-        "gmx" = "GMXFile",
-        "grp" = "GRPFile",
-        "gsheet" = "RioHandoffFile",
-        "gtf" = "RtracklayerHandoffFile",
-        "json" = "JSONFile",
-        "lines" = "LinesFile",
-        "log" = "LinesFile",
-        "mat" = "RioHandoffFile",
-        "md" = "LinesFile",
-        "mtp" = "RioHandoffFile",
-        "mtx" = "MTXFile",
-        "narrowpeak" = "RtracklayerHandoffFile",
-        "ods" = "RioHandoffFile",
-        "por" = "RioHandoffFile",
-        "psv" = "RioHandoffFile",
-        "py" = "LinesFile",
-        "pzfx" = "PZFXFile",
-        "r" = "LinesFile",
-        "rda" = "RDataFile",
-        "rdata" = "RDataFile",
-        "rds" = "RDSFile",
-        "rec" = "RioHandoffFile",
-        "rio" = "RioHandoffFile",
-        "rmd" = "LinesFile",
-        "rtracklayer" = "RtracklayerHandoffFile",
-        "sas7bdat" = "RioHandoffFile",
-        "sav" = "RioHandoffFile",
-        "sh" = "LinesFile",
-        "syd" = "RioHandoffFile",
-        "table" = "TableFile",
-        "tsv" = "TSVFile",
-        "wig" = "RtracklayerHandoffFile",
-        "xls" = "ExcelFile",
-        "xlsb" = "ExcelFile",
-        "xlsx" = "ExcelFile",
-        "xpt" = "RioHandoffFile",
-        "yaml" = "YAMLFile",
-        "yml" = "YAMLFile",
-        "zsh" = "LinesFile"
     )
-    assert(
-        isSubset(format, names(dict)),
-        msg = sprintf("{.var %s} extension is not supported.", format)
-    )
-    class <- dict[[format]]
+    class <- paste0(class, "File")
     class
 }
 
@@ -1909,6 +1912,40 @@ NULL
 
 
 
+
+
+#' Import an open biomedical ontologies file (`.obo`)
+#'
+#' @note Updated 2022-05-12.
+#' @noRd
+`import,OBOFile` <- # nolint
+    function(con,
+             format, # NULL
+             text, # NULL
+             quiet = getOption(
+                 x = "acid.quiet",
+                 default = FALSE
+             )) {
+        assert(
+            requireNamespaces("ontologyIndex"),
+            is.null(format),
+            is.null(text),
+            isFlag(quiet)
+        )
+        ## Alternatively can use `get_OBO` here.
+        file <- resource(con)
+        relations <- ontologyIndex::get_relation_names(file = file)
+        object <- ontologyIndex::get_ontology(
+            file = file,
+            propagate_relationships = relations,
+            extract_tags = "everything" # or "minimal".
+        )
+        assert(is(object, "ontology_index"))
+        object
+    }
+
+
+
 ## Handoff methods =============================================================
 
 #' Import a file using `rio::import()`
@@ -2210,6 +2247,18 @@ setMethod(
         text = "missingOrNULL"
     ),
     definition = `import,MTXFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(
+        con = "OBOFile",
+        format = "missingOrNULL",
+        text = "missingOrNULL"
+    ),
+    definition = `import,OBOFile`
 )
 
 #' @rdname import

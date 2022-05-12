@@ -5,10 +5,11 @@
 #' Extends `BiocFile` defined in BiocIO package.
 #'
 #' @export
-#' @note Updated 2021-09-24.
+#' @note Updated 2022-05-12.
 #'
 #' @seealso
 #' - `getGeneric`.
+#' - `BiocIO::FileForFormat`.
 setClass(
     Class = "PipetteFile",
     contains = "BiocFile"
@@ -173,6 +174,14 @@ setClass(
 #' @export
 setClass(
     Class = "MTXFile",
+    contains = "PipetteFile"
+)
+
+#' @describeIn PipetteFile-class
+#' Open Biomedical Ontologies file (OBO).
+#' @export
+setClass(
+    Class = "OBOFile",
     contains = "PipetteFile"
 )
 

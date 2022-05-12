@@ -1,6 +1,8 @@
 #+TITLE: pipette
 #+STARTUP: content
 * Development
+** TODO Consider reworking GMT file import using BiocSet.
+** TODO Add support for OBO file (e.g. Cellosaurus) using BiocSet.
 ** TODO `import()`: Check that we have a `tryCatch()` call for invalid YAML that will stop on warnings.
 ** TODO Do we need to improve sanitization of BiocFileCache local file names
    for complex URLs?
