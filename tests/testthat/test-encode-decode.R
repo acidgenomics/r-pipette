@@ -3,7 +3,7 @@ test_that("DataFrame", {
     x <- encode(x)
     expect_s4_class(x[[1L]], "Rle")
     y <- decode(x)
-    expect_is(y[[1L]], "factor")
+    expect_s3_class(y[[1L]], "factor")
 })
 
 test_that("GenomicRanges", {

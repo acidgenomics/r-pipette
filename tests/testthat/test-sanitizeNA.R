@@ -1,5 +1,5 @@
 test_that("sanitizeNA", {
-    mapply(
+    Map(
         object = list(
             "character" = c(1L, "x", "", "NA"),
             "data.frame" = data.frame(
@@ -34,13 +34,12 @@ test_that("sanitizeNA", {
                 "b" = c(NA, "bar")
             )
         ),
-        FUN = function(object, expected) {
+        f = function(object, expected) {
             expect_identical(
                 object = sanitizeNA(object),
                 expected = expected
             )
-        },
-        SIMPLIFY = FALSE
+        }
     )
 })
 
@@ -71,7 +70,7 @@ test_that("Named factor", {
     expect_false(anyNA(x))
     expect_s3_class(x, "factor")
     y <- sanitizeNA(x)
-    expect_identical(names(x), names(y))
+    expect_named(x, names(y))
     expect_true(anyNA(y))
     expect_s3_class(y, "factor")
 })

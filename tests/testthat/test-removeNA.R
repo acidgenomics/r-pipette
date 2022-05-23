@@ -1,7 +1,7 @@
 ## Support for vectors (using `stats::na.omit`).
 ## This will return structure attributes about original size, with class omit.
 test_that("removeNA", {
-    mapply(
+    Map(
         object = list(
             "character" = c("hello", "world", NA),
             "numeric" = c(1L, 2L, NA),
@@ -27,12 +27,11 @@ test_that("removeNA", {
                 row.names = c("x", "z")
             )
         ),
-        FUN = function(object, expected) {
+        f = function(object, expected) {
             expect_identical(
                 object = removeNA(object),
                 expected = expected
             )
-        },
-        SIMPLIFY = FALSE
+        }
     )
 })

@@ -125,7 +125,6 @@ for (format in .exportFormatChoices[["delim"]]) {
                     testdir <- file.path(tempdir(), "export")
                     unlink(testdir, recursive = TRUE)
                     object <- objects[[class]]
-                    expect_is(object, class)
                     file <- export(
                         object = object,
                         format = format,
