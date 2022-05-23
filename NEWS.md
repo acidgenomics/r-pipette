@@ -1,3 +1,9 @@
+# pipette 0.9.2 (2022-05-23)
+
+## Minor changes
+
+- Updated lintr checks and testthat unit tests.
+
 # pipette 0.9.1 (2022-05-12)
 
 ## Minor changes
