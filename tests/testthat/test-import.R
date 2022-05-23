@@ -29,7 +29,7 @@ for (engine in .engines) {
                 con = con,
                 engine = engine
             )
-            expect_is(object, "character")
+            expect_type(object, "character")
         }
     )
     test_that(
@@ -318,11 +318,11 @@ for (engine in .engines) {
                     engine = engine,
                     metadata = TRUE
                 )
-                expect_is(object, "data.frame")
+                expect_s3_class(object, "data.frame")
                 expect_true(hasRownames(object))
-                expect_is(
+                expect_type(
                     object = attributes(object)[["import"]][["file"]],
-                    class = "character"
+                    type = "character"
                 )
                 expect_match(
                     object = attributes(object)[["import"]][["importerName"]],
@@ -341,7 +341,7 @@ for (engine in .engines) {
 
 test_that("Deprecated 'file' argument", {
     object <- import(file = file.path("cache", "example.csv"))
-    expect_is(object, "data.frame")
+    expect_s3_class(object, "data.frame")
 })
 
 test_that("GFF3", {
@@ -477,7 +477,7 @@ test_that("Error on RDA containing multiple objects.", {
 })
 
 test_that("MSigDB hallmark", {
-    mapply(
+    Map(
         file = c(
             symbols = "h.all.v6.2.symbols.gmt",
             entrez = "h.all.v6.2.entrez.gmt"
@@ -486,18 +486,17 @@ test_that("MSigDB hallmark", {
             symbols = c("JUNB", "CXCL2", "ATF3", "NFKBIA", "TNFAIP3", "PTGS2"),
             entrez = c("3726", "2920", "467", "4792", "7128", "5743")
         ),
-        FUN = function(file, ids) {
+        f = function(file, ids) {
             file <- file.path("cache", file)
             object <- import(file)
-            expect_identical(length(object), 50L)
+            expect_length(object, 50L)
             expect_identical(
                 object = names(object)[[1L]],
                 expected = "HALLMARK_TNFA_SIGNALING_VIA_NFKB"
             )
-            expect_identical(length(object[[1L]]), 200L)
+            expect_length(object[[1L]], 200L)
             expect_identical(head(object[[1L]]), ids)
-        },
-        SIMPLIFY = FALSE
+        }
     )
 })
 
@@ -509,8 +508,8 @@ test_that("T_CELL_ACTIVATION", {
     )) {
         file <- file.path("cache", file)
         object <- import(file)
-        expect_identical(names(object), "T_CELL_ACTIVATION")
-        expect_identical(length(object[[1L]]), 44L)
+        expect_named(object, "T_CELL_ACTIVATION")
+        expect_length(object[[1L]], 44L)
         expect_identical(
             head(object[[1L]]),
             c("CADM1", "CD1D", "CD2", "CD24", "CD276", "CD28")
@@ -522,7 +521,7 @@ test_that("JSON/YAML", {
     for (ext in c("json", "yml")) {
         file <- file.path("cache", paste0("example.", ext))
         object <- import(file)
-        expect_is(object, "list")
+        expect_type(object, "list")
     }
 })
 
@@ -531,7 +530,7 @@ test_that("'rio::import()', e.g. Stata DTA file", {
     skip_if_not_installed(pkg = "rio")
     file <- system.file("examples/iris.dta", package = "haven")
     x <- import(file)
-    expect_is(x, "data.frame")
+    expect_s3_class(x, "data.frame")
     expect_identical(
         colnames(x),
         c("sepallength", "sepalwidth", "petallength", "petalwidth", "species")
@@ -542,7 +541,7 @@ test_that("OBO", {
     skip_if_not_installed(pkg = "ontologyIndex")
     file <- file.path("cache", "example.obo")
     x <- import(file)
-    expect_is(x, "ontology_index")
+    expect_s3_class(x, "ontology_index")
     expect_length(x, 25L)
 })
 
@@ -633,8 +632,7 @@ test_that("bcbio counts", {
         con = file.path("cache", "example.counts"),
         metadata = TRUE
     )
-    expect_is(object, "matrix")
-    expect_true(is.integer(object))
+    expect_type(object, "integer")
     expect_identical(
         object = head(rownames(object), n = 5L),
         expected = c(
@@ -667,15 +665,15 @@ test_that("FASTA", {
         moleculeType = "DNA",
         metadata = TRUE
     )
-    expect_is(object, "DNAStringSet")
+    expect_s4_class(object, "DNAStringSet")
     expect_identical(
         object = names(object)[[1L]],
         expected = "ENST00000456328.2"
     )
     expect_length(object[[1L]], 1657L)
-    expect_is(metadata(object)[["attributes"]], "SimpleList")
-    expect_identical(
-        object = names(object),
+    expect_s4_class(metadata(object)[["attributes"]], "SimpleList")
+    expect_named(
+        object = object,
         expected = names(metadata(object)[["attributes"]])
     )
 })
@@ -687,7 +685,7 @@ test_that("FASTQ", {
         moleculeType = "DNA",
         metadata = TRUE
     )
-    expect_is(object, "DNAStringSet")
+    expect_s4_class(object, "DNAStringSet")
     expect_identical(
         object = names(object)[[1L]],
         expected = "NS500233:572:H25VKBGX2:1:11101:16195:1041 3:N:0:1"
@@ -705,5 +703,5 @@ test_that("Google Sheets", {
         protocol = "https"
     )
     object <- import(url)
-    expect_is(object, "data.frame")
+    expect_s3_class(object, "data.frame")
 })

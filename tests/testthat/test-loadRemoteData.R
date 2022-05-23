@@ -5,10 +5,10 @@ test_that("loadRemoteData", {
     url <- paste(pipetteTestsURL, "example.rds", sep = "/")
     object <- loadRemoteData(url, envir = envir)
     ## Character matrix of loaded files.
-    expect_is(object, "character")
+    expect_type(object, "character")
     expect_identical(object, c(example = url))
     ## Check that the object loaded correctly.
-    expect_is(envir[["example"]], "DataFrame")
+    expect_s4_class(envir[["example"]], "DataFrame")
 })
 
 test_that("Overwrite mode", {

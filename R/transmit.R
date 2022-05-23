@@ -4,7 +4,7 @@
 #' FTP server. Also enables on-the-fly file renaming and compression.
 #'
 #' @export
-#' @note Updated 2022-05-03.
+#' @note Updated 2022-05-23.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @inheritParams saveData
@@ -156,8 +156,8 @@ transmit <-
             "Downloading %s.",
             toInlineString(basename(files), n = 10L, class = "file")
         ))
-        files <- mapply(
-            FUN = function(url, destfile, compress = FALSE) {
+        files <- Map(
+            f = function(url, destfile, compress = FALSE) {
                 download(url = url, destfile = destfile)
                 if (isTRUE(compress)) {
                     destfile <- compress(
@@ -171,9 +171,9 @@ transmit <-
             url = remotePaths,
             destfile = localPaths,
             MoreArgs = list(compress = compress),
-            SIMPLIFY = TRUE,
             USE.NAMES = FALSE
         )
+        files <- unlist(files, recursive = FALSE, use.names = FALSE)
         names(files) <- remoteFiles
         invisible(files)
     }

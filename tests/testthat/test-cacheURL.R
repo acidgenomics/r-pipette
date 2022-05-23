@@ -8,7 +8,7 @@ test_that("URL into BiocFileCache", {
         protocol = "none"
     )
     file <- cacheURL(url)
-    expect_is(file, "character")
+    expect_type(file, "character")
     expect_match(object = file, regexp = basename(url))
 })
 
