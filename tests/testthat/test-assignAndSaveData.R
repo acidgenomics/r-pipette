@@ -1,5 +1,3 @@
-context("assignAndSaveData")
-
 test_that("assignAndSaveData", {
     dir <- tempdir()
     file <- file.path(dir, "example.rds")

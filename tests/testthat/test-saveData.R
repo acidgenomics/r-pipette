@@ -1,5 +1,3 @@
-context("saveData")
-
 object1 <- "aaa"
 object2 <- "bbb"
 dir <- "example"

@@ -1,6 +1,4 @@
-context("as.DataFrame")
-
-test_that("list method", {
+test_that("list", {
     from <- list(
         "a" = list(c(1L, 2L), c(3L, 4L)),
         "b" = list(NULL, NULL)

@@ -648,7 +648,7 @@ NULL
             assert(hasNoDuplicates(rownames(object)))
         }
         if (hasNames(object)) {
-            if (isTRUE(any(duplicated(names(object))))) {
+            if (anyDuplicated(names(object)) > 0L) {
                 ## nocov start
                 dupes <- sort(names(object)[duplicated(names(object))])
                 alertWarning(sprintf(
@@ -1185,9 +1185,9 @@ NULL
             ".name_repair" = make.names
         )
         what <- .getFunction(f = whatFun, pkg = whatPkg)
-        options(warn = 2L)
+        options(warn = 2L) # nolint
         object <- do.call(what = what, args = args)
-        options(warn = warn)
+        options(warn = warn) # nolint
         object <- as.data.frame(
             x = object,
             make.names = FALSE,
