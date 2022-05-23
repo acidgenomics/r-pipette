@@ -125,8 +125,8 @@ saveData <-
         switch(
             EXPR = ext,
             "rds" = {
-                mapply(
-                    FUN = saveRDS,
+                Map(
+                    f = saveRDS,
                     object = objects,
                     file = files,
                     MoreArgs = list(
@@ -135,8 +135,8 @@ saveData <-
                 )
             },
             {
-                mapply(
-                    FUN = save,
+                Map(
+                    f = save,
                     list = names(files),
                     file = files,
                     MoreArgs = list(

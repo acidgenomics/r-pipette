@@ -8,7 +8,7 @@ test_that("RDS, overwrite mode", {
         envir = envir,
         overwrite = TRUE
     )
-    expect_identical(names(x), "new")
+    expect_named(x, "new")
     ## We're defaulting to global environment.
     expect_true(exists("new", envir = envir, inherits = FALSE))
     expect_error(
@@ -24,7 +24,7 @@ test_that("RDS, overwrite mode", {
 
 test_that("RDA", {
     x <- loadDataAsName(data = gr, dir = dir)
-    expect_identical(names(x), "data")
+    expect_named(x, "data")
 })
 
 test_that("Standard evaluation", {

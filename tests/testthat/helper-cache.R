@@ -43,8 +43,8 @@ files <- c(
     "single_cell_counts.mtx.gz.colnames",
     "single_cell_counts.mtx.gz.rownames"
 )
-mapply(
-    FUN = function(remoteDir, file, envir) {
+invisible(Map(
+    f = function(remoteDir, file, envir) {
         destfile <- file.path("cache", file)
         if (!file.exists(destfile)) {
             utils::download.file(
@@ -55,8 +55,8 @@ mapply(
     },
     file = files,
     MoreArgs = list(
-        remoteDir = pipetteTestsURL,
-        envir = environment()
+        "envir" = environment(),
+        "remoteDir" = pipetteTestsURL
     )
-)
+))
 rm(files)
