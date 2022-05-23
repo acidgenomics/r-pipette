@@ -1,5 +1,3 @@
-context("matchRownameColumn")
-
 test_that("NULL return", {
     df <- data.frame()
     expect_null(matchRownameColumn(df))

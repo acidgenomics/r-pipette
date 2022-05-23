@@ -55,7 +55,7 @@ NULL
                 ngettext(
                     n = length(drop),
                     msg1 = "column",
-                    msg2 = "columns",
+                    msg2 = "columns"
                 ),
                 toInlineString(drop, n = 10L)
             ))

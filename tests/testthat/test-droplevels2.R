@@ -1,5 +1,3 @@
-context("droplevels2")
-
 test_that("DataFrame", {
     x <- DataFrame(
         "aaa" = factor(

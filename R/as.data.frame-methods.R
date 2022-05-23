@@ -81,11 +81,11 @@ NULL
 ## Updated 2021-02-05.
 `as.data.frame,IntegerRanges` <- # nolint
     function(x,
-             row.names = NULL,
+             row.names = NULL, # nolint
              optional = FALSE,
              ...) {
         if (missing(row.names)) {
-            row.names <- names(x)
+            row.names <- names(x) # nolint
         }
         if (!is.null(names(x))) {
             names(x) <- NULL

@@ -1,5 +1,3 @@
-context("encode/decode")
-
 test_that("DataFrame", {
     x <- df
     x <- encode(x)

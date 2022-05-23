@@ -56,31 +56,31 @@ loadDataAsName <-
             x = tolower(basename(files))
         ))) {
             ## R data serialized: assign directly.
-            invisible(mapply(
+            invisible(Map(
                 name = names(files),
                 file = files,
-                FUN = function(name, file, envir) {
+                f = function(name, file, envir) {
                     data <- readRDS(file)
                     assign(x = name, value = data, envir = envir)
                 },
-                MoreArgs = list(envir = envir)
+                MoreArgs = list("envir" = envir)
             ))
         } else {
             ## R data: use safe loading.
             safe <- new.env()
-            invisible(mapply(
-                FUN = .loadRDA,
+            invisible(Map(
+                f = .loadRDA,
                 file = files,
                 MoreArgs = list(
-                    envir = safe,
+                    "envir" = safe,
                     ## Note that we're checking for overwrite above already.
-                    overwrite = FALSE
+                    "overwrite" = FALSE
                 )
             ))
             assert(areSetEqual(dots, ls(safe)))
             ## Now assign to the desired object names.
-            invisible(mapply(
-                FUN = function(from, to, safe, envir) {
+            invisible(Map(
+                f = function(from, to, safe, envir) {
                     assign(
                         x = to,
                         value = get(from, envir = safe, inherits = FALSE),
@@ -89,9 +89,7 @@ loadDataAsName <-
                 },
                 from = dots,
                 to = names(dots),
-                MoreArgs = list(safe = safe, envir = envir),
-                SIMPLIFY = FALSE,
-                USE.NAMES = FALSE
+                MoreArgs = list("safe" = safe, "envir" = envir)
             ))
         }
         invisible(files)

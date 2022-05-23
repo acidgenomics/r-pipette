@@ -1,5 +1,3 @@
-context("atomize")
-
 test_that("DataFrame", {
     object <- encode(df)
     expect_false(any(bapply(X = object, FUN = is.atomic)))

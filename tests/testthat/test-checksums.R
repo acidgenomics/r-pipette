@@ -1,5 +1,3 @@
-context("checksums")
-
 test_that("checksums", {
     file <- file.path("cache", "example.rds")
     for (fun in list(md5, sha256)) {
