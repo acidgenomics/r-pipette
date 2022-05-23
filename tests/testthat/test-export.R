@@ -1,5 +1,3 @@
-context("export : character")
-
 for (engine in .engines) {
     test_that(
         desc = paste("'append' argument", engine, sep = " : "),
@@ -108,10 +106,6 @@ for (engine in .engines) {
         )
     }
 }
-
-
-
-context("export : Delimited files")
 
 objects <- list(
     "DataFrame" = df,
@@ -241,10 +235,6 @@ test_that("Deprecated 'file' argument", {
     expect_true(file.exists(x))
     unlink(file, recursive = FALSE)
 })
-
-
-
-context("export : sparseMatrix")
 
 for (format in .exportFormatChoices[["Matrix"]]) {
     test_that(

@@ -1,5 +1,3 @@
-context("cacheURL")
-
 ## These tests can be a bit slow, since some of the files are large.
 ## But we want to make sure they work for important genomics files.
 

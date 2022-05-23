@@ -1,5 +1,3 @@
-context("removeNA")
-
 ## Support for vectors (using `stats::na.omit`).
 ## This will return structure attributes about original size, with class omit.
 test_that("removeNA", {

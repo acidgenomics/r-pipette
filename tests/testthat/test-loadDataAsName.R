@@ -1,5 +1,3 @@
-context("loadDataAsName")
-
 dir <- "cache"
 
 test_that("RDS, overwrite mode", {

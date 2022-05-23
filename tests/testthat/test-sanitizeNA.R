@@ -1,5 +1,3 @@
-context("sanitizeNA")
-
 test_that("sanitizeNA", {
     mapply(
         object = list(

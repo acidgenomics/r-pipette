@@ -31,7 +31,7 @@ NULL
 
 ## Updated 2022-02-07.
 `as.DataFrame,list` <- # nolint
-    function(x, row.names = NULL) {
+    function(x, row.names = NULL) { # nolint
         if (hasLength(x)) {
             assert(
                 hasLength(x[[1L]]),

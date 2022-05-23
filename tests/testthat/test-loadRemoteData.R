@@ -1,5 +1,3 @@
-context("loadRemoteData")
-
 skip_if_not(hasInternet())
 
 test_that("loadRemoteData", {

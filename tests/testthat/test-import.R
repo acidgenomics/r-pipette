@@ -1,5 +1,3 @@
-context("import : Invalid input")
-
 test_that("Invalid extension", {
     con <- file.path(tempdir(), "file.XXX")
     unlink(con, recursive = TRUE)
@@ -21,10 +19,6 @@ test_that("No extension", {
     )
     unlink(con, recursive = TRUE)
 })
-
-
-
-context("import : Source code lines")
 
 for (engine in .engines) {
     test_that(
@@ -313,10 +307,6 @@ for (engine in .engines) {
     )
 }
 
-
-
-context("import : Delimited files")
-
 for (engine in .engines) {
     for (ext in c("csv", "csv.gz", "tsv")) {
         test_that(
@@ -353,10 +343,6 @@ test_that("Deprecated 'file' argument", {
     object <- import(file = file.path("cache", "example.csv"))
     expect_is(object, "data.frame")
 })
-
-
-
-context("import : rtracklayer (GFF/GTF)")
 
 test_that("GFF3", {
     object <- import(
@@ -449,10 +435,6 @@ test_that("GTF", {
     )
 })
 
-
-
-context("import : MTX")
-
 test_that("MTX", {
     object <- import(
         con = file.path("cache", "single_cell_counts.mtx.gz"),
@@ -472,10 +454,6 @@ test_that("MTX", {
         expected = "Matrix::readMM"
     )
 })
-
-
-
-context("import : R data")
 
 test_that("R data", {
     object <- import(file.path("cache", "example.rda"))
@@ -497,10 +475,6 @@ test_that("Error on RDA containing multiple objects.", {
         regexp = "single"
     )
 })
-
-
-
-context("import : GSEA")
 
 test_that("MSigDB hallmark", {
     mapply(
@@ -544,10 +518,6 @@ test_that("T_CELL_ACTIVATION", {
     }
 })
 
-
-
-context("import : JSON/YAML")
-
 test_that("JSON/YAML", {
     for (ext in c("json", "yml")) {
         file <- file.path("cache", paste0("example.", ext))
@@ -568,26 +538,16 @@ test_that("'rio::import()', e.g. Stata DTA file", {
     )
 })
 
-
-
-context("import : OBO")
-
-skip_if_not_installed(pkg = "ontologyIndex")
-
 test_that("OBO", {
+    skip_if_not_installed(pkg = "ontologyIndex")
     file <- file.path("cache", "example.obo")
     x <- import(file)
     expect_is(x, "ontology_index")
     expect_length(x, 25L)
 })
 
-
-
-context("import : PZFX")
-
-skip_if_not_installed(pkg = "pzfx")
-
 test_that("PZFX", {
+    skip_if_not_installed(pkg = "pzfx")
     file <- system.file("extdata", "exponential_decay.pzfx", package = "pzfx")
     x <- import(file, sheet = 1L)
     colnames(x)
@@ -601,13 +561,8 @@ test_that("PZFX", {
     )
 })
 
-
-
-context("import : Excel")
-
-skip_if_not_installed(pkg = "readxl")
-
 test_that("XLSX", {
+    skip_if_not_installed(pkg = "readxl")
     file <- file.path("cache", "example.xlsx")
     expect_identical(
         object = import(
@@ -673,10 +628,6 @@ test_that("XLS", {
     expect_true(hasRownames(import(file = file, rownameCol = "rowname")))
 })
 
-
-
-context("import : bcbio files")
-
 test_that("bcbio counts", {
     object <- import(
         con = file.path("cache", "example.counts"),
@@ -708,10 +659,6 @@ test_that("bcbio counts", {
         )
     )
 })
-
-
-
-context("import : FASTA / FASTQ")
 
 test_that("FASTA", {
     file <- file.path("cache", "example.fa.gz")

@@ -1,5 +1,3 @@
-context("loadData")
-
 dir <- "cache"
 
 test_that("R data", {
