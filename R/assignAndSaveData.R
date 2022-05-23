@@ -35,27 +35,25 @@
 #' rm(example)
 #' unlink("example.rds")
 assignAndSaveData <-
-    function(
-        name,
-        object,
-        dir = getOption(
-            x = "acid.save.dir",
-            default = getwd()
-        ),
-        ext = getOption(
-            x = "acid.save.ext",
-            default = "rds"
-        ),
-        overwrite = getOption(
-            x = "acid.overwrite",
-            default = TRUE
-        ),
-        compress = getOption(
-            x = "acid.save.compress",
-            default = TRUE
-        ),
-        envir = parent.frame()
-    ) {
+    function(name,
+             object,
+             dir = getOption(
+                 x = "acid.save.dir",
+                 default = getwd()
+             ),
+             ext = getOption(
+                 x = "acid.save.ext",
+                 default = "rds"
+             ),
+             overwrite = getOption(
+                 x = "acid.overwrite",
+                 default = TRUE
+             ),
+             compress = getOption(
+                 x = "acid.save.compress",
+                 default = TRUE
+             ),
+             envir = parent.frame()) {
         assert(
             isString(name),
             !is.null(object),
