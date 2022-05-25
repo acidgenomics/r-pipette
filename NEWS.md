@@ -1,3 +1,12 @@
+# pipette 0.9.3 (2022-05-25)
+
+## Minor changes
+
+- `atomize`: Hardened edge cases of empty `DataFrame` and `GRanges` input.
+  Also improved code coverage to test handling of these edge case events, which
+  can occur when exporting metadata from `SummarizedExperiment` in upstream
+  AcidExperiment and bcbioRNASeq packages for objects with minimal metadata.
+
 # pipette 0.9.2 (2022-05-23)
 
 ## Minor changes
