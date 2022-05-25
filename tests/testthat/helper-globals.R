@@ -34,6 +34,7 @@ mtcars <- as(mtcars, "DataFrame")
 sparse <- sparseMatrix
 
 DataFrame <- S4Vectors::DataFrame
+GRanges <- GenomicRanges::GRanges
 hasInternet <- goalie::hasInternet
 isSubset <- goalie::isSubset
 mcols <- S4Vectors::mcols
