@@ -5,7 +5,7 @@
 #' Keep only atomic columns. Complex columns won't write to disk as CSVs or work
 #' with R Markdown functions, in some cases.
 #'
-#' @note Updated 2021-10-12.
+#' @note Updated 2022-05-25.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
@@ -21,46 +21,61 @@ NULL
 
 
 
-## Updated 2019-07-19.
+## Updated 2022-05-25.
 `atomize,DataFrame` <- ## nolint
     function(object) {
+        if (!hasLength(object)) {
+            return(object)
+        }
+        rn <- rownames(object)
         object <- decode(object)
         object <- as.data.frame(object)
         object <- atomize(object)
         object <- as(object, "DataFrame")
+        rownames(object) <- rn
         object
     }
 
 
 
-## Updated 2019-07-21.
+## Updated 2022-05-25.
 `atomize,Ranges` <- # nolint
     function(object) {
+        if (!hasLength(object)) {
+            return(object)
+        }
         mcols(object) <- atomize(mcols(object))
         object
     }
 
 
 
-## Updated 2021-08-24.
+## Updated 2022-05-25.
 `atomize,data.frame` <- # nolint
     function(object) {
-        keep <- vapply(X = object, FUN = is.atomic, FUN.VALUE = logical(1L))
-        assert(hasLength(keep))
-        drop <- names(keep)[!keep]
-        if (hasLength(drop)) {
-            alertInfo(sprintf(
-                "Dropping %s non-atomic %s: %s.",
-                length(drop),
-                ngettext(
-                    n = length(drop),
-                    msg1 = "column",
-                    msg2 = "columns"
-                ),
-                toInlineString(drop, n = 10L)
-            ))
+        if (!hasLength(object)) {
+            return(object)
         }
-        object[, keep, drop = FALSE]
+        keep <- vapply(X = object, FUN = is.atomic, FUN.VALUE = logical(1L))
+        if (all(keep)) {
+            return(object)
+        }
+        if (!any(keep)) {
+            return(data.frame(row.names = rownames(object)))
+        }
+        drop <- names(keep)[!keep]
+        alertInfo(sprintf(
+            "Dropping %s non-atomic %s: %s.",
+            length(drop),
+            ngettext(
+                n = length(drop),
+                msg1 = "column",
+                msg2 = "columns"
+            ),
+            toInlineString(drop, n = 10L)
+        ))
+        object <- object[, keep, drop = FALSE]
+        object
     }
 
 
