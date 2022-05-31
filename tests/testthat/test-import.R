@@ -1,6 +1,5 @@
 test_that("Invalid extension", {
     con <- file.path(tempdir, "file.XXX")
-    .unlink(con)
     file.create(con)
     expect_error(
         object = import(con),
@@ -11,7 +10,6 @@ test_that("Invalid extension", {
 
 test_that("No extension", {
     con <- file.path(tempdir, "example")
-    .unlink(con)
     file.create(con)
     expect_error(
         object = import(con),
@@ -36,7 +34,6 @@ for (engine in .engines) {
         desc = paste("Empty file", engine, sep = " : "),
         code = {
             con <- file.path(tempdir, "lines.txt")
-            .unlink(con)
             file.create(con)
             expect_identical(
                 object = import(
@@ -53,7 +50,6 @@ for (engine in .engines) {
         desc = paste("'comment' argument", engine, sep = " : "),
         code = {
             con <- file.path(tempdir, "lines.txt")
-            .unlink(con)
             vec <- c(
                 "# comment 1",
                 "aaa",
@@ -121,7 +117,6 @@ for (engine in .engines) {
         desc = paste("'nMax' argument", engine, sep = " : "),
         code = {
             con <- file.path(tempdir, "lines.txt")
-            .unlink(con)
             vec <- c("aaa", "bbb", "ccc")
             writeLines(text = vec, con = con)
             expect_identical(
@@ -158,7 +153,6 @@ for (engine in .engines) {
         desc = paste("'removeBlank' argument", engine, sep = " : "),
         code = {
             con <- file.path(tempdir, "lines.txt")
-            .unlink(con)
             vec <- c(
                 "  aaa",
                 "bbb  ",
@@ -209,7 +203,6 @@ for (engine in .engines) {
         desc = paste("'skip' argument", engine, sep = " : "),
         code = {
             con <- file.path(tempdir, "lines.txt")
-            .unlink(con)
             vec <- c("aaa", "bbb", "ccc", "ddd")
             writeLines(text = vec, con = con)
             expect_identical(
@@ -267,7 +260,6 @@ for (engine in .engines) {
         desc = "'stripWhitespace' argument",
         code = {
             con <- file.path(tempdir, "lines.txt")
-            .unlink(con)
             vec <- c(
                 "  aaa",
                 "bbb  ",

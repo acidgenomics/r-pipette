@@ -7,7 +7,6 @@ for (engine in .engines) {
                 "export",
                 paste(engine, "lines.txt", sep = "-")
             )
-            .unlink(con)
             object1 <- c("aaa", "bbb")
             object2 <- c("ccc", "ddd")
             switch(
@@ -56,9 +55,9 @@ for (engine in .engines) {
                         ),
                         expected = c(object1, object2)
                     )
+                    .unlink(con)
                 }
             )
-            .unlink(con)
         }
     )
     ## FIXME This step is failing for readr engine on Windows.
@@ -70,7 +69,6 @@ for (engine in .engines) {
             desc = paste("'format' argument", format, engine, sep = " : "),
             code = {
                 testdir <- file.path(tempdir, "export")
-                .unlink(testdir)
                 vec <- c("hello", "world")
                 con <- file.path(testdir, paste0("vec", ".", format))
                 x <- export(
@@ -131,7 +129,6 @@ for (format in .exportFormatChoices[["delim"]]) {
                 ),
                 code = {
                     testdir <- file.path(tempdir, "export")
-                    .unlink(testdir)
                     object <- objects[[class]]
                     file <- export(
                         object = object,
@@ -197,7 +194,6 @@ for (engine in .engines) {
                 "geneId" = c("gene0001", "gene0001", "gene0002", "gene0002")
             )
             con <- file.path(tempdir, "export", "tx2gene.csv")
-            .unlink(con)
             x <- export(
                 object = object,
                 con = con,
@@ -223,7 +219,6 @@ test_that("Deprecated 'ext' argument", {
     object <- df
     expect_s4_class(object, "DataFrame")
     testdir <- file.path(tempdir, "export")
-    .unlink(testdir)
     x <- export(
         object = object,
         ext = "csv",
@@ -237,7 +232,6 @@ test_that("Deprecated 'file' argument", {
     object <- df
     expect_s4_class(object, "DataFrame")
     file <- file.path(tempdir, "export", "test.csv")
-    .unlink(file)
     x <- export(object = object, file = file)
     expect_true(file.exists(x))
     .unlink(file)
@@ -250,7 +244,6 @@ for (format in .exportFormatChoices[["Matrix"]]) {
             object <- sparse
             expect_s4_class(object, "sparseMatrix")
             testdir <- file.path(tempdir, "export")
-            .unlink(testdir)
             x <- export(
                 object = object,
                 format = format,
@@ -302,7 +295,6 @@ test_that("Deprecated 'file' argument", {
     object <- sparse
     expect_s4_class(object, "sparseMatrix")
     testdir <- file.path(tempdir, "export")
-    .unlink(testdir)
     x <- export(
         object = object,
         file = file.path(testdir, "sparse.mtx")
