@@ -41,19 +41,20 @@ Utility function that supports easy file matching and download from a remote
 FTP server. Also enables on-the-fly file renaming and compression.
 }
 \note{
-Updated 2022-05-03.
+Updated 2022-05-31.
 }
 \examples{
 try({
+    localDir <- file.path(tempdir(), "transmit")
     readme <- transmit(
         remoteDir = "ftp://ftp.ncbi.nlm.nih.gov/genomes/",
-        localDir = tempdir(),
+        localDir = localDir,
         pattern = "^README\\\\.txt$",
         rename = "ncbi-readme.txt",
         compress = FALSE
     )
     basename(readme)
     file.exists(readme)
-    unlink(readme)
+    unlink(normalizePath(localDir), recursive = TRUE)
 })
 }

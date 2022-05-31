@@ -11,7 +11,7 @@
 #' on disk, following the same conventions as `save()`.
 #'
 #' @export
-#' @note Updated 2021-10-12.
+#' @note Updated 2022-05-31.
 #'
 #' @inheritParams loadData
 #' @inheritParams base::save
@@ -41,7 +41,7 @@
 #' File paths.
 #'
 #' @examples
-#' dir <- "example"
+#' dir <- file.path(tempdir(), "saveData")
 #'
 #' ## Interactive mode ====
 #' ## Note that this method uses non-standard evaluation.
@@ -51,7 +51,7 @@
 #' sort(list.files(dir))
 #'
 #' ## Clean up.
-#' unlink(dir, recursive = TRUE)
+#' unlink(normalizePath(dir), recursive = TRUE)
 #'
 #' ## List mode ====
 #' ## Note that this method uses standard evaluation.
@@ -63,7 +63,7 @@
 #' sort(list.files(dir))
 #'
 #' ## Clean up.
-#' unlink(dir, recursive = TRUE)
+#' unlink(normalizePath(dir), recursive = TRUE)
 saveData <-
     function(...,
              dir = getOption(

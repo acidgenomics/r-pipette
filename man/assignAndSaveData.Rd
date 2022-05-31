@@ -61,16 +61,14 @@ Updated 2022-05-23.
 }
 \examples{
 x <- 1L
+dir <- file.path(tempdir(), "assignAndSaveData")
 assignAndSaveData(
     name = "example",
     object = x,
-    dir = getwd(),
+    dir = dir,
     ext = "rds"
 )
 exists("example", inherits = FALSE)
-file.exists("example.rds")
-
-## Clean up.
-rm(example)
-unlink("example.rds")
+file.exists(file.path(dir, "example.rds"))
+unlink(normalizePath(dir), recursive = TRUE)
 }
