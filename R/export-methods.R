@@ -527,13 +527,11 @@ NULL
             },
             "readr" = {
                 whatFun <- "write_delim"
-                if (isAFile(file)) {
-                    file <- normalizePath(
-                        path = file,
-                        winslash = "\\",
-                        mustWork = TRUE
-                    )
-                }
+                file <- normalizePath(
+                    path = file,
+                    winslash = "\\",
+                    mustWork = FALSE
+                )
                 args <- list(
                     "x" = object,
                     "file" = file,
