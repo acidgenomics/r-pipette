@@ -1,14 +1,13 @@
 ## Note that only FTP is currently supported.
 remoteDir <- "ftp://ftp.ncbi.nlm.nih.gov/genomes/"
 skip_if_not(hasInternet(remoteDir))
-tmpdir <- realpath(tempdir())
 
 test_that("Get README file", {
-    expected <- file.path(tmpdir, "README.txt")
+    expected <- file.path(tempdir, "README.txt")
     unlink(expected)
     object <- transmit(
         remoteDir = remoteDir,
-        localDir = tmpdir,
+        localDir = tempdir,
         pattern = "^README\\.txt$",
         compress = FALSE
     )
@@ -18,7 +17,7 @@ test_that("Get README file", {
     expect_message(
         object = transmit(
             remoteDir = remoteDir,
-            localDir = tmpdir,
+            localDir = tempdir,
             pattern = "^README\\.txt$",
             compress = FALSE
         ),
@@ -28,11 +27,11 @@ test_that("Get README file", {
 })
 
 test_that("Rename and compress", {
-    expected <- file.path(tmpdir, "readme.txt.gz")
+    expected <- file.path(tempdir, "readme.txt.gz")
     unlink(expected)
     object <- transmit(
         remoteDir = remoteDir,
-        localDir = tmpdir,
+        localDir = tempdir,
         pattern = "^README\\.txt$",
         rename = "readme.txt",
         compress = TRUE

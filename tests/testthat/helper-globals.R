@@ -32,6 +32,7 @@ ir <- IntegerRanges
 mat <- matrix
 mtcars <- as(mtcars, "DataFrame")
 sparse <- sparseMatrix
+tempdir <- realpath(tempdir())
 
 DataFrame <- S4Vectors::DataFrame
 GRanges <- GenomicRanges::GRanges

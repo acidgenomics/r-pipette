@@ -2,7 +2,7 @@ for (engine in .engines) {
     test_that(
         desc = paste("'append' argument", engine, sep = " : "),
         code = {
-            con <- file.path(tempdir(), "export", "lines.txt")
+            con <- file.path(tempdir, "export", "lines.txt")
             unlink(con, recursive = FALSE)
             object1 <- c("aaa", "bbb")
             object2 <- c("ccc", "ddd")
@@ -57,11 +57,15 @@ for (engine in .engines) {
             unlink(con, recursive = FALSE)
         }
     )
+    ## FIXME This step is failing for readr engine on Windows.
+    ## FIXME Hits a permission issue regarding being unable to write file...
+    ## FIXME Think this has to do with file.path and normalizePath winslash
+    ## consistency issues...so annoying.
     for (format in .exportFormatChoices[["character"]]) {
         test_that(
             desc = paste("'format' argument", format, engine, sep = " : "),
             code = {
-                testdir <- file.path(tempdir(), "export")
+                testdir <- file.path(tempdir, "export")
                 unlink(testdir, recursive = TRUE)
                 vec <- c("hello", "world")
                 con <- file.path(testdir, paste0("vec", ".", format))
@@ -122,7 +126,7 @@ for (format in .exportFormatChoices[["delim"]]) {
                     sep = " : "
                 ),
                 code = {
-                    testdir <- file.path(tempdir(), "export")
+                    testdir <- file.path(tempdir, "export")
                     unlink(testdir, recursive = TRUE)
                     object <- objects[[class]]
                     file <- export(
@@ -188,7 +192,7 @@ for (engine in .engines) {
                 "txId" = c("tx0001", "tx0002", "tx0003", "tx0004"),
                 "geneId" = c("gene0001", "gene0001", "gene0002", "gene0002")
             )
-            con <- file.path(tempdir(), "export", "tx2gene.csv")
+            con <- file.path(tempdir, "export", "tx2gene.csv")
             unlink(con, recursive = FALSE)
             x <- export(
                 object = object,
@@ -214,7 +218,7 @@ for (engine in .engines) {
 test_that("Deprecated 'ext' argument", {
     object <- df
     expect_s4_class(object, "DataFrame")
-    testdir <- file.path(tempdir(), "export")
+    testdir <- file.path(tempdir, "export")
     unlink(testdir, recursive = TRUE)
     x <- export(
         object = object,
@@ -228,7 +232,7 @@ test_that("Deprecated 'ext' argument", {
 test_that("Deprecated 'file' argument", {
     object <- df
     expect_s4_class(object, "DataFrame")
-    file <- file.path(tempdir(), "export", "test.csv")
+    file <- file.path(tempdir, "export", "test.csv")
     unlink(file, recursive = FALSE)
     x <- export(object = object, file = file)
     expect_true(file.exists(x))
@@ -241,7 +245,7 @@ for (format in .exportFormatChoices[["Matrix"]]) {
         code = {
             object <- sparse
             expect_s4_class(object, "sparseMatrix")
-            testdir <- file.path(tempdir(), "export")
+            testdir <- file.path(tempdir, "export")
             unlink(testdir, recursive = TRUE)
             x <- export(
                 object = object,
@@ -293,7 +297,7 @@ for (format in .exportFormatChoices[["Matrix"]]) {
 test_that("Deprecated 'file' argument", {
     object <- sparse
     expect_s4_class(object, "sparseMatrix")
-    testdir <- file.path(tempdir(), "export")
+    testdir <- file.path(tempdir, "export")
     unlink(testdir, recursive = TRUE)
     x <- export(
         object = object,

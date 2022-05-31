@@ -1,5 +1,5 @@
 test_that("assignAndSaveData", {
-    dir <- tempdir()
+    dir <- tempdir
     file <- file.path(dir, "example.rds")
     envir <- new.env()
     x <- 1L
