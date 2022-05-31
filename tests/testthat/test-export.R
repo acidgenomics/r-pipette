@@ -2,7 +2,7 @@ for (engine in .engines) {
     test_that(
         desc = paste("'append' argument", engine, sep = " : "),
         code = {
-            con <- file.path(tempdir(), "lines.txt")
+            con <- file.path(tempdir(), "export", "lines.txt")
             unlink(con, recursive = FALSE)
             object1 <- c("aaa", "bbb")
             object2 <- c("ccc", "ddd")
