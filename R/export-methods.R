@@ -247,13 +247,11 @@ NULL
             },
             "readr" = {
                 whatFun <- "write_lines"
-                if (isAFile(con)) {
-                    con <- normalizePath(
-                        path = con,
-                        winslash = "\\",
-                        mustWork = TRUE
-                    )
-                }
+                con <- normalizePath(
+                    path = con,
+                    winslash = "\\",
+                    mustWork = FALSE
+                )
                 args <- list(
                     "x" = object,
                     "file" = con,
