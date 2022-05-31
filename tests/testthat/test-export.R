@@ -1,5 +1,4 @@
 for (engine in .engines) {
-    ## FIXME This step is failing for data.table engine on Windows.
     test_that(
         desc = paste("'append' argument", engine, sep = " : "),
         code = {
@@ -8,7 +7,7 @@ for (engine in .engines) {
                 "export",
                 paste(engine, "lines.txt", sep = "-")
             )
-            unlink(con, recursive = FALSE)
+            .unlink(con)
             object1 <- c("aaa", "bbb")
             object2 <- c("ccc", "ddd")
             switch(
@@ -59,7 +58,7 @@ for (engine in .engines) {
                     )
                 }
             )
-            unlink(con, recursive = FALSE)
+            .unlink(con)
         }
     )
     ## FIXME This step is failing for readr engine on Windows.
@@ -71,7 +70,7 @@ for (engine in .engines) {
             desc = paste("'format' argument", format, engine, sep = " : "),
             code = {
                 testdir <- file.path(tempdir, "export")
-                unlink(testdir, recursive = TRUE)
+                .unlink(testdir)
                 vec <- c("hello", "world")
                 con <- file.path(testdir, paste0("vec", ".", format))
                 x <- export(
@@ -110,7 +109,7 @@ for (engine in .engines) {
                     ),
                     "Overwriting"
                 )
-                unlink(testdir, recursive = TRUE)
+                .unlink(testdir)
             }
         )
     }
@@ -132,7 +131,7 @@ for (format in .exportFormatChoices[["delim"]]) {
                 ),
                 code = {
                     testdir <- file.path(tempdir, "export")
-                    unlink(testdir, recursive = TRUE)
+                    .unlink(testdir)
                     object <- objects[[class]]
                     file <- export(
                         object = object,
@@ -168,7 +167,7 @@ for (format in .exportFormatChoices[["delim"]]) {
                         ),
                         "Overwriting"
                     )
-                    unlink(testdir, recursive = TRUE)
+                    .unlink(testdir)
                 }
             )
         }
@@ -198,7 +197,7 @@ for (engine in .engines) {
                 "geneId" = c("gene0001", "gene0001", "gene0002", "gene0002")
             )
             con <- file.path(tempdir, "export", "tx2gene.csv")
-            unlink(con, recursive = FALSE)
+            .unlink(con)
             x <- export(
                 object = object,
                 con = con,
@@ -215,7 +214,7 @@ for (engine in .engines) {
                 object = header,
                 expected = "\"tx0001\",\"gene0001\""
             )
-            unlink(con, recursive = FALSE)
+            .unlink(con)
         }
     )
 }
@@ -224,24 +223,24 @@ test_that("Deprecated 'ext' argument", {
     object <- df
     expect_s4_class(object, "DataFrame")
     testdir <- file.path(tempdir, "export")
-    unlink(testdir, recursive = TRUE)
+    .unlink(testdir)
     x <- export(
         object = object,
         ext = "csv",
         dir = testdir
     )
     expect_true(file.exists(x))
-    unlink(testdir, recursive = FALSE)
+    .unlink(testdir)
 })
 
 test_that("Deprecated 'file' argument", {
     object <- df
     expect_s4_class(object, "DataFrame")
     file <- file.path(tempdir, "export", "test.csv")
-    unlink(file, recursive = FALSE)
+    .unlink(file)
     x <- export(object = object, file = file)
     expect_true(file.exists(x))
-    unlink(file, recursive = FALSE)
+    .unlink(file)
 })
 
 for (format in .exportFormatChoices[["Matrix"]]) {
@@ -251,7 +250,7 @@ for (format in .exportFormatChoices[["Matrix"]]) {
             object <- sparse
             expect_s4_class(object, "sparseMatrix")
             testdir <- file.path(tempdir, "export")
-            unlink(testdir, recursive = TRUE)
+            .unlink(testdir)
             x <- export(
                 object = object,
                 format = format,
@@ -294,7 +293,7 @@ for (format in .exportFormatChoices[["Matrix"]]) {
                 ),
                 regexp = "Overwriting"
             )
-            unlink(testdir, recursive = TRUE)
+            .unlink(testdir)
         }
     )
 }
@@ -303,7 +302,7 @@ test_that("Deprecated 'file' argument", {
     object <- sparse
     expect_s4_class(object, "sparseMatrix")
     testdir <- file.path(tempdir, "export")
-    unlink(testdir, recursive = TRUE)
+    .unlink(testdir)
     x <- export(
         object = object,
         file = file.path(testdir, "sparse.mtx")
@@ -317,7 +316,7 @@ test_that("Deprecated 'file' argument", {
         )
     )
     expect_true(all(file.exists(x)))
-    unlink(testdir, recursive = TRUE)
+    .unlink(testdir)
 })
 
 test_that("Invalid input", {

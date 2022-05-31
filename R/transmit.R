@@ -4,7 +4,7 @@
 #' FTP server. Also enables on-the-fly file renaming and compression.
 #'
 #' @export
-#' @note Updated 2022-05-23.
+#' @note Updated 2022-05-31.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @inheritParams saveData
@@ -29,16 +29,17 @@
 #'
 #' @examples
 #' try({
+#'     localDir <- file.path(tempdir(), "transmit")
 #'     readme <- transmit(
 #'         remoteDir = "ftp://ftp.ncbi.nlm.nih.gov/genomes/",
-#'         localDir = tempdir(),
+#'         localDir = localDir,
 #'         pattern = "^README\\.txt$",
 #'         rename = "ncbi-readme.txt",
 #'         compress = FALSE
 #'     )
 #'     basename(readme)
 #'     file.exists(readme)
-#'     unlink(readme)
+#'     unlink(normalizePath(localDir), recursive = TRUE)
 #' })
 transmit <-
     function(remoteDir,

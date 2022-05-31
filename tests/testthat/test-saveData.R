@@ -33,19 +33,20 @@ test_that("overwrite = FALSE", {
         ),
         regexp = "No files were saved."
     )
-    unlink(dir, recursive = TRUE)
+    .unlink(dir)
 })
 
 test_that("List mode", {
     x <- TRUE
     y <- FALSE
-    object <- saveData(list = c("x", "y"), dir = "XXX")
+    dir <- file.path(tempdir, "XXX")
+    object <- saveData(list = c("x", "y"), dir = dir)
     expect_identical(
         object = basename(object),
         expected = c("x.rds", "y.rds")
     )
-    expect_true(all(file.exists(file.path("XXX", paste0(c("x", "y"), ".rds")))))
-    unlink("XXX", recursive = TRUE)
+    expect_true(all(file.exists(file.path(dir, paste0(c("x", "y"), ".rds")))))
+    .unlink(dir)
 })
 
 test_that("Invalid parameters", {
