@@ -1,8 +1,13 @@
 for (engine in .engines) {
+    ## FIXME This step is failing for data.table engine on Windows.
     test_that(
         desc = paste("'append' argument", engine, sep = " : "),
         code = {
-            con <- file.path(tempdir, "export", "lines.txt")
+            con <- file.path(
+                tempdir,
+                "export",
+                paste(engine, "lines.txt", sep = "-")
+            )
             unlink(con, recursive = FALSE)
             object1 <- c("aaa", "bbb")
             object2 <- c("ccc", "ddd")
