@@ -216,7 +216,6 @@ NULL
             } else {
                 abort(sprintf("File exists: {.file %s}.", con))
             }
-            con <- normalizePath(path = con, winslash = "\\", mustWork = TRUE)
         }
         if (isTRUE(compress)) {
             con <- sub(
@@ -248,6 +247,13 @@ NULL
             },
             "readr" = {
                 whatFun <- "write_lines"
+                if (isAFile(con)) {
+                    con <- normalizePath(
+                        path = con,
+                        winslash = "\\",
+                        mustWork = TRUE
+                    )
+                }
                 args <- list(
                     "x" = object,
                     "file" = con,
@@ -337,7 +343,7 @@ NULL
 
 #' Export `matrix` method
 #'
-#' @note Updated 2022-05-03.
+#' @note Updated 2022-05-31.
 #' @noRd
 #'
 #' @details
@@ -521,6 +527,13 @@ NULL
             },
             "readr" = {
                 whatFun <- "write_delim"
+                if (isAFile(file)) {
+                    file <- normalizePath(
+                        path = file,
+                        winslash = "\\",
+                        mustWork = TRUE
+                    )
+                }
                 args <- list(
                     "x" = object,
                     "file" = file,
