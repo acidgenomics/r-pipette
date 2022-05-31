@@ -42,4 +42,15 @@ mcols <- S4Vectors::mcols
 metadata <- S4Vectors::metadata
 seqnames <- GenomicRanges::seqnames
 
+.unlink <- function(x) {
+    unlink(
+        x = normalizePath(
+            path = x,
+            winslash = "\\",
+            mustWork = FALSE
+        ),
+        recursive = TRUE
+    )
+}
+
 ## nolint end

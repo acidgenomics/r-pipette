@@ -32,7 +32,7 @@ Keep only atomic columns. Complex columns won't write to disk as CSVs or work
 with R Markdown functions, in some cases.
 }
 \note{
-Updated 2021-10-12.
+Updated 2022-05-25.
 }
 \examples{
 df <- S4Vectors::DataFrame(

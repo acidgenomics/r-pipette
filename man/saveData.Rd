@@ -71,10 +71,10 @@ This function is desired for interactive use and interprets object
 names using non-standard evaluation. It will \strong{overwrite} existing files
 on disk, following the same conventions as \code{save()}.
 
-Updated 2021-10-12.
+Updated 2022-05-31.
 }
 \examples{
-dir <- "example"
+dir <- file.path(tempdir(), "saveData")
 
 ## Interactive mode ====
 ## Note that this method uses non-standard evaluation.
@@ -84,7 +84,7 @@ saveData(a, b, dir = dir)
 sort(list.files(dir))
 
 ## Clean up.
-unlink(dir, recursive = TRUE)
+unlink(normalizePath(dir), recursive = TRUE)
 
 ## List mode ====
 ## Note that this method uses standard evaluation.
@@ -96,7 +96,7 @@ saveData(list = list, dir = dir)
 sort(list.files(dir))
 
 ## Clean up.
-unlink(dir, recursive = TRUE)
+unlink(normalizePath(dir), recursive = TRUE)
 }
 \seealso{
 \itemize{
