@@ -216,6 +216,7 @@ NULL
             } else {
                 abort(sprintf("File exists: {.file %s}.", con))
             }
+            con <- normalizePath(path = con, winslash = "\\", mustWork = TRUE)
         }
         if (isTRUE(compress)) {
             con <- sub(
@@ -224,11 +225,6 @@ NULL
                 x = con
             )
         }
-        con <- normalizePath(
-            path = path,
-            winslash = "\\",
-            mustWork = TRUE
-        )
         switch(
             EXPR = whatPkg,
             "base" = {
