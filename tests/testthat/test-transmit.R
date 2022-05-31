@@ -4,7 +4,6 @@ skip_if_not(hasInternet(remoteDir))
 
 test_that("Get README file", {
     expected <- file.path(tempdir, "README.txt")
-    .unlink(expected)
     object <- transmit(
         remoteDir = remoteDir,
         localDir = tempdir,
@@ -28,7 +27,6 @@ test_that("Get README file", {
 
 test_that("Rename and compress", {
     expected <- file.path(tempdir, "readme.txt.gz")
-    .unlink(expected)
     object <- transmit(
         remoteDir = remoteDir,
         localDir = tempdir,
