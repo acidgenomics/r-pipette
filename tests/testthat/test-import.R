@@ -1,5 +1,5 @@
 test_that("Invalid extension", {
-    con <- file.path(tempdir(), "file.XXX")
+    con <- file.path(tempdir, "file.XXX")
     unlink(con, recursive = TRUE)
     file.create(con)
     expect_error(
@@ -10,7 +10,7 @@ test_that("Invalid extension", {
 })
 
 test_that("No extension", {
-    con <- file.path(tempdir(), "example")
+    con <- file.path(tempdir, "example")
     unlink(con, recursive = TRUE)
     file.create(con)
     expect_error(
@@ -35,7 +35,7 @@ for (engine in .engines) {
     test_that(
         desc = paste("Empty file", engine, sep = " : "),
         code = {
-            con <- file.path(tempdir(), "lines.txt")
+            con <- file.path(tempdir, "lines.txt")
             unlink(con, recursive = FALSE)
             file.create(con)
             expect_identical(
@@ -52,7 +52,7 @@ for (engine in .engines) {
     test_that(
         desc = paste("'comment' argument", engine, sep = " : "),
         code = {
-            con <- file.path(tempdir(), "lines.txt")
+            con <- file.path(tempdir, "lines.txt")
             unlink(con, recursive = FALSE)
             vec <- c(
                 "# comment 1",
@@ -120,7 +120,7 @@ for (engine in .engines) {
     test_that(
         desc = paste("'nMax' argument", engine, sep = " : "),
         code = {
-            con <- file.path(tempdir(), "lines.txt")
+            con <- file.path(tempdir, "lines.txt")
             unlink(con, recursive = FALSE)
             vec <- c("aaa", "bbb", "ccc")
             writeLines(text = vec, con = con)
@@ -157,7 +157,7 @@ for (engine in .engines) {
     test_that(
         desc = paste("'removeBlank' argument", engine, sep = " : "),
         code = {
-            con <- file.path(tempdir(), "lines.txt")
+            con <- file.path(tempdir, "lines.txt")
             unlink(con, recursive = FALSE)
             vec <- c(
                 "  aaa",
@@ -208,7 +208,7 @@ for (engine in .engines) {
     test_that(
         desc = paste("'skip' argument", engine, sep = " : "),
         code = {
-            con <- file.path(tempdir(), "lines.txt")
+            con <- file.path(tempdir, "lines.txt")
             unlink(con, recursive = FALSE)
             vec <- c("aaa", "bbb", "ccc", "ddd")
             writeLines(text = vec, con = con)
@@ -266,7 +266,7 @@ for (engine in .engines) {
     test_that(
         desc = "'stripWhitespace' argument",
         code = {
-            con <- file.path(tempdir(), "lines.txt")
+            con <- file.path(tempdir, "lines.txt")
             unlink(con, recursive = FALSE)
             vec <- c(
                 "  aaa",
