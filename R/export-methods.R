@@ -1,7 +1,11 @@
+## FIXME overwrite character method isn't working on Windows.
+
+
+
 #' Export
 #'
 #' @name export
-#' @note Updated 2022-05-03.
+#' @note Updated 2022-05-31.
 #'
 #' @section Output file format extension:
 #'
@@ -220,6 +224,11 @@ NULL
                 x = con
             )
         }
+        con <- normalizePath(
+            path = path,
+            winslash = "\\",
+            mustWork = TRUE
+        )
         switch(
             EXPR = whatPkg,
             "base" = {
