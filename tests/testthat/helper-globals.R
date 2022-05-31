@@ -47,7 +47,7 @@ seqnames <- GenomicRanges::seqnames
         x = normalizePath(
             path = x,
             winslash = "\\",
-            mustWork = FALSE
+            mustWork = TRUE
         ),
         recursive = TRUE
     )
