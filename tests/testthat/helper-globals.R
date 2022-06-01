@@ -38,6 +38,7 @@ DataFrame <- S4Vectors::DataFrame
 GRanges <- GenomicRanges::GRanges
 hasInternet <- goalie::hasInternet
 isSubset <- goalie::isSubset
+isWindows <- goalie::isWindows
 mcols <- S4Vectors::mcols
 metadata <- S4Vectors::metadata
 seqnames <- GenomicRanges::seqnames
