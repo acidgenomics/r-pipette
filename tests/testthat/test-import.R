@@ -554,6 +554,7 @@ test_that("PZFX", {
 
 test_that("XLSX", {
     skip_if_not_installed(pkg = "readxl")
+    skip_on_os("windows")
     file <- file.path("cache", "example.xlsx")
     expect_identical(
         object = import(
@@ -588,6 +589,7 @@ test_that("XLSX", {
 
 test_that("XLS", {
     file <- file.path("cache", "example.xls")
+    skip_on_os("windows")
     expect_identical(
         object = import(
             con = file,
