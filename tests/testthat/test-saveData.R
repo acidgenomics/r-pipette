@@ -1,7 +1,7 @@
 object1 <- "aaa"
 object2 <- "bbb"
-dir <- "example"
-paths <- file.path(getwd(), dir, c("object1.rds", "object2.rds"))
+dir <- tempdir2()
+paths <- file.path(dir, c("object1.rds", "object2.rds"))
 names(paths) <- c("object1", "object2")
 
 test_that("R data serialized", {
@@ -33,20 +33,21 @@ test_that("overwrite = FALSE", {
         ),
         regexp = "No files were saved."
     )
-    .unlink(dir)
 })
+
+unlink2(dir)
 
 test_that("List mode", {
     x <- TRUE
     y <- FALSE
-    dir <- file.path(tempdir, "XXX")
+    dir <- tempdir2()
     object <- saveData(list = c("x", "y"), dir = dir)
     expect_identical(
         object = basename(object),
         expected = c("x.rds", "y.rds")
     )
     expect_true(all(file.exists(file.path(dir, paste0(c("x", "y"), ".rds")))))
-    .unlink(dir)
+    unlink2(dir)
 })
 
 test_that("Invalid parameters", {
