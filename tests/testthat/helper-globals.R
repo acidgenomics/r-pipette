@@ -32,7 +32,6 @@ ir <- IntegerRanges
 mat <- matrix
 mtcars <- as(mtcars, "DataFrame")
 sparse <- sparseMatrix
-tempdir <- realpath(tempdir())
 
 DataFrame <- S4Vectors::DataFrame
 GRanges <- GenomicRanges::GRanges
@@ -42,16 +41,5 @@ isWindows <- goalie::isWindows
 mcols <- S4Vectors::mcols
 metadata <- S4Vectors::metadata
 seqnames <- GenomicRanges::seqnames
-
-.unlink <- function(x) {
-    unlink(
-        x = normalizePath(
-            path = x,
-            winslash = "\\",
-            mustWork = TRUE
-        ),
-        recursive = TRUE
-    )
-}
 
 ## nolint end

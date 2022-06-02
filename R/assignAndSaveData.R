@@ -5,7 +5,7 @@
 #'
 #' @export
 #' @note This function attempts to follow the same order as `assign()`.
-#' @note Updated 2022-05-23.
+#' @note Updated 2022-06-02.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @inheritParams saveData
@@ -22,7 +22,7 @@
 #'
 #' @examples
 #' x <- 1L
-#' dir <- file.path(tempdir(), "assignAndSaveData")
+#' dir <- AcidBase::tempdir2()
 #' assignAndSaveData(
 #'     name = "example",
 #'     object = x,
@@ -31,7 +31,7 @@
 #' )
 #' exists("example", inherits = FALSE)
 #' file.exists(file.path(dir, "example.rds"))
-#' unlink(normalizePath(dir), recursive = TRUE)
+#' AcidBase::unlink2(dir)
 assignAndSaveData <-
     function(name,
              object,

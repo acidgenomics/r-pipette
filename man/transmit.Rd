@@ -41,11 +41,11 @@ Utility function that supports easy file matching and download from a remote
 FTP server. Also enables on-the-fly file renaming and compression.
 }
 \note{
-Updated 2022-05-31.
+Updated 2022-06-02.
 }
 \examples{
 try({
-    localDir <- file.path(tempdir(), "transmit")
+    localDir <- AcidBase::tempdir2()
     readme <- transmit(
         remoteDir = "ftp://ftp.ncbi.nlm.nih.gov/genomes/",
         localDir = localDir,
@@ -55,6 +55,6 @@ try({
     )
     basename(readme)
     file.exists(readme)
-    unlink(normalizePath(localDir), recursive = TRUE)
+    AcidBase::unlink2(localDir)
 })
 }

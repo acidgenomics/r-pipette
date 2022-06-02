@@ -466,7 +466,7 @@ NULL
 #' Compressed files will automatically be decompressed. Currently, these file
 #' extensions are natively supported: `BZ2`, `GZ`, `XZ`, and `ZIP`.
 #'
-#' @note Updated 2022-05-02.
+#' @note Updated 2022-06-02.
 #' @noRd
 #'
 #' @inheritParams AcidRoxygen::params
@@ -484,7 +484,7 @@ NULL
 #'
 #' @examples
 #' ## Local
-#' file <- system.file("extdata/example.csv", package = "pipette")
+#' file <- system.file("extdata", "example.csv", package = "pipette")
 #' x <- localOrRemoteFile(file)
 #' basename(x)
 #'
@@ -503,7 +503,7 @@ NULL
             isString(file),
             isFlag(quiet)
         )
-        tmpDir <- realpath(tempdir())
+        tmpDir <- tempdir2()
         tmpPrefix <- paste0(.pkgName, "-")
         fileExt <- fileExt(file)
         tmpFileExt <- ifelse(
