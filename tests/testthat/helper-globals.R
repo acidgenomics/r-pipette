@@ -41,5 +41,7 @@ isWindows <- goalie::isWindows
 mcols <- S4Vectors::mcols
 metadata <- S4Vectors::metadata
 seqnames <- GenomicRanges::seqnames
+tempdir2 <- AcidBase::tempdir2
+unlink2 <- AcidBase::unlink2
 
 ## nolint end
