@@ -57,11 +57,11 @@ the newly assigned object, specified by the \code{"dir"} argument.
 \note{
 This function attempts to follow the same order as \code{assign()}.
 
-Updated 2022-05-23.
+Updated 2022-06-02.
 }
 \examples{
 x <- 1L
-dir <- file.path(tempdir(), "assignAndSaveData")
+dir <- AcidBase::tempdir2()
 assignAndSaveData(
     name = "example",
     object = x,
@@ -70,5 +70,5 @@ assignAndSaveData(
 )
 exists("example", inherits = FALSE)
 file.exists(file.path(dir, "example.rds"))
-unlink(normalizePath(dir), recursive = TRUE)
+AcidBase::unlink2(dir)
 }
