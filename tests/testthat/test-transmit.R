@@ -3,6 +3,7 @@ remoteDir <- "ftp://ftp.ncbi.nlm.nih.gov/genomes/"
 skip_if_not(hasInternet(remoteDir))
 
 test_that("Get README file", {
+    tempdir <- tempdir2()
     expected <- file.path(tempdir, "README.txt")
     object <- transmit(
         remoteDir = remoteDir,
@@ -22,10 +23,11 @@ test_that("Get README file", {
         ),
         regexp = "Skipped"
     )
-    .unlink(object)
+    unlink2(object)
 })
 
 test_that("Rename and compress", {
+    tempdir <- tempdir2()
     expected <- file.path(tempdir, "readme.txt.gz")
     object <- transmit(
         remoteDir = remoteDir,
@@ -36,7 +38,7 @@ test_that("Rename and compress", {
     )
     names(expected) <- "README.txt"
     expect_identical(object, expected)
-    .unlink(object)
+    unlink2(object)
 })
 
 test_that("URL return", {

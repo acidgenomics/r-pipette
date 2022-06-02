@@ -1,21 +1,21 @@
 test_that("Invalid extension", {
-    con <- file.path(tempdir, "file.XXX")
+    con <- file.path(tempdir2(), "file.XXX")
     file.create(con)
     expect_error(
         object = import(con),
         regexp = "XXX"
     )
-    .unlink(con)
+    unlink2(con)
 })
 
 test_that("No extension", {
-    con <- file.path(tempdir, "example")
+    con <- file.path(tempdir2(), "example")
     file.create(con)
     expect_error(
         object = import(con),
         regexp = "extension"
     )
-    .unlink(con)
+    unlink2(con)
 })
 
 for (engine in .engines) {
@@ -33,7 +33,7 @@ for (engine in .engines) {
     test_that(
         desc = paste("Empty file", engine, sep = " : "),
         code = {
-            con <- file.path(tempdir, "lines.txt")
+            con <- file.path(tempdir2(), "lines.txt")
             file.create(con)
             expect_identical(
                 object = import(
@@ -43,13 +43,13 @@ for (engine in .engines) {
                 ),
                 expected = character(0L)
             )
-            .unlink(con)
+            unlink2(con)
         }
     )
     test_that(
         desc = paste("'comment' argument", engine, sep = " : "),
         code = {
-            con <- file.path(tempdir, "lines.txt")
+            con <- file.path(tempdir2(), "lines.txt")
             vec <- c(
                 "# comment 1",
                 "aaa",
@@ -110,13 +110,13 @@ for (engine in .engines) {
                     "ccc"
                 )
             )
-            .unlink(con)
+            unlink2(con)
         }
     )
     test_that(
         desc = paste("'nMax' argument", engine, sep = " : "),
         code = {
-            con <- file.path(tempdir, "lines.txt")
+            con <- file.path(tempdir2(), "lines.txt")
             vec <- c("aaa", "bbb", "ccc")
             writeLines(text = vec, con = con)
             expect_identical(
@@ -146,13 +146,13 @@ for (engine in .engines) {
                 ),
                 expected = vec[[1L]]
             )
-            .unlink(con)
+            unlink2(con)
         }
     )
     test_that(
         desc = paste("'removeBlank' argument", engine, sep = " : "),
         code = {
-            con <- file.path(tempdir, "lines.txt")
+            con <- file.path(tempdir2(), "lines.txt")
             vec <- c(
                 "  aaa",
                 "bbb  ",
@@ -196,13 +196,13 @@ for (engine in .engines) {
                     "bbb"
                 )
             )
-            .unlink(con)
+            unlink2(con)
         }
     )
     test_that(
         desc = paste("'skip' argument", engine, sep = " : "),
         code = {
-            con <- file.path(tempdir, "lines.txt")
+            con <- file.path(tempdir2(), "lines.txt")
             vec <- c("aaa", "bbb", "ccc", "ddd")
             writeLines(text = vec, con = con)
             expect_identical(
@@ -253,13 +253,13 @@ for (engine in .engines) {
                 ),
                 regexp = "removeBlank"
             )
-            .unlink(con)
+            unlink2(con)
         }
     )
     test_that(
         desc = "'stripWhitespace' argument",
         code = {
-            con <- file.path(tempdir, "lines.txt")
+            con <- file.path(tempdir2(), "lines.txt")
             vec <- c(
                 "  aaa",
                 "bbb  ",
@@ -294,7 +294,7 @@ for (engine in .engines) {
                     ""
                 )
             )
-            .unlink(con)
+            unlink2(con)
         }
     )
 }

@@ -1,3 +1,10 @@
+# pipette 0.9.4 (2022-06-02)
+
+## Minor changes
+
+- Updated and hardened unit tests to avoid file system lock issues on Windows
+  related to readr engine.
+
 # pipette 0.9.3 (2022-05-25)
 
 ## Minor changes

@@ -84,7 +84,7 @@ saveData(a, b, dir = dir)
 sort(list.files(dir))
 
 ## Clean up.
-unlink(normalizePath(dir), recursive = TRUE)
+AcidBase::unlink2(dir)
 
 ## List mode ====
 ## Note that this method uses standard evaluation.
