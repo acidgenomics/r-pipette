@@ -1,7 +1,3 @@
-## FIXME overwrite character method isn't working on Windows.
-
-
-
 #' Export
 #'
 #' @name export
