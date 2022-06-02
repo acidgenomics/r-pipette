@@ -11,7 +11,7 @@
 #' on disk, following the same conventions as `save()`.
 #'
 #' @export
-#' @note Updated 2022-05-31.
+#' @note Updated 2022-06-02.
 #'
 #' @inheritParams loadData
 #' @inheritParams base::save
@@ -41,7 +41,7 @@
 #' File paths.
 #'
 #' @examples
-#' dir <- file.path(tempdir(), "saveData")
+#' dir <- AcidBase::tempdir2()
 #'
 #' ## Interactive mode ====
 #' ## Note that this method uses non-standard evaluation.
@@ -63,7 +63,7 @@
 #' sort(list.files(dir))
 #'
 #' ## Clean up.
-#' unlink(normalizePath(dir), recursive = TRUE)
+#' AcidBase::unlink2(dir)
 saveData <-
     function(...,
              dir = getOption(

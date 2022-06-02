@@ -71,10 +71,10 @@ This function is desired for interactive use and interprets object
 names using non-standard evaluation. It will \strong{overwrite} existing files
 on disk, following the same conventions as \code{save()}.
 
-Updated 2022-05-31.
+Updated 2022-06-02.
 }
 \examples{
-dir <- file.path(tempdir(), "saveData")
+dir <- AcidBase::tempdir2()
 
 ## Interactive mode ====
 ## Note that this method uses non-standard evaluation.
@@ -96,7 +96,7 @@ saveData(list = list, dir = dir)
 sort(list.files(dir))
 
 ## Clean up.
-unlink(normalizePath(dir), recursive = TRUE)
+AcidBase::unlink2(dir)
 }
 \seealso{
 \itemize{
