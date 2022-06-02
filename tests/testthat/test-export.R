@@ -2,11 +2,7 @@ for (engine in .engines) {
     test_that(
         desc = paste("'append' argument", engine, sep = " : "),
         code = {
-            con <- file.path(
-                tempdir,
-                "export",
-                paste(engine, "lines.txt", sep = "-")
-            )
+            con <- file.path(tempdir2(), "lines.txt")
             object1 <- c("aaa", "bbb")
             object2 <- c("ccc", "ddd")
             switch(
@@ -55,7 +51,7 @@ for (engine in .engines) {
                         ),
                         expected = c(object1, object2)
                     )
-                    .unlink(con)
+                    unlink2(con)
                 }
             )
         }
@@ -64,8 +60,7 @@ for (engine in .engines) {
         test_that(
             desc = paste("'format' argument", format, engine, sep = " : "),
             code = {
-                ## This approach avoids locked file issues on Windows.
-                testdir <- file.path(tempdir, as.numeric(Sys.time()))
+                testdir <- tempdir2()
                 vec <- c("hello", "world")
                 con <- file.path(testdir, paste0("vec", ".", format))
                 x <- export(
@@ -108,7 +103,7 @@ for (engine in .engines) {
                     ),
                     "Overwriting"
                 )
-                .unlink(testdir)
+                unlink2(testdir)
             }
         )
     }
@@ -129,7 +124,7 @@ for (format in .exportFormatChoices[["delim"]]) {
                     sep = " : "
                 ),
                 code = {
-                    testdir <- file.path(tempdir, "export")
+                    testdir <- tempdir2()
                     object <- objects[[class]]
                     file <- export(
                         object = object,
@@ -165,7 +160,7 @@ for (format in .exportFormatChoices[["delim"]]) {
                         ),
                         "Overwriting"
                     )
-                    .unlink(testdir)
+                    unlink2(testdir)
                 }
             )
         }
@@ -194,7 +189,7 @@ for (engine in .engines) {
                 "txId" = c("tx0001", "tx0002", "tx0003", "tx0004"),
                 "geneId" = c("gene0001", "gene0001", "gene0002", "gene0002")
             )
-            con <- file.path(tempdir, "export", "tx2gene.csv")
+            con <- file.path(tempdir2(), "tx2gene.csv")
             x <- export(
                 object = object,
                 con = con,
@@ -211,7 +206,7 @@ for (engine in .engines) {
                 object = header,
                 expected = "\"tx0001\",\"gene0001\""
             )
-            .unlink(con)
+            unlink2(con)
         }
     )
 }
@@ -219,23 +214,23 @@ for (engine in .engines) {
 test_that("Deprecated 'ext' argument", {
     object <- df
     expect_s4_class(object, "DataFrame")
-    testdir <- file.path(tempdir, "export")
+    testdir <- tempdir2()
     x <- export(
         object = object,
         ext = "csv",
         dir = testdir
     )
     expect_true(file.exists(x))
-    .unlink(testdir)
+    unlink2(testdir)
 })
 
 test_that("Deprecated 'file' argument", {
     object <- df
     expect_s4_class(object, "DataFrame")
-    file <- file.path(tempdir, "export", "test.csv")
+    file <- file.path(tempdir2(), "test.csv")
     x <- export(object = object, file = file)
     expect_true(file.exists(x))
-    .unlink(file)
+    unlink2(file)
 })
 
 for (format in .exportFormatChoices[["Matrix"]]) {
@@ -244,7 +239,7 @@ for (format in .exportFormatChoices[["Matrix"]]) {
         code = {
             object <- sparse
             expect_s4_class(object, "sparseMatrix")
-            testdir <- file.path(tempdir, "export")
+            testdir <- tempdir2()
             x <- export(
                 object = object,
                 format = format,
@@ -287,7 +282,7 @@ for (format in .exportFormatChoices[["Matrix"]]) {
                 ),
                 regexp = "Overwriting"
             )
-            .unlink(testdir)
+            unlink2(testdir)
         }
     )
 }
@@ -295,7 +290,7 @@ for (format in .exportFormatChoices[["Matrix"]]) {
 test_that("Deprecated 'file' argument", {
     object <- sparse
     expect_s4_class(object, "sparseMatrix")
-    testdir <- file.path(tempdir, "export")
+    testdir <- tempdir2()
     x <- export(
         object = object,
         file = file.path(testdir, "sparse.mtx")
@@ -309,7 +304,7 @@ test_that("Deprecated 'file' argument", {
         )
     )
     expect_true(all(file.exists(x)))
-    .unlink(testdir)
+    unlink2(testdir)
 })
 
 test_that("Invalid input", {
