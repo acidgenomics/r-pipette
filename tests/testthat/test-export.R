@@ -150,6 +150,10 @@ for (format in .exportFormatChoices[["delim"]]) {
                         ),
                         "File exists"
                     )
+                    ## readr engine currently has locked file issues on Windows.
+                    if (identical(engine, "readr") && isWindows()) {
+                        return()
+                    }
                     expect_message(
                         export(
                             object = object,
