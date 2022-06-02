@@ -55,6 +55,7 @@ cacheURL <-
         ## nocov start
         if (!hasLength(rid)) {
             if (isTRUE(verbose)) {
+                ## NOTE Can improve path appearance on Windows here.
                 alert(sprintf(
                     "Caching URL at {.url %s} into {.path %s}.",
                     url, BiocFileCache::bfccache(bfc)
