@@ -256,13 +256,13 @@ for (format in .exportFormatChoices[["Matrix"]]) {
                         testdir,
                         paste0("object", ".", format)
                     )),
-                    "barcodes" = realpath(file.path(
-                        testdir,
-                        paste0("object", ".", format, ".", "colnames")
-                    )),
-                    "genes" = realpath(file.path(
+                    "rownames" = realpath(file.path(
                         testdir,
                         paste0("object", ".", format, ".", "rownames")
+                    )),
+                    "colnames" = realpath(file.path(
+                        testdir,
+                        paste0("object", ".", format, ".", "colnames")
                     ))
                 )
             )
@@ -303,8 +303,8 @@ test_that("Deprecated 'file' argument", {
         object = x,
         expected = c(
             "matrix" = realpath(file.path(testdir, "sparse.mtx")),
-            "barcodes" = realpath(file.path(testdir, "sparse.mtx.colnames")),
-            "genes" = realpath(file.path(testdir, "sparse.mtx.rownames"))
+            "rownames" = realpath(file.path(testdir, "sparse.mtx.rownames")),
+            "colnames" = realpath(file.path(testdir, "sparse.mtx.colnames"))
         )
     )
     expect_true(all(file.exists(x)))
