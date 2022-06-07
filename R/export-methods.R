@@ -623,7 +623,7 @@ NULL
 
 #' Export `Matrix` (e.g. `sparseMatrix`) method
 #'
-#' @note Updated 2022-05-03.
+#' @note Updated 2022-06-07.
 #' @noRd
 #'
 #' @details
@@ -700,28 +700,34 @@ NULL
             )
         }
         file <- realpath(file)
-        ## Write barcodes (column names).
-        barcodes <- colnames(object)
-        barcodesFile <- paste0(file, ".colnames")
-        export(
-            object = barcodes,
-            file = barcodesFile,
-            overwrite = TRUE,
-            quiet = quiet
-        )
         ## Write features (row names).
-        features <- rownames(object)
-        featuresFile <- paste0(file, ".rownames")
-        export(
-            object = features,
-            file = featuresFile,
-            overwrite = TRUE,
-            quiet = quiet
-        )
+        if (!is.null(rownames(object))) {
+            rownamesFile <- paste0(file, ".rownames")
+            export(
+                object = rownames(object),
+                con = rownamesFile,
+                overwrite = TRUE,
+                quiet = quiet
+            )
+        } else {
+            rownamesFile <- NULL
+        }
+        ## Write barcodes (column names).
+        if (!is.null(colnames(object))) {
+            colnamesFile <- paste0(file, ".colnames")
+            export(
+                object = colnames(object),
+                con = colnamesFile,
+                overwrite = TRUE,
+                quiet = quiet
+            )
+        } else {
+            colnamesFile <- NULL
+        }
         files <- c(
             "matrix" = file,
-            "barcodes" = barcodesFile,
-            "genes" = featuresFile
+            "rownames" = rownamesFile,
+            "colnames" = colnamesFile
         )
         assert(allAreFiles(files))
         invisible(files)
