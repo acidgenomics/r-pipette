@@ -1,3 +1,11 @@
+# pipette 0.9.5 (2022-06-07)
+
+## Minor changes
+
+- `export`: Bug fix to provide compatibility in `Matrix` method for export of
+  sparse matrices without dimnames (e.g. row and/or column names). Hit this
+  edge case in the update of example data in our Chromium package.
+
 # pipette 0.9.4 (2022-06-02)
 
 ## Minor changes
