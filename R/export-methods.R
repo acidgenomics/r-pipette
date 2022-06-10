@@ -73,10 +73,10 @@
 #' @seealso
 #' Packages:
 #'
-#' - [readr](http://readr.tidyverse.org).
-#' - [data.table](http://r-datatable.com/).
+#' - [readr](https://readr.tidyverse.org).
+#' - [data.table](https://r-datatable.com/).
 #' - [rio](https://cran.r-project.org/package=rio).
-#' - [rtracklayer](http://bioconductor.org/packages/rtracklayer/).
+#' - [rtracklayer](https://bioconductor.org/packages/rtracklayer/).
 #' - [vroom](https://vroom.r-lib.org).
 #'
 #' Export functions:

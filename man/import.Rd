@@ -398,8 +398,8 @@ GTF (General Transfer Format) is identical to GFF version 2.
 
 See also:
 \itemize{
-\item \href{http://www.ensembl.org/info/website/upload/gff.html}{Ensembl spec}
-\item \href{http://www.gencodegenes.org/gencodeformat.html}{GENCODE spec}
+\item \href{https://useast.ensembl.org/info/website/upload/gff.html}{Ensembl spec}
+\item \href{https://www.gencodegenes.org/pages/data_format.html}{GENCODE spec}
 }
 }
 
@@ -456,11 +456,11 @@ print(head(x))
 \seealso{
 Packages:
 \itemize{
-\item \href{http://r-datatable.com/}{data.table}.
-\item \href{http://readr.tidyverse.org}{readr}.
-\item \href{http://readxl.tidyverse.org}{readxl}.
+\item \href{https://r-datatable.com/}{data.table}.
+\item \href{https://readr.tidyverse.org}{readr}.
+\item \href{https://readxl.tidyverse.org}{readxl}.
 \item \href{https://cran.r-project.org/package=rio}{rio}.
-\item \href{http://bioconductor.org/packages/rtracklayer/}{rtracklayer}.
+\item \href{https://bioconductor.org/packages/rtracklayer/}{rtracklayer}.
 \item \href{https://vroom.r-lib.org}{vroom}.
 }
 
