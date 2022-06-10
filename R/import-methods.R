@@ -47,8 +47,8 @@
 #'
 #' See also:
 #'
-#' - [Ensembl spec](http://www.ensembl.org/info/website/upload/gff.html)
-#' - [GENCODE spec](http://www.gencodegenes.org/gencodeformat.html)
+#' - [Ensembl spec](https://useast.ensembl.org/info/website/upload/gff.html)
+#' - [GENCODE spec](https://www.gencodegenes.org/pages/data_format.html)
 #'
 #' @section GSEA gene set files (`GMTFile`, `GMXFile`, `GRPFile`):
 #'
@@ -238,11 +238,11 @@
 #' @seealso
 #' Packages:
 #'
-#' - [data.table](http://r-datatable.com/).
-#' - [readr](http://readr.tidyverse.org).
-#' - [readxl](http://readxl.tidyverse.org).
+#' - [data.table](https://r-datatable.com/).
+#' - [readr](https://readr.tidyverse.org).
+#' - [readxl](https://readxl.tidyverse.org).
 #' - [rio](https://cran.r-project.org/package=rio).
-#' - [rtracklayer](http://bioconductor.org/packages/rtracklayer/).
+#' - [rtracklayer](https://bioconductor.org/packages/rtracklayer/).
 #' - [vroom](https://vroom.r-lib.org).
 #'
 #' Import functions:
