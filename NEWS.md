@@ -565,7 +565,7 @@
   issue that has popped up in the latest version of R.
 - `import`: Fix for importing JSON files without extension. Can now declare
   using the `format` argument. This fix was needed to import GitHub JSON URLs
-  inside new `installGitHub` function defined in [bb8][] package.
+  inside new `installGitHub` function defined in bb8 package.
 
 # pipette 0.4.1 (2020-01-28)
 
@@ -865,7 +865,7 @@ involving less repetitive variable declarations.
 ## New functions
 
 - Migrated `removeNA` and `sanitizeNA` from [basejump][] here, so these
-  functions can be imported in [freerange][] package.
+  functions can be imported in freerange package.
 
 # brio 0.1.14 (2019-03-22)
 
@@ -991,7 +991,7 @@ deal specifically with file input/output:
 ## Minor changes
 
 - Updated imports to reflect renaming of S4Transformer package to simply
-  [transformer][].
+  transformer.
 
 # brio 0.1.2 (2019-12-12)
 
@@ -1019,12 +1019,9 @@ deal specifically with file input/output:
 
 Initial release. Migrated input-output (IO) functions from [basejump][].
 
-[acidbase]: https://acidbase.acidgenomics.com/
+[acidbase]: https://r.acidgenomics.com/packages/acidbase/
 [acid genomics]: https://acidgenomics.com/
 [appveyor ci]: https://www.appveyor.com/
-[basejump]: https://basejump.acidgenomics.com/
-[bb8]: https://bb8.acidgenomics.com/
-[freerange]: https://freerange.acidgenomics.com/
-[testthat]: http://testthat.r-lib.org/
-[transformer]: https://transformer.acidgenomics.com/
-[travis ci]: https://travis-ci.com/
+[basejump]: https://r.acidgenomics.com/packages/acidbase/
+[testthat]: https://testthat.r-lib.org/
+[travis ci]: https://www.travis-ci.com/
