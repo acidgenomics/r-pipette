@@ -37,7 +37,7 @@ R
 ### [Docker][] method
 
 ```sh
-image="acidgenomics/r-pipette"
+image="docker.io/acidgenomics/r-pipette"
 workdir="/mnt/work"
 docker pull "$image"
 docker run -it \
