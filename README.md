@@ -37,6 +37,7 @@ R
 ### [Docker][] method
 
 ```sh
+# This uses a bind mount. Don't run from '$HOME'.
 image='docker.io/acidgenomics/r-pipette'
 workdir='/mnt/work'
 docker pull "$image"
