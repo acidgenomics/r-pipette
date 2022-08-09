@@ -38,7 +38,7 @@ R
 
 ```sh
 # This uses a bind mount. Don't run from '$HOME'.
-image='docker.io/acidgenomics/r-pipette'
+image='docker.io/acidgenomics/r-packages:pipette'
 workdir='/mnt/work'
 docker pull "$image"
 docker run -it \
