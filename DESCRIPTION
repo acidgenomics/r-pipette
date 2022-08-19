@@ -2,7 +2,7 @@ Package: pipette
 Title: Pipette Biological Data In and Out of R
 Description: Input/output functions for biological data formats.
 Version: 0.9.6.9000
-Date: 2022-06-10
+Date: 2022-08-19
 Authors@R: c(
     person(
         "Michael", "Steinbaugh",
@@ -58,4 +58,4 @@ Suggests:
 Additional_repositories: https://r.acidgenomics.com
 Config/testthat/edition: 3
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.1
