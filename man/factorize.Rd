@@ -25,7 +25,7 @@ All columns will be coerced to \code{factor}.
 Coerce all columns in the object to \code{factor} (i.e. \code{stringsAsFactors}).
 }
 \note{
-Updated 2021-02-11.
+Updated 2022-08-17.
 }
 \examples{
 ## DataFrame ====
@@ -36,5 +36,7 @@ df <- S4Vectors::DataFrame(
 x <- factorize(df)
 }
 \seealso{
-\code{\link[AcidGenerics:encode]{encode()}} for run-length encoding (Rle) approach.
+\itemize{
+\item Legacy \code{stringsAsFactors} approach for \code{data.frame} import.
+}
 }

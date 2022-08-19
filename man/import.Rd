@@ -380,7 +380,7 @@ vector. It's strongly recommended to always define column names in a
 supported file type.
 }
 
-\section{FASTA and FASTQ files (\code{FASTAFile}, \code{FASTQFile})}{
+\section{FASTA and FASTQ files}{
 
 
 FASTA and FASTQ files are currently managed internally by the Biostrings
@@ -389,7 +389,7 @@ Import of these files will return \code{DNAStringSet} or \code{RNAStringSet} dep
 on the input, defined by \code{moleculeType} argument.
 }
 
-\section{General feature format (GFF, GTF; \code{RtracklayerHandoffFile})}{
+\section{General feature format (GFF, GTF)}{
 
 
 The GFF (General Feature Format) format consists of one line per feature,
@@ -403,13 +403,13 @@ See also:
 }
 }
 
-\section{GSEA gene set files (\code{GMTFile}, \code{GMXFile}, \code{GRPFile})}{
+\section{GSEA gene set files}{
 
 
 Refer to the Broad Institute \href{https://goo.gl/3ZkDPb}{GSEA wiki} for details.
 }
 
-\section{Matrix Market Exchange (\code{MTXFile})}{
+\section{Matrix Market Exchange}{
 
 
 Reading a Matrix Market Exchange file requires \code{ROWNAMES} and \code{COLNAMES}
@@ -417,7 +417,7 @@ sidecar files containing the corresponding row and column names of the sparse
 matrix.
 }
 
-\section{bcbio-nextgen count matrix (\code{BcbioCountsFile})}{
+\section{bcbio-nextgen count matrix}{
 
 
 \href{https://bcbio-nextgen.readthedocs.io/}{bcbio} count matrix (e.g. generated from featureCounts) and related
