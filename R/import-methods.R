@@ -1,3 +1,13 @@
+## FIXME Need to quiet down the readr message in this edge case:
+# > format = "csv"
+# >         df <- import(file = tmpfile, format = format, engine = engine)
+# → Importing /Users/mike/.cache/R/DepMapAnalysis/53c277f4c266_13515395 using readr::`read_delim()`.
+# New names:
+# • `` -> `...1`
+# > url [1] "https://ndownloader.figshare.com/files/13515395"
+
+
+
 #' Import
 #'
 #' Read file by extension into R.
@@ -32,14 +42,14 @@
 #' vector. It's strongly recommended to always define column names in a
 #' supported file type.
 #'
-#' @section FASTA and FASTQ files (`FASTAFile`, `FASTQFile`):
+#' @section FASTA and FASTQ files:
 #'
 #' FASTA and FASTQ files are currently managed internally by the Biostrings
 #' package. Refer to `readDNAStringSet` and `readRNAStringSet` for details.
 #' Import of these files will return `DNAStringSet` or `RNAStringSet` depending
 #' on the input, defined by `moleculeType` argument.
 #'
-#' @section General feature format (GFF, GTF; `RtracklayerHandoffFile`):
+#' @section General feature format (GFF, GTF):
 #'
 #' The GFF (General Feature Format) format consists of one line per feature,
 #' each containing 9 columns of data, plus optional track definition lines. The
@@ -50,19 +60,19 @@
 #' - [Ensembl spec](https://useast.ensembl.org/info/website/upload/gff.html)
 #' - [GENCODE spec](https://www.gencodegenes.org/pages/data_format.html)
 #'
-#' @section GSEA gene set files (`GMTFile`, `GMXFile`, `GRPFile`):
+#' @section GSEA gene set files:
 #'
 #' Refer to the Broad Institute [GSEA wiki][] for details.
 #'
 #' [GSEA wiki]: https://goo.gl/3ZkDPb
 #'
-#' @section Matrix Market Exchange (`MTXFile`):
+#' @section Matrix Market Exchange:
 #'
 #' Reading a Matrix Market Exchange file requires `ROWNAMES` and `COLNAMES`
 #' sidecar files containing the corresponding row and column names of the sparse
 #' matrix.
 #'
-#' @section bcbio-nextgen count matrix (`BcbioCountsFile`):
+#' @section bcbio-nextgen count matrix:
 #'
 #' [bcbio][] count matrix (e.g. generated from featureCounts) and related
 #' sidecar files are natively supported.
