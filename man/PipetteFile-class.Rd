@@ -31,25 +31,62 @@ Currently intended for use with \code{import} function.
 \details{
 Extends \code{BiocFile} defined in BiocIO package.
 }
-\section{Functions}{
+\note{
+Updated 2022-08-19.
+}
+\section{Primary classes}{
+
 \itemize{
-\item \code{DelimFile-class}: Delimited file.\cr
+\item \code{BcbioCountsFile}: bcbio-nextgen counts file.
+\item \code{CSVFile}: Comma-separated values file (CSV).
+\item \code{FASTAFile}: FASTA file.
+\item \code{FASTQFile}: FASTQ file.
+\item \code{GMTFile}: Gene matrix transposed file (GMT).
+\item \code{GMXFile}: Gene matrix file (GMX).
+\item \code{GRPFile}: Gene set file (GRP).
+\item \code{JSONFile}: JSON file.
+\item \code{MTXFile}: MatrixMarket exchange file (MTX).
+\item \code{OBOFile}: Open Biomedical Ontologies file (OBO).
+\item \code{PZFXFile}: GraphPad Prism file (PZFX).
+\item \code{RDSFile}: R data file containing a single, serialized object (RDS).
+\item \code{RDataFile}: R Data file containing multiple objects (RData/RDA).
+\item \code{TSVFile}: Tab-separated values file (TSV).
+\item \code{TableFile}: Base R table file (TXT).
+\item \code{YAMLFile}: YAML file.
+}
+}
+
+\section{\code{DelimFile-class}}{
+
+
+Delimited file.
+
 File extension group supporting:
 \itemize{
 \item CSV: Comma-separated values
 \item TSV: Tab-separated values
 \item Base R table (TXT)
 }
+}
 
-\item \code{ExcelFile-class}: Microsoft Excel file.\cr
+\section{\code{ExcelFile-class}}{
+
+
+Microsoft Excel file.
+
 File extension group supporting:
 \itemize{
 \item XLS
 \item XLSB
 \item XLSX
 }
+}
 
-\item \code{LinesFile-class}: Source code lines file.\cr
+\section{\code{LinesFile-class}}{
+
+
+Source code lines file.
+
 File extension group supporting:
 \itemize{
 \item BASH: Bash shell script
@@ -61,8 +98,13 @@ File extension group supporting:
 \item SH: Shell script (e.g. Bash, POSIX)
 \item ZSH: Zsh shell script
 }
+}
 
-\item \code{RioHandoffFile-class}: File extension supported by \code{rio::import}.\cr
+\section{\code{RioHandoffFile-class}}{
+
+
+File extension supported by \code{rio::import}.
+
 File extension group supporting:
 \itemize{
 \item ARFF: Weka Attribute-Relation File Format
@@ -81,8 +123,13 @@ File extension group supporting:
 \item REC: Epi Info
 \item XPT: SASS
 }
+}
 
-\item \code{RtracklayerHandoffFile-class}: File extension supported by \code{rtracklayer::import()}.\cr
+\section{\code{RtracklayerHandoffFile-class}}{
+
+
+File extension supported by \code{rtracklayer::import()}.
+
 File extension group supporting:
 \itemize{
 \item BED, BED15, BEDGRAPH, BEDPE
@@ -90,43 +137,8 @@ File extension group supporting:
 \item GFF, GFF1, GFF2, GFF3, GTF
 \item BROADPEAK, NARROWPEAK
 }
-
-\item \code{BcbioCountsFile-class}: bcbio-nextgen counts file.
-
-\item \code{CSVFile-class}: Comma-separated values file (CSV).
-
-\item \code{FASTAFile-class}: FASTA file.
-
-\item \code{FASTQFile-class}: FASTQ file.
-
-\item \code{GMTFile-class}: Gene matrix transposed file (GMT).
-
-\item \code{GMXFile-class}: Gene matrix file (GMX).
-
-\item \code{GRPFile-class}: Gene set file (GRP).
-
-\item \code{JSONFile-class}: JSON file.
-
-\item \code{MTXFile-class}: MatrixMarket exchange file (MTX).
-
-\item \code{OBOFile-class}: Open Biomedical Ontologies file (OBO).
-
-\item \code{PZFXFile-class}: GraphPad Prism file (PZFX).
-
-\item \code{RDataFile-class}: R Data file containing multiple objects (RData/RDA).
-
-\item \code{RDSFile-class}: R data file containing a single, serialized object (RDS).
-
-\item \code{TableFile-class}: Base R table file (TXT).
-
-\item \code{TSVFile-class}: Tab-separated values file (TSV).
-
-\item \code{YAMLFile-class}: YAML file.
-}}
-
-\note{
-Updated 2022-05-12.
 }
+
 \seealso{
 \itemize{
 \item \code{getGeneric}.

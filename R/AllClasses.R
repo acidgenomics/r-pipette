@@ -2,50 +2,57 @@
 #'
 #' Currently intended for use with `import` function.
 #'
+#' @details
 #' Extends `BiocFile` defined in BiocIO package.
 #'
 #' @export
-#' @note Updated 2022-05-12.
+#' @note Updated 2022-08-19.
 #'
-#' @seealso
-#' - `getGeneric`.
-#' - `BiocIO::FileForFormat`.
-setClass(
-    Class = "PipetteFile",
-    contains = "BiocFile"
-)
-
-
-
-## File extension groups =======================================================
-
-#' @describeIn PipetteFile-class
-#' Delimited file.\cr
+#' @section Primary classes:
+#'
+#' - `BcbioCountsFile`: bcbio-nextgen counts file.
+#' - `CSVFile`: Comma-separated values file (CSV).
+#' - `FASTAFile`: FASTA file.
+#' - `FASTQFile`: FASTQ file.
+#' - `GMTFile`: Gene matrix transposed file (GMT).
+#' - `GMXFile`: Gene matrix file (GMX).
+#' - `GRPFile`: Gene set file (GRP).
+#' - `JSONFile`: JSON file.
+#' - `MTXFile`: MatrixMarket exchange file (MTX).
+#' - `OBOFile`: Open Biomedical Ontologies file (OBO).
+#' - `PZFXFile`: GraphPad Prism file (PZFX).
+#' - `RDSFile`: R data file containing a single, serialized object (RDS).
+#' - `RDataFile`: R Data file containing multiple objects (RData/RDA).
+#' - `TSVFile`: Tab-separated values file (TSV).
+#' - `TableFile`: Base R table file (TXT).
+#' - `YAMLFile`: YAML file.
+#'
+#' @section `DelimFile-class`:
+#'
+#' Delimited file.
+#'
 #' File extension group supporting:
+#'
 #' - CSV: Comma-separated values
 #' - TSV: Tab-separated values
 #' - Base R table (TXT)
-#' @export
-setClass(
-    Class = "DelimFile",
-    contains = "PipetteFile"
-)
-
-#' @describeIn PipetteFile-class
-#' Microsoft Excel file.\cr
+#'
+#' @section `ExcelFile-class`:
+#'
+#' Microsoft Excel file.
+#'
 #' File extension group supporting:
+#'
 #' - XLS
 #' - XLSB
 #' - XLSX
-#' @export
-setClass(
-    Class = "ExcelFile",
-    contains = "PipetteFile"
-)
-
-#' @describeIn PipetteFile-class
-#' Source code lines file.\cr
+#'
+#' @section `LinesFile-class`:
+#'
+#' Source code lines file.
+#'
 #' File extension group supporting:
+#'
 #' - BASH: Bash shell script
 #' - LOG: Log file
 #' - MD: Markdown file
@@ -54,19 +61,13 @@ setClass(
 #' - RMD: R Markdown file
 #' - SH: Shell script (e.g. Bash, POSIX)
 #' - ZSH: Zsh shell script
-#' @export
-setClass(
-    Class = "LinesFile",
-    contains = "PipetteFile"
-)
-
-
-
-## Handoff classes =============================================================
-
-#' @describeIn PipetteFile-class
-#' File extension supported by `rio::import`.\cr
+#'
+#' @section `RioHandoffFile-class`:
+#'
+#' File extension supported by `rio::import`.
+#'
 #' File extension group supporting:
+#'
 #' - ARFF: Weka Attribute-Relation File Format
 #' - DBF: dBase Database File
 #' - DIF: Data Interchange Format
@@ -82,19 +83,63 @@ setClass(
 #' - SYD: Systat
 #' - REC: Epi Info
 #' - XPT: SASS
+#'
+#' @section `RtracklayerHandoffFile-class`:
+#'
+#' File extension supported by `rtracklayer::import()`.
+#'
+#' File extension group supporting:
+#'
+#' - BED, BED15, BEDGRAPH, BEDPE
+#' - BIGWIG, BW, WIG
+#' - GFF, GFF1, GFF2, GFF3, GTF
+#' - BROADPEAK, NARROWPEAK
+#'
+#' @seealso
+#' - `getGeneric`.
+#' - `BiocIO::FileForFormat`.
+setClass(
+    Class = "PipetteFile",
+    contains = "BiocFile"
+)
+
+
+
+## File extension groups =======================================================
+
+#' @rdname PipetteFile-class
+#' @export
+setClass(
+    Class = "DelimFile",
+    contains = "PipetteFile"
+)
+
+#' @rdname PipetteFile-class
+#' @export
+setClass(
+    Class = "ExcelFile",
+    contains = "PipetteFile"
+)
+
+#' @rdname PipetteFile-class
+#' @export
+setClass(
+    Class = "LinesFile",
+    contains = "PipetteFile"
+)
+
+
+
+## Handoff classes =============================================================
+
+#' @rdname PipetteFile-class
 #' @export
 setClass(
     Class = "RioHandoffFile",
     contains = "PipetteFile"
 )
 
-#' @describeIn PipetteFile-class
-#' File extension supported by `rtracklayer::import()`.\cr
-#' File extension group supporting:
-#' - BED, BED15, BEDGRAPH, BEDPE
-#' - BIGWIG, BW, WIG
-#' - GFF, GFF1, GFF2, GFF3, GTF
-#' - BROADPEAK, NARROWPEAK
+#' @rdname PipetteFile-class
 #' @export
 setClass(
     Class = "RtracklayerHandoffFile",
@@ -105,128 +150,112 @@ setClass(
 
 ## File extensions =============================================================
 
-#' @describeIn PipetteFile-class
-#' bcbio-nextgen counts file.
+#' @rdname PipetteFile-class
 #' @export
 setClass(
     Class = "BcbioCountsFile",
     contains = "PipetteFile"
 )
 
-#' @describeIn PipetteFile-class
-#' Comma-separated values file (CSV).
+#' @rdname PipetteFile-class
 #' @export
 setClass(
     Class = "CSVFile",
     contains = "DelimFile"
 )
 
-#' @describeIn PipetteFile-class
-#' FASTA file.
+#' @rdname PipetteFile-class
 #' @export
 setClass(
     Class = "FASTAFile",
     contains = "PipetteFile"
 )
 
-#' @describeIn PipetteFile-class
-#' FASTQ file.
+#' @rdname PipetteFile-class
 #' @export
 setClass(
     Class = "FASTQFile",
     contains = "PipetteFile"
 )
 
-#' @describeIn PipetteFile-class
-#' Gene matrix transposed file (GMT).
+#' @rdname PipetteFile-class
 #' @export
 setClass(
     Class = "GMTFile",
     contains = "PipetteFile"
 )
 
-#' @describeIn PipetteFile-class
-#' Gene matrix file (GMX).
+#' @rdname PipetteFile-class
 #' @export
 setClass(
     Class = "GMXFile",
     contains = "PipetteFile"
 )
 
-#' @describeIn PipetteFile-class
-#' Gene set file (GRP).
+#' @rdname PipetteFile-class
 #' @export
 setClass(
     Class = "GRPFile",
     contains = "PipetteFile"
 )
 
-#' @describeIn PipetteFile-class
-#' JSON file.
+#' @rdname PipetteFile-class
 #' @export
 setClass(
     Class = "JSONFile",
     contains = "PipetteFile"
 )
 
-#' @describeIn PipetteFile-class
-#' MatrixMarket exchange file (MTX).
+#' @rdname PipetteFile-class
 #' @export
 setClass(
     Class = "MTXFile",
     contains = "PipetteFile"
 )
 
-#' @describeIn PipetteFile-class
-#' Open Biomedical Ontologies file (OBO).
+#' @rdname PipetteFile-class
 #' @export
 setClass(
     Class = "OBOFile",
     contains = "PipetteFile"
 )
 
-#' @describeIn PipetteFile-class
-#' GraphPad Prism file (PZFX).
+#' @rdname PipetteFile-class
 #' @export
 setClass(
     Class = "PZFXFile",
     contains = "PipetteFile"
 )
 
-#' @describeIn PipetteFile-class
-#' R Data file containing multiple objects (RData/RDA).
+#' @rdname PipetteFile-class
 #' @export
 setClass(
     Class = "RDataFile",
     contains = "PipetteFile"
 )
 
-#' @describeIn PipetteFile-class
-#' R data file containing a single, serialized object (RDS).
+#' @rdname PipetteFile-class
 #' @export
 setClass(
     Class = "RDSFile",
     contains = "PipetteFile"
 )
 
-#' @describeIn PipetteFile-class
-#' Base R table file (TXT).
+#' @rdname PipetteFile-class
 #' @export
 setClass(
     Class = "TableFile",
     contains = "DelimFile"
 )
 
-#' @describeIn PipetteFile-class
-#' Tab-separated values file (TSV).
+#' @rdname PipetteFile-class
 #' @export
 setClass(
     Class = "TSVFile",
     contains = "DelimFile"
 )
 
-#' @describeIn PipetteFile-class
-#' YAML file.
+#' @rdname PipetteFile-class
 #' @export
 setClass(
     Class = "YAMLFile",
