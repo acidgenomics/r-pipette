@@ -1,3 +1,10 @@
+# pipette 0.9.7 (2022-08-19)
+
+## Minor changes
+
+- `factorize`: Improved handling of `DataFrame` input that contains complex
+  S4 columns, such as `CharacterList`.
+
 # pipette 0.9.6 (2022-08-19)
 
 ## Major changes

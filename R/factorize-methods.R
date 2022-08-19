@@ -26,21 +26,32 @@ NULL
 ## Updated 2022-08-19.
 `factorize,DataFrame` <- # nolint
     function(object) {
-        hasDupes <- bapply(
+        isFactor <- bapply(
             X = object,
             FUN = function(x) {
-                anyDuplicated(na.omit(x)) > 0L
+                if (is.factor(x)) {
+                    return(TRUE)
+                }
+                if (!is.atomic(x)) {
+                    return(FALSE)
+                }
+                ok <- anyDuplicated(na.omit(x)) > 0L
+                ok
             }
         )
-        if (!any(hasDupes)) {
+        if (!any(isFactor)) {
             return(object)
         }
         object <- as(object, "DataFrame")
-        idx <- which(hasDupes)
+        idx <- which(isFactor)
         object[idx] <- lapply(
             X = object[idx],
             FUN = function(x) {
-                droplevels(as.factor(x))
+                if (!is.factor(x)) {
+                    x <- as.factor(x)
+                }
+                x <- droplevels(x)
+                x
             }
         )
         object
