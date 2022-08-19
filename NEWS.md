@@ -1,3 +1,17 @@
+# pipette 0.9.6 (2022-08-19)
+
+## Major changes
+
+- `factorize`: Reworked internal method to only coerce columns with repeated
+  values to factor. Now uses `anyDuplicated` internally to check for which
+  columns to factorize.
+
+## Minor changes
+
+- `import`: Hardened the internal readr engine to use base `make.names` for
+  column name repair for delimited file import (e.g. CSV, TSV). This also
+  eliminates unwanted CLI messages about name repair when using readr.
+
 # pipette 0.9.5 (2022-06-07)
 
 ## Minor changes
