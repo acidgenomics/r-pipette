@@ -1,10 +1,3 @@
-## FIXME Add a setting here (or default?) to only apply as.factor coerction
-## to columns with repeated values...
-## FIXME In the unit test, check that non-repeated values do not get factorized.
-## FIXME Improve the working example here.
-
-
-
 #' @name factorize
 #' @inherit AcidGenerics::factorize
 #' @note Updated 2022-08-19.
