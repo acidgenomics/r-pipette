@@ -9,7 +9,6 @@ test_that("DataFrame", {
     object <- factorize(object)
     print(object)
     object <- factorize(object)
-
     expected <- DataFrame(
         "a" = c("a", "b", "c", "d"),
         "b" = as.factor(c("a", "a", "b", "b")),
