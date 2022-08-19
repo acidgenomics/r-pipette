@@ -15,11 +15,12 @@ NULL
 #' @importFrom AcidGenerics as.DataFrame atomize droplevels2 encode factorize
 #' matchRownameColumn metadata2 metadata2<- removeNA sanitizeNA
 #' sanitizePercent
-#' @importFrom BiocGenerics anyDuplicated as.data.frame end start strand width
+#' @importFrom BiocGenerics anyDuplicated as.data.frame do.call end lapply start
+#' strand which width
 #' @importFrom BiocIO export import resource
 #' @importFrom GenomicRanges seqnames
-#' @importFrom S4Vectors DataFrame Rle SimpleList decode droplevels head mcols
-#' mcols<- metadata metadata<- na.omit tail
+#' @importFrom S4Vectors DataFrame Rle SimpleList as.factor decode droplevels
+#' head mcols mcols<- metadata metadata<- na.omit tail
 #' @importFrom syntactic makeNames
 NULL
 
