@@ -1,7 +1,21 @@
 test_that("DataFrame", {
-    object <- factorize(df)
-    expect_s4_class(object, "DataFrame")
-    expect_true(
-        all(vapply(X = object, FUN = is.factor, FUN.VALUE = logical(1L)))
+    object <- DataFrame(
+        "a" = c("a", "b", "c", "d"),
+        "b" = c("a", "a", "b", "b"),
+        "c" = c(1L, 2L, 3L, 4L),
+        "d" = c(1L, 2L, 1L, 2L),
+        row.names = c("A", "B", "C", "D")
     )
+    object <- factorize(object)
+    print(object)
+    object <- factorize(object)
+
+    expected <- DataFrame(
+        "a" = c("a", "b", "c", "d"),
+        "b" = as.factor(c("a", "a", "b", "b")),
+        "c" = c(1L, 2L, 3L, 4L),
+        "d" = as.factor(c(1L, 2L, 1L, 2L)),
+        row.names = c("A", "B", "C", "D")
+    )
+    expect_identical(object, expected)
 })
