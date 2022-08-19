@@ -1,19 +1,9 @@
-## FIXME Need to quiet down the readr message in this edge case:
-# > format = "csv"
-# >         df <- import(file = tmpfile, format = format, engine = engine)
-# → Importing /Users/mike/.cache/R/DepMapAnalysis/53c277f4c266_13515395 using readr::`read_delim()`.
-# New names:
-# • `` -> `...1`
-# > url [1] "https://ndownloader.figshare.com/files/13515395"
-
-
-
 #' Import
 #'
 #' Read file by extension into R.
 #'
 #' @name import
-#' @note Updated 2022-05-03.
+#' @note Updated 2022-08-19.
 #'
 #' @details
 #' `import()` supports automatic loading of common file types, by wrapping
@@ -934,7 +924,7 @@ NULL
 
 #' Import a delimited file (e.g. `.csv`, `.tsv`).
 #'
-#' @note Updated 2022-05-02.
+#' @note Updated 2022-08-19.
 #' @noRd
 `import,DelimFile` <- # nolint
     function(con,
@@ -1079,6 +1069,7 @@ NULL
                     ),
                     "lazy" = TRUE,
                     "na" = naStrings,
+                    "name_repair" = make.names,
                     "n_max" = nMax,
                     "progress" = verbose,
                     "show_col_types" = verbose,
