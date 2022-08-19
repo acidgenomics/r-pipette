@@ -15,7 +15,7 @@ NULL
 #' @importFrom AcidGenerics as.DataFrame atomize droplevels2 encode factorize
 #' matchRownameColumn metadata2 metadata2<- removeNA sanitizeNA
 #' sanitizePercent
-#' @importFrom BiocGenerics as.data.frame end start strand width
+#' @importFrom BiocGenerics anyDuplicated as.data.frame end start strand width
 #' @importFrom BiocIO export import resource
 #' @importFrom GenomicRanges seqnames
 #' @importFrom S4Vectors DataFrame Rle SimpleList decode droplevels head mcols
