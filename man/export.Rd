@@ -4,26 +4,26 @@
 \alias{export}
 \alias{export,DataFrame,character,character-method}
 \alias{export,DataFrame,character,missingOrNULL-method}
-\alias{export,DataFrame,missingOrNULL,missingOrNULL-method}
-\alias{export,DataFrame,missingOrNULL,character-method}
 \alias{export,GenomicRanges,character,character-method}
 \alias{export,GenomicRanges,character,missingOrNULL-method}
-\alias{export,GenomicRanges,missingOrNULL,missingOrNULL-method}
-\alias{export,GenomicRanges,missingOrNULL,character-method}
 \alias{export,Matrix,character,character-method}
 \alias{export,Matrix,character,missingOrNULL-method}
-\alias{export,Matrix,missingOrNULL,missingOrNULL-method}
-\alias{export,Matrix,missingOrNULL,character-method}
 \alias{export,character,character,character-method}
 \alias{export,character,character,missingOrNULL-method}
-\alias{export,character,missingOrNULL,missingOrNULL-method}
-\alias{export,character,missingOrNULL,character-method}
 \alias{export,data.frame,character,character-method}
 \alias{export,data.frame,character,missingOrNULL-method}
-\alias{export,data.frame,missingOrNULL,missingOrNULL-method}
-\alias{export,data.frame,missingOrNULL,character-method}
 \alias{export,matrix,character,character-method}
 \alias{export,matrix,character,missingOrNULL-method}
+\alias{export,DataFrame,missingOrNULL,missingOrNULL-method}
+\alias{export,DataFrame,missingOrNULL,character-method}
+\alias{export,GenomicRanges,missingOrNULL,missingOrNULL-method}
+\alias{export,GenomicRanges,missingOrNULL,character-method}
+\alias{export,Matrix,missingOrNULL,missingOrNULL-method}
+\alias{export,Matrix,missingOrNULL,character-method}
+\alias{export,character,missingOrNULL,missingOrNULL-method}
+\alias{export,character,missingOrNULL,character-method}
+\alias{export,data.frame,missingOrNULL,missingOrNULL-method}
+\alias{export,data.frame,missingOrNULL,character-method}
 \alias{export,matrix,missingOrNULL,missingOrNULL-method}
 \alias{export,matrix,missingOrNULL,character-method}
 \title{Export}
@@ -52,26 +52,6 @@ export(object, con, format, ...)
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
-\S4method{export}{DataFrame,missingOrNULL,missingOrNULL}(
-  object,
-  con,
-  format,
-  dir = getOption(x = "acid.export.dir", default = getwd()),
-  ...,
-  ext,
-  file
-)
-
-\S4method{export}{DataFrame,missingOrNULL,character}(
-  object,
-  con,
-  format,
-  dir = getOption(x = "acid.export.dir", default = getwd()),
-  ...,
-  ext,
-  file
-)
-
 \S4method{export}{GenomicRanges,character,character}(
   object,
   con,
@@ -94,26 +74,6 @@ export(object, con, format, ...)
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
-\S4method{export}{GenomicRanges,missingOrNULL,missingOrNULL}(
-  object,
-  con,
-  format,
-  dir = getOption(x = "acid.export.dir", default = getwd()),
-  ...,
-  ext,
-  file
-)
-
-\S4method{export}{GenomicRanges,missingOrNULL,character}(
-  object,
-  con,
-  format,
-  dir = getOption(x = "acid.export.dir", default = getwd()),
-  ...,
-  ext,
-  file
-)
-
 \S4method{export}{Matrix,character,character}(
   object,
   con,
@@ -128,26 +88,6 @@ export(object, con, format, ...)
   format,
   overwrite = getOption(x = "acid.overwrite", default = TRUE),
   quiet = getOption(x = "acid.quiet", default = FALSE)
-)
-
-\S4method{export}{Matrix,missingOrNULL,missingOrNULL}(
-  object,
-  con,
-  format,
-  dir = getOption(x = "acid.export.dir", default = getwd()),
-  ...,
-  ext,
-  file
-)
-
-\S4method{export}{Matrix,missingOrNULL,character}(
-  object,
-  con,
-  format,
-  dir = getOption(x = "acid.export.dir", default = getwd()),
-  ...,
-  ext,
-  file
 )
 
 \S4method{export}{character,character,character}(
@@ -172,26 +112,6 @@ export(object, con, format, ...)
   verbose = getOption(x = "acid.verbose", default = FALSE)
 )
 
-\S4method{export}{character,missingOrNULL,missingOrNULL}(
-  object,
-  con,
-  format,
-  dir = getOption(x = "acid.export.dir", default = getwd()),
-  ...,
-  ext,
-  file
-)
-
-\S4method{export}{character,missingOrNULL,character}(
-  object,
-  con,
-  format,
-  dir = getOption(x = "acid.export.dir", default = getwd()),
-  ...,
-  ext,
-  file
-)
-
 \S4method{export}{data.frame,character,character}(
   object,
   con,
@@ -212,26 +132,6 @@ export(object, con, format, ...)
   overwrite = getOption(x = "acid.overwrite", default = TRUE),
   engine = getOption(x = "acid.export.engine", default = "base"),
   quiet = getOption(x = "acid.quiet", default = FALSE)
-)
-
-\S4method{export}{data.frame,missingOrNULL,missingOrNULL}(
-  object,
-  con,
-  format,
-  dir = getOption(x = "acid.export.dir", default = getwd()),
-  ...,
-  ext,
-  file
-)
-
-\S4method{export}{data.frame,missingOrNULL,character}(
-  object,
-  con,
-  format,
-  dir = getOption(x = "acid.export.dir", default = getwd()),
-  ...,
-  ext,
-  file
 )
 
 \S4method{export}{matrix,character,character}(
@@ -256,25 +156,29 @@ export(object, con, format, ...)
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
-\S4method{export}{matrix,missingOrNULL,missingOrNULL}(
-  object,
-  con,
-  format,
-  dir = getOption(x = "acid.export.dir", default = getwd()),
-  ...,
-  ext,
-  file
-)
+\S4method{export}{DataFrame,missingOrNULL,missingOrNULL}(object, con, format, ...)
 
-\S4method{export}{matrix,missingOrNULL,character}(
-  object,
-  con,
-  format,
-  dir = getOption(x = "acid.export.dir", default = getwd()),
-  ...,
-  ext,
-  file
-)
+\S4method{export}{DataFrame,missingOrNULL,character}(object, con, format, ...)
+
+\S4method{export}{GenomicRanges,missingOrNULL,missingOrNULL}(object, con, format, ...)
+
+\S4method{export}{GenomicRanges,missingOrNULL,character}(object, con, format, ...)
+
+\S4method{export}{Matrix,missingOrNULL,missingOrNULL}(object, con, format, ...)
+
+\S4method{export}{Matrix,missingOrNULL,character}(object, con, format, ...)
+
+\S4method{export}{character,missingOrNULL,missingOrNULL}(object, con, format, ...)
+
+\S4method{export}{character,missingOrNULL,character}(object, con, format, ...)
+
+\S4method{export}{data.frame,missingOrNULL,missingOrNULL}(object, con, format, ...)
+
+\S4method{export}{data.frame,missingOrNULL,character}(object, con, format, ...)
+
+\S4method{export}{matrix,missingOrNULL,missingOrNULL}(object, con, format, ...)
+
+\S4method{export}{matrix,missingOrNULL,character}(object, con, format, ...)
 }
 \arguments{
 \item{object}{Object.
@@ -310,17 +214,6 @@ Currently supported:
 \item{quiet}{\code{logical(1)}.
 Perform command quietly, suppressing messages.}
 
-\item{dir}{\code{character(1)}.
-Directory path.}
-
-\item{...}{Additional arguments.}
-
-\item{ext}{\code{character(1)}.
-\emph{Deprecated in favor of \code{format} argument.}}
-
-\item{file}{\code{character(1)}.
-\emph{Deprecated in favor of \code{con} argument.}}
-
 \item{append}{\code{logical(1)}.
 Append to output file.
 When enabled, automatically sets \code{overwrite} argument to \code{FALSE}.
@@ -328,6 +221,8 @@ Requires readr package to be installed.}
 
 \item{verbose}{\code{logical(1)}.
 Run the function with verbose output.}
+
+\item{...}{Additional arguments.}
 }
 \value{
 Invisible \code{character}.
@@ -337,7 +232,7 @@ File path(s).
 Export
 }
 \note{
-Updated 2022-05-31.
+Updated 2022-08-23.
 }
 \section{Output file format extension}{
 

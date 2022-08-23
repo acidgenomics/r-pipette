@@ -691,6 +691,23 @@ NULL
 
 ## Primary S4 methods ==========================================================
 
+#' Deprecated handler for primary `"file"` argument
+#'
+#' @note Updated 2022-08-23.
+#' @noRd
+`import,character,deprecated` <- # nolint
+    function(con,
+             format, # NULL
+             text,
+             ...) {
+        abort(sprintf(
+            "Need to define {.arg %s} (e.g. instead of {.arg %s}).",
+            "con", "file"
+        ))
+    }
+
+
+
 #' Primary `import` method, that hands off to classed file-extension variants
 #'
 #' @details
@@ -781,23 +798,6 @@ NULL
             text = NULL,
             ...
         )
-    }
-
-
-
-#' Deprecated handler for primary "file" argument
-#'
-#' @note Updated 2022-08-23.
-#' @noRd
-`import,character,deprecated` <- # nolint
-    function(con,
-             format, # NULL
-             text,
-             ...) {
-        abort(sprintf(
-            "Need to define {.arg %s} (e.g. instead of {.arg %s}).",
-            "con", "file"
-        ))
     }
 
 
