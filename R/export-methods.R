@@ -804,8 +804,7 @@ setMethod(
                  x = "acid.export.dir",
                  default = getwd()
              ),
-             ...
-    ) {
+             ...) {
         dots <- list(...)
         if (isSubset("file", names(dots))) {
             abort(sprintf(
