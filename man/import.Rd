@@ -32,9 +32,9 @@ import(con, format, text, ...)
 
 \S4method{import}{character,character,missingOrNULL}(con, format, text, ...)
 
-\S4method{import}{missingOrNULL,missingOrNULL,missingOrNULL}(con, format, text, file, ...)
+\S4method{import}{missingOrNULL,missingOrNULL,missingOrNULL}(con, format, text, ...)
 
-\S4method{import}{missingOrNULL,character,missingOrNULL}(con, format, text, file, ...)
+\S4method{import}{missingOrNULL,character,missingOrNULL}(con, format, text, ...)
 
 \S4method{import}{DelimFile,missingOrNULL,missingOrNULL}(
   con,
@@ -199,10 +199,6 @@ string data to import.}
 
 \item{...}{Additional arguments.}
 
-\item{file}{\code{character(1)} or \code{missing}.
-Deprecated in favor of primary \code{con} argument, defined in BiocIO
-package. This argument likely will be removed in a future update.}
-
 \item{rownames}{\code{logical(1)}.
 Automatically assign row names, if \code{rowname} column is defined.
 Applies to file types that return a data frame only.}
@@ -356,7 +352,7 @@ arguments. Remote URLs and compressed files are supported. If you need more
 complex import settings, just call the wrapped importer directly instead.
 }
 \note{
-Updated 2022-08-19.
+Updated 2022-08-23.
 }
 \section{Row and column names}{
 
