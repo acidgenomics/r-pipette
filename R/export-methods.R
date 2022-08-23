@@ -1,7 +1,7 @@
 #' Export
 #'
 #' @name export
-#' @note Updated 2022-05-31.
+#' @note Updated 2022-08-23.
 #'
 #' @section Output file format extension:
 #'
@@ -57,12 +57,6 @@
 #' - base
 #' - data.table
 #' - readr
-#'
-#' @param ext `character(1)`.
-#' *Deprecated in favor of `format` argument.*
-#'
-#' @param file `character(1)`.
-#' *Deprecated in favor of `con` argument.*
 #'
 #' @param format `character(1)`, `missing`, or `NULL`.
 #' Output file format extension.
@@ -278,59 +272,6 @@ NULL
         }
         con <- realpath(con)
         invisible(con)
-    }
-
-
-
-## Updated 2021-10-19.
-`export,character,deprecated` <- # nolint
-    function(object,
-             con, # NULL
-             format,
-             dir = getOption(
-                 x = "acid.export.dir",
-                 default = getwd()
-             ),
-             ...,
-             ext, # deprecated in favor of "format"
-             file # deprecated in favor of "con"
-    ) {
-        if (!missing(file)) {
-            ## > .Deprecated(sprintf(
-            ## >     "Use '%s' instead of '%s'.",
-            ## >     "con", "file"
-            ## > ))
-            con <- file
-        }
-        if (missing(con)) {
-            con <- NULL
-        }
-        if (!missing(ext)) {
-            ## > .Deprecated(sprintf(
-            ## >     "Use '%s' instead of '%s'.",
-            ## >     "format", "ext"
-            ## > ))
-            format <- ext
-        }
-        assert(isString(dir))
-        formatChoices <- .exportFormatChoices[["character"]]
-        if (missing(format)) {
-            format <- formatChoices[[1L]]
-        }
-        format <- match.arg(arg = format, choices = formatChoices)
-        if (is.null(con)) {
-            call <- standardizeCall()
-            sym <- call[["object"]]
-            assert(is.symbol(sym), msg = .symError)
-            name <- as.character(sym)
-            con <- file.path(dir, paste0(name, ".", format))
-        }
-        export(
-            object = object,
-            con = con,
-            format = NULL,
-            ...
-        )
     }
 
 
@@ -568,59 +509,6 @@ NULL
 
 
 
-## Updated 2021-10-19.
-`export,data.frame,deprecated` <- # nolint
-    function(object,
-             con, # NULL
-             format,
-             dir = getOption(
-                 x = "acid.export.dir",
-                 default = getwd()
-             ),
-             ...,
-             ext, # deprecated in favor of "format"
-             file # deprecated in favor of "con"
-    ) {
-        if (!missing(file)) {
-            ## > .Deprecated(sprintf(
-            ## >     "Use '%s' instead of '%s'.",
-            ## >     "con", "file"
-            ## > ))
-            con <- file
-        }
-        if (missing(con)) {
-            con <- NULL
-        }
-        if (!missing(ext)) {
-            ## > .Deprecated(sprintf(
-            ## >     "Use '%s' instead of '%s'.",
-            ## >     "format", "ext"
-            ## > ))
-            format <- ext
-        }
-        assert(isString(dir))
-        formatChoices <- .exportFormatChoices[["delim"]]
-        if (missing(format)) {
-            format <- formatChoices[[1L]]
-        }
-        format <- match.arg(arg = format, choices = formatChoices)
-        if (is.null(con)) {
-            call <- standardizeCall()
-            sym <- call[["object"]]
-            assert(is.symbol(sym), msg = .symError)
-            name <- as.character(sym)
-            con <- file.path(dir, paste0(name, ".", format))
-        }
-        export(
-            object = object,
-            con = con,
-            format = format,
-            ...
-        )
-    }
-
-
-
 #' Export `Matrix` (e.g. `sparseMatrix`) method
 #'
 #' @note Updated 2022-06-07.
@@ -735,42 +623,222 @@ NULL
 
 
 
+`export,DataFrame` <- # nolint
+    `export,data.frame`
+
+`export,GenomicRanges` <- # nolint
+    `export,data.frame`
+
+`export,matrix` <- # nolint
+    `export,data.frame`
+
+
+
+## S4 method exports ===========================================================
+
+## FIXME What about when "format" is defined but "con" isn't?
+## Don't we need to define these methods??
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "DataFrame",
+        con = "character",
+        format = "character"
+    ),
+    definition = `export,DataFrame`
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "DataFrame",
+        con = "character",
+        format = "missingOrNULL"
+    ),
+    definition = `export,DataFrame`
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "GenomicRanges",
+        con = "character",
+        format = "character"
+    ),
+    definition = `export,GenomicRanges`
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "GenomicRanges",
+        con = "character",
+        format = "missingOrNULL"
+    ),
+    definition = `export,GenomicRanges`
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "Matrix",
+        con = "character",
+        format = "character"
+    ),
+    definition = `export,Matrix`
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "Matrix",
+        con = "character",
+        format = "missingOrNULL"
+    ),
+    definition = `export,Matrix`
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "character",
+        con = "character",
+        format = "character"
+    ),
+    definition = `export,character`
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "character",
+        con = "character",
+        format = "missingOrNULL"
+    ),
+    definition = `export,character`
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "data.frame",
+        con = "character",
+        format = "character"
+    ),
+    definition = `export,data.frame`
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "data.frame",
+        con = "character",
+        format = "missingOrNULL"
+    ),
+    definition = `export,data.frame`
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "matrix",
+        con = "character",
+        format = "character"
+    ),
+    definition = `export,matrix`
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "matrix",
+        con = "character",
+        format = "missingOrNULL"
+    ),
+    definition = `export,matrix`
+)
+
+
+
+
+## FIXME Add back support for export without con or format definition!
+## This is super useful for interactive export.
+## FIXME Error if the user has defined "ext" or "file" here instead.
+## Inform them of the updated argument names.
+
+
+## FIXME Rethink this as clever approach for handling automatic name export.
+## FIXME What if we don't set con but we DO set format?
+
 ## Updated 2021-10-19.
-`export,Matrix,deprecated` <- # nolint
+`export,character,deprecated` <- # nolint
     function(object,
-             con, # NULL
-             format,
+             con, # missingOrNULL
+             format, # missingOrNULL
              dir = getOption(
                  x = "acid.export.dir",
                  default = getwd()
              ),
-             ...,
-             ext, # deprecated in favor of "format"
-             file # deprecated in favor of "con"
+             ...
     ) {
-        if (!missing(file)) {
-            ## > .Deprecated(sprintf(
-            ## >     "Use '%s' instead of '%s'.",
-            ## >     "con", "file"
-            ## > ))
-            con <- file
+        dots <- list(...)
+        if (isSubset("file", names(dots))) {
+            abort(sprintf(
+                "Use {.arg %s} instead of {.arg %s}.",
+                "con", "file"
+            ))
         }
+        if (isSubset("ext", names(dots))) {
+            abort(sprintf(
+                "Use {.arg %s} instead of {.arg %s}.",
+                "format", "ext"
+            ))
+        }
+        assert(isString(dir))
         if (missing(con)) {
             con <- NULL
         }
-        if (!missing(ext)) {
-            ## > .Deprecated(sprintf(
-            ## >     "Use '%s' instead of '%s'.",
-            ## >     "format", "ext"
-            ## > ))
-            format <- ext
-        }
-        assert(isString(dir))
-        formatChoices <- .exportFormatChoices[["Matrix"]]
         if (missing(format)) {
-            format <- formatChoices[[1L]]
+            format <- NULL
         }
-        format <- match.arg(arg = format, choices = formatChoices)
+        ## Mode 1: neither `con` nor `format` are defined.
+        if (is.null(con) && is.null(format)) {
+        }
+        ## Mode 2: `con` is defined.
+        if (!is.null(con)) {
+            assert(is.null(format))
+        }
+        ## Mode 3: `format` is defined.
+        if (!is.null(format)) {
+            assert(is.null(con))
+        }
+
+
         if (is.null(con)) {
             call <- standardizeCall()
             sym <- call[["object"]]
@@ -778,61 +846,27 @@ NULL
             name <- as.character(sym)
             con <- file.path(dir, paste0(name, ".", format))
         }
-        export(
-            object = object,
-            con = con,
-            format = format,
-            ...
-        )
+
+
+        args <- list()
+        args[["object"]] <- object
+        if (!missing(con)) {
+            args[["con"]] <- con
+        }
+        if (!missing(format)) {
+            args[["format"]] <- format
+        }
+        args <- append(x = args, values = dots)
+        do.call(what = export, args = args)
     }
 
 
 
-`export,DataFrame` <- # nolint
-    `export,data.frame`
+## Deprecated S4 method exports ================================================
 
-`export,DataFrame,deprecated` <- # nolint
-    `export,data.frame,deprecated`
-
-`export,GenomicRanges` <- # nolint
-    `export,data.frame`
-
-`export,GenomicRanges,deprecated` <- # nolint
-    `export,data.frame,deprecated`
-
-`export,matrix` <- # nolint
-    `export,data.frame`
-
-`export,matrix,deprecated` <- # nolint
-    `export,data.frame,deprecated`
-
-
-
-## S4 method exports ===========================================================
-
-#' @rdname export
-#' @export
-setMethod(
-    f = "export",
-    signature = signature(
-        object = "DataFrame",
-        con = "character",
-        format = "character"
-    ),
-    definition = `export,DataFrame`
-)
-
-#' @rdname export
-#' @export
-setMethod(
-    f = "export",
-    signature = signature(
-        object = "DataFrame",
-        con = "character",
-        format = "missingOrNULL"
-    ),
-    definition = `export,DataFrame`
-)
+`export,deprecated` <- function(object, con, format, ...) {
+    stop("FIXME")
+}
 
 #' @rdname export
 #' @export
@@ -843,7 +877,7 @@ setMethod(
         con = "missingOrNULL",
         format = "missingOrNULL"
     ),
-    definition = `export,DataFrame,deprecated`
+    definition = `export,deprecated`
 )
 
 #' @rdname export
@@ -855,31 +889,7 @@ setMethod(
         con = "missingOrNULL",
         format = "character"
     ),
-    definition = `export,DataFrame,deprecated`
-)
-
-#' @rdname export
-#' @export
-setMethod(
-    f = "export",
-    signature = signature(
-        object = "GenomicRanges",
-        con = "character",
-        format = "character"
-    ),
-    definition = `export,GenomicRanges`
-)
-
-#' @rdname export
-#' @export
-setMethod(
-    f = "export",
-    signature = signature(
-        object = "GenomicRanges",
-        con = "character",
-        format = "missingOrNULL"
-    ),
-    definition = `export,GenomicRanges`
+    definition = `export,deprecated`
 )
 
 #' @rdname export
@@ -891,7 +901,7 @@ setMethod(
         con = "missingOrNULL",
         format = "missingOrNULL"
     ),
-    definition = `export,GenomicRanges,deprecated`
+    definition = `export,deprecated`
 )
 
 #' @rdname export
@@ -903,31 +913,7 @@ setMethod(
         con = "missingOrNULL",
         format = "character"
     ),
-    definition = `export,GenomicRanges,deprecated`
-)
-
-#' @rdname export
-#' @export
-setMethod(
-    f = "export",
-    signature = signature(
-        object = "Matrix",
-        con = "character",
-        format = "character"
-    ),
-    definition = `export,Matrix`
-)
-
-#' @rdname export
-#' @export
-setMethod(
-    f = "export",
-    signature = signature(
-        object = "Matrix",
-        con = "character",
-        format = "missingOrNULL"
-    ),
-    definition = `export,Matrix`
+    definition = `export,deprecated`
 )
 
 #' @rdname export
@@ -939,7 +925,7 @@ setMethod(
         con = "missingOrNULL",
         format = "missingOrNULL"
     ),
-    definition = `export,Matrix,deprecated`
+    definition = `export,deprecated`
 )
 
 #' @rdname export
@@ -951,31 +937,7 @@ setMethod(
         con = "missingOrNULL",
         format = "character"
     ),
-    definition = `export,Matrix,deprecated`
-)
-
-#' @rdname export
-#' @export
-setMethod(
-    f = "export",
-    signature = signature(
-        object = "character",
-        con = "character",
-        format = "character"
-    ),
-    definition = `export,character`
-)
-
-#' @rdname export
-#' @export
-setMethod(
-    f = "export",
-    signature = signature(
-        object = "character",
-        con = "character",
-        format = "missingOrNULL"
-    ),
-    definition = `export,character`
+    definition = `export,deprecated`
 )
 
 #' @rdname export
@@ -987,7 +949,7 @@ setMethod(
         con = "missingOrNULL",
         format = "missingOrNULL"
     ),
-    definition = `export,character,deprecated`
+    definition = `export,deprecated`
 )
 
 #' @rdname export
@@ -999,31 +961,7 @@ setMethod(
         con = "missingOrNULL",
         format = "character"
     ),
-    definition = `export,character,deprecated`
-)
-
-#' @rdname export
-#' @export
-setMethod(
-    f = "export",
-    signature = signature(
-        object = "data.frame",
-        con = "character",
-        format = "character"
-    ),
-    definition = `export,data.frame`
-)
-
-#' @rdname export
-#' @export
-setMethod(
-    f = "export",
-    signature = signature(
-        object = "data.frame",
-        con = "character",
-        format = "missingOrNULL"
-    ),
-    definition = `export,data.frame`
+    definition = `export,deprecated`
 )
 
 #' @rdname export
@@ -1035,7 +973,7 @@ setMethod(
         con = "missingOrNULL",
         format = "missingOrNULL"
     ),
-    definition = `export,data.frame,deprecated`
+    definition = `export,deprecated`
 )
 
 #' @rdname export
@@ -1047,31 +985,7 @@ setMethod(
         con = "missingOrNULL",
         format = "character"
     ),
-    definition = `export,data.frame,deprecated`
-)
-
-#' @rdname export
-#' @export
-setMethod(
-    f = "export",
-    signature = signature(
-        object = "matrix",
-        con = "character",
-        format = "character"
-    ),
-    definition = `export,matrix`
-)
-
-#' @rdname export
-#' @export
-setMethod(
-    f = "export",
-    signature = signature(
-        object = "matrix",
-        con = "character",
-        format = "missingOrNULL"
-    ),
-    definition = `export,matrix`
+    definition = `export,deprecated`
 )
 
 #' @rdname export
@@ -1083,7 +997,7 @@ setMethod(
         con = "missingOrNULL",
         format = "missingOrNULL"
     ),
-    definition = `export,matrix,deprecated`
+    definition = `export,deprecated`
 )
 
 #' @rdname export
@@ -1095,5 +1009,5 @@ setMethod(
         con = "missingOrNULL",
         format = "character"
     ),
-    definition = `export,matrix,deprecated`
+    definition = `export,deprecated`
 )
