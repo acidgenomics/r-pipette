@@ -3,7 +3,7 @@
 #' Read file by extension into R.
 #'
 #' @name import
-#' @note Updated 2022-08-19.
+#' @note Updated 2022-08-23.
 #'
 #' @details
 #' `import()` supports automatic loading of common file types, by wrapping
@@ -100,10 +100,6 @@
 #' An optional file format type, which can be used to override the file format
 #' inferred from `con`. Only recommended for file and URL paths that don't
 #' contain an extension.
-#'
-#' @param file `character(1)` or `missing`.
-#' Deprecated in favor of primary `con` argument, defined in BiocIO
-#' package. This argument likely will be removed in a future update.
 #'
 #' @param rownameCol `NULL`, `character(1)`, or `integer(1)`.
 #' *Applies only when `rownames = TRUE`.*
@@ -789,30 +785,19 @@ NULL
 
 
 
-#' Soft deprecated legacy handler for primary "file" argument
+#' Deprecated handler for primary "file" argument
 #'
-#' @note Updated 2021-10-12.
+#' @note Updated 2022-08-23.
 #' @noRd
 `import,character,deprecated` <- # nolint
     function(con,
              format, # NULL
-             text, # NULL
-             file, # deprecated
+             text,
              ...) {
-        assert(isString(file))
-        con <- file
-        if (missing(format)) {
-            format <- NULL
-        }
-        if (missing(text)) {
-            text <- NULL
-        }
-        import(
-            con = con,
-            format = format,
-            text = text,
-            ...
-        )
+        abort(sprintf(
+            "Need to define {.arg %s} (e.g. instead of {.arg %s}).",
+            "con", "file"
+        ))
     }
 
 
@@ -1917,6 +1902,9 @@ NULL
 `import,GRPFile` <- `import,GMXFile` # nolint
 
 
+
+## FIXME Error if user has ontologyIndex 2.9 installed.
+## Doesn't work currently with Cellosaurus OBO file.
 
 #' Import an open biomedical ontologies file (`.obo`)
 #'
