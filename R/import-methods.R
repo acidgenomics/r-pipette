@@ -1908,7 +1908,7 @@ NULL
 
 #' Import an open biomedical ontologies file (`.obo`)
 #'
-#' @note Updated 2022-05-12.
+#' @note Updated 2022-08-23.
 #' @noRd
 `import,OBOFile` <- # nolint
     function(con,
@@ -1926,6 +1926,17 @@ NULL
         file <- resource(con)
         whatPkg <- "ontologyIndex"
         whatFun <- "get_ontology"
+        ## nocov start
+        if (identical(
+            x = packageVersion(whatPkg),
+            y = package_version("2.9")
+        )) {
+            abort(sprintf(
+                "{.pkg %s} {.strong %s} is not supported.",
+                whatPkg, "2.9"
+            ))
+        }
+        ## nocov end
         if (isFALSE(quiet)) {
             .alertImport(
                 con = con,
