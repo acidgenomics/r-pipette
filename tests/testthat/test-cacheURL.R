@@ -24,7 +24,7 @@ test_that("URLs with the same base name", {
         "Homo_sapiens.GRCh38.cdna.all.fa.gz",
         protocol = "ftp"
     )
-    ## > lines <- import(file = url1, format = "lines")
+    ## > lines <- import(con = url1, format = "lines")
     ## > expect_identical(
     ## >     object = length(lines),
     ## >     expected = 5063317L
@@ -40,7 +40,7 @@ test_that("URLs with the same base name", {
         "Homo_sapiens.GRCh38.cdna.all.fa.gz",
         protocol = "ftp"
     )
-    ## > lines <- import(file = url2, format = "lines")
+    ## > lines <- import(con = url2, format = "lines")
     ## > expect_identical(
     ## >     object = length(lines),
     ## >     expected = 5883368L

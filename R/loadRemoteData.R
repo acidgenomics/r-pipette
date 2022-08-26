@@ -66,7 +66,7 @@ loadRemoteData <-
             url = url,
             MoreArgs = list("envir" = envir),
             f = function(name, url, envir) {
-                data <- import(file = url)
+                data <- import(url)
                 assign(x = name, value = data, envir = envir)
             }
         ))

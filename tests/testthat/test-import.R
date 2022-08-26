@@ -332,7 +332,7 @@ for (engine in .engines) {
 }
 
 test_that("Deprecated 'file' argument", {
-    object <- import(file = file.path("cache", "example.csv"))
+    object <- import(file.path("cache", "example.csv"))
     expect_s3_class(object, "data.frame")
 })
 
@@ -584,7 +584,7 @@ test_that("XLSX", {
             )
         )
     )
-    expect_true(hasRownames(import(file = file, rownameCol = "rowname")))
+    expect_true(hasRownames(import(con = file, rownameCol = "rowname")))
 })
 
 test_that("XLS", {
@@ -618,7 +618,7 @@ test_that("XLS", {
             )
         )
     )
-    expect_true(hasRownames(import(file = file, rownameCol = "rowname")))
+    expect_true(hasRownames(import(con = file, rownameCol = "rowname")))
 })
 
 test_that("bcbio counts", {

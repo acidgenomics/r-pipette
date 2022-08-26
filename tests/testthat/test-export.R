@@ -297,7 +297,7 @@ test_that("Deprecated 'file' argument", {
     testdir <- tempdir2()
     x <- export(
         object = object,
-        file = file.path(testdir, "sparse.mtx")
+        con = file.path(testdir, "sparse.mtx")
     )
     expect_identical(
         object = x,
