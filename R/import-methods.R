@@ -1,3 +1,15 @@
+## FIXME Improve `quiet = TRUE` mode using sink call here.
+## Refer to AcidDevTools::getCurrentGitHubVersion for inspiration.
+## > nullcon <- file(nullfile(), open = "wb")
+## > sink(nullcon, type = "message")
+## > suppressMessages({
+## >     x <- pipette::import(url, format = "json", quiet = TRUE)
+## > })
+## > sink(type = "message")
+## > close(nullcon)
+
+
+
 #' Import
 #'
 #' Read file by extension into R.
