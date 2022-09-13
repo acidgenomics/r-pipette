@@ -29,7 +29,7 @@ Imports:
     BiocIO (>= 1.6.0),
     GenomicRanges (>= 1.48.0),
     IRanges (>= 2.30.1),
-    Matrix (>= 1.5),
+    Matrix (>= 1.4),
     S4Vectors (>= 0.34.0),
     goalie (>= 0.6.4),
     methods,
@@ -51,7 +51,7 @@ Suggests:
     rio (>= 0.5.29),
     rtracklayer (>= 1.56.1),
     stringi (>= 1.7.8),
-    testthat (>= 3.0.0),
+    testthat (>= 3.1.4),
     tibble (>= 3.1.8),
     tools,
     yaml (>= 2.3.5)
