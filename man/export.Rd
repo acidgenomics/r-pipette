@@ -5,7 +5,7 @@
 \alias{export,DataFrame,character,missing-method}
 \alias{export,GenomicRanges,character,missing-method}
 \alias{export,Matrix,character,missing-method}
-\alias{export,character,character,missing-method}
+\alias{export,atomic,character,missing-method}
 \alias{export,data.frame,character,missing-method}
 \alias{export,matrix,character,missing-method}
 \alias{export,ANY,missing,missing-method}
@@ -44,7 +44,7 @@ export(object, con, format, ...)
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
-\S4method{export}{character,character,missing}(
+\S4method{export}{atomic,character,missing}(
   object,
   con,
   format,
