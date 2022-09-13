@@ -1914,7 +1914,7 @@ NULL
             isFlag(quiet)
         )
         lines <- import(
-            file = resource(con),
+            con = resource(con),
             format = "lines",
             metadata = FALSE,
             quiet = quiet
