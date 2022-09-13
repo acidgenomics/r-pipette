@@ -158,7 +158,7 @@ NULL
 
 
 ## Updated 2022-09-13.
-`export,ANY,NSE` <-
+`export,ANY,NSE` <- # nolint
     function(object,
              con,
              format,
