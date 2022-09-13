@@ -15,7 +15,7 @@
 #' Read file by extension into R.
 #'
 #' @name import
-#' @note Updated 2022-08-23.
+#' @note Updated 2022-09-13.
 #'
 #' @details
 #' `import()` supports automatic loading of common file types, by wrapping
@@ -474,7 +474,7 @@ NULL
 #' Compressed files will automatically be decompressed. Currently, these file
 #' extensions are natively supported: `BZ2`, `GZ`, `XZ`, and `ZIP`.
 #'
-#' @note Updated 2022-06-02.
+#' @note Updated 2022-09-13.
 #' @noRd
 #'
 #' @inheritParams AcidRoxygen::params
@@ -505,8 +505,7 @@ NULL
 #' x <- .localOrRemoteFile(file)
 #' print(x)
 .localOrRemoteFile <-
-    function(file,
-             quiet = getOption(x = "acid.quiet", default = FALSE)) {
+    function(file, quiet) {
         assert(
             isString(file),
             isFlag(quiet)
@@ -728,7 +727,7 @@ NULL
 #' Allow Google Sheets import using rio, by matching the URL.
 #' Otherwise, coerce the file extension to uppercase, for easy matching.
 #'
-#' @note Updated 2021-10-12.
+#' @note Updated 2022-09-13.
 #' @noRd
 `import,character` <- # nolint
     function(con,
@@ -745,9 +744,16 @@ NULL
         if (missing(text)) {
             text <- NULL
         }
+        dots <- list(...)
+        if (isSubset("quiet", names(dots))) {
+            quiet <- dots[["quiet"]]
+        } else {
+            quiet <- getOption(x = "acid.quiet", default = FALSE)
+        }
         assert(
             isString(format, nullOK = TRUE),
-            is.null(text)
+            is.null(text),
+            isFlag(quiet)
         )
         if (grepl(
             pattern = "^https://docs\\.google\\.com/spreadsheets",
@@ -794,7 +800,7 @@ NULL
                 if (isAFile(origResource)) {
                     origResource <- realpath(origResource)
                 }
-                resource <- .localOrRemoteFile(con)
+                resource <- .localOrRemoteFile(con, quiet = quiet)
                 con <- new(Class = class, resource = resource)
                 attr(con, which = "origResource") <- origResource
             }
