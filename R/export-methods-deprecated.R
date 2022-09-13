@@ -16,6 +16,66 @@
 
 
 
+## Updated 2022-09-13.
+.exportFormat <- function(object, con, format) {
+    abort(sprintf(
+        "Use {.arg %s} instead of {.arg %s}.",
+        "con", "format"
+    ))
+}
+
+
+
+## Updated 2022-09-13.
+.exportNSE <- function(object,
+         con,
+         format,
+         dir = getOption(
+             x = "acid.export.dir",
+             default = getwd()
+         ),
+         ...) {
+    dots <- list(...)
+    if (isSubset("file", names(dots))) {
+        abort(sprintf(
+            "Use {.arg %s} instead of {.arg %s}.",
+            "con", "file"
+        ))
+    }
+    if (isSubset("ext", names(dots))) {
+        abort(sprintf(
+            "Use {.arg %s} instead of {.arg %s}.",
+            "format", "ext"
+        ))
+    }
+    if (missing(con)) {
+        con <- NULL
+    }
+    if (missing(format)) {
+        format <- NULL
+    }
+    assert(
+        is.null(con),
+        is.null(format),
+        isString(dir)
+    )
+    call <- standardizeCall()
+    sym <- call[["object"]]
+    assert(is.symbol(sym), msg = .symError)
+    name <- as.character(sym)
+    ext <- .defaultExt(object)
+    con <- file.path(dir, paste0(name, ".", ext))
+    args <- list(
+        "object" = object,
+        "con" = con,
+        "format" = format
+    )
+    args <- append(x = args, values = dots)
+    do.call(what = export, args = args)
+}
+
+
+
 #' @rdname export
 #' @export
 setMethod(
@@ -25,69 +85,86 @@ setMethod(
         con = "missingOrNULL",
         format = "missingOrNULL"
     ),
-    definition = function(object,
-                          con,
-                          format,
-                          dir = getOption(
-                              x = "acid.export.dir",
-                              default = getwd()
-                          ),
-                          ...) {
-        dots <- list(...)
-        if (isSubset("file", names(dots))) {
-            abort(sprintf(
-                "Use {.arg %s} instead of {.arg %s}.",
-                "con", "file"
-            ))
-        }
-        if (isSubset("ext", names(dots))) {
-            abort(sprintf(
-                "Use {.arg %s} instead of {.arg %s}.",
-                "format", "ext"
-            ))
-        }
-        if (missing(con)) {
-            con <- NULL
-        }
-        if (missing(format)) {
-            format <- NULL
-        }
-        assert(
-            is.null(con),
-            is.null(format),
-            isString(dir)
-        )
-        call <- standardizeCall()
-        sym <- call[["object"]]
-        assert(is.symbol(sym), msg = .symError)
-        name <- as.character(sym)
-        ext <- .defaultExt(object)
-        con <- file.path(dir, paste0(name, ".", ext))
-        args <- list(
-            "object" = object,
-            "con" = con,
-            "format" = format
-        )
-        args <- append(x = args, values = dots)
-        do.call(what = export, args = args)
-    }
+    definition = .exportNSE
 )
 
 
+
+## DataFrame
+## GenomicRanges
+## Matrix
+## character
+## data.frame
+## matrix
 
 #' @rdname export
 #' @export
 setMethod(
     f = "export",
     signature = signature(
-        object = "ANY",
+        object = "DataFrame",
         con = "missingOrNULL",
         format = "character"
     ),
-    definition = function(object, con, format) {
-        abort(sprintf(
-            "Use {.arg %s} instead of {.arg %s}.",
-            "con", "format"
-        ))
-    }
+    definition = .exportFormat
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "GenomicRanges",
+        con = "missingOrNULL",
+        format = "character"
+    ),
+    definition = .exportFormat
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "Matrix",
+        con = "missingOrNULL",
+        format = "character"
+    ),
+    definition = .exportFormat
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "character",
+        con = "missingOrNULL",
+        format = "character"
+    ),
+    definition = .exportFormat
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "data.frame",
+        con = "missingOrNULL",
+        format = "character"
+    ),
+    definition = .exportFormat
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "matrix",
+        con = "missingOrNULL",
+        format = "character"
+    ),
+    definition = .exportFormat
 )

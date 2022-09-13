@@ -59,7 +59,7 @@
 #' - readr
 #'
 #' @param format `character(1)`, `missing`, or `NULL`.
-#' Output file format extension.
+#' *Currently not supported.*
 #'
 #' @return Invisible `character`.
 #' File path(s).
