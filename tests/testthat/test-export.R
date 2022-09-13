@@ -1,6 +1,3 @@
-## FIXME Need to rework all "format" tests to use "con" instead.
-
-
 for (engine in .engines) {
     test_that(
         desc = paste("'append' argument", engine, sep = " : "),
@@ -61,11 +58,11 @@ for (engine in .engines) {
     )
     for (format in .exportFormatChoices[["character"]]) {
         test_that(
-            desc = paste("format", format, engine, sep = " : "),
+            desc = paste(format, engine, sep = " : "),
             code = {
                 testdir <- tempdir2()
                 vec <- c("hello", "world")
-                con <- file.path(testdir, paste0("vec", ".", format))
+                con <- file.path(testdir, paste0("character", ".", format))
                 x <- export(
                     object = vec,
                     con = con,
@@ -84,8 +81,7 @@ for (engine in .engines) {
                 expect_error(
                     export(
                         object = vec,
-                        format = format,
-                        dir = testdir,
+                        con = con,
                         overwrite = FALSE,
                         engine = engine
                     ),
@@ -98,8 +94,7 @@ for (engine in .engines) {
                 expect_message(
                     export(
                         object = vec,
-                        format = format,
-                        dir = testdir,
+                        con = con,
                         overwrite = TRUE,
                         engine = engine
                     ),
@@ -120,24 +115,20 @@ for (format in .exportFormatChoices[["delim"]]) {
     for (class in names(objects)) {
         for (engine in .engines) {
             test_that(
-                desc = paste(
-                    "'format' argument",
-                    format, class, engine,
-                    sep = " : "
-                ),
+                desc = paste(format, class, engine, sep = " : "),
                 code = {
                     testdir <- tempdir2()
                     object <- objects[[class]]
+                    con <- file.path(testdir, paste0(class, ".", format))
                     file <- export(
                         object = object,
-                        format = format,
-                        dir = testdir,
+                        con = con,
                         engine = engine
                     )
                     expect_true(file.exists(file))
                     expect_identical(
                         object = basename(file),
-                        expected = paste0("object", ".", format)
+                        expected = paste0(class, ".", format)
                     )
                     reimport <- import(file, engine = engine)
                     expect_true(hasRownames(reimport))
@@ -145,8 +136,7 @@ for (format in .exportFormatChoices[["delim"]]) {
                     expect_error(
                         export(
                             object = object,
-                            format = format,
-                            dir = testdir,
+                            con = con,
                             overwrite = FALSE,
                             engine = engine
                         ),
@@ -159,8 +149,7 @@ for (format in .exportFormatChoices[["delim"]]) {
                     expect_message(
                         export(
                             object = object,
-                            format = format,
-                            dir = testdir,
+                            con = con,
                             overwrite = TRUE,
                             engine = engine
                         ),
@@ -217,54 +206,32 @@ for (engine in .engines) {
     )
 }
 
-test_that("Deprecated 'ext' argument", {
-    object <- df
-    expect_s4_class(object, "DataFrame")
-    testdir <- tempdir2()
-    x <- export(
-        object = object,
-        ext = "csv",
-        dir = testdir
-    )
-    expect_true(file.exists(x))
-    unlink2(testdir)
-})
-
-test_that("Deprecated 'file' argument", {
-    object <- df
-    expect_s4_class(object, "DataFrame")
-    file <- file.path(tempdir2(), "test.csv")
-    x <- export(object = object, file = file)
-    expect_true(file.exists(x))
-    unlink2(file)
-})
-
 for (format in .exportFormatChoices[["Matrix"]]) {
     test_that(
-        desc = paste("'format' argument", format, sep = " : "),
+        desc = format,
         code = {
             object <- sparse
             expect_s4_class(object, "sparseMatrix")
             testdir <- tempdir2()
+            con <- file.path(testdir, paste0("Matrix", ".", format))
             x <- export(
                 object = object,
-                format = format,
-                dir = testdir
+                con = con
             )
             expect_identical(
                 object = x,
                 expected = c(
                     "matrix" = realpath(file.path(
                         testdir,
-                        paste0("object", ".", format)
+                        paste0("Matrix", ".", format)
                     )),
                     "rownames" = realpath(file.path(
                         testdir,
-                        paste0("object", ".", format, ".", "rownames")
+                        paste0("Matrix", ".", format, ".", "rownames")
                     )),
                     "colnames" = realpath(file.path(
                         testdir,
-                        paste0("object", ".", format, ".", "colnames")
+                        paste0("Matrix", ".", format, ".", "colnames")
                     ))
                 )
             )
@@ -273,8 +240,7 @@ for (format in .exportFormatChoices[["Matrix"]]) {
             expect_error(
                 object = export(
                     object = object,
-                    format = format,
-                    dir = testdir,
+                    con = con,
                     overwrite = FALSE
                 ),
                 regexp = "File exists"
@@ -282,8 +248,7 @@ for (format in .exportFormatChoices[["Matrix"]]) {
             expect_message(
                 object = export(
                     object = object,
-                    format = format,
-                    dir = testdir,
+                    con = con,
                     overwrite = TRUE
                 ),
                 regexp = "Overwriting"
@@ -292,26 +257,6 @@ for (format in .exportFormatChoices[["Matrix"]]) {
         }
     )
 }
-
-test_that("Deprecated 'file' argument", {
-    object <- sparse
-    expect_s4_class(object, "sparseMatrix")
-    testdir <- tempdir2()
-    x <- export(
-        object = object,
-        con = file.path(testdir, "sparse.mtx")
-    )
-    expect_identical(
-        object = x,
-        expected = c(
-            "matrix" = realpath(file.path(testdir, "sparse.mtx")),
-            "rownames" = realpath(file.path(testdir, "sparse.mtx.rownames")),
-            "colnames" = realpath(file.path(testdir, "sparse.mtx.colnames"))
-        )
-    )
-    expect_true(all(file.exists(x)))
-    unlink2(testdir)
-})
 
 test_that("Invalid input", {
     object <- sparse
