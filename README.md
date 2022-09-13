@@ -47,7 +47,6 @@ docker run -it \
 ```
 
 [bioconda]: https://bioconda.github.io/
-[bioconductor]: https://bioconductor.org/
 [conda]: https://conda.io/
 [docker]: https://www.docker.com/
 [r]: https://www.r-project.org/
