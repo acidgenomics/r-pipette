@@ -2,41 +2,41 @@
 % Please edit documentation in R/AllGenerics.R, R/import-methods.R
 \name{import}
 \alias{import}
-\alias{import,character,missingOrNULL,missingOrNULL-method}
-\alias{import,character,character,missingOrNULL-method}
-\alias{import,missingOrNULL,missingOrNULL,missingOrNULL-method}
-\alias{import,missingOrNULL,character,missingOrNULL-method}
-\alias{import,DelimFile,missingOrNULL,missingOrNULL-method}
-\alias{import,LinesFile,missingOrNULL,missingOrNULL-method}
-\alias{import,ExcelFile,missingOrNULL,missingOrNULL-method}
-\alias{import,FASTAFile,missingOrNULL,missingOrNULL-method}
-\alias{import,FASTQFile,missingOrNULL,missingOrNULL-method}
-\alias{import,GMTFile,missingOrNULL,missingOrNULL-method}
-\alias{import,GMXFile,missingOrNULL,missingOrNULL-method}
-\alias{import,GRPFile,missingOrNULL,missingOrNULL-method}
-\alias{import,JSONFile,missingOrNULL,missingOrNULL-method}
-\alias{import,MTXFile,missingOrNULL,missingOrNULL-method}
-\alias{import,OBOFile,missingOrNULL,missingOrNULL-method}
-\alias{import,PZFXFile,missingOrNULL,missingOrNULL-method}
-\alias{import,YAMLFile,missingOrNULL,missingOrNULL-method}
-\alias{import,RDSFile,missingOrNULL,missingOrNULL-method}
-\alias{import,RDataFile,missingOrNULL,missingOrNULL-method}
-\alias{import,RioHandoffFile,missingOrNULL,missingOrNULL-method}
-\alias{import,RtracklayerHandoffFile,missingOrNULL,missingOrNULL-method}
-\alias{import,BcbioCountsFile,missingOrNULL,missingOrNULL-method}
+\alias{import,character,missing,missing-method}
+\alias{import,character,character,missing-method}
+\alias{import,missing,missing,missing-method}
+\alias{import,missing,character,missing-method}
+\alias{import,DelimFile,missing,missing-method}
+\alias{import,LinesFile,missing,missing-method}
+\alias{import,ExcelFile,missing,missing-method}
+\alias{import,FASTAFile,missing,missing-method}
+\alias{import,FASTQFile,missing,missing-method}
+\alias{import,GMTFile,missing,missing-method}
+\alias{import,GMXFile,missing,missing-method}
+\alias{import,GRPFile,missing,missing-method}
+\alias{import,JSONFile,missing,missing-method}
+\alias{import,MTXFile,missing,missing-method}
+\alias{import,OBOFile,missing,missing-method}
+\alias{import,PZFXFile,missing,missing-method}
+\alias{import,YAMLFile,missing,missing-method}
+\alias{import,RDSFile,missing,missing-method}
+\alias{import,RDataFile,missing,missing-method}
+\alias{import,RioHandoffFile,missing,missing-method}
+\alias{import,RtracklayerHandoffFile,missing,missing-method}
+\alias{import,BcbioCountsFile,missing,missing-method}
 \title{Import}
 \usage{
 import(con, format, text, ...)
 
-\S4method{import}{character,missingOrNULL,missingOrNULL}(con, format, text, ...)
+\S4method{import}{character,missing,missing}(con, format, text, ...)
 
-\S4method{import}{character,character,missingOrNULL}(con, format, text, ...)
+\S4method{import}{character,character,missing}(con, format, text, ...)
 
-\S4method{import}{missingOrNULL,missingOrNULL,missingOrNULL}(con, format, text, ...)
+\S4method{import}{missing,missing,missing}(con, format, text, ...)
 
-\S4method{import}{missingOrNULL,character,missingOrNULL}(con, format, text, ...)
+\S4method{import}{missing,character,missing}(con, format, text, ...)
 
-\S4method{import}{DelimFile,missingOrNULL,missingOrNULL}(
+\S4method{import}{DelimFile,missing,missing}(
   con,
   format,
   text,
@@ -53,7 +53,7 @@ import(con, format, text, ...)
   verbose = getOption(x = "acid.verbose", default = FALSE)
 )
 
-\S4method{import}{LinesFile,missingOrNULL,missingOrNULL}(
+\S4method{import}{LinesFile,missing,missing}(
   con,
   format,
   text,
@@ -68,7 +68,7 @@ import(con, format, text, ...)
   verbose = getOption(x = "acid.verbose", default = FALSE)
 )
 
-\S4method{import}{ExcelFile,missingOrNULL,missingOrNULL}(
+\S4method{import}{ExcelFile,missing,missing}(
   con,
   format,
   text,
@@ -83,7 +83,7 @@ import(con, format, text, ...)
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
-\S4method{import}{FASTAFile,missingOrNULL,missingOrNULL}(
+\S4method{import}{FASTAFile,missing,missing}(
   con,
   format,
   text,
@@ -92,7 +92,7 @@ import(con, format, text, ...)
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
-\S4method{import}{FASTQFile,missingOrNULL,missingOrNULL}(
+\S4method{import}{FASTQFile,missing,missing}(
   con,
   format,
   text,
@@ -101,13 +101,13 @@ import(con, format, text, ...)
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
-\S4method{import}{GMTFile,missingOrNULL,missingOrNULL}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
+\S4method{import}{GMTFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
 
-\S4method{import}{GMXFile,missingOrNULL,missingOrNULL}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
+\S4method{import}{GMXFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
 
-\S4method{import}{GRPFile,missingOrNULL,missingOrNULL}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
+\S4method{import}{GRPFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
 
-\S4method{import}{JSONFile,missingOrNULL,missingOrNULL}(
+\S4method{import}{JSONFile,missing,missing}(
   con,
   format,
   text,
@@ -115,7 +115,7 @@ import(con, format, text, ...)
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
-\S4method{import}{MTXFile,missingOrNULL,missingOrNULL}(
+\S4method{import}{MTXFile,missing,missing}(
   con,
   format,
   text,
@@ -125,9 +125,9 @@ import(con, format, text, ...)
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
-\S4method{import}{OBOFile,missingOrNULL,missingOrNULL}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
+\S4method{import}{OBOFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
 
-\S4method{import}{PZFXFile,missingOrNULL,missingOrNULL}(
+\S4method{import}{PZFXFile,missing,missing}(
   con,
   format,
   text,
@@ -137,7 +137,7 @@ import(con, format, text, ...)
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
-\S4method{import}{YAMLFile,missingOrNULL,missingOrNULL}(
+\S4method{import}{YAMLFile,missing,missing}(
   con,
   format,
   text,
@@ -145,11 +145,11 @@ import(con, format, text, ...)
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
-\S4method{import}{RDSFile,missingOrNULL,missingOrNULL}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
+\S4method{import}{RDSFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
 
-\S4method{import}{RDataFile,missingOrNULL,missingOrNULL}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
+\S4method{import}{RDataFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
 
-\S4method{import}{RioHandoffFile,missingOrNULL,missingOrNULL}(
+\S4method{import}{RioHandoffFile,missing,missing}(
   con,
   format,
   text,
@@ -162,7 +162,7 @@ import(con, format, text, ...)
   ...
 )
 
-\S4method{import}{RtracklayerHandoffFile,missingOrNULL,missingOrNULL}(
+\S4method{import}{RtracklayerHandoffFile,missing,missing}(
   con,
   format,
   text,
@@ -171,7 +171,7 @@ import(con, format, text, ...)
   ...
 )
 
-\S4method{import}{BcbioCountsFile,missingOrNULL,missingOrNULL}(
+\S4method{import}{BcbioCountsFile,missing,missing}(
   con,
   format,
   text,

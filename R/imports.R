@@ -1,6 +1,5 @@
 ## Classes =====================================================================
 
-#' @importClassesFrom AcidBase missingOrNULL
 #' @importClassesFrom BiocIO BiocFile
 #' @importClassesFrom GenomicRanges GenomicRanges
 #' @importClassesFrom IRanges IRanges Ranges
