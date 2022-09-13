@@ -10,6 +10,7 @@ Major changes:
 - Reduced the number of exported methods, tightening on `missing` instead of
   using `missingOrNULL`, which can cause unwanted inheritance issues that
   collide with BiocIO package.
+- `export` now supports any type of `atomic` vector.
 
 ## pipette 0.9.7 (2022-08-19)
 

@@ -211,7 +211,7 @@ NULL
 
 
 ## Updated 2022-09-13.
-`export,character` <- # nolint
+`export,atomic` <- # nolint
     function(object,
              con,
              format, # NULL
@@ -235,6 +235,7 @@ NULL
         if (missing(format)) {
             format <- NULL
         }
+        object <- as.character(object)
         assert(
             isString(con),
             is.null(format),
@@ -753,11 +754,11 @@ setMethod(
 setMethod(
     f = "export",
     signature = signature(
-        object = "character",
+        object = "atomic",
         con = "character",
         format = "missing"
     ),
-    definition = `export,character`
+    definition = `export,atomic`
 )
 
 #' @rdname export
