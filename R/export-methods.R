@@ -794,7 +794,12 @@ setMethod(
     definition = `export,ANY,NSE`
 )
 
+
+
+## Deprecated S4 method exports ================================================
+
 #' @rdname export
+#' @usage NULL
 #' @export
 setMethod(
     f = "export",
