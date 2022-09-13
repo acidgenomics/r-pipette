@@ -772,8 +772,8 @@ NULL
                 f = "import",
                 signature = signature(
                     con = class,
-                    format = "missingOrNULL",
-                    text = "missingOrNULL"
+                    format = "missing",
+                    text = "missing"
                 ),
                 where = asNamespace(.pkgName)
             )
@@ -2090,8 +2090,8 @@ setMethod(
     f = "import",
     signature = signature(
         con = "character",
-        format = "missingOrNULL",
-        text = "missingOrNULL"
+        format = "missing",
+        text = "missing"
     ),
     definition = `import,character`
 )
@@ -2103,7 +2103,7 @@ setMethod(
     signature = signature(
         con = "character",
         format = "character",
-        text = "missingOrNULL"
+        text = "missing"
     ),
     definition = `import,character`
 )
@@ -2113,9 +2113,9 @@ setMethod(
 setMethod(
     f = "import",
     signature = signature(
-        con = "missingOrNULL",
-        format = "missingOrNULL",
-        text = "missingOrNULL"
+        con = "missing",
+        format = "missing",
+        text = "missing"
     ),
     definition = `import,character,deprecated`
 )
@@ -2125,9 +2125,9 @@ setMethod(
 setMethod(
     f = "import",
     signature = signature(
-        con = "missingOrNULL",
+        con = "missing",
         format = "character",
-        text = "missingOrNULL"
+        text = "missing"
     ),
     definition = `import,character,deprecated`
 )
@@ -2138,8 +2138,8 @@ setMethod(
     f = "import",
     signature = signature(
         con = "DelimFile",
-        format = "missingOrNULL",
-        text = "missingOrNULL"
+        format = "missing",
+        text = "missing"
     ),
     definition = `import,DelimFile`
 )
@@ -2150,8 +2150,8 @@ setMethod(
     f = "import",
     signature = signature(
         con = "LinesFile",
-        format = "missingOrNULL",
-        text = "missingOrNULL"
+        format = "missing",
+        text = "missing"
     ),
     definition = `import,LinesFile`
 )
@@ -2162,8 +2162,8 @@ setMethod(
     f = "import",
     signature = signature(
         con = "ExcelFile",
-        format = "missingOrNULL",
-        text = "missingOrNULL"
+        format = "missing",
+        text = "missing"
     ),
     definition = `import,ExcelFile`
 )
@@ -2174,8 +2174,8 @@ setMethod(
     f = "import",
     signature = signature(
         con = "FASTAFile",
-        format = "missingOrNULL",
-        text = "missingOrNULL"
+        format = "missing",
+        text = "missing"
     ),
     definition = `import,FASTAFile`
 )
@@ -2186,8 +2186,8 @@ setMethod(
     f = "import",
     signature = signature(
         con = "FASTQFile",
-        format = "missingOrNULL",
-        text = "missingOrNULL"
+        format = "missing",
+        text = "missing"
     ),
     definition = `import,FASTQFile`
 )
@@ -2198,8 +2198,8 @@ setMethod(
     f = "import",
     signature = signature(
         con = "GMTFile",
-        format = "missingOrNULL",
-        text = "missingOrNULL"
+        format = "missing",
+        text = "missing"
     ),
     definition = `import,GMTFile`
 )
@@ -2210,8 +2210,8 @@ setMethod(
     f = "import",
     signature = signature(
         con = "GMXFile",
-        format = "missingOrNULL",
-        text = "missingOrNULL"
+        format = "missing",
+        text = "missing"
     ),
     definition = `import,GMXFile`
 )
@@ -2222,8 +2222,8 @@ setMethod(
     f = "import",
     signature = signature(
         con = "GRPFile",
-        format = "missingOrNULL",
-        text = "missingOrNULL"
+        format = "missing",
+        text = "missing"
     ),
     definition = `import,GRPFile`
 )
@@ -2234,8 +2234,8 @@ setMethod(
     f = "import",
     signature = signature(
         con = "JSONFile",
-        format = "missingOrNULL",
-        text = "missingOrNULL"
+        format = "missing",
+        text = "missing"
     ),
     definition = `import,JSONFile`
 )
@@ -2246,8 +2246,8 @@ setMethod(
     f = "import",
     signature = signature(
         con = "MTXFile",
-        format = "missingOrNULL",
-        text = "missingOrNULL"
+        format = "missing",
+        text = "missing"
     ),
     definition = `import,MTXFile`
 )
@@ -2258,8 +2258,8 @@ setMethod(
     f = "import",
     signature = signature(
         con = "OBOFile",
-        format = "missingOrNULL",
-        text = "missingOrNULL"
+        format = "missing",
+        text = "missing"
     ),
     definition = `import,OBOFile`
 )
@@ -2270,8 +2270,8 @@ setMethod(
     f = "import",
     signature = signature(
         con = "PZFXFile",
-        format = "missingOrNULL",
-        text = "missingOrNULL"
+        format = "missing",
+        text = "missing"
     ),
     definition = `import,PZFXFile`
 )
@@ -2282,8 +2282,8 @@ setMethod(
     f = "import",
     signature = signature(
         con = "YAMLFile",
-        format = "missingOrNULL",
-        text = "missingOrNULL"
+        format = "missing",
+        text = "missing"
     ),
     definition = `import,YAMLFile`
 )
@@ -2294,8 +2294,8 @@ setMethod(
     f = "import",
     signature = signature(
         con = "RDSFile",
-        format = "missingOrNULL",
-        text = "missingOrNULL"
+        format = "missing",
+        text = "missing"
     ),
     definition = `import,RDSFile`
 )
@@ -2306,8 +2306,8 @@ setMethod(
     f = "import",
     signature = signature(
         con = "RDataFile",
-        format = "missingOrNULL",
-        text = "missingOrNULL"
+        format = "missing",
+        text = "missing"
     ),
     definition = `import,RDataFile`
 )
@@ -2318,8 +2318,8 @@ setMethod(
     f = "import",
     signature = signature(
         con = "RioHandoffFile",
-        format = "missingOrNULL",
-        text = "missingOrNULL"
+        format = "missing",
+        text = "missing"
     ),
     definition = `import,RioHandoffFile`
 )
@@ -2330,8 +2330,8 @@ setMethod(
     f = "import",
     signature = signature(
         con = "RtracklayerHandoffFile",
-        format = "missingOrNULL",
-        text = "missingOrNULL"
+        format = "missing",
+        text = "missing"
     ),
     definition = `import,RtracklayerHandoffFile`
 )
@@ -2342,8 +2342,8 @@ setMethod(
     f = "import",
     signature = signature(
         con = "BcbioCountsFile",
-        format = "missingOrNULL",
-        text = "missingOrNULL"
+        format = "missing",
+        text = "missing"
     ),
     definition = `import,BcbioCountsFile`
 )
