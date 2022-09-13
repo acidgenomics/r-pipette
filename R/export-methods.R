@@ -110,7 +110,7 @@ NULL
 
 ## Updated 2022-09-13.
 .defaultExt <- function(object) {
-    if (is.character(object)) {
+    if (is.atomic(object)) {
         key <- "character"
     } else if (is.data.frame(object)) {
         key <- "delim"
