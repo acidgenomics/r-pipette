@@ -214,7 +214,7 @@ NULL
 `export,atomic` <- # nolint
     function(object,
              con,
-             format, # NULL
+             format, # missing
              append = FALSE,
              overwrite = getOption(
                  x = "acid.overwrite",
@@ -361,7 +361,7 @@ NULL
 `export,data.frame` <- # nolint
     function(object,
              con,
-             format, # NULL
+             format, # missing
              rownames = TRUE,
              colnames = TRUE,
              overwrite = getOption(
@@ -595,7 +595,7 @@ NULL
 `export,Matrix` <- # nolint
     function(object,
              con,
-             format, # NULL
+             format, # missing
              overwrite = getOption(
                  x = "acid.overwrite",
                  default = TRUE
