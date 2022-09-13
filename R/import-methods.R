@@ -1,8 +1,3 @@
-## FIXME This is now failing:
-## > import("/Users/mike/git/monorepo/r-packages/r-pipette/tests/testthat/cache/h.all.v6.2.symbols.gmt")
-
-
-
 #' Import
 #'
 #' Read file by extension into R.
