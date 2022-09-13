@@ -790,7 +790,7 @@ NULL
 
 #' Import an R data file containing multiple objects (`.rda`)
 #'
-#' @note Updated 2021-10-12.
+#' @note Updated 2022-09-13.
 #' @noRd
 `import,RDataFile` <- # nolint
     function(con,
@@ -800,6 +800,12 @@ NULL
                  x = "acid.quiet",
                  default = FALSE
              )) {
+        if (missing(format)) {
+            format <- NULL
+        }
+        if (missing(text)) {
+            text <- NULL
+        }
         assert(
             is.null(format),
             is.null(text),
@@ -893,7 +899,7 @@ NULL
 
 #' Import a delimited file (e.g. `.csv`, `.tsv`).
 #'
-#' @note Updated 2022-08-19.
+#' @note Updated 2022-09-13.
 #' @noRd
 `import,DelimFile` <- # nolint
     function(con,
@@ -925,6 +931,12 @@ NULL
                  x = "acid.verbose",
                  default = FALSE
              )) {
+        if (missing(format)) {
+            format <- NULL
+        }
+        if (missing(text)) {
+            text <- NULL
+        }
         assert(
             is.null(format),
             is.null(text),
@@ -1093,7 +1105,7 @@ NULL
 
 #' Import a Microsoft Excel worksheet (`.xlsx`)
 #'
-#' @note Updated 2021-10-12.
+#' @note Updated 2022-09-13.
 #' @noRd
 `import,ExcelFile` <- # nolint
     function(con,
@@ -1117,6 +1129,12 @@ NULL
                  x = "acid.quiet",
                  default = FALSE
              )) {
+        if (missing(format)) {
+            format <- NULL
+        }
+        if (missing(text)) {
+            text <- NULL
+        }
         assert(
             is.null(format),
             is.null(text),
@@ -1182,7 +1200,7 @@ NULL
 
 #' Import a sparse matrix file (`.mtx`)
 #'
-#' @note Updated 2021-10-12.
+#' @note Updated 2022-09-13.
 #' @noRd
 `import,MTXFile` <- # nolint
     function(con,
@@ -1198,6 +1216,12 @@ NULL
                  x = "acid.quiet",
                  default = FALSE
              )) {
+        if (missing(format)) {
+            format <- NULL
+        }
+        if (missing(text)) {
+            text <- NULL
+        }
         file <- resource(con)
         origFile <- attr(con, which = "origResource")
         if (is.null(origFile)) {
@@ -1271,7 +1295,7 @@ NULL
 
 #' Import a GraphPad Prism file (`.pzfx`)
 #'
-#' @note Updated 2021-10-12.
+#' @note Updated 2022-09-13.
 #' @noRd
 #'
 #' @note This function doesn't support optional column names.
@@ -1292,6 +1316,12 @@ NULL
                  x = "acid.quiet",
                  default = FALSE
              )) {
+        if (missing(format)) {
+            format <- NULL
+        }
+        if (missing(text)) {
+            text <- NULL
+        }
         assert(
             is.null(format),
             is.null(text),
@@ -1340,7 +1370,7 @@ NULL
 #' Internal importer for a bcbio count matrix file (`.counts`).
 #' These files contain an `"id"` column that we need to coerce to row names.
 #'
-#' @note Updated 2021-10-12.
+#' @note Updated 2022-09-13.
 #' @noRd
 `import,BcbioCountsFile` <- # nolint
     function(con,
@@ -1354,6 +1384,12 @@ NULL
                  x = "acid.quiet",
                  default = FALSE
              )) {
+        if (missing(format)) {
+            format <- NULL
+        }
+        if (missing(text)) {
+            text <- NULL
+        }
         assert(
             is.null(format),
             is.null(text),
