@@ -190,8 +190,7 @@ inferred from \code{con}. Only recommended for file and URL paths that don't
 contain an extension.}
 
 \item{text}{\code{character} or \code{missing}.
-If \code{con} is missing, this can be a character vector directly providing the
-string data to import.}
+\emph{Not currently supported.}}
 
 \item{...}{Additional arguments.}
 
