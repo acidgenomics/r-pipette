@@ -43,8 +43,8 @@ setMethod(
         sym <- call[["object"]]
         assert(is.symbol(sym), msg = .symError)
         name <- as.character(sym)
-        con <- file.path(dir, paste0(name, ".", format))
-        format <- .defaultFormat(object)
+        ext <- .defaultExt(object)
+        con <- file.path(dir, paste0(name, ".", ext))
         args <- list(
             "object" = object,
             "con" = con,
@@ -58,7 +58,7 @@ setMethod(
 
 
 ## Updated 2022-09-13.
-.defaultFormat <- function(object) {
+.defaultExt <- function(object) {
     if (is.character(object)) {
         key <- "character"
     }

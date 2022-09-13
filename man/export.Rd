@@ -3,18 +3,8 @@
 %   R/export-methods.R
 \name{export}
 \alias{export}
-\alias{export,DataFrame,missingOrNULL,missingOrNULL-method}
-\alias{export,DataFrame,missingOrNULL,character-method}
-\alias{export,GenomicRanges,missingOrNULL,missingOrNULL-method}
-\alias{export,GenomicRanges,missingOrNULL,character-method}
-\alias{export,Matrix,missingOrNULL,missingOrNULL-method}
-\alias{export,Matrix,missingOrNULL,character-method}
-\alias{export,character,missingOrNULL,missingOrNULL-method}
-\alias{export,character,missingOrNULL,character-method}
-\alias{export,data.frame,missingOrNULL,missingOrNULL-method}
-\alias{export,data.frame,missingOrNULL,character-method}
-\alias{export,matrix,missingOrNULL,missingOrNULL-method}
-\alias{export,matrix,missingOrNULL,character-method}
+\alias{export,ANY,missingOrNULL,missingOrNULL-method}
+\alias{export,ANY,missingOrNULL,character-method}
 \alias{export,DataFrame,character,missingOrNULL-method}
 \alias{export,GenomicRanges,character,missingOrNULL-method}
 \alias{export,Matrix,character,missingOrNULL-method}
@@ -25,29 +15,15 @@
 \usage{
 export(object, con, format, ...)
 
-\S4method{export}{DataFrame,missingOrNULL,missingOrNULL}(object, con, format, ...)
+\S4method{export}{ANY,missingOrNULL,missingOrNULL}(
+  object,
+  con,
+  format,
+  dir = getOption(x = "acid.export.dir", default = getwd()),
+  ...
+)
 
-\S4method{export}{DataFrame,missingOrNULL,character}(object, con, format, ...)
-
-\S4method{export}{GenomicRanges,missingOrNULL,missingOrNULL}(object, con, format, ...)
-
-\S4method{export}{GenomicRanges,missingOrNULL,character}(object, con, format, ...)
-
-\S4method{export}{Matrix,missingOrNULL,missingOrNULL}(object, con, format, ...)
-
-\S4method{export}{Matrix,missingOrNULL,character}(object, con, format, ...)
-
-\S4method{export}{character,missingOrNULL,missingOrNULL}(object, con, format, ...)
-
-\S4method{export}{character,missingOrNULL,character}(object, con, format, ...)
-
-\S4method{export}{data.frame,missingOrNULL,missingOrNULL}(object, con, format, ...)
-
-\S4method{export}{data.frame,missingOrNULL,character}(object, con, format, ...)
-
-\S4method{export}{matrix,missingOrNULL,missingOrNULL}(object, con, format, ...)
-
-\S4method{export}{matrix,missingOrNULL,character}(object, con, format, ...)
+\S4method{export}{ANY,missingOrNULL,character}(object, con, format)
 
 \S4method{export}{DataFrame,character,missingOrNULL}(
   object,
@@ -123,6 +99,9 @@ Alternatively, can leave unset and use \code{ext} and \code{dir} arguments inste
 
 \item{format}{\code{character(1)}, \code{missing}, or \code{NULL}.
 Output file format extension.}
+
+\item{dir}{\code{character(1)}.
+Directory path.}
 
 \item{...}{Additional arguments.}
 
