@@ -1,3 +1,6 @@
+## FIXME Need to rework all "format" tests to use "con" instead.
+
+
 for (engine in .engines) {
     test_that(
         desc = paste("'append' argument", engine, sep = " : "),
@@ -58,15 +61,14 @@ for (engine in .engines) {
     )
     for (format in .exportFormatChoices[["character"]]) {
         test_that(
-            desc = paste("'format' argument", format, engine, sep = " : "),
+            desc = paste("format", format, engine, sep = " : "),
             code = {
                 testdir <- tempdir2()
                 vec <- c("hello", "world")
                 con <- file.path(testdir, paste0("vec", ".", format))
                 x <- export(
                     object = vec,
-                    format = format,
-                    dir = testdir,
+                    con = con,
                     engine = engine
                 )
                 expect_identical(x, realpath(con))

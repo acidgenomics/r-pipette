@@ -781,12 +781,7 @@ NULL
             is(con, "PipetteFile"),
             is(con, "BiocFile")
         )
-        import(
-            con = con,
-            format = NULL,
-            text = NULL,
-            ...
-        )
+        import(con = con, ...)
     }
 
 
@@ -1411,7 +1406,7 @@ NULL
 
 #' Import source code lines
 #'
-#' @note Updated 2021-10-21.
+#' @note Updated 2022-09-13.
 #' @noRd
 `import,LinesFile` <- # nolint
     function(con,
@@ -1438,6 +1433,12 @@ NULL
                  x = "acid.verbose",
                  default = FALSE
              )) {
+        if (missing(format)) {
+            format <- NULL
+        }
+        if (missing(text)) {
+            text <- NULL
+        }
         assert(
             is.null(format),
             is.null(text),
@@ -1568,7 +1569,7 @@ NULL
 
 #' Import a JSON file (`.json`)
 #'
-#' @note Updated 2021-10-12.
+#' @note Updated 2022-09-13.
 #' @noRd
 `import,JSONFile` <- # nolint
     function(con,
@@ -1582,6 +1583,12 @@ NULL
                  x = "acid.quiet",
                  default = FALSE
              )) {
+        if (missing(format)) {
+            format <- NULL
+        }
+        if (missing(text)) {
+            text <- NULL
+        }
         assert(
             is.null(format),
             is.null(text),
@@ -1615,7 +1622,7 @@ NULL
 
 #' Import a YAML file (`.yaml`, `.yml`)
 #'
-#' @note Updated 2021-10-12.
+#' @note Updated 2022-09-13.
 #' @noRd
 `import,YAMLFile` <- # nolint
     function(con,
@@ -1629,6 +1636,12 @@ NULL
                  x = "acid.quiet",
                  default = FALSE
              )) {
+        if (missing(format)) {
+            format <- NULL
+        }
+        if (missing(text)) {
+            text <- NULL
+        }
         assert(
             is.null(format),
             is.null(text),
@@ -1664,7 +1677,7 @@ NULL
 
 #' Import a FASTA file
 #'
-#' @note Updated 2021-09-24.
+#' @note Updated 2022-09-13.
 #' @noRd
 #'
 #' @seealso
@@ -1686,6 +1699,12 @@ NULL
                  x = "acid.quiet",
                  default = FALSE
              )) {
+        if (missing(format)) {
+            format <- NULL
+        }
+        if (missing(text)) {
+            text <- NULL
+        }
         assert(
             is.null(format),
             is.null(text),
@@ -1753,7 +1772,7 @@ NULL
 
 #' Import a FASTQ file
 #'
-#' @note Updated 2021-09-24.
+#' @note Updated 2022-09-13.
 #' @noRd
 #'
 #' @seealso
@@ -1775,6 +1794,12 @@ NULL
                  x = "acid.quiet",
                  default = FALSE
              )) {
+        if (missing(format)) {
+            format <- NULL
+        }
+        if (missing(text)) {
+            text <- NULL
+        }
         assert(
             is.null(format),
             is.null(text),
@@ -1818,7 +1843,7 @@ NULL
 
 #' Import a gene matrix transposed file (`.gmt`)
 #'
-#' @note Updated 2021-10-12.
+#' @note Updated 2022-09-13.
 #' @noRd
 #'
 #' @seealso `fgsea::gmtPathways()`.
@@ -1830,6 +1855,12 @@ NULL
                  x = "acid.quiet",
                  default = FALSE
              )) {
+        if (missing(format)) {
+            format <- NULL
+        }
+        if (missing(text)) {
+            text <- NULL
+        }
         assert(
             is.null(format),
             is.null(text),
@@ -1856,7 +1887,7 @@ NULL
 
 #' Import a gene matrix file (`.gmx`)
 #'
-#' @note Updated 2021-10-12.
+#' @note Updated 2022-09-13.
 #' @noRd
 `import,GMXFile` <- # nolint
     function(con,
@@ -1866,6 +1897,12 @@ NULL
                  x = "acid.quiet",
                  default = FALSE
              )) {
+        if (missing(format)) {
+            format <- NULL
+        }
+        if (missing(text)) {
+            text <- NULL
+        }
         assert(
             is.null(format),
             is.null(text),
@@ -1894,7 +1931,7 @@ NULL
 
 #' Import an open biomedical ontologies file (`.obo`)
 #'
-#' @note Updated 2022-08-25.
+#' @note Updated 2022-09-13.
 #' @noRd
 `import,OBOFile` <- # nolint
     function(con,
@@ -1904,6 +1941,12 @@ NULL
                  x = "acid.quiet",
                  default = FALSE
              )) {
+        if (missing(format)) {
+            format <- NULL
+        }
+        if (missing(text)) {
+            text <- NULL
+        }
         assert(
             is.null(format),
             is.null(text),
@@ -1936,7 +1979,7 @@ NULL
 
 #' Import a file using `rio::import()`
 #'
-#' @note Updated 2021-10-24.
+#' @note Updated 2022-09-13.
 #' @noRd
 `import,RioHandoffFile` <- # nolint
     function(con,
@@ -1958,6 +2001,12 @@ NULL
                  default = FALSE
              ),
              ...) {
+        if (missing(format)) {
+            format <- NULL
+        }
+        if (missing(text)) {
+            text <- NULL
+        }
         assert(
             is.null(format),
             is.null(text),
@@ -2001,7 +2050,7 @@ NULL
 
 #' Import file using `rtracklayer::import()`
 #'
-#' @note Updated 2021-10-12.
+#' @note Updated 2022-09-13.
 #' @noRd
 #'
 #' @note Using `tryCatch()` here to error if there are any warnings.
@@ -2018,6 +2067,12 @@ NULL
                  default = FALSE
              ),
              ...) {
+        if (missing(format)) {
+            format <- NULL
+        }
+        if (missing(text)) {
+            text <- NULL
+        }
         assert(
             is.null(format),
             is.null(text),
