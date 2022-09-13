@@ -82,20 +82,25 @@ setMethod(
     f = "export",
     signature = signature(
         object = "ANY",
-        con = "missingOrNULL",
-        format = "missingOrNULL"
+        con = "missing",
+        format = "missing"
     ),
     definition = .exportNSE
 )
 
 
 
-## DataFrame
-## GenomicRanges
-## Matrix
-## character
-## data.frame
-## matrix
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "ANY",
+        con = "missing",
+        format = "character"
+    ),
+    definition = .exportFormat
+)
 
 #' @rdname export
 #' @export
@@ -103,7 +108,7 @@ setMethod(
     f = "export",
     signature = signature(
         object = "DataFrame",
-        con = "missingOrNULL",
+        con = "missing",
         format = "character"
     ),
     definition = .exportFormat
@@ -115,7 +120,7 @@ setMethod(
     f = "export",
     signature = signature(
         object = "GenomicRanges",
-        con = "missingOrNULL",
+        con = "missing",
         format = "character"
     ),
     definition = .exportFormat
@@ -127,7 +132,7 @@ setMethod(
     f = "export",
     signature = signature(
         object = "Matrix",
-        con = "missingOrNULL",
+        con = "missing",
         format = "character"
     ),
     definition = .exportFormat
@@ -139,7 +144,7 @@ setMethod(
     f = "export",
     signature = signature(
         object = "character",
-        con = "missingOrNULL",
+        con = "missing",
         format = "character"
     ),
     definition = .exportFormat
@@ -151,7 +156,7 @@ setMethod(
     f = "export",
     signature = signature(
         object = "data.frame",
-        con = "missingOrNULL",
+        con = "missing",
         format = "character"
     ),
     definition = .exportFormat
@@ -163,7 +168,7 @@ setMethod(
     f = "export",
     signature = signature(
         object = "matrix",
-        con = "missingOrNULL",
+        con = "missing",
         format = "character"
     ),
     definition = .exportFormat

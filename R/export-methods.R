@@ -648,7 +648,7 @@ setMethod(
     signature = signature(
         object = "DataFrame",
         con = "character",
-        format = "missingOrNULL"
+        format = "missing"
     ),
     definition = `export,DataFrame`
 )
@@ -660,7 +660,7 @@ setMethod(
     signature = signature(
         object = "GenomicRanges",
         con = "character",
-        format = "missingOrNULL"
+        format = "missing"
     ),
     definition = `export,GenomicRanges`
 )
@@ -672,7 +672,7 @@ setMethod(
     signature = signature(
         object = "Matrix",
         con = "character",
-        format = "missingOrNULL"
+        format = "missing"
     ),
     definition = `export,Matrix`
 )
@@ -684,7 +684,7 @@ setMethod(
     signature = signature(
         object = "character",
         con = "character",
-        format = "missingOrNULL"
+        format = "missing"
     ),
     definition = `export,character`
 )
@@ -696,7 +696,7 @@ setMethod(
     signature = signature(
         object = "data.frame",
         con = "character",
-        format = "missingOrNULL"
+        format = "missing"
     ),
     definition = `export,data.frame`
 )
@@ -708,7 +708,7 @@ setMethod(
     signature = signature(
         object = "matrix",
         con = "character",
-        format = "missingOrNULL"
+        format = "missing"
     ),
     definition = `export,matrix`
 )

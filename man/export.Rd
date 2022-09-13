@@ -3,24 +3,25 @@
 %   R/export-methods.R
 \name{export}
 \alias{export}
-\alias{export,ANY,missingOrNULL,missingOrNULL-method}
-\alias{export,DataFrame,missingOrNULL,character-method}
-\alias{export,GenomicRanges,missingOrNULL,character-method}
-\alias{export,Matrix,missingOrNULL,character-method}
-\alias{export,character,missingOrNULL,character-method}
-\alias{export,data.frame,missingOrNULL,character-method}
-\alias{export,matrix,missingOrNULL,character-method}
-\alias{export,DataFrame,character,missingOrNULL-method}
-\alias{export,GenomicRanges,character,missingOrNULL-method}
-\alias{export,Matrix,character,missingOrNULL-method}
-\alias{export,character,character,missingOrNULL-method}
-\alias{export,data.frame,character,missingOrNULL-method}
-\alias{export,matrix,character,missingOrNULL-method}
+\alias{export,ANY,missing,missing-method}
+\alias{export,ANY,missing,character-method}
+\alias{export,DataFrame,missing,character-method}
+\alias{export,GenomicRanges,missing,character-method}
+\alias{export,Matrix,missing,character-method}
+\alias{export,character,missing,character-method}
+\alias{export,data.frame,missing,character-method}
+\alias{export,matrix,missing,character-method}
+\alias{export,DataFrame,character,missing-method}
+\alias{export,GenomicRanges,character,missing-method}
+\alias{export,Matrix,character,missing-method}
+\alias{export,character,character,missing-method}
+\alias{export,data.frame,character,missing-method}
+\alias{export,matrix,character,missing-method}
 \title{Export}
 \usage{
 export(object, con, format, ...)
 
-\S4method{export}{ANY,missingOrNULL,missingOrNULL}(
+\S4method{export}{ANY,missing,missing}(
   object,
   con,
   format,
@@ -28,19 +29,21 @@ export(object, con, format, ...)
   ...
 )
 
-\S4method{export}{DataFrame,missingOrNULL,character}(object, con, format)
+\S4method{export}{ANY,missing,character}(object, con, format)
 
-\S4method{export}{GenomicRanges,missingOrNULL,character}(object, con, format)
+\S4method{export}{DataFrame,missing,character}(object, con, format)
 
-\S4method{export}{Matrix,missingOrNULL,character}(object, con, format)
+\S4method{export}{GenomicRanges,missing,character}(object, con, format)
 
-\S4method{export}{character,missingOrNULL,character}(object, con, format)
+\S4method{export}{Matrix,missing,character}(object, con, format)
 
-\S4method{export}{data.frame,missingOrNULL,character}(object, con, format)
+\S4method{export}{character,missing,character}(object, con, format)
 
-\S4method{export}{matrix,missingOrNULL,character}(object, con, format)
+\S4method{export}{data.frame,missing,character}(object, con, format)
 
-\S4method{export}{DataFrame,character,missingOrNULL}(
+\S4method{export}{matrix,missing,character}(object, con, format)
+
+\S4method{export}{DataFrame,character,missing}(
   object,
   con,
   format,
@@ -51,7 +54,7 @@ export(object, con, format, ...)
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
-\S4method{export}{GenomicRanges,character,missingOrNULL}(
+\S4method{export}{GenomicRanges,character,missing}(
   object,
   con,
   format,
@@ -62,7 +65,7 @@ export(object, con, format, ...)
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
-\S4method{export}{Matrix,character,missingOrNULL}(
+\S4method{export}{Matrix,character,missing}(
   object,
   con,
   format,
@@ -70,7 +73,7 @@ export(object, con, format, ...)
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
-\S4method{export}{character,character,missingOrNULL}(
+\S4method{export}{character,character,missing}(
   object,
   con,
   format,
@@ -81,7 +84,7 @@ export(object, con, format, ...)
   verbose = getOption(x = "acid.verbose", default = FALSE)
 )
 
-\S4method{export}{data.frame,character,missingOrNULL}(
+\S4method{export}{data.frame,character,missing}(
   object,
   con,
   format,
@@ -92,7 +95,7 @@ export(object, con, format, ...)
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
-\S4method{export}{matrix,character,missingOrNULL}(
+\S4method{export}{matrix,character,missing}(
   object,
   con,
   format,
