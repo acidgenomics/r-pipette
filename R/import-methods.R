@@ -93,8 +93,7 @@
 #' vector, rather than writing to a connection.
 #'
 #' @param text `character` or `missing`.
-#' If `con` is missing, this can be a character vector directly providing the
-#' string data to import.
+#' *Not currently supported.*
 #'
 #' @param format `character(1)` or `missing`.
 #' An optional file format type, which can be used to override the file format
