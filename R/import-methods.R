@@ -702,7 +702,7 @@ NULL
 `import,character` <- # nolint
     function(con,
              format,
-             text, # NULL
+             text, # missing
              ...) {
         if (
             missing(format) ||
@@ -793,8 +793,8 @@ NULL
 #' @noRd
 `import,RDataFile` <- # nolint
     function(con,
-             format, # NULL
-             text, # NULL
+             format, # missing
+             text, # missing
              quiet = getOption(
                  x = "acid.quiet",
                  default = FALSE
@@ -855,8 +855,8 @@ NULL
 #' @noRd
 `import,RDSFile` <- # nolint
     function(con,
-             format, # NULL
-             text, # NULL
+             format, # missing
+             text, # missing
              quiet = getOption(
                  x = "acid.quiet",
                  default = FALSE
@@ -908,8 +908,8 @@ NULL
 #' @noRd
 `import,DelimFile` <- # nolint
     function(con,
-             format, # NULL
-             text, # NULL
+             format, # missing
+             text, # missing
              rownames = TRUE,
              rownameCol = NULL,
              colnames = TRUE,
@@ -1114,8 +1114,8 @@ NULL
 #' @noRd
 `import,ExcelFile` <- # nolint
     function(con,
-             format, # NULL
-             text, # NULL
+             format, # missing
+             text, # missing
              sheet = 1L,
              rownames = TRUE,
              rownameCol = NULL,
@@ -1209,8 +1209,8 @@ NULL
 #' @noRd
 `import,MTXFile` <- # nolint
     function(con,
-             format, # NULL
-             text, # NULL
+             format, # missing
+             text, # missing
              rownamesFile,
              colnamesFile,
              metadata = getOption(
@@ -1306,8 +1306,8 @@ NULL
 #' @note This function doesn't support optional column names.
 `import,PZFXFile` <- # nolint
     function(con,
-             format, # NULL
-             text, # NULL
+             format, # missing
+             text, # missing
              sheet = 1L,
              makeNames = getOption(
                  x = "acid.import.make.names",
@@ -1379,8 +1379,8 @@ NULL
 #' @noRd
 `import,BcbioCountsFile` <- # nolint
     function(con,
-             format, # NULL
-             text, # NULL
+             format, # missing
+             text, # missing
              metadata = getOption(
                  x = "acid.import.metadata",
                  default = FALSE
@@ -1450,8 +1450,8 @@ NULL
 #' @noRd
 `import,LinesFile` <- # nolint
     function(con,
-             format, # NULL
-             text, # NULL
+             format, # missing
+             text, # missing
              comment = "",
              skip = 0L,
              nMax = Inf,
@@ -1613,8 +1613,8 @@ NULL
 #' @noRd
 `import,JSONFile` <- # nolint
     function(con,
-             format, # NULL
-             text, # NULL
+             format, # missing
+             text, # missing
              metadata = getOption(
                  x = "acid.import.metadata",
                  default = FALSE
@@ -1666,8 +1666,8 @@ NULL
 #' @noRd
 `import,YAMLFile` <- # nolint
     function(con,
-             format, # NULL
-             text, # NULL
+             format, # missing
+             text, # missing
              metadata = getOption(
                  x = "acid.import.metadata",
                  default = FALSE
@@ -1728,8 +1728,8 @@ NULL
 #' - `"RNA"`: `RNAStringSet`.
 `import,FASTAFile` <- # nolint
     function(con,
-             format, # NULL
-             text, # NULL
+             format, # missing
+             text, # missing
              moleculeType = c("DNA", "RNA"),
              metadata = getOption(
                  x = "acid.import.metadata",
@@ -1823,8 +1823,8 @@ NULL
 #' - `"RNA"`: `RNAStringSet`.
 `import,FASTQFile` <- # nolint
     function(con,
-             format, # NULL
-             text, # NULL
+             format, # missing
+             text, # missing
              moleculeType = c("DNA", "RNA"),
              metadata = getOption(
                  x = "acid.import.metadata",
@@ -1889,8 +1889,8 @@ NULL
 #' @seealso `fgsea::gmtPathways()`.
 `import,GMTFile` <- # nolint
     function(con,
-             format, # NULL
-             text, # NULL
+             format, # missing
+             text, # missing
              quiet = getOption(
                  x = "acid.quiet",
                  default = FALSE
@@ -1931,8 +1931,8 @@ NULL
 #' @noRd
 `import,GMXFile` <- # nolint
     function(con,
-             format, # NULL
-             text, # NULL
+             format, # missing
+             text, # missing
              quiet = getOption(
                  x = "acid.quiet",
                  default = FALSE
@@ -1975,8 +1975,8 @@ NULL
 #' @noRd
 `import,OBOFile` <- # nolint
     function(con,
-             format, # NULL
-             text, # NULL
+             format, # missing
+             text, # missing
              quiet = getOption(
                  x = "acid.quiet",
                  default = FALSE
@@ -2023,8 +2023,8 @@ NULL
 #' @noRd
 `import,RioHandoffFile` <- # nolint
     function(con,
-             format, # NULL
-             text, # NULL
+             format, # missing
+             text, # missing
              rownames = TRUE,
              rownameCol = NULL,
              colnames = TRUE,
@@ -2096,8 +2096,8 @@ NULL
 #' @note Using `tryCatch()` here to error if there are any warnings.
 `import,RtracklayerHandoffFile` <- # nolint
     function(con,
-             format, # NULL
-             text, # NULL
+             format, # missing
+             text, # missing
              metadata = getOption(
                  x = "acid.import.metadata",
                  default = FALSE
