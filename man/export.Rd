@@ -180,7 +180,7 @@ for exporting \code{DataFrame}, \code{data.frame}, and \code{matrix} class objec
 
 \examples{
 counts <- matrix(data = seq_len(100L), nrow = 10)
-export(counts, ext = "csv")
+export(object = counts, con = "counts.csv")
 
 ## Clean up.
 file.remove("counts.csv")

@@ -49,6 +49,7 @@
 #' @param con `character(1)`, `missing`, or `NULL`.
 #' File path.
 #' Alternatively, can leave unset and use `ext` and `dir` arguments instead.
+
 #'
 #' @param engine `character(1)`.
 #' Engine (package) to use for export.
@@ -84,7 +85,7 @@
 #'
 #' @examples
 #' counts <- matrix(data = seq_len(100L), nrow = 10)
-#' export(counts, ext = "csv")
+#' export(object = counts, con = "counts.csv")
 #'
 #' ## Clean up.
 #' file.remove("counts.csv")
@@ -107,6 +108,7 @@ NULL
 
 
 
+## NOTE This approach is problematic for SummarizedExperiment.
 ## Updated 2022-09-13.
 .defaultExt <- function(object) {
     if (is.character(object)) {
@@ -177,7 +179,7 @@ NULL
         if (isSubset("ext", names(dots))) {
             abort(sprintf(
                 "Use {.arg %s} instead of {.arg %s}.",
-                "format", "ext"
+                "con", "ext"
             ))
         }
         if (missing(con)) {
