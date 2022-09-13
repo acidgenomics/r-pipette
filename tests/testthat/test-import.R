@@ -475,8 +475,8 @@ test_that("MSigDB hallmark", {
             "entrez" = "h.all.v6.2.entrez.gmt"
         ),
         ids = list(
-            "symbols" = c("JUNB", "CXCL2", "ATF3", "NFKBIA", "TNFAIP3", "PTGS2"),
-            "entrez" = c("3726", "2920", "467", "4792", "7128", "5743")
+            "symbols" = c("JUNB", "CXCL2", "ATF3", "NFKBIA", "TNFAIP3"),
+            "entrez" = c("3726", "2920", "467", "4792", "7128")
         ),
         f = function(file, ids) {
             file <- file.path("cache", file)
@@ -487,7 +487,7 @@ test_that("MSigDB hallmark", {
                 expected = "HALLMARK_TNFA_SIGNALING_VIA_NFKB"
             )
             expect_length(object[[1L]], 200L)
-            expect_identical(head(object[[1L]]), ids)
+            expect_identical(head(object[[1L]], n = 5L), ids)
         }
     )
 })
