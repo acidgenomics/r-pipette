@@ -1407,9 +1407,8 @@ NULL
             isFlag(metadata),
             isFlag(quiet)
         )
-        file <- resource(con)
         object <- import(
-            file = file,
+            con = resource(con),
             format = "tsv",
             rownames = FALSE,
             colnames = TRUE,
@@ -1956,7 +1955,7 @@ NULL
             isFlag(quiet)
         )
         lines <- import(
-            file = resource(con),
+            con = resource(con),
             format = "lines",
             metadata = FALSE,
             quiet = quiet
