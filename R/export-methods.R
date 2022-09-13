@@ -108,16 +108,22 @@ NULL
 
 
 
-## NOTE This approach is problematic for SummarizedExperiment.
 ## Updated 2022-09-13.
 .defaultExt <- function(object) {
     if (is.character(object)) {
         key <- "character"
-    }
-    if (is(object, "Matrix")) {
+    } else if (is.data.frame(object)) {
+        key <- "delim"
+    } else if (is.matrix(object)) {
+        key <- "delim"
+    } else if (is(object, "DataFrame")) {
+        key <- "delim"
+    } else if (is(object, "GenomicRanges")) {
+        key <- "delim"
+    } else if (is(object, "Matrix")) {
         key <- "Matrix"
     } else {
-        key <- "delim"
+        abort(sprintf("{.arg %s} argument is required.", "con")) # nocov
     }
     choices <- .exportFormatChoices
     ext <- choices[[key]][[1L]]
