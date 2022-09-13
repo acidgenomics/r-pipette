@@ -4,8 +4,6 @@
 \alias{import}
 \alias{import,character,missing,missing-method}
 \alias{import,character,character,missing-method}
-\alias{import,missing,missing,missing-method}
-\alias{import,missing,character,missing-method}
 \alias{import,DelimFile,missing,missing-method}
 \alias{import,LinesFile,missing,missing-method}
 \alias{import,ExcelFile,missing,missing-method}
@@ -24,6 +22,8 @@
 \alias{import,RioHandoffFile,missing,missing-method}
 \alias{import,RtracklayerHandoffFile,missing,missing-method}
 \alias{import,BcbioCountsFile,missing,missing-method}
+\alias{import,missing,missing,missing-method}
+\alias{import,missing,character,missing-method}
 \title{Import}
 \usage{
 import(con, format, text, ...)
@@ -31,10 +31,6 @@ import(con, format, text, ...)
 \S4method{import}{character,missing,missing}(con, format, text, ...)
 
 \S4method{import}{character,character,missing}(con, format, text, ...)
-
-\S4method{import}{missing,missing,missing}(con, format, text, ...)
-
-\S4method{import}{missing,character,missing}(con, format, text, ...)
 
 \S4method{import}{DelimFile,missing,missing}(
   con,

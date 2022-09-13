@@ -84,8 +84,6 @@ export(object, con, format, ...)
   dir = getOption(x = "acid.export.dir", default = getwd()),
   ...
 )
-
-\S4method{export}{ANY,missing,character}(object, con, format)
 }
 \arguments{
 \item{object}{Object.

@@ -690,23 +690,6 @@ NULL
 
 ## Primary S4 methods ==========================================================
 
-#' Deprecated handler for primary `"file"` argument
-#'
-#' @note Updated 2022-08-23.
-#' @noRd
-`import,character,deprecated` <- # nolint
-    function(con,
-             format, # NULL
-             text,
-             ...) {
-        abort(sprintf(
-            "Need to define {.arg %s} (e.g. instead of {.arg %s}).",
-            "con", "file"
-        ))
-    }
-
-
-
 #' Primary `import` method, that hands off to classed file-extension variants
 #'
 #' @details
@@ -2113,30 +2096,6 @@ setMethod(
 setMethod(
     f = "import",
     signature = signature(
-        con = "missing",
-        format = "missing",
-        text = "missing"
-    ),
-    definition = `import,character,deprecated`
-)
-
-#' @rdname import
-#' @export
-setMethod(
-    f = "import",
-    signature = signature(
-        con = "missing",
-        format = "character",
-        text = "missing"
-    ),
-    definition = `import,character,deprecated`
-)
-
-#' @rdname import
-#' @export
-setMethod(
-    f = "import",
-    signature = signature(
         con = "DelimFile",
         format = "missing",
         text = "missing"
@@ -2346,4 +2305,46 @@ setMethod(
         text = "missing"
     ),
     definition = `import,BcbioCountsFile`
+)
+
+
+
+## Deprecated S4 method exports ================================================
+
+## Updated 2022-09-13.
+.importError <-
+    function(con,
+             format,
+             text,
+             ...) {
+        abort(sprintf(
+            "Need to define {.arg %s} (e.g. instead of {.arg %s}).",
+            "con", "file"
+        ))
+    }
+
+#' @rdname import
+#' @usage NULL
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(
+        con = "missing",
+        format = "missing",
+        text = "missing"
+    ),
+    definition = .importError
+)
+
+#' @rdname import
+#' @usage NULL
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(
+        con = "missing",
+        format = "character",
+        text = "missing"
+    ),
+    definition = .importError
 )
