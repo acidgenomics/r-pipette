@@ -1,3 +1,21 @@
+## Updated 2022-09-13.
+.defaultExt <- function(object) {
+    if (is.character(object)) {
+        key <- "character"
+    }
+    if (is(object, "Matrix")) {
+        key <- "Matrix"
+    } else {
+        key <- "delim"
+    }
+    choices <- .exportFormatChoices
+    ext <- choices[[key]][[1L]]
+    assert(isString(ext))
+    ext
+}
+
+
+
 #' @rdname export
 #' @export
 setMethod(
@@ -8,8 +26,8 @@ setMethod(
         format = "missingOrNULL"
     ),
     definition = function(object,
-                          con, # missingOrNULL
-                          format, # missingOrNULL
+                          con,
+                          format,
                           dir = getOption(
                               x = "acid.export.dir",
                               default = getwd()
@@ -57,26 +75,6 @@ setMethod(
 
 
 
-## Updated 2022-09-13.
-.defaultExt <- function(object) {
-    if (is.character(object)) {
-        key <- "character"
-    }
-    if (is(object, "Matrix")) {
-        key <- "Matrix"
-    } else {
-        key <- "delim"
-    }
-    choices <- .exportFormatChoices
-    format <- choices[[key]][[1L]]
-    assert(isString(format))
-    format
-}
-
-
-
-
-
 #' @rdname export
 #' @export
 setMethod(
@@ -87,6 +85,9 @@ setMethod(
         format = "character"
     ),
     definition = function(object, con, format) {
-        stop("FIXME NOT SUPPORTED YET")
+        abort(sprintf(
+            "Use {.arg %s} instead of {.arg %s}.",
+            "con", "format"
+        ))
     }
 )
