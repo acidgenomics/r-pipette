@@ -471,12 +471,12 @@ test_that("Error on RDA containing multiple objects.", {
 test_that("MSigDB hallmark", {
     Map(
         file = c(
-            symbols = "h.all.v6.2.symbols.gmt",
-            entrez = "h.all.v6.2.entrez.gmt"
+            "symbols" = "h.all.v6.2.symbols.gmt",
+            "entrez" = "h.all.v6.2.entrez.gmt"
         ),
         ids = list(
-            symbols = c("JUNB", "CXCL2", "ATF3", "NFKBIA", "TNFAIP3", "PTGS2"),
-            entrez = c("3726", "2920", "467", "4792", "7128", "5743")
+            "symbols" = c("JUNB", "CXCL2", "ATF3", "NFKBIA", "TNFAIP3", "PTGS2"),
+            "entrez" = c("3726", "2920", "467", "4792", "7128", "5743")
         ),
         f = function(file, ids) {
             file <- file.path("cache", file)
