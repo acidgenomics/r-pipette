@@ -5,12 +5,6 @@
 \alias{export}
 \alias{export,ANY,missing,missing-method}
 \alias{export,ANY,missing,character-method}
-\alias{export,DataFrame,missing,character-method}
-\alias{export,GenomicRanges,missing,character-method}
-\alias{export,Matrix,missing,character-method}
-\alias{export,character,missing,character-method}
-\alias{export,data.frame,missing,character-method}
-\alias{export,matrix,missing,character-method}
 \alias{export,DataFrame,character,missing-method}
 \alias{export,GenomicRanges,character,missing-method}
 \alias{export,Matrix,character,missing-method}
@@ -30,18 +24,6 @@ export(object, con, format, ...)
 )
 
 \S4method{export}{ANY,missing,character}(object, con, format)
-
-\S4method{export}{DataFrame,missing,character}(object, con, format)
-
-\S4method{export}{GenomicRanges,missing,character}(object, con, format)
-
-\S4method{export}{Matrix,missing,character}(object, con, format)
-
-\S4method{export}{character,missing,character}(object, con, format)
-
-\S4method{export}{data.frame,missing,character}(object, con, format)
-
-\S4method{export}{matrix,missing,character}(object, con, format)
 
 \S4method{export}{DataFrame,character,missing}(
   object,
