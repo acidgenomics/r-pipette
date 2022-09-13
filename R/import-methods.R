@@ -1,3 +1,8 @@
+## FIXME This is now failing:
+## > import("/Users/mike/git/monorepo/r-packages/r-pipette/tests/testthat/cache/h.all.v6.2.symbols.gmt")
+
+
+
 #' Import
 #'
 #' Read file by extension into R.
@@ -852,7 +857,7 @@ NULL
 
 #' Import an R data serialized file (`.rds`)
 #'
-#' @note Updated 2021-10-12.
+#' @note Updated 2022-09-13.
 #' @noRd
 `import,RDSFile` <- # nolint
     function(con,
@@ -862,6 +867,12 @@ NULL
                  x = "acid.quiet",
                  default = FALSE
              )) {
+        if (missing(format)) {
+            format <- NULL
+        }
+        if (missing(text)) {
+            text <- NULL
+        }
         assert(
             is.null(format),
             is.null(text),
