@@ -43,5 +43,5 @@ NULL
 #' isMatchingRegex isNonNegative isPositive isScalar isString isSubset
 #' validNames validate
 #' @importFrom methods as is hasMethod new setGeneric signature validObject
-#' @importFrom utils download.file packageName packageVersion
+#' @importFrom utils packageName packageVersion
 NULL
