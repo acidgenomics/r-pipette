@@ -205,13 +205,7 @@ NULL
         name <- as.character(sym)
         ext <- .defaultExt(object)
         con <- file.path(dir, paste0(name, ".", ext))
-        args <- list(
-            "object" = object,
-            "con" = con,
-            "format" = format
-        )
-        args <- append(x = args, values = dots)
-        do.call(what = export, args = args)
+        export(object = object, con = con, ...)
     }
 
 
