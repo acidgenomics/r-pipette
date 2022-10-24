@@ -36,11 +36,11 @@ NULL
 #' @importFrom goalie assert allAreAtomic allAreExisting allAreFiles
 #' allAreMatchingRegex allAreNonExisting allAreURLs allHaveAccess
 #' areDisjointSets areSameLength areSetEqual bapply compressExtPattern
-#' extPattern formalCompress hasColnames hasCols hasDimnames hasInternet
-#' hasLength hasNames hasNoDuplicates hasRownames hasRows hasValidNames
-#' hasValidDimnames isAFile isAURL isAny isCharacter isFlag isInstalled isInt
-#' isMatchingRegex isNonNegative isPositive isScalar isString isSubset
-#' validNames validate
+#' extPattern formalCompress hasColnames hasCols hasDimnames hasDuplicates
+#' hasInternet hasLength hasNames hasNoDuplicates hasRownames hasRows
+#' hasValidNames hasValidDimnames isAFile isAURL isAny isCharacter isFlag
+#' isInstalled isInt isMatchingRegex isNonNegative isPositive isScalar isString
+#' isSubset validNames validate
 #' @importFrom methods as is hasMethod new setGeneric signature validObject
 #' @importFrom utils packageName packageVersion
 NULL
