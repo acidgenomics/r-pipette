@@ -25,7 +25,7 @@ All columns will be coerced to \code{factor}.
 Coerce all columns in the object to \code{factor} (i.e. \code{stringsAsFactors}).
 }
 \note{
-Updated 2022-08-23.
+Updated 2022-10-24.
 }
 \examples{
 object <- S4Vectors::DataFrame(

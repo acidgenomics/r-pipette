@@ -642,7 +642,7 @@ NULL
             assert(hasNoDuplicates(rownames(object)))
         }
         if (hasNames(object)) {
-            if (anyDuplicated(names(object)) > 0L) {
+            if (hasDuplicates(names(object))) {
                 ## nocov start
                 dupes <- sort(names(object)[duplicated(names(object))])
                 alertWarning(sprintf(
