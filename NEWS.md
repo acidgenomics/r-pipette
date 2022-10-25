@@ -1,6 +1,6 @@
 # Release notes
 
-## pipette 0.10.0 (2022-09-13)
+## pipette 0.10.0 (2022-10-25)
 
 Major changes:
 
