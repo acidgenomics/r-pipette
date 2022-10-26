@@ -49,7 +49,6 @@
 #' @param con `character(1)`, `missing`, or `NULL`.
 #' File path.
 #' Alternatively, can leave unset and use `ext` and `dir` arguments instead.
-
 #'
 #' @param engine `character(1)`.
 #' Engine (package) to use for export.
