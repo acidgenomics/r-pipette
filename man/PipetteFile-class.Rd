@@ -12,6 +12,7 @@
 \alias{CSVFile-class}
 \alias{FASTAFile-class}
 \alias{FASTQFile-class}
+\alias{GCTFile-class}
 \alias{GMTFile-class}
 \alias{GMXFile-class}
 \alias{GRPFile-class}
@@ -32,7 +33,7 @@ Currently intended for use with \code{import} function.
 Extends \code{BiocFile} defined in BiocIO package.
 }
 \note{
-Updated 2022-08-19.
+Updated 2022-11-09.
 }
 \section{Primary classes}{
 
@@ -41,6 +42,7 @@ Updated 2022-08-19.
 \item \code{CSVFile}: Comma-separated values file (CSV).
 \item \code{FASTAFile}: FASTA file.
 \item \code{FASTQFile}: FASTQ file.
+\item \code{GCTFile}: Gene Cluster Text file (GCT).
 \item \code{GMTFile}: Gene matrix transposed file (GMT).
 \item \code{GMXFile}: Gene matrix file (GMX).
 \item \code{GRPFile}: Gene set file (GRP).

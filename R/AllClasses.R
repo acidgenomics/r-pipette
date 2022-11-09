@@ -6,7 +6,7 @@
 #' Extends `BiocFile` defined in BiocIO package.
 #'
 #' @export
-#' @note Updated 2022-08-19.
+#' @note Updated 2022-11-09.
 #'
 #' @section Primary classes:
 #'
@@ -14,6 +14,7 @@
 #' - `CSVFile`: Comma-separated values file (CSV).
 #' - `FASTAFile`: FASTA file.
 #' - `FASTQFile`: FASTQ file.
+#' - `GCTFile`: Gene Cluster Text file (GCT).
 #' - `GMTFile`: Gene matrix transposed file (GMT).
 #' - `GMXFile`: Gene matrix file (GMX).
 #' - `GRPFile`: Gene set file (GRP).
@@ -176,6 +177,13 @@ setClass(
 setClass(
     Class = "FASTQFile",
     contains = "PipetteFile"
+)
+
+#' @rdname PipetteFile-class
+#' @export
+setClass(
+    Class = "GCTFile",
+    contains = "DelimFile"
 )
 
 #' @rdname PipetteFile-class
