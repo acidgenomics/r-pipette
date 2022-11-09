@@ -9,6 +9,7 @@
 \alias{import,ExcelFile,missing,missing-method}
 \alias{import,FASTAFile,missing,missing-method}
 \alias{import,FASTQFile,missing,missing-method}
+\alias{import,GCTFile,missing,missing-method}
 \alias{import,GMTFile,missing,missing-method}
 \alias{import,GMXFile,missing,missing-method}
 \alias{import,GRPFile,missing,missing-method}
@@ -93,6 +94,14 @@ import(con, format, text, ...)
   format,
   text,
   moleculeType = c("DNA", "RNA"),
+  metadata = getOption(x = "acid.import.metadata", default = FALSE),
+  quiet = getOption(x = "acid.quiet", default = FALSE)
+)
+
+\S4method{import}{GCTFile,missing,missing}(
+  con,
+  format,
+  text,
   metadata = getOption(x = "acid.import.metadata", default = FALSE),
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
