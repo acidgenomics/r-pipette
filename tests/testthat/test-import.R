@@ -336,6 +336,10 @@ test_that("Deprecated 'file' argument", {
     expect_s3_class(object, "data.frame")
 })
 
+test_that("GCT", {
+    ## FIXME
+})
+
 test_that("GFF3", {
     object <- import(
         con = file.path("cache", "example.gff3"),
