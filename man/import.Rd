@@ -103,7 +103,8 @@ import(con, format, text, ...)
   format,
   text,
   metadata = getOption(x = "acid.import.metadata", default = FALSE),
-  quiet = getOption(x = "acid.quiet", default = FALSE)
+  quiet = getOption(x = "acid.quiet", default = FALSE),
+  return = c("matrix", "data.frame")
 )
 
 \S4method{import}{GMTFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
@@ -277,6 +278,9 @@ Molecule type, either DNA or RNA.
 Most RNA-seq FASTQ files contain complementary DNA (cDNA) sequences, not
 direct sequencing of the RNA molecules.}
 
+\item{return}{\code{character(1)}.
+Object class to return.}
+
 \item{rownamesFile, colnamesFile}{\code{character(1)} or \code{NULL}.
 Row names and/or column names sidecare file.
 Applies primarily to MatrixMarket Exchange files (e.g. \code{MTXFile}).}
@@ -310,6 +314,9 @@ Imported by \code{rtracklayer::import()}.
 \item \strong{MatrixMarket exchange sparse matrix} (\code{MTX}):
 \code{sparseMatrix}.\cr
 Imported by \code{Matrix::readMM()}.
+\item \strong{Gene cluster text} (\code{GCT}):
+\code{matrix} or \code{data.frame}.\cr
+Imported by \code{readr::read_delim()}.
 \item \strong{Gene sets (for GSEA)} (\code{GMT}, \code{GMX}):
 \code{character}.
 \item \strong{Browser extensible data} (\code{BED}, \code{BED15}, \code{BEDGRAPH}, \code{BEDPE}):
@@ -356,7 +363,7 @@ arguments. Remote URLs and compressed files are supported. If you need more
 complex import settings, just call the wrapped importer directly instead.
 }
 \note{
-Updated 2022-09-13.
+Updated 2022-11-10.
 }
 \section{Row and column names}{
 
@@ -401,6 +408,12 @@ See also:
 \item \href{https://useast.ensembl.org/info/website/upload/gff.html}{Ensembl spec}
 \item \href{https://www.gencodegenes.org/pages/data_format.html}{GENCODE spec}
 }
+}
+
+\section{Gene cluster text format (GCT)}{
+
+
+Refer to the \href{https://software.broadinstitute.org/software/igv/GCT}{IGV GCT website} for details.
 }
 
 \section{GSEA gene set files}{
