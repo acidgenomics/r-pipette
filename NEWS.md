@@ -1,5 +1,13 @@
 # Release notes
 
+## pipette 0.10.1 (2022-11-10)
+
+Major changes:
+
+- `import`: Added support for import of gene cluster text (GCT) file format.
+  Currently can set `return` parameter to import as a `matrix` (default) or
+  `data.frame` with `Name` and `Description` columns retained.
+
 ## pipette 0.10.0 (2022-10-25)
 
 Major changes:
