@@ -3,7 +3,7 @@
 #' Read file by extension into R.
 #'
 #' @name import
-#' @note Updated 2022-09-13.
+#' @note Updated 2022-11-10.
 #'
 #' @details
 #' `import()` supports automatic loading of common file types, by wrapping
@@ -50,6 +50,12 @@
 #' - [Ensembl spec](https://useast.ensembl.org/info/website/upload/gff.html)
 #' - [GENCODE spec](https://www.gencodegenes.org/pages/data_format.html)
 #'
+#' @section Gene cluster text format (GCT):
+#'
+#' Refer to the [IGV GCT website][] for details.
+#'
+#' [IGV GCT website]: https://software.broadinstitute.org/software/igv/GCT
+#'
 #' @section GSEA gene set files:
 #'
 #' Refer to the Broad Institute [GSEA wiki][] for details.
@@ -92,22 +98,13 @@
 #' resource.  If missing, the function will return the output as a character
 #' vector, rather than writing to a connection.
 #'
-#' @param text `character` or `missing`.
-#' *Not currently supported.*
-#'
 #' @param format `character(1)` or `missing`.
 #' An optional file format type, which can be used to override the file format
 #' inferred from `con`. Only recommended for file and URL paths that don't
 #' contain an extension.
 #'
-#' @param rownameCol `NULL`, `character(1)`, or `integer(1)`.
-#' *Applies only when `rownames = TRUE`.*
-#' Column name to use for row names assignment.
-#' If left `NULL` (default), the function will call `matchRownameCol()`
-#' internally to attempt to automatically match the row name column (e.g.
-#' `"rowname"` or `"rn"`).
-#' Otherwise, can manually define using a scalar argument, either the name
-#' directly or position in the column names.
+#' @param text `character` or `missing`.
+#' *Not currently supported.*
 #'
 #' @param colnames `logical(1)` or `character`.
 #' Automatically assign column names, using the first header row.
@@ -145,6 +142,18 @@
 #' @param removeBlank `logical(1)`.
 #' Remove blank lines.
 #' *Applies to source code lines*.
+#'
+#' @param return `character(1)`.
+#' Object class to return.
+#'
+#' @param rownameCol `NULL`, `character(1)`, or `integer(1)`.
+#' *Applies only when `rownames = TRUE`.*
+#' Column name to use for row names assignment.
+#' If left `NULL` (default), the function will call `matchRownameCol()`
+#' internally to attempt to automatically match the row name column (e.g.
+#' `"rowname"` or `"rn"`).
+#' Otherwise, can manually define using a scalar argument, either the name
+#' directly or position in the column names.
 #'
 #' @param rownames `logical(1)`.
 #' Automatically assign row names, if `rowname` column is defined.
@@ -195,6 +204,9 @@
 #' - **MatrixMarket exchange sparse matrix** (`MTX`):
 #' `sparseMatrix`.\cr
 #' Imported by `Matrix::readMM()`.
+#' - **Gene cluster text** (`GCT`):
+#' `matrix` or `data.frame`.\cr
+#' Imported by `readr::read_delim()`.
 #' - **Gene sets (for GSEA)** (`GMT`, `GMX`):
 #' `character`.
 #' - **Browser extensible data** (`BED`, `BED15`, `BEDGRAPH`, `BEDPE`):
@@ -1882,9 +1894,12 @@ NULL
 
 
 
+## FIXME Document the return option.
+## FIXME Ensure metadata propagates...
+
 #' Import a gene cluster text file (`.gct`)
 #'
-#' @note Updated 2022-11-09.
+#' @note Updated 2022-11-10.
 #' @noRd
 #'
 #' @seealso
@@ -1900,13 +1915,15 @@ NULL
              quiet = getOption(
                  x = "acid.quiet",
                  default = FALSE
-             )) {
+             ),
+             return = c("matrix", "data.frame")) {
         if (missing(format)) {
             format <- NULL
         }
         if (missing(text)) {
             text <- NULL
         }
+        return <- match.arg(return)
         assert(
             is.null(format),
             is.null(text),
@@ -1938,21 +1955,33 @@ NULL
             hasLength(header, n = 2L)
         )
         header <- strsplit(header, split = "\t", fixed = TRUE)
-        version <- numeric_version(sub(
-            pattern = "#",
-            replacement = "",
-            x = header[[1L]][[1L]]
-        ))
+        ## Here's how to return the GCT file version, for reference.
+        ## > version <- numeric_version(sub(
+        ## >     pattern = "#",
+        ## >     replacement = "",
+        ## >     x = header[[1L]][[1L]]
+        ## > ))
         dim1 <- as.integer(header[[2L]][c(1L, 2L)])
         dim2 <- c(nrow(object), ncol(object) - 2L)
         assert(
             identical(dim1, dim2),
             msg = "Dimension mismatch."
         )
-        mat <- as.matrix(object[, c(3L, ncol(object))])
-        assert(identical(dim(mat), dim2))
-        rownames(mat) <- object[["Name"]]
-        mat
+        switch(
+            EXPR = return,
+            "data.frame" = {
+                out <- object
+            },
+            "matrix" = {
+                out <- as.matrix(object[, c(3L, ncol(object))])
+                assert(identical(dim(out), dim2))
+                if (isTRUE(metadata)) {
+                    attr(out, "import") <- attr(object, "import")
+                }
+            }
+        )
+        rownames(out) <- object[["Name"]]
+        out
     }
 
 

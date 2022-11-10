@@ -12,6 +12,10 @@ files <- c(
     "example.fa.gz",
     ## Klein Lab inDrops R3 FASTQ file (from bcbio-nextgen unit tests).
     "example.fq.gz",
+    ## https://software.broadinstitute.org/software/igv/GCT
+    ## https://software.broadinstitute.org/software/igv/sites/
+    ##   cancerinformatics.org.igv/files/linked_files/example.gct
+    "example.gct",
     "example.gtf",
     "example.gff3",
     "example.json",
