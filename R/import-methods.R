@@ -1970,7 +1970,7 @@ NULL
                 out <- object
             },
             "matrix" = {
-                out <- as.matrix(object[, c(3L, ncol(object))])
+                out <- as.matrix(object[, seq(from = 3L, to = ncol(object))])
                 assert(identical(dim(out), dim2))
                 if (isTRUE(metadata)) {
                     attr(out, "import") <- attr(object, "import")
