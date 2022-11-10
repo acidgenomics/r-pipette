@@ -1894,9 +1894,6 @@ NULL
 
 
 
-## FIXME Document the return option.
-## FIXME Ensure metadata propagates...
-
 #' Import a gene cluster text file (`.gct`)
 #'
 #' @note Updated 2022-11-10.
