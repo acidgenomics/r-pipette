@@ -337,7 +337,50 @@ test_that("Deprecated 'file' argument", {
 })
 
 test_that("GCT", {
-    ## FIXME
+    object <- import(
+        con = file.path("cache", "example.gct"),
+        metadata = TRUE,
+        return = "matrix"
+    )
+    expect_type(object, "double")
+    expect_identical(
+        object = dim(object),
+        expected = c(10L, 2L)
+    )
+    expect_identical(
+        object = rownames(object)[[1L]],
+        expected = "1007_s_at"
+    )
+    expect_identical(
+        object = colnames(object),
+        expected = c("Tumor_One", "Normal_One")
+    )
+    expect_identical(
+        object = attr(object, "import")[["importerName"]],
+        expected = "readr::read_delim"
+    )
+    object <- import(
+        con = file.path("cache", "example.gct"),
+        metadata = TRUE,
+        return = "data.frame"
+    )
+    expect_s3_class(object, "data.frame")
+    expect_identical(
+        object = dim(object),
+        expected = c(10L, 4L)
+    )
+    expect_identical(
+        object = rownames(object)[[1L]],
+        expected = "1007_s_at"
+    )
+    expect_identical(
+        object = colnames(object),
+        expected = c("Name", "Description", "Tumor_One", "Normal_One")
+    )
+    expect_identical(
+        object = attr(object, "import")[["importerName"]],
+        expected = "readr::read_delim"
+    )
 })
 
 test_that("GFF3", {
