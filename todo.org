@@ -1,6 +1,8 @@
 #+TITLE: pipette
 #+STARTUP: content
 * Development
+** TODO Need to improve export of matrix with row names defined.
+    Currently dropping this...add code coverage.
 ** TODO File path messages are inconsistent on Windows.
 ** TODO Some of the unit tests are failing on Windows.
     Need to get a laptop with Windows 11 and fix these.
