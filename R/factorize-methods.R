@@ -1,3 +1,7 @@
+## FIXME Ensure that this doesn't modify logical vectors.
+
+
+
 #' @name factorize
 #' @inherit AcidGenerics::factorize
 #' @note Updated 2022-10-24.
