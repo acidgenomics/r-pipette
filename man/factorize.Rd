@@ -25,14 +25,16 @@ All columns will be coerced to \code{factor}.
 Coerce all columns in the object to \code{factor} (i.e. \code{stringsAsFactors}).
 }
 \note{
-Updated 2022-10-24.
+Updated 2023-01-31.
 }
 \examples{
+## DataFrame ====
 object <- S4Vectors::DataFrame(
     "a" = c("a", "b", "c", "d"),
     "b" = c("a", "a", "b", "b"),
     "c" = c(1L, 2L, 3L, 4L),
     "d" = c(1L, 2L, 1L, 2L),
+    "e" = c(TRUE, TRUE, FALSE, FALSE),
     row.names = c("A", "B", "C", "D")
 )
 object <- factorize(object)
