@@ -1,5 +1,13 @@
 # Release notes
 
+## pipette 0.10.2 (2023-01-31)
+
+Minor changes:
+
+- `factorize`: Bug fix to ensure that `logical` columns are not coerced to
+  factor, as these are expected to have repeated values.
+- Now requiring Bioconductor 3.16 release.
+
 ## pipette 0.10.1 (2022-11-10)
 
 Major changes:
