@@ -4,7 +4,7 @@
 
 #' @name factorize
 #' @inherit AcidGenerics::factorize
-#' @note Updated 2022-10-24.
+#' @note Updated 2023-01-31.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
@@ -27,7 +27,7 @@ NULL
 
 
 
-## Updated 2022-10-24.
+## Updated 2023-01-31.
 `factorize,DataFrame` <- # nolint
     function(object) {
         isFactor <- bapply(
@@ -36,7 +36,7 @@ NULL
                 if (is.factor(x)) {
                     return(TRUE)
                 }
-                if (isS4(x) || !is.atomic(x)) {
+                if (isS4(x) || !is.atomic(x) || is.logical(x)) {
                     return(FALSE)
                 }
                 ok <- hasDuplicates(na.omit(x))
