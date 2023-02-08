@@ -28,8 +28,7 @@ NULL
 ## Standard functions ==========================================================
 
 #' @importFrom AcidBase basenameSansExt compress decompress dots download
-#' fileExt initDir methodFunction pasteURL realpath requireNamespaces
-#' standardizeCall tempdir2
+#' fileExt initDir methodFunction pasteURL realpath standardizeCall tempdir2
 #' @importFrom AcidCLI abort alert alertInfo alertSuccess alertWarning
 #' toInlineString
 #' @importFrom Matrix readMM writeMM
@@ -40,7 +39,7 @@ NULL
 #' hasInternet hasLength hasNames hasNoDuplicates hasRownames hasRows
 #' hasValidNames hasValidDimnames isAFile isAURL isAny isCharacter isFlag
 #' isInstalled isInt isMatchingRegex isNonNegative isPositive isScalar isString
-#' isSubset validNames validate
+#' isSubset requireNamespaces validNames validate
 #' @importFrom methods as is hasMethod new setGeneric signature validObject
 #' @importFrom utils packageName packageVersion
 NULL
