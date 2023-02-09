@@ -1,5 +1,12 @@
 # Release notes
 
+## pipette 0.10.3 (2023-02-09)
+
+Minor changes:
+
+- Migrated `requireNamespaces` import in NAMESPACE from AcidBase to goalie.
+- Updated package dependencies.
+
 ## pipette 0.10.2 (2023-01-31)
 
 Minor changes:
