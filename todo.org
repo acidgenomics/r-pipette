@@ -1,6 +1,7 @@
 #+TITLE: pipette
 #+STARTUP: content
 * Development
+** TODO Consider reexporting initDir here.
 ** TODO Need to improve export of matrix with row names defined.
     Currently dropping this...add code coverage.
 ** TODO File path messages are inconsistent on Windows.
