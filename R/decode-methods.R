@@ -1,3 +1,8 @@
+## FIXME Need to skip some S4 classes that we shouldn't attempt to decode...
+## Use our GRanges with "X" column as example.
+
+
+
 #' Decode data that uses run-length encoding
 #'
 #' @name decode
