@@ -19,18 +19,16 @@ as.DataFrame(x, ...)
 
 \S4method{as.DataFrame}{Matrix}(x)
 
-\S4method{as.DataFrame}{SimpleList}(x, row.names = NULL)
+\S4method{as.DataFrame}{SimpleList}(x)
 
 \S4method{as.DataFrame}{data.frame}(x)
 
-\S4method{as.DataFrame}{list}(x, row.names = NULL)
+\S4method{as.DataFrame}{list}(x)
 
 \S4method{as.DataFrame}{matrix}(x)
 }
 \arguments{
 \item{x}{Object.}
-
-\item{row.names}{Refer to \code{base::as.data.frame} for usage details.}
 
 \item{...}{Additional arguments.}
 }
