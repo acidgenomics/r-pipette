@@ -34,23 +34,24 @@ NULL
         if (!hasLength(x)) {
             return(DataFrame())
         }
+        assert(
+            all(bapply(
+                X = x,
+                FUN = function(x, y) {
+                    identical(length(x), y)
+                },
+                y = length(x[[1L]])
+            )),
+            msg = "List elements contain variable lengths."
+        )
         if (!hasNames(x)) {
             names(x) <- paste0("X", seq_along(x))
         }
         ncols <- length(x)
         nrows <- length(x[[1L]])
         rn <- names(x[[1L]])
-        if (!is.null(rn)) {
-            assert(
-                all(bapply(
-                    X = x,
-                    FUN = function(x, rn) {
-                        areSetEqual(names(x), rn)
-                    },
-                    rn = rn
-                )),
-                msg = "Names of list elements are mismatched."
-            )
+        ## Dynamically reorder list elements only when all named.
+        if (!is.null(rn) && all(bapply(X = x, FUN = hasNames))) {
             x <- lapply(
                 X = x,
                 FUN = function(x, rn) {

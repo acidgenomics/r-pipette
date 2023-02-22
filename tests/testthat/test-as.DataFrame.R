@@ -48,3 +48,14 @@ test_that("list : mismatched rownames", {
     )
     expect_identical(object, expected)
 })
+
+test_that("list : length-mismatched rows", {
+    lst <- list(
+        seq(from = 1L, to = 2L),
+        seq(from = 1L, to = 3L)
+    )
+    expect_error(
+        object = as.DataFrame(lst),
+        regexp = "List elements contain variable lengths."
+    )
+})
