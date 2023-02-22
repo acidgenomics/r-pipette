@@ -1,6 +1,20 @@
+## FIXME Check coverage against empty list.
+## FIXME Check coverage with named list differing in order
+## FIXME Check coverage with GRanges in list, which doesn't support extraction.
+## FIXME Refer to GRanges to DataFrame coercion method for inspiration.
+## FIXME Cover expected error of list with empty elements.
+
+## Here's how we coerce from GRanges to DFrame.
+## > getMethod(f = "coerce", signature = signature("from" = "Vector", "to" = "DFrame"))
+## S4Vectors:::.defaultAsDFrame
+## S4Vectors:::new_DataFrame
+## new2("DFrame", nrows = nrows, listData = listData, check = FALSE)
+
+
+
 #' @name as.DataFrame
 #' @inherit AcidGenerics::as.DataFrame
-#' @note Updated 2022-05-03.
+#' @note Updated 2023-02-22.
 #'
 #' @param row.names
 #' Refer to `base::as.data.frame` for usage details.
@@ -29,43 +43,24 @@ NULL
 
 
 
-## Updated 2022-02-07.
+## Updated 2022-02-22.
 `as.DataFrame,list` <- # nolint
     function(x, row.names = NULL) { # nolint
-        if (hasLength(x)) {
-            assert(
-                hasLength(x[[1L]]),
-                msg = "First element of list is empty."
-            )
-            nc <- length(x)
-            nr <- length(x[[1L]])
-            x <- lapply(
-                X = x,
-                FUN = function(x) {
-                    if (isAny(x = x, classes = c("List", "Rle"))) {
-                        return(x)
-                    }
-                    I(x)
-                }
-            )
-        } else {
-            ## nocov start
-            nc <- 0L
-            nr <- 0L
-            ## nocov end
+        if (!hasLength(x)) {
+            return(DataFrame())
         }
-        args <- append(
-            x = x,
-            values = list(
-                "row.names" = row.names,
-                "check.names" = TRUE
+        ncols <- length(x)
+        nrows <- length(x[[1L]])
+        df <- new(Class = "DFrame", listData = x, nrows = nrows)
+        rownames(df) <- row.names
+        assert(
+            identical(dim(df), c(nrows, ncols)),
+            msg = sprintf(
+                "Dimension mismatch during {.cls %s} to {.cls %s} coercion.",
+                "list", "DataFrame"
             )
         )
-        ## FIXME This is splitting out the complex "X" column, which we
-        ## don't want....argh.
-        out <- do.call(what = DataFrame, args = args)
-        assert(identical(dim(out), c(nr, nc)))
-        out
+        df
     }
 
 ## Updated 2022-02-08.
