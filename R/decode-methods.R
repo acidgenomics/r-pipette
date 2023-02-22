@@ -39,11 +39,9 @@ NULL
         list <- lapply(
             X = x,
             FUN = function(x) {
+                x <- unname(x)
                 if (is(x, "Rle")) {
                     x <- decode(x)
-                }
-                if (isS4(x)) {
-                    return(x)
                 }
                 if (is.factor(x)) {
                     x <- droplevels(x)
@@ -51,9 +49,6 @@ NULL
                 x
             }
         )
-        ## FIXME This step can fail with complex S4 inside of list...need
-        ## to rethink the coercion method here. Take a look at AcidPlyr
-        ## rbindToDataFrame for inspiration / consistency.
         out <- as.DataFrame(list)
         rownames(out) <- rownames(x)
         metadata(out) <- metadata(x)
