@@ -28,7 +28,7 @@ NULL
 
 
 
-## Updated 2022-02-22.
+## Updated 2023-02-22.
 `as.DataFrame,list` <- # nolint
     function(x) { # nolint
         if (!hasLength(x)) {
@@ -121,11 +121,11 @@ NULL
         as.DataFrame(as.matrix(x))
     }
 
-
-
-## Updated 2021-02-19.
+## Updated 2022-03-22.
 `as.DataFrame,SimpleList` <- # nolint
-    `as.DataFrame,list`
+    function(x) {
+        as.DataFrame(as.list(x))
+    }
 
 ## Updated 2022-02-08.
 `as.DataFrame,data.frame` <- # nolint
