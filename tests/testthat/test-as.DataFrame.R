@@ -5,20 +5,6 @@ test_that("list : empty list", {
     )
 })
 
-test_that("list : nested list", {
-    lst <- list(
-        "a" = list(c(1L, 2L), c(3L, 4L)),
-        "b" = list(NULL, NULL)
-    )
-    object <- as.DataFrame(lst)
-    expected <- new(
-        Class = "DFrame",
-        listData = lst,
-        nrows = length(lst[[1L]])
-    )
-    expect_identical(object, expected)
-})
-
 test_that("list : unnamed list", {
     lst <- list(character(), character())
     object <- as.DataFrame(lst)
@@ -28,6 +14,20 @@ test_that("list : unnamed list", {
             "X1" = character(),
             "X2" = character()
         ),
+        nrows = length(lst[[1L]])
+    )
+    expect_identical(object, expected)
+})
+
+test_that("list : nested list", {
+    lst <- list(
+        "a" = list(c(1L, 2L), c(3L, 4L)),
+        "b" = list(NULL, NULL)
+    )
+    object <- as.DataFrame(lst)
+    expected <- new(
+        Class = "DFrame",
+        listData = lst,
         nrows = length(lst[[1L]])
     )
     expect_identical(object, expected)
