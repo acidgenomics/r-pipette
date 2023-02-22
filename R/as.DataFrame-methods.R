@@ -1,18 +1,3 @@
-## FIXME Check coverage against empty list.
-## FIXME Check coverage with named list differing in order
-## FIXME Check coverage with GRanges in list, which doesn't support extraction.
-## FIXME Refer to GRanges to DataFrame coercion method for inspiration.
-## FIXME Cover expected error of list with empty elements.
-
-## Here's how we coerce from GRanges to DFrame.
-## > getMethod(f = "coerce", signature = signature("from" = "Vector", "to" = "DFrame"))
-## S4Vectors:::.defaultAsDFrame
-## S4Vectors:::new_DataFrame
-## new2("DFrame", nrows = nrows, listData = listData, check = FALSE)
-## as.DataFrame(list(c(), c()))
-
-
-
 #' @name as.DataFrame
 #' @inherit AcidGenerics::as.DataFrame
 #' @note Updated 2023-02-22.
@@ -47,7 +32,7 @@ NULL
 
 ## Updated 2022-02-22.
 `as.DataFrame,list` <- # nolint
-    function(x, row.names = NULL) { # nolint
+    function(x) { # nolint
         if (!hasLength(x)) {
             return(DataFrame())
         }
@@ -56,31 +41,27 @@ NULL
         }
         ncols <- length(x)
         nrows <- length(x[[1L]])
-        rn <- row.names
-        refRn <- names(x[[1L]])
-        if (!is.null(refRn)) {
+        rn <- names(x[[1L]])
+        if (!is.null(rn)) {
             assert(
                 all(bapply(
                     X = x,
-                    FUN = function(x, refRn) {
-                        areSetEqual(names(x), refRn)
+                    FUN = function(x, rn) {
+                        areSetEqual(names(x), rn)
                     },
-                    refRn = refRn
+                    rn = rn
                 )),
                 msg = "Names of list elements are mismatched."
             )
             x <- lapply(
                 X = x,
-                FUN = function(x, refRn) {
-                    x <- x[refRn]
+                FUN = function(x, rn) {
+                    x <- x[rn]
                     x <- unname(x)
                     x
                 },
-                refRn = refRn
+                rn = rn
             )
-            if (is.null(rn)) {
-                rn <- refRn
-            }
         }
         df <- new(Class = "DFrame", listData = x, nrows = nrows)
         rownames(df) <- rn
