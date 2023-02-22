@@ -9,6 +9,7 @@
 ## S4Vectors:::.defaultAsDFrame
 ## S4Vectors:::new_DataFrame
 ## new2("DFrame", nrows = nrows, listData = listData, check = FALSE)
+## as.DataFrame(list(c(), c()))
 
 
 
@@ -21,10 +22,12 @@
 #' @param ... Additional arguments.
 #'
 #' @examples
-#' data(
-#'     sparseMatrix,
-#'     package = "AcidTest"
-#' )
+#' data(GenomicRanges, sparseMatrix, package = "AcidTest")
+#'
+#' ## `GenomicRanges` to `DataFrame` ====
+#' from <- GenomicRanges
+#' to <- as.DataFrame(from)
+#' print(to)
 #'
 #' ## `Matrix` to `DataFrame` ====
 #' from <- sparseMatrix
@@ -32,7 +35,6 @@
 #' print(to)
 #'
 #' ## `list` to `DataFrame` ====
-#' ## Use `as.DataFrame()` instead of `as()` for `list` class.
 #' from <- list(
 #'     "a" = list(c(1, 2), c(3, 4)),
 #'     "b" = list(NULL, NULL)
@@ -48,6 +50,9 @@ NULL
     function(x, row.names = NULL) { # nolint
         if (!hasLength(x)) {
             return(DataFrame())
+        }
+        if (!hasNames(x)) {
+            names(x) <- paste0("X", seq_along(x))
         }
         ncols <- length(x)
         nrows <- length(x[[1L]])
