@@ -24,7 +24,7 @@ Modified object.
 Drop factor levels
 }
 \note{
-Updated 2022-04-25.
+Updated 2023-02-22.
 }
 \examples{
 data(GenomicRanges, package = "AcidTest")
