@@ -1,5 +1,30 @@
 # Release notes
 
+## pipette 0.10.4 (2023-02-22)
+
+Minor changes:
+
+- `as.DataFrame`: Reworked the `list` and `SimpleList` methods:
+
+  - We removed the option to set `row.names` for `list` and `SimpleList`
+    methods. Instead, row names will get defined automatically when the first
+    element in the list is named.
+  - The `list` method now checks for length mismatched input at the start of the
+    function. This should also be handled in the downstream `DataFrame`
+    generator step, but we can set a custom error message instead.
+  - We're now calling `new` internally with `listData` and `nrows` defined,
+    which is faster and less problematic then attempting to construct a matrix
+    (via `cbind`) and then coerce to `DataFrame` instead.
+  - Our `list` method now attempts to reorder named elements when possible.
+
+- `decode`: The internal code for `DataFrame` method has been simplified, due to
+  rework of our internal `as.DataFrame` method code. Note that list elements
+  are now unname during the decoding step, but has no effect on row name
+  handling.
+- `droplevels2`: Hardened `DataFrame` method to properly coerce `DataFrame`
+  to `SimpleList` before proceeding. Using `as` method with `"List"` class
+  does not currently unclass `DataFrame` as expected.
+
 ## pipette 0.10.3 (2023-02-09)
 
 Minor changes:
