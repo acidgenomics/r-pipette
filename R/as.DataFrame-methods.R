@@ -54,11 +54,15 @@ NULL
             nr <- 0L
             ## nocov end
         }
-        args <- list(
-            x,
-            "row.names" = row.names,
-            "check.names" = TRUE
+        args <- append(
+            x = x,
+            values = list(
+                "row.names" = row.names,
+                "check.names" = TRUE
+            )
         )
+        ## FIXME This is splitting out the complex "X" column, which we
+        ## don't want....argh.
         out <- do.call(what = DataFrame, args = args)
         assert(identical(dim(out), c(nr, nc)))
         out
