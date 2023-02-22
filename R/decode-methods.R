@@ -6,7 +6,7 @@
 #' Decode data that uses run-length encoding
 #'
 #' @name decode
-#' @note Updated 2022-02-04.
+#' @note Updated 2022-02-22.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
@@ -30,34 +30,33 @@ NULL
 
 
 
-## Updated 2021-06-09.
+## Updated 2023-02-22.
 `decode,DataFrame` <- # nolint
     function(x) {
         if (!(hasCols(x) && hasRows(x))) {
             return(x)
         }
-        meta <- metadata(x)
-        rn <- rownames(x)
         list <- lapply(
             X = x,
             FUN = function(x) {
-                if (is(x, "List")) {
-                    return(x) # nocov
-                }
-                ## Decode Rle, if necessary.
                 if (is(x, "Rle")) {
                     x <- decode(x)
                 }
-                ## Adjust (drop) factor levels, if necessary.
+                if (isS4(x)) {
+                    return(x)
+                }
                 if (is.factor(x)) {
                     x <- droplevels(x)
                 }
                 x
             }
         )
+        ## FIXME This step can fail with complex S4 inside of list...need
+        ## to rethink the coercion method here. Take a look at AcidPlyr
+        ## rbindToDataFrame for inspiration / consistency.
         out <- as.DataFrame(list)
-        rownames(out) <- rn
-        metadata(out) <- meta
+        rownames(out) <- rownames(x)
+        metadata(out) <- metadata(x)
         out
     }
 
