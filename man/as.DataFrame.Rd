@@ -41,7 +41,7 @@ as.DataFrame(x, ...)
 Coerce object to S4 DataFrame
 }
 \note{
-Updated 2022-05-03.
+Updated 2023-02-22.
 }
 \examples{
 data(
