@@ -44,10 +44,12 @@ Coerce object to S4 DataFrame
 Updated 2023-02-22.
 }
 \examples{
-data(
-    sparseMatrix,
-    package = "AcidTest"
-)
+data(GenomicRanges, sparseMatrix, package = "AcidTest")
+
+## `GenomicRanges` to `DataFrame` ====
+from <- GenomicRanges
+to <- as.DataFrame(from)
+print(to)
 
 ## `Matrix` to `DataFrame` ====
 from <- sparseMatrix
@@ -55,7 +57,6 @@ to <- as.DataFrame(from)
 print(to)
 
 ## `list` to `DataFrame` ====
-## Use `as.DataFrame()` instead of `as()` for `list` class.
 from <- list(
     "a" = list(c(1, 2), c(3, 4)),
     "b" = list(NULL, NULL)
