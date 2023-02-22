@@ -56,8 +56,34 @@ NULL
         }
         ncols <- length(x)
         nrows <- length(x[[1L]])
+        rn <- row.names
+        refRn <- names(x[[1L]])
+        if (!is.null(refRn)) {
+            assert(
+                all(bapply(
+                    X = x,
+                    FUN = function(x, refRn) {
+                        areSetEqual(names(x), refRn)
+                    },
+                    refRn = refRn
+                )),
+                msg = "Names of list elements are mismatched."
+            )
+            x <- lapply(
+                X = x,
+                FUN = function(x, refRn) {
+                    x <- x[refRn]
+                    x <- unname(x)
+                    x
+                },
+                refRn = refRn
+            )
+            if (is.null(rn)) {
+                rn <- refRn
+            }
+        }
         df <- new(Class = "DFrame", listData = x, nrows = nrows)
-        rownames(df) <- row.names
+        rownames(df) <- rn
         assert(
             identical(dim(df), c(nrows, ncols)),
             msg = sprintf(
