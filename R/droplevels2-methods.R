@@ -2,7 +2,7 @@
 #'
 #' @name droplevels2
 #' @inherit AcidGenerics::droplevels2
-#' @note Updated 2023-02-22.
+#' @note Updated 2023-03-01.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
@@ -18,7 +18,7 @@ NULL
 
 
 
-## Updated 2023-02-22.
+## Updated 2023-03-01.
 `droplevels2,DataFrame` <- # nolint
     function(x) {
         except <- !bapply(X = decode(x), FUN = is.factor)
@@ -28,6 +28,7 @@ NULL
         lst <- SimpleList(as.list(x))
         lst <- droplevels(x = lst, except = except)
         out <- as.DataFrame(lst)
+        rownames(out) <- rownames(x)
         out
     }
 
