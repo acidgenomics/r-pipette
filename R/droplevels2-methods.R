@@ -18,10 +18,18 @@ NULL
 
 
 
-## Updated 2023-03-01.
+## Updated 2023-03-08.
 `droplevels2,DataFrame` <- # nolint
     function(x) {
-        except <- !bapply(X = decode(x), FUN = is.factor)
+        except <- !bapply(
+            X = x,
+            FUN = function(x) {
+                if (is(x, "Rle")) {
+                    x <- decode(x)
+                }
+                is.factor(x)
+            }
+        )
         if (all(except)) {
             return(x)
         }
