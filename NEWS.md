@@ -1,5 +1,12 @@
 # Release notes
 
+## pipette 0.10.5 (2023-04-12)
+
+Minor changes:
+
+- Reexporting `initDir` and `pasteURL` from AcidBase.
+- Improved `pattern` documentation for `getURLDirList`.
+
 ## pipette 0.10.4 (2023-02-22)
 
 Minor changes:
