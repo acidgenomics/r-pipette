@@ -45,7 +45,7 @@
 #' NA strings
 #'
 #' @export
-#' @note Updated 2021-03-16.
+#' @note Updated 2023-04-12.
 #'
 #' @examples
 #' naStrings
@@ -61,7 +61,8 @@ naStrings <- c(
     "_",
     "n/a",
     "na",
-    "null"
+    "null",
+    "\\N"
 )
 
 
