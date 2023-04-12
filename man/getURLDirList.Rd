@@ -11,7 +11,8 @@ getURLDirList(url, pattern = NULL)
 Uniform Resource Locator (URL).}
 
 \item{pattern}{\code{character(1)}.
-Pattern to use for matching.}
+Regular expression pattern to use for matching.
+Passes to \code{grepl} function internally.}
 }
 \value{
 \code{character}.
@@ -23,7 +24,7 @@ Get remote URL directory listing
 \note{
 Best served using FTP instead of HTTP.
 
-Updated 2022-05-04.
+Updated 2023-04-12.
 }
 \examples{
 url <- "ftp://ftp.ncbi.nlm.nih.gov/genomes/"
