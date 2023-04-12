@@ -2,9 +2,13 @@
 #'
 #' @export
 #' @note Best served using FTP instead of HTTP.
-#' @note Updated 2022-05-04.
+#' @note Updated 2023-04-12.
 #'
 #' @inheritParams AcidRoxygen::params
+#'
+#' @param pattern `character(1)`.
+#' Regular expression pattern to use for matching.
+#' Passes to `grepl` function internally.
 #'
 #' @return `character`.
 #' Simple directory contents return, including both files and subdirectories.
