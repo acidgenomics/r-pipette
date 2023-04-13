@@ -1,7 +1,3 @@
-## FIXME Add support for quote override for delim.
-
-
-
 #' Import
 #'
 #' Read file by extension into R.
