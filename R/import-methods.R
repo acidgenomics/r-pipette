@@ -967,6 +967,7 @@ NULL
             isFlag(rownames),
             isScalar(rownameCol) || is.null(rownameCol),
             isFlag(colnames) || isCharacter(colnames),
+            is.character(quote) && length(quote) <= 1L,
             is.character(comment) && length(comment) <= 1L,
             isInt(skip), isNonNegative(skip),
             isPositive(nMax),
@@ -981,7 +982,6 @@ NULL
         if (isTRUE(verbose)) {
             assert(isFALSE(quiet))
         }
-        quote <- match.arg(arg = quote, choices = c("\"", "'", ""))
         file <- resource(con)
         ext <- switch(
             EXPR = class(con),
