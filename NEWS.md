@@ -4,7 +4,9 @@
 
 Minor changes:
 
-- `import`: Switched default quoting for delim file using base engine.
+- `import`: Switched default quoting for delim file using base engine. Also
+  removed empty string assert checks, which can be problematic for some data
+  types returned by readr and data.table engines.
 
 ## pipette 0.10.6 (2023-04-13)
 
