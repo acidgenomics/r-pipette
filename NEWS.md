@@ -1,5 +1,14 @@
 # Release notes
 
+## pipette 0.10.8 (2023-04-13)
+
+Minor changes:
+
+- `import` and `export` now support overriding default quote handling with the
+  `quote` argument. Changing this is not recommended by default, but is useful
+  for some edge cases with annoying gene metadata files from Ensembl. Who
+  decided that `B"` is an acceptable gene name?
+
 ## pipette 0.10.7 (2023-04-13)
 
 Minor changes:
