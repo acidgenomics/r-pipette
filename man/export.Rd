@@ -20,6 +20,7 @@ export(object, con, format, ...)
   format,
   rownames = TRUE,
   colnames = TRUE,
+  quote = TRUE,
   overwrite = getOption(x = "acid.overwrite", default = TRUE),
   engine = getOption(x = "acid.export.engine", default = "base"),
   quiet = getOption(x = "acid.quiet", default = FALSE)
@@ -31,6 +32,7 @@ export(object, con, format, ...)
   format,
   rownames = TRUE,
   colnames = TRUE,
+  quote = TRUE,
   overwrite = getOption(x = "acid.overwrite", default = TRUE),
   engine = getOption(x = "acid.export.engine", default = "base"),
   quiet = getOption(x = "acid.quiet", default = FALSE)
@@ -61,6 +63,7 @@ export(object, con, format, ...)
   format,
   rownames = TRUE,
   colnames = TRUE,
+  quote = TRUE,
   overwrite = getOption(x = "acid.overwrite", default = TRUE),
   engine = getOption(x = "acid.export.engine", default = "base"),
   quiet = getOption(x = "acid.quiet", default = FALSE)
@@ -72,6 +75,7 @@ export(object, con, format, ...)
   format,
   rownames = TRUE,
   colnames = TRUE,
+  quote = TRUE,
   overwrite = getOption(x = "acid.overwrite", default = TRUE),
   engine = getOption(x = "acid.export.engine", default = "base"),
   quiet = getOption(x = "acid.quiet", default = FALSE)
@@ -102,6 +106,10 @@ Apply to row names.}
 
 \item{colnames}{\code{logical(1)}.
 Apply to column names.}
+
+\item{quote}{\code{logical(1)}.
+Surround any \code{character} or \code{factor} columns by double quotes.
+Recommended by default.}
 
 \item{overwrite}{\code{logical(1)}.
 Overwrite existing file on disk.}
@@ -140,7 +148,7 @@ File path(s).
 Export
 }
 \note{
-Updated 2022-09-13.
+Updated 2023-04-13.
 }
 \section{Output file format extension}{
 

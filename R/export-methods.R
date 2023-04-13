@@ -1,7 +1,7 @@
 #' Export
 #'
 #' @name export
-#' @note Updated 2022-09-13.
+#' @note Updated 2023-04-13.
 #'
 #' @section Output file format extension:
 #'
@@ -60,6 +60,10 @@
 #'
 #' @param format `character(1)`, `missing`, or `NULL`.
 #' *Currently not supported.*
+#'
+#' @param quote `logical(1)`.
+#' Surround any `character` or `factor` columns by double quotes.
+#' Recommended by default.
 #'
 #' @return Invisible `character`.
 #' File path(s).
@@ -347,9 +351,9 @@ NULL
 
 
 
-#' Export `matrix` method
+#' Export `data.frame` method
 #'
-#' @note Updated 2022-09-13.
+#' @note Updated 2023-04-13.
 #' @noRd
 #'
 #' @details
@@ -363,6 +367,7 @@ NULL
              format, # missing
              rownames = TRUE,
              colnames = TRUE,
+             quote = TRUE,
              overwrite = getOption(
                  x = "acid.overwrite",
                  default = TRUE
@@ -388,6 +393,7 @@ NULL
             is.null(format),
             isFlag(rownames),
             isFlag(colnames),
+            isFlag(quote),
             isFlag(overwrite),
             isFlag(verbose),
             isFlag(quiet)
@@ -501,7 +507,7 @@ NULL
                     "eol" = "\n",
                     "na" = "NA",
                     "qmethod" = "double",
-                    "quote" = TRUE,
+                    "quote" = quote,
                     "row.names" = FALSE,
                     "sep" = switch(
                         EXPR = format,
@@ -522,7 +528,7 @@ NULL
                     "eol" = "\n",
                     "na" = "NA",
                     "qmethod" = "double",
-                    "quote" = TRUE,
+                    "quote" = quote,
                     "row.names" = FALSE,
                     "sep" = switch(
                         EXPR = format,
@@ -553,7 +559,11 @@ NULL
                     "eol" = "\n",
                     "escape" = "double",
                     "na" = "NA",
-                    "quote" = "all"
+                    "quote" = ifelse(
+                        test = isTRUE(quote),
+                        yes = "all",
+                        no = "none"
+                    )
                 )
             }
         )
