@@ -3,7 +3,7 @@
 #' Read file by extension into R.
 #'
 #' @name import
-#' @note Updated 2023-04-12.
+#' @note Updated 2023-04-13.
 #'
 #' @details
 #' `import()` supports automatic loading of common file types, by wrapping
@@ -917,7 +917,7 @@ NULL
 
 #' Import a delimited file (e.g. `.csv`, `.tsv`).
 #'
-#' @note Updated 2022-09-13.
+#' @note Updated 2023-04-13.
 #' @noRd
 `import,DelimFile` <- # nolint
     function(con,
@@ -995,8 +995,10 @@ NULL
                     "file" = file,
                     "blank.lines.skip" = TRUE,
                     "comment.char" = comment,
+                    "fill" = FALSE,
                     "na.strings" = naStrings,
                     "nrows" = nMax,
+                    "quote" = "\"",
                     "sep" = switch(
                         EXPR = ext,
                         "csv" = ",",
@@ -1095,16 +1097,7 @@ NULL
                 stringsAsFactors = FALSE
             )
         }
-        if (
-            identical(engine, "data.table") &&
-                isTRUE(any(object == "", na.rm = TRUE))
-        ) {
-            object <- sanitizeNA(object) # nocov
-        }
-        assert(
-            allAreAtomic(object),
-            isFALSE(any(object == "", na.rm = TRUE))
-        )
+        assert(allAreAtomic(object))
         .returnImport(
             object = object,
             con = con,
