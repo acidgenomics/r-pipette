@@ -1,3 +1,7 @@
+## FIXME Add support for quote override for delim.
+
+
+
 #' Import
 #'
 #' Read file by extension into R.
@@ -138,6 +142,11 @@
 #' @param nMax `integer(1)` or `Inf`.
 #' Maximum number of lines to parse.
 #' *Applies to plain text delimited, Excel, and source code lines only.*
+#'
+#' @param quote `character(1)`.
+#' The set of quoting characters.
+#' To disable quoting altogether, use `quote = ""` (not generally recommended).
+#' *Applies to plain text delimited files only.*
 #'
 #' @param removeBlank `logical(1)`.
 #' Remove blank lines.
@@ -926,6 +935,7 @@ NULL
              rownames = TRUE,
              rownameCol = NULL,
              colnames = TRUE,
+             quote = "\"",
              comment = "",
              skip = 0L,
              nMax = Inf,
@@ -975,6 +985,7 @@ NULL
         if (isTRUE(verbose)) {
             assert(isFALSE(quiet))
         }
+        quote <- match.arg(arg = quote, choices = c("\"", "'", ""))
         file <- resource(con)
         ext <- switch(
             EXPR = class(con),
@@ -998,7 +1009,7 @@ NULL
                     "fill" = FALSE,
                     "na.strings" = naStrings,
                     "nrows" = nMax,
-                    "quote" = "\"",
+                    "quote" = quote,
                     "sep" = switch(
                         EXPR = ext,
                         "csv" = ",",
@@ -1041,6 +1052,7 @@ NULL
                     "fill" = FALSE,
                     "na.strings" = naStrings,
                     "nrows" = nMax,
+                    "quote" = quote,
                     "skip" = skip,
                     "showProgress" = FALSE,
                     "stringsAsFactors" = FALSE,
@@ -1073,6 +1085,7 @@ NULL
                     "name_repair" = make.names,
                     "n_max" = nMax,
                     "progress" = verbose,
+                    "quote" = quote,
                     "show_col_types" = verbose,
                     "skip" = skip,
                     "skip_empty_rows" = TRUE,

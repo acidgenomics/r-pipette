@@ -40,6 +40,7 @@ import(con, format, text, ...)
   rownames = TRUE,
   rownameCol = NULL,
   colnames = TRUE,
+  quote = "\\"",
   comment = "",
   skip = 0L,
   nMax = Inf,
@@ -222,6 +223,11 @@ Automatically assign column names, using the first header row.
 Applies to file types that return \code{data.frame} only.
 Pass in a \code{character} vector to define the column names manually.}
 
+\item{quote}{\code{character(1)}.
+The set of quoting characters.
+To disable quoting altogether, use \code{quote = ""} (not generally recommended).
+\emph{Applies to plain text delimited files only.}}
+
 \item{comment}{\code{character(1)}.
 Comment character to detect at beginning of line, which will skip when
 parsing file. Use \code{""} to disable interpretation of comments, which is
@@ -363,7 +369,7 @@ arguments. Remote URLs and compressed files are supported. If you need more
 complex import settings, just call the wrapped importer directly instead.
 }
 \note{
-Updated 2022-11-10.
+Updated 2023-04-13.
 }
 \section{Row and column names}{
 
