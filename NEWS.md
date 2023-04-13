@@ -1,5 +1,11 @@
 # Release notes
 
+## pipette 0.10.7 (2023-04-13)
+
+Minor changes:
+
+- `import`: Switched default quoting for delim file using base engine.
+
 ## pipette 0.10.6 (2023-04-13)
 
 Minor changes:
