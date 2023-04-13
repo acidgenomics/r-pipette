@@ -1,5 +1,12 @@
 # Release notes
 
+## pipette 0.10.6 (2023-04-13)
+
+Minor changes:
+
+- Added line break to `naStrings` handling, which improves automatic
+  sanitization of some malformed gene CSV files on the Ensembl FTP server.
+
 ## pipette 0.10.5 (2023-04-12)
 
 Minor changes:
