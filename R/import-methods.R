@@ -3,7 +3,7 @@
 #' Read file by extension into R.
 #'
 #' @name import
-#' @note Updated 2022-11-10.
+#' @note Updated 2023-04-12.
 #'
 #' @details
 #' `import()` supports automatic loading of common file types, by wrapping
