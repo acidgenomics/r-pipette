@@ -27,10 +27,10 @@ Drop factor levels
 Updated 2023-03-01.
 }
 \examples{
-data(GenomicRanges, package = "AcidTest")
+data(GRanges, package = "AcidTest")
 
 ## Ranges ====
-object <- GenomicRanges
+object <- GRanges
 object <- droplevels2(object)
 print(object)
 }

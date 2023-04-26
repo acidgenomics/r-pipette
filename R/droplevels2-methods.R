@@ -8,10 +8,10 @@
 #' @param ... Additional arguments.
 #'
 #' @examples
-#' data(GenomicRanges, package = "AcidTest")
+#' data(GRanges, package = "AcidTest")
 #'
 #' ## Ranges ====
-#' object <- GenomicRanges
+#' object <- GRanges
 #' object <- droplevels2(object)
 #' print(object)
 NULL
