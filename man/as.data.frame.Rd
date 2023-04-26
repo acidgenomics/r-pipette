@@ -2,13 +2,13 @@
 % Please edit documentation in R/AllGenerics.R, R/as.data.frame-methods.R
 \name{as.data.frame}
 \alias{as.data.frame}
-\alias{as.data.frame,IntegerRanges-method}
+\alias{as.data.frame,IRanges-method}
 \alias{as.data.frame,Matrix-method}
 \title{Coerce object to data.frame}
 \usage{
 as.data.frame(x, row.names = NULL, optional = FALSE, ...)
 
-\S4method{as.data.frame}{IntegerRanges}(x, row.names = NULL, optional = FALSE, ...)
+\S4method{as.data.frame}{IRanges}(x, row.names = NULL, optional = FALSE, ...)
 
 \S4method{as.data.frame}{Matrix}(x, row.names = NULL, optional = FALSE, ...)
 }
@@ -30,13 +30,13 @@ Updated 2022-02-08.
 }
 \examples{
 data(
-    IntegerRanges,
+    IRanges,
     sparseMatrix,
     package = "AcidTest"
 )
 
-## `IntegerRanges` to `data.frame` ====
-from <- IntegerRanges
+## `IRanges` to `data.frame` ====
+from <- IRanges
 to <- as.data.frame(from)
 head(to)
 

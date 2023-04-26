@@ -3,7 +3,7 @@
 \name{as.DataFrame}
 \alias{as.DataFrame}
 \alias{as.DataFrame,GenomicRanges-method}
-\alias{as.DataFrame,IntegerRanges-method}
+\alias{as.DataFrame,IRanges-method}
 \alias{as.DataFrame,Matrix-method}
 \alias{as.DataFrame,SimpleList-method}
 \alias{as.DataFrame,data.frame-method}
@@ -15,7 +15,7 @@ as.DataFrame(x, ...)
 
 \S4method{as.DataFrame}{GenomicRanges}(x)
 
-\S4method{as.DataFrame}{IntegerRanges}(x)
+\S4method{as.DataFrame}{IRanges}(x)
 
 \S4method{as.DataFrame}{Matrix}(x)
 
