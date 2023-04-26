@@ -2,13 +2,13 @@
 % Please edit documentation in R/AllGenerics.R, R/droplevels2-methods.R
 \name{droplevels2}
 \alias{droplevels2}
-\alias{droplevels2,DataFrame-method}
+\alias{droplevels2,DFrame-method}
 \alias{droplevels2,Ranges-method}
 \title{Drop factor levels}
 \usage{
 droplevels2(x, ...)
 
-\S4method{droplevels2}{DataFrame}(x)
+\S4method{droplevels2}{DFrame}(x)
 
 \S4method{droplevels2}{Ranges}(x)
 }

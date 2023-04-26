@@ -1,4 +1,4 @@
-test_that("DataFrame", {
+test_that("DFrame", {
     object <- DataFrame(
         "a" = c("a", "b", "c", "d"),
         "b" = c("a", "a", "b", "b"),

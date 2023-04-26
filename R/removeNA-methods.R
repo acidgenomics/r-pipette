@@ -20,7 +20,7 @@
 #' to <- removeNA(from)
 #' print(to)
 #'
-#' ## DataFrame ====
+#' ## DFrame ====
 #' from <- S4Vectors::DataFrame(
 #'     "a" = c("A", NA, "C"),
 #'     "b" = c(NA, NA, NA),
@@ -58,8 +58,8 @@ NULL
 
 
 
-## Updated 2021-10-14.
-`removeNA,DataFrame` <- # nolint
+## Updated 2023-04-26.
+`removeNA,DFrame` <- # nolint
     `removeNA,matrix`
 
 ## Updated 2021-02-02.
@@ -76,8 +76,8 @@ NULL
 #' @export
 setMethod(
     f = "removeNA",
-    signature = signature(object = "DataFrame"),
-    definition = `removeNA,DataFrame`
+    signature = signature(object = "DFrame"),
+    definition = `removeNA,DFrame`
 )
 
 #' @rdname removeNA

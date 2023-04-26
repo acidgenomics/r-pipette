@@ -2,13 +2,13 @@
 % Please edit documentation in R/AllGenerics.R, R/matchRownameColumn-methods.R
 \name{matchRownameColumn}
 \alias{matchRownameColumn}
-\alias{matchRownameColumn,DataFrame-method}
+\alias{matchRownameColumn,DFrame-method}
 \alias{matchRownameColumn,data.frame-method}
 \title{Match row name column}
 \usage{
 matchRownameColumn(object, ...)
 
-\S4method{matchRownameColumn}{DataFrame}(
+\S4method{matchRownameColumn}{DFrame}(
   object,
   choices = c("rn", "row.name", "row.names", "rowname", "rownames")
 )

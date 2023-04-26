@@ -2,13 +2,13 @@
 % Please edit documentation in R/AllGenerics.R, R/encode-methods.R
 \name{encode}
 \alias{encode}
-\alias{encode,DataFrame-method}
+\alias{encode,DFrame-method}
 \alias{encode,Ranges-method}
 \title{Encode using run-length encoding}
 \usage{
 encode(x, ...)
 
-\S4method{encode}{DataFrame}(x)
+\S4method{encode}{DFrame}(x)
 
 \S4method{encode}{Ranges}(x)
 }
@@ -28,7 +28,7 @@ Encode using run-length encoding
 Updated 2021-06-09.
 }
 \examples{
-## DataFrame ====
+## DFrame ====
 binary <- seq(from = 0L, to = 1L)
 object <- S4Vectors::DataFrame(
     "a" = rep(x = binary, times = 50L),

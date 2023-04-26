@@ -31,7 +31,7 @@
 #' @section Debugging:
 #'
 #' Note that this function currently wraps `readr::write_delim()` by default
-#' for exporting `DataFrame`, `data.frame`, and `matrix` class objects.
+#' for exporting `DFrame`, `data.frame`, and `matrix` class objects.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @inheritParams import
@@ -119,7 +119,7 @@ NULL
         key <- "delim"
     } else if (is.matrix(object)) {
         key <- "delim"
-    } else if (is(object, "DataFrame")) {
+    } else if (is(object, "DFrame")) {
         key <- "delim"
     } else if (is(object, "GenomicRanges")) {
         key <- "delim"
@@ -358,7 +358,7 @@ NULL
 #'
 #' @details
 #' This method covers standard `matrix` but is also intended to work for
-#' `data.table`, `tbl_df`, and `DataFrame` classes. Note that `rio::export()`
+#' `data.table`, `tbl_df`, and `DFrame` classes. Note that `rio::export()`
 #' doesn't preserve row names by default, so we're ensuring row names get
 #' coerced to "rowname" column consistently here.
 `export,data.frame` <- # nolint
@@ -709,7 +709,7 @@ NULL
 
 
 
-`export,DataFrame` <- # nolint
+`export,DFrame` <- # nolint
     `export,data.frame`
 
 `export,GenomicRanges` <- # nolint
@@ -727,11 +727,11 @@ NULL
 setMethod(
     f = "export",
     signature = signature(
-        object = "DataFrame",
+        object = "DFrame",
         con = "character",
         format = "missing"
     ),
-    definition = `export,DataFrame`
+    definition = `export,DFrame`
 )
 
 #' @rdname export

@@ -39,8 +39,8 @@ NULL
 
 
 
-## Updated 2021-10-14.
-`matchRownameColumn,DataFrame` <- # nolint
+## Updated 2023-04-26.
+`matchRownameColumn,DFrame` <- # nolint
     function(object,
              choices = c(
                  "rn",
@@ -75,7 +75,7 @@ NULL
 
 ## Updated 2021-10-14.
 `matchRownameColumn,data.frame` <- # nolint
-    `matchRownameColumn,DataFrame`
+    `matchRownameColumn,DFrame`
 
 
 
@@ -83,8 +83,8 @@ NULL
 #' @export
 setMethod(
     f = "matchRownameColumn",
-    signature = signature(object = "DataFrame"),
-    definition = `matchRownameColumn,DataFrame`
+    signature = signature(object = "DFrame"),
+    definition = `matchRownameColumn,DFrame`
 )
 
 #' @rdname matchRownameColumn

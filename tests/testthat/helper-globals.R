@@ -6,9 +6,9 @@ options(
 )
 
 data(
-    DataFrame,
-    GenomicRanges,
-    IntegerRanges,
+    DFrame,
+    GRanges,
+    IRanges,
     matrix,
     sparseMatrix,
     package = "AcidTest",
@@ -20,17 +20,17 @@ data(
     envir = environment()
 )
 stopifnot(
-    is(DataFrame, "DataFrame"),
-    is(GenomicRanges, "GenomicRanges"),
-    is(IntegerRanges, "IntegerRanges"),
+    is(DFrame, "DFrame"),
+    is(GRanges, "GRanges"),
+    is(IRanges, "IRanges"),
     is(sparseMatrix, "sparseMatrix")
 )
 
-df <- DataFrame
-gr <- GenomicRanges
-ir <- IntegerRanges
+df <- DFrame
+gr <- GRanges
+ir <- IRanges
 mat <- matrix
-mtcars <- as(mtcars, "DataFrame")
+mtcars <- as(mtcars, "DFrame")
 sparse <- sparseMatrix
 
 DataFrame <- S4Vectors::DataFrame

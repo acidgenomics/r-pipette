@@ -9,7 +9,7 @@
 #' - Legacy `stringsAsFactors` approach for `data.frame` import.
 #'
 #' @examples
-#' ## DataFrame ====
+#' ## DFrame ====
 #' object <- S4Vectors::DataFrame(
 #'     "a" = c("a", "b", "c", "d"),
 #'     "b" = c("a", "a", "b", "b"),
@@ -25,7 +25,7 @@ NULL
 
 
 ## Updated 2023-01-31.
-`factorize,DataFrame` <- # nolint
+`factorize,DFrame` <- # nolint
     function(object) {
         isFactor <- bapply(
             X = object,
@@ -43,7 +43,7 @@ NULL
         if (!any(isFactor)) {
             return(object)
         }
-        object <- as(object, "DataFrame")
+        object <- as(object, "DFrame")
         idx <- which(isFactor)
         object[idx] <- lapply(
             X = object[idx],
@@ -62,7 +62,7 @@ NULL
 
 ## Updated 2021-10-14.
 `factorize,data.frame` <- # nolint
-    `factorize,DataFrame`
+    `factorize,DFrame`
 
 
 
@@ -70,8 +70,8 @@ NULL
 #' @export
 setMethod(
     f = "factorize",
-    signature = signature(object = "DataFrame"),
-    definition = `factorize,DataFrame`
+    signature = signature(object = "DFrame"),
+    definition = `factorize,DFrame`
 )
 
 #' @rdname factorize

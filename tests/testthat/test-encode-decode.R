@@ -1,4 +1,4 @@
-test_that("DataFrame", {
+test_that("DFrame", {
     x <- df
     x <- encode(x)
     expect_s4_class(x[[1L]], "Rle")
@@ -6,7 +6,7 @@ test_that("DataFrame", {
     expect_s3_class(y[[1L]], "factor")
 })
 
-test_that("GenomicRanges", {
+test_that("GRanges", {
     x <- encode(gr)
     expect_s4_class(mcols(x)[[1L]], "Rle")
     y <- decode(x)

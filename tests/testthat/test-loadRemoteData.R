@@ -8,7 +8,7 @@ test_that("loadRemoteData", {
     expect_type(object, "character")
     expect_identical(object, c(example = url))
     ## Check that the object loaded correctly.
-    expect_s4_class(envir[["example"]], "DataFrame")
+    expect_s4_class(envir[["example"]], "DFrame")
 })
 
 test_that("Overwrite mode", {

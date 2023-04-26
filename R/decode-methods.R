@@ -13,10 +13,10 @@
 #' - `S4Vectors::decode()`.
 #'
 #' @examples
-#' data(DataFrame, package = "AcidTest")
+#' data(DFrame, package = "AcidTest")
 #'
-#' ## DataFrame ====
-#' object <- DataFrame
+#' ## DFrame ====
+#' object <- DFrame
 #' object <- encode(object)
 #' lapply(object, class)
 #' object <- decode(object)
@@ -25,8 +25,8 @@ NULL
 
 
 
-## Updated 2023-02-22.
-`decode,DataFrame` <- # nolint
+## Updated 2023-04-26.
+`decode,DFrame` <- # nolint
     function(x) {
         if (!(hasCols(x) && hasRows(x))) {
             return(x)
@@ -67,8 +67,8 @@ NULL
 #' @export
 setMethod(
     f = "decode",
-    signature = signature(x = "DataFrame"),
-    definition = `decode,DataFrame`
+    signature = signature(x = "DFrame"),
+    definition = `decode,DFrame`
 )
 
 #' @rdname decode

@@ -1,6 +1,6 @@
 test_that("metadata2", {
     for (x in list(
-        "DataFrame" = DataFrame(),
+        "DFrame" = DataFrame(),
         "data.frame" = data.frame()
     )) {
         which <- "A"
