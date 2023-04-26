@@ -5,7 +5,7 @@
 #' @param ... Additional arguments.
 #'
 #' @examples
-#' data(GenomicRanges, sparseMatrix, package = "AcidTest")
+#' data(GRanges, sparseMatrix, package = "AcidTest")
 #'
 #' ## `GRanges` to `DFrame` ====
 #' from <- GRanges
@@ -90,8 +90,8 @@ NULL
         to
     }
 
-## Updated 2021-10-14.
-`as.DataFrame,GenomicRanges` <- # nolint
+## Updated 2023-04-26.
+`as.DataFrame,GRanges` <- # nolint
     function(x) {
         DataFrame(
             "seqnames" = seqnames(x),
@@ -142,8 +142,8 @@ NULL
 #' @export
 setMethod(
     f = "as.DataFrame",
-    signature = signature(x = "GenomicRanges"),
-    definition = `as.DataFrame,GenomicRanges`
+    signature = signature(x = "GRanges"),
+    definition = `as.DataFrame,GRanges`
 )
 
 #' @rdname as.DataFrame

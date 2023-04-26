@@ -11,7 +11,7 @@ test_that("DFrame", {
     expect_true(hasRownames(object))
 })
 
-test_that("GenomicRanges", {
+test_that("GRanges", {
     expect_identical(
         object = atomize(GRanges()),
         expected = GRanges()
@@ -20,7 +20,7 @@ test_that("GenomicRanges", {
     expect_false(any(bapply(X = mcols(object), FUN = is.atomic)))
     object <- atomize(gr)
     expect_true(all(bapply(X = mcols(object), FUN = is.atomic)))
-    expect_s4_class(object, "GenomicRanges")
+    expect_s4_class(object, "GRanges")
     expect_true(hasNames(object))
 })
 
