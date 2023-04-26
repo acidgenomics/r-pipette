@@ -11,13 +11,13 @@
 #'
 #' @examples
 #' data(
-#'     IntegerRanges,
+#'     IRanges,
 #'     sparseMatrix,
 #'     package = "AcidTest"
 #' )
 #'
-#' ## `IntegerRanges` to `data.frame` ====
-#' from <- IntegerRanges
+#' ## `IRanges` to `data.frame` ====
+#' from <- IRanges
 #' to <- as.data.frame(from)
 #' head(to)
 #'
@@ -78,8 +78,8 @@ NULL
         as(x, "data.frame")
     }
 
-## Updated 2021-02-05.
-`as.data.frame,IntegerRanges` <- # nolint
+## Updated 2023-04-26.
+`as.data.frame,IRanges` <- # nolint
     function(x,
              row.names = NULL, # nolint
              optional = FALSE,
@@ -118,8 +118,8 @@ NULL
 #' @export
 setMethod(
     f = "as.data.frame",
-    signature = signature("IntegerRanges"),
-    definition = `as.data.frame,IntegerRanges`
+    signature = signature("IRanges"),
+    definition = `as.data.frame,IRanges`
 )
 
 #' @rdname as.data.frame
