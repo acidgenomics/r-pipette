@@ -1,5 +1,12 @@
 # Release notes
 
+## pipette 0.10.9 (2023-04-26)
+
+Minor changes:
+
+- Renamed S4 class definitions: `DataFrame` to `DFrame`; `GenomicRanges` to
+  `GRanges`; and `IntegerRanges` to `IRanges`.
+
 ## pipette 0.10.8 (2023-04-13)
 
 Minor changes:
