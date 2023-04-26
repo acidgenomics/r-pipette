@@ -18,7 +18,7 @@
 #' To maintain sanity, `import()` attempts to handle row names automatically.
 #' The function checks for a `rowname` column in delimited data, and moves these
 #' values into the object's row names, if supported by the return type (e.g.
-#' `data.frame`, `DataFrame`). Note that `tbl_df` (tibble) and `data.table`
+#' `data.frame`, `DFrame`). Note that `tbl_df` (tibble) and `data.table`
 #' intentionally do not support row names. When returning in this format, no
 #' attempt to assign the `rowname` column into the return object's row names is
 #' made. Note that `import()` is strict about this matching and only checks for
@@ -188,7 +188,7 @@
 #' Data separated by commas, tabs, or visual spaces.\cr
 #' Note that TXT structure is amgibuous and actively discouraged.\cr
 #' Refer to `Data frame return` section for details on how to change the
-#' default return type to `DataFrame`, `tbl_df` or `data.table`.\cr
+#' default return type to `DFrame`, `tbl_df` or `data.table`.\cr
 #' Imported by `readr::read_delim()` by default.
 #' - **Excel workbook** (`XLSB`, `XLSX`):
 #' `data.frame`.\cr

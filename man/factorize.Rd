@@ -2,13 +2,13 @@
 % Please edit documentation in R/AllGenerics.R, R/factorize-methods.R
 \name{factorize}
 \alias{factorize}
-\alias{factorize,DataFrame-method}
+\alias{factorize,DFrame-method}
 \alias{factorize,data.frame-method}
 \title{Factorize}
 \usage{
 factorize(object, ...)
 
-\S4method{factorize}{DataFrame}(object)
+\S4method{factorize}{DFrame}(object)
 
 \S4method{factorize}{data.frame}(object)
 }
@@ -28,7 +28,7 @@ Coerce all columns in the object to \code{factor} (i.e. \code{stringsAsFactors})
 Updated 2023-01-31.
 }
 \examples{
-## DataFrame ====
+## DFrame ====
 object <- S4Vectors::DataFrame(
     "a" = c("a", "b", "c", "d"),
     "b" = c("a", "a", "b", "b"),

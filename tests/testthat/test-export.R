@@ -107,7 +107,7 @@ for (engine in .engines) {
 }
 
 objects <- list(
-    "DataFrame" = df,
+    "DFrame" = df,
     "matrix" = mat
 )
 

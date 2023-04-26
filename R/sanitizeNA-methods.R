@@ -12,7 +12,7 @@
 #' to <- sanitizeNA(from)
 #' print(to)
 #'
-#' ## DataFrame ====
+#' ## DFrame ====
 #' from <- S4Vectors::DataFrame(
 #'     "a" = c("foo", ""),
 #'     "b" = c(NA, "bar"),
@@ -25,8 +25,8 @@ NULL
 
 
 
-## Updated 2021-10-14.
-`sanitizeNA,DataFrame` <- # nolint
+## Updated 2023-04-26.
+`sanitizeNA,DFrame` <- # nolint
     function(object) {
         if (!(hasCols(object) && hasRows(object))) {
             return(object) # nocov
@@ -139,8 +139,8 @@ NULL
 #' @export
 setMethod(
     f = "sanitizeNA",
-    signature = signature(object = "DataFrame"),
-    definition = `sanitizeNA,DataFrame`
+    signature = signature(object = "DFrame"),
+    definition = `sanitizeNA,DFrame`
 )
 
 #' @rdname sanitizeNA

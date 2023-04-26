@@ -44,17 +44,17 @@ Updated 2023-02-22.
 \examples{
 data(GenomicRanges, sparseMatrix, package = "AcidTest")
 
-## `GenomicRanges` to `DataFrame` ====
-from <- GenomicRanges
+## `GRanges` to `DFrame` ====
+from <- GRanges
 to <- as.DataFrame(from)
 print(to)
 
-## `Matrix` to `DataFrame` ====
+## `Matrix` to `DFrame` ====
 from <- sparseMatrix
 to <- as.DataFrame(from)
 print(to)
 
-## `list` to `DataFrame` ====
+## `list` to `DFrame` ====
 from <- list(
     "a" = list(c(1, 2), c(3, 4)),
     "b" = list(NULL, NULL)

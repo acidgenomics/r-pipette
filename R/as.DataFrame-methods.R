@@ -7,17 +7,17 @@
 #' @examples
 #' data(GenomicRanges, sparseMatrix, package = "AcidTest")
 #'
-#' ## `GenomicRanges` to `DataFrame` ====
-#' from <- GenomicRanges
+#' ## `GRanges` to `DFrame` ====
+#' from <- GRanges
 #' to <- as.DataFrame(from)
 #' print(to)
 #'
-#' ## `Matrix` to `DataFrame` ====
+#' ## `Matrix` to `DFrame` ====
 #' from <- sparseMatrix
 #' to <- as.DataFrame(from)
 #' print(to)
 #'
-#' ## `list` to `DataFrame` ====
+#' ## `list` to `DFrame` ====
 #' from <- list(
 #'     "a" = list(c(1, 2), c(3, 4)),
 #'     "b" = list(NULL, NULL)
@@ -68,7 +68,7 @@ NULL
             identical(dim(df), c(nrows, ncols)),
             msg = sprintf(
                 "Dimension mismatch during {.cls %s} to {.cls %s} coercion.",
-                "list", "DataFrame"
+                "list", "DFrame"
             )
         )
         df
@@ -78,7 +78,7 @@ NULL
 `as.DataFrame,matrix` <- # nolint
     function(x) {
         to <- as.data.frame(x, stringsAsFactors = FALSE)
-        to <- as(to, "DataFrame")
+        to <- as(to, "DFrame")
         ## Move row names automatically, if defined.
         if (!hasRownames(to)) {
             rncol <- matchRownameColumn(to)
