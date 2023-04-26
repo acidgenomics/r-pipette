@@ -35,7 +35,7 @@ test_that("GenomicRanges", {
     expect_true(any(bapply(X = mcols(x), FUN = is.factor)))
 })
 
-test_that("IntegerRanges", {
+test_that("IRanges", {
     x <- ir
     expect_identical(
         object = droplevels2(x),
