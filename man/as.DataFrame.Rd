@@ -2,7 +2,7 @@
 % Please edit documentation in R/AllGenerics.R, R/as.DataFrame-methods.R
 \name{as.DataFrame}
 \alias{as.DataFrame}
-\alias{as.DataFrame,GenomicRanges-method}
+\alias{as.DataFrame,GRanges-method}
 \alias{as.DataFrame,IRanges-method}
 \alias{as.DataFrame,Matrix-method}
 \alias{as.DataFrame,SimpleList-method}
@@ -13,7 +13,7 @@
 \usage{
 as.DataFrame(x, ...)
 
-\S4method{as.DataFrame}{GenomicRanges}(x)
+\S4method{as.DataFrame}{GRanges}(x)
 
 \S4method{as.DataFrame}{IRanges}(x)
 
@@ -42,7 +42,7 @@ Coerce object to S4 DataFrame
 Updated 2023-02-22.
 }
 \examples{
-data(GenomicRanges, sparseMatrix, package = "AcidTest")
+data(GRanges, sparseMatrix, package = "AcidTest")
 
 ## `GRanges` to `DFrame` ====
 from <- GRanges

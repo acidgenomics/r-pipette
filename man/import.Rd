@@ -315,7 +315,7 @@ Imported by \code{readxl::read_excel()}.
 Experimental. Consider resaving in CSV format instead.\cr
 Imported by \code{pzfx::read_pzfx()}.
 \item \strong{General feature format} (\code{GFF}, \code{GFF1}, \code{GFF2}, \code{GFF3}, \code{GTF}):
-\code{GenomicRanges}.\cr
+\code{GRanges}.\cr
 Imported by \code{rtracklayer::import()}.
 \item \strong{MatrixMarket exchange sparse matrix} (\code{MTX}):
 \code{sparseMatrix}.\cr
@@ -326,13 +326,13 @@ Imported by \code{readr::read_delim()}.
 \item \strong{Gene sets (for GSEA)} (\code{GMT}, \code{GMX}):
 \code{character}.
 \item \strong{Browser extensible data} (\code{BED}, \code{BED15}, \code{BEDGRAPH}, \code{BEDPE}):
-\code{GenomicRanges}.\cr
+\code{GRanges}.\cr
 Imported by \code{rtracklayer::import()}.
 \item \strong{ChIP-seq peaks} (\code{BROADPEAK}, \code{NARROWPEAK}):
-\code{GenomicRanges}.\cr
+\code{GRanges}.\cr
 Imported by \code{rtracklayer::import()}.
 \item \strong{Wiggle track format} (\code{BIGWIG}, \code{BW}, \code{WIG}):
-\code{GenomicRanges}.\cr
+\code{GRanges}.\cr
 Imported by \code{rtracklayer::import()}.
 \item \strong{JSON serialization data} (\code{JSON}):
 \code{list}.\cr

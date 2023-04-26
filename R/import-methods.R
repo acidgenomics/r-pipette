@@ -204,7 +204,7 @@
 #' Experimental. Consider resaving in CSV format instead.\cr
 #' Imported by `pzfx::read_pzfx()`.
 #' - **General feature format** (`GFF`, `GFF1`, `GFF2`, `GFF3`, `GTF`):
-#' `GenomicRanges`.\cr
+#' `GRanges`.\cr
 #' Imported by `rtracklayer::import()`.
 #' - **MatrixMarket exchange sparse matrix** (`MTX`):
 #' `sparseMatrix`.\cr
@@ -215,13 +215,13 @@
 #' - **Gene sets (for GSEA)** (`GMT`, `GMX`):
 #' `character`.
 #' - **Browser extensible data** (`BED`, `BED15`, `BEDGRAPH`, `BEDPE`):
-#' `GenomicRanges`.\cr
+#' `GRanges`.\cr
 #' Imported by `rtracklayer::import()`.
 #' - **ChIP-seq peaks** (`BROADPEAK`, `NARROWPEAK`):
-#' `GenomicRanges`.\cr
+#' `GRanges`.\cr
 #' Imported by `rtracklayer::import()`.
 #' - **Wiggle track format** (`BIGWIG`, `BW`, `WIG`):
-#' `GenomicRanges`.\cr
+#' `GRanges`.\cr
 #' Imported by `rtracklayer::import()`.
 #' - **JSON serialization data** (`JSON`):
 #' `list`.\cr

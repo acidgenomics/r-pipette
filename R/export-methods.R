@@ -121,7 +121,7 @@ NULL
         key <- "delim"
     } else if (is(object, "DFrame")) {
         key <- "delim"
-    } else if (is(object, "GenomicRanges")) {
+    } else if (is(object, "GRanges")) {
         key <- "delim"
     } else if (is(object, "Matrix")) {
         key <- "Matrix"
@@ -712,7 +712,7 @@ NULL
 `export,DFrame` <- # nolint
     `export,data.frame`
 
-`export,GenomicRanges` <- # nolint
+`export,GRanges` <- # nolint
     `export,data.frame`
 
 `export,matrix` <- # nolint
@@ -739,11 +739,11 @@ setMethod(
 setMethod(
     f = "export",
     signature = signature(
-        object = "GenomicRanges",
+        object = "GRanges",
         con = "character",
         format = "missing"
     ),
-    definition = `export,GenomicRanges`
+    definition = `export,GRanges`
 )
 
 #' @rdname export
