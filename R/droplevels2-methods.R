@@ -18,8 +18,8 @@ NULL
 
 
 
-## Updated 2023-03-08.
-`droplevels2,DataFrame` <- # nolint
+## Updated 2023-04-26.
+`droplevels2,DFrame` <- # nolint
     function(x) {
         except <- !bapply(
             X = x,
@@ -56,8 +56,8 @@ NULL
 #' @rdname droplevels2
 setMethod(
     f = "droplevels2",
-    signature = signature(x = "DataFrame"),
-    definition = `droplevels2,DataFrame`
+    signature = signature(x = "DFrame"),
+    definition = `droplevels2,DFrame`
 )
 
 #' @rdname droplevels2

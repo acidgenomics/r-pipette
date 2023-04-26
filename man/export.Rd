@@ -2,7 +2,7 @@
 % Please edit documentation in R/AllGenerics.R, R/export-methods.R
 \name{export}
 \alias{export}
-\alias{export,DataFrame,character,missing-method}
+\alias{export,DFrame,character,missing-method}
 \alias{export,GenomicRanges,character,missing-method}
 \alias{export,Matrix,character,missing-method}
 \alias{export,atomic,character,missing-method}
@@ -14,7 +14,7 @@
 \usage{
 export(object, con, format, ...)
 
-\S4method{export}{DataFrame,character,missing}(
+\S4method{export}{DFrame,character,missing}(
   object,
   con,
   format,
@@ -183,7 +183,7 @@ are always moved to a \code{"rowname"} column in the CSV export.
 
 
 Note that this function currently wraps \code{readr::write_delim()} by default
-for exporting \code{DataFrame}, \code{data.frame}, and \code{matrix} class objects.
+for exporting \code{DFrame}, \code{data.frame}, and \code{matrix} class objects.
 }
 
 \examples{

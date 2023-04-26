@@ -21,8 +21,8 @@ NULL
 
 
 
-## Updated 2022-05-25.
-`atomize,DataFrame` <- ## nolint
+## Updated 2023-04-26.
+`atomize,DFrame` <- ## nolint
     function(object) {
         if (!hasLength(object)) {
             return(object)
@@ -31,7 +31,7 @@ NULL
         object <- decode(object)
         object <- as.data.frame(object)
         object <- atomize(object)
-        object <- as(object, "DataFrame")
+        object <- as(object, "DFrame")
         rownames(object) <- rn
         object
     }
@@ -84,8 +84,8 @@ NULL
 #' @export
 setMethod(
     f = "atomize",
-    signature = signature(object = "DataFrame"),
-    definition = `atomize,DataFrame`
+    signature = signature(object = "DFrame"),
+    definition = `atomize,DFrame`
 )
 
 #' @rdname atomize

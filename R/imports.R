@@ -1,10 +1,10 @@
 ## Classes =====================================================================
 
 #' @importClassesFrom BiocIO BiocFile
-#' @importClassesFrom GenomicRanges GenomicRanges
+#' @importClassesFrom GenomicRanges GRanges
 #' @importClassesFrom IRanges IRanges Ranges
 #' @importClassesFrom Matrix Matrix
-#' @importClassesFrom S4Vectors DataFrame List SimpleList
+#' @importClassesFrom S4Vectors DFrame List SimpleList
 NULL
 
 

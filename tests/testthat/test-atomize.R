@@ -1,4 +1,4 @@
-test_that("DataFrame", {
+test_that("DFrame", {
     expect_identical(
         object = atomize(DataFrame()),
         expected = DataFrame()
@@ -7,7 +7,7 @@ test_that("DataFrame", {
     expect_false(any(bapply(X = object, FUN = is.atomic)))
     object <- atomize(object)
     expect_true(all(bapply(X = object, FUN = is.atomic)))
-    expect_s4_class(object, "DataFrame")
+    expect_s4_class(object, "DFrame")
     expect_true(hasRownames(object))
 })
 
