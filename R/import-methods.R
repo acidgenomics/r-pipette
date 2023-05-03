@@ -3,7 +3,7 @@
 #' Read file by extension into R.
 #'
 #' @name import
-#' @note Updated 2023-04-13.
+#' @note Updated 2023-05-03.
 #'
 #' @details
 #' `import()` supports automatic loading of common file types, by wrapping
@@ -1060,6 +1060,10 @@ NULL
                     args[["header"]] <- FALSE
                     args[["col.names"]] <- colnames
                     ## nocov end
+                } else if (isTRUE(colnames)) {
+                    ## Usage of "auto" instead of TRUE will attempt to handle
+                    ## malformed columns, similar to readr engine.
+                    args[["header"]] <- "auto"
                 } else {
                     args[["header"]] <- colnames
                 }
