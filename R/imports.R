@@ -38,8 +38,8 @@ NULL
 #' extPattern formalCompress hasColnames hasCols hasDimnames hasDuplicates
 #' hasInternet hasLength hasNames hasNoDuplicates hasRownames hasRows
 #' hasValidNames hasValidDimnames isAFile isAURL isAny isCharacter isFlag
-#' isInstalled isInt isMatchingRegex isNonNegative isPositive isScalar isString
-#' isSubset requireNamespaces validNames validate
+#' isInstalled isInt isMatchingFixed isMatchingRegex isNonNegative isPositive
+#' isScalar isString isSubset requireNamespaces validNames validate
 #' @importFrom methods as is hasMethod new setGeneric signature validObject
 #' @importFrom utils packageName packageVersion
 NULL
