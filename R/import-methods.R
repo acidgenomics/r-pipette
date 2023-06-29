@@ -561,8 +561,8 @@ NULL
             )
         }
         assert(isAFile(file))
-        if (grepl(pattern = compressExtPattern, x = file)) {
-            if (!grepl(
+        if (isMatchingRegex(pattern = compressExtPattern, x = file)) {
+            if (!isMatchingFixed(
                 pattern = file.path(tmpDir, tmpPrefix),
                 x = file
             )) {
@@ -715,7 +715,7 @@ NULL
 #' Allow Google Sheets import using rio, by matching the URL.
 #' Otherwise, coerce the file extension to uppercase, for easy matching.
 #'
-#' @note Updated 2022-09-13.
+#' @note Updated 2023-06-29.
 #' @noRd
 `import,character` <- # nolint
     function(con,
@@ -743,7 +743,7 @@ NULL
             is.null(text),
             isFlag(quiet)
         )
-        if (grepl(
+        if (isMatchingRegex(
             pattern = "^https://docs\\.google\\.com/spreadsheets",
             x = con
         )) {
@@ -1814,10 +1814,10 @@ NULL
         )
         assert(is(object, paste0(moleculeType, "StringSet")))
         if (hasNames(object)) {
-            if (all(grepl(
+            if (allAreMatchingRegex(
                 pattern = "\\bMI(MAT)?[0-9]+\\b",
-                x = head(names(object))
-            ))) {
+                x = names(object)
+            )) {
                 alertInfo("miRBase FASTA file detected.")
                 spl <- strsplit(
                     x = names(object),
@@ -1842,11 +1842,9 @@ NULL
                 names(object) <- names
                 rownames(attributes) <- names
                 metadata(object)[["attributes"]] <- attributes
-            } else if (all(grepl(
-                pattern = "|",
-                x = head(names(object)),
-                fixed = TRUE
-            ))) {
+            } else if (allAreMatchingFixed(
+                pattern = "|", x = names(object)
+            )) {
                 alertInfo(sprintf(
                     "Splitting attributes by {.var %s} separator.", "|"
                 ))
