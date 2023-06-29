@@ -36,7 +36,7 @@ Load data as name
 This function is intended for interactive use and interprets object
 names using non-standard evaluation.
 
-Updated 2022-05-04.
+Updated 2023-06-29.
 }
 \examples{
 dir <- system.file("extdata", package = "pipette")
