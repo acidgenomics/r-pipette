@@ -1,5 +1,29 @@
 # Release notes
 
+## pipette 0.10.10 (2023-06-29)
+
+Major changes:
+
+- `import`: Improved support for FASTA files. The function will now
+  intentionally error on any warnings, which can occur if the `moleculeType`
+  argument is not set correctly. For example, we're defaulting to DNA input
+  here, but that is not always the case. miRBase FASTA files are in RNA format,
+  so use `moleculeType` argument here to set `"RNA"` instead of `"DNA"`. We've
+  also added amino acid support via `"AA"` argument, which passes to Biostrings
+  package in a similar method for DNA and RNA. Note that for miRBase FASTA
+  files, we now attempt to get metadata from the FASTA identifiers, which are
+  defined as a `DataFrame` slotted into `metadata` as `attributes`.
+
+Minor changes:
+
+- `import`: Updated `data.table` engine settings to use `header = "auto"` when
+  `colnames` argument is declared as `TRUE`. This will attempt to handle
+  malformed columns, similar to readr/vroom approach.
+- Improved internal usage consistency of goalie boolean `grepl` wrapper
+  functions, such as `isMatchingFixed` and `isMatchingRegex`, which improves
+  code legibility.
+- Removed legacy Docker usage instructions in README.
+
 ## pipette 0.10.9 (2023-04-26)
 
 Minor changes:
