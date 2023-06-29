@@ -2,7 +2,7 @@ Package: pipette
 Title: Pipette Biological Data In and Out of R
 Description: Input/output functions for biological data formats.
 Version: 0.10.10.9000
-Date: 2023-05-03
+Date: 2023-06-28
 Authors@R: c(
     person(
         "Michael", "Steinbaugh",
@@ -22,7 +22,7 @@ License: AGPL-3
 Encoding: UTF-8
 Depends: R (>= 4.2)
 Imports:
-    AcidBase (>= 0.6.13),
+    AcidBase (>= 0.6.16),
     AcidCLI (>= 0.2.7),
     AcidGenerics (>= 0.6.7),
     BiocGenerics (>= 0.44.0),
@@ -31,27 +31,27 @@ Imports:
     IRanges (>= 2.32.0),
     Matrix (>= 1.5.4),
     S4Vectors (>= 0.36.0),
-    goalie (>= 0.6.8),
-    syntactic (>= 0.6.5),
+    goalie (>= 0.6.10),
+    syntactic (>= 0.6.6),
     methods,
     utils
 Suggests:
-    AcidTest (>= 0.7.1),
+    AcidTest (>= 0.7.2),
     BiocFileCache (>= 2.6.0),
     Biostrings (>= 2.66.0),
     RCurl (>= 1.98),
     data.table (>= 1.14.8),
-    digest (>= 0.6.31),
-    httr (>= 1.4.5),
-    jsonlite (>= 1.8.4),
-    ontologyIndex (>= 2.10),
+    digest (>= 0.6.32),
+    httr (>= 1.4.6),
+    jsonlite (>= 1.8.5),
+    ontologyIndex (>= 2.11),
     pzfx (>= 0.3.0),
     readr (>= 2.1.4),
     readxl (>= 1.4.2),
     rio (>= 0.5.29),
     rtracklayer (>= 1.58.0),
     stringi (>= 1.7.12),
-    testthat (>= 3.1.7),
+    testthat (>= 3.1.9),
     tibble (>= 3.2.1),
     yaml (>= 2.3.7),
     tools
