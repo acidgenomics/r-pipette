@@ -66,6 +66,7 @@ loadData <-
                  default = TRUE
              )) {
         assert(
+            isADir(dir),
             is.environment(envir),
             isCharacter(list, nullOK = TRUE),
             isFlag(overwrite)

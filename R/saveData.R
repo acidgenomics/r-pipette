@@ -11,7 +11,7 @@
 #' on disk, following the same conventions as `save()`.
 #'
 #' @export
-#' @note Updated 2022-06-02.
+#' @note Updated 2023-06-29.
 #'
 #' @inheritParams loadData
 #' @inheritParams base::save
@@ -85,6 +85,7 @@ saveData <-
              list = NULL,
              envir = parent.frame()) {
         assert(
+            isString(dir),
             isFlag(overwrite),
             formalCompress(compress)
         )

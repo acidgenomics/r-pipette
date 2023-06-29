@@ -71,7 +71,7 @@ This function is desired for interactive use and interprets object
 names using non-standard evaluation. It will \strong{overwrite} existing files
 on disk, following the same conventions as \code{save()}.
 
-Updated 2022-06-02.
+Updated 2023-06-29.
 }
 \examples{
 dir <- AcidBase::tempdir2()

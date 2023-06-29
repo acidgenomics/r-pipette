@@ -29,6 +29,7 @@ loadDataAsName <-
                  default = TRUE
              )) {
         assert(
+            isADir(dir),
             is.environment(envir),
             isFlag(overwrite)
         )
