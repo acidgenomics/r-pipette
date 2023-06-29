@@ -3,7 +3,7 @@
 #' Read file by extension into R.
 #'
 #' @name import
-#' @note Updated 2023-05-03.
+#' @note Updated 2023-06-28.
 #'
 #' @details
 #' `import()` supports automatic loading of common file types, by wrapping
@@ -1736,20 +1736,23 @@ NULL
 
 #' Import a FASTA file
 #'
-#' @note Updated 2022-09-13.
+#' @note Updated 2023-06-29.
 #' @noRd
 #'
 #' @seealso
 #' - `Biostrings::readDNAStringSet()`.
+#' - `Biostrings::readRNAStringSet()`.
+#' - `Biostrings::readAAStringSet()`.
 #'
 #' @return Varies, depending on the `moleculeType` argument:
 #' - `"DNA"`: `DNAStringSet`.
 #' - `"RNA"`: `RNAStringSet`.
+#' - `"AA"`: `AAStringSet`.
 `import,FASTAFile` <- # nolint
     function(con,
              format, # missing
              text, # missing
-             moleculeType = c("DNA", "RNA"),
+             moleculeType = c("DNA", "RNA", "AA"),
              metadata = getOption(
                  x = "acid.import.metadata",
                  default = FALSE
@@ -1787,35 +1790,83 @@ NULL
             "nrec" = -1L,
             "skip" = 0L,
             "seek.first.rec" = TRUE,
-            "use.names" = metadata
+            "use.names" = TRUE
         )
         what <- .getFunction(f = whatFun, pkg = whatPkg)
-        object <- do.call(what = what, args = args)
+        tryCatch(
+            expr = {
+                object <- do.call(what = what, args = args)
+            },
+            warning = function(w) {
+                msg <- w[["message"]]
+                if (isMatchingFixed(
+                    x = msg,
+                    pattern = "invalid one-letter sequence codes"
+                )) {
+                    msg <- paste(
+                        msg,
+                        "Ensure that 'moleculeType' argument is correct.",
+                        sep = "\n"
+                    )
+                }
+                abort(msg)
+            }
+        )
         assert(is(object, paste0(moleculeType, "StringSet")))
-        if (
-            hasNames(object) &&
-                any(grepl(
-                    pattern = "|",
-                    x = head(names(object)),
+        if (hasNames(object)) {
+            if (all(grepl(
+                pattern = "\\bMI(MAT)?[0-9]+\\b",
+                x = head(names(object))
+            ))) {
+                alertInfo("miRBase FASTA file detected.")
+                spl <- strsplit(
+                    x = names(object),
+                    split = " ",
                     fixed = TRUE
-                ))
-        ) {
-            attributes <- strsplit(
-                x = names(object),
-                split = "|",
+                )
+                names <- vapply(
+                    X = spl,
+                    FUN = `[[`,
+                    1L,
+                    FUN.VALUE = character(1L),
+                    USE.NAMES = FALSE
+                )
+                mat <- do.call(what = rbind, args = spl)
+                assert(identical(ncol(mat), 5L))
+                attributes <- DataFrame(
+                    "id" = mat[, 1L],
+                    "accession" = mat[, 2L],
+                    "organism" = paste(mat[, 3L], mat[, 4L]),
+                    "name" = mat[, 5L]
+                )
+                names(object) <- names
+                rownames(attributes) <- names
+                metadata(object)[["attributes"]] <- attributes
+            } else if (all(grepl(
+                pattern = "|",
+                x = head(names(object)),
                 fixed = TRUE
-            )
-            attributes <- SimpleList(attributes)
-            names <- vapply(
-                X = attributes,
-                FUN = `[[`,
-                1L,
-                FUN.VALUE = character(1L),
-                USE.NAMES = FALSE
-            )
-            names(object) <- names
-            names(attributes) <- names
-            metadata(object)[["attributes"]] <- attributes
+            ))) {
+                alertInfo(sprintf(
+                    "Splitting attributes by {.var %s} separator.", "|"
+                ))
+                attributes <- strsplit(
+                    x = names(object),
+                    split = "|",
+                    fixed = TRUE
+                )
+                attributes <- SimpleList(attributes)
+                names <- vapply(
+                    X = attributes,
+                    FUN = `[[`,
+                    1L,
+                    FUN.VALUE = character(1L),
+                    USE.NAMES = FALSE
+                )
+                names(object) <- names
+                names(attributes) <- names
+                metadata(object)[["attributes"]] <- attributes
+            }
         }
         .returnImport(
             object = object,
