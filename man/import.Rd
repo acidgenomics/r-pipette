@@ -85,7 +85,7 @@ import(con, format, text, ...)
   con,
   format,
   text,
-  moleculeType = c("DNA", "RNA"),
+  moleculeType = c("DNA", "RNA", "AA"),
   metadata = getOption(x = "acid.import.metadata", default = FALSE),
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
@@ -369,7 +369,7 @@ arguments. Remote URLs and compressed files are supported. If you need more
 complex import settings, just call the wrapped importer directly instead.
 }
 \note{
-Updated 2023-04-13.
+Updated 2023-06-28.
 }
 \section{Row and column names}{
 
