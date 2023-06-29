@@ -3,7 +3,7 @@
 #' @export
 #' @note This function is intended for interactive use and interprets object
 #' names using non-standard evaluation.
-#' @note Updated 2022-05-04.
+#' @note Updated 2023-06-29.
 #'
 #' @inheritParams loadData
 #' @param ... Key value pairs, defining the name mappings. For example,
@@ -49,12 +49,10 @@ loadDataAsName <-
         ) {
             .loadExistsError(names)
         }
-        ## Note that we can skip safe loading here because we have already
-        ## checked for existing names in environment outside of the loop call.
-        if (any(grepl(
-            pattern = "\\.rds$",
-            x = tolower(basename(files))
-        ))) {
+        if (allAreMatchingRegex(
+            x = tolower(basename(files)),
+            pattern = "\\.rds$"
+        )) {
             ## R data serialized: assign directly.
             invisible(Map(
                 name = names(files),
@@ -65,7 +63,10 @@ loadDataAsName <-
                 },
                 MoreArgs = list("envir" = envir)
             ))
-        } else {
+        } else if (allAreMatchingRegex(
+            x = tolower(basename(files)),
+            pattern = "\\.rd[a|ata]$"
+        )) {
             ## R data: use safe loading.
             safe <- new.env()
             invisible(Map(
@@ -73,7 +74,6 @@ loadDataAsName <-
                 file = files,
                 MoreArgs = list(
                     "envir" = safe,
-                    ## Note that we're checking for overwrite above already.
                     "overwrite" = FALSE
                 )
             ))
@@ -90,6 +90,16 @@ loadDataAsName <-
                 from = dots,
                 to = names(dots),
                 MoreArgs = list("safe" = safe, "envir" = envir)
+            ))
+        } else {
+            abort(sprintf(
+                fmt = paste(
+                    "File extension error: %s.",
+                    "Don't mix %s files in a directory.",
+                    sep = "\n"
+                ),
+                toInlineString(basename(files), n = 5L),
+                toInlineString(c("RDS", "RDA", "RDATA"))
             ))
         }
         invisible(files)
