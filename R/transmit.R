@@ -4,7 +4,7 @@
 #' FTP server. Also enables on-the-fly file renaming and compression.
 #'
 #' @export
-#' @note Updated 2022-06-02.
+#' @note Updated 2023-06-29.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @inheritParams saveData
@@ -59,7 +59,7 @@ transmit <-
             isFlag(download)
         )
         ## `RCurl::getURL()` requires a trailing slash.
-        if (!grepl(pattern = "/$", x = remoteDir)) {
+        if (!isMatchingRegex(pattern = "/$", x = remoteDir)) {
             remoteDir <- paste0(remoteDir, "/") # nocov
         }
         if (isTRUE(download)) {
