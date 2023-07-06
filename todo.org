@@ -2,8 +2,6 @@
 #+STARTUP: content
 * Development
 ** TODO Need to add MAF file support (e.g. OmicsSomaticMutationsMAFProfile.maf, https://figshare.com/ndownloader/files/40449641)
-** TODO Consider adding `rest()` function that wraps httr2 JSON code. Refer to WormBase `.rest` function for details.
-** TODO Consider reexporting initDir here.
 ** TODO Need to improve export of matrix with row names defined.
     Currently dropping this...add code coverage.
 ** TODO File path messages are inconsistent on Windows.
