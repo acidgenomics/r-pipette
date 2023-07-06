@@ -1,19 +1,9 @@
 #+TITLE: pipette
 #+STARTUP: content
 * Development
-** TODO Need to add MAF file support (e.g. OmicsSomaticMutationsMAFProfile.maf, https://figshare.com/ndownloader/files/40449641)
+** TODO Need to add MAF file support
+    (e.g. OmicsSomaticMutationsMAFProfile.maf, https://figshare.com/ndownloader/files/40449641)
 ** TODO Need to improve export of matrix with row names defined.
     Currently dropping this...add code coverage.
-** TODO File path messages are inconsistent on Windows.
-** TODO Some of the unit tests are failing on Windows.
-    Need to get a laptop with Windows 11 and fix these.
-** TODO Do we need to improve sanitization of BiocFileCache local file names
-   for complex URLs?
-   For example:
-   /Users/mike/.cache/R/DepMapAnalysis/
-       147524e053f4a_top_correlations%3Fdataset_name%3DRNAi_merged
-** TODO Test support for readr v2.0.0 update.
-** TODO Need to improve support for fixed width file (FWF) parsing?
-** TODO importMTX: MTX import: look for "barcodes.tsv.gz", "genes.tsv.gz",
-   "features.tsv.gz", which are output by CellRanger.
-** TODO Add `sanitizePercentage()` function?
+** TODO File path messages are inconsistent on Windows?
+** TODO Some of the unit tests are failing on Windows?
