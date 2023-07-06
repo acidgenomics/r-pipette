@@ -1,8 +1,8 @@
 #+TITLE: pipette
 #+STARTUP: content
 * Development
-** TODO Need to add MAF file support
-    (e.g. OmicsSomaticMutationsMAFProfile.maf, https://figshare.com/ndownloader/files/40449641)
+** TODO Support for BAM/SAM files.
+** TODO Write support for MAF file.
 ** TODO Need to improve export of matrix with row names defined.
     Currently dropping this...add code coverage.
 ** TODO File path messages are inconsistent on Windows?
