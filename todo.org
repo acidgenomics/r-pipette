@@ -7,8 +7,6 @@
 ** TODO File path messages are inconsistent on Windows.
 ** TODO Some of the unit tests are failing on Windows.
     Need to get a laptop with Windows 11 and fix these.
-** TODO Add support for OBO file (e.g. Cellosaurus) using BiocSet.
-** TODO `import()`: Check that we have a `tryCatch()` call for invalid YAML that will stop on warnings.
 ** TODO Do we need to improve sanitization of BiocFileCache local file names
    for complex URLs?
    For example:
