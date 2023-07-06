@@ -17,6 +17,7 @@
 \alias{GMXFile-class}
 \alias{GRPFile-class}
 \alias{JSONFile-class}
+\alias{MAFFile-class}
 \alias{MTXFile-class}
 \alias{OBOFile-class}
 \alias{PZFXFile-class}
@@ -33,7 +34,7 @@ Currently intended for use with \code{import} function.
 Extends \code{BiocFile} defined in BiocIO package.
 }
 \note{
-Updated 2022-11-09.
+Updated 2023-07-06.
 }
 \section{Primary classes}{
 
@@ -47,6 +48,7 @@ Updated 2022-11-09.
 \item \code{GMXFile}: Gene matrix file (GMX).
 \item \code{GRPFile}: Gene set file (GRP).
 \item \code{JSONFile}: JSON file.
+\item \code{MAFFile}: Mutation annotation format file (MAF).
 \item \code{MTXFile}: MatrixMarket exchange file (MTX).
 \item \code{OBOFile}: Open Biomedical Ontologies file (OBO).
 \item \code{PZFXFile}: GraphPad Prism file (PZFX).

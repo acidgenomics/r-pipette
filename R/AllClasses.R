@@ -6,7 +6,7 @@
 #' Extends `BiocFile` defined in BiocIO package.
 #'
 #' @export
-#' @note Updated 2022-11-09.
+#' @note Updated 2023-07-06.
 #'
 #' @section Primary classes:
 #'
@@ -19,6 +19,7 @@
 #' - `GMXFile`: Gene matrix file (GMX).
 #' - `GRPFile`: Gene set file (GRP).
 #' - `JSONFile`: JSON file.
+#' - `MAFFile`: Mutation annotation format file (MAF).
 #' - `MTXFile`: MatrixMarket exchange file (MTX).
 #' - `OBOFile`: Open Biomedical Ontologies file (OBO).
 #' - `PZFXFile`: GraphPad Prism file (PZFX).
@@ -211,6 +212,13 @@ setClass(
 #' @export
 setClass(
     Class = "JSONFile",
+    contains = "PipetteFile"
+)
+
+#' @rdname PipetteFile-class
+#' @export
+setClass(
+    Class = "MAFFile",
     contains = "PipetteFile"
 )
 
