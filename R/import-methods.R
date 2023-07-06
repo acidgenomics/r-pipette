@@ -1,3 +1,9 @@
+## FIXME Add support for BAMFile.
+## FIXME Add support for CRAMFile.
+## FIXME Add support for SAMFile.
+
+
+
 #' Import
 #'
 #' Read file by extension into R.
