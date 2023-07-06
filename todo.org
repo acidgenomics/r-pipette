@@ -2,7 +2,6 @@
 #+STARTUP: content
 * Development
 ** TODO Support for BAM/SAM files.
-** TODO Write support for MAF file.
 ** TODO Need to improve export of matrix with row names defined.
     Currently dropping this...add code coverage.
 ** TODO File path messages are inconsistent on Windows?
