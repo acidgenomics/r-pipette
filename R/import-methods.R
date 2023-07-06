@@ -3,7 +3,7 @@
 #' Read file by extension into R.
 #'
 #' @name import
-#' @note Updated 2023-06-28.
+#' @note Updated 2023-07-06.
 #'
 #' @details
 #' `import()` supports automatic loading of common file types, by wrapping
@@ -209,6 +209,9 @@
 #' - **MatrixMarket exchange sparse matrix** (`MTX`):
 #' `sparseMatrix`.\cr
 #' Imported by `Matrix::readMM()`.
+#' - **Mutation annotation format** (`MAF`):
+#' `MAF`.\cr
+#' Imported by `maftools::read.maf()`.
 #' - **Gene cluster text** (`GCT`):
 #' `matrix` or `data.frame`.\cr
 #' Imported by `readr::read_delim()`.
@@ -251,6 +254,7 @@
 #' Packages:
 #'
 #' - [data.table](https://r-datatable.com/).
+#' - [maftools](https://bioconductor.org/packages/maftools/).
 #' - [readr](https://readr.tidyverse.org).
 #' - [readxl](https://readxl.tidyverse.org).
 #' - [rio](https://cran.r-project.org/package=rio).
@@ -261,6 +265,7 @@
 #'
 #' - `BiocIO::import()`.
 #' - `data.table::fread()`.
+#' - `maftools::read.maf()`.
 #' - `readr::read_delim()`.
 #' - `rio::import()`.
 #' - `rtracklayer::import()`.
@@ -363,6 +368,7 @@ NULL
             "json" = "JSON",
             "lines" = "Lines",
             "log" = "Lines",
+            "maf" = "MAF",
             "mat" = "RioHandoff",
             "md" = "Lines",
             "mtp" = "RioHandoff",
@@ -2126,6 +2132,51 @@ NULL
 
 
 
+#' Import a mutation annotation format file (`.maf`)
+#'
+#' @note Updated 2023-07-06.
+#' @noRd
+`import,MAFFile` <- # nolint
+    function(con,
+             format, # missing
+             text, # missing
+             quiet = getOption(
+                 x = "acid.quiet",
+                 default = FALSE
+             )) {
+        if (missing(format)) {
+            format <- NULL
+        }
+        if (missing(text)) {
+            text <- NULL
+        }
+        assert(
+            is.null(format),
+            is.null(text),
+            isFlag(quiet)
+        )
+        file <- resource(con)
+        whatPkg <- "maftools"
+        whatFun <- "read.maf"
+        if (isFALSE(quiet)) {
+            .alertImport(
+                con = con,
+                whatPkg = whatPkg,
+                whatFun = whatFun
+            )
+        }
+        args <- list(
+            "maf" = file,
+            "verbose" = !quiet
+        )
+        what <- .getFunction(f = whatFun, pkg = whatPkg)
+        object <- do.call(what = what, args = args)
+        assert(is(object, "MAF"))
+        object
+    }
+
+
+
 #' Import an open biomedical ontologies file (`.obo`)
 #'
 #' @note Updated 2022-09-13.
@@ -2461,6 +2512,18 @@ setMethod(
         text = "missing"
     ),
     definition = `import,JSONFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(
+        con = "MAFFile",
+        format = "missing",
+        text = "missing"
+    ),
+    definition = `import,MAFFile`
 )
 
 #' @rdname import

@@ -14,6 +14,7 @@
 \alias{import,GMXFile,missing,missing-method}
 \alias{import,GRPFile,missing,missing-method}
 \alias{import,JSONFile,missing,missing-method}
+\alias{import,MAFFile,missing,missing-method}
 \alias{import,MTXFile,missing,missing-method}
 \alias{import,OBOFile,missing,missing-method}
 \alias{import,PZFXFile,missing,missing-method}
@@ -121,6 +122,8 @@ import(con, format, text, ...)
   metadata = getOption(x = "acid.import.metadata", default = FALSE),
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
+
+\S4method{import}{MAFFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
 
 \S4method{import}{MTXFile,missing,missing}(
   con,
@@ -320,6 +323,9 @@ Imported by \code{rtracklayer::import()}.
 \item \strong{MatrixMarket exchange sparse matrix} (\code{MTX}):
 \code{sparseMatrix}.\cr
 Imported by \code{Matrix::readMM()}.
+\item \strong{Mutation annotation format} (\code{MAF}):
+\code{MAF}.\cr
+Imported by \code{maftools::read.maf()}.
 \item \strong{Gene cluster text} (\code{GCT}):
 \code{matrix} or \code{data.frame}.\cr
 Imported by \code{readr::read_delim()}.
@@ -369,7 +375,7 @@ arguments. Remote URLs and compressed files are supported. If you need more
 complex import settings, just call the wrapped importer directly instead.
 }
 \note{
-Updated 2023-06-28.
+Updated 2023-07-06.
 }
 \section{Row and column names}{
 
@@ -476,6 +482,7 @@ print(head(x))
 Packages:
 \itemize{
 \item \href{https://r-datatable.com/}{data.table}.
+\item \href{https://bioconductor.org/packages/maftools/}{maftools}.
 \item \href{https://readr.tidyverse.org}{readr}.
 \item \href{https://readxl.tidyverse.org}{readxl}.
 \item \href{https://cran.r-project.org/package=rio}{rio}.
@@ -487,6 +494,7 @@ Import functions:
 \itemize{
 \item \code{BiocIO::import()}.
 \item \code{data.table::fread()}.
+\item \code{maftools::read.maf()}.
 \item \code{readr::read_delim()}.
 \item \code{rio::import()}.
 \item \code{rtracklayer::import()}.
