@@ -1,6 +1,11 @@
 ## FIXME Add support for BAMFile.
 ## FIXME Add support for CRAMFile.
 ## FIXME Add support for SAMFile.
+##
+## FIXME Add support for BCFFile.
+## FIXME Add support for VCFFile.
+## FIXME Add support for tabix files.
+
 
 
 
