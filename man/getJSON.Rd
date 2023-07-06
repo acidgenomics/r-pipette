@@ -17,11 +17,16 @@ Uniform Resource Locator (URL).}
 Get JSON from an API
 }
 \note{
-Updated 2020-01-05.
+Updated 2023-07-06.
 }
 \examples{
 ## Access the UCSC Genome Browser API.
 url <- "https://api.genome.ucsc.edu/list/ucscGenomes"
 json <- getJSON(url)
 names(json)
+}
+\seealso{
+\itemize{
+\item httr2 package.
+}
 }
