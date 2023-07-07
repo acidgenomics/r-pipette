@@ -1,3 +1,8 @@
+## FIXME Ensure all file classes begin with pipette here, to avoid
+## unwanted collisions with BiocIO / rtracklayer...
+
+
+
 #' File extension classes
 #'
 #' Currently intended for use with `import` function.
@@ -6,7 +11,7 @@
 #' Extends `BiocFile` defined in BiocIO package.
 #'
 #' @export
-#' @note Updated 2023-07-06.
+#' @note Updated 2023-07-07.
 #'
 #' @section Primary classes:
 #'
