@@ -481,13 +481,15 @@ print(head(x))
 \seealso{
 Packages:
 \itemize{
+\item \href{https://bioconductor.org/packages/BiocIO/}{BiocIO}.
 \item \href{https://r-datatable.com/}{data.table}.
-\item \href{https://bioconductor.org/packages/maftools/}{maftools}.
-\item \href{https://readr.tidyverse.org}{readr}.
-\item \href{https://readxl.tidyverse.org}{readxl}.
-\item \href{https://cran.r-project.org/package=rio}{rio}.
+\item \href{https://readr.tidyverse.org/}{readr}.
+\item \href{https://vroom.r-lib.org/}{vroom}.
+\item \href{https://readxl.tidyverse.org/}{readxl}.
 \item \href{https://bioconductor.org/packages/rtracklayer/}{rtracklayer}.
-\item \href{https://vroom.r-lib.org}{vroom}.
+\item \href{https://bioconductor.org/packages/maftools/}{maftools}.
+\item \href{https://bioconductor.org/packages/Rsamtools/}{Rsamtools}.
+\item \href{https://cran.r-project.org/package=rio}{rio}.
 }
 
 Import functions:

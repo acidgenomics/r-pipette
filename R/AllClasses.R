@@ -10,7 +10,9 @@
 #'
 #' @section Primary classes:
 #'
+#' - `BAMFile`: Binary representation of sequence alignment map (BAM).
 #' - `BcbioCountsFile`: bcbio-nextgen counts file.
+#' - `CRAMFile`: Compressed reference-oriented alignment map (CRAM).
 #' - `CSVFile`: Comma-separated values file (CSV).
 #' - `FASTAFile`: FASTA file.
 #' - `FASTQFile`: FASTQ file.
@@ -25,6 +27,7 @@
 #' - `PZFXFile`: GraphPad Prism file (PZFX).
 #' - `RDSFile`: R data file containing a single, serialized object (RDS).
 #' - `RDataFile`: R Data file containing multiple objects (RData/RDA).
+#' - `SAMFile`: Sequence alignment map (SAM).
 #' - `TSVFile`: Tab-separated values file (TSV).
 #' - `TableFile`: Base R table file (TXT).
 #' - `YAMLFile`: YAML file.
@@ -155,7 +158,21 @@ setClass(
 #' @rdname PipetteFile-class
 #' @export
 setClass(
+    Class = "BAMFile",
+    contains = "PipetteFile"
+)
+
+#' @rdname PipetteFile-class
+#' @export
+setClass(
     Class = "BcbioCountsFile",
+    contains = "PipetteFile"
+)
+
+#' @rdname PipetteFile-class
+#' @export
+setClass(
+    Class = "CRAMFile",
     contains = "PipetteFile"
 )
 
@@ -247,6 +264,13 @@ setClass(
 #' @export
 setClass(
     Class = "RDataFile",
+    contains = "PipetteFile"
+)
+
+#' @rdname PipetteFile-class
+#' @export
+setClass(
+    Class = "SAMFile",
     contains = "PipetteFile"
 )
 
