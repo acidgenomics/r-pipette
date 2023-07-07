@@ -8,7 +8,9 @@
 \alias{LinesFile-class}
 \alias{RioHandoffFile-class}
 \alias{RtracklayerHandoffFile-class}
+\alias{BAMFile-class}
 \alias{BcbioCountsFile-class}
+\alias{CRAMFile-class}
 \alias{CSVFile-class}
 \alias{FASTAFile-class}
 \alias{FASTQFile-class}
@@ -22,6 +24,7 @@
 \alias{OBOFile-class}
 \alias{PZFXFile-class}
 \alias{RDataFile-class}
+\alias{SAMFile-class}
 \alias{RDSFile-class}
 \alias{TableFile-class}
 \alias{TSVFile-class}
@@ -39,7 +42,9 @@ Updated 2023-07-06.
 \section{Primary classes}{
 
 \itemize{
+\item \code{BAMFile}: Binary representation of sequence alignment map (BAM).
 \item \code{BcbioCountsFile}: bcbio-nextgen counts file.
+\item \code{CRAMFile}: Compressed reference-oriented alignment map (CRAM).
 \item \code{CSVFile}: Comma-separated values file (CSV).
 \item \code{FASTAFile}: FASTA file.
 \item \code{FASTQFile}: FASTQ file.
@@ -54,6 +59,7 @@ Updated 2023-07-06.
 \item \code{PZFXFile}: GraphPad Prism file (PZFX).
 \item \code{RDSFile}: R data file containing a single, serialized object (RDS).
 \item \code{RDataFile}: R Data file containing multiple objects (RData/RDA).
+\item \code{SAMFile}: Sequence alignment map (SAM).
 \item \code{TSVFile}: Tab-separated values file (TSV).
 \item \code{TableFile}: Base R table file (TXT).
 \item \code{YAMLFile}: YAML file.
