@@ -3,32 +3,32 @@
 \docType{class}
 \name{PipetteFile-class}
 \alias{PipetteFile-class}
-\alias{DelimFile-class}
-\alias{ExcelFile-class}
-\alias{LinesFile-class}
-\alias{RioHandoffFile-class}
-\alias{RtracklayerHandoffFile-class}
-\alias{BAMFile-class}
-\alias{BcbioCountsFile-class}
-\alias{CRAMFile-class}
-\alias{CSVFile-class}
-\alias{FASTAFile-class}
-\alias{FASTQFile-class}
-\alias{GCTFile-class}
-\alias{GMTFile-class}
-\alias{GMXFile-class}
-\alias{GRPFile-class}
-\alias{JSONFile-class}
-\alias{MAFFile-class}
-\alias{MTXFile-class}
-\alias{OBOFile-class}
-\alias{PZFXFile-class}
-\alias{RDataFile-class}
-\alias{SAMFile-class}
-\alias{RDSFile-class}
-\alias{TableFile-class}
-\alias{TSVFile-class}
-\alias{YAMLFile-class}
+\alias{PipetteDelimFile-class}
+\alias{PipetteExcelFile-class}
+\alias{PipetteLinesFile-class}
+\alias{PipetteRioFile-class}
+\alias{PipetteRtracklayerFile-class}
+\alias{PipetteBAMFile-class}
+\alias{PipetteBcbioCountsFile-class}
+\alias{PipetteCRAMFile-class}
+\alias{PipetteCSVFile-class}
+\alias{PipetteFASTAFile-class}
+\alias{PipetteFASTQFile-class}
+\alias{PipetteGCTFile-class}
+\alias{PipetteGMTFile-class}
+\alias{PipetteGMXFile-class}
+\alias{PipetteGRPFile-class}
+\alias{PipetteJSONFile-class}
+\alias{PipetteMAFFile-class}
+\alias{PipetteMTXFile-class}
+\alias{PipetteOBOFile-class}
+\alias{PipettePZFXFile-class}
+\alias{PipetteRDataFile-class}
+\alias{PipetteSAMFile-class}
+\alias{PipetteRDSFile-class}
+\alias{PipetteTableFile-class}
+\alias{PipetteTSVFile-class}
+\alias{PipetteYAMLFile-class}
 \title{File extension classes}
 \description{
 Currently intended for use with \code{import} function.
@@ -37,36 +37,36 @@ Currently intended for use with \code{import} function.
 Extends \code{BiocFile} defined in BiocIO package.
 }
 \note{
-Updated 2023-07-06.
+Updated 2023-07-07.
 }
 \section{Primary classes}{
 
 \itemize{
-\item \code{BAMFile}: Binary representation of sequence alignment map (BAM).
-\item \code{BcbioCountsFile}: bcbio-nextgen counts file.
-\item \code{CRAMFile}: Compressed reference-oriented alignment map (CRAM).
-\item \code{CSVFile}: Comma-separated values file (CSV).
-\item \code{FASTAFile}: FASTA file.
-\item \code{FASTQFile}: FASTQ file.
-\item \code{GCTFile}: Gene Cluster Text file (GCT).
-\item \code{GMTFile}: Gene matrix transposed file (GMT).
-\item \code{GMXFile}: Gene matrix file (GMX).
-\item \code{GRPFile}: Gene set file (GRP).
-\item \code{JSONFile}: JSON file.
-\item \code{MAFFile}: Mutation annotation format file (MAF).
-\item \code{MTXFile}: MatrixMarket exchange file (MTX).
-\item \code{OBOFile}: Open Biomedical Ontologies file (OBO).
-\item \code{PZFXFile}: GraphPad Prism file (PZFX).
-\item \code{RDSFile}: R data file containing a single, serialized object (RDS).
-\item \code{RDataFile}: R Data file containing multiple objects (RData/RDA).
-\item \code{SAMFile}: Sequence alignment map (SAM).
-\item \code{TSVFile}: Tab-separated values file (TSV).
-\item \code{TableFile}: Base R table file (TXT).
-\item \code{YAMLFile}: YAML file.
+\item \code{PipetteBAMFile}: Binary sequence alignment map (BAM).
+\item \code{PipetteBcbioCountsFile}: bcbio-nextgen counts file.
+\item \code{PipetteCRAMFile}: Compressed reference-oriented alignment map (CRAM).
+\item \code{PipetteCSVFile}: Comma-separated values file (CSV).
+\item \code{PipetteFASTAFile}: FASTA file.
+\item \code{PipetteFASTQFile}: FASTQ file.
+\item \code{PipetteGCTFile}: Gene Cluster Text file (GCT).
+\item \code{PipetteGMTFile}: Gene matrix transposed file (GMT).
+\item \code{PipetteGMXFile}: Gene matrix file (GMX).
+\item \code{PipetteGRPFile}: Gene set file (GRP).
+\item \code{PipetteJSONFile}: JSON file.
+\item \code{PipetteMAFFile}: Mutation annotation format file (MAF).
+\item \code{PipetteMTXFile}: MatrixMarket exchange file (MTX).
+\item \code{PipetteOBOFile}: Open Biomedical Ontologies file (OBO).
+\item \code{PipettePZFXFile}: GraphPad Prism file (PZFX).
+\item \code{PipetteRDSFile}: R data file containing a single, serialized object (RDS).
+\item \code{PipetteRDataFile}: R Data file containing multiple objects (RData/RDA).
+\item \code{PipetteSAMFile}: Sequence alignment map (SAM).
+\item \code{PipetteTSVFile}: Tab-separated values file (TSV).
+\item \code{PipetteTableFile}: Base R table file (TXT).
+\item \code{PipetteYAMLFile}: YAML file.
 }
 }
 
-\section{\code{DelimFile-class}}{
+\section{\code{PipetteDelimFile-class}}{
 
 
 Delimited file.
@@ -79,7 +79,7 @@ File extension group supporting:
 }
 }
 
-\section{\code{ExcelFile-class}}{
+\section{\code{PipetteExcelFile-class}}{
 
 
 Microsoft Excel file.
@@ -92,7 +92,7 @@ File extension group supporting:
 }
 }
 
-\section{\code{LinesFile-class}}{
+\section{\code{PipetteLinesFile-class}}{
 
 
 Source code lines file.
@@ -110,7 +110,7 @@ File extension group supporting:
 }
 }
 
-\section{\code{RioHandoffFile-class}}{
+\section{\code{PipetteRioFile-class}}{
 
 
 File extension supported by \code{rio::import}.
@@ -135,10 +135,10 @@ File extension group supporting:
 }
 }
 
-\section{\code{RtracklayerHandoffFile-class}}{
+\section{\code{PipetteRtracklayerFile-class}}{
 
 
-File extension supported by \code{rtracklayer::import()}.
+File extension supported by \code{rtracklayer::import}.
 
 File extension group supporting:
 \itemize{
