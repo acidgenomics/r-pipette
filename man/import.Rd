@@ -4,26 +4,26 @@
 \alias{import}
 \alias{import,character,missing,missing-method}
 \alias{import,character,character,missing-method}
-\alias{import,DelimFile,missing,missing-method}
-\alias{import,LinesFile,missing,missing-method}
-\alias{import,ExcelFile,missing,missing-method}
-\alias{import,FASTAFile,missing,missing-method}
-\alias{import,FASTQFile,missing,missing-method}
-\alias{import,GCTFile,missing,missing-method}
-\alias{import,GMTFile,missing,missing-method}
-\alias{import,GMXFile,missing,missing-method}
-\alias{import,GRPFile,missing,missing-method}
-\alias{import,JSONFile,missing,missing-method}
-\alias{import,MAFFile,missing,missing-method}
-\alias{import,MTXFile,missing,missing-method}
-\alias{import,OBOFile,missing,missing-method}
-\alias{import,PZFXFile,missing,missing-method}
-\alias{import,YAMLFile,missing,missing-method}
-\alias{import,RDSFile,missing,missing-method}
-\alias{import,RDataFile,missing,missing-method}
-\alias{import,RioHandoffFile,missing,missing-method}
-\alias{import,RtracklayerHandoffFile,missing,missing-method}
-\alias{import,BcbioCountsFile,missing,missing-method}
+\alias{import,PipetteDelimFile,missing,missing-method}
+\alias{import,PipetteLinesFile,missing,missing-method}
+\alias{import,PipetteExcelFile,missing,missing-method}
+\alias{import,PipetteFASTAFile,missing,missing-method}
+\alias{import,PipetteFASTQFile,missing,missing-method}
+\alias{import,PipetteGCTFile,missing,missing-method}
+\alias{import,PipetteGMTFile,missing,missing-method}
+\alias{import,PipetteGMXFile,missing,missing-method}
+\alias{import,PipetteGRPFile,missing,missing-method}
+\alias{import,PipetteJSONFile,missing,missing-method}
+\alias{import,PipetteMAFFile,missing,missing-method}
+\alias{import,PipetteMTXFile,missing,missing-method}
+\alias{import,PipetteOBOFile,missing,missing-method}
+\alias{import,PipettePZFXFile,missing,missing-method}
+\alias{import,PipetteYAMLFile,missing,missing-method}
+\alias{import,PipetteRDSFile,missing,missing-method}
+\alias{import,PipetteRDataFile,missing,missing-method}
+\alias{import,PipetteRioFile,missing,missing-method}
+\alias{import,PipetteRtracklayerFile,missing,missing-method}
+\alias{import,PipetteBcbioCountsFile,missing,missing-method}
 \alias{import,missing,missing,missing-method}
 \alias{import,missing,character,missing-method}
 \title{Import}
@@ -34,7 +34,7 @@ import(con, format, text, ...)
 
 \S4method{import}{character,character,missing}(con, format, text, ...)
 
-\S4method{import}{DelimFile,missing,missing}(
+\S4method{import}{PipetteDelimFile,missing,missing}(
   con,
   format,
   text,
@@ -52,7 +52,7 @@ import(con, format, text, ...)
   verbose = getOption(x = "acid.verbose", default = FALSE)
 )
 
-\S4method{import}{LinesFile,missing,missing}(
+\S4method{import}{PipetteLinesFile,missing,missing}(
   con,
   format,
   text,
@@ -67,7 +67,7 @@ import(con, format, text, ...)
   verbose = getOption(x = "acid.verbose", default = FALSE)
 )
 
-\S4method{import}{ExcelFile,missing,missing}(
+\S4method{import}{PipetteExcelFile,missing,missing}(
   con,
   format,
   text,
@@ -82,7 +82,7 @@ import(con, format, text, ...)
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
-\S4method{import}{FASTAFile,missing,missing}(
+\S4method{import}{PipetteFASTAFile,missing,missing}(
   con,
   format,
   text,
@@ -91,7 +91,7 @@ import(con, format, text, ...)
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
-\S4method{import}{FASTQFile,missing,missing}(
+\S4method{import}{PipetteFASTQFile,missing,missing}(
   con,
   format,
   text,
@@ -100,7 +100,7 @@ import(con, format, text, ...)
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
-\S4method{import}{GCTFile,missing,missing}(
+\S4method{import}{PipetteGCTFile,missing,missing}(
   con,
   format,
   text,
@@ -109,13 +109,13 @@ import(con, format, text, ...)
   return = c("matrix", "data.frame")
 )
 
-\S4method{import}{GMTFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
+\S4method{import}{PipetteGMTFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
 
-\S4method{import}{GMXFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
+\S4method{import}{PipetteGMXFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
 
-\S4method{import}{GRPFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
+\S4method{import}{PipetteGRPFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
 
-\S4method{import}{JSONFile,missing,missing}(
+\S4method{import}{PipetteJSONFile,missing,missing}(
   con,
   format,
   text,
@@ -123,9 +123,9 @@ import(con, format, text, ...)
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
-\S4method{import}{MAFFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
+\S4method{import}{PipetteMAFFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
 
-\S4method{import}{MTXFile,missing,missing}(
+\S4method{import}{PipetteMTXFile,missing,missing}(
   con,
   format,
   text,
@@ -135,9 +135,9 @@ import(con, format, text, ...)
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
-\S4method{import}{OBOFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
+\S4method{import}{PipetteOBOFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
 
-\S4method{import}{PZFXFile,missing,missing}(
+\S4method{import}{PipettePZFXFile,missing,missing}(
   con,
   format,
   text,
@@ -147,7 +147,7 @@ import(con, format, text, ...)
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
-\S4method{import}{YAMLFile,missing,missing}(
+\S4method{import}{PipetteYAMLFile,missing,missing}(
   con,
   format,
   text,
@@ -155,11 +155,11 @@ import(con, format, text, ...)
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
-\S4method{import}{RDSFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
+\S4method{import}{PipetteRDSFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
 
-\S4method{import}{RDataFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
+\S4method{import}{PipetteRDataFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
 
-\S4method{import}{RioHandoffFile,missing,missing}(
+\S4method{import}{PipetteRioFile,missing,missing}(
   con,
   format,
   text,
@@ -172,7 +172,7 @@ import(con, format, text, ...)
   ...
 )
 
-\S4method{import}{RtracklayerHandoffFile,missing,missing}(
+\S4method{import}{PipetteRtracklayerFile,missing,missing}(
   con,
   format,
   text,
@@ -181,7 +181,7 @@ import(con, format, text, ...)
   ...
 )
 
-\S4method{import}{BcbioCountsFile,missing,missing}(
+\S4method{import}{PipetteBcbioCountsFile,missing,missing}(
   con,
   format,
   text,

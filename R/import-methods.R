@@ -335,7 +335,7 @@ NULL
 
 #' Map file format extension to corresponding S4 file class
 #'
-#' @note Updated 2022-05-12.
+#' @note Updated 2022-07-07.
 #' @noRd
 .formatToFileClass <-
     function(format) {
@@ -347,67 +347,67 @@ NULL
                 fixed = FALSE,
                 ignore.case = FALSE
             ),
-            "arff" = "RioHandoff",
+            "arff" = "Rio",
             "bam" = "BAM",
             "bash" = "Lines",
             "bcbio-counts" = "BcbioCounts",
-            "bed" = "RtracklayerHandoff",
-            "bed15" = "RtracklayerHandoff",
-            "bedgraph" = "RtracklayerHandoff",
-            "bedpe" = "RtracklayerHandoff",
-            "bigwig" = "RtracklayerHandoff",
-            "broadpeak" = "RtracklayerHandoff",
-            "bw" = "RtracklayerHandoff",
+            "bed" = "Rtracklayer",
+            "bed15" = "Rtracklayer",
+            "bedgraph" = "Rtracklayer",
+            "bedpe" = "Rtracklayer",
+            "bigwig" = "Rtracklayer",
+            "broadpeak" = "Rtracklayer",
+            "bw" = "Rtracklayer",
             "counts" = "BcbioCounts",
             "cram" = "CRAM",
             "csv" = "CSV",
-            "dbf" = "RioHandoff",
-            "dif" = "RioHandoff",
-            "dta" = "RioHandoff",
+            "dbf" = "Rio",
+            "dif" = "Rio",
+            "dta" = "Rio",
             "excel" = "Excel",
             "fa" = "FASTA",
             "fasta" = "FASTA",
             "fastq" = "FASTQ",
             "fq" = "FASTQ",
-            "fwf" = "RioHandoff",
+            "fwf" = "Rio",
             "gct" = "GCT",
-            "gff" = "RtracklayerHandoff",
-            "gff1" = "RtracklayerHandoff",
-            "gff2" = "RtracklayerHandoff",
-            "gff3" = "RtracklayerHandoff",
+            "gff" = "Rtracklayer",
+            "gff1" = "Rtracklayer",
+            "gff2" = "Rtracklayer",
+            "gff3" = "Rtracklayer",
             "gmt" = "GMT",
             "gmx" = "GMX",
             "grp" = "GRP",
-            "gsheet" = "RioHandoff",
-            "gtf" = "RtracklayerHandoff",
+            "gsheet" = "Rio",
+            "gtf" = "Rtracklayer",
             "json" = "JSON",
             "lines" = "Lines",
             "log" = "Lines",
             "maf" = "MAF",
-            "mat" = "RioHandoff",
+            "mat" = "Rio",
             "md" = "Lines",
-            "mtp" = "RioHandoff",
+            "mtp" = "Rio",
             "mtx" = "MTX",
-            "narrowpeak" = "RtracklayerHandoff",
+            "narrowpeak" = "Rtracklayer",
             "obo" = "OBO",
-            "ods" = "RioHandoff",
-            "por" = "RioHandoff",
-            "psv" = "RioHandoff",
+            "ods" = "Rio",
+            "por" = "Rio",
+            "psv" = "Rio",
             "py" = "Lines",
             "pzfx" = "PZFX",
             "r" = "Lines",
             "rda" = "RData",
             "rdata" = "RData",
             "rds" = "RDS",
-            "rec" = "RioHandoff",
-            "rio" = "RioHandoff",
+            "rec" = "Rio",
+            "rio" = "Rio",
             "rmd" = "Lines",
-            "rtracklayer" = "RtracklayerHandoff",
+            "rtracklayer" = "Rtracklayer",
             "sam" = "SAM",
-            "sas7bdat" = "RioHandoff",
-            "sav" = "RioHandoff",
+            "sas7bdat" = "Rio",
+            "sav" = "Rio",
             "sh" = "Lines",
-            "syd" = "RioHandoff",
+            "syd" = "Rio",
             "table" = "Table",
             "txt" = {
                 abort(sprintf(
@@ -422,11 +422,11 @@ NULL
                 ))
             },
             "tsv" = "TSV",
-            "wig" = "RtracklayerHandoff",
+            "wig" = "Rtracklayer",
             "xls" = "Excel",
             "xlsb" = "Excel",
             "xlsx" = "Excel",
-            "xpt" = "RioHandoff",
+            "xpt" = "Rio",
             "yaml" = "YAML",
             "yml" = "YAML",
             "zsh" = "Lines",
@@ -435,7 +435,7 @@ NULL
                 .pkgName, format
             ))
         )
-        class <- paste0(class, "File")
+        class <- paste0("Pipette", class, "File")
         class
     }
 
@@ -816,10 +816,7 @@ NULL
             }
         )
         validObject(con)
-        assert(
-            is(con, "PipetteFile"),
-            is(con, "BiocFile")
-        )
+        assert(is(con, "PipetteFile"))
         import(con = con, ...)
     }
 
@@ -829,9 +826,9 @@ NULL
 
 #' Import an R data file containing multiple objects (`.rda`)
 #'
-#' @note Updated 2022-09-13.
+#' @note Updated 2023-07-07.
 #' @noRd
-`import,RDataFile` <- # nolint
+`import,PipetteRDataFile` <- # nolint
     function(con,
              format, # missing
              text, # missing
@@ -891,9 +888,9 @@ NULL
 
 #' Import an R data serialized file (`.rds`)
 #'
-#' @note Updated 2022-09-13.
+#' @note Updated 2023-07-07.
 #' @noRd
-`import,RDSFile` <- # nolint
+`import,PipetteRDSFile` <- # nolint
     function(con,
              format, # missing
              text, # missing
@@ -944,9 +941,9 @@ NULL
 
 #' Import a delimited file (e.g. `.csv`, `.tsv`).
 #'
-#' @note Updated 2023-04-13.
+#' @note Updated 2023-07-07.
 #' @noRd
-`import,DelimFile` <- # nolint
+`import,PipetteDelimFile` <- # nolint
     function(con,
              format, # missing
              text, # missing
@@ -1007,9 +1004,9 @@ NULL
         file <- resource(con)
         ext <- switch(
             EXPR = class(con),
-            "CSVFile" = "csv",
-            "TSVFile" = "tsv",
-            "TableFile" = "table",
+            "PipetteCSVFile" = "csv",
+            "PipetteTSVFile" = "tsv",
+            "PipetteTableFile" = "table",
             abort("Unsupported delim class.")
         )
         whatPkg <- match.arg(arg = engine, choices = .engines)
@@ -1151,9 +1148,9 @@ NULL
 
 #' Import a Microsoft Excel worksheet (`.xlsx`)
 #'
-#' @note Updated 2022-09-13.
+#' @note Updated 2023-07-07.
 #' @noRd
-`import,ExcelFile` <- # nolint
+`import,PipetteExcelFile` <- # nolint
     function(con,
              format, # missing
              text, # missing
@@ -1246,9 +1243,9 @@ NULL
 
 #' Import a sparse matrix file (`.mtx`)
 #'
-#' @note Updated 2022-09-13.
+#' @note Updated 2023-07-07.
 #' @noRd
-`import,MTXFile` <- # nolint
+`import,PipetteMTXFile` <- # nolint
     function(con,
              format, # missing
              text, # missing
@@ -1341,11 +1338,11 @@ NULL
 
 #' Import a GraphPad Prism file (`.pzfx`)
 #'
-#' @note Updated 2022-09-13.
+#' @note Updated 2023-07-07.
 #' @noRd
 #'
 #' @note This function doesn't support optional column names.
-`import,PZFXFile` <- # nolint
+`import,PipettePZFXFile` <- # nolint
     function(con,
              format, # missing
              text, # missing
@@ -1414,9 +1411,9 @@ NULL
 
 #' Import source code lines
 #'
-#' @note Updated 2022-09-13.
+#' @note Updated 2023-07-07.
 #' @noRd
-`import,LinesFile` <- # nolint
+`import,PipetteLinesFile` <- # nolint
     function(con,
              format, # missing
              text, # missing
@@ -1577,9 +1574,9 @@ NULL
 
 #' Import a JSON file (`.json`)
 #'
-#' @note Updated 2022-09-13.
+#' @note Updated 2023-07-07.
 #' @noRd
-`import,JSONFile` <- # nolint
+`import,PipetteJSONFile` <- # nolint
     function(con,
              format, # missing
              text, # missing
@@ -1630,9 +1627,9 @@ NULL
 
 #' Import a YAML file (`.yaml`, `.yml`)
 #'
-#' @note Updated 2022-09-13.
+#' @note Updated 2023-07-07.
 #' @noRd
-`import,YAMLFile` <- # nolint
+`import,PipetteYAMLFile` <- # nolint
     function(con,
              format, # missing
              text, # missing
@@ -1683,12 +1680,13 @@ NULL
 
 ## Bioinformatics importers ====================================================
 
+## FIXME This is a work in progress.
 
-#' Import a  (`.bam`)
+#' Import a binary sequencing alignment file (`.bam`)
 #'
-#' @note Updated 2023-07-06.
+#' @note Updated 2023-07-07.
 #' @noRd
-`import,BAMFile` <- # nolint
+`import,PipetteBAMFile` <- # nolint
     function(con,
              format, # missing
              text, # missing
@@ -1736,9 +1734,9 @@ NULL
 #' Internal importer for a bcbio count matrix file (`.counts`).
 #' These files contain an `"id"` column that we need to coerce to row names.
 #'
-#' @note Updated 2022-09-13.
+#' @note Updated 2023-07-07.
 #' @noRd
-`import,BcbioCountsFile` <- # nolint
+`import,PipetteBcbioCountsFile` <- # nolint
     function(con,
              format, # missing
              text, # missing
@@ -1805,7 +1803,7 @@ NULL
 
 #' Import a FASTA file
 #'
-#' @note Updated 2023-06-29.
+#' @note Updated 2023-07-07.
 #' @noRd
 #'
 #' @seealso
@@ -1817,7 +1815,7 @@ NULL
 #' - `"DNA"`: `DNAStringSet`.
 #' - `"RNA"`: `RNAStringSet`.
 #' - `"AA"`: `AAStringSet`.
-`import,FASTAFile` <- # nolint
+`import,PipetteFASTAFile` <- # nolint
     function(con,
              format, # missing
              text, # missing
@@ -1949,7 +1947,7 @@ NULL
 
 #' Import a FASTQ file
 #'
-#' @note Updated 2022-09-13.
+#' @note Updated 2023-07-07.
 #' @noRd
 #'
 #' @seealso
@@ -1958,7 +1956,7 @@ NULL
 #' @return Varies, depending on the `moleculeType` argument:
 #' - `"DNA"`: `DNAStringSet`.
 #' - `"RNA"`: `RNAStringSet`.
-`import,FASTQFile` <- # nolint
+`import,PipetteFASTQFile` <- # nolint
     function(con,
              format, # missing
              text, # missing
@@ -2020,12 +2018,12 @@ NULL
 
 #' Import a gene cluster text file (`.gct`)
 #'
-#' @note Updated 2022-11-10.
+#' @note Updated 2023-07-07.
 #' @noRd
 #'
 #' @seealso
 #' - https://software.broadinstitute.org/software/igv/GCT
-`import,GCTFile` <- # nolint
+`import,PipetteGCTFile` <- # nolint
     function(con,
              format, # missing
              text, # missing
@@ -2076,12 +2074,6 @@ NULL
             hasLength(header, n = 2L)
         )
         header <- strsplit(header, split = "\t", fixed = TRUE)
-        ## Here's how to return the GCT file version, for reference.
-        ## > version <- numeric_version(sub(
-        ## >     pattern = "#",
-        ## >     replacement = "",
-        ## >     x = header[[1L]][[1L]]
-        ## > ))
         dim1 <- as.integer(header[[2L]][c(1L, 2L)])
         dim2 <- c(nrow(object), ncol(object) - 2L)
         assert(
@@ -2109,11 +2101,11 @@ NULL
 
 #' Import a gene matrix transposed file (`.gmt`)
 #'
-#' @note Updated 2022-09-13.
+#' @note Updated 2023-07-07.
 #' @noRd
 #'
 #' @seealso `fgsea::gmtPathways()`.
-`import,GMTFile` <- # nolint
+`import,PipetteGMTFile` <- # nolint
     function(con,
              format, # missing
              text, # missing
@@ -2153,9 +2145,9 @@ NULL
 
 #' Import a gene matrix file (`.gmx`)
 #'
-#' @note Updated 2022-09-13.
+#' @note Updated 2023-07-07.
 #' @noRd
-`import,GMXFile` <- # nolint
+`import,PipetteGMXFile` <- # nolint
     function(con,
              format, # missing
              text, # missing
@@ -2189,17 +2181,18 @@ NULL
 
 #' Import a gene set file (`.grp`)
 #'
-#' @note Updated 2021-06-04.
+#' @note Updated 2023-07-07.
 #' @noRd
-`import,GRPFile` <- `import,GMXFile` # nolint
+`import,PipetteGRPFile` <- # nolint
+    `import,PipetteGMXFile`
 
 
 
 #' Import a mutation annotation format file (`.maf`)
 #'
-#' @note Updated 2023-07-06.
+#' @note Updated 2023-07-07.
 #' @noRd
-`import,MAFFile` <- # nolint
+`import,PipetteMAFFile` <- # nolint
     function(con,
              format, # missing
              text, # missing
@@ -2242,9 +2235,9 @@ NULL
 
 #' Import an open biomedical ontologies file (`.obo`)
 #'
-#' @note Updated 2022-09-13.
+#' @note Updated 2023-07-07.
 #' @noRd
-`import,OBOFile` <- # nolint
+`import,PipetteOBOFile` <- # nolint
     function(con,
              format, # missing
              text, # missing
@@ -2290,9 +2283,9 @@ NULL
 
 #' Import a file using `rio::import()`
 #'
-#' @note Updated 2022-09-13.
+#' @note Updated 2023-07-07.
 #' @noRd
-`import,RioHandoffFile` <- # nolint
+`import,PipetteRioFile` <- # nolint
     function(con,
              format, # missing
              text, # missing
@@ -2361,11 +2354,11 @@ NULL
 
 #' Import file using `rtracklayer::import()`
 #'
-#' @note Updated 2022-09-13.
+#' @note Updated 2023-07-07.
 #' @noRd
 #'
 #' @note Using `tryCatch()` here to error if there are any warnings.
-`import,RtracklayerHandoffFile` <- # nolint
+`import,PipetteRtracklayerFile` <- # nolint
     function(con,
              format, # missing
              text, # missing
@@ -2462,11 +2455,11 @@ setMethod(
 setMethod(
     f = "import",
     signature = signature(
-        con = "DelimFile",
+        con = "PipetteDelimFile",
         format = "missing",
         text = "missing"
     ),
-    definition = `import,DelimFile`
+    definition = `import,PipetteDelimFile`
 )
 
 #' @rdname import
@@ -2474,11 +2467,11 @@ setMethod(
 setMethod(
     f = "import",
     signature = signature(
-        con = "LinesFile",
+        con = "PipetteLinesFile",
         format = "missing",
         text = "missing"
     ),
-    definition = `import,LinesFile`
+    definition = `import,PipetteLinesFile`
 )
 
 #' @rdname import
@@ -2486,11 +2479,11 @@ setMethod(
 setMethod(
     f = "import",
     signature = signature(
-        con = "ExcelFile",
+        con = "PipetteExcelFile",
         format = "missing",
         text = "missing"
     ),
-    definition = `import,ExcelFile`
+    definition = `import,PipetteExcelFile`
 )
 
 #' @rdname import
@@ -2498,11 +2491,11 @@ setMethod(
 setMethod(
     f = "import",
     signature = signature(
-        con = "FASTAFile",
+        con = "PipetteFASTAFile",
         format = "missing",
         text = "missing"
     ),
-    definition = `import,FASTAFile`
+    definition = `import,PipetteFASTAFile`
 )
 
 #' @rdname import
@@ -2510,11 +2503,11 @@ setMethod(
 setMethod(
     f = "import",
     signature = signature(
-        con = "FASTQFile",
+        con = "PipetteFASTQFile",
         format = "missing",
         text = "missing"
     ),
-    definition = `import,FASTQFile`
+    definition = `import,PipetteFASTQFile`
 )
 
 #' @rdname import
@@ -2522,11 +2515,11 @@ setMethod(
 setMethod(
     f = "import",
     signature = signature(
-        con = "GCTFile",
+        con = "PipetteGCTFile",
         format = "missing",
         text = "missing"
     ),
-    definition = `import,GCTFile`
+    definition = `import,PipetteGCTFile`
 )
 
 #' @rdname import
@@ -2534,11 +2527,11 @@ setMethod(
 setMethod(
     f = "import",
     signature = signature(
-        con = "GMTFile",
+        con = "PipetteGMTFile",
         format = "missing",
         text = "missing"
     ),
-    definition = `import,GMTFile`
+    definition = `import,PipetteGMTFile`
 )
 
 #' @rdname import
@@ -2546,11 +2539,11 @@ setMethod(
 setMethod(
     f = "import",
     signature = signature(
-        con = "GMXFile",
+        con = "PipetteGMXFile",
         format = "missing",
         text = "missing"
     ),
-    definition = `import,GMXFile`
+    definition = `import,PipetteGMXFile`
 )
 
 #' @rdname import
@@ -2558,11 +2551,11 @@ setMethod(
 setMethod(
     f = "import",
     signature = signature(
-        con = "GRPFile",
+        con = "PipetteGRPFile",
         format = "missing",
         text = "missing"
     ),
-    definition = `import,GRPFile`
+    definition = `import,PipetteGRPFile`
 )
 
 #' @rdname import
@@ -2570,11 +2563,11 @@ setMethod(
 setMethod(
     f = "import",
     signature = signature(
-        con = "JSONFile",
+        con = "PipetteJSONFile",
         format = "missing",
         text = "missing"
     ),
-    definition = `import,JSONFile`
+    definition = `import,PipetteJSONFile`
 )
 
 #' @rdname import
@@ -2582,11 +2575,11 @@ setMethod(
 setMethod(
     f = "import",
     signature = signature(
-        con = "MAFFile",
+        con = "PipetteMAFFile",
         format = "missing",
         text = "missing"
     ),
-    definition = `import,MAFFile`
+    definition = `import,PipetteMAFFile`
 )
 
 #' @rdname import
@@ -2594,11 +2587,11 @@ setMethod(
 setMethod(
     f = "import",
     signature = signature(
-        con = "MTXFile",
+        con = "PipetteMTXFile",
         format = "missing",
         text = "missing"
     ),
-    definition = `import,MTXFile`
+    definition = `import,PipetteMTXFile`
 )
 
 #' @rdname import
@@ -2606,11 +2599,11 @@ setMethod(
 setMethod(
     f = "import",
     signature = signature(
-        con = "OBOFile",
+        con = "PipetteOBOFile",
         format = "missing",
         text = "missing"
     ),
-    definition = `import,OBOFile`
+    definition = `import,PipetteOBOFile`
 )
 
 #' @rdname import
@@ -2618,11 +2611,11 @@ setMethod(
 setMethod(
     f = "import",
     signature = signature(
-        con = "PZFXFile",
+        con = "PipettePZFXFile",
         format = "missing",
         text = "missing"
     ),
-    definition = `import,PZFXFile`
+    definition = `import,PipettePZFXFile`
 )
 
 #' @rdname import
@@ -2630,11 +2623,11 @@ setMethod(
 setMethod(
     f = "import",
     signature = signature(
-        con = "YAMLFile",
+        con = "PipetteYAMLFile",
         format = "missing",
         text = "missing"
     ),
-    definition = `import,YAMLFile`
+    definition = `import,PipetteYAMLFile`
 )
 
 #' @rdname import
@@ -2642,11 +2635,11 @@ setMethod(
 setMethod(
     f = "import",
     signature = signature(
-        con = "RDSFile",
+        con = "PipetteRDSFile",
         format = "missing",
         text = "missing"
     ),
-    definition = `import,RDSFile`
+    definition = `import,PipetteRDSFile`
 )
 
 #' @rdname import
@@ -2654,11 +2647,11 @@ setMethod(
 setMethod(
     f = "import",
     signature = signature(
-        con = "RDataFile",
+        con = "PipetteRDataFile",
         format = "missing",
         text = "missing"
     ),
-    definition = `import,RDataFile`
+    definition = `import,PipetteRDataFile`
 )
 
 #' @rdname import
@@ -2666,11 +2659,11 @@ setMethod(
 setMethod(
     f = "import",
     signature = signature(
-        con = "RioHandoffFile",
+        con = "PipetteRioFile",
         format = "missing",
         text = "missing"
     ),
-    definition = `import,RioHandoffFile`
+    definition = `import,PipetteRioFile`
 )
 
 #' @rdname import
@@ -2678,11 +2671,11 @@ setMethod(
 setMethod(
     f = "import",
     signature = signature(
-        con = "RtracklayerHandoffFile",
+        con = "PipetteRtracklayerFile",
         format = "missing",
         text = "missing"
     ),
-    definition = `import,RtracklayerHandoffFile`
+    definition = `import,PipetteRtracklayerFile`
 )
 
 #' @rdname import
@@ -2690,11 +2683,11 @@ setMethod(
 setMethod(
     f = "import",
     signature = signature(
-        con = "BcbioCountsFile",
+        con = "PipetteBcbioCountsFile",
         format = "missing",
         text = "missing"
     ),
-    definition = `import,BcbioCountsFile`
+    definition = `import,PipetteBcbioCountsFile`
 )
 
 
