@@ -1,5 +1,11 @@
 # Release notes
 
+## pipette 0.11.0 (UNRELEASED)
+
+Major changes:
+
+- Now requiring R 4.3 / Bioconductor 3.17.
+
 ## pipette 0.10.10 (2023-06-29)
 
 Major changes:
