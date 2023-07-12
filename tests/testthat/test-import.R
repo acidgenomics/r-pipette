@@ -746,3 +746,44 @@ test_that("Google Sheets", {
     object <- import(url)
     expect_s3_class(object, "data.frame")
 })
+
+test_that("MAF", {
+    file <- file.path("cache", "example.maf")
+    object <- import(file)
+    expect_s4_class(object, "MAF")
+})
+
+test_that("BAM/SAM (and CRAM)", {
+    files <- file.path("cache", c("example.bam", "example.sam"))
+    for (file in files) {
+        object <- import(file)
+        expect_type(object, "list")
+        expect_named(
+            object = object,
+            expected = c(
+                "qname",
+                "flag",
+                "rname",
+                "strand",
+                "pos",
+                "qwidth",
+                "mapq",
+                "cigar",
+                "mrnm",
+                "mpos",
+                "isize",
+                "seq",
+                "qual"
+            )
+        )
+    }
+})
+
+test_that("FIXME BCF/VCF", {
+    ## FIXME Require an index file and decompress on the fly.
+    ## FIXME This is failing because of tmpfile generation...hmm need to rework.
+    files <- file.path("cache", c("example.bcf.gz", "example.vcf.gz"))
+    for (file in files) {
+        object <- import(file)
+    }
+})
