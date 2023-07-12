@@ -17,6 +17,8 @@ files <- c(
     "example.gtf",
     "example.gff3",
     "example.json",
+    # DepMap example.
+    "example.maf",
     ## Example gene ontology OBO file from BiocSet package.
     "example.obo",
     "example.R",
@@ -43,7 +45,15 @@ files <- c(
     "serialized.rds",
     "single_cell_counts.mtx.gz",
     "single_cell_counts.mtx.gz.colnames",
-    "single_cell_counts.mtx.gz.rownames"
+    "single_cell_counts.mtx.gz.rownames",
+    ## Rsamtools extdata files.
+    "example.bam",
+    "example.bam.bai",
+    "example.bcf.gz",
+    "example.bcf.gz.csi",
+    "example.sam",
+    "example.vcf.gz",
+    "example.vcf.gz.csi"
 )
 invisible(Map(
     f = function(remoteDir, file, envir) {
