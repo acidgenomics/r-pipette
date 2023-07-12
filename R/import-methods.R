@@ -1762,17 +1762,19 @@ NULL
                 whatFun = whatFun
             )
         }
-        print(con)
-        print(file)
-        stop("FIXME")
-        index <- .localOrRemoteFile(
-            file = paste0(file, ".csi"),
+        origFile <- attr(x = con, which = "origResource")
+        indexFile <- .localOrRemoteFile(
+            file = paste0(origFile, ".csi"),
             quiet = quiet
         )
-        args <- list(
-            "file" = file,
-            "index" = index
-        )
+        if (!isAFile(paste0(file, ".csi"))) {
+            file.copy(
+                from = indexFile,
+                to = paste0(file, ".csi"),
+                overwrite = FALSE
+            )
+        }
+        args <- list("file" = file)
         what <- .getFunction(f = whatFun, pkg = whatPkg)
         object <- do.call(what = what, args = args)
         assert(
