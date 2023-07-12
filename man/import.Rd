@@ -24,6 +24,7 @@
 \alias{import,PipetteOBOFile,missing,missing-method}
 \alias{import,PipettePZFXFile,missing,missing-method}
 \alias{import,PipetteSAMFile,missing,missing-method}
+\alias{import,PipetteVCFFile,missing,missing-method}
 \alias{import,PipetteYAMLFile,missing,missing-method}
 \alias{import,PipetteRioFile,missing,missing-method}
 \alias{import,PipetteRtracklayerFile,missing,missing-method}
@@ -162,6 +163,8 @@ import(con, format, text, ...)
 )
 
 \S4method{import}{PipetteSAMFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
+
+\S4method{import}{PipetteVCFFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
 
 \S4method{import}{PipetteYAMLFile,missing,missing}(
   con,
@@ -520,5 +523,7 @@ Import functions:
 \item \code{rtracklayer::import()}.
 \item \code{utils::read.table()}.
 \item \code{vroom::vroom()}.
+\item \code{Rsamtools::scanBam}.
+\item \code{Rsamtools::scanBcf}.
 }
 }
