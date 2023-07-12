@@ -183,6 +183,15 @@
 #'
 #' @return Varies, depending on the file type (format):
 #'
+#' - **R data serialized** (`RDS`):
+#' *variable*.\cr
+#' Currently recommend over RDA, if possible.\cr
+#' Imported by `readRDS()`.
+#' - **R data** (`RDA`, `RDATA`):
+#' *variable*.\cr
+#' Must contain a single object.
+#' Doesn't require internal object name to match, unlike `loadData()`.\cr
+#' Imported by `load()`.
 #' - **Plain text delimited** (`CSV`, `TSV`, `TXT`):
 #' `data.frame`.\cr
 #' Data separated by commas, tabs, or visual spaces.\cr
@@ -209,9 +218,15 @@
 #' - **MatrixMarket exchange sparse matrix** (`MTX`):
 #' `sparseMatrix`.\cr
 #' Imported by `Matrix::readMM()`.
+#' - **Sequence alignment/map format (`SAM`, `BAM`, `CRAM`):
+#' `list`.\cr
+#' Imported by `Rsamtools::scanBam`.
 #' - **Mutation annotation format** (`MAF`):
 #' `MAF`.\cr
 #' Imported by `maftools::read.maf()`.
+#' - **Variant annotation format** (`VCF`, `BCF`):
+#' `list`.\cr
+#' Imported by `Rsamtools::scanBcf`.
 #' - **Gene cluster text** (`GCT`):
 #' `matrix` or `data.frame`.\cr
 #' Imported by `readr::read_delim()`.
@@ -236,15 +251,6 @@
 #' `character`.\cr
 #' Source code or log files.\cr
 #' Imported by `readr::read_delim()` by default.
-#' - **R data serialized** (`RDS`):
-#' *variable*.\cr
-#' Currently recommend over RDA, if possible.\cr
-#' Imported by `readRDS()`.
-#' - **R data** (`RDA`, `RDATA`):
-#' *variable*.\cr
-#' Must contain a single object.
-#' Doesn't require internal object name to match, unlike `loadData()`.\cr
-#' Imported by `load()`.
 #' - **Infrequently used rio-compatible formats** (`ARFF`, `DBF`, `DIF`, `DTA`,
 #' `MAT`, `MTP`, `ODS`, `POR`, `SAS7BDAT`, `SAV`, `SYD`, `REC`, `XPT`):
 #' *variable*.\cr

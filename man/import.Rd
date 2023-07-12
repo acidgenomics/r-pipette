@@ -309,6 +309,15 @@ Applies primarily to MatrixMarket Exchange files (e.g. \code{MTXFile}).}
 \value{
 Varies, depending on the file type (format):
 \itemize{
+\item \strong{R data serialized} (\code{RDS}):
+\emph{variable}.\cr
+Currently recommend over RDA, if possible.\cr
+Imported by \code{readRDS()}.
+\item \strong{R data} (\code{RDA}, \code{RDATA}):
+\emph{variable}.\cr
+Must contain a single object.
+Doesn't require internal object name to match, unlike \code{loadData()}.\cr
+Imported by \code{load()}.
 \item \strong{Plain text delimited} (\code{CSV}, \code{TSV}, \code{TXT}):
 \code{data.frame}.\cr
 Data separated by commas, tabs, or visual spaces.\cr
@@ -335,9 +344,15 @@ Imported by \code{rtracklayer::import()}.
 \item \strong{MatrixMarket exchange sparse matrix} (\code{MTX}):
 \code{sparseMatrix}.\cr
 Imported by \code{Matrix::readMM()}.
+\item **Sequence alignment/map format (\code{SAM}, \code{BAM}, \code{CRAM}):
+\code{list}.\cr
+Imported by \code{Rsamtools::scanBam}.
 \item \strong{Mutation annotation format} (\code{MAF}):
 \code{MAF}.\cr
 Imported by \code{maftools::read.maf()}.
+\item \strong{Variant annotation format} (\code{VCF}, \code{BCF}):
+\code{list}.\cr
+Imported by \code{Rsamtools::scanBcf}.
 \item \strong{Gene cluster text} (\code{GCT}):
 \code{matrix} or \code{data.frame}.\cr
 Imported by \code{readr::read_delim()}.
@@ -362,15 +377,6 @@ Imported by \code{yaml::yaml.load_file()}.
 \code{character}.\cr
 Source code or log files.\cr
 Imported by \code{readr::read_delim()} by default.
-\item \strong{R data serialized} (\code{RDS}):
-\emph{variable}.\cr
-Currently recommend over RDA, if possible.\cr
-Imported by \code{readRDS()}.
-\item \strong{R data} (\code{RDA}, \code{RDATA}):
-\emph{variable}.\cr
-Must contain a single object.
-Doesn't require internal object name to match, unlike \code{loadData()}.\cr
-Imported by \code{load()}.
 \item \strong{Infrequently used rio-compatible formats} (\code{ARFF}, \code{DBF}, \code{DIF}, \code{DTA},
 \code{MAT}, \code{MTP}, \code{ODS}, \code{POR}, \code{SAS7BDAT}, \code{SAV}, \code{SYD}, \code{REC}, \code{XPT}):
 \emph{variable}.\cr
