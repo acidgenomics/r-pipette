@@ -1,7 +1,7 @@
 #+TITLE: pipette
 #+STARTUP: content
 * Development
-** TODO Support for BAM/SAM files.
+** TODO Add code coverage for BAM, CRAM, SAM, BCF, and VCF files.
 ** TODO Need to improve export of matrix with row names defined.
     Currently dropping this...add code coverage.
 ** TODO File path messages are inconsistent on Windows?
