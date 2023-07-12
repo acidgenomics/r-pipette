@@ -6,11 +6,12 @@
 #' Extends `BiocFile` defined in BiocIO package.
 #'
 #' @export
-#' @note Updated 2023-07-07.
+#' @note Updated 2023-07-12.
 #'
 #' @section Primary classes:
 #'
 #' - `PipetteBAMFile`: Binary sequence alignment map (BAM).
+#' - `PipetteBCFFile`: Binary variant call format (BCF).
 #' - `PipetteBcbioCountsFile`: bcbio-nextgen counts file.
 #' - `PipetteCRAMFile`: Compressed reference-oriented alignment map (CRAM).
 #' - `PipetteCSVFile`: Comma-separated values file (CSV).
@@ -30,6 +31,7 @@
 #' - `PipetteSAMFile`: Sequence alignment map (SAM).
 #' - `PipetteTSVFile`: Tab-separated values file (TSV).
 #' - `PipetteTableFile`: Base R table file (TXT).
+#' - `PipetteVCFFile`: Variant call format (VCF).
 #' - `PipetteYAMLFile`: YAML file.
 #'
 #' @section `PipetteDelimFile-class`:
@@ -165,6 +167,13 @@ setClass(
 #' @rdname PipetteFile-class
 #' @export
 setClass(
+    Class = "PipetteBCFFile",
+    contains = "PipetteFile"
+)
+
+#' @rdname PipetteFile-class
+#' @export
+setClass(
     Class = "PipetteBcbioCountsFile",
     contains = "PipetteFile"
 )
@@ -293,6 +302,13 @@ setClass(
 setClass(
     Class = "PipetteTSVFile",
     contains = "PipetteDelimFile"
+)
+
+#' @rdname PipetteFile-class
+#' @export
+setClass(
+    Class = "PipetteVCFFile",
+    contains = "PipetteFile"
 )
 
 #' @rdname PipetteFile-class

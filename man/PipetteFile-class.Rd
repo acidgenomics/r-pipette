@@ -9,6 +9,7 @@
 \alias{PipetteRioFile-class}
 \alias{PipetteRtracklayerFile-class}
 \alias{PipetteBAMFile-class}
+\alias{PipetteBCFFile-class}
 \alias{PipetteBcbioCountsFile-class}
 \alias{PipetteCRAMFile-class}
 \alias{PipetteCSVFile-class}
@@ -28,6 +29,7 @@
 \alias{PipetteRDSFile-class}
 \alias{PipetteTableFile-class}
 \alias{PipetteTSVFile-class}
+\alias{PipetteVCFFile-class}
 \alias{PipetteYAMLFile-class}
 \title{File extension classes}
 \description{
@@ -37,12 +39,13 @@ Currently intended for use with \code{import} function.
 Extends \code{BiocFile} defined in BiocIO package.
 }
 \note{
-Updated 2023-07-07.
+Updated 2023-07-12.
 }
 \section{Primary classes}{
 
 \itemize{
 \item \code{PipetteBAMFile}: Binary sequence alignment map (BAM).
+\item \code{PipetteBCFFile}: Binary variant call format (BCF).
 \item \code{PipetteBcbioCountsFile}: bcbio-nextgen counts file.
 \item \code{PipetteCRAMFile}: Compressed reference-oriented alignment map (CRAM).
 \item \code{PipetteCSVFile}: Comma-separated values file (CSV).
@@ -62,6 +65,7 @@ Updated 2023-07-07.
 \item \code{PipetteSAMFile}: Sequence alignment map (SAM).
 \item \code{PipetteTSVFile}: Tab-separated values file (TSV).
 \item \code{PipetteTableFile}: Base R table file (TXT).
+\item \code{PipetteVCFFile}: Variant call format (VCF).
 \item \code{PipetteYAMLFile}: YAML file.
 }
 }
