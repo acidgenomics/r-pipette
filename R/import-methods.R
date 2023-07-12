@@ -1726,6 +1726,9 @@ NULL
 
 
 
+## FIXME This is decompressing and modifying the con, which we don't want
+## How to we preserve the original input???
+
 #' Import a binary variant call file (`.bcf`)
 #'
 #' @note Updated 2023-07-12.
@@ -1759,7 +1762,17 @@ NULL
                 whatFun = whatFun
             )
         }
-        args <- list("file" = file)
+        print(con)
+        print(file)
+        stop("FIXME")
+        index <- .localOrRemoteFile(
+            file = paste0(file, ".csi"),
+            quiet = quiet
+        )
+        args <- list(
+            "file" = file,
+            "index" = index
+        )
         what <- .getFunction(f = whatFun, pkg = whatPkg)
         object <- do.call(what = what, args = args)
         assert(
