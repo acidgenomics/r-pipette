@@ -4,9 +4,13 @@
 \alias{import}
 \alias{import,character,missing,missing-method}
 \alias{import,character,character,missing-method}
+\alias{import,PipetteRDSFile,missing,missing-method}
+\alias{import,PipetteRDataFile,missing,missing-method}
 \alias{import,PipetteDelimFile,missing,missing-method}
 \alias{import,PipetteLinesFile,missing,missing-method}
 \alias{import,PipetteExcelFile,missing,missing-method}
+\alias{import,PipetteBAMFile,missing,missing-method}
+\alias{import,PipetteCRAMFile,missing,missing-method}
 \alias{import,PipetteFASTAFile,missing,missing-method}
 \alias{import,PipetteFASTQFile,missing,missing-method}
 \alias{import,PipetteGCTFile,missing,missing-method}
@@ -18,9 +22,8 @@
 \alias{import,PipetteMTXFile,missing,missing-method}
 \alias{import,PipetteOBOFile,missing,missing-method}
 \alias{import,PipettePZFXFile,missing,missing-method}
+\alias{import,PipetteSAMFile,missing,missing-method}
 \alias{import,PipetteYAMLFile,missing,missing-method}
-\alias{import,PipetteRDSFile,missing,missing-method}
-\alias{import,PipetteRDataFile,missing,missing-method}
 \alias{import,PipetteRioFile,missing,missing-method}
 \alias{import,PipetteRtracklayerFile,missing,missing-method}
 \alias{import,PipetteBcbioCountsFile,missing,missing-method}
@@ -33,6 +36,10 @@ import(con, format, text, ...)
 \S4method{import}{character,missing,missing}(con, format, text, ...)
 
 \S4method{import}{character,character,missing}(con, format, text, ...)
+
+\S4method{import}{PipetteRDSFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
+
+\S4method{import}{PipetteRDataFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
 
 \S4method{import}{PipetteDelimFile,missing,missing}(
   con,
@@ -81,6 +88,10 @@ import(con, format, text, ...)
   metadata = getOption(x = "acid.import.metadata", default = FALSE),
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
+
+\S4method{import}{PipetteBAMFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
+
+\S4method{import}{PipetteCRAMFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
 
 \S4method{import}{PipetteFASTAFile,missing,missing}(
   con,
@@ -147,6 +158,8 @@ import(con, format, text, ...)
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
+\S4method{import}{PipetteSAMFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
+
 \S4method{import}{PipetteYAMLFile,missing,missing}(
   con,
   format,
@@ -154,10 +167,6 @@ import(con, format, text, ...)
   metadata = getOption(x = "acid.import.metadata", default = FALSE),
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
-
-\S4method{import}{PipetteRDSFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
-
-\S4method{import}{PipetteRDataFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
 
 \S4method{import}{PipetteRioFile,missing,missing}(
   con,
@@ -207,6 +216,9 @@ contain an extension.}
 \emph{Not currently supported.}}
 
 \item{...}{Additional arguments.}
+
+\item{quiet}{\code{logical(1)}.
+Perform command quietly, suppressing messages.}
 
 \item{rownames}{\code{logical(1)}.
 Automatically assign row names, if \code{rowname} column is defined.
@@ -262,9 +274,6 @@ Function is never applied to row names, when they are defined in object.}
 
 \item{metadata}{\code{list}.
 Metadata.}
-
-\item{quiet}{\code{logical(1)}.
-Perform command quietly, suppressing messages.}
 
 \item{verbose}{\code{logical(1)}.
 Run the function with verbose output.}
@@ -375,7 +384,7 @@ arguments. Remote URLs and compressed files are supported. If you need more
 complex import settings, just call the wrapped importer directly instead.
 }
 \note{
-Updated 2023-07-06.
+Updated 2023-07-12.
 }
 \section{Row and column names}{
 

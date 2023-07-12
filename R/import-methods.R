@@ -14,7 +14,7 @@
 #' Read file by extension into R.
 #'
 #' @name import
-#' @note Updated 2023-07-06.
+#' @note Updated 2023-07-12.
 #'
 #' @details
 #' `import()` supports automatic loading of common file types, by wrapping
@@ -1680,11 +1680,9 @@ NULL
 
 ## Bioinformatics importers ====================================================
 
-## FIXME This is a work in progress.
-
 #' Import a binary sequencing alignment file (`.bam`)
 #'
-#' @note Updated 2023-07-07.
+#' @note Updated 2023-07-12.
 #' @noRd
 `import,PipetteBAMFile` <- # nolint
     function(con,
@@ -1706,8 +1704,8 @@ NULL
             isFlag(quiet)
         )
         file <- resource(con)
-        whatPkg <- "maftools"
-        whatFun <- "read.maf"
+        whatPkg <- "Rsamtools"
+        whatFun <- "scanBam"
         if (isFALSE(quiet)) {
             .alertImport(
                 con = con,
@@ -1715,16 +1713,17 @@ NULL
                 whatFun = whatFun
             )
         }
-        args <- list(
-            "maf" = file,
-            "verbose" = !quiet
-        )
+        args <- list("file" = file)
         what <- .getFunction(f = whatFun, pkg = whatPkg)
         object <- do.call(what = what, args = args)
-        assert(is(object, "MAF"))
+        assert(
+            is.list(object),
+            hasLength(object, n = 1L),
+            is.list(object[[1L]])
+        )
+        object <- object[[1L]]
         object
     }
-
 
 
 
@@ -1796,6 +1795,61 @@ NULL
         if (isTRUE(metadata)) {
             metadata2(object, which = "import") <- m
         }
+        object
+    }
+
+
+
+#' Import a compressed reference-oriented alignment map file (`.cram`)
+#'
+#' @note Updated 2023-07-12.
+#' @noRd
+`import,PipetteCRAMFile` <- # nolint
+    function(con,
+             format, # missing
+             text, # missing
+             quiet = getOption(
+                 x = "acid.quiet",
+                 default = FALSE
+             )) {
+        if (missing(format)) {
+            format <- NULL
+        }
+        if (missing(text)) {
+            text <- NULL
+        }
+        assert(
+            requireNamespaces("Rsamtools"),
+            is.null(format),
+            is.null(text),
+            isFlag(quiet)
+        )
+        file <- resource(con)
+        whatPkg <- "Rsamtools"
+        whatFun <- "scanBam"
+        if (isFALSE(quiet)) {
+            .alertImport(
+                con = con,
+                whatPkg = whatPkg,
+                whatFun = whatFun
+            )
+        }
+        tmpBamFile <- Rsamtools::asBam(
+            file = file,
+            destination = tempfile(),
+            overwrite = FALSE,
+            indexDestination = TRUE
+        )
+        args <- list("file" = tmpBamFile)
+        what <- .getFunction(f = whatFun, pkg = whatPkg)
+        object <- do.call(what = what, args = args)
+        file.remove(tmpBamFile)
+        assert(
+            is.list(object),
+            hasLength(object, n = 1L),
+            is.list(object[[1L]])
+        )
+        object <- object[[1L]]
         object
     }
 
@@ -2279,6 +2333,61 @@ NULL
 
 
 
+#' Import a sequence alignment map file (`.sam`)
+#'
+#' @note Updated 2023-07-12.
+#' @noRd
+`import,PipetteSAMFile` <- # nolint
+    function(con,
+             format, # missing
+             text, # missing
+             quiet = getOption(
+                 x = "acid.quiet",
+                 default = FALSE
+             )) {
+        if (missing(format)) {
+            format <- NULL
+        }
+        if (missing(text)) {
+            text <- NULL
+        }
+        assert(
+            requireNamespaces("Rsamtools"),
+            is.null(format),
+            is.null(text),
+            isFlag(quiet)
+        )
+        file <- resource(con)
+        whatPkg <- "Rsamtools"
+        whatFun <- "scanBam"
+        if (isFALSE(quiet)) {
+            .alertImport(
+                con = con,
+                whatPkg = whatPkg,
+                whatFun = whatFun
+            )
+        }
+        tmpBamFile <- Rsamtools::asBam(
+            file = file,
+            destination = tempfile(),
+            overwrite = FALSE,
+            indexDestination = TRUE
+        )
+        args <- list("file" = tmpBamFile)
+        what <- .getFunction(f = whatFun, pkg = whatPkg)
+        object <- do.call(what = what, args = args)
+        file.remove(tmpBamFile)
+        assert(
+            is.list(object),
+            hasLength(object, n = 1L),
+            is.list(object[[1L]])
+        )
+        object <- object[[1L]]
+        object
+    }
+
+
+
 ## Handoff methods =============================================================
 
 #' Import a file using `rio::import()`
@@ -2455,6 +2564,30 @@ setMethod(
 setMethod(
     f = "import",
     signature = signature(
+        con = "PipetteRDSFile",
+        format = "missing",
+        text = "missing"
+    ),
+    definition = `import,PipetteRDSFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(
+        con = "PipetteRDataFile",
+        format = "missing",
+        text = "missing"
+    ),
+    definition = `import,PipetteRDataFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(
         con = "PipetteDelimFile",
         format = "missing",
         text = "missing"
@@ -2484,6 +2617,30 @@ setMethod(
         text = "missing"
     ),
     definition = `import,PipetteExcelFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(
+        con = "PipetteBAMFile",
+        format = "missing",
+        text = "missing"
+    ),
+    definition = `import,PipetteBAMFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(
+        con = "PipetteCRAMFile",
+        format = "missing",
+        text = "missing"
+    ),
+    definition = `import,PipetteCRAMFile`
 )
 
 #' @rdname import
@@ -2623,35 +2780,23 @@ setMethod(
 setMethod(
     f = "import",
     signature = signature(
+        con = "PipetteSAMFile",
+        format = "missing",
+        text = "missing"
+    ),
+    definition = `import,PipetteSAMFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(
         con = "PipetteYAMLFile",
         format = "missing",
         text = "missing"
     ),
     definition = `import,PipetteYAMLFile`
-)
-
-#' @rdname import
-#' @export
-setMethod(
-    f = "import",
-    signature = signature(
-        con = "PipetteRDSFile",
-        format = "missing",
-        text = "missing"
-    ),
-    definition = `import,PipetteRDSFile`
-)
-
-#' @rdname import
-#' @export
-setMethod(
-    f = "import",
-    signature = signature(
-        con = "PipetteRDataFile",
-        format = "missing",
-        text = "missing"
-    ),
-    definition = `import,PipetteRDataFile`
 )
 
 #' @rdname import
