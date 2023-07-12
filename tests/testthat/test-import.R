@@ -779,11 +779,26 @@ test_that("BAM/SAM (and CRAM)", {
     }
 })
 
-test_that("FIXME BCF/VCF", {
-    ## FIXME Require an index file and decompress on the fly.
-    ## FIXME This is failing because of tmpfile generation...hmm need to rework.
+test_that("BCF/VCF", {
     files <- file.path("cache", c("example.bcf.gz", "example.vcf.gz"))
     for (file in files) {
         object <- import(file)
+        expect_type(object, "list")
+        expect_named(
+            object = object,
+            expected = c(
+                "CHROM",
+                "POS",
+                "ID",
+                "REF",
+                "ALT",
+                "QUAL",
+                "FILTER",
+                "INFO",
+                "FORMAT",
+                "GENO",
+                "RecordsPerRange"
+            )
+        )
     }
 })
