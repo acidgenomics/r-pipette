@@ -279,6 +279,8 @@
 #' - `rtracklayer::import()`.
 #' - `utils::read.table()`.
 #' - `vroom::vroom()`.
+#' - `Rsamtools::scanBam`.
+#' - `Rsamtools::scanBcf`.
 #'
 #' @examples
 #' con <- system.file("extdata", "example.csv", package = "pipette")
@@ -2395,53 +2397,16 @@ NULL
 #' @note Updated 2023-07-12.
 #' @noRd
 `import,PipetteSAMFile` <- # nolint
-    function(con,
-             format, # missing
-             text, # missing
-             quiet = getOption(
-                 x = "acid.quiet",
-                 default = FALSE
-             )) {
-        if (missing(format)) {
-            format <- NULL
-        }
-        if (missing(text)) {
-            text <- NULL
-        }
-        assert(
-            requireNamespaces("Rsamtools"),
-            is.null(format),
-            is.null(text),
-            isFlag(quiet)
-        )
-        file <- resource(con)
-        whatPkg <- "Rsamtools"
-        whatFun <- "scanBam"
-        if (isFALSE(quiet)) {
-            .alertImport(
-                con = con,
-                whatPkg = whatPkg,
-                whatFun = whatFun
-            )
-        }
-        tmpBamFile <- Rsamtools::asBam(
-            file = file,
-            destination = tempfile(),
-            overwrite = FALSE,
-            indexDestination = TRUE
-        )
-        args <- list("file" = tmpBamFile)
-        what <- .getFunction(f = whatFun, pkg = whatPkg)
-        object <- do.call(what = what, args = args)
-        file.remove(tmpBamFile)
-        assert(
-            is.list(object),
-            hasLength(object, n = 1L),
-            is.list(object[[1L]])
-        )
-        object <- object[[1L]]
-        object
-    }
+    `import,PipetteCRAMFile`
+
+
+
+#' Import a variant call file (`.vcf`)
+#'
+#' @note Updated 2023-07-12.
+#' @noRd
+`import,PipetteVCFFile` <- # nolint
+    `import,PipetteBCFFile`
 
 
 
@@ -2854,6 +2819,18 @@ setMethod(
         text = "missing"
     ),
     definition = `import,PipetteSAMFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(
+        con = "PipetteVCFFile",
+        format = "missing",
+        text = "missing"
+    ),
+    definition = `import,PipetteVCFFile`
 )
 
 #' @rdname import
