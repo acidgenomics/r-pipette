@@ -10,6 +10,7 @@
 \alias{import,PipetteLinesFile,missing,missing-method}
 \alias{import,PipetteExcelFile,missing,missing-method}
 \alias{import,PipetteBAMFile,missing,missing-method}
+\alias{import,PipetteBCFFile,missing,missing-method}
 \alias{import,PipetteCRAMFile,missing,missing-method}
 \alias{import,PipetteFASTAFile,missing,missing-method}
 \alias{import,PipetteFASTQFile,missing,missing-method}
@@ -90,6 +91,8 @@ import(con, format, text, ...)
 )
 
 \S4method{import}{PipetteBAMFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
+
+\S4method{import}{PipetteBCFFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
 
 \S4method{import}{PipetteCRAMFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
 
