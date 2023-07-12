@@ -1,9 +1,3 @@
-## FIXME Add support for BCFFile.
-## FIXME Add support for VCFFile.
-## FIXME Add support for tabix files.
-
-
-
 #' Import
 #'
 #' Read file by extension into R.
