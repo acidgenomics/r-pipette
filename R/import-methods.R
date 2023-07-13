@@ -2869,6 +2869,18 @@ setMethod(
 setMethod(
     f = "import",
     signature = signature(
+        con = "PipetteBcbioCountsFile",
+        format = "missing",
+        text = "missing"
+    ),
+    definition = `import,PipetteBcbioCountsFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(
         con = "PipetteRioFile",
         format = "missing",
         text = "missing"
@@ -2886,18 +2898,6 @@ setMethod(
         text = "missing"
     ),
     definition = `import,PipetteRtracklayerFile`
-)
-
-#' @rdname import
-#' @export
-setMethod(
-    f = "import",
-    signature = signature(
-        con = "PipetteBcbioCountsFile",
-        format = "missing",
-        text = "missing"
-    ),
-    definition = `import,PipetteBcbioCountsFile`
 )
 
 
