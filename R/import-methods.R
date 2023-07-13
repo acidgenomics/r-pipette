@@ -1,14 +1,9 @@
-## FIXME Need to ensure we clean up decompressed temporary files.
-## FIXME Create a new goalie isATempFile and isTempFile checks for this.
-
-
-
 #' Import
 #'
 #' Read file by extension into R.
 #'
 #' @name import
-#' @note Updated 2023-07-12.
+#' @note Updated 2023-07-13.
 #'
 #' @details
 #' `import()` supports automatic loading of common file types, by wrapping
@@ -1736,12 +1731,9 @@ NULL
 
 
 
-## FIXME This is decompressing and modifying the con, which we don't want
-## How to we preserve the original input???
-
 #' Import a binary variant call file (`.bcf`)
 #'
-#' @note Updated 2023-07-12.
+#' @note Updated 2023-07-13.
 #' @noRd
 `import,PipetteBCFFile` <- # nolint
     function(con,
