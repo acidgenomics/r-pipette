@@ -1,10 +1,22 @@
 # Release notes
 
-## pipette 0.11.0 (UNRELEASED)
+## pipette 0.11.0 (2023-07-13)
 
 Major changes:
 
 - Now requiring R 4.3 / Bioconductor 3.17.
+- File classes for `import` and `export` are now prefixed with `Pipette`, to
+  avoid unwanted collisions with other classes defined in Bioconductor packages.
+- `import`: Added support for MAF files.
+- `import`: Added support for BAM, CRAM, and SAM files. Note that CRAM files
+  must be able to resolve the corresponding reference genome.
+- `import`: Added support for BCF and VCF files. Note that these files currently
+  require corresponding CSI index files, which can be generated using htslib.
+- Temporary files generated during `import` calls (i.e. automatic decompression
+  of compressed files, such as `gz` or `xz`) are now automatically cleaned
+  up. This change should _only_ affect temporary files. If you notice any issues
+  with this, please file a bug report!
+- `getJSON`: Reworked to use httr2 instead of deprecated httr package.
 
 ## pipette 0.10.10 (2023-06-29)
 
