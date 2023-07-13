@@ -37,8 +37,8 @@ NULL
 #' allHaveAccess areDisjointSets areSameLength areSetEqual bapply
 #' compressExtPattern extPattern formalCompress hasColnames hasCols hasDimnames
 #' hasDuplicates hasInternet hasLength hasNames hasNoDuplicates hasRownames
-#' hasRows hasValidNames hasValidDimnames isADir isAFile isAURL isAny
-#' isCharacter isFlag isInstalled isInt isMatchingFixed isMatchingRegex
+#' hasRows hasValidNames hasValidDimnames isADir isAFile isATempFile isAURL
+#' isAny isCharacter isFlag isInstalled isInt isMatchingFixed isMatchingRegex
 #' isNonNegative isPositive isScalar isString isSubset requireNamespaces
 #' validNames validate
 #' @importFrom methods as is hasMethod new setGeneric signature validObject
