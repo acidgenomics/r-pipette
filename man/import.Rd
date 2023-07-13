@@ -26,9 +26,9 @@
 \alias{import,PipetteSAMFile,missing,missing-method}
 \alias{import,PipetteVCFFile,missing,missing-method}
 \alias{import,PipetteYAMLFile,missing,missing-method}
+\alias{import,PipetteBcbioCountsFile,missing,missing-method}
 \alias{import,PipetteRioFile,missing,missing-method}
 \alias{import,PipetteRtracklayerFile,missing,missing-method}
-\alias{import,PipetteBcbioCountsFile,missing,missing-method}
 \alias{import,missing,missing,missing-method}
 \alias{import,missing,character,missing-method}
 \title{Import}
@@ -174,6 +174,14 @@ import(con, format, text, ...)
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 
+\S4method{import}{PipetteBcbioCountsFile,missing,missing}(
+  con,
+  format,
+  text,
+  metadata = getOption(x = "acid.import.metadata", default = FALSE),
+  quiet = getOption(x = "acid.quiet", default = FALSE)
+)
+
 \S4method{import}{PipetteRioFile,missing,missing}(
   con,
   format,
@@ -194,14 +202,6 @@ import(con, format, text, ...)
   metadata = getOption(x = "acid.import.metadata", default = FALSE),
   quiet = getOption(x = "acid.quiet", default = FALSE),
   ...
-)
-
-\S4method{import}{PipetteBcbioCountsFile,missing,missing}(
-  con,
-  format,
-  text,
-  metadata = getOption(x = "acid.import.metadata", default = FALSE),
-  quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 }
 \arguments{
@@ -396,7 +396,7 @@ arguments. Remote URLs and compressed files are supported. If you need more
 complex import settings, just call the wrapped importer directly instead.
 }
 \note{
-Updated 2023-07-12.
+Updated 2023-07-13.
 }
 \section{Row and column names}{
 
