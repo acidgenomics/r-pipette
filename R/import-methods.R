@@ -1,3 +1,8 @@
+## FIXME Need to ensure we clean up decompressed temporary files.
+## FIXME Create a new goalie isATempFile and isTempFile checks for this.
+
+
+
 #' Import
 #'
 #' Read file by extension into R.
