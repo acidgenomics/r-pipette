@@ -751,6 +751,10 @@ test_that("MAF", {
     file <- file.path("cache", "example.maf")
     object <- import(file)
     expect_s4_class(object, "MAF")
+    expect_identical(
+        object = dim(object@data),
+        expected = c(64L, 12L)
+    )
 })
 
 test_that("BAM/SAM (and CRAM)", {
