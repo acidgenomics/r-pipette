@@ -821,7 +821,12 @@ NULL
         )
         validObject(con)
         assert(is(con, "PipetteFile"))
-        import(con = con, ...)
+        out <- import(con = con, ...)
+        resource <- resource(con)
+        if (isATempFile(resource)) {
+            file.remove(resource)
+        }
+        out
     }
 
 
@@ -1772,13 +1777,12 @@ NULL
             file = paste0(origFile, ".csi"),
             quiet = quiet
         )
-        if (!isAFile(paste0(file, ".csi"))) {
-            file.copy(
-                from = indexFile,
-                to = paste0(file, ".csi"),
-                overwrite = FALSE
-            )
+        ## Ensure that a decompressed BCF file in tempdir contains index file.
+        indexFile2 <- paste0(file, ".csi")
+        if (!isAFile(indexFile2)) {
+            file.copy(from = indexFile, to = indexFile2, overwrite = FALSE)
         }
+        indexFile <- indexFile2
         args <- list("file" = file)
         what <- .getFunction(f = whatFun, pkg = whatPkg)
         object <- do.call(what = what, args = args)
@@ -1801,6 +1805,9 @@ NULL
                 )
             )
         )
+        if (isATempFile(indexFile)) {
+            file.remove(indexFile)
+        }
         object
     }
 
