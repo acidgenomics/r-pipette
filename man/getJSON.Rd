@@ -21,9 +21,28 @@ Updated 2023-07-06.
 }
 \examples{
 ## Access the UCSC Genome Browser API.
-url <- "https://api.genome.ucsc.edu/list/ucscGenomes"
+url <- pasteURL(
+    "api.genome.ucsc.edu",
+    "list",
+    "ucscGenomes",
+    protocol = "https"
+)
 json <- getJSON(url)
-names(json)
+print(names(json))
+
+## Access Ensembl genome assembly metadata.
+url <- pasteURL(
+    "rest.ensembl.org",
+    "info",
+    "assembly",
+    paste0(
+        "Homo sapiens",
+        "?", "content-type=application/json"
+    ),
+    protocol = "https"
+)
+json <- getJSON(url)
+print(names(json))
 }
 \seealso{
 \itemize{
