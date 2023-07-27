@@ -1,5 +1,11 @@
 # Release notes
 
+## pipette 0.11.1 (2023-07-27)
+
+Minor changes:
+
+- `getJSON`: Improved code coverage for parsing of Ensembl REST API.
+
 ## pipette 0.11.0 (2023-07-13)
 
 Major changes:
