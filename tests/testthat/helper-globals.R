@@ -5,6 +5,8 @@ options(
     "acid.import.engine" = NULL
 )
 
+data <- utils::data
+
 data(
     DFrame,
     GRanges,
