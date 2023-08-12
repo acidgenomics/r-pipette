@@ -1103,7 +1103,10 @@ NULL
                         "csv" = ",",
                         "tsv" = "\t"
                     ),
-                    "lazy" = TRUE,
+                    "lazy" = getOption(
+                        x = "readr.read_lazy",
+                        default = TRUE
+                    ),
                     "na" = naStrings,
                     "name_repair" = make.names,
                     "n_max" = nMax,
@@ -1506,7 +1509,10 @@ NULL
                 whatFun <- "read_lines"
                 args <- list(
                     "file" = file,
-                    "lazy" = TRUE,
+                    "lazy" = getOption(
+                        x = "readr.read_lazy",
+                        default = TRUE
+                    ),
                     "n_max" = nMax,
                     "progress" = verbose,
                     "skip" = skip,
