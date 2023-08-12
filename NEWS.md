@@ -1,5 +1,12 @@
 # Release notes
 
+## pipette 0.11.2 (2023-08-12)
+
+Minor changes:
+
+- `import`: Disabled `lazy` loading mode for readr.
+- Enabled parallel testthat unit tests.
+
 ## pipette 0.11.1 (2023-07-27)
 
 Minor changes:
