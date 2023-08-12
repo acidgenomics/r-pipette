@@ -4,7 +4,9 @@
 
 Minor changes:
 
-- `import`: Disabled `lazy` loading mode for readr.
+- `import`: Disabled `lazy` loading mode for readr. Enabling this makes it
+  basically impossible to suppress warnings when parsing malformed files, such
+  as in the `MGI` function of AcidGenomes.
 - Enabled parallel testthat unit tests.
 
 ## pipette 0.11.1 (2023-07-27)
