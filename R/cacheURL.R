@@ -1,3 +1,7 @@
+## FIXME Rework to include BiocFileCache in NAMESPACE.
+
+
+
 #' Download and cache a file using BiocFileCache
 #'
 #' @export

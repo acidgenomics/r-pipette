@@ -1,3 +1,10 @@
+## FIXME Rework to include BiocFileCache in NAMESPACE.
+## FIXME Rework to include digest in NAMESPACE.
+## FIXME Rework to include readr and data.table in NAMESPACE.
+## FIXME Rework to include rtracklayer in NAMESPACE.
+
+
+
 ## Classes =====================================================================
 
 #' @importClassesFrom BiocIO BiocFile
