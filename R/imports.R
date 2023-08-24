@@ -36,6 +36,9 @@ NULL
 #' @importFrom syntactic makeNames
 NULL
 
+#' @importMethodsFrom rtracklayer import
+NULL
+
 
 
 ## Standard functions ==========================================================
