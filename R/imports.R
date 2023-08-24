@@ -57,6 +57,7 @@ NULL
 #' isNonNegative isPositive isScalar isString isSubset requireNamespaces
 #' validNames validate
 #' @importFrom methods as is hasMethod new setGeneric signature validObject
+#' @importFrom readr read_delim write_delim
 #' @importFrom tools R_user_dir
 #' @importFrom utils packageName packageVersion
 NULL
