@@ -36,7 +36,7 @@
 #' json <- getJSON(url)
 #' print(names(json))
 getJSON <- function(url) {
-    assert(isAURL(url))
+    assert(isAnExistingURL(url))
     req <- request(url)
     resp <- req_perform(req)
     json <- resp_body_json(resp)

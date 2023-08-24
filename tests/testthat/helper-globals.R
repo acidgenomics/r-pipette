@@ -38,6 +38,7 @@ sparse <- sparseMatrix
 DataFrame <- S4Vectors::DataFrame
 GRanges <- GenomicRanges::GRanges
 hasInternet <- goalie::hasInternet
+isAnExistingURL <- goalie::isAnExistingURL
 isSubset <- goalie::isSubset
 isWindows <- goalie::isWindows
 mcols <- S4Vectors::mcols

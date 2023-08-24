@@ -40,15 +40,15 @@ NULL
 #' @importFrom Matrix readMM writeMM
 #' @importFrom data.table fread fwrite
 #' @importFrom digest digest
-#' @importFrom goalie assert allAreAtomic allAreExisting allAreFiles
-#' allAreMatchingFixed allAreMatchingRegex allAreNonExisting allAreURLs
+#' @importFrom goalie assert allAreAtomic allAreExisting allAreExistingURLs
+#' allAreFiles allAreMatchingFixed allAreMatchingRegex allAreNonExisting
 #' allHaveAccess areDisjointSets areSameLength areSetEqual bapply
 #' compressExtPattern extPattern formalCompress hasColnames hasCols hasDimnames
-#' hasDuplicates hasInternet hasLength hasNames hasNoDuplicates hasRownames
-#' hasRows hasValidNames hasValidDimnames isADir isAFile isATempFile isAURL
-#' isAny isCharacter isFlag isInstalled isInt isMatchingFixed isMatchingRegex
-#' isNonNegative isPositive isScalar isString isSubset requireNamespaces
-#' validNames validate
+#' hasDuplicates hasLength hasNames hasNoDuplicates hasRownames hasRows
+#' hasValidNames hasValidDimnames isADir isAFile isATempFile isAURL
+#' isAnExistingURL isAny isCharacter isFlag isInstalled isInt isMatchingFixed
+#' isMatchingRegex isNonNegative isPositive isScalar isString isSubset
+#' requireNamespaces validNames validate
 #' @importFrom httr2 req_perform request resp_body_json
 #' @importFrom jsonlite read_json
 #' @importFrom methods as is hasMethod new setGeneric signature validObject

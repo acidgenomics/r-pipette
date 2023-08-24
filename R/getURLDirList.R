@@ -2,7 +2,7 @@
 #'
 #' @export
 #' @note Best served using FTP instead of HTTP.
-#' @note Updated 2023-06-29.
+#' @note Updated 2023-08-24.
 #'
 #' @inheritParams AcidRoxygen::params
 #'
@@ -15,14 +15,14 @@
 #'
 #' @examples
 #' url <- "ftp://ftp.ncbi.nlm.nih.gov/genomes/"
-#' if (goalie::hasInternet(url)) {
+#' if (goalie::isAnExistingURL(url)) {
 #'     x <- getURLDirList(url)
 #'     tail(x)
 #' }
 getURLDirList <- function(url, pattern = NULL) {
     assert(
         requireNamespaces("RCurl"),
-        isAURL(url),
+        isAnExistingURL(url),
         isString(pattern, nullOK = TRUE)
     )
     if (!isMatchingRegex(pattern = "/$", x = url)) {

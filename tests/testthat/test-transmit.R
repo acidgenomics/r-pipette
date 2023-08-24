@@ -1,6 +1,6 @@
 ## Note that only FTP is currently supported.
 remoteDir <- "ftp://ftp.ncbi.nlm.nih.gov/genomes/"
-skip_if_not(hasInternet(remoteDir))
+skip_if_not(isAnExistingURL(remoteDir))
 
 test_that("Get README file", {
     tempdir <- tempdir2()

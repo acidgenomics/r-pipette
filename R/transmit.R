@@ -50,8 +50,7 @@ transmit <-
              download = TRUE) {
         assert(
             requireNamespaces("RCurl"),
-            hasInternet(),
-            isString(remoteDir),
+            isAnExistingURL(remoteDir),
             allAreMatchingRegex(x = remoteDir, pattern = "^ftp\\://"),
             isString(pattern, nullOK = TRUE),
             isAny(rename, classes = c("character", "NULL")),
