@@ -1,5 +1,4 @@
 ## FIXME Need to import from these packages:
-## BiocFileCache
 ## data.table
 ## digest
 ## httr2
@@ -47,6 +46,7 @@ NULL
 #' toInlineString
 #' @importFrom BiocFileCache BiocFileCache
 #' @importFrom Matrix readMM writeMM
+#' @importFrom data.table fread fwrite
 #' @importFrom goalie assert allAreAtomic allAreExisting allAreFiles
 #' allAreMatchingFixed allAreMatchingRegex allAreNonExisting allAreURLs
 #' allHaveAccess areDisjointSets areSameLength areSetEqual bapply
