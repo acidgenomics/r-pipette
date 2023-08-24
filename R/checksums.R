@@ -1,9 +1,12 @@
 #' Generate checksum from file
 #'
 #' @name checksums
-#' @note Updated 2021-04-27.
+#' @note Updated 2023-08-24.
 #'
 #' @inheritParams AcidRoxygen::params
+#'
+#' @seealso
+#' - `digest::digest`.
 #'
 #' @examples
 #' file <- system.file("extdata/example.csv", package = "pipette")
@@ -13,17 +16,15 @@ NULL
 
 
 
-## Updated 2021-04-27.
+## Updated 2023-08-24.
 .digest <-
     function(file,
              algo = c("md5", "sha256")) {
-        assert(
-            requireNamespaces("digest"),
-            isAFile(file)
-        )
-        x <- digest::digest(
+        assert(isAFile(file))
+        algo <- match.arg(algo)
+        x <- digest(
             object = file,
-            algo = match.arg(algo),
+            algo = algo,
             file = TRUE
         )
         assert(isString(x))
