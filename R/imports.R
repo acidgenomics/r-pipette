@@ -1,7 +1,12 @@
-## FIXME Rework to include BiocFileCache in NAMESPACE.
-## FIXME Rework to include digest in NAMESPACE.
-## FIXME Rework to include readr and data.table in NAMESPACE.
-## FIXME Rework to include rtracklayer in NAMESPACE.
+## FIXME Need to import from these packages:
+## BiocFileCache
+## data.table
+## digest
+## httr2
+## jsonlite
+## readr
+## rtracklayer
+## yaml
 
 
 
@@ -21,6 +26,8 @@ NULL
 #' @importFrom AcidGenerics as.DataFrame atomize droplevels2 encode factorize
 #' matchRownameColumn metadata2 metadata2<- removeNA sanitizeNA
 #' sanitizePercent
+#' @importFrom BiocFileCache bfcadd bfccache bfcdownload bfcneedsupdate bfcquery
+#' bfcrpath
 #' @importFrom BiocGenerics anyDuplicated as.data.frame do.call end lapply start
 #' strand which width
 #' @importFrom BiocIO export import resource
@@ -38,6 +45,7 @@ NULL
 #' fileExt initDir methodFunction pasteURL realpath standardizeCall tempdir2
 #' @importFrom AcidCLI abort alert alertInfo alertSuccess alertWarning
 #' toInlineString
+#' @importFrom BiocFileCache BiocFileCache
 #' @importFrom Matrix readMM writeMM
 #' @importFrom goalie assert allAreAtomic allAreExisting allAreFiles
 #' allAreMatchingFixed allAreMatchingRegex allAreNonExisting allAreURLs
@@ -49,5 +57,6 @@ NULL
 #' isNonNegative isPositive isScalar isString isSubset requireNamespaces
 #' validNames validate
 #' @importFrom methods as is hasMethod new setGeneric signature validObject
+#' @importFrom tools R_user_dir
 #' @importFrom utils packageName packageVersion
 NULL

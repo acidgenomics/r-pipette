@@ -37,7 +37,7 @@ Cached file path on disk.
 Download and cache a file using BiocFileCache
 }
 \note{
-Updated 2021-05-18.
+Updated 2023-08-24.
 }
 \examples{
 url <- AcidBase::pasteURL(
