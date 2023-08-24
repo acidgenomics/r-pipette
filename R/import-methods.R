@@ -545,7 +545,7 @@ NULL
             no = paste0(".", fileExt)
         )
         if (isAURL(file)) {
-            assert(hasInternet())
+            assert(isAnExistingURL(file))
             url <- file
             file <- tempfile(
                 pattern = tmpPrefix,

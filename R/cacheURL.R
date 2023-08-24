@@ -36,8 +36,7 @@ cacheURL <-
              ask = FALSE,
              verbose = TRUE) {
         assert(
-            hasInternet(),
-            isAURL(url),
+            isAnExistingURL(url),
             isString(pkg),
             isFlag(update),
             isFlag(ask),

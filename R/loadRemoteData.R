@@ -30,8 +30,7 @@ loadRemoteData <-
                  default = TRUE
              )) {
         assert(
-            hasInternet(),
-            allAreURLs(url),
+            allAreExistingURLs(url),
             is.environment(envir),
             isFlag(overwrite)
         )
