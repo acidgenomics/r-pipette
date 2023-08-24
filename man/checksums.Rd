@@ -18,10 +18,15 @@ File path.}
 Generate checksum from file
 }
 \note{
-Updated 2021-04-27.
+Updated 2023-08-24.
 }
 \examples{
 file <- system.file("extdata/example.csv", package = "pipette")
 md5(file)
 sha256(file)
+}
+\seealso{
+\itemize{
+\item \code{digest::digest}.
+}
 }
