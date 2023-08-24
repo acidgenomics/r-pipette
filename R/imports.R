@@ -50,6 +50,7 @@ NULL
 #' @importFrom BiocFileCache BiocFileCache
 #' @importFrom Matrix readMM writeMM
 #' @importFrom data.table fread fwrite
+#' @importFrom digest digest
 #' @importFrom goalie assert allAreAtomic allAreExisting allAreFiles
 #' allAreMatchingFixed allAreMatchingRegex allAreNonExisting allAreURLs
 #' allHaveAccess areDisjointSets areSameLength areSetEqual bapply
