@@ -17,7 +17,7 @@ Uniform Resource Locator (URL).}
 Get JSON from an API
 }
 \note{
-Updated 2023-07-06.
+Updated 2023-08-24.
 }
 \examples{
 ## Access the UCSC Genome Browser API.
@@ -46,6 +46,7 @@ print(names(json))
 }
 \seealso{
 \itemize{
-\item httr2 package.
+\item httr2 package. Refer specifically to the \code{request}, \code{req_perform}, and
+\code{resp_body_json} function documentation.
 }
 }
