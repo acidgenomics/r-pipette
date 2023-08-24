@@ -1,14 +1,3 @@
-## FIXME Need to import from these packages:
-## data.table
-## digest
-## httr2
-## jsonlite
-## readr
-## rtracklayer
-## yaml
-
-
-
 ## Classes =====================================================================
 
 #' @importClassesFrom BiocIO BiocFile
@@ -60,8 +49,11 @@ NULL
 #' isAny isCharacter isFlag isInstalled isInt isMatchingFixed isMatchingRegex
 #' isNonNegative isPositive isScalar isString isSubset requireNamespaces
 #' validNames validate
+#' @importFrom httr2 req_perform request resp_body_json
+#' @importFrom jsonlite read_json
 #' @importFrom methods as is hasMethod new setGeneric signature validObject
 #' @importFrom readr read_delim write_delim
 #' @importFrom tools R_user_dir
 #' @importFrom utils packageName packageVersion
+#' @importFrom yaml yaml.load_file
 NULL
