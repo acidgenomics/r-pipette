@@ -1,14 +1,15 @@
 #' Get JSON from an API
 #'
 #' @export
-#' @note Updated 2023-07-06.
+#' @note Updated 2023-08-24.
 #'
 #' @inheritParams AcidRoxygen::params
 #'
 #' @return `list`.
 #'
 #' @seealso
-#' - httr2 package.
+#' - httr2 package. Refer specifically to the `request`, `req_perform`, and
+#' `resp_body_json` function documentation.
 #'
 #' @examples
 #' ## Access the UCSC Genome Browser API.
@@ -35,13 +36,10 @@
 #' json <- getJSON(url)
 #' print(names(json))
 getJSON <- function(url) {
-    assert(
-        requireNamespaces("httr2"),
-        isAURL(url)
-    )
-    req <- httr2::request(url)
-    resp <- httr2::req_perform(req)
-    json <- httr2::resp_body_json(resp)
+    assert(isAURL(url))
+    req <- request(url)
+    resp <- req_perform(req)
+    json <- resp_body_json(resp)
     assert(is.list(json))
     json
 }
