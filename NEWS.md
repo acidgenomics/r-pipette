@@ -1,5 +1,27 @@
 # Release notes
 
+## pipette 0.12.0 (2023-08-25)
+
+Major changes:
+
+- Migrated a number of dependency packages from `Suggests` to `Imports`
+  (see `DESCRIPTION` and `IMPORTS` files) to avoid issues with missing
+  dependencies in some commonly used Acid Genomics software. Here we are now
+  requiring BiocFileCache, data.table, digest, httr2, jsonlite, readr,
+  rtracklayer, and yaml as standard packages in pipette, so that they get
+  automatically installed. This change only applies when managing dependencies
+  using R directly and doesn't affect bioconda recipes.
+- Hardened some internal assert checks using `isAnExistingURL` instead of
+  simply `isAURL`. This new function available in the goalie package actively
+  checks to see if the URL exists and is active. Note that for FTP directories,
+  such as with the `transmit` function, the `isAnExistingURL` check only works
+  if there is a trailing slash.
+
+Minor changes:
+
+- Disabled examples using the Ensembl REST API server (`"rest.ensembl.org"`),
+  as this has recently been flaky and can cause build checks to time out.
+
 ## pipette 0.11.2 (2023-08-12)
 
 Minor changes:
