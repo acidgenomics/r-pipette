@@ -4,7 +4,7 @@
 #' FTP server. Also enables on-the-fly file renaming and compression.
 #'
 #' @export
-#' @note Updated 2023-06-29.
+#' @note Updated 2023-08-25.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @inheritParams saveData
@@ -50,17 +50,19 @@ transmit <-
              download = TRUE) {
         assert(
             requireNamespaces("RCurl"),
-            isAnExistingURL(remoteDir),
-            allAreMatchingRegex(x = remoteDir, pattern = "^ftp\\://"),
+            ## We check that the URL exists after we add trailing slash below.
+            isAURL(remoteDir),
+            isMatchingRegex(x = remoteDir, pattern = "^ftp\\://"),
             isString(pattern, nullOK = TRUE),
             isAny(rename, classes = c("character", "NULL")),
             isFlag(compress),
             isFlag(download)
         )
-        ## `RCurl::getURL()` requires a trailing slash.
         if (!isMatchingRegex(pattern = "/$", x = remoteDir)) {
-            remoteDir <- paste0(remoteDir, "/") # nocov
+            remoteDir <- paste0(remoteDir, "/")
         }
+        ## Both `isAnExistingURL` and `getURL` require trailing slash.
+        assert(isAnExistingURL(remoteDir))
         if (isTRUE(download)) {
             localDir <- initDir(localDir)
         }
