@@ -1,7 +1,7 @@
 #' Get JSON from an API
 #'
 #' @export
-#' @note Updated 2023-08-24.
+#' @note Updated 2023-08-25.
 #'
 #' @inheritParams AcidRoxygen::params
 #'
@@ -19,8 +19,10 @@
 #'     "ucscGenomes",
 #'     protocol = "https"
 #' )
-#' json <- getJSON(url)
-#' print(names(json))
+#' if (goalie::isAnExistingURL(url)) {
+#'     json <- getJSON(url)
+#'     print(names(json))
+#' }
 #'
 #' ## Access Ensembl genome assembly metadata.
 #' url <- pasteURL(
@@ -33,8 +35,10 @@
 #'     ),
 #'     protocol = "https"
 #' )
-#' json <- getJSON(url)
-#' print(names(json))
+#' if (goalie::isAnExistingURL(url)) {
+#'     json <- getJSON(url)
+#'     print(names(json))
+#' }
 getJSON <- function(url) {
     assert(isAnExistingURL(url))
     req <- request(url)
