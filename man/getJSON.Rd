@@ -17,7 +17,7 @@ Uniform Resource Locator (URL).}
 Get JSON from an API
 }
 \note{
-Updated 2023-08-24.
+Updated 2023-08-25.
 }
 \examples{
 ## Access the UCSC Genome Browser API.
@@ -27,8 +27,10 @@ url <- pasteURL(
     "ucscGenomes",
     protocol = "https"
 )
-json <- getJSON(url)
-print(names(json))
+if (goalie::isAnExistingURL(url)) {
+    json <- getJSON(url)
+    print(names(json))
+}
 
 ## Access Ensembl genome assembly metadata.
 url <- pasteURL(
@@ -41,8 +43,10 @@ url <- pasteURL(
     ),
     protocol = "https"
 )
-json <- getJSON(url)
-print(names(json))
+if (goalie::isAnExistingURL(url)) {
+    json <- getJSON(url)
+    print(names(json))
+}
 }
 \seealso{
 \itemize{
