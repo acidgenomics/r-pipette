@@ -5,7 +5,7 @@ test_that("UCSC Genome Browser API", {
         "ucscGenomes",
         protocol = "https"
     )
-    skip_if_not_true(isAnExistingURL(url))
+    skip_if_not(isAnExistingURL(url))
     json <- getJSON(url)
     expect_type(json, "list")
 })
@@ -24,7 +24,7 @@ test_that("UCSC Genome Browser API", {
 ## >         ),
 ## >         protocol = "https"
 ## >     )
-## >     skip_if_not_true(isAnExistingURL(url))
+## >     skip_if_not(isAnExistingURL(url))
 ## >     json <- getJSON(url)
 ## >     expect_type(json, "list")
 ## > })
