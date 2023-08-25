@@ -33,20 +33,22 @@ if (goalie::isAnExistingURL(url)) {
 }
 
 ## Access Ensembl genome assembly metadata.
-url <- pasteURL(
-    "rest.ensembl.org",
-    "info",
-    "assembly",
-    paste0(
-        "Homo sapiens",
-        "?", "content-type=application/json"
-    ),
-    protocol = "https"
-)
-if (goalie::isAnExistingURL(url)) {
-    json <- getJSON(url)
-    print(names(json))
-}
+## The Ensembl REST API server is prone to connection issues, so keeping
+## disabled here in the working example.
+## > url <- pasteURL(
+## >     "rest.ensembl.org",
+## >     "info",
+## >     "assembly",
+## >     paste0(
+## >         "Homo sapiens",
+## >         "?", "content-type=application/json"
+## >     ),
+## >     protocol = "https"
+## > )
+## > if (goalie::isAnExistingURL(url)) {
+## >     json <- getJSON(url)
+## >     print(names(json))
+## > }
 }
 \seealso{
 \itemize{
