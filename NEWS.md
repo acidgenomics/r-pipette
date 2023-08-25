@@ -21,6 +21,7 @@ Minor changes:
 
 - Disabled examples using the Ensembl REST API server (`"rest.ensembl.org"`),
   as this has recently been flaky and can cause build checks to time out.
+- Miscellaneous unit test fixes, now using `isAnExistingURL` to check.
 
 ## pipette 0.11.2 (2023-08-12)
 
