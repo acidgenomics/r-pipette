@@ -33,9 +33,10 @@ test_that("Overwrite mode", {
 })
 
 test_that("Invalid arguments", {
-    url <- paste(pipetteTestsURL, "mmusculus.gtf", sep = "/")
     expect_error(
-        object = loadRemoteData(url),
+        object = loadRemoteData(
+            url = paste(pipetteTestsURL, "example.csv", sep = "/")
+        ),
         regexp = "rds"
     )
     expect_error(
