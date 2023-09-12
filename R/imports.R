@@ -33,7 +33,8 @@ NULL
 ## Standard functions ==========================================================
 
 #' @importFrom AcidBase basenameSansExt compress decompress dots download
-#' fileExt initDir methodFunction pasteURL realpath standardizeCall tempdir2
+#' fileExt initDir methodFunction pasteURL realpath simpleClass standardizeCall
+#' tempdir2
 #' @importFrom AcidCLI abort alert alertInfo alertSuccess alertWarning
 #' toInlineString
 #' @importFrom BiocFileCache BiocFileCache
