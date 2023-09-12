@@ -24,7 +24,7 @@ Modified object.
 Drop factor levels
 }
 \note{
-Updated 2023-03-01.
+Updated 2023-09-12.
 }
 \examples{
 data(GRanges, package = "AcidTest")
