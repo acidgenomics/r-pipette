@@ -1,5 +1,12 @@
 # Release notes
 
+## pipette 0.12.1 (2023-09-12)
+
+Minor changes:
+
+- `as.DataFrame`: Fixed support for nesting of `DFrame` objects.
+- `droplevels2`: Ensure that original class and object metadata are preserved.
+
 ## pipette 0.12.0 (2023-08-25)
 
 Major changes:
