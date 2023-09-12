@@ -37,8 +37,8 @@ NULL
         lst <- droplevels(x = lst, except = except)
         out <- as.DataFrame(lst)
         rownames(out) <- rownames(x)
-        out <- as(out, Class = simpleClass(x))
         metadata(out) <- metadata(x)
+        out <- as(out, Class = simpleClass(x))
         out
     }
 
