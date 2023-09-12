@@ -1,5 +1,3 @@
-## S4 generics =================================================================
-
 #' @rdname as.DataFrame
 #' @name as.DataFrame
 #' @export
