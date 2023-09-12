@@ -1,6 +1,6 @@
 #' @name as.DataFrame
 #' @inherit AcidGenerics::as.DataFrame
-#' @note Updated 2023-02-22.
+#' @note Updated 2023-09-12.
 #'
 #' @param ... Additional arguments.
 #'
@@ -28,39 +28,66 @@ NULL
 
 
 
-## Updated 2023-02-22.
+## Updated 2023-09-12.
 `as.DataFrame,list` <- # nolint
     function(x) { # nolint
         if (!hasLength(x)) {
             return(DataFrame())
         }
+        if (!is.null(dim(x[[1L]]))) {
+            nrows <- nrow(x[[1L]])
+            rn <- rownames(x[[1L]])
+        } else {
+            nrows <- length(x[[1L]])
+            rn <- names(x[[1L]])
+        }
+        ncols <- length(x)
         assert(
             all(bapply(
                 X = x,
                 FUN = function(x, y) {
-                    identical(length(x), y)
+                    if (!is.null(dim(x))) {
+                        x <- nrow(x)
+                    } else {
+                        x <- length(x)
+                    }
+                    identical(x, y)
                 },
-                y = length(x[[1L]])
+                y = nrows
             )),
             msg = "List elements contain variable lengths."
         )
         if (!hasNames(x)) {
             names(x) <- paste0("X", seq_along(x))
         }
-        ncols <- length(x)
-        nrows <- length(x[[1L]])
-        rn <- names(x[[1L]])
         ## Dynamically reorder list elements only when all named.
-        if (!is.null(rn) && all(bapply(X = x, FUN = hasNames))) {
-            x <- lapply(
+        if (!is.null(rn)) {
+            hasRn <- bapply(
                 X = x,
-                FUN = function(x, rn) {
-                    x <- x[rn]
-                    x <- unname(x)
-                    x
-                },
-                rn = rn
+                FUN = function(x) {
+                    if (!is.null(dim(x))) {
+                        hasRownames(x)
+                    } else {
+                        hasNames(x)
+                    }
+                }
             )
+            if (all(hasRn)) {
+                x <- lapply(
+                    X = x,
+                    FUN = function(x, rn) {
+                        if (!is.null(dim(x))) {
+                            x <- x[rn, , drop = FALSE]
+                            rownames(x) <- NULL
+                        } else {
+                            x <- x[rn]
+                            x <- unname(x)
+                        }
+                        x
+                    },
+                    rn = rn
+                )
+            }
         }
         df <- new(Class = "DFrame", listData = x, nrows = nrows)
         rownames(df) <- rn
@@ -73,6 +100,8 @@ NULL
         )
         df
     }
+
+
 
 ## Updated 2022-02-08.
 `as.DataFrame,matrix` <- # nolint
@@ -90,6 +119,8 @@ NULL
         to
     }
 
+
+
 ## Updated 2023-04-26.
 `as.DataFrame,GRanges` <- # nolint
     function(x) {
@@ -104,6 +135,8 @@ NULL
         )
     }
 
+
+
 ## Updated 2023-04-26.
 `as.DataFrame,IRanges` <- # nolint
     function(x) {
@@ -116,11 +149,15 @@ NULL
         )
     }
 
+
+
 ## Updated 2022-02-08.
 `as.DataFrame,Matrix` <- # nolint
     function(x) {
         as.DataFrame(as.matrix(x))
     }
+
+
 
 ## Updated 2022-03-22.
 `as.DataFrame,SimpleList` <- # nolint
@@ -128,9 +165,13 @@ NULL
         as.DataFrame(as.list(x))
     }
 
+
+
 ## Updated 2022-02-08.
 `as.DataFrame,data.frame` <- # nolint
     `as.DataFrame,matrix`
+
+
 
 ## Updated 2022-02-08.
 `as.DataFrame,matrix` <- # nolint
