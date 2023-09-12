@@ -25,13 +25,13 @@ NULL
 
 
 
-## Updated 2023-04-26.
+## Updated 2023-09-12.
 `decode,DFrame` <- # nolint
     function(x) {
         if (!(hasCols(x) && hasRows(x))) {
             return(x)
         }
-        list <- lapply(
+        lst <- lapply(
             X = x,
             FUN = function(x) {
                 x <- unname(x)
@@ -44,7 +44,7 @@ NULL
                 x
             }
         )
-        out <- as.DataFrame(list)
+        out <- as.DataFrame(lst)
         rownames(out) <- rownames(x)
         metadata(out) <- metadata(x)
         out
