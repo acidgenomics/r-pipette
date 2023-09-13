@@ -1,5 +1,12 @@
 # Release notes
 
+## pipette 0.12.2 (2023-09-13)
+
+Minor changes:
+
+- `getURLDirList`: Need to move `isAnExistingURL` assert check down, to not
+  break Ensembl FTP server checks in AcidGenomes `makeGRangesFromEnsembl`.
+
 ## pipette 0.12.1 (2023-09-12)
 
 Minor changes:
