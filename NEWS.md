@@ -10,6 +10,8 @@ Major changes:
   data.table, digest, httr2, readr, and rtracklayer to be installed. This
   helps speed up attachment of the package, where it is most commonly used to
   simply import and export CSV files as the primary utility.
+- These package changes will not affect the bioconda recipe, as all optional
+  dependencies are bundled with the recipe.
 
 ## pipette 0.12.2 (2023-09-13)
 
