@@ -47,7 +47,6 @@ NULL
 #' isAnExistingURL isAny isCharacter isFlag isInstalled isInt isMatchingFixed
 #' isMatchingRegex isNonNegative isPositive isScalar isString isSubset
 #' requireNamespaces validNames validate
-#' @importFrom httr2 req_perform request resp_body_json
 #' @importFrom jsonlite read_json
 #' @importFrom methods as is hasMethod new setGeneric signature validObject
 #' @importFrom tools R_user_dir
