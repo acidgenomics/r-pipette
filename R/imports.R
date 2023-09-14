@@ -36,7 +36,6 @@ NULL
 #' toInlineString
 #' @importFrom BiocFileCache BiocFileCache
 #' @importFrom Matrix readMM writeMM
-#' @importFrom data.table fread fwrite
 #' @importFrom digest digest
 #' @importFrom goalie assert allAreAtomic allAreExisting allAreExistingURLs
 #' allAreFiles allAreMatchingFixed allAreMatchingRegex allAreNonExisting
