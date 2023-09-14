@@ -1,5 +1,16 @@
 # Release notes
 
+## Pipette 0.12.3 (2023-09-14)
+
+Major changes:
+
+- After inspecting the package with `packageDependencies` from AcidDevTools,
+  decided to revert the changes introduced in 0.12.0 back to making more heavy
+  dependencies optional. We are now no longer requiring BiocFileCache,
+  data.table, digest, httr2, readr, and rtracklayer to be installed. This
+  helps speed up attachment of the package, where it is most commonly used to
+  simply import and export CSV files as the primary utility.
+
 ## pipette 0.12.2 (2023-09-13)
 
 Minor changes:
