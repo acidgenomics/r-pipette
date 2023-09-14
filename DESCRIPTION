@@ -1,7 +1,7 @@
 Package: pipette
 Title: Pipette Biological Data In and Out of R
 Description: Input/output functions for biological data formats.
-Version: 0.12.3.9000
+Version: 0.12.3
 Date: 2023-09-14
 Authors@R: c(
     person(
@@ -31,13 +31,11 @@ Imports:
     IRanges (>= 2.34.0),
     Matrix (>= 1.6.1),
     S4Vectors (>= 0.38.0),
-    digest (>= 0.6.33),
     goalie (>= 0.6.15),
     jsonlite (>= 1.8.7),
     syntactic (>= 0.6.6),
     yaml (>= 2.3.7),
     methods,
-    tools,
     utils
 Suggests:
     AcidTest (>= 0.7.2),
@@ -46,6 +44,7 @@ Suggests:
     RCurl (>= 1.98),
     Rsamtools (>= 2.16.0),
     data.table (>= 1.14.8),
+    digest (>= 0.6.33),
     httr2 (>= 0.2.3),
     maftools (>= 2.16.0),
     ontologyIndex (>= 2.11),
@@ -56,7 +55,8 @@ Suggests:
     rtracklayer (>= 1.60.0),
     stringi (>= 1.7.12),
     testthat (>= 3.1.10),
-    tibble (>= 3.2.1)
+    tibble (>= 3.2.1),
+    tools
 Additional_repositories: https://r.acidgenomics.com
 Config/testthat/edition: 3
 Config/testthat/parallel: true

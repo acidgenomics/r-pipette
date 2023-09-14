@@ -17,8 +17,11 @@ File path.}
 \description{
 Generate checksum from file
 }
+\details{
+Requires digest package to be installed.
+}
 \note{
-Updated 2023-08-24.
+Updated 2023-09-14.
 }
 \examples{
 file <- system.file("extdata/example.csv", package = "pipette")

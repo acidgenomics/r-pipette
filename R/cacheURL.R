@@ -1,7 +1,10 @@
-#' Download and cache a file using BiocFileCache
+#' Download and cache a file
 #'
 #' @export
 #' @note Updated 2023-09-14.
+#'
+#' @details
+#' Requires BiocFileCache and tools packages to be installed.
 #'
 #' @inheritParams AcidRoxygen::params
 #'
@@ -96,11 +99,11 @@ cacheURL <-
 #' - `rappdirs::user_cache_dir()`.
 .biocPackageCache <- function(pkg, ask) {
     assert(
-        requireNamespaces("BiocFileCache"),
+        requireNamespaces(c("BiocFileCache", "tools")),
         isString(pkg),
         isFlag(ask)
     )
-    cache <- R_user_dir(package = pkg, which = "cache")
+    cache <- tools::R_user_dir(package = pkg, which = "cache")
     bfc <- BiocFileCache::BiocFileCache(cache = cache, ask = ask)
     bfc
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/cacheURL.R
 \name{cacheURL}
 \alias{cacheURL}
-\title{Download and cache a file using BiocFileCache}
+\title{Download and cache a file}
 \usage{
 cacheURL(
   url,
@@ -34,7 +34,10 @@ Run the function with verbose output.}
 Cached file path on disk.
 }
 \description{
-Download and cache a file using BiocFileCache
+Download and cache a file
+}
+\details{
+Requires BiocFileCache and tools packages to be installed.
 }
 \note{
 Updated 2023-09-14.

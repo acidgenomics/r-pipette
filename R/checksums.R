@@ -1,7 +1,10 @@
 #' Generate checksum from file
 #'
 #' @name checksums
-#' @note Updated 2023-08-24.
+#' @note Updated 2023-09-14.
+#'
+#' @details
+#' Requires digest package to be installed.
 #'
 #' @inheritParams AcidRoxygen::params
 #'
@@ -20,9 +23,12 @@ NULL
 .digest <-
     function(file,
              algo = c("md5", "sha256")) {
-        assert(isAFile(file))
+        assert(
+            requireNamespaces("digest"),
+            isAFile(file)
+        )
         algo <- match.arg(algo)
-        x <- digest(
+        x <- digest::digest(
             object = file,
             algo = algo,
             file = TRUE

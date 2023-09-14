@@ -4,7 +4,10 @@
 #' FTP server. Also enables on-the-fly file renaming and compression.
 #'
 #' @export
-#' @note Updated 2023-08-25.
+#' @note Updated 2023-09-14.
+#'
+#' @details
+#' Requires RCurl package to be installed.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @inheritParams saveData
