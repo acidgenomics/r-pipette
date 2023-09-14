@@ -16,6 +16,9 @@ Uniform Resource Locator (URL).}
 \description{
 Get JSON from an API
 }
+\details{
+Requires httr2 package to be installed.
+}
 \note{
 Updated 2023-09-14.
 }
@@ -49,10 +52,4 @@ if (goalie::isAnExistingURL(url)) {
 ## >     json <- getJSON(url)
 ## >     print(names(json))
 ## > }
-}
-\seealso{
-\itemize{
-\item httr2 package. Refer specifically to the \code{request}, \code{req_perform}, and
-\code{resp_body_json} function documentation.
-}
 }

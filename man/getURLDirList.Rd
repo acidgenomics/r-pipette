@@ -21,6 +21,9 @@ Simple directory contents return, including both files and subdirectories.
 \description{
 Get remote URL directory listing
 }
+\details{
+Requires RCurl package to be installed.
+}
 \note{
 Best served using FTP instead of HTTP.
 

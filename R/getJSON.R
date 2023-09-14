@@ -3,13 +3,12 @@
 #' @export
 #' @note Updated 2023-09-14.
 #'
+#' @details
+#' Requires httr2 package to be installed.
+#'
 #' @inheritParams AcidRoxygen::params
 #'
 #' @return `list`.
-#'
-#' @seealso
-#' - httr2 package. Refer specifically to the `request`, `req_perform`, and
-#' `resp_body_json` function documentation.
 #'
 #' @examples
 #' ## Access the UCSC Genome Browser API.

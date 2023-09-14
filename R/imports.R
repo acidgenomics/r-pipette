@@ -32,9 +32,7 @@ NULL
 #' tempdir2
 #' @importFrom AcidCLI abort alert alertInfo alertSuccess alertWarning
 #' toInlineString
-#' @importFrom BiocFileCache BiocFileCache
 #' @importFrom Matrix readMM writeMM
-#' @importFrom digest digest
 #' @importFrom goalie assert allAreAtomic allAreExisting allAreExistingURLs
 #' allAreFiles allAreMatchingFixed allAreMatchingRegex allAreNonExisting
 #' allHaveAccess areDisjointSets areSameLength areSetEqual bapply
@@ -46,7 +44,6 @@ NULL
 #' requireNamespaces validNames validate
 #' @importFrom jsonlite read_json
 #' @importFrom methods as is hasMethod new setGeneric signature validObject
-#' @importFrom tools R_user_dir
 #' @importFrom utils packageName packageVersion
 #' @importFrom yaml yaml.load_file
 NULL
