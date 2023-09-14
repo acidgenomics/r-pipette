@@ -39,7 +39,7 @@ as.DataFrame(x, ...)
 Coerce object to S4 DataFrame
 }
 \note{
-Updated 2023-02-22.
+Updated 2023-09-12.
 }
 \examples{
 data(GRanges, sparseMatrix, package = "AcidTest")

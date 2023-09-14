@@ -25,9 +25,6 @@ NULL
 #' @importFrom syntactic makeNames
 NULL
 
-#' @importMethodsFrom rtracklayer import
-NULL
-
 
 
 ## Standard functions ==========================================================
@@ -53,7 +50,6 @@ NULL
 #' @importFrom httr2 req_perform request resp_body_json
 #' @importFrom jsonlite read_json
 #' @importFrom methods as is hasMethod new setGeneric signature validObject
-#' @importFrom readr read_delim write_delim
 #' @importFrom tools R_user_dir
 #' @importFrom utils packageName packageVersion
 #' @importFrom yaml yaml.load_file
