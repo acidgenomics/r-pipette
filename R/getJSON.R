@@ -1,7 +1,7 @@
 #' Get JSON from an API
 #'
 #' @export
-#' @note Updated 2023-08-25.
+#' @note Updated 2023-09-14.
 #'
 #' @inheritParams AcidRoxygen::params
 #'
@@ -42,10 +42,13 @@
 #' ## >     print(names(json))
 #' ## > }
 getJSON <- function(url) {
-    assert(isAnExistingURL(url))
-    req <- request(url)
-    resp <- req_perform(req)
-    json <- resp_body_json(resp)
+    assert(
+        requireNamespaces("httr2"),
+        isAnExistingURL(url)
+    )
+    req <- httr2::request(url)
+    resp <- httr2::req_perform(req)
+    json <- httr2::resp_body_json(resp)
     assert(is.list(json))
     json
 }

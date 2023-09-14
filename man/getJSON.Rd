@@ -17,7 +17,7 @@ Uniform Resource Locator (URL).}
 Get JSON from an API
 }
 \note{
-Updated 2023-08-25.
+Updated 2023-09-14.
 }
 \examples{
 ## Access the UCSC Genome Browser API.
