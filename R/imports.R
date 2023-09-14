@@ -14,8 +14,6 @@ NULL
 #' @importFrom AcidGenerics as.DataFrame atomize droplevels2 encode factorize
 #' matchRownameColumn metadata2 metadata2<- removeNA sanitizeNA
 #' sanitizePercent
-#' @importFrom BiocFileCache bfcadd bfccache bfcdownload bfcneedsupdate bfcquery
-#' bfcrpath
 #' @importFrom BiocGenerics anyDuplicated as.data.frame do.call end lapply start
 #' strand which width
 #' @importFrom BiocIO export import resource

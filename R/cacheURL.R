@@ -1,7 +1,7 @@
 #' Download and cache a file using BiocFileCache
 #'
 #' @export
-#' @note Updated 2023-08-24.
+#' @note Updated 2023-09-14.
 #'
 #' @inheritParams AcidRoxygen::params
 #'
@@ -36,6 +36,7 @@ cacheURL <-
              ask = FALSE,
              verbose = TRUE) {
         assert(
+            requireNamespaces("BiocFileCache"),
             isAnExistingURL(url),
             isString(pkg),
             isFlag(update),
@@ -43,7 +44,7 @@ cacheURL <-
             isFlag(verbose)
         )
         bfc <- .biocPackageCache(pkg = pkg, ask = ask)
-        query <- bfcquery(
+        query <- BiocFileCache::bfcquery(
             x = bfc,
             query = url,
             field = "fpath",
@@ -55,10 +56,11 @@ cacheURL <-
             if (isTRUE(verbose)) {
                 alert(sprintf(
                     "Caching URL at {.url %s} into {.path %s}.",
-                    url, bfccache(bfc)
+                    url,
+                    BiocFileCache::bfccache(bfc)
                 ))
             }
-            add <- bfcadd(
+            add <- BiocFileCache::bfcadd(
                 x = bfc,
                 rname = basename(url),
                 fpath = url,
@@ -69,13 +71,13 @@ cacheURL <-
         }
         if (isTRUE(update)) {
             ## Note that some servers will return NA here, which isn't helpful.
-            up <- bfcneedsupdate(x = bfc, rids = rid)
+            up <- BiocFileCache::bfcneedsupdate(x = bfc, rids = rid)
             if (isTRUE(up)) {
-                bfcdownload(x = bfc, rid = rid, ask = ask)
+                BiocFileCache::bfcdownload(x = bfc, rid = rid, ask = ask)
             }
         }
         ## nocov end
-        rpath <- bfcrpath(x = bfc, rids = rid)
+        rpath <- BiocFileCache::bfcrpath(x = bfc, rids = rid)
         assert(isAFile(rpath))
         out <- unname(rpath)
         out
@@ -85,7 +87,7 @@ cacheURL <-
 
 #' Prepare BiocFileCache for package
 #'
-#' @note Updated 2023-08-24.
+#' @note Updated 2023-09-14.
 #' @noRd
 #'
 #' @seealso
@@ -94,10 +96,11 @@ cacheURL <-
 #' - `rappdirs::user_cache_dir()`.
 .biocPackageCache <- function(pkg, ask) {
     assert(
+        requireNamespaces("BiocFileCache"),
         isString(pkg),
         isFlag(ask)
     )
     cache <- R_user_dir(package = pkg, which = "cache")
-    bfc <- BiocFileCache(cache = cache, ask = ask)
+    bfc <- BiocFileCache::BiocFileCache(cache = cache, ask = ask)
     bfc
 }
