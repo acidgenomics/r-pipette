@@ -4,6 +4,9 @@
 #' @note Best served using FTP instead of HTTP.
 #' @note Updated 2023-09-13.
 #'
+#' @details
+#' Requires RCurl package to be installed.
+#'
 #' @inheritParams AcidRoxygen::params
 #'
 #' @param pattern `character(1)`.
