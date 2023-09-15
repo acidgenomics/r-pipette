@@ -1,6 +1,11 @@
 # Release notes
 
-## Pipette 0.12.3 (2023-09-14)
+## pipette 0.12.4 (2023-09-15)
+
+- `getURLDirList`: Tighten up assert checks to intentionally error if input
+  does not contain an FTP server URL.
+
+## pipette 0.12.3 (2023-09-14)
 
 Major changes:
 
