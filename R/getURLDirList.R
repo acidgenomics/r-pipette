@@ -1,11 +1,11 @@
 #' Get remote URL directory listing
 #'
 #' @export
-#' @note Best served using FTP instead of HTTP.
-#' @note Updated 2023-09-13.
+#' @note Updated 2023-09-15.
 #'
 #' @details
 #' Requires RCurl package to be installed.
+#' Currently, only FTP servers are supported.
 #'
 #' @inheritParams AcidRoxygen::params
 #'
@@ -25,9 +25,10 @@
 getURLDirList <- function(url, pattern = NULL) {
     assert(
         requireNamespaces("RCurl"),
-        isString(pattern, nullOK = TRUE)
+        isString(pattern, nullOK = TRUE),
+        isMatchingRegex(x = url, pattern = "^ftp://")
     )
-    if (!isMatchingRegex(pattern = "/$", x = url)) {
+    if (!isMatchingRegex(x = url, pattern = "/$")) {
         url <- paste0(url, "/") # nocov
     }
     assert(isAnExistingURL(url))

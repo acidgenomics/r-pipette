@@ -4,3 +4,11 @@ test_that("NCBI FTP", {
     x <- getURLDirList(url, pattern = "^refseq$")
     expect_type(x, "character")
 })
+
+test_that("FTP only", {
+    url <- "https://ftp.ensembl.org/pub/"
+    expect_error(
+        object = getURLDirList(url),
+        regexp = "ftp"
+    )
+})

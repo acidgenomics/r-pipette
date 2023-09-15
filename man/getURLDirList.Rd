@@ -25,9 +25,9 @@ Get remote URL directory listing
 Requires RCurl package to be installed.
 }
 \note{
-Best served using FTP instead of HTTP.
+Best served using FTP instead of HTTPS.
 
-Updated 2023-09-13.
+Updated 2023-09-15.
 }
 \examples{
 url <- "ftp://ftp.ncbi.nlm.nih.gov/genomes/"
