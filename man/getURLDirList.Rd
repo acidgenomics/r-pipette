@@ -4,7 +4,7 @@
 \alias{getURLDirList}
 \title{Get remote URL directory listing}
 \usage{
-getURLDirList(url, pattern = NULL)
+getURLDirList(url, pattern = NULL, absolute = FALSE)
 }
 \arguments{
 \item{url}{\code{character(1)}.
@@ -13,6 +13,9 @@ Uniform Resource Locator (URL).}
 \item{pattern}{\code{character(1)}.
 Regular expression pattern to use for matching.
 Passes to \code{grepl} function internally.}
+
+\item{absolute}{\code{logical(1)}.
+Return absolute path.}
 }
 \value{
 \code{character}.
@@ -22,17 +25,20 @@ Simple directory contents return, including both files and subdirectories.
 Get remote URL directory listing
 }
 \details{
-Requires RCurl package to be installed.
+Currently, only FTP servers are supported.
 }
 \note{
-Best served using FTP instead of HTTPS.
-
-Updated 2023-09-15.
+Updated 2023-09-17.
 }
 \examples{
 url <- "ftp://ftp.ncbi.nlm.nih.gov/genomes/"
 if (goalie::isAnExistingURL(url)) {
     x <- getURLDirList(url)
-    tail(x)
+    print(x)
+}
+}
+\seealso{
+\itemize{
+\item \code{curlGetHeaders}.
 }
 }
