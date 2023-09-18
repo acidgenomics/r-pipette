@@ -175,12 +175,20 @@ getURLDirList <- function(
             "basename"
         )
     )
+
+    ## FIXME Don't do this use, ensure we flip the directory code for symlinks
+    ## that map to a directory.
+
     ## Ensure we sanitize symlinks.
     df[["basename"]] <- sub(
         pattern = "\\s->\\s.+$",
         replacement = "",
         x = df[["basename"]]
     )
+
+
+
+
     ## Standardize modification date.
     df[["date"]] <- gsub(
         pattern = "\\s+",
@@ -263,14 +271,14 @@ getURLDirList <- function(
     switch(
         EXPR = type,
         "dirs" = {
-            keep <- grepl(pattern = "/^", x = df[["basename"]])
+            keep <- grepl(pattern = "/$", x = df[["basename"]])
             if (!any(keep)) {
                 return(character())
             }
             df <- df[keep, , drop = FALSE]
         },
         "files" = {
-            keep <- !grepl(pattern = "/^", x = df[["basename"]])
+            keep <- !grepl(pattern = "/$", x = df[["basename"]])
             if (!any(keep)) {
                 return(character())
             }
@@ -279,7 +287,7 @@ getURLDirList <- function(
     )
     ## Ensure directories don't return with trailing slash, similar to FTP.
     df[["basename"]] <- sub(
-        pattern = "/^",
+        pattern = "/$",
         replacement = "",
         x = df[["basename"]]
     )
