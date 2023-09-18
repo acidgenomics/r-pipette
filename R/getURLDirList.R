@@ -233,18 +233,43 @@ getURLDirList <- function(
         return(character())
     }
     ## Reformat input as CSV.
-    pattern <- paste0(
-        "^<a href=\".+\">(.+)</a>\\s+",
-        "([0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2})",
-        "\\s+",
-        "([^ ]+)",
-        "\\s+",
-        ".+$"
+    ## Loop across different HTTP server listings until we hit a match.
+    patterns <- c(
+        "ncbi" = paste0(
+            "^<a href=\".+\">(.+)</a>\\s+",
+            "([0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2})",
+            "\\s+",
+            "([^ ]+)",
+            "\\s+",
+            ".+$"
+        ),
+        "ensembl" = paste0(
+            "^<tr>",
+            ".+",
+            "<td><a href=\".+\">(.+)</a></td>",
+            "<td.+>(.+)</td>",
+            "<td.+>(.+)</td>",
+            ".+",
+            "</tr>$"
+        )
     )
-    keep <- grepl(pattern = pattern, x = x)
+    keep <- logical()
+    pattern <- character()
+    i <- 0L
+    while (i < length(patterns)) {
+        i <- i + 1L
+        keep <- grepl(pattern = patterns[[i]], x = x)
+        if (any(keep)) {
+            pattern <- patterns[[i]]
+            break
+        }
+    }
     if (!any(keep)) {
         return(character())
     }
+
+
+
     x <- x[keep]
     x <- sub(
         pattern = pattern,
