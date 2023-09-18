@@ -1,14 +1,16 @@
 ## FIXME Add type tests: dirs, files.
 ## FIXME Add HTTP coverage.
 ## FIXME Check absolute path support.
-## FIXME Consider keeping trailing slash on directories.
-
 
 test_that("NCBI FTP", {
     url <- "ftp://ftp.ncbi.nlm.nih.gov/genomes/"
     skip_if_not(isAnExistingURL(url))
-    ## FIXME This now isn't working, need to rethink.
+    ## FIXME This test isn't correct, need to rework.
     x <- getURLDirList(url = url, pattern = "^refseq/$", absolute = TRUE)
+
+    x <- getURLDirList(url = url, pattern = "^refseq$", absolute = TRUE)
+
+    ## FIXME Add a test without trailing slash, which should fail.
     expect_type(x, "character")
 })
 
