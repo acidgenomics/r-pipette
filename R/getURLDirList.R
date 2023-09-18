@@ -1,8 +1,3 @@
-## FIXME Directories need to return with trailing slash.
-## FIXME Need to improve error message on pattern match fail?
-
-
-
 #' Get remote URL directory listing
 #'
 #' @export
@@ -29,7 +24,6 @@
 #'
 #' @return `character`.
 #' File basename, or absolute URL path when `absolute` is `TRUE`.
-#' Directories intentionally return with a trailing slash.
 #'
 #' @seealso
 #' - `curlGetHeaders`.
@@ -95,7 +89,7 @@ getURLDirList <- function(
     if (isString(pattern)) {
         keep <- grepl(pattern = pattern, x = x)
         assert(
-            hasLength(keep),
+            any(keep),
             msg = sprintf(
                 "No files matched pattern {.var %s}.",
                 pattern
@@ -199,11 +193,6 @@ getURLDirList <- function(
         x = df[["date"]]
     )
     df[["date"]] <- as.Date(df[["date"]], format = "%b %d %Y")
-    ## Ensure directories contain trailing slash, similar to HTTP.
-    dirs <- grepl(pattern = "^d", x = df[["perms"]])
-    if (any(dirs)) {
-        df[["basename"]][dirs] <- paste0(df[["basename"]][dirs], "/")
-    }
     switch(
         EXPR = type,
         "dirs" = {
@@ -287,6 +276,12 @@ getURLDirList <- function(
             }
             df <- df[keep, , drop = FALSE]
         }
+    )
+    ## Ensure directories don't return with trailing slash, similar to FTP.
+    df[["basename"]] <- sub(
+        pattern = "/^",
+        replacement = "",
+        x = df[["basename"]]
     )
     out <- df[["basename"]]
     out
