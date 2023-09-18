@@ -175,20 +175,12 @@ getURLDirList <- function(
             "basename"
         )
     )
-
-    ## FIXME Don't do this use, ensure we flip the directory code for symlinks
-    ## that map to a directory.
-
     ## Ensure we sanitize symlinks.
     df[["basename"]] <- sub(
         pattern = "\\s->\\s.+$",
         replacement = "",
         x = df[["basename"]]
     )
-
-
-
-
     ## Standardize modification date.
     df[["date"]] <- gsub(
         pattern = "\\s+",
@@ -223,8 +215,6 @@ getURLDirList <- function(
 }
 
 
-
-## FIXME Support files/directories filtering.
 
 #' Get list of files from an HTTP(S) server
 #'
