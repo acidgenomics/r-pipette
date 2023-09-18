@@ -267,9 +267,6 @@ getURLDirList <- function(
     if (!any(keep)) {
         return(character())
     }
-
-
-
     x <- x[keep]
     x <- sub(
         pattern = pattern,
