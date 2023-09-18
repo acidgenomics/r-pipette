@@ -4,7 +4,7 @@
 #' @note Updated 2023-09-18.
 #'
 #' @details
-#' Currently, only FTP servers are supported.
+#' FTP and HTTP(S) servers are supported.
 #'
 #' @inheritParams AcidRoxygen::params
 #'
