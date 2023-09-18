@@ -38,7 +38,7 @@ File basename, or absolute URL path when \code{absolute} is \code{TRUE}.
 Get remote URL directory listing
 }
 \details{
-Currently, only FTP servers are supported.
+FTP and HTTP(S) servers are supported.
 }
 \note{
 Updated 2023-09-18.
