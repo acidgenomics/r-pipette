@@ -1,17 +1,96 @@
-## FIXME Add type tests: dirs, files.
-## FIXME Add HTTP coverage.
-## FIXME Check absolute path support.
+## FIXME Parameterize this over FTP and HTTPS.
 
 test_that("NCBI FTP", {
     url <- "ftp://ftp.ncbi.nlm.nih.gov/genomes/"
     skip_if_not(isAnExistingURL(url))
-    ## FIXME This test isn't correct, need to rework.
-    x <- getURLDirList(url = url, pattern = "^refseq/$", absolute = TRUE)
-
-    x <- getURLDirList(url = url, pattern = "^refseq$", absolute = TRUE)
-
-    ## FIXME Add a test without trailing slash, which should fail.
-    expect_type(x, "character")
+    expect_identical(
+        object = with_collate(
+            new = "C",
+            code = {
+                getURLDirList(url, type = "all")
+            }
+        ),
+        expected = c(
+            "ASSEMBLY_REPORTS",
+            "CLUSTERS",
+            "GENOME_REPORTS",
+            "HUMAN_MICROBIOM",
+            "INFLUENZA",
+            "MapView",
+            "README.txt",
+            "README_GFF3.txt",
+            "README_assembly_summary.txt",
+            "README_change_notice.txt",
+            "TARGET",
+            "TOOLS",
+            "Viruses",
+            "all",
+            "archive",
+            "check.txt",
+            "genbank",
+            "refseq",
+            "species.diff.txt"
+        )
+    )
+    expect_identical(
+        object = with_collate(
+            new = "C",
+            code = {
+                getURLDirList(url, type = "dirs")
+            }
+        ),
+        expected = c(
+            "ASSEMBLY_REPORTS",
+            "CLUSTERS",
+            "GENOME_REPORTS",
+            "HUMAN_MICROBIOM",
+            "INFLUENZA",
+            "MapView",
+            "TARGET",
+            "TOOLS",
+            "Viruses",
+            "all",
+            "archive"
+        )
+    )
+    expect_identical(
+        object = with_collate(
+            new = "C",
+            code = {
+                getURLDirList(url, type = "files")
+            }
+        ),
+        expected = c(
+            "README.txt",
+            "README_GFF3.txt",
+            "README_assembly_summary.txt",
+            "README_change_notice.txt",
+            "check.txt",
+            "genbank",
+            "refseq",
+            "species.diff.txt"
+        )
+    )
+    expect_identical(
+        object = getURLDirList(
+            url = url,
+            pattern = "^refseq$",
+            absolute = TRUE
+        ),
+        expected = paste0(url, "refseq")
+    )
+    expect_identical(
+        object = getURLDirList(url = url, pattern = "^refseq$"),
+        expected = "refseq"
+    )
+    expect_error(
+        object = getURLDirList(
+            url = url,
+            pattern = "^refseq/$",
+            absolute = TRUE
+        ),
+        regexp = "No files matched pattern"
+    )
 })
 
 test_that("NCBI HTTPS", {
