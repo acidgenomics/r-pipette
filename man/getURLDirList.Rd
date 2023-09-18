@@ -25,7 +25,7 @@ Type of files to return:
 
 \item{pattern}{\code{character(1)}.
 Regular expression pattern to use for matching.
-Passes to \code{grepl} function internally.}
+Only matches against the basename of the URL.}
 
 \item{absolute}{\code{logical(1)}.
 Return absolute path.}
@@ -39,6 +39,7 @@ Get remote URL directory listing
 }
 \details{
 FTP and HTTP(S) servers are supported.
+Designed to be simple, and does not support recursive directory listing.
 }
 \note{
 Updated 2023-09-18.

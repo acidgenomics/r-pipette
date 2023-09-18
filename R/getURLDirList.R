@@ -1,3 +1,8 @@
+## FIXME Directories need to return with trailing slash.
+## FIXME Need to improve error message on pattern match fail?
+
+
+
 #' Get remote URL directory listing
 #'
 #' @export
@@ -5,6 +10,7 @@
 #'
 #' @details
 #' FTP and HTTP(S) servers are supported.
+#' Designed to be simple, and does not support recursive directory listing.
 #'
 #' @inheritParams AcidRoxygen::params
 #'
@@ -16,13 +22,14 @@
 #'
 #' @param pattern `character(1)`.
 #' Regular expression pattern to use for matching.
-#' Passes to `grepl` function internally.
+#' Only matches against the basename of the URL.
 #'
 #' @param absolute `logical(1)`.
 #' Return absolute path.
 #'
 #' @return `character`.
 #' File basename, or absolute URL path when `absolute` is `TRUE`.
+#' Directories intentionally return with a trailing slash.
 #'
 #' @seealso
 #' - `curlGetHeaders`.
@@ -47,7 +54,7 @@ getURLDirList <- function(
     )
     type <- match.arg(type)
     if (!isMatchingRegex(x = url, pattern = "/$")) {
-        url <- paste0(url, "/") # nocov
+        url <- paste0(url, "/")
     }
     assert(isAnExistingURL(url))
     destfile <- tempfile()
@@ -80,9 +87,11 @@ getURLDirList <- function(
             .httpDirList(x = x, type = type)
         }
     )
+    assert(isCharacter(x))
     if (!hasLength(x)) {
         return(character())
     }
+    x <- sort(x)
     if (isString(pattern)) {
         keep <- grepl(pattern = pattern, x = x)
         assert(
@@ -95,7 +104,7 @@ getURLDirList <- function(
         x <- x[keep]
     }
     if (isTRUE(absolute)) {
-        x <- pasteURL(url, x)
+        x <- paste0(url, x)
     }
     x
 }
@@ -190,6 +199,11 @@ getURLDirList <- function(
         x = df[["date"]]
     )
     df[["date"]] <- as.Date(df[["date"]], format = "%b %d %Y")
+    ## Ensure directories contain trailing slash, similar to HTTP.
+    dirs <- grepl(pattern = "^d", x = df[["perms"]])
+    if (any(dirs)) {
+        df[["basename"]][dirs] <- paste0(df[["basename"]][dirs], "/")
+    }
     switch(
         EXPR = type,
         "dirs" = {
@@ -207,7 +221,7 @@ getURLDirList <- function(
             df <- df[keep, , drop = FALSE]
         }
     )
-    out <- sort(df[["basename"]])
+    out <- df[["basename"]]
     out
 }
 
@@ -274,11 +288,6 @@ getURLDirList <- function(
             df <- df[keep, , drop = FALSE]
         }
     )
-    df[["basename"]] <- sub(
-        pattern = "/$",
-        replacement = "",
-        x = df[["basename"]]
-    )
-    out <- sort(df[["basename"]])
+    out <- df[["basename"]]
     out
 }
