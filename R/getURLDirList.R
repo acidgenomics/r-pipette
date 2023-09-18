@@ -44,8 +44,7 @@ getURLDirList <- function(url, pattern = NULL, absolute = FALSE) {
     assert(
         requireNamespaces("RCurl"),
         isString(url),
-        ## FIXME Add support for http, https.
-        isMatchingRegex(x = url, pattern = "^ftp://"),
+        isMatchingRegex(x = url, pattern = "^(ftp|http|https)://"),
         isString(pattern, nullOK = TRUE),
         isFlag(absolute)
     )
@@ -68,9 +67,9 @@ getURLDirList <- function(url, pattern = NULL, absolute = FALSE) {
         !inherits(status, "try-error"),
         msg = sprintf("URL failure: {.url %s}.", url)
     )
-    lines <- import(destfile, format = "lines")
+    x <- import(con = destfile, format = "lines", quiet = TRUE)
     unlink(destfile)
-    x <- .ftpDirList(lines)
+    x <- .ftpDirList(x)
     if (!hasLength(x)) {
         return(character())
     }
@@ -90,6 +89,8 @@ getURLDirList <- function(url, pattern = NULL, absolute = FALSE) {
 
 
 
+## FIXME FTP sever listing converts year to relative time, which is annoying.
+
 #' Get list of files from an FTP server
 #'
 #' @note Updated 2023-09-18.
@@ -100,24 +101,102 @@ getURLDirList <- function(url, pattern = NULL, absolute = FALSE) {
 #'
 #' @return `character`.
 #' File and directory basenames.
-.ftpDirList <- function(x) {
-    keep <- grepl(pattern = "^d", x = x)
-    if (!any(keep)) {
-        return(character())
-    }
-    x <- x[keep]
-    ## FIXME Switch to using import once we add support for textConnection.
-    ## "textConnection"
-    df <- read.table(textConnection(x))
-    assert(identical(ncol(df), 9L))
-    x <- sort(df[[9L]])
-    x
+.ftpDirList <- function(
+        x,
+        type = c("all", "dirs", "files")
+    ) {
+    type <- match.arg(type)
+    ## Reformat and input as CSV.
+    x <- sub(
+        pattern = paste0(
+            "^",
+            "([a-z-]{10})",
+            "\\s+",
+            "([0-9]+)",
+            "\\s+",
+            "([a-z]+)",
+            "\\s+",
+            "([^ ]+)",
+            "\\s+",
+            "([0-9]+)",
+            "\\s+",
+            "([^ ]+\\s+[^ ]+\\s+[^ ]+)",
+            "\\s+",
+            "(.+)",
+            "$"
+        ),
+        replacement = paste0(
+            "\"\\1\"",
+            ",",
+            "\\2",
+            ",",
+            "\"\\3\"",
+            ",",
+            "\"\\4\"",
+            ",",
+            "\\5",
+            ",",
+            "\"\\6\"",
+            ",",
+            "\"\\7\""
+        ),
+        x = x
+    )
+    df <- read.csv(
+        textConnection(x),
+        header = FALSE,
+        col.names = c(
+            "perms",
+            "n",
+            "protocol",
+            "user",
+            "size",
+            "date",
+            "basename"
+        )
+    )
+    ## Ensure we sanitize symlinks.
+    df[["basename"]] <- sub(
+        pattern = "\\s->\\s.+$",
+        replacement = "",
+        x = df[["basename"]]
+    )
+    ## Standardize modification date.
+    df[["date"]] <- gsub(
+        pattern = "\\s+",
+        replacement = " ",
+        x = df[["date"]]
+    )
+    df[["date"]] <- sub(
+        pattern = "[0-9]{2}:[0-9]{2}",
+        replacement = format(Sys.Date(), "%Y"),
+        x = df[["date"]]
+    )
+    df[["date"]] <- as.Date(df[["date"]], format = "%b %d %Y")
+    switch(
+        EXPR = type,
+        "dirs" = {
+            keep <- grepl(pattern = "^d", x = df[["perms"]])
+            if (!any(keep)) {
+                return(character())
+            }
+            df <- df[keep, , drop = FALSE]
+        },
+        "files" = {
+            keep <- !grepl(pattern = "^d", x = df[["perms"]])
+            if (!any(keep)) {
+                return(character())
+            }
+            df <- df[keep, , drop = FALSE]
+        }
+    )
+    out <- sort(df[["basename"]])
+    out
 }
 
 
 
 ## FIXME Support files/directories filtering.
-## FIXME Support size filtering.
 
 #' Get list of files from an HTTP(S) server
 #'
@@ -140,11 +219,11 @@ getURLDirList <- function(url, pattern = NULL, absolute = FALSE) {
         return(character())
     }
     x <- x[keep]
+    ## FIXME Can we do without perl here?
     x <- sub(
         pattern = pattern,
         replacement = "\"\\1\",\"\\2\",\"\\3\"",
-        x = x,
-        perl = TRUE
+        x = x
     )
     ## FIXME Need to add support for this in import.
     df <- read.csv(
@@ -153,8 +232,6 @@ getURLDirList <- function(url, pattern = NULL, absolute = FALSE) {
         col.names = c("basename", "date", "size")
     )
     df[["date"]] <- as.POSIXlt(df[["date"]])
-    ## FIXME How to convert to size??
-    ## > df[["size"]]
     out <- df[["basename"]]
     out
 }
