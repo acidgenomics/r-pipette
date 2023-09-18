@@ -1,10 +1,15 @@
+## FIXME Rework to use base R or our getURLDirList function instead.
+## Remove the dependency on RCurl package.
+
+
+
 #' Transmit files from a remote FTP server
 #'
 #' Utility function that supports easy file matching and download from a remote
 #' FTP server. Also enables on-the-fly file renaming and compression.
 #'
 #' @export
-#' @note Updated 2023-09-14.
+#' @note Updated 2023-09-18.
 #'
 #' @details
 #' Requires RCurl package to be installed.

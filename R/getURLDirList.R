@@ -40,7 +40,6 @@ getURLDirList <- function(
         absolute = FALSE
     ) {
     assert(
-        requireNamespaces("RCurl"),
         isString(url),
         isMatchingRegex(x = url, pattern = "^(ftp|http|https)://"),
         isString(pattern, nullOK = TRUE),
