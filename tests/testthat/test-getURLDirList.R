@@ -1,5 +1,8 @@
 test_that("NCBI FTP", {
-    url <- "ftp://ftp.ncbi.nlm.nih.gov/genomes/"
+    url <- pasteURL(
+        "ftp.ncbi.nlm.nih.gov", "genomes",
+        protocol = "ftp"
+    )
     skip_if_not(isAnExistingURL(url))
     expect_identical(
         object = with_collate(
@@ -92,7 +95,10 @@ test_that("NCBI FTP", {
 })
 
 test_that("NCBI HTTPS", {
-    url <- "https://ftp.ncbi.nlm.nih.gov/genomes/"
+    url <- pasteURL(
+        "ftp.ncbi.nlm.nih.gov", "genomes",
+        protocol = "https"
+    )
     skip_if_not(isAnExistingURL(url))
     expect_identical(
         object = with_collate(
@@ -184,43 +190,19 @@ test_that("NCBI HTTPS", {
     )
 })
 
-## This is prone to timeouts and can fail.
-test_that("Ensembl FTP", {
-    url <- "ftp://ftp.ensembl.org/pub/release-110/mysql/"
-    skip_if_not(isAnExistingURL(url))
-    expect_identical(
-        object = with_collate(
-            new = "C",
-            code = {
-                getURLDirList(url)
-            }
-        ),
-        expected = c(
-            "ASSEMBLY_REPORTS",
-            "CLUSTERS",
-            "GENOME_REPORTS",
-            "HUMAN_MICROBIOM",
-            "INFLUENZA",
-            "MapView",
-            "README.txt",
-            "README_GFF3.txt",
-            "README_assembly_summary.txt",
-            "README_change_notice.txt",
-            "TARGET",
-            "TOOLS",
-            "Viruses",
-            "all",
-            "archive",
-            "check.txt",
-            "genbank",
-            "refseq",
-            "species.diff.txt"
-        )
-    )
-})
+## Ensembl server listing is prone to timeouts over FTP protocol, so just
+## checking HTTPS protocol here for time being.
 
 test_that("Ensembl HTTPS", {
-    url <- "https://ftp.ensembl.org/pub/release-110/mysql/"
+    url <- pasteURL(
+        "ftp.ensembl.org",
+        "pub",
+        "release-110",
+        "fasta",
+        "homo_sapiens",
+        "cdna",
+        protocol = "https"
+    )
     skip_if_not(isAnExistingURL(url))
     expect_identical(
         object = with_collate(
@@ -230,25 +212,10 @@ test_that("Ensembl HTTPS", {
             }
         ),
         expected = c(
-            "ASSEMBLY_REPORTS",
-            "CLUSTERS",
-            "GENOME_REPORTS",
-            "HUMAN_MICROBIOM",
-            "INFLUENZA",
-            "MapView",
-            "README.txt",
-            "README_GFF3.txt",
-            "README_assembly_summary.txt",
-            "README_change_notice.txt",
-            "TARGET",
-            "TOOLS",
-            "Viruses",
-            "all",
-            "archive",
-            "check.txt",
-            "genbank",
-            "refseq",
-            "species.diff.txt"
+            "CHECKSUMS",
+            "Homo_sapiens.GRCh38.cdna.abinitio.fa.gz",
+            "Homo_sapiens.GRCh38.cdna.all.fa.gz",
+            "README"
         )
     )
 })
