@@ -4,11 +4,24 @@
 \alias{getURLDirList}
 \title{Get remote URL directory listing}
 \usage{
-getURLDirList(url, pattern = NULL, absolute = FALSE)
+getURLDirList(
+  url,
+  type = c("all", "dirs", "files"),
+  pattern = NULL,
+  absolute = FALSE
+)
 }
 \arguments{
 \item{url}{\code{character(1)}.
 Uniform Resource Locator (URL).}
+
+\item{type}{\code{character(1)}.
+Type of files to return:
+\itemize{
+\item \code{"all"}: Both directories and files.
+\item \code{"dirs"}: Directories only.
+\item \code{"files"}: Files only.
+}}
 
 \item{pattern}{\code{character(1)}.
 Regular expression pattern to use for matching.
@@ -19,7 +32,7 @@ Return absolute path.}
 }
 \value{
 \code{character}.
-Simple directory contents return, including both files and subdirectories.
+File basename, or absolute URL path when \code{absolute} is \code{TRUE}.
 }
 \description{
 Get remote URL directory listing
@@ -28,7 +41,7 @@ Get remote URL directory listing
 Currently, only FTP servers are supported.
 }
 \note{
-Updated 2023-09-17.
+Updated 2023-09-18.
 }
 \examples{
 url <- "ftp://ftp.ncbi.nlm.nih.gov/genomes/"
