@@ -399,7 +399,7 @@ NULL
         object <- as.data.frame(object)
         switch(
             EXPR = dfMode,
-            "GRangesList" {
+            "GRangesList" = {
                 assert(isSubset(c("group", "group_name"), colnames(object)))
                 colnames(object)[
                     colnames(object) == "group_name"] <- "groupName"
