@@ -164,6 +164,7 @@ getURLDirList <- function(
     con <- textConnection(x)
     df <- import(
         con = con,
+        format = "csv",
         colnames = c(
             "perms",
             "n",
@@ -172,7 +173,8 @@ getURLDirList <- function(
             "size",
             "date",
             "basename"
-        )
+        ),
+        quiet = TRUE
     )
     close(con)
     ## Ensure we sanitize symlinks.
@@ -276,7 +278,9 @@ getURLDirList <- function(
     con <- textConnection(x)
     df <- import(
         con = con,
-        colnames = c("basename", "date", "size")
+        format = "csv",
+        colnames = c("basename", "date", "size"),
+        quiet = TRUE
     )
     close(con)
     df[["date"]] <- as.POSIXlt(df[["date"]])
