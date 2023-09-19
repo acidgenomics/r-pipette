@@ -116,17 +116,22 @@ NULL
 
 
 
-## Updated 2022-09-13.
+## Updated 2023-09-19.
 .defaultExt <- function(object) {
     if (is.atomic(object)) {
         key <- "character"
-    } else if (is.data.frame(object)) {
-        key <- "delim"
-    } else if (is.matrix(object)) {
-        key <- "delim"
-    } else if (is(object, "DFrame")) {
-        key <- "delim"
-    } else if (is(object, "GRanges")) {
+    } else if (
+        isAny(
+            x = object,
+            classes = c(
+                "DFrame",
+                "GRanges",
+                "GRangesList",
+                "data.frame",
+                "matrix"
+            )
+        )
+    ) {
         key <- "delim"
     } else if (is(object, "Matrix")) {
         key <- "Matrix"
