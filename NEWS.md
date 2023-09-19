@@ -1,5 +1,25 @@
 # Release notes
 
+## pipette 0.13.0 (2023-09-19)
+
+Major changes:
+
+- `getURLDirList`: Entirely reworked internal code to no longer depend on RCurl
+  package. Added support for HTTP(S) servers, which has been tested to work
+  for Ensembl and NCBI.
+- `import`: Now supports `textConnection` class for primary `con` argument
+  instead of always using `character` representing a file path. This is
+  incredibly useful for reformatting a malformed delimited file on a remote
+  server prior to import, which can help eliminate our reliance on readr or
+  data.table as alternative engines to handle malformed files.
+- `transmit`: Reworked internal code to no longer depend on RCurl.
+
+Minor changes:
+
+- `export`: Now supports `GRangesList`, which first coerces to `data.frame`.
+  This class includes `"group"` and `"groupName"` as the first columns upon
+  export.
+
 ## pipette 0.12.4 (2023-09-15)
 
 - `getURLDirList`: Tighten up assert checks to intentionally error if input
@@ -1257,4 +1277,5 @@ Initial release. Migrated input-output (IO) functions from [basejump][].
 [appveyor ci]: https://www.appveyor.com/
 [basejump]: https://r.acidgenomics.com/packages/acidbase/
 [testthat]: https://testthat.r-lib.org/
+[travis ci]: https://www.travis-ci.com/
 [travis ci]: https://www.travis-ci.com/
