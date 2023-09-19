@@ -1,7 +1,7 @@
 ## Classes =====================================================================
 
 #' @importClassesFrom BiocIO BiocFile
-#' @importClassesFrom GenomicRanges GRanges
+#' @importClassesFrom GenomicRanges GRanges GRangesList
 #' @importClassesFrom IRanges IRanges Ranges
 #' @importClassesFrom Matrix Matrix
 #' @importClassesFrom S4Vectors DFrame List SimpleList
