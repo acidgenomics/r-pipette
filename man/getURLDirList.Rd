@@ -42,7 +42,7 @@ FTP and HTTP(S) servers are supported.
 Designed to be simple, and does not support recursive directory listing.
 }
 \note{
-Updated 2023-09-18.
+Updated 2023-09-19.
 }
 \examples{
 url <- "ftp://ftp.ncbi.nlm.nih.gov/genomes/"
