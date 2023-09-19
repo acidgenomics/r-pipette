@@ -44,6 +44,6 @@ NULL
 #' requireNamespaces validNames validate
 #' @importFrom jsonlite read_json
 #' @importFrom methods as is hasMethod new setGeneric signature validObject
-#' @importFrom utils packageName packageVersion
+#' @importFrom utils download.file packageName packageVersion
 #' @importFrom yaml yaml.load_file
 NULL
