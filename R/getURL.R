@@ -27,7 +27,7 @@ getURL <-
             quiet = quiet
         )
         assert(isAFile(destfile))
-        x <- import(con = destfile, format = "lines", quiet = quiet)
+        x <- import(con = destfile, format = "lines", quiet = TRUE)
         assert(is.character(x))
         unlink(destfile)
         x
