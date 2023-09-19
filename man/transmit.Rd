@@ -40,9 +40,6 @@ Local file paths.
 Utility function that supports easy file matching and download from a remote
 FTP server. Also enables on-the-fly file renaming and compression.
 }
-\details{
-Requires RCurl package to be installed.
-}
 \note{
 Updated 2023-09-19.
 }
