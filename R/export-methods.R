@@ -725,6 +725,9 @@ NULL
 `export,GRanges` <- # nolint
     `export,data.frame`
 
+`export,GRangesList` <- # nolint
+    `export,data.frame`
+
 `export,matrix` <- # nolint
     `export,data.frame`
 
@@ -754,6 +757,18 @@ setMethod(
         format = "missing"
     ),
     definition = `export,GRanges`
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "GRangesList",
+        con = "character",
+        format = "missing"
+    ),
+    definition = `export,GRangesList`
 )
 
 #' @rdname export
