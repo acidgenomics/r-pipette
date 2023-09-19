@@ -402,7 +402,8 @@ NULL
             "GRangesList" = {
                 assert(isSubset(c("group", "group_name"), colnames(object)))
                 colnames(object)[
-                    colnames(object) == "group_name"] <- "groupName"
+                    colnames(object) == "group_name"
+                ] <- "groupName"
             }
         )
         ## Allowing export of empty objects, so don't check for length,
