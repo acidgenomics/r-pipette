@@ -806,3 +806,63 @@ test_that("BCF/VCF", {
         )
     }
 })
+
+test_that("textConnection : CSV", {
+    object <- c("\"a\",\"b\"", "\"c\",\"d\"", "\"e\",\"f\"")
+    con <- textConnection(object)
+    expect_identical(
+        object = import(
+            con = con,
+            format = "csv",
+            colnames = TRUE
+        ),
+        expected = data.frame(
+            "a" = c("c", "e"),
+            "b" = c("d", "f")
+        )
+    )
+    close(con)
+    con <- textConnection(object)
+    expect_identical(
+        object = import(
+            con = con,
+            format = "csv",
+            colnames = FALSE
+        ),
+        expected = data.frame(
+            "V1" = c("a", "c", "e"),
+            "V2" = c("b", "d", "f")
+        )
+    )
+    close(con)
+})
+
+test_that("textConnection : TSV", {
+    object <- c("a\tb", "c\td", "e\tf")
+    con <- textConnection(object)
+    expect_identical(
+        object = import(
+            con = con,
+            format = "tsv",
+            colnames = TRUE
+        ),
+        expected = data.frame(
+            "a" = c("c", "e"),
+            "b" = c("d", "f")
+        )
+    )
+    close(con)
+    con <- textConnection(object)
+    expect_identical(
+        object = import(
+            con = con,
+            format = "tsv",
+            colnames = FALSE
+        ),
+        expected = data.frame(
+            "V1" = c("a", "c", "e"),
+            "V2" = c("b", "d", "f")
+        )
+    )
+    close(con)
+})
