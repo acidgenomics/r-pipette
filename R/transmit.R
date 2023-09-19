@@ -1,15 +1,10 @@
-## FIXME Rework to use base R or our getURLDirList function instead.
-## Remove the dependency on RCurl package.
-
-
-
 #' Transmit files from a remote FTP server
 #'
 #' Utility function that supports easy file matching and download from a remote
 #' FTP server. Also enables on-the-fly file renaming and compression.
 #'
 #' @export
-#' @note Updated 2023-09-18.
+#' @note Updated 2023-09-19.
 #'
 #' @details
 #' Requires RCurl package to be installed.
@@ -75,6 +70,9 @@ transmit <-
             localDir <- initDir(localDir)
         }
         alert(sprintf("Transmitting files from {.url %s}.", remoteDir))
+
+        ## FIXME Rework this to just use base R.
+
         ## Get a list of the files in the remote directory.
         remoteTxt <- RCurl::getURL(url = remoteDir)
         assert(

@@ -44,7 +44,7 @@ FTP server. Also enables on-the-fly file renaming and compression.
 Requires RCurl package to be installed.
 }
 \note{
-Updated 2023-09-18.
+Updated 2023-09-19.
 }
 \examples{
 try({
