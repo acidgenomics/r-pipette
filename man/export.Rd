@@ -4,6 +4,7 @@
 \alias{export}
 \alias{export,DFrame,character,missing-method}
 \alias{export,GRanges,character,missing-method}
+\alias{export,GRangesList,character,missing-method}
 \alias{export,Matrix,character,missing-method}
 \alias{export,atomic,character,missing-method}
 \alias{export,data.frame,character,missing-method}
@@ -27,6 +28,18 @@ export(object, con, format, ...)
 )
 
 \S4method{export}{GRanges,character,missing}(
+  object,
+  con,
+  format,
+  rownames = TRUE,
+  colnames = TRUE,
+  quote = TRUE,
+  overwrite = getOption(x = "acid.overwrite", default = TRUE),
+  engine = getOption(x = "acid.export.engine", default = "base"),
+  quiet = getOption(x = "acid.quiet", default = FALSE)
+)
+
+\S4method{export}{GRangesList,character,missing}(
   object,
   con,
   format,
