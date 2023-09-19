@@ -827,16 +827,15 @@ NULL
 
 
 ## Updated 2023-09-19.
-`import,textConnection` <- function(
-        con,
-        format = c("csv", "tsv"),
-        text, # missing
-        colnames = TRUE,
-        quote = "\"",
-        quiet = getOption(
-            x = "acid.quiet",
-            default = FALSE
-        )) {
+`import,textConnection` <- function(con,
+                                    format = c("csv", "tsv"),
+                                    text, # missing
+                                    colnames = TRUE,
+                                    quote = "\"",
+                                    quiet = getOption(
+                                        x = "acid.quiet",
+                                        default = FALSE
+                                    )) {
     if (missing(text)) {
         text <- NULL
     }
