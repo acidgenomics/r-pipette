@@ -1,7 +1,7 @@
 #' Get remote URL directory listing
 #'
 #' @export
-#' @note Updated 2023-09-18.
+#' @note Updated 2023-09-19.
 #'
 #' @details
 #' FTP and HTTP(S) servers are supported.
@@ -107,7 +107,7 @@ getURLDirList <- function(
 
 #' Get list of files from an FTP server
 #'
-#' @note Updated 2023-09-18.
+#' @note Updated 2023-09-19.
 #' @noRd
 #'
 #' @param x `character`.
@@ -161,11 +161,10 @@ getURLDirList <- function(
         ),
         x = x
     )
-    ## FIXME Need to add support for this in import.
+    con <- textConnection(x)
     df <- read.csv(
-        textConnection(x),
-        header = FALSE,
-        col.names = c(
+        con = con,
+        colnames = c(
             "perms",
             "n",
             "protocol",
@@ -175,6 +174,7 @@ getURLDirList <- function(
             "basename"
         )
     )
+    close(con)
     ## Ensure we sanitize symlinks.
     df[["basename"]] <- sub(
         pattern = "\\s->\\s.+$",
@@ -218,7 +218,7 @@ getURLDirList <- function(
 
 #' Get list of files from an HTTP(S) server
 #'
-#' @note Updated 2023-09-18.
+#' @note Updated 2023-09-19.
 #' @noRd
 #'
 #' @param x `character`.
@@ -273,12 +273,12 @@ getURLDirList <- function(
         replacement = "\"\\1\",\"\\2\",\"\\3\"",
         x = x
     )
-    ## FIXME Need to add support for this in import.
-    df <- read.csv(
-        file = textConnection(x),
-        header = FALSE,
-        col.names = c("basename", "date", "size")
+    con <- textConnection(x)
+    df <- import(
+        con = con,
+        colnames = c("basename", "date", "size")
     )
+    close(con)
     df[["date"]] <- as.POSIXlt(df[["date"]])
     switch(
         EXPR = type,

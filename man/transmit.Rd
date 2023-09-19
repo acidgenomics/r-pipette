@@ -44,10 +44,11 @@ FTP server. Also enables on-the-fly file renaming and compression.
 Updated 2023-09-19.
 }
 \examples{
-try({
+remoteDir <- "ftp://ftp.ncbi.nlm.nih.gov/genomes/"
+if (goalie::isAnExistingURL(remoteDir)) {
     localDir <- AcidBase::tempdir2()
     readme <- transmit(
-        remoteDir = "ftp://ftp.ncbi.nlm.nih.gov/genomes/",
+        remoteDir = remoteDir,
         localDir = localDir,
         pattern = "^README\\\\.txt$",
         rename = "ncbi-readme.txt",
@@ -56,5 +57,5 @@ try({
     basename(readme)
     file.exists(readme)
     AcidBase::unlink2(localDir)
-})
+}
 }
