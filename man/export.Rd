@@ -161,7 +161,7 @@ File path(s).
 Export
 }
 \note{
-Updated 2023-04-13.
+Updated 2023-09-19.
 }
 \section{Output file format extension}{
 
