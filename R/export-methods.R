@@ -358,7 +358,7 @@ NULL
 
 #' Export `data.frame` method
 #'
-#' @note Updated 2023-04-13.
+#' @note Updated 2023-09-19.
 #' @noRd
 #'
 #' @details
@@ -389,9 +389,24 @@ NULL
             format <- NULL
         }
         verbose <- getOption(x = "acid.verbose", default = FALSE)
+        ## We prefer camel case formatting, so handle edge case of GRangesList
+        ## coercion resulting in hard-coded snake case formatted names. This is
+        ## intended primarily for export of `RefSeqTranscripts` object.
+        dfMode <- character()
+        if (is(object, "GRangesList")) {
+            dfMode <- "GRangesList"
+        }
+        object <- as.data.frame(object)
+        switch(
+            EXPR = dfMode,
+            "GRangesList" {
+                assert(isSubset(c("group", "group_name"), colnames(object)))
+                colnames(object)[
+                    colnames(object) == "group_name"] <- "groupName"
+            }
+        )
         ## Allowing export of empty objects, so don't check for length,
         ## rows, or columns here.
-        object <- as.data.frame(object)
         assert(
             hasNoDuplicates(colnames(object)),
             isString(con),
