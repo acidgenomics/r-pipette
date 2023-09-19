@@ -29,6 +29,7 @@
 \alias{import,PipetteBcbioCountsFile,missing,missing-method}
 \alias{import,PipetteRioFile,missing,missing-method}
 \alias{import,PipetteRtracklayerFile,missing,missing-method}
+\alias{import,textConnection,character,missing-method}
 \alias{import,missing,missing,missing-method}
 \alias{import,missing,character,missing-method}
 \title{Import}
@@ -202,6 +203,15 @@ import(con, format, text, ...)
   metadata = getOption(x = "acid.import.metadata", default = FALSE),
   quiet = getOption(x = "acid.quiet", default = FALSE),
   ...
+)
+
+\S4method{import}{textConnection,character,missing}(
+  con,
+  format = c("csv", "tsv"),
+  text,
+  colnames = TRUE,
+  quote = "\\"",
+  quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 }
 \arguments{
