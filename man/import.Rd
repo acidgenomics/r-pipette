@@ -52,6 +52,7 @@ import(con, format, text, ...)
   rownameCol = NULL,
   colnames = TRUE,
   quote = "\\"",
+  naStrings = naStrings,
   comment = "",
   skip = 0L,
   nMax = Inf,
@@ -87,6 +88,7 @@ import(con, format, text, ...)
   colnames = TRUE,
   skip = 0L,
   nMax = Inf,
+  naStrings = naStrings,
   makeNames = getOption(x = "acid.import.make.names", default = syntactic::makeNames),
   metadata = getOption(x = "acid.import.metadata", default = FALSE),
   quiet = getOption(x = "acid.quiet", default = FALSE)
@@ -211,6 +213,7 @@ import(con, format, text, ...)
   text,
   colnames = TRUE,
   quote = "\\"",
+  naStrings = naStrings,
   quiet = getOption(x = "acid.quiet", default = FALSE)
 )
 }
@@ -258,6 +261,10 @@ Pass in a \code{character} vector to define the column names manually.}
 The set of quoting characters.
 To disable quoting altogether, use \code{quote = ""} (not generally recommended).
 \emph{Applies to plain text delimited files only.}}
+
+\item{naStrings}{\code{character}.
+Character strings to reformat as \code{NA}.
+Refer to \code{pipette::naStrings} for defaults.}
 
 \item{comment}{\code{character(1)}.
 Comment character to detect at beginning of line, which will skip when

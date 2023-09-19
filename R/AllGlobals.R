@@ -45,24 +45,24 @@
 #' NA strings
 #'
 #' @export
-#' @note Updated 2023-04-12.
+#' @note Updated 2023-09-19.
 #'
 #' @examples
 #' naStrings
 naStrings <- c(
     ## > " ",  # data.table will warn about this.
+    ## > "-", # Used by NCBI (e.g. gene info files).
     "",
     "#N/A",
     "#n/a",
-    "-", # Used by NCBI (e.g. gene info files).
     "N/A",
     "NA",
     "NULL",
+    "\\N",
     "_",
     "n/a",
     "na",
-    "null",
-    "\\N"
+    "null"
 )
 
 
