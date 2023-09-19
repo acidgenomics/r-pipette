@@ -28,10 +28,11 @@
 #' Local file paths.
 #'
 #' @examples
-#' try({
+#' remoteDir <- "ftp://ftp.ncbi.nlm.nih.gov/genomes/"
+#' if (goalie::isAnExistingURL(remoteDir)) {
 #'     localDir <- AcidBase::tempdir2()
 #'     readme <- transmit(
-#'         remoteDir = "ftp://ftp.ncbi.nlm.nih.gov/genomes/",
+#'         remoteDir = remoteDir,
 #'         localDir = localDir,
 #'         pattern = "^README\\.txt$",
 #'         rename = "ncbi-readme.txt",
@@ -40,7 +41,7 @@
 #'     basename(readme)
 #'     file.exists(readme)
 #'     AcidBase::unlink2(localDir)
-#' })
+#' }
 transmit <-
     function(remoteDir,
              localDir = getwd(),
