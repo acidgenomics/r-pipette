@@ -41,7 +41,6 @@ Suggests:
     AcidTest (>= 0.7.2),
     BiocFileCache (>= 2.8.0),
     Biostrings (>= 2.68.0),
-    RCurl (>= 1.98),
     Rsamtools (>= 2.16.0),
     data.table (>= 1.14.8),
     digest (>= 0.6.33),

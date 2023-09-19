@@ -6,9 +6,6 @@
 #' @export
 #' @note Updated 2023-09-19.
 #'
-#' @details
-#' Requires RCurl package to be installed.
-#'
 #' @inheritParams AcidRoxygen::params
 #' @inheritParams saveData
 #'
@@ -52,7 +49,6 @@ transmit <-
              compress = FALSE,
              download = TRUE) {
         assert(
-            requireNamespaces("RCurl"),
             ## We check that the URL exists after we add trailing slash below.
             isAURL(remoteDir),
             isMatchingRegex(x = remoteDir, pattern = "^ftp\\://"),
@@ -64,29 +60,16 @@ transmit <-
         if (!isMatchingRegex(pattern = "/$", x = remoteDir)) {
             remoteDir <- paste0(remoteDir, "/")
         }
-        ## Both `isAnExistingURL` and `getURL` require trailing slash.
         assert(isAnExistingURL(remoteDir))
         if (isTRUE(download)) {
             localDir <- initDir(localDir)
         }
         alert(sprintf("Transmitting files from {.url %s}.", remoteDir))
-
-        ## FIXME Rework this to just use base R.
-
         ## Get a list of the files in the remote directory.
-        remoteTxt <- RCurl::getURL(url = remoteDir)
-        assert(
-            isString(remoteTxt),
-            msg = "Failed to list directory contents."
-        )
+        remoteFiles <- import(con = remoteDir, format = "lines", quiet = TRUE)
         ## Match the `-` at begining for file.
         ## `-rwxrwxr-x`: File
         ## `drwxrwxr-x`: Directory
-        remoteFiles <- strsplit(
-            x = remoteTxt,
-            split = "\n",
-            fixed = TRUE
-        )[[1L]]
         ## Match files but not dirs (`"^d"`) or symlinks (`"^l"`).
         remoteFiles <-
             remoteFiles[grepl(pattern = "^-", x = remoteFiles)]
