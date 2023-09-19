@@ -3,7 +3,7 @@ test_that("NCBI FTP", {
         "ftp.ncbi.nlm.nih.gov", "genomes",
         protocol = "ftp"
     )
-    skip_if_not(isAnExistingURL(url))
+    skip_if_not(isAnExistingURL(paste0(url, "/")))
     expect_identical(
         object = with_collate(
             new = "C",
@@ -78,7 +78,7 @@ test_that("NCBI FTP", {
             pattern = "^refseq$",
             absolute = TRUE
         ),
-        expected = paste0(url, "refseq")
+        expected = pasteURL(url, "refseq")
     )
     expect_identical(
         object = getURLDirList(url = url, pattern = "^refseq$"),
@@ -174,7 +174,7 @@ test_that("NCBI HTTPS", {
             pattern = "^refseq$",
             absolute = TRUE
         ),
-        expected = paste0(url, "refseq")
+        expected = pasteURL(url, "refseq")
     )
     expect_identical(
         object = getURLDirList(url = url, pattern = "^refseq$"),
