@@ -162,7 +162,7 @@ getURLDirList <- function(
         x = x
     )
     con <- textConnection(x)
-    df <- read.csv(
+    df <- import(
         con = con,
         colnames = c(
             "perms",
