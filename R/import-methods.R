@@ -139,6 +139,10 @@
 #' Maximum number of lines to parse.
 #' *Applies to plain text delimited, Excel, and source code lines only.*
 #'
+#' @param naStrings `character`.
+#' Character strings to reformat as `NA`.
+#' Refer to `pipette::naStrings` for defaults.
+#'
 #' @param quote `character(1)`.
 #' The set of quoting characters.
 #' To disable quoting altogether, use `quote = ""` (not generally recommended).
@@ -833,6 +837,7 @@ NULL
              text, # missing
              colnames = TRUE,
              quote = "\"",
+             naStrings = naStrings,
              quiet = getOption(
                  x = "acid.quiet",
                  default = FALSE
@@ -845,6 +850,7 @@ NULL
             isString(format),
             is.null(text),
             isString(quote),
+            isCharacter(naStrings),
             isFlag(quiet)
         )
         format <- match.arg(format)
@@ -1011,6 +1017,7 @@ NULL
              rownameCol = NULL,
              colnames = TRUE,
              quote = "\"",
+             naStrings = naStrings,
              comment = "",
              skip = 0L,
              nMax = Inf,
@@ -1047,6 +1054,7 @@ NULL
             isScalar(rownameCol) || is.null(rownameCol),
             isFlag(colnames) || isCharacter(colnames),
             is.character(quote) && length(quote) <= 1L,
+            isCharacter(naStrings),
             is.character(comment) && length(comment) <= 1L,
             isInt(skip), isNonNegative(skip),
             isPositive(nMax),
@@ -1212,7 +1220,7 @@ NULL
 
 #' Import a Microsoft Excel worksheet (`.xlsx`)
 #'
-#' @note Updated 2023-07-07.
+#' @note Updated 2023-09-19.
 #' @noRd
 `import,PipetteExcelFile` <- # nolint
     function(con,
@@ -1224,6 +1232,7 @@ NULL
              colnames = TRUE,
              skip = 0L,
              nMax = Inf,
+             naStrings = naStrings,
              makeNames = getOption(
                  x = "acid.import.make.names",
                  default = syntactic::makeNames
@@ -1251,6 +1260,7 @@ NULL
             isFlag(colnames) || isCharacter(colnames),
             isInt(skip), isNonNegative(skip),
             isPositive(nMax),
+            isCharacter(naStrings),
             is.function(makeNames) ||
                 is.null(makeNames) ||
                 isFALSE(makeNames),
