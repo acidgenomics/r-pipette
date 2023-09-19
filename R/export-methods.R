@@ -1,12 +1,7 @@
-## FIXME Need to add support for GRangesList (e.g. RefSeqGenes,
-## RefSeqTranscripts) from AcidGenomes.
-
-
-
 #' Export
 #'
 #' @name export
-#' @note Updated 2023-04-13.
+#' @note Updated 2023-09-19.
 #'
 #' @section Output file format extension:
 #'
