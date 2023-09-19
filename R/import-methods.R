@@ -827,57 +827,58 @@ NULL
 
 
 ## Updated 2023-09-19.
-`import,textConnection` <- function(con,
-                                    format = c("csv", "tsv"),
-                                    text, # missing
-                                    colnames = TRUE,
-                                    quote = "\"",
-                                    quiet = getOption(
-                                        x = "acid.quiet",
-                                        default = FALSE
-                                    )) {
-    if (missing(text)) {
-        text <- NULL
-    }
-    assert(
-        is(con, "textConnection"),
-        isString(format),
-        is.null(text),
-        isString(quote),
-        isFlag(quiet)
-    )
-    format <- match.arg(format)
-    whatPkg <- "base"
-    whatFun <- "read.table"
-    args <- list(
-        "file" = con,
-        "blank.lines.skip" = FALSE,
-        "fill" = FALSE,
-        "na.strings" = naStrings,
-        "quote" = quote,
-        "sep" = switch(
-            EXPR = format,
-            "csv" = ",",
-            "tsv" = "\t"
+`import,textConnection` <- # nolint
+    function(con,
+             format = c("csv", "tsv"),
+             text, # missing
+             colnames = TRUE,
+             quote = "\"",
+             quiet = getOption(
+                 x = "acid.quiet",
+                 default = FALSE
+             )) {
+        if (missing(text)) {
+            text <- NULL
+        }
+        assert(
+            is(con, "textConnection"),
+            isString(format),
+            is.null(text),
+            isString(quote),
+            isFlag(quiet)
         )
-    )
-    if (isCharacter(colnames)) {
-        args[["header"]] <- FALSE
-        args[["col.names"]] <- colnames
-    } else {
-        args[["header"]] <- colnames
+        format <- match.arg(format)
+        whatPkg <- "base"
+        whatFun <- "read.table"
+        args <- list(
+            "file" = con,
+            "blank.lines.skip" = FALSE,
+            "fill" = FALSE,
+            "na.strings" = naStrings,
+            "quote" = quote,
+            "sep" = switch(
+                EXPR = format,
+                "csv" = ",",
+                "tsv" = "\t"
+            )
+        )
+        if (isCharacter(colnames)) {
+            args[["header"]] <- FALSE
+            args[["col.names"]] <- colnames
+        } else {
+            args[["header"]] <- colnames
+        }
+        if (isFALSE(quiet)) {
+            alert(sprintf(
+                "Importing text connection with {.pkg %s}::{.fun %s}.",
+                whatPkg, whatFun
+            ))
+        }
+        what <- .getFunction(f = whatFun, pkg = whatPkg)
+        object <- do.call(what = what, args = args)
+        assert(is.data.frame(object))
+        object
     }
-    if (isFALSE(quiet)) {
-        alert(sprintf(
-            "Importing text connection with {.pkg %s}::{.fun %s}.",
-            whatPkg, whatFun
-        ))
-    }
-    what <- .getFunction(f = whatFun, pkg = whatPkg)
-    object <- do.call(what = what, args = args)
-    assert(is.data.frame(object))
-    object
-}
 
 
 
