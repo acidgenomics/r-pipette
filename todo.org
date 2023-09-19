@@ -1,6 +1,9 @@
 #+TITLE: pipette
 #+STARTUP: content
 * Development
+** TODO Consider adding support for `unfactor` function, which handles numerics/
+   integers the way we would expect.
+** TODO Let the user determine which columns to factorize.
 ** TODO Make some optional packages required, to make downstream dependencies
    less likely to run into package issues: BiocFileCache, readr, data.table.
 ** TODO Add code coverage for BAM, CRAM, SAM, BCF, and VCF files.
