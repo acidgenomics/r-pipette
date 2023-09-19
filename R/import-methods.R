@@ -1,14 +1,9 @@
-## FIXME Add support for import of text connection via `textConnection`.
-## e.g. draft code in r-pipette for getURLDirList.
-
-
-
 #' Import
 #'
 #' Read file by extension into R.
 #'
 #' @name import
-#' @note Updated 2023-07-13.
+#' @note Updated 2023-09-19.
 #'
 #' @details
 #' `import()` supports automatic loading of common file types, by wrapping
