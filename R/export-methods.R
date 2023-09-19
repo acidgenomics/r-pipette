@@ -392,7 +392,7 @@ NULL
         ## We prefer camel case formatting, so handle edge case of GRangesList
         ## coercion resulting in hard-coded snake case formatted names. This is
         ## intended primarily for export of `RefSeqTranscripts` object.
-        dfMode <- character()
+        dfMode <- "default"
         if (is(object, "GRangesList")) {
             dfMode <- "GRangesList"
         }
