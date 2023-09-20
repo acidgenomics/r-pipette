@@ -1,7 +1,3 @@
-## FIXME Consider reworking to use "object[idx] <- lapply(" approach from factorize.
-
-
-
 #' Decode data that uses run-length encoding
 #'
 #' @name decode
@@ -57,26 +53,22 @@ NULL
             idx <- seq(from = 1L, to = ncol(x))
             lgl <- idx %in% j
         }
-        lst <- Map(
+        lgl <- unlist(Map(
             f = function(x, eval) {
                 if (isFALSE(eval)) {
                     return(x)
                 }
-                if (is(x, "Rle")) {
-                    x <- decode(x)
-                }
-                if (is.factor(x)) {
-                    x <- droplevels(x)
-                }
-                x
+                is(x, "Rle")
             },
             x = x,
             eval = lgl
-        )
-        out <- as.DataFrame(lst)
-        dimnames(out) <- dimnames(x)
-        metadata(out) <- metadata(x)
-        out
+        ))
+        if (!any(lgl)) {
+            return(x)
+        }
+        idx <- which(lgl)
+        x[idx] <- lapply(X = x[idx], FUN = decode)
+        x
     }
 
 
