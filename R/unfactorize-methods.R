@@ -72,7 +72,10 @@ NULL
             )
             lgl <- colnames(object) %in% j
         } else {
-            assert(length(j) <= ncol(object))
+            assert(
+                allAreIntegerish(j),
+                length(j) <= ncol(object)
+            )
             idx <- seq(from = 1L, to = ncol(object))
             lgl <- idx %in% j
         }

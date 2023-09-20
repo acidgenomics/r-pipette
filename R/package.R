@@ -41,11 +41,11 @@ NULL
 #' toInlineString
 #' @importFrom Matrix readMM writeMM
 #' @importFrom goalie assert allAreAtomic allAreExisting allAreExistingURLs
-#' allAreFiles allAreMatchingFixed allAreMatchingRegex allAreNonExisting
-#' allHaveAccess areDisjointSets areSameLength areSetEqual bapply
-#' compressExtPattern extPattern formalCompress hasColnames hasCols hasDimnames
-#' hasDuplicates hasLength hasNames hasNoDuplicates hasRownames hasRows
-#' hasValidNames hasValidDimnames isADir isAFile isATempFile isAURL
+#' allAreFiles allAreIntegerish allAreMatchingFixed allAreMatchingRegex
+#' allAreNonExisting allHaveAccess areDisjointSets areSameLength areSetEqual
+#' bapply compressExtPattern extPattern formalCompress hasColnames hasCols
+#' hasDimnames hasDuplicates hasLength hasNames hasNoDuplicates hasRownames
+#' hasRows hasValidNames hasValidDimnames isADir isAFile isATempFile isAURL
 #' isAnExistingURL isAny isCharacter isFlag isInstalled isInt isMatchingFixed
 #' isMatchingRegex isNonNegative isPositive isScalar isString isSubset
 #' requireNamespaces validNames validate

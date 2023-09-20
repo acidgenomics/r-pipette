@@ -37,20 +37,42 @@ NULL
     function(object, j = NULL) {
         assert(is.null(j) || is.vector(j))
         if (is.null(j)) {
-            lgl <- bapply(
-                X = object,
-                FUN = function(x) {
-                    if (is.factor(x)) {
-                        return(TRUE)
-                    }
-                    if (isS4(x) || !is.atomic(x) || is.logical(x)) {
-                        return(FALSE)
-                    }
-                    ok <- hasDuplicates(na.omit(x))
-                    ok
-                }
+            if (!(hasCols(object) && hasRows(object))) {
+                return(object)
+            }
+            lgl <- rep(x = TRUE, times = ncol(object))
+        } else if (is.character(j)) {
+            assert(
+                hasColnames(object),
+                isSubset(j, colnames(object))
             )
+            lgl <- colnames(object) %in% j
+        } else {
+            assert(
+                allAreIntegerish(j),
+                length(j) <= ncol(object)
+            )
+            idx <- seq(from = 1L, to = ncol(object))
+            lgl <- idx %in% j
         }
+        lgl <- Map(
+            f = function(x, eval) {
+                if (isFALSE(eval)) {
+                    return(FALSE)
+                }
+                if (is.factor(x)) {
+                    return(TRUE)
+                }
+                if (isS4(x) || !is.atomic(x) || is.logical(x)) {
+                    return(FALSE)
+                }
+                ok <- hasDuplicates(na.omit(x))
+                ok
+            },
+            x = object,
+            eval = lgl
+        )
+        lgl <- unlist(x = lgl, recursive = FALSE, use.names = FALSE)
         if (!any(lgl)) {
             return(object)
         }
