@@ -54,7 +54,6 @@ NULL
         if (!any(lgl)) {
             return(object)
         }
-        object <- as(object, "DFrame")
         idx <- which(lgl)
         object[idx] <- lapply(
             X = object[idx],
