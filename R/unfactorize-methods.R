@@ -1,7 +1,3 @@
-## FIXME Consider reworking to use "object[idx] <- lapply(" approach from factorize.
-
-
-
 #' @name unfactorize
 #' @inherit AcidGenerics::unfactorize
 #' @note Updated 2023-09-20.
@@ -79,28 +75,31 @@ NULL
             idx <- seq(from = 1L, to = ncol(object))
             lgl <- idx %in% j
         }
-        assert(
-            is.logical(lgl),
-            hasLength(lgl, n = ncol(object))
-        )
-        lst <- Map(
+        ## FIXME Now figure out which columns are factor.
+        lgl <- Map(
             f = function(x, eval) {
                 if (isFALSE(eval)) {
-                    return(x)
+                    return(FALSE)
                 }
-                if (!is.factor(x)) {
-                    return(x)
-                }
-                unfactorize(x)
+                is.factor(x)
             },
             x = object,
             eval = lgl
         )
-        out <- as.DataFrame(lst)
-        dimnames(out) <- dimnames(object)
-        metadata(out) <- metadata(object)
-        out
+        lgl <- unlist(x = lgl, recursive = FALSE, use.names = FALSE)
+        if (!any(lgl)) {
+            return(object)
+        }
+        idx <- which(lgl)
+        object[idx] <- lapply(X = object[idx], FUN = unfactorize)
+        object
     }
+
+
+
+## Updated 2021-10-14.
+`unfactorize,data.frame` <- # nolint
+    `unfactorize,DFrame`
 
 
 
@@ -118,4 +117,12 @@ setMethod(
     f = "unfactorize",
     signature = signature(object = "DFrame"),
     definition = `unfactorize,DFrame`
+)
+
+#' @export
+#' @rdname unfactorize
+setMethod(
+    f = "unfactorize",
+    signature = signature(object = "data.frame"),
+    definition = `unfactorize,data.frame`
 )
