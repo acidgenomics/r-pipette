@@ -1,8 +1,3 @@
-## FIXME Rework to assign directly into the columns, similar to factorize.
-## Then we can add simpler data.frame support here, rather than coercing...
-
-
-
 #' @name sanitizeNA
 #' @inherit AcidGenerics::sanitizeNA
 #' @note Updated 2023-09-20.
