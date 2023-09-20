@@ -44,7 +44,8 @@ object <- droplevels2(object)
 print(object)
 
 ## Rle ====
-object <- Rle(factor(c("a", "a", "b", "b"), levels = c("a", "b", "c")))
+object <- factor(c("a", "a", "b", "b"), levels = c("a", "b", "c"))
+object <- S4Vectors::Rle(object)
 print(object)
 object <- droplevels2(object)
 print(object)
