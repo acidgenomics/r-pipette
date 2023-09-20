@@ -50,9 +50,9 @@ NULL
     function(object) {
         idx <- as.integer(object)
         lvl <- levels(object)
-        if (all(grepl(pattern = "^[0-9]+", x = lvl))) {
+        if (all(grepl(pattern = "^[0-9]+$", x = lvl))) {
             lvl <- as.integer(lvl)
-        } else if (all(grepl(pattern = "^[0-9.]+", x = lvl))) {
+        } else if (all(grepl(pattern = "^[0-9.]+$", x = lvl))) {
             lvl <- as.numeric(lvl)
         }
         out <- lvl[idx]
