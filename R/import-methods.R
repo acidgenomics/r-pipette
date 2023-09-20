@@ -1170,8 +1170,6 @@ NULL
 #' @noRd
 `import,PipetteExcelFile` <- # nolint
     function(con,
-             format, # missing
-             text, # missing
              sheet = 1L,
              rownames = TRUE,
              rownameCol = NULL,
@@ -1182,15 +1180,7 @@ NULL
              makeNames = syntactic::makeNames,
              metadata = FALSE,
              quiet = FALSE) {
-        if (missing(format)) {
-            format <- NULL
-        }
-        if (missing(text)) {
-            text <- NULL
-        }
         assert(
-            is.null(format),
-            is.null(text),
             isScalar(sheet),
             isFlag(rownames) || isCharacter(rownames),
             isScalar(rownameCol) || is.null(rownameCol),
@@ -1422,33 +1412,19 @@ NULL
 
 #' Import source code lines
 #'
-#' @note Updated 2023-07-07.
+#' @note Updated 2023-09-20.
 #' @noRd
 `import,PipetteLinesFile` <- # nolint
     function(con,
-             format, # missing
-             text, # missing
              comment = "",
              skip = 0L,
              nMax = Inf,
              stripWhitespace = FALSE,
              removeBlank = FALSE,
-             metadata = getOption(
-                 x = "acid.import.metadata",
-                 default = FALSE
-             ),
-             engine = getOption(
-                 x = "acid.import.engine",
-                 default = "base"
-             ),
-             quiet = getOption(
-                 x = "acid.quiet",
-                 default = FALSE
-             ),
-             verbose = getOption(
-                 x = "acid.verbose",
-                 default = FALSE
-             )) {
+             metadata = FALSE,
+             engine = "base",
+             quiet = FALSE,
+             verbose = FALSE) {
         if (missing(format)) {
             format <- NULL
         }
@@ -1456,8 +1432,6 @@ NULL
             text <- NULL
         }
         assert(
-            is.null(format),
-            is.null(text),
             is.character(comment) && length(comment) <= 1L,
             isInt(skip),
             isInt(skip), isNonNegative(skip),
@@ -1513,10 +1487,6 @@ NULL
                 whatFun <- "read_lines"
                 args <- list(
                     "file" = file,
-                    ## > "lazy" = getOption(
-                    ## >     x = "readr.read_lazy",
-                    ## >     default = TRUE
-                    ## > ),
                     "lazy" = FALSE,
                     "n_max" = nMax,
                     "progress" = verbose,
@@ -2627,30 +2597,22 @@ setMethod(
     definition = `import,PipetteDelimFile`
 )
 
-#' #' @rdname import
-#' #' @export
-#' setMethod(
-#'     f = "import",
-#'     signature = signature(
-#'         con = "PipetteLinesFile",
-#'         format = "missing",
-#'         text = "missing"
-#'     ),
-#'     definition = `import,PipetteLinesFile`
-#' )
-#'
-#' #' @rdname import
-#' #' @export
-#' setMethod(
-#'     f = "import",
-#'     signature = signature(
-#'         con = "PipetteExcelFile",
-#'         format = "missing",
-#'         text = "missing"
-#'     ),
-#'     definition = `import,PipetteExcelFile`
-#' )
-#'
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(con = "PipetteLinesFile"),
+    definition = `import,PipetteLinesFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(con = "PipetteExcelFile"),
+    definition = `import,PipetteExcelFile`
+)
+
 #' #' @rdname import
 #' #' @export
 #' setMethod(

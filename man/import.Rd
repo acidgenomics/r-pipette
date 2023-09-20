@@ -7,6 +7,8 @@
 \alias{import,PipetteRDSFile-method}
 \alias{import,PipetteRDataFile-method}
 \alias{import,PipetteDelimFile-method}
+\alias{import,PipetteLinesFile-method}
+\alias{import,PipetteExcelFile-method}
 \title{Import data into R}
 \usage{
 import(con, ...)
@@ -41,6 +43,33 @@ import(con, ...)
   metadata = FALSE,
   quiet = FALSE,
   verbose = FALSE
+)
+
+\S4method{import}{PipetteLinesFile}(
+  con,
+  comment = "",
+  skip = 0L,
+  nMax = Inf,
+  stripWhitespace = FALSE,
+  removeBlank = FALSE,
+  metadata = FALSE,
+  engine = "base",
+  quiet = FALSE,
+  verbose = FALSE
+)
+
+\S4method{import}{PipetteExcelFile}(
+  con,
+  sheet = 1L,
+  rownames = TRUE,
+  rownameCol = NULL,
+  colnames = TRUE,
+  skip = 0L,
+  nMax = Inf,
+  naStrings = pipette::naStrings,
+  makeNames = syntactic::makeNames,
+  metadata = FALSE,
+  quiet = FALSE
 )
 }
 \arguments{
@@ -113,14 +142,23 @@ Currently supported:
 Apply syntactic naming function to (column) names.
 Function is never applied to row names, when they are defined in object.}
 
-\item{moleculeType}{\code{character(1)}.
-Molecule type, either DNA or RNA.
-Most RNA-seq FASTQ files contain complementary DNA (cDNA) sequences, not
-direct sequencing of the RNA molecules.}
+\item{stripWhitespace}{\code{logical(1)}.
+Strip leading and/or trailing whitespace.
+\emph{Applies to source code lines}.}
 
 \item{removeBlank}{\code{logical(1)}.
 Remove blank lines.
 \emph{Applies to source code lines}.}
+
+\item{sheet}{\code{character(1)} or \code{integer(1)}.
+Sheet to read. Either a string (the name of a sheet), or an integer (the
+position of the sheet). Defaults to the first sheet.
+\emph{Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.}}
+
+\item{moleculeType}{\code{character(1)}.
+Molecule type, either DNA or RNA.
+Most RNA-seq FASTQ files contain complementary DNA (cDNA) sequences, not
+direct sequencing of the RNA molecules.}
 
 \item{return}{\code{character(1)}.
 Object class to return.}
@@ -128,15 +166,6 @@ Object class to return.}
 \item{rownamesFile, colnamesFile}{\code{character(1)} or \code{NULL}.
 Row names and/or column names sidecare file.
 Applies primarily to MatrixMarket Exchange files (e.g. \code{MTXFile}).}
-
-\item{sheet}{\code{character(1)} or \code{integer(1)}.
-Sheet to read. Either a string (the name of a sheet), or an integer (the
-position of the sheet). Defaults to the first sheet.
-\emph{Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.}}
-
-\item{stripWhitespace}{\code{logical(1)}.
-Strip leading and/or trailing whitespace.
-\emph{Applies to source code lines}.}
 }
 \value{
 Varies, depending on the file type (format):
