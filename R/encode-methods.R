@@ -1,12 +1,12 @@
-## FIXME Allow the user to specify which columns.
-
-
-
 #' @name encode
 #' @inherit AcidGenerics::encode
 #' @note Updated 2023-09-20.
 #'
 #' @inheritParams AcidRoxygen::params
+#'
+#' @param j `vector`.
+#' Column names or positions to evaluate.
+#'
 #' @param ... Additional arguments.
 #'
 #' @seealso `Rle()`.
@@ -36,13 +36,24 @@ NULL
             if (!(hasCols(x) && hasRows(x))) {
                 return(x)
             }
+            lgl <- rep(x = TRUE, times = ncol(x))
+        } else if (is.character(j)) {
+            assert(
+                hasColnames(x),
+                isSubset(j, colnames(x))
+            )
+            lgl <- colnames(x) %in% j
+        } else {
+            assert(length(j) <= ncol(x))
+            idx <- seq(from = 1L, to = ncol(x))
+            lgl <- idx %in% j
         }
-
-
-        ## FIXME Rework to support specific columns.
-        list <- lapply(
-            X = x,
-            FUN = function(x) {
+        assert(
+            is.logical(lgl),
+            hasLength(lgl, n = ncol(x))
+        )
+        lst <- Map(
+            f = function(x) {
                 if (is(x, "List")) {
                     return(x)
                 }
@@ -59,17 +70,17 @@ NULL
                     x <- Rle(x)
                 }
                 x
-            }
+            },
+            x = x,
+            eval = lgl
         )
-        out <- as.DataFrame(list)
+        out <- as.DataFrame(lst)
         dimnames(out) <- dimnames(x)
         metadata(out) <- metadata(x)
         out
     }
 
 
-
-## FIXME Rework to support specific columns.
 
 ## Updated 2023-09-19.
 `encode,Ranges` <- # nolint

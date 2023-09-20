@@ -4,9 +4,13 @@
 
 #' @name factorize
 #' @inherit AcidGenerics::factorize
-#' @note Updated 2023-09-19.
+#' @note Updated 2023-09-20.
 #'
 #' @inheritParams AcidRoxygen::params
+#'
+#' @param j `vector`.
+#' Column names or positions to evaluate.
+#'
 #' @param ... Additional arguments.
 #'
 #' @seealso
