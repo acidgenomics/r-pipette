@@ -41,8 +41,8 @@ NULL
             return(x)
         }
         idx <- which(lgl)
-        object[idx] <- lapply(X = object[idx], FUN = droplevels2)
-        object
+        x[idx] <- lapply(X = x[idx], FUN = droplevels2)
+        x
     }
 
 
