@@ -41,3 +41,36 @@ test_that("DFrame", {
         )
     )
 })
+
+test_that("Column selection with j", {
+    expect_identical(
+        object = unfactorize(
+            object = data.frame(
+                "a" = as.factor(c(100L, 100L, 101L, 101L)),
+                "b" = as.factor(c("a", "b", "a", "b")),
+                row.names = c("AAA", "BBB", "CCC", "DDD")
+            ),
+            j = 2L
+        ),
+        expected = data.frame(
+            "a" = as.factor(c(100L, 100L, 101L, 101L)),
+            "b" = c("a", "b", "a", "b"),
+            row.names = c("AAA", "BBB", "CCC", "DDD")
+        )
+    )
+    expect_identical(
+        object = unfactorize(
+            object = data.frame(
+                "a" = as.factor(c(100L, 100L, 101L, 101L)),
+                "b" = as.factor(c("a", "b", "a", "b")),
+                row.names = c("AAA", "BBB", "CCC", "DDD")
+            ),
+            j = "a"
+        ),
+        expected = data.frame(
+            "a" = c(100L, 100L, 101L, 101L),
+            "b" = as.factor(c("a", "b", "a", "b")),
+            row.names = c("AAA", "BBB", "CCC", "DDD")
+        )
+    )
+})
