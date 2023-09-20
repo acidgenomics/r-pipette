@@ -3,14 +3,20 @@
 \name{factorize}
 \alias{factorize}
 \alias{factorize,DFrame-method}
+\alias{factorize,atomic-method}
 \alias{factorize,data.frame-method}
+\alias{factorize,factor-method}
 \title{Factorize}
 \usage{
 factorize(object, ...)
 
 \S4method{factorize}{DFrame}(object, j = NULL)
 
+\S4method{factorize}{atomic}(object)
+
 \S4method{factorize}{data.frame}(object, j = NULL)
+
+\S4method{factorize}{factor}(object)
 }
 \arguments{
 \item{object}{Object.}
