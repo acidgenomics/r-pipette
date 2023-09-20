@@ -87,3 +87,9 @@ NULL
 #' @export
 #' @usage sanitizePercent(object, ...)
 NULL
+
+#' @rdname unfactorize
+#' @name unfactorize
+#' @export
+#' @usage unfactorize(object, ...)
+NULL
