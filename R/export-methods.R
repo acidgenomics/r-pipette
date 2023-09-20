@@ -353,9 +353,8 @@ NULL
              overwrite = TRUE,
              engine = c("base", "data.table", "readr"),
              quiet = FALSE) {
-        ## We prefer camel case formatting, so handle edge case of GRangesList
-        ## coercion resulting in hard-coded snake case formatted names. This is
-        ## intended primarily for export of `RefSeqTranscripts` object.
+        ## Handle edge cases where `as.data.frame` coercion generates
+        ## undesirable extra columns.
         dfMode <- "default"
         if (is(object, "GRangesList")) {
             dfMode <- "GRangesList"
@@ -375,12 +374,10 @@ NULL
         assert(
             hasNoDuplicates(colnames(object)),
             isString(con),
-            is.null(format),
             isFlag(rownames),
             isFlag(colnames),
             isFlag(quote),
             isFlag(overwrite),
-            isFlag(verbose),
             isFlag(quiet)
         )
         format <- match.arg(
@@ -521,7 +518,7 @@ NULL
                         "tsv" = "\t"
                     ),
                     "showProgress" = FALSE,
-                    "verbose" = verbose
+                    "verbose" = FALSE
                 )
             },
             "readr" = {
@@ -579,7 +576,7 @@ NULL
 
 #' Export `Matrix` (e.g. `sparseMatrix`) method
 #'
-#' @note Updated 2022-09-13.
+#' @note Updated 2023-09-20.
 #' @noRd
 #'
 #' @details
@@ -589,17 +586,12 @@ NULL
 `export,Matrix` <- # nolint
     function(object,
              con,
-             format, # missing
              overwrite = TRUE,
              quiet = FALSE) {
-        if (missing(format)) {
-            format <- NULL
-        }
         assert(
             validObject(object),
             hasLength(object),
             isString(con),
-            is.null(format),
             isFlag(overwrite),
             isFlag(quiet)
         )
@@ -704,89 +696,82 @@ NULL
 
 ## S4 method exports ===========================================================
 
-#' #' @rdname export
-#' #' @export
-#' setMethod(
-#'     f = "export",
-#'     signature = signature(
-#'         object = "DFrame",
-#'         con = "character",
-#'         format = "missing"
-#'     ),
-#'     definition = `export,DFrame`
-#' )
-#'
-#' #' @rdname export
-#' #' @export
-#' setMethod(
-#'     f = "export",
-#'     signature = signature(
-#'         object = "GRanges",
-#'         con = "character",
-#'         format = "missing"
-#'     ),
-#'     definition = `export,GRanges`
-#' )
-#'
-#' #' @rdname export
-#' #' @export
-#' setMethod(
-#'     f = "export",
-#'     signature = signature(
-#'         object = "GRangesList",
-#'         con = "character",
-#'         format = "missing"
-#'     ),
-#'     definition = `export,GRangesList`
-#' )
-#'
-#' #' @rdname export
-#' #' @export
-#' setMethod(
-#'     f = "export",
-#'     signature = signature(
-#'         object = "Matrix",
-#'         con = "character",
-#'         format = "missing"
-#'     ),
-#'     definition = `export,Matrix`
-#' )
-#'
-#' #' @rdname export
-#' #' @export
-#' setMethod(
-#'     f = "export",
-#'     signature = signature(
-#'         object = "atomic",
-#'         con = "character",
-#'         format = "missing"
-#'     ),
-#'     definition = `export,atomic`
-#' )
-#'
-#' #' @rdname export
-#' #' @export
-#' setMethod(
-#'     f = "export",
-#'     signature = signature(
-#'         object = "data.frame",
-#'         con = "character",
-#'         format = "missing"
-#'     ),
-#'     definition = `export,data.frame`
-#' )
-#'
-#' #' @rdname export
-#' #' @export
-#' setMethod(
-#'     f = "export",
-#'     signature = signature(
-#'         object = "matrix",
-#'         con = "character",
-#'         format = "missing"
-#'     ),
-#'     definition = `export,matrix`
-#' )
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "DFrame",
+        con = "character"
+    ),
+    definition = `export,DFrame`
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "GRanges",
+        con = "character"
+    ),
+    definition = `export,GRanges`
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "GRangesList",
+        con = "character"
+    ),
+    definition = `export,GRangesList`
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "Matrix",
+        con = "character"
+    ),
+    definition = `export,Matrix`
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "atomic",
+        con = "character"
+    ),
+    definition = `export,atomic`
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "data.frame",
+        con = "character"
+    ),
+    definition = `export,data.frame`
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "matrix",
+        con = "character"
+    ),
+    definition = `export,matrix`
+)
 
 #' @rdname export
 #' @export
@@ -798,25 +783,3 @@ setMethod(
     ),
     definition = `export,ANY,missing`
 )
-
-
-
-## Deprecated S4 method exports ================================================
-
-#' #' @rdname export
-#' #' @usage NULL
-#' #' @export
-#' setMethod(
-#'     f = "export",
-#'     signature = signature(
-#'         object = "ANY",
-#'         con = "missing",
-#'         format = "character"
-#'     ),
-#'     definition = function(object, con, format) {
-#'         abort(sprintf(
-#'             "Use {.arg %s} instead of {.arg %s}.",
-#'             "con", "format"
-#'         ))
-#'     }
-#' )
