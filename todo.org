@@ -1,13 +1,11 @@
 #+TITLE: pipette
 #+STARTUP: content
 * Development
-** TODO Consider adding support for `unfactor` function, which handles numerics/
-   integers the way we would expect.
-** TODO Let the user determine which columns to factorize.
-** TODO Make some optional packages required, to make downstream dependencies
-   less likely to run into package issues: BiocFileCache, readr, data.table.
-** TODO Add code coverage for BAM, CRAM, SAM, BCF, and VCF files.
 ** TODO Need to improve export of matrix with row names defined.
-    Currently dropping this...add code coverage.
-** TODO File path messages are inconsistent on Windows?
-** TODO Some of the unit tests are failing on Windows?
+    Currently dropping this?
+** TODO Let the user determine which columns to factorize.
+** TODO Remove factorize calls in other packages in favor of Rle.
+    Alternatively, pick the columns to factorize.
+** TODO Add code coverage for BAM, CRAM, SAM, BCF, and VCF files.
+** TODO Need to check package coverage on Windows.
+** TODO Check that file path messages work on Windows.
