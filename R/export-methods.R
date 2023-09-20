@@ -1,7 +1,3 @@
-## FIXME Don't allow format usage here.
-
-
-
 #' @name export
 #' @inherit AcidGenerics::export
 #' @note Updated 2023-09-20.
@@ -58,9 +54,6 @@
 #' - base
 #' - data.table
 #' - readr
-#'
-#' @param format `character(1)`, `missing`, or `NULL`.
-#' *Currently not supported.*
 #'
 #' @param quote `logical(1)`.
 #' Surround any `character` or `factor` columns by double quotes.
