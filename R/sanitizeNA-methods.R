@@ -1,6 +1,11 @@
+## FIXME Rework to assign directly into the columns, similar to factorize.
+## Then we can add simpler data.frame support here, rather than coercing...
+
+
+
 #' @name sanitizeNA
 #' @inherit AcidGenerics::sanitizeNA
-#' @note Updated 2021-02-11.
+#' @note Updated 2023-09-20.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
@@ -24,6 +29,10 @@
 NULL
 
 
+
+## FIXME Need to rework to not construct the whole data frame...
+## figure out where we need to apply first.
+## Can optimize by checking to see if we need to apply first.
 
 ## Updated 2023-09-20.
 `sanitizeNA,DFrame` <- # nolint
@@ -79,6 +88,7 @@ NULL
 
 
 
+## FIXME Rework to use the same code as DFrame.
 ## Updated 2021-06-09.
 `sanitizeNA,data.frame` <- # nolint
     function(object) {
