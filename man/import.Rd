@@ -9,7 +9,26 @@
 \alias{import,PipetteDelimFile-method}
 \alias{import,PipetteLinesFile-method}
 \alias{import,PipetteExcelFile-method}
+\alias{import,PipetteBAMFile-method}
+\alias{import,PipetteBCFFile-method}
+\alias{import,PipetteCRAMFile-method}
+\alias{import,PipetteFASTAFile-method}
+\alias{import,PipetteFASTQFile-method}
+\alias{import,PipetteGCTFile-method}
+\alias{import,PipetteGMTFile-method}
+\alias{import,PipetteGMXFile-method}
+\alias{import,PipetteGRPFile-method}
+\alias{import,PipetteJSONFile-method}
+\alias{import,PipetteMAFFile-method}
 \alias{import,PipetteMTXFile-method}
+\alias{import,PipetteOBOFile-method}
+\alias{import,PipettePZFXFile-method}
+\alias{import,PipetteSAMFile-method}
+\alias{import,PipetteVCFFile-method}
+\alias{import,PipetteYAMLFile-method}
+\alias{import,PipetteBcbioCountsFile-method}
+\alias{import,PipetteRioFile-method}
+\alias{import,PipetteRtracklayerFile-method}
 \title{Import data into R}
 \usage{
 import(con, ...)
@@ -71,7 +90,70 @@ import(con, ...)
   quiet = FALSE
 )
 
+\S4method{import}{PipetteBAMFile}(con, quiet = FALSE)
+
+\S4method{import}{PipetteBCFFile}(con, quiet = FALSE)
+
+\S4method{import}{PipetteCRAMFile}(con, quiet = FALSE)
+
+\S4method{import}{PipetteFASTAFile}(
+  con,
+  moleculeType = c("DNA", "RNA", "AA"),
+  metadata = FALSE,
+  quiet = FALSE
+)
+
+\S4method{import}{PipetteFASTQFile}(con, moleculeType = c("DNA", "RNA"), metadata = FALSE, quiet = FALSE)
+
+\S4method{import}{PipetteGCTFile}(
+  con,
+  metadata = FALSE,
+  quiet = FALSE,
+  return = c("matrix", "data.frame")
+)
+
+\S4method{import}{PipetteGMTFile}(con, quiet = FALSE)
+
+\S4method{import}{PipetteGMXFile}(con, quiet = FALSE)
+
+\S4method{import}{PipetteGRPFile}(con, quiet = FALSE)
+
+\S4method{import}{PipetteJSONFile}(con, metadata = FALSE, quiet = FALSE)
+
+\S4method{import}{PipetteMAFFile}(con, quiet = FALSE)
+
 \S4method{import}{PipetteMTXFile}(con, rownamesFile, colnamesFile, metadata = FALSE, quiet = FALSE)
+
+\S4method{import}{PipetteOBOFile}(con, quiet = FALSE)
+
+\S4method{import}{PipettePZFXFile}(
+  con,
+  sheet = 1L,
+  makeNames = syntactic::makeNames,
+  metadata = FALSE,
+  quiet = FALSE
+)
+
+\S4method{import}{PipetteSAMFile}(con, quiet = FALSE)
+
+\S4method{import}{PipetteVCFFile}(con, quiet = FALSE)
+
+\S4method{import}{PipetteYAMLFile}(con, metadata = FALSE, quiet = FALSE)
+
+\S4method{import}{PipetteBcbioCountsFile}(con, metadata = FALSE, quiet = FALSE)
+
+\S4method{import}{PipetteRioFile}(
+  con,
+  rownames = TRUE,
+  rownameCol = NULL,
+  colnames = TRUE,
+  makeNames = syntactic::makeNames,
+  metadata = FALSE,
+  quiet = FALSE,
+  ...
+)
+
+\S4method{import}{PipetteRtracklayerFile}(con, metadata = FALSE, quiet = FALSE, ...)
 }
 \arguments{
 \item{con}{\code{character(1)} or \code{connection}.
@@ -156,10 +238,6 @@ Sheet to read. Either a string (the name of a sheet), or an integer (the
 position of the sheet). Defaults to the first sheet.
 \emph{Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.}}
 
-\item{rownamesFile, colnamesFile}{\code{character(1)} or \code{NULL}.
-Row names and/or column names sidecare file.
-Applies primarily to MatrixMarket Exchange files (e.g. \code{MTXFile}).}
-
 \item{moleculeType}{\code{character(1)}.
 Molecule type, either DNA or RNA.
 Most RNA-seq FASTQ files contain complementary DNA (cDNA) sequences, not
@@ -167,6 +245,10 @@ direct sequencing of the RNA molecules.}
 
 \item{return}{\code{character(1)}.
 Object class to return.}
+
+\item{rownamesFile, colnamesFile}{\code{character(1)} or \code{NULL}.
+Row names and/or column names sidecare file.
+Applies primarily to MatrixMarket Exchange files (e.g. \code{MTXFile}).}
 }
 \value{
 Varies, depending on the file type (format):
