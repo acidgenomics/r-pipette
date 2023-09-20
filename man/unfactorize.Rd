@@ -11,12 +11,15 @@ unfactorize(object, ...)
 
 \S4method{unfactorize}{factor}(object)
 
-\S4method{unfactorize}{data.frame}(object)
+\S4method{unfactorize}{data.frame}(object, j = NULL)
 
-\S4method{unfactorize}{DFrame}(object)
+\S4method{unfactorize}{DFrame}(object, j = NULL)
 }
 \arguments{
 \item{object}{Object.}
+
+\item{j}{\code{vector}.
+Column names or positions to evaluate.}
 }
 \value{
 Modified object, with \code{factor} coerced back to atomic vector.
