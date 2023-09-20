@@ -50,7 +50,8 @@ NULL
 #' isMatchingRegex isNonNegative isPositive isScalar isString isSubset
 #' requireNamespaces validNames validate
 #' @importFrom jsonlite read_json
-#' @importFrom methods as is hasMethod new setGeneric signature slot validObject
+#' @importFrom methods as is hasMethod new setGeneric signature slot slot<-
+#' validObject
 #' @importFrom utils download.file packageName packageVersion
 #' @importFrom yaml yaml.load_file
 NULL

@@ -5,6 +5,8 @@
 #' @param j `vector`.
 #' Column names or positions to evaluate.
 #'
+#' @param ... Additional arguments.
+#'
 #' @return Modified object, with `factor` coerced back to atomic vector.
 #'
 #' @seealso
