@@ -1,9 +1,3 @@
-## FIXME Need to rework the "resource" usage.
-## FIXME Need to update the signature.
-## FIXME Need to rework origResource.
-
-
-
 #' @name import
 #' @inherit AcidGenerics::import
 #' @note Updated 2023-09-20.
