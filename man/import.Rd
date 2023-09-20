@@ -183,6 +183,9 @@ To disable quoting altogether, use \code{quote = ""} (not generally recommended)
 Character strings to reformat as \code{NA}.
 Refer to \code{pipette::naStrings} for defaults.}
 
+\item{quiet}{\code{logical(1)}.
+Perform command quietly, suppressing messages.}
+
 \item{rownames}{\code{logical(1)}.
 Automatically assign row names, if \code{rowname} column is defined.
 Applies to file types that return a data frame only.}
@@ -224,6 +227,9 @@ Currently supported:
 \item{makeNames}{\code{function}.
 Apply syntactic naming function to (column) names.
 Function is never applied to row names, when they are defined in object.}
+
+\item{metadata}{\code{logical(1)}.
+Slot useful metadata about the import into the object.}
 
 \item{stripWhitespace}{\code{logical(1)}.
 Strip leading and/or trailing whitespace.

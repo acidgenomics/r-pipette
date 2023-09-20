@@ -32,20 +32,12 @@
 #' Note that this function currently wraps `readr::write_delim()` by default
 #' for exporting `DFrame`, `data.frame`, and `matrix` class objects.
 #'
-#' @param ... Additional arguments.
-#'
-#' @param object Object.
-#' An object supporting `dim()`, or a supported class capable of being coerced
-#' to `data.frame`, to be written to disk.
+#' @inheritParams AcidRoxygen::params
 #'
 #' @param append `logical(1)`.
 #' Append to output file.
 #' When enabled, automatically sets `overwrite` argument to `FALSE`.
 #' Requires readr package to be installed.
-#'
-#' @param con `character(1)`, `missing`, or `NULL`.
-#' File path.
-#' Alternatively, can leave unset and use `ext` and `dir` arguments instead.
 #'
 #' @param engine `character(1)`.
 #' Engine (package) to use for export.
@@ -59,8 +51,7 @@
 #' Surround any `character` or `factor` columns by double quotes.
 #' Recommended by default.
 #'
-#' @return Invisible `character`.
-#' File path(s).
+#' @param ... Additional arguments.
 #'
 #' @seealso
 #' Packages:
