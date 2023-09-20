@@ -1,7 +1,10 @@
-#' Export
-#'
+## FIXME Need to simplify the signature.
+
+
+
 #' @name export
-#' @note Updated 2023-09-19.
+#' @inherit AcidGenerics::export
+#' @note Updated 2023-09-20.
 #'
 #' @section Output file format extension:
 #'
@@ -33,8 +36,6 @@
 #' Note that this function currently wraps `readr::write_delim()` by default
 #' for exporting `DFrame`, `data.frame`, and `matrix` class objects.
 #'
-#' @inheritParams AcidRoxygen::params
-#' @inheritParams import
 #' @param ... Additional arguments.
 #'
 #' @param object Object.
@@ -746,120 +747,120 @@ NULL
 
 ## S4 method exports ===========================================================
 
-#' @rdname export
-#' @export
-setMethod(
-    f = "export",
-    signature = signature(
-        object = "DFrame",
-        con = "character",
-        format = "missing"
-    ),
-    definition = `export,DFrame`
-)
-
-#' @rdname export
-#' @export
-setMethod(
-    f = "export",
-    signature = signature(
-        object = "GRanges",
-        con = "character",
-        format = "missing"
-    ),
-    definition = `export,GRanges`
-)
-
-#' @rdname export
-#' @export
-setMethod(
-    f = "export",
-    signature = signature(
-        object = "GRangesList",
-        con = "character",
-        format = "missing"
-    ),
-    definition = `export,GRangesList`
-)
-
-#' @rdname export
-#' @export
-setMethod(
-    f = "export",
-    signature = signature(
-        object = "Matrix",
-        con = "character",
-        format = "missing"
-    ),
-    definition = `export,Matrix`
-)
-
-#' @rdname export
-#' @export
-setMethod(
-    f = "export",
-    signature = signature(
-        object = "atomic",
-        con = "character",
-        format = "missing"
-    ),
-    definition = `export,atomic`
-)
-
-#' @rdname export
-#' @export
-setMethod(
-    f = "export",
-    signature = signature(
-        object = "data.frame",
-        con = "character",
-        format = "missing"
-    ),
-    definition = `export,data.frame`
-)
-
-#' @rdname export
-#' @export
-setMethod(
-    f = "export",
-    signature = signature(
-        object = "matrix",
-        con = "character",
-        format = "missing"
-    ),
-    definition = `export,matrix`
-)
-
-#' @rdname export
-#' @export
-setMethod(
-    f = "export",
-    signature = signature(
-        object = "ANY",
-        con = "missing",
-        format = "missing"
-    ),
-    definition = `export,ANY,NSE`
-)
+#' #' @rdname export
+#' #' @export
+#' setMethod(
+#'     f = "export",
+#'     signature = signature(
+#'         object = "DFrame",
+#'         con = "character",
+#'         format = "missing"
+#'     ),
+#'     definition = `export,DFrame`
+#' )
+#'
+#' #' @rdname export
+#' #' @export
+#' setMethod(
+#'     f = "export",
+#'     signature = signature(
+#'         object = "GRanges",
+#'         con = "character",
+#'         format = "missing"
+#'     ),
+#'     definition = `export,GRanges`
+#' )
+#'
+#' #' @rdname export
+#' #' @export
+#' setMethod(
+#'     f = "export",
+#'     signature = signature(
+#'         object = "GRangesList",
+#'         con = "character",
+#'         format = "missing"
+#'     ),
+#'     definition = `export,GRangesList`
+#' )
+#'
+#' #' @rdname export
+#' #' @export
+#' setMethod(
+#'     f = "export",
+#'     signature = signature(
+#'         object = "Matrix",
+#'         con = "character",
+#'         format = "missing"
+#'     ),
+#'     definition = `export,Matrix`
+#' )
+#'
+#' #' @rdname export
+#' #' @export
+#' setMethod(
+#'     f = "export",
+#'     signature = signature(
+#'         object = "atomic",
+#'         con = "character",
+#'         format = "missing"
+#'     ),
+#'     definition = `export,atomic`
+#' )
+#'
+#' #' @rdname export
+#' #' @export
+#' setMethod(
+#'     f = "export",
+#'     signature = signature(
+#'         object = "data.frame",
+#'         con = "character",
+#'         format = "missing"
+#'     ),
+#'     definition = `export,data.frame`
+#' )
+#'
+#' #' @rdname export
+#' #' @export
+#' setMethod(
+#'     f = "export",
+#'     signature = signature(
+#'         object = "matrix",
+#'         con = "character",
+#'         format = "missing"
+#'     ),
+#'     definition = `export,matrix`
+#' )
+#'
+#' #' @rdname export
+#' #' @export
+#' setMethod(
+#'     f = "export",
+#'     signature = signature(
+#'         object = "ANY",
+#'         con = "missing",
+#'         format = "missing"
+#'     ),
+#'     definition = `export,ANY,NSE`
+#' )
 
 
 
 ## Deprecated S4 method exports ================================================
 
-#' @rdname export
-#' @usage NULL
-#' @export
-setMethod(
-    f = "export",
-    signature = signature(
-        object = "ANY",
-        con = "missing",
-        format = "character"
-    ),
-    definition = function(object, con, format) {
-        abort(sprintf(
-            "Use {.arg %s} instead of {.arg %s}.",
-            "con", "format"
-        ))
-    }
-)
+#' #' @rdname export
+#' #' @usage NULL
+#' #' @export
+#' setMethod(
+#'     f = "export",
+#'     signature = signature(
+#'         object = "ANY",
+#'         con = "missing",
+#'         format = "character"
+#'     ),
+#'     definition = function(object, con, format) {
+#'         abort(sprintf(
+#'             "Use {.arg %s} instead of {.arg %s}.",
+#'             "con", "format"
+#'         ))
+#'     }
+#' )

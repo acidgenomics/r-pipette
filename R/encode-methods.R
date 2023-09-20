@@ -1,6 +1,10 @@
+## FIXME Allow the user to specify which columns.
+
+
+
 #' @name encode
 #' @inherit AcidGenerics::encode
-#' @note Updated 2021-06-09.
+#' @note Updated 2023-09-19.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
@@ -32,6 +36,7 @@ NULL
         }
         meta <- metadata(x)
         rn <- rownames(x)
+        ## FIXME Rework to support specific columns.
         list <- lapply(
             X = x,
             FUN = function(x) {
@@ -61,7 +66,9 @@ NULL
 
 
 
-## Updated 2019-07-20.
+## FIXME Rework to support specific columns.
+
+## Updated 2023-09-19.
 `encode,Ranges` <- # nolint
     function(x) {
         if (!is.null(mcols(x))) {

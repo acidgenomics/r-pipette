@@ -25,7 +25,7 @@ All \code{atomic} columns will be encoded to \code{Rle} S4 class.
 Encode using run-length encoding
 }
 \note{
-Updated 2021-06-09.
+Updated 2023-09-19.
 }
 \examples{
 ## DFrame ====

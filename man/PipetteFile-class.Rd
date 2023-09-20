@@ -35,11 +35,8 @@
 \description{
 Currently intended for use with \code{import} function.
 }
-\details{
-Extends \code{BiocFile} defined in BiocIO package.
-}
 \note{
-Updated 2023-07-12.
+Updated 2023-09-20.
 }
 \section{Primary classes}{
 
@@ -153,9 +150,3 @@ File extension group supporting:
 }
 }
 
-\seealso{
-\itemize{
-\item \code{getGeneric}.
-\item \code{BiocIO::FileForFormat}.
-}
-}

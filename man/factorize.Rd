@@ -25,7 +25,7 @@ All columns will be coerced to \code{factor}.
 Coerce all columns in the object to \code{factor} (i.e. \code{stringsAsFactors}).
 }
 \note{
-Updated 2023-01-31.
+Updated 2023-09-19.
 }
 \examples{
 ## DFrame ====

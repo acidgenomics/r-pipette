@@ -2,269 +2,20 @@
 % Please edit documentation in R/AllGenerics.R, R/import-methods.R
 \name{import}
 \alias{import}
-\alias{import,character,missing,missing-method}
-\alias{import,character,character,missing-method}
-\alias{import,PipetteRDSFile,missing,missing-method}
-\alias{import,PipetteRDataFile,missing,missing-method}
-\alias{import,PipetteDelimFile,missing,missing-method}
-\alias{import,PipetteLinesFile,missing,missing-method}
-\alias{import,PipetteExcelFile,missing,missing-method}
-\alias{import,PipetteBAMFile,missing,missing-method}
-\alias{import,PipetteBCFFile,missing,missing-method}
-\alias{import,PipetteCRAMFile,missing,missing-method}
-\alias{import,PipetteFASTAFile,missing,missing-method}
-\alias{import,PipetteFASTQFile,missing,missing-method}
-\alias{import,PipetteGCTFile,missing,missing-method}
-\alias{import,PipetteGMTFile,missing,missing-method}
-\alias{import,PipetteGMXFile,missing,missing-method}
-\alias{import,PipetteGRPFile,missing,missing-method}
-\alias{import,PipetteJSONFile,missing,missing-method}
-\alias{import,PipetteMAFFile,missing,missing-method}
-\alias{import,PipetteMTXFile,missing,missing-method}
-\alias{import,PipetteOBOFile,missing,missing-method}
-\alias{import,PipettePZFXFile,missing,missing-method}
-\alias{import,PipetteSAMFile,missing,missing-method}
-\alias{import,PipetteVCFFile,missing,missing-method}
-\alias{import,PipetteYAMLFile,missing,missing-method}
-\alias{import,PipetteBcbioCountsFile,missing,missing-method}
-\alias{import,PipetteRioFile,missing,missing-method}
-\alias{import,PipetteRtracklayerFile,missing,missing-method}
-\alias{import,textConnection,character,missing-method}
-\alias{import,missing,missing,missing-method}
-\alias{import,missing,character,missing-method}
-\title{Import}
+\title{Import data into R}
 \usage{
 import(con, format, text, ...)
-
-\S4method{import}{character,missing,missing}(con, format, text, ...)
-
-\S4method{import}{character,character,missing}(con, format, text, ...)
-
-\S4method{import}{PipetteRDSFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
-
-\S4method{import}{PipetteRDataFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
-
-\S4method{import}{PipetteDelimFile,missing,missing}(
-  con,
-  format,
-  text,
-  rownames = TRUE,
-  rownameCol = NULL,
-  colnames = TRUE,
-  quote = "\\"",
-  naStrings = naStrings,
-  comment = "",
-  skip = 0L,
-  nMax = Inf,
-  engine = getOption(x = "acid.import.engine", default = "base"),
-  makeNames = getOption(x = "acid.import.make.names", default = syntactic::makeNames),
-  metadata = getOption(x = "acid.import.metadata", default = FALSE),
-  quiet = getOption(x = "acid.quiet", default = FALSE),
-  verbose = getOption(x = "acid.verbose", default = FALSE)
-)
-
-\S4method{import}{PipetteLinesFile,missing,missing}(
-  con,
-  format,
-  text,
-  comment = "",
-  skip = 0L,
-  nMax = Inf,
-  stripWhitespace = FALSE,
-  removeBlank = FALSE,
-  metadata = getOption(x = "acid.import.metadata", default = FALSE),
-  engine = getOption(x = "acid.import.engine", default = "base"),
-  quiet = getOption(x = "acid.quiet", default = FALSE),
-  verbose = getOption(x = "acid.verbose", default = FALSE)
-)
-
-\S4method{import}{PipetteExcelFile,missing,missing}(
-  con,
-  format,
-  text,
-  sheet = 1L,
-  rownames = TRUE,
-  rownameCol = NULL,
-  colnames = TRUE,
-  skip = 0L,
-  nMax = Inf,
-  naStrings = naStrings,
-  makeNames = getOption(x = "acid.import.make.names", default = syntactic::makeNames),
-  metadata = getOption(x = "acid.import.metadata", default = FALSE),
-  quiet = getOption(x = "acid.quiet", default = FALSE)
-)
-
-\S4method{import}{PipetteBAMFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
-
-\S4method{import}{PipetteBCFFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
-
-\S4method{import}{PipetteCRAMFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
-
-\S4method{import}{PipetteFASTAFile,missing,missing}(
-  con,
-  format,
-  text,
-  moleculeType = c("DNA", "RNA", "AA"),
-  metadata = getOption(x = "acid.import.metadata", default = FALSE),
-  quiet = getOption(x = "acid.quiet", default = FALSE)
-)
-
-\S4method{import}{PipetteFASTQFile,missing,missing}(
-  con,
-  format,
-  text,
-  moleculeType = c("DNA", "RNA"),
-  metadata = getOption(x = "acid.import.metadata", default = FALSE),
-  quiet = getOption(x = "acid.quiet", default = FALSE)
-)
-
-\S4method{import}{PipetteGCTFile,missing,missing}(
-  con,
-  format,
-  text,
-  metadata = getOption(x = "acid.import.metadata", default = FALSE),
-  quiet = getOption(x = "acid.quiet", default = FALSE),
-  return = c("matrix", "data.frame")
-)
-
-\S4method{import}{PipetteGMTFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
-
-\S4method{import}{PipetteGMXFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
-
-\S4method{import}{PipetteGRPFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
-
-\S4method{import}{PipetteJSONFile,missing,missing}(
-  con,
-  format,
-  text,
-  metadata = getOption(x = "acid.import.metadata", default = FALSE),
-  quiet = getOption(x = "acid.quiet", default = FALSE)
-)
-
-\S4method{import}{PipetteMAFFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
-
-\S4method{import}{PipetteMTXFile,missing,missing}(
-  con,
-  format,
-  text,
-  rownamesFile,
-  colnamesFile,
-  metadata = getOption(x = "acid.import.metadata", default = FALSE),
-  quiet = getOption(x = "acid.quiet", default = FALSE)
-)
-
-\S4method{import}{PipetteOBOFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
-
-\S4method{import}{PipettePZFXFile,missing,missing}(
-  con,
-  format,
-  text,
-  sheet = 1L,
-  makeNames = getOption(x = "acid.import.make.names", default = syntactic::makeNames),
-  metadata = getOption(x = "acid.import.metadata", default = FALSE),
-  quiet = getOption(x = "acid.quiet", default = FALSE)
-)
-
-\S4method{import}{PipetteSAMFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
-
-\S4method{import}{PipetteVCFFile,missing,missing}(con, format, text, quiet = getOption(x = "acid.quiet", default = FALSE))
-
-\S4method{import}{PipetteYAMLFile,missing,missing}(
-  con,
-  format,
-  text,
-  metadata = getOption(x = "acid.import.metadata", default = FALSE),
-  quiet = getOption(x = "acid.quiet", default = FALSE)
-)
-
-\S4method{import}{PipetteBcbioCountsFile,missing,missing}(
-  con,
-  format,
-  text,
-  metadata = getOption(x = "acid.import.metadata", default = FALSE),
-  quiet = getOption(x = "acid.quiet", default = FALSE)
-)
-
-\S4method{import}{PipetteRioFile,missing,missing}(
-  con,
-  format,
-  text,
-  rownames = TRUE,
-  rownameCol = NULL,
-  colnames = TRUE,
-  makeNames = getOption(x = "acid.import.make.names", default = syntactic::makeNames),
-  metadata = getOption(x = "acid.import.metadata", default = FALSE),
-  quiet = getOption(x = "acid.quiet", default = FALSE),
-  ...
-)
-
-\S4method{import}{PipetteRtracklayerFile,missing,missing}(
-  con,
-  format,
-  text,
-  metadata = getOption(x = "acid.import.metadata", default = FALSE),
-  quiet = getOption(x = "acid.quiet", default = FALSE),
-  ...
-)
-
-\S4method{import}{textConnection,character,missing}(
-  con,
-  format = c("csv", "tsv"),
-  text,
-  colnames = TRUE,
-  quote = "\\"",
-  naStrings = naStrings,
-  quiet = getOption(x = "acid.quiet", default = FALSE)
-)
 }
 \arguments{
-\item{con}{\code{character(1)}, \code{connection}, or \code{missing}.
-The connection from which data is loaded or to which data is saved. If this
-is a character vector, it is assumed to be a filename, and a corresponding
-file connection is created and then closed after exporting the object. If a
-\code{BiocFile} derivative, the data is loaded from or saved to the underlying
-resource.  If missing, the function will return the output as a character
-vector, rather than writing to a connection.}
-
 \item{format}{\code{character(1)} or \code{missing}.
 An optional file format type, which can be used to override the file format
 inferred from \code{con}. Only recommended for file and URL paths that don't
 contain an extension.}
 
-\item{text}{\code{character} or \code{missing}.
-\emph{Not currently supported.}}
-
-\item{...}{Additional arguments.}
-
-\item{quiet}{\code{logical(1)}.
-Perform command quietly, suppressing messages.}
-
-\item{rownames}{\code{logical(1)}.
-Automatically assign row names, if \code{rowname} column is defined.
-Applies to file types that return a data frame only.}
-
-\item{rownameCol}{\code{NULL}, \code{character(1)}, or \code{integer(1)}.
-\emph{Applies only when \code{rownames = TRUE}.}
-Column name to use for row names assignment.
-If left \code{NULL} (default), the function will call \code{matchRownameCol()}
-internally to attempt to automatically match the row name column (e.g.
-\code{"rowname"} or \code{"rn"}).
-Otherwise, can manually define using a scalar argument, either the name
-directly or position in the column names.}
-
 \item{colnames}{\code{logical(1)} or \code{character}.
 Automatically assign column names, using the first header row.
 Applies to file types that return \code{data.frame} only.
 Pass in a \code{character} vector to define the column names manually.}
-
-\item{quote}{\code{character(1)}.
-The set of quoting characters.
-To disable quoting altogether, use \code{quote = ""} (not generally recommended).
-\emph{Applies to plain text delimited files only.}}
-
-\item{naStrings}{\code{character}.
-Character strings to reformat as \code{NA}.
-Refer to \code{pipette::naStrings} for defaults.}
 
 \item{comment}{\code{character(1)}.
 Comment character to detect at beginning of line, which will skip when
@@ -272,14 +23,6 @@ parsing file. Use \code{""} to disable interpretation of comments, which is
 particularly
 useful when parsing lines.
 \emph{Applies to plain text delimited and source code lines only.}}
-
-\item{skip}{\code{integer(1)}.
-Number of lines to skip.
-\emph{Applies to delimited file (CSV, TSV), Excel Workbook, or lines.}}
-
-\item{nMax}{\code{integer(1)} or \code{Inf}.
-Maximum number of lines to parse.
-\emph{Applies to plain text delimited, Excel, and source code lines only.}}
 
 \item{engine}{\code{character(1)}.
 Engine (package) to use for import.
@@ -295,36 +38,60 @@ Currently supported:
 Apply syntactic naming function to (column) names.
 Function is never applied to row names, when they are defined in object.}
 
-\item{metadata}{\code{list}.
-Metadata.}
+\item{moleculeType}{\code{character(1)}.
+Molecule type, either DNA or RNA.
+Most RNA-seq FASTQ files contain complementary DNA (cDNA) sequences, not
+direct sequencing of the RNA molecules.}
 
-\item{verbose}{\code{logical(1)}.
-Run the function with verbose output.}
+\item{nMax}{\code{integer(1)} or \code{Inf}.
+Maximum number of lines to parse.
+\emph{Applies to plain text delimited, Excel, and source code lines only.}}
 
-\item{stripWhitespace}{\code{logical(1)}.
-Strip leading and/or trailing whitespace.
-\emph{Applies to source code lines}.}
+\item{naStrings}{\code{character}.
+Character strings to reformat as \code{NA}.
+Refer to \code{pipette::naStrings} for defaults.}
+
+\item{quote}{\code{character(1)}.
+The set of quoting characters.
+To disable quoting altogether, use \code{quote = ""} (not generally recommended).
+\emph{Applies to plain text delimited files only.}}
 
 \item{removeBlank}{\code{logical(1)}.
 Remove blank lines.
 \emph{Applies to source code lines}.}
+
+\item{return}{\code{character(1)}.
+Object class to return.}
+
+\item{rownameCol}{\code{NULL}, \code{character(1)}, or \code{integer(1)}.
+\emph{Applies only when \code{rownames = TRUE}.}
+Column name to use for row names assignment.
+If left \code{NULL} (default), the function will call \code{matchRownameCol()}
+internally to attempt to automatically match the row name column (e.g.
+\code{"rowname"} or \code{"rn"}).
+Otherwise, can manually define using a scalar argument, either the name
+directly or position in the column names.}
+
+\item{rownames}{\code{logical(1)}.
+Automatically assign row names, if \code{rowname} column is defined.
+Applies to file types that return a data frame only.}
+
+\item{rownamesFile, colnamesFile}{\code{character(1)} or \code{NULL}.
+Row names and/or column names sidecare file.
+Applies primarily to MatrixMarket Exchange files (e.g. \code{MTXFile}).}
 
 \item{sheet}{\code{character(1)} or \code{integer(1)}.
 Sheet to read. Either a string (the name of a sheet), or an integer (the
 position of the sheet). Defaults to the first sheet.
 \emph{Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.}}
 
-\item{moleculeType}{\code{character(1)}.
-Molecule type, either DNA or RNA.
-Most RNA-seq FASTQ files contain complementary DNA (cDNA) sequences, not
-direct sequencing of the RNA molecules.}
+\item{skip}{\code{integer(1)}.
+Number of lines to skip.
+\emph{Applies to delimited file (CSV, TSV), Excel Workbook, or lines.}}
 
-\item{return}{\code{character(1)}.
-Object class to return.}
-
-\item{rownamesFile, colnamesFile}{\code{character(1)} or \code{NULL}.
-Row names and/or column names sidecare file.
-Applies primarily to MatrixMarket Exchange files (e.g. \code{MTXFile}).}
+\item{stripWhitespace}{\code{logical(1)}.
+Strip leading and/or trailing whitespace.
+\emph{Applies to source code lines}.}
 }
 \value{
 Varies, depending on the file type (format):
@@ -404,7 +171,7 @@ Imported by \code{rio::import()}.
 }
 }
 \description{
-Read file by extension into R.
+Import data into R
 }
 \details{
 \code{import()} supports automatic loading of common file types, by wrapping
@@ -413,7 +180,7 @@ arguments. Remote URLs and compressed files are supported. If you need more
 complex import settings, just call the wrapped importer directly instead.
 }
 \note{
-Updated 2023-09-19.
+Updated 2023-09-20.
 }
 \section{Row and column names}{
 

@@ -1,6 +1,5 @@
 ## Classes =====================================================================
 
-#' @importClassesFrom BiocIO BiocFile
 #' @importClassesFrom GenomicRanges GRanges GRangesList
 #' @importClassesFrom IRanges IRanges Ranges
 #' @importClassesFrom Matrix Matrix
@@ -11,12 +10,11 @@ NULL
 
 ## S4 generics and methods =====================================================
 
-#' @importFrom AcidGenerics as.DataFrame atomize droplevels2 encode factorize
-#' matchRownameColumn metadata2 metadata2<- removeNA sanitizeNA
+#' @importFrom AcidGenerics as.DataFrame atomize droplevels2 encode export
+#' factorize import matchRownameColumn metadata2 metadata2<- removeNA sanitizeNA
 #' sanitizePercent
 #' @importFrom BiocGenerics anyDuplicated as.data.frame do.call end lapply start
 #' strand which width
-#' @importFrom BiocIO export import resource
 #' @importFrom GenomicRanges seqnames
 #' @importFrom S4Vectors DataFrame Rle SimpleList as.factor decode droplevels
 #' head mcols mcols<- metadata metadata<- na.omit tail
