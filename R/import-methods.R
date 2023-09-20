@@ -994,11 +994,10 @@ NULL
              comment = "",
              skip = 0L,
              nMax = Inf,
-             engine = "base",
+             engine = c("base", "data.table", "readr"),
              makeNames = syntactic::makeNames,
              metadata = FALSE,
-             quiet = FALSE,
-             verbose = FALSE) {
+             quiet = FALSE) {
         assert(
             isFlag(rownames),
             isScalar(rownameCol) || is.null(rownameCol),
@@ -1013,12 +1012,8 @@ NULL
                 is.null(makeNames) ||
                 isFALSE(makeNames),
             isFlag(metadata),
-            isFlag(quiet),
-            isFlag(verbose)
+            isFlag(quiet)
         )
-        if (isTRUE(verbose)) {
-            assert(isFALSE(quiet))
-        }
         file <- .resource(con)
         ext <- switch(
             EXPR = class(con),
@@ -1027,7 +1022,7 @@ NULL
             "PipetteTableFile" = "table",
             "table"
         )
-        whatPkg <- match.arg(arg = engine, choices = .engines)
+        whatPkg <- match.arg(engine)
         if (identical(ext, "table")) {
             whatPkg <- "base" # nocov
         }
@@ -1090,7 +1085,7 @@ NULL
                     "showProgress" = FALSE,
                     "stringsAsFactors" = FALSE,
                     "strip.white" = TRUE,
-                    "verbose" = verbose
+                    "verbose" = FALSE
                 )
                 if (isCharacter(colnames)) {
                     ## nocov start
@@ -1121,9 +1116,9 @@ NULL
                     "na" = naStrings,
                     "name_repair" = make.names,
                     "n_max" = nMax,
-                    "progress" = verbose,
+                    "progress" = FALSE,
                     "quote" = quote,
-                    "show_col_types" = verbose,
+                    "show_col_types" = FALSE,
                     "skip" = skip,
                     "skip_empty_rows" = TRUE,
                     "trim_ws" = TRUE
@@ -1422,9 +1417,8 @@ NULL
              stripWhitespace = FALSE,
              removeBlank = FALSE,
              metadata = FALSE,
-             engine = "base",
-             quiet = FALSE,
-             verbose = FALSE) {
+             engine = c("base", "data.table", "readr"),
+             quiet = FALSE) {
         if (missing(format)) {
             format <- NULL
         }
@@ -1438,12 +1432,8 @@ NULL
             isPositive(nMax),
             isFlag(stripWhitespace),
             isFlag(removeBlank),
-            isFlag(quiet),
-            isFlag(verbose)
+            isFlag(quiet)
         )
-        if (isTRUE(verbose)) {
-            assert(isFALSE(quiet))
-        }
         if (isString(comment) || isTRUE(removeBlank)) {
             assert(
                 identical(nMax, eval(formals()[["nMax"]])),
@@ -1459,7 +1449,7 @@ NULL
             )
         }
         file <- .resource(con)
-        whatPkg <- match.arg(arg = engine, choices = .engines)
+        whatPkg <- match.arg(engine)
         switch(
             EXPR = whatPkg,
             "base" = {
@@ -1480,7 +1470,7 @@ NULL
                     "sep" = "\n",
                     "skip" = skip,
                     "strip.white" = stripWhitespace,
-                    "verbose" = verbose
+                    "verbose" = FALSE
                 )
             },
             "readr" = {
@@ -1489,7 +1479,7 @@ NULL
                     "file" = file,
                     "lazy" = FALSE,
                     "n_max" = nMax,
-                    "progress" = verbose,
+                    "progress" = FALSE,
                     "skip" = skip,
                     ## This setting considers lines containing spaces empty.
                     "skip_empty_rows" = FALSE
@@ -2336,7 +2326,7 @@ NULL
         }
         args <- list(
             "maf" = file,
-            "verbose" = !quiet
+            "verbose" = FALSE
         )
         what <- .getFunction(f = whatFun, pkg = whatPkg)
         object <- do.call(what = what, args = args)
