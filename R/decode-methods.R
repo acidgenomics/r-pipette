@@ -57,10 +57,6 @@ NULL
             idx <- seq(from = 1L, to = ncol(x))
             lgl <- idx %in% j
         }
-        assert(
-            is.logical(lgl),
-            hasLength(lgl, n = ncol(x))
-        )
         lst <- Map(
             f = function(x, eval) {
                 if (isFALSE(eval)) {
