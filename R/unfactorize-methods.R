@@ -7,6 +7,7 @@
 #' @seealso
 #' - Warning section of `help("factor")`.
 #' - R FAQ 7.10: How do I convert factors to numeric?
+#' - `stringsAsFactors` for `read.table` and `data.frame`.
 #' - https://stackoverflow.com/questions/3418128/
 #' - forcats package.
 #'
@@ -16,6 +17,8 @@
 #' ## Coercion with `as.numeric` or `as.integer` don't work the way we want.
 #' print(as.numeric(object))
 #' print(as.integer(object))
+#' object <- factorize(object)
+#' print(object)
 NULL
 
 
