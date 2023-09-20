@@ -1,6 +1,10 @@
+## FIXME Allow the user to specify which columns.
+
+
+
 #' @name factorize
 #' @inherit AcidGenerics::factorize
-#' @note Updated 2023-01-31.
+#' @note Updated 2023-09-19.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.

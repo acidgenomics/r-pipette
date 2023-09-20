@@ -1,9 +1,11 @@
-#' Import
-#'
-#' Read file by extension into R.
-#'
+## FIXME Need to rework the "resource" usage.
+## FIXME Need to update the signature.
+
+
+
 #' @name import
-#' @note Updated 2023-09-19.
+#' @inherit AcidGenerics::import
+#' @note Updated 2023-09-20.
 #'
 #' @details
 #' `import()` supports automatic loading of common file types, by wrapping
@@ -88,23 +90,10 @@
 #'
 #' `GMTFile` and `OBOFile` are also supported by BiocSet package.
 #'
-#' @inheritParams AcidRoxygen::params
-#'
-#' @param con `character(1)`, `connection`, or `missing`.
-#' The connection from which data is loaded or to which data is saved. If this
-#' is a character vector, it is assumed to be a filename, and a corresponding
-#' file connection is created and then closed after exporting the object. If a
-#' `BiocFile` derivative, the data is loaded from or saved to the underlying
-#' resource.  If missing, the function will return the output as a character
-#' vector, rather than writing to a connection.
-#'
 #' @param format `character(1)` or `missing`.
 #' An optional file format type, which can be used to override the file format
 #' inferred from `con`. Only recommended for file and URL paths that don't
 #' contain an extension.
-#'
-#' @param text `character` or `missing`.
-#' *Not currently supported.*
 #'
 #' @param colnames `logical(1)` or `character`.
 #' Automatically assign column names, using the first header row.
@@ -2650,380 +2639,338 @@ NULL
 
 ## S4 method exports ===========================================================
 
-#' @rdname import
-#' @export
-setMethod(
-    f = "import",
-    signature = signature(
-        con = "character",
-        format = "missing",
-        text = "missing"
-    ),
-    definition = `import,character`
-)
-
-#' @rdname import
-#' @export
-setMethod(
-    f = "import",
-    signature = signature(
-        con = "character",
-        format = "character",
-        text = "missing"
-    ),
-    definition = `import,character`
-)
-
-#' @rdname import
-#' @export
-setMethod(
-    f = "import",
-    signature = signature(
-        con = "PipetteRDSFile",
-        format = "missing",
-        text = "missing"
-    ),
-    definition = `import,PipetteRDSFile`
-)
-
-#' @rdname import
-#' @export
-setMethod(
-    f = "import",
-    signature = signature(
-        con = "PipetteRDataFile",
-        format = "missing",
-        text = "missing"
-    ),
-    definition = `import,PipetteRDataFile`
-)
-
-#' @rdname import
-#' @export
-setMethod(
-    f = "import",
-    signature = signature(
-        con = "PipetteDelimFile",
-        format = "missing",
-        text = "missing"
-    ),
-    definition = `import,PipetteDelimFile`
-)
-
-#' @rdname import
-#' @export
-setMethod(
-    f = "import",
-    signature = signature(
-        con = "PipetteLinesFile",
-        format = "missing",
-        text = "missing"
-    ),
-    definition = `import,PipetteLinesFile`
-)
-
-#' @rdname import
-#' @export
-setMethod(
-    f = "import",
-    signature = signature(
-        con = "PipetteExcelFile",
-        format = "missing",
-        text = "missing"
-    ),
-    definition = `import,PipetteExcelFile`
-)
-
-#' @rdname import
-#' @export
-setMethod(
-    f = "import",
-    signature = signature(
-        con = "PipetteBAMFile",
-        format = "missing",
-        text = "missing"
-    ),
-    definition = `import,PipetteBAMFile`
-)
-
-#' @rdname import
-#' @export
-setMethod(
-    f = "import",
-    signature = signature(
-        con = "PipetteBCFFile",
-        format = "missing",
-        text = "missing"
-    ),
-    definition = `import,PipetteBCFFile`
-)
-
-#' @rdname import
-#' @export
-setMethod(
-    f = "import",
-    signature = signature(
-        con = "PipetteCRAMFile",
-        format = "missing",
-        text = "missing"
-    ),
-    definition = `import,PipetteCRAMFile`
-)
-
-#' @rdname import
-#' @export
-setMethod(
-    f = "import",
-    signature = signature(
-        con = "PipetteFASTAFile",
-        format = "missing",
-        text = "missing"
-    ),
-    definition = `import,PipetteFASTAFile`
-)
-
-#' @rdname import
-#' @export
-setMethod(
-    f = "import",
-    signature = signature(
-        con = "PipetteFASTQFile",
-        format = "missing",
-        text = "missing"
-    ),
-    definition = `import,PipetteFASTQFile`
-)
-
-#' @rdname import
-#' @export
-setMethod(
-    f = "import",
-    signature = signature(
-        con = "PipetteGCTFile",
-        format = "missing",
-        text = "missing"
-    ),
-    definition = `import,PipetteGCTFile`
-)
-
-#' @rdname import
-#' @export
-setMethod(
-    f = "import",
-    signature = signature(
-        con = "PipetteGMTFile",
-        format = "missing",
-        text = "missing"
-    ),
-    definition = `import,PipetteGMTFile`
-)
-
-#' @rdname import
-#' @export
-setMethod(
-    f = "import",
-    signature = signature(
-        con = "PipetteGMXFile",
-        format = "missing",
-        text = "missing"
-    ),
-    definition = `import,PipetteGMXFile`
-)
-
-#' @rdname import
-#' @export
-setMethod(
-    f = "import",
-    signature = signature(
-        con = "PipetteGRPFile",
-        format = "missing",
-        text = "missing"
-    ),
-    definition = `import,PipetteGRPFile`
-)
-
-#' @rdname import
-#' @export
-setMethod(
-    f = "import",
-    signature = signature(
-        con = "PipetteJSONFile",
-        format = "missing",
-        text = "missing"
-    ),
-    definition = `import,PipetteJSONFile`
-)
-
-#' @rdname import
-#' @export
-setMethod(
-    f = "import",
-    signature = signature(
-        con = "PipetteMAFFile",
-        format = "missing",
-        text = "missing"
-    ),
-    definition = `import,PipetteMAFFile`
-)
-
-#' @rdname import
-#' @export
-setMethod(
-    f = "import",
-    signature = signature(
-        con = "PipetteMTXFile",
-        format = "missing",
-        text = "missing"
-    ),
-    definition = `import,PipetteMTXFile`
-)
-
-#' @rdname import
-#' @export
-setMethod(
-    f = "import",
-    signature = signature(
-        con = "PipetteOBOFile",
-        format = "missing",
-        text = "missing"
-    ),
-    definition = `import,PipetteOBOFile`
-)
-
-#' @rdname import
-#' @export
-setMethod(
-    f = "import",
-    signature = signature(
-        con = "PipettePZFXFile",
-        format = "missing",
-        text = "missing"
-    ),
-    definition = `import,PipettePZFXFile`
-)
-
-#' @rdname import
-#' @export
-setMethod(
-    f = "import",
-    signature = signature(
-        con = "PipetteSAMFile",
-        format = "missing",
-        text = "missing"
-    ),
-    definition = `import,PipetteSAMFile`
-)
-
-#' @rdname import
-#' @export
-setMethod(
-    f = "import",
-    signature = signature(
-        con = "PipetteVCFFile",
-        format = "missing",
-        text = "missing"
-    ),
-    definition = `import,PipetteVCFFile`
-)
-
-#' @rdname import
-#' @export
-setMethod(
-    f = "import",
-    signature = signature(
-        con = "PipetteYAMLFile",
-        format = "missing",
-        text = "missing"
-    ),
-    definition = `import,PipetteYAMLFile`
-)
-
-#' @rdname import
-#' @export
-setMethod(
-    f = "import",
-    signature = signature(
-        con = "PipetteBcbioCountsFile",
-        format = "missing",
-        text = "missing"
-    ),
-    definition = `import,PipetteBcbioCountsFile`
-)
-
-#' @rdname import
-#' @export
-setMethod(
-    f = "import",
-    signature = signature(
-        con = "PipetteRioFile",
-        format = "missing",
-        text = "missing"
-    ),
-    definition = `import,PipetteRioFile`
-)
-
-#' @rdname import
-#' @export
-setMethod(
-    f = "import",
-    signature = signature(
-        con = "PipetteRtracklayerFile",
-        format = "missing",
-        text = "missing"
-    ),
-    definition = `import,PipetteRtracklayerFile`
-)
-
-#' @rdname import
-#' @export
-setMethod(
-    f = "import",
-    signature = signature(
-        con = "textConnection",
-        format = "character",
-        text = "missing"
-    ),
-    definition = `import,textConnection`
-)
-
-
-
-## Deprecated S4 method exports ================================================
-
-## Updated 2022-09-13.
-.importError <-
-    function(con,
-             format,
-             text,
-             ...) {
-        abort(sprintf(
-            "Need to define {.arg %s} (e.g. instead of {.arg %s}).",
-            "con", "file"
-        ))
-    }
-
-#' @rdname import
-#' @usage NULL
-#' @export
-setMethod(
-    f = "import",
-    signature = signature(
-        con = "missing",
-        format = "missing",
-        text = "missing"
-    ),
-    definition = .importError
-)
-
-#' @rdname import
-#' @usage NULL
-#' @export
-setMethod(
-    f = "import",
-    signature = signature(
-        con = "missing",
-        format = "character",
-        text = "missing"
-    ),
-    definition = .importError
-)
+#' #' @rdname import
+#' #' @export
+#' setMethod(
+#'     f = "import",
+#'     signature = signature(
+#'         con = "character",
+#'         format = "missing",
+#'         text = "missing"
+#'     ),
+#'     definition = `import,character`
+#' )
+#'
+#' #' @rdname import
+#' #' @export
+#' setMethod(
+#'     f = "import",
+#'     signature = signature(
+#'         con = "character",
+#'         format = "character",
+#'         text = "missing"
+#'     ),
+#'     definition = `import,character`
+#' )
+#'
+#' #' @rdname import
+#' #' @export
+#' setMethod(
+#'     f = "import",
+#'     signature = signature(
+#'         con = "PipetteRDSFile",
+#'         format = "missing",
+#'         text = "missing"
+#'     ),
+#'     definition = `import,PipetteRDSFile`
+#' )
+#'
+#' #' @rdname import
+#' #' @export
+#' setMethod(
+#'     f = "import",
+#'     signature = signature(
+#'         con = "PipetteRDataFile",
+#'         format = "missing",
+#'         text = "missing"
+#'     ),
+#'     definition = `import,PipetteRDataFile`
+#' )
+#'
+#' #' @rdname import
+#' #' @export
+#' setMethod(
+#'     f = "import",
+#'     signature = signature(
+#'         con = "PipetteDelimFile",
+#'         format = "missing",
+#'         text = "missing"
+#'     ),
+#'     definition = `import,PipetteDelimFile`
+#' )
+#'
+#' #' @rdname import
+#' #' @export
+#' setMethod(
+#'     f = "import",
+#'     signature = signature(
+#'         con = "PipetteLinesFile",
+#'         format = "missing",
+#'         text = "missing"
+#'     ),
+#'     definition = `import,PipetteLinesFile`
+#' )
+#'
+#' #' @rdname import
+#' #' @export
+#' setMethod(
+#'     f = "import",
+#'     signature = signature(
+#'         con = "PipetteExcelFile",
+#'         format = "missing",
+#'         text = "missing"
+#'     ),
+#'     definition = `import,PipetteExcelFile`
+#' )
+#'
+#' #' @rdname import
+#' #' @export
+#' setMethod(
+#'     f = "import",
+#'     signature = signature(
+#'         con = "PipetteBAMFile",
+#'         format = "missing",
+#'         text = "missing"
+#'     ),
+#'     definition = `import,PipetteBAMFile`
+#' )
+#'
+#' #' @rdname import
+#' #' @export
+#' setMethod(
+#'     f = "import",
+#'     signature = signature(
+#'         con = "PipetteBCFFile",
+#'         format = "missing",
+#'         text = "missing"
+#'     ),
+#'     definition = `import,PipetteBCFFile`
+#' )
+#'
+#' #' @rdname import
+#' #' @export
+#' setMethod(
+#'     f = "import",
+#'     signature = signature(
+#'         con = "PipetteCRAMFile",
+#'         format = "missing",
+#'         text = "missing"
+#'     ),
+#'     definition = `import,PipetteCRAMFile`
+#' )
+#'
+#' #' @rdname import
+#' #' @export
+#' setMethod(
+#'     f = "import",
+#'     signature = signature(
+#'         con = "PipetteFASTAFile",
+#'         format = "missing",
+#'         text = "missing"
+#'     ),
+#'     definition = `import,PipetteFASTAFile`
+#' )
+#'
+#' #' @rdname import
+#' #' @export
+#' setMethod(
+#'     f = "import",
+#'     signature = signature(
+#'         con = "PipetteFASTQFile",
+#'         format = "missing",
+#'         text = "missing"
+#'     ),
+#'     definition = `import,PipetteFASTQFile`
+#' )
+#'
+#' #' @rdname import
+#' #' @export
+#' setMethod(
+#'     f = "import",
+#'     signature = signature(
+#'         con = "PipetteGCTFile",
+#'         format = "missing",
+#'         text = "missing"
+#'     ),
+#'     definition = `import,PipetteGCTFile`
+#' )
+#'
+#' #' @rdname import
+#' #' @export
+#' setMethod(
+#'     f = "import",
+#'     signature = signature(
+#'         con = "PipetteGMTFile",
+#'         format = "missing",
+#'         text = "missing"
+#'     ),
+#'     definition = `import,PipetteGMTFile`
+#' )
+#'
+#' #' @rdname import
+#' #' @export
+#' setMethod(
+#'     f = "import",
+#'     signature = signature(
+#'         con = "PipetteGMXFile",
+#'         format = "missing",
+#'         text = "missing"
+#'     ),
+#'     definition = `import,PipetteGMXFile`
+#' )
+#'
+#' #' @rdname import
+#' #' @export
+#' setMethod(
+#'     f = "import",
+#'     signature = signature(
+#'         con = "PipetteGRPFile",
+#'         format = "missing",
+#'         text = "missing"
+#'     ),
+#'     definition = `import,PipetteGRPFile`
+#' )
+#'
+#' #' @rdname import
+#' #' @export
+#' setMethod(
+#'     f = "import",
+#'     signature = signature(
+#'         con = "PipetteJSONFile",
+#'         format = "missing",
+#'         text = "missing"
+#'     ),
+#'     definition = `import,PipetteJSONFile`
+#' )
+#'
+#' #' @rdname import
+#' #' @export
+#' setMethod(
+#'     f = "import",
+#'     signature = signature(
+#'         con = "PipetteMAFFile",
+#'         format = "missing",
+#'         text = "missing"
+#'     ),
+#'     definition = `import,PipetteMAFFile`
+#' )
+#'
+#' #' @rdname import
+#' #' @export
+#' setMethod(
+#'     f = "import",
+#'     signature = signature(
+#'         con = "PipetteMTXFile",
+#'         format = "missing",
+#'         text = "missing"
+#'     ),
+#'     definition = `import,PipetteMTXFile`
+#' )
+#'
+#' #' @rdname import
+#' #' @export
+#' setMethod(
+#'     f = "import",
+#'     signature = signature(
+#'         con = "PipetteOBOFile",
+#'         format = "missing",
+#'         text = "missing"
+#'     ),
+#'     definition = `import,PipetteOBOFile`
+#' )
+#'
+#' #' @rdname import
+#' #' @export
+#' setMethod(
+#'     f = "import",
+#'     signature = signature(
+#'         con = "PipettePZFXFile",
+#'         format = "missing",
+#'         text = "missing"
+#'     ),
+#'     definition = `import,PipettePZFXFile`
+#' )
+#'
+#' #' @rdname import
+#' #' @export
+#' setMethod(
+#'     f = "import",
+#'     signature = signature(
+#'         con = "PipetteSAMFile",
+#'         format = "missing",
+#'         text = "missing"
+#'     ),
+#'     definition = `import,PipetteSAMFile`
+#' )
+#'
+#' #' @rdname import
+#' #' @export
+#' setMethod(
+#'     f = "import",
+#'     signature = signature(
+#'         con = "PipetteVCFFile",
+#'         format = "missing",
+#'         text = "missing"
+#'     ),
+#'     definition = `import,PipetteVCFFile`
+#' )
+#'
+#' #' @rdname import
+#' #' @export
+#' setMethod(
+#'     f = "import",
+#'     signature = signature(
+#'         con = "PipetteYAMLFile",
+#'         format = "missing",
+#'         text = "missing"
+#'     ),
+#'     definition = `import,PipetteYAMLFile`
+#' )
+#'
+#' #' @rdname import
+#' #' @export
+#' setMethod(
+#'     f = "import",
+#'     signature = signature(
+#'         con = "PipetteBcbioCountsFile",
+#'         format = "missing",
+#'         text = "missing"
+#'     ),
+#'     definition = `import,PipetteBcbioCountsFile`
+#' )
+#'
+#' #' @rdname import
+#' #' @export
+#' setMethod(
+#'     f = "import",
+#'     signature = signature(
+#'         con = "PipetteRioFile",
+#'         format = "missing",
+#'         text = "missing"
+#'     ),
+#'     definition = `import,PipetteRioFile`
+#' )
+#'
+#' #' @rdname import
+#' #' @export
+#' setMethod(
+#'     f = "import",
+#'     signature = signature(
+#'         con = "PipetteRtracklayerFile",
+#'         format = "missing",
+#'         text = "missing"
+#'     ),
+#'     definition = `import,PipetteRtracklayerFile`
+#' )
+#'
+#' #' @rdname import
+#' #' @export
+#' setMethod(
+#'     f = "import",
+#'     signature = signature(
+#'         con = "textConnection",
+#'         format = "character",
+#'         text = "missing"
+#'     ),
+#'     definition = `import,textConnection`
+#' )
