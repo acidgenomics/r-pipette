@@ -38,6 +38,24 @@ print(as.numeric(object))
 print(as.integer(object))
 object <- factorize(object)
 print(object)
+
+## data.frame ====
+object <- data.frame(
+    "a" = as.factor(c(100L, 100L, 101L, 101L)),
+    "b" = as.factor(c("a", "b", "a", "b"))
+)
+print(object)
+object <- unfactorize(object)
+print(object)
+
+## DFrame ====
+object <- S4Vectors::DataFrame(
+    "a" = as.factor(c(100L, 100L, 101L, 101L)),
+    "b" = as.factor(c("a", "b", "a", "b"))
+)
+print(object)
+object <- unfactorize(object)
+print(object)
 }
 \seealso{
 \itemize{
