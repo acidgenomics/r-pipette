@@ -9,6 +9,7 @@
 \alias{import,PipetteDelimFile-method}
 \alias{import,PipetteLinesFile-method}
 \alias{import,PipetteExcelFile-method}
+\alias{import,PipetteMTXFile-method}
 \title{Import data into R}
 \usage{
 import(con, ...)
@@ -69,6 +70,8 @@ import(con, ...)
   metadata = FALSE,
   quiet = FALSE
 )
+
+\S4method{import}{PipetteMTXFile}(con, rownamesFile, colnamesFile, metadata = FALSE, quiet = FALSE)
 }
 \arguments{
 \item{con}{\code{character(1)} or \code{connection}.
@@ -153,6 +156,10 @@ Sheet to read. Either a string (the name of a sheet), or an integer (the
 position of the sheet). Defaults to the first sheet.
 \emph{Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.}}
 
+\item{rownamesFile, colnamesFile}{\code{character(1)} or \code{NULL}.
+Row names and/or column names sidecare file.
+Applies primarily to MatrixMarket Exchange files (e.g. \code{MTXFile}).}
+
 \item{moleculeType}{\code{character(1)}.
 Molecule type, either DNA or RNA.
 Most RNA-seq FASTQ files contain complementary DNA (cDNA) sequences, not
@@ -160,10 +167,6 @@ direct sequencing of the RNA molecules.}
 
 \item{return}{\code{character(1)}.
 Object class to return.}
-
-\item{rownamesFile, colnamesFile}{\code{character(1)} or \code{NULL}.
-Row names and/or column names sidecare file.
-Applies primarily to MatrixMarket Exchange files (e.g. \code{MTXFile}).}
 }
 \value{
 Varies, depending on the file type (format):

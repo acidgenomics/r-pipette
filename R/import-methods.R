@@ -1239,30 +1239,16 @@ NULL
 
 #' Import a sparse matrix file (`.mtx`)
 #'
-#' @note Updated 2023-07-07.
+#' @note Updated 2023-09-20.
 #' @noRd
 `import,PipetteMTXFile` <- # nolint
     function(con,
-             format, # missing
-             text, # missing
              rownamesFile,
              colnamesFile,
-             metadata = getOption(
-                 x = "acid.import.metadata",
-                 default = FALSE
-             ),
-             quiet = getOption(
-                 x = "acid.quiet",
-                 default = FALSE
-             )) {
-        if (missing(format)) {
-            format <- NULL
-        }
-        if (missing(text)) {
-            text <- NULL
-        }
+             metadata = FALSE,
+             quiet = FALSE) {
         file <- .resource(con)
-        origFile <- attr(con, which = "origResource")
+        origFile <- .origResource(con)
         if (is.null(origFile)) {
             origFile <- file # nocov
         }
@@ -1273,8 +1259,6 @@ NULL
             colnamesFile <- paste0(origFile, ".colnames")
         }
         assert(
-            is.null(format),
-            is.null(text),
             isString(rownamesFile, nullOK = TRUE),
             isString(colnamesFile, nullOK = TRUE),
             isFlag(metadata),
@@ -1735,7 +1719,7 @@ NULL
                 whatFun = whatFun
             )
         }
-        origFile <- attr(x = con, which = "origResource")
+        origFile <- .origResource(con)
         indexFile <- .localOrRemoteFile(
             file = paste0(origFile, ".csi"),
             quiet = quiet
@@ -2734,19 +2718,16 @@ setMethod(
 #'     ),
 #'     definition = `import,PipetteMAFFile`
 #' )
-#'
-#' #' @rdname import
-#' #' @export
-#' setMethod(
-#'     f = "import",
-#'     signature = signature(
-#'         con = "PipetteMTXFile",
-#'         format = "missing",
-#'         text = "missing"
-#'     ),
-#'     definition = `import,PipetteMTXFile`
-#' )
-#'
+NULL
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(con = "PipetteMTXFile"),
+    definition = `import,PipetteMTXFile`
+)
+
 #' #' @rdname import
 #' #' @export
 #' setMethod(
