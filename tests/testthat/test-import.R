@@ -18,7 +18,7 @@ test_that("No extension", {
     unlink2(con)
 })
 
-for (engine in .engines) {
+for (engine in engines) {
     test_that(
         desc = paste("R script", engine, sep = " : "),
         code = {
@@ -299,7 +299,7 @@ for (engine in .engines) {
     )
 }
 
-for (engine in .engines) {
+for (engine in engines) {
     for (ext in c("csv", "csv.gz", "tsv")) {
         test_that(
             desc = paste(ext, engine, sep = " : "),
