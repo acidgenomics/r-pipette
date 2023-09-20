@@ -3,15 +3,12 @@
 \name{unfactorize}
 \alias{unfactorize}
 \alias{unfactorize,factor-method}
-\alias{unfactorize,data.frame-method}
 \alias{unfactorize,DFrame-method}
 \title{Unfactorize}
 \usage{
 unfactorize(object, ...)
 
 \S4method{unfactorize}{factor}(object)
-
-\S4method{unfactorize}{data.frame}(object, j = NULL)
 
 \S4method{unfactorize}{DFrame}(object, j = NULL)
 }
@@ -37,15 +34,6 @@ object <- as.factor(c(100L, 100L, 101L, 101L))
 print(as.numeric(object))
 print(as.integer(object))
 object <- factorize(object)
-print(object)
-
-## data.frame ====
-object <- data.frame(
-    "a" = as.factor(c(100L, 100L, 101L, 101L)),
-    "b" = as.factor(c("a", "b", "a", "b"))
-)
-print(object)
-object <- unfactorize(object)
 print(object)
 
 ## DFrame ====

@@ -28,14 +28,12 @@ NULL
 
 
 
-## Updated 2023-04-26.
+## Updated 2023-09-20.
 `encode,DFrame` <- # nolint
     function(x) {
         if (!(hasCols(x) && hasRows(x))) {
             return(x) # nocov
         }
-        meta <- metadata(x)
-        rn <- rownames(x)
         ## FIXME Rework to support specific columns.
         list <- lapply(
             X = x,
@@ -59,8 +57,8 @@ NULL
             }
         )
         out <- as.DataFrame(list)
-        rownames(out) <- rn
-        metadata(out) <- meta
+        dimnames(out) <- dimnames(x)
+        metadata(out) <- metadata(x)
         out
     }
 
