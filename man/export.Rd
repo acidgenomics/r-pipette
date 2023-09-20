@@ -2,130 +2,25 @@
 % Please edit documentation in R/AllGenerics.R, R/export-methods.R
 \name{export}
 \alias{export}
-\alias{export,DFrame,character,missing-method}
-\alias{export,GRanges,character,missing-method}
-\alias{export,GRangesList,character,missing-method}
-\alias{export,Matrix,character,missing-method}
-\alias{export,atomic,character,missing-method}
-\alias{export,data.frame,character,missing-method}
-\alias{export,matrix,character,missing-method}
-\alias{export,ANY,missing,missing-method}
-\alias{export,ANY,missing,character-method}
-\title{Export}
+\title{Export data from R}
 \usage{
 export(object, con, format, ...)
-
-\S4method{export}{DFrame,character,missing}(
-  object,
-  con,
-  format,
-  rownames = TRUE,
-  colnames = TRUE,
-  quote = TRUE,
-  overwrite = getOption(x = "acid.overwrite", default = TRUE),
-  engine = getOption(x = "acid.export.engine", default = "base"),
-  quiet = getOption(x = "acid.quiet", default = FALSE)
-)
-
-\S4method{export}{GRanges,character,missing}(
-  object,
-  con,
-  format,
-  rownames = TRUE,
-  colnames = TRUE,
-  quote = TRUE,
-  overwrite = getOption(x = "acid.overwrite", default = TRUE),
-  engine = getOption(x = "acid.export.engine", default = "base"),
-  quiet = getOption(x = "acid.quiet", default = FALSE)
-)
-
-\S4method{export}{GRangesList,character,missing}(
-  object,
-  con,
-  format,
-  rownames = TRUE,
-  colnames = TRUE,
-  quote = TRUE,
-  overwrite = getOption(x = "acid.overwrite", default = TRUE),
-  engine = getOption(x = "acid.export.engine", default = "base"),
-  quiet = getOption(x = "acid.quiet", default = FALSE)
-)
-
-\S4method{export}{Matrix,character,missing}(
-  object,
-  con,
-  format,
-  overwrite = getOption(x = "acid.overwrite", default = TRUE),
-  quiet = getOption(x = "acid.quiet", default = FALSE)
-)
-
-\S4method{export}{atomic,character,missing}(
-  object,
-  con,
-  format,
-  append = FALSE,
-  overwrite = getOption(x = "acid.overwrite", default = TRUE),
-  engine = getOption(x = "acid.export.engine", default = "base"),
-  quiet = getOption(x = "acid.quiet", default = FALSE),
-  verbose = getOption(x = "acid.verbose", default = FALSE)
-)
-
-\S4method{export}{data.frame,character,missing}(
-  object,
-  con,
-  format,
-  rownames = TRUE,
-  colnames = TRUE,
-  quote = TRUE,
-  overwrite = getOption(x = "acid.overwrite", default = TRUE),
-  engine = getOption(x = "acid.export.engine", default = "base"),
-  quiet = getOption(x = "acid.quiet", default = FALSE)
-)
-
-\S4method{export}{matrix,character,missing}(
-  object,
-  con,
-  format,
-  rownames = TRUE,
-  colnames = TRUE,
-  quote = TRUE,
-  overwrite = getOption(x = "acid.overwrite", default = TRUE),
-  engine = getOption(x = "acid.export.engine", default = "base"),
-  quiet = getOption(x = "acid.quiet", default = FALSE)
-)
-
-\S4method{export}{ANY,missing,missing}(
-  object,
-  con,
-  format,
-  dir = getOption(x = "acid.export.dir", default = getwd()),
-  ...
-)
 }
 \arguments{
+\item{...}{Additional arguments.}
+
 \item{object}{Object.
 An object supporting \code{dim()}, or a supported class capable of being coerced
 to \code{data.frame}, to be written to disk.}
 
+\item{append}{\code{logical(1)}.
+Append to output file.
+When enabled, automatically sets \code{overwrite} argument to \code{FALSE}.
+Requires readr package to be installed.}
+
 \item{con}{\code{character(1)}, \code{missing}, or \code{NULL}.
 File path.
 Alternatively, can leave unset and use \code{ext} and \code{dir} arguments instead.}
-
-\item{format}{\code{character(1)}, \code{missing}, or \code{NULL}.
-\emph{Currently not supported.}}
-
-\item{rownames}{\code{logical(1)}.
-Apply to row names.}
-
-\item{colnames}{\code{logical(1)}.
-Apply to column names.}
-
-\item{quote}{\code{logical(1)}.
-Surround any \code{character} or \code{factor} columns by double quotes.
-Recommended by default.}
-
-\item{overwrite}{\code{logical(1)}.
-Overwrite existing file on disk.}
 
 \item{engine}{\code{character(1)}.
 Engine (package) to use for export.
@@ -137,31 +32,22 @@ Currently supported:
 \item readr
 }}
 
-\item{quiet}{\code{logical(1)}.
-Perform command quietly, suppressing messages.}
+\item{format}{\code{character(1)}, \code{missing}, or \code{NULL}.
+\emph{Currently not supported.}}
 
-\item{append}{\code{logical(1)}.
-Append to output file.
-When enabled, automatically sets \code{overwrite} argument to \code{FALSE}.
-Requires readr package to be installed.}
-
-\item{verbose}{\code{logical(1)}.
-Run the function with verbose output.}
-
-\item{dir}{\code{character(1)}.
-Directory path.}
-
-\item{...}{Additional arguments.}
+\item{quote}{\code{logical(1)}.
+Surround any \code{character} or \code{factor} columns by double quotes.
+Recommended by default.}
 }
 \value{
 Invisible \code{character}.
 File path(s).
 }
 \description{
-Export
+Export data from R
 }
 \note{
-Updated 2023-09-19.
+Updated 2023-09-20.
 }
 \section{Output file format extension}{
 

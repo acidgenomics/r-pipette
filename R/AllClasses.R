@@ -2,11 +2,8 @@
 #'
 #' Currently intended for use with `import` function.
 #'
-#' @details
-#' Extends `BiocFile` defined in BiocIO package.
-#'
 #' @export
-#' @note Updated 2023-07-12.
+#' @note Updated 2023-09-20.
 #'
 #' @section Primary classes:
 #'
@@ -101,13 +98,9 @@
 #' - BIGWIG, BW, WIG
 #' - GFF, GFF1, GFF2, GFF3, GTF
 #' - BROADPEAK, NARROWPEAK
-#'
-#' @seealso
-#' - `getGeneric`.
-#' - `BiocIO::FileForFormat`.
 setClass(
     Class = "PipetteFile",
-    contains = "BiocFile"
+    contains = "SimpleList"
 )
 
 
