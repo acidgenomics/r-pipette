@@ -778,7 +778,7 @@ NULL
         if (isSubset("quiet", names(dots))) {
             quiet <- dots[["quiet"]]
         } else {
-            quiet <- getOption(x = "acid.quiet", default = FALSE)
+            quiet <- FALSE
         }
         assert(
             isString(format, nullOK = TRUE),
@@ -813,7 +813,8 @@ NULL
                 f = "import",
                 signature = signature(con = class),
                 where = asNamespace(.pkgName)
-            )
+            ),
+            msg = sprintf("Unsupported class: {.cls %s}.", class)
         )
         switch(
             EXPR = format,
@@ -847,22 +848,19 @@ NULL
 ## Updated 2023-09-20.
 `import,textConnection` <- # nolint
     function(con,
-             format,
+             format = c("csv", "tsv"),
              colnames = TRUE,
              quote = "\"",
-             naStrings = naStrings,
-             quiet = getOption(
-                 x = "acid.quiet",
-                 default = FALSE
-             )) {
+             naStrings = pipette::naStrings,
+             quiet = FALSE) {
         assert(
             is(con, "textConnection"),
             isString(format),
             isString(quote),
-            isCharacter(naStrings),
+            is.character(naStrings),
             isFlag(quiet)
         )
-        format <- match.arg(arg = format, choices = c("csv", "tsv"))
+        format <- match.arg(format)
         whatPkg <- "base"
         whatFun <- "read.table"
         args <- list(
@@ -984,54 +982,29 @@ NULL
 
 #' Import a delimited file (e.g. `.csv`, `.tsv`).
 #'
-#' @note Updated 2023-07-07.
+#' @note Updated 2023-09-20.
 #' @noRd
 `import,PipetteDelimFile` <- # nolint
     function(con,
-             format, # missing
-             text, # missing
              rownames = TRUE,
              rownameCol = NULL,
              colnames = TRUE,
              quote = "\"",
-             naStrings = naStrings,
+             naStrings = pipette::naStrings,
              comment = "",
              skip = 0L,
              nMax = Inf,
-             engine = getOption(
-                 x = "acid.import.engine",
-                 default = "base"
-             ),
-             makeNames = getOption(
-                 x = "acid.import.make.names",
-                 default = syntactic::makeNames
-             ),
-             metadata = getOption(
-                 x = "acid.import.metadata",
-                 default = FALSE
-             ),
-             quiet = getOption(
-                 x = "acid.quiet",
-                 default = FALSE
-             ),
-             verbose = getOption(
-                 x = "acid.verbose",
-                 default = FALSE
-             )) {
-        if (missing(format)) {
-            format <- NULL
-        }
-        if (missing(text)) {
-            text <- NULL
-        }
+             engine = "base",
+             makeNames = syntactic::makeNames,
+             metadata = FALSE,
+             quiet = FALSE,
+             verbose = FALSE) {
         assert(
-            is.null(format),
-            is.null(text),
             isFlag(rownames),
             isScalar(rownameCol) || is.null(rownameCol),
             isFlag(colnames) || isCharacter(colnames),
             is.character(quote) && length(quote) <= 1L,
-            isCharacter(naStrings),
+            is.character(naStrings),
             is.character(comment) && length(comment) <= 1L,
             isInt(skip), isNonNegative(skip),
             isPositive(nMax),
@@ -1052,7 +1025,7 @@ NULL
             "PipetteCSVFile" = "csv",
             "PipetteTSVFile" = "tsv",
             "PipetteTableFile" = "table",
-            abort("Unsupported delim class.")
+            "table"
         )
         whatPkg <- match.arg(arg = engine, choices = .engines)
         if (identical(ext, "table")) {
@@ -1144,10 +1117,6 @@ NULL
                         "csv" = ",",
                         "tsv" = "\t"
                     ),
-                    ## > "lazy" = getOption(
-                    ## >     x = "readr.read_lazy",
-                    ## >     default = TRUE
-                    ## > ),
                     "lazy" = FALSE,
                     "na" = naStrings,
                     "name_repair" = make.names,
@@ -1197,7 +1166,7 @@ NULL
 
 #' Import a Microsoft Excel worksheet (`.xlsx`)
 #'
-#' @note Updated 2023-09-19.
+#' @note Updated 2023-09-20.
 #' @noRd
 `import,PipetteExcelFile` <- # nolint
     function(con,
@@ -1209,19 +1178,10 @@ NULL
              colnames = TRUE,
              skip = 0L,
              nMax = Inf,
-             naStrings = naStrings,
-             makeNames = getOption(
-                 x = "acid.import.make.names",
-                 default = syntactic::makeNames
-             ),
-             metadata = getOption(
-                 x = "acid.import.metadata",
-                 default = FALSE
-             ),
-             quiet = getOption(
-                 x = "acid.quiet",
-                 default = FALSE
-             )) {
+             naStrings = pipette::naStrings,
+             makeNames = syntactic::makeNames,
+             metadata = FALSE,
+             quiet = FALSE) {
         if (missing(format)) {
             format <- NULL
         }
@@ -1237,7 +1197,7 @@ NULL
             isFlag(colnames) || isCharacter(colnames),
             isInt(skip), isNonNegative(skip),
             isPositive(nMax),
-            isCharacter(naStrings),
+            is.character(naStrings),
             is.function(makeNames) ||
                 is.null(makeNames) ||
                 isFALSE(makeNames),
@@ -2635,6 +2595,13 @@ setMethod(
     definition = `import,character`
 )
 
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(con = "textConnection"),
+    definition = `import,textConnection`
+)
 
 #' @rdname import
 #' @export
@@ -2652,18 +2619,14 @@ setMethod(
     definition = `import,PipetteRDataFile`
 )
 
-#' #' @rdname import
-#' #' @export
-#' setMethod(
-#'     f = "import",
-#'     signature = signature(
-#'         con = "PipetteDelimFile",
-#'         format = "missing",
-#'         text = "missing"
-#'     ),
-#'     definition = `import,PipetteDelimFile`
-#' )
-#'
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(con = "PipetteDelimFile"),
+    definition = `import,PipetteDelimFile`
+)
+
 #' #' @rdname import
 #' #' @export
 #' setMethod(
@@ -2926,16 +2889,4 @@ setMethod(
 #'         text = "missing"
 #'     ),
 #'     definition = `import,PipetteRtracklayerFile`
-#' )
-#'
-#' #' @rdname import
-#' #' @export
-#' setMethod(
-#'     f = "import",
-#'     signature = signature(
-#'         con = "textConnection",
-#'         format = "character",
-#'         text = "missing"
-#'     ),
-#'     definition = `import,textConnection`
 #' )
