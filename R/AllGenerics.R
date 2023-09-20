@@ -37,7 +37,7 @@ NULL
 #' @rdname export
 #' @name export
 #' @export
-#' @usage export(object, con, format, ...)
+#' @usage export(object, con, ...)
 NULL
 
 #' @rdname factorize
@@ -49,7 +49,7 @@ NULL
 #' @rdname import
 #' @name import
 #' @export
-#' @usage import(con, format, text, ...)
+#' @usage import(con, ...)
 NULL
 
 #' @rdname matchRownameColumn

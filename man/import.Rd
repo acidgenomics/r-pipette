@@ -3,17 +3,45 @@
 \name{import}
 \alias{import}
 \alias{import,character-method}
+\alias{import,textConnection-method}
 \alias{import,PipetteRDSFile-method}
 \alias{import,PipetteRDataFile-method}
+\alias{import,PipetteDelimFile-method}
 \title{Import data into R}
 \usage{
-import(con, format, text, ...)
+import(con, ...)
 
 \S4method{import}{character}(con, format = NULL, ...)
+
+\S4method{import}{textConnection}(
+  con,
+  format = c("csv", "tsv"),
+  colnames = TRUE,
+  quote = "\\"",
+  naStrings = pipette::naStrings,
+  quiet = FALSE
+)
 
 \S4method{import}{PipetteRDSFile}(con, quiet = FALSE)
 
 \S4method{import}{PipetteRDataFile}(con, quiet = FALSE)
+
+\S4method{import}{PipetteDelimFile}(
+  con,
+  rownames = TRUE,
+  rownameCol = NULL,
+  colnames = TRUE,
+  quote = "\\"",
+  naStrings = pipette::naStrings,
+  comment = "",
+  skip = 0L,
+  nMax = Inf,
+  engine = "base",
+  makeNames = syntactic::makeNames,
+  metadata = FALSE,
+  quiet = FALSE,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{con}{\code{character(1)} or \code{connection}.
@@ -34,12 +62,42 @@ Automatically assign column names, using the first header row.
 Applies to file types that return \code{data.frame} only.
 Pass in a \code{character} vector to define the column names manually.}
 
+\item{quote}{\code{character(1)}.
+The set of quoting characters.
+To disable quoting altogether, use \code{quote = ""} (not generally recommended).
+\emph{Applies to plain text delimited files only.}}
+
+\item{naStrings}{\code{character}.
+Character strings to reformat as \code{NA}.
+Refer to \code{pipette::naStrings} for defaults.}
+
+\item{rownames}{\code{logical(1)}.
+Automatically assign row names, if \code{rowname} column is defined.
+Applies to file types that return a data frame only.}
+
+\item{rownameCol}{\code{NULL}, \code{character(1)}, or \code{integer(1)}.
+\emph{Applies only when \code{rownames = TRUE}.}
+Column name to use for row names assignment.
+If left \code{NULL} (default), the function will call \code{matchRownameCol()}
+internally to attempt to automatically match the row name column (e.g.
+\code{"rowname"} or \code{"rn"}).
+Otherwise, can manually define using a scalar argument, either the name
+directly or position in the column names.}
+
 \item{comment}{\code{character(1)}.
 Comment character to detect at beginning of line, which will skip when
 parsing file. Use \code{""} to disable interpretation of comments, which is
 particularly
 useful when parsing lines.
 \emph{Applies to plain text delimited and source code lines only.}}
+
+\item{skip}{\code{integer(1)}.
+Number of lines to skip.
+\emph{Applies to delimited file (CSV, TSV), Excel Workbook, or lines.}}
+
+\item{nMax}{\code{integer(1)} or \code{Inf}.
+Maximum number of lines to parse.
+\emph{Applies to plain text delimited, Excel, and source code lines only.}}
 
 \item{engine}{\code{character(1)}.
 Engine (package) to use for import.
@@ -60,38 +118,12 @@ Molecule type, either DNA or RNA.
 Most RNA-seq FASTQ files contain complementary DNA (cDNA) sequences, not
 direct sequencing of the RNA molecules.}
 
-\item{nMax}{\code{integer(1)} or \code{Inf}.
-Maximum number of lines to parse.
-\emph{Applies to plain text delimited, Excel, and source code lines only.}}
-
-\item{naStrings}{\code{character}.
-Character strings to reformat as \code{NA}.
-Refer to \code{pipette::naStrings} for defaults.}
-
-\item{quote}{\code{character(1)}.
-The set of quoting characters.
-To disable quoting altogether, use \code{quote = ""} (not generally recommended).
-\emph{Applies to plain text delimited files only.}}
-
 \item{removeBlank}{\code{logical(1)}.
 Remove blank lines.
 \emph{Applies to source code lines}.}
 
 \item{return}{\code{character(1)}.
 Object class to return.}
-
-\item{rownameCol}{\code{NULL}, \code{character(1)}, or \code{integer(1)}.
-\emph{Applies only when \code{rownames = TRUE}.}
-Column name to use for row names assignment.
-If left \code{NULL} (default), the function will call \code{matchRownameCol()}
-internally to attempt to automatically match the row name column (e.g.
-\code{"rowname"} or \code{"rn"}).
-Otherwise, can manually define using a scalar argument, either the name
-directly or position in the column names.}
-
-\item{rownames}{\code{logical(1)}.
-Automatically assign row names, if \code{rowname} column is defined.
-Applies to file types that return a data frame only.}
 
 \item{rownamesFile, colnamesFile}{\code{character(1)} or \code{NULL}.
 Row names and/or column names sidecare file.
@@ -101,10 +133,6 @@ Applies primarily to MatrixMarket Exchange files (e.g. \code{MTXFile}).}
 Sheet to read. Either a string (the name of a sheet), or an integer (the
 position of the sheet). Defaults to the first sheet.
 \emph{Applies to Excel Workbook, Google Sheet, or GraphPad Prism file.}}
-
-\item{skip}{\code{integer(1)}.
-Number of lines to skip.
-\emph{Applies to delimited file (CSV, TSV), Excel Workbook, or lines.}}
 
 \item{stripWhitespace}{\code{logical(1)}.
 Strip leading and/or trailing whitespace.

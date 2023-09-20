@@ -4,7 +4,7 @@
 \alias{export}
 \title{Export data from R}
 \usage{
-export(object, con, format, ...)
+export(object, con, ...)
 }
 \arguments{
 \item{...}{Additional arguments.}
