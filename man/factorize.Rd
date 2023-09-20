@@ -15,6 +15,9 @@ factorize(object, ...)
 \arguments{
 \item{object}{Object.}
 
+\item{j}{\code{vector}.
+Column names or positions to evaluate.}
+
 \item{...}{Additional arguments.}
 }
 \value{
@@ -25,7 +28,7 @@ All columns will be coerced to \code{factor}.
 Coerce all columns in the object to \code{factor} (i.e. \code{stringsAsFactors}).
 }
 \note{
-Updated 2023-09-19.
+Updated 2023-09-20.
 }
 \examples{
 ## DFrame ====

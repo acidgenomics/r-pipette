@@ -8,12 +8,15 @@
 \usage{
 encode(x, ...)
 
-\S4method{encode}{DFrame}(x)
+\S4method{encode}{DFrame}(x, j = NULL)
 
 \S4method{encode}{Ranges}(x)
 }
 \arguments{
 \item{x}{Object.}
+
+\item{j}{\code{vector}.
+Column names or positions to evaluate.}
 
 \item{...}{Additional arguments.}
 }
@@ -25,7 +28,7 @@ All \code{atomic} columns will be encoded to \code{Rle} S4 class.
 Encode using run-length encoding
 }
 \note{
-Updated 2023-09-19.
+Updated 2023-09-20.
 }
 \examples{
 ## DFrame ====

@@ -15,13 +15,8 @@ decode(x, ...)
 \arguments{
 \item{x}{Object.}
 
-\item{j}{Indices specifying elements to extract or replace. Indices are \code{numeric} or
-\code{character} vectors, empty (\code{missing}), or \code{NULL}.
-
-For more information:
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{help(topic = "Extract", package = "base")
-}\if{html}{\out{</div>}}}
+\item{j}{\code{vector}.
+Column names or positions to evaluate.}
 
 \item{...}{Additional arguments.}
 }
