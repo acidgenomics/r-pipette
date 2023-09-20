@@ -1,4 +1,4 @@
-## FIXME Need to simplify the signature.
+## FIXME Don't allow format usage here.
 
 
 
@@ -120,11 +120,11 @@ NULL
         isAny(
             x = object,
             classes = c(
+                "matrix",
+                "data.frame",
                 "DFrame",
                 "GRanges",
-                "GRangesList",
-                "data.frame",
-                "matrix"
+                "GRangesList"
             )
         )
     ) {
@@ -174,38 +174,37 @@ NULL
 
 
 
-## Updated 2022-09-13.
-`export,ANY,NSE` <- # nolint
-    function(object,
-             con,
-             format,
-             dir = getOption(
-                 x = "acid.export.dir",
-                 default = getwd()
-             ),
-             ...) {
+#' Easy export of an object to working directory
+#'
+#' @note Updated 2023-09-20.
+#' @noRd
+`export,ANY,missing` <- # nolint
+    function(object, con, ...) {
         dots <- list(...)
-        if (isSubset("file", names(dots))) {
-            abort(sprintf(
-                "Use {.arg %s} instead of {.arg %s}.",
-                "con", "file"
-            ))
-        }
         if (isSubset("ext", names(dots))) {
             abort(sprintf(
                 "Use {.arg %s} instead of {.arg %s}.",
                 "con", "ext"
             ))
         }
+        if (isSubset("file", names(dots))) {
+            abort(sprintf(
+                "Use {.arg %s} instead of {.arg %s}.",
+                "con", "file"
+            ))
+        }
+        if (isSubset("format", names(dots))) {
+            abort(sprintf(
+                "Use {.arg %s} instead of {.arg %s}.",
+                "con", "format"
+            ))
+        }
         if (missing(con)) {
             con <- NULL
         }
-        if (missing(format)) {
-            format <- NULL
-        }
+        dir <- getOption(x = "acid.export.dir", default = getwd())
         assert(
             is.null(con),
-            is.null(format),
             isString(dir)
         )
         call <- standardizeCall()
@@ -219,7 +218,7 @@ NULL
 
 
 
-## Updated 2022-09-20.
+## Updated 2023-09-20.
 `export,atomic` <- # nolint
     function(object,
              con,
@@ -591,14 +590,8 @@ NULL
     function(object,
              con,
              format, # missing
-             overwrite = getOption(
-                 x = "acid.overwrite",
-                 default = TRUE
-             ),
-             quiet = getOption(
-                 x = "acid.quiet",
-                 default = FALSE
-             )) {
+             overwrite = TRUE,
+             quiet = FALSE) {
         if (missing(format)) {
             format <- NULL
         }
@@ -794,18 +787,17 @@ NULL
 #'     ),
 #'     definition = `export,matrix`
 #' )
-#'
-#' #' @rdname export
-#' #' @export
-#' setMethod(
-#'     f = "export",
-#'     signature = signature(
-#'         object = "ANY",
-#'         con = "missing",
-#'         format = "missing"
-#'     ),
-#'     definition = `export,ANY,NSE`
-#' )
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "ANY",
+        con = "missing"
+    ),
+    definition = `export,ANY,missing`
+)
 
 
 
