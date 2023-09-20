@@ -8,9 +8,9 @@
 \usage{
 factorize(object, ...)
 
-\S4method{factorize}{DFrame}(object)
+\S4method{factorize}{DFrame}(object, j = NULL)
 
-\S4method{factorize}{data.frame}(object)
+\S4method{factorize}{data.frame}(object, j = NULL)
 }
 \arguments{
 \item{object}{Object.}
