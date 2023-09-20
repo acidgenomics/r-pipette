@@ -1,4 +1,4 @@
-for (engine in .engines) {
+for (engine in engines) {
     test_that(
         desc = paste("'append' argument", engine, sep = " : "),
         code = {
@@ -113,7 +113,7 @@ objects <- list(
 
 for (format in .exportFormatChoices[["delim"]]) {
     for (class in names(objects)) {
-        for (engine in .engines) {
+        for (engine in engines) {
             test_that(
                 desc = paste(format, class, engine, sep = " : "),
                 code = {
@@ -176,7 +176,7 @@ for (format in .exportFormatChoices[["delim"]]) {
     }
 }
 
-for (engine in .engines) {
+for (engine in engines) {
     test_that(
         desc = paste("Column names disabled", engine, sep = " : "),
         code = {

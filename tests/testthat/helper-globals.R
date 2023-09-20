@@ -35,6 +35,8 @@ mat <- matrix
 mtcars <- as(mtcars, "DFrame")
 sparse <- sparseMatrix
 
+engines <- c("base", "data.table", "readr")
+
 DataFrame <- S4Vectors::DataFrame
 GRanges <- GenomicRanges::GRanges
 hasInternet <- goalie::hasInternet

@@ -377,7 +377,7 @@ NULL
             arg = fileExt(con),
             choices = .exportFormatChoices[["delim"]]
         )
-        whatPkg <- match.arg(arg = engine, choices = .engines)
+        whatPkg <- match.arg(engine)
         assert(requireNamespaces(whatPkg))
         file <- con
         whatFile <- con
