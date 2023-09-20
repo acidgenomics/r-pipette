@@ -56,7 +56,7 @@ NULL
         lgl <- unlist(Map(
             f = function(x, eval) {
                 if (isFALSE(eval)) {
-                    return(x)
+                    return(FALSE)
                 }
                 is(x, "Rle")
             },
