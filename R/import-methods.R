@@ -1581,27 +1581,12 @@ NULL
 
 #' Import a binary sequencing alignment file (`.bam`)
 #'
-#' @note Updated 2023-07-12.
+#' @note Updated 2023-09-20.
 #' @noRd
 `import,PipetteBAMFile` <- # nolint
     function(con,
-             format, # missing
-             text, # missing
-             quiet = getOption(
-                 x = "acid.quiet",
-                 default = FALSE
-             )) {
-        if (missing(format)) {
-            format <- NULL
-        }
-        if (missing(text)) {
-            text <- NULL
-        }
-        assert(
-            is.null(format),
-            is.null(text),
-            isFlag(quiet)
-        )
+             quiet = FALSE) {
+        assert(isFlag(quiet))
         file <- .resource(con)
         whatPkg <- "Rsamtools"
         whatFun <- "scanBam"
@@ -1628,27 +1613,11 @@ NULL
 
 #' Import a binary variant call file (`.bcf`)
 #'
-#' @note Updated 2023-07-13.
+#' @note Updated 2023-09-20.
 #' @noRd
 `import,PipetteBCFFile` <- # nolint
-    function(con,
-             format, # missing
-             text, # missing
-             quiet = getOption(
-                 x = "acid.quiet",
-                 default = FALSE
-             )) {
-        if (missing(format)) {
-            format <- NULL
-        }
-        if (missing(text)) {
-            text <- NULL
-        }
-        assert(
-            is.null(format),
-            is.null(text),
-            isFlag(quiet)
-        )
+    function(con, quiet = FALSE) {
+        assert(isFlag(quiet))
         file <- .resource(con)
         whatPkg <- "Rsamtools"
         whatFun <- "scanBcf"
@@ -1706,29 +1675,13 @@ NULL
 #' Internal importer for a bcbio count matrix file (`.counts`).
 #' These files contain an `"id"` column that we need to coerce to row names.
 #'
-#' @note Updated 2023-07-07.
+#' @note Updated 2023-09-20.
 #' @noRd
 `import,PipetteBcbioCountsFile` <- # nolint
     function(con,
-             format, # missing
-             text, # missing
-             metadata = getOption(
-                 x = "acid.import.metadata",
-                 default = FALSE
-             ),
-             quiet = getOption(
-                 x = "acid.quiet",
-                 default = FALSE
-             )) {
-        if (missing(format)) {
-            format <- NULL
-        }
-        if (missing(text)) {
-            text <- NULL
-        }
+             metadata = FALSE,
+             quiet = FALSE) {
         assert(
-            is.null(format),
-            is.null(text),
             isFlag(metadata),
             isFlag(quiet)
         )
@@ -1775,26 +1728,12 @@ NULL
 
 #' Import a compressed reference-oriented alignment map file (`.cram`)
 #'
-#' @note Updated 2023-07-12.
+#' @note Updated 2023-09-20.
 #' @noRd
 `import,PipetteCRAMFile` <- # nolint
-    function(con,
-             format, # missing
-             text, # missing
-             quiet = getOption(
-                 x = "acid.quiet",
-                 default = FALSE
-             )) {
-        if (missing(format)) {
-            format <- NULL
-        }
-        if (missing(text)) {
-            text <- NULL
-        }
+    function(con, quiet = FALSE) {
         assert(
             requireNamespaces("Rsamtools"),
-            is.null(format),
-            is.null(text),
             isFlag(quiet)
         )
         file <- .resource(con)
@@ -1830,7 +1769,7 @@ NULL
 
 #' Import a FASTA file
 #'
-#' @note Updated 2023-07-07.
+#' @note Updated 2023-09-20.
 #' @noRd
 #'
 #' @seealso
@@ -1844,26 +1783,10 @@ NULL
 #' - `"AA"`: `AAStringSet`.
 `import,PipetteFASTAFile` <- # nolint
     function(con,
-             format, # missing
-             text, # missing
              moleculeType = c("DNA", "RNA", "AA"),
-             metadata = getOption(
-                 x = "acid.import.metadata",
-                 default = FALSE
-             ),
-             quiet = getOption(
-                 x = "acid.quiet",
-                 default = FALSE
-             )) {
-        if (missing(format)) {
-            format <- NULL
-        }
-        if (missing(text)) {
-            text <- NULL
-        }
+             metadata = FALSE,
+             quiet = FALSE) {
         assert(
-            is.null(format),
-            is.null(text),
             isFlag(metadata),
             isFlag(quiet)
         )
@@ -1974,7 +1897,7 @@ NULL
 
 #' Import a FASTQ file
 #'
-#' @note Updated 2023-07-07.
+#' @note Updated 2023-09-20.
 #' @noRd
 #'
 #' @seealso
@@ -1985,26 +1908,10 @@ NULL
 #' - `"RNA"`: `RNAStringSet`.
 `import,PipetteFASTQFile` <- # nolint
     function(con,
-             format, # missing
-             text, # missing
              moleculeType = c("DNA", "RNA"),
-             metadata = getOption(
-                 x = "acid.import.metadata",
-                 default = FALSE
-             ),
-             quiet = getOption(
-                 x = "acid.quiet",
-                 default = FALSE
-             )) {
-        if (missing(format)) {
-            format <- NULL
-        }
-        if (missing(text)) {
-            text <- NULL
-        }
+             metadata = FALSE,
+             quiet = FALSE) {
         assert(
-            is.null(format),
-            is.null(text),
             isFlag(metadata),
             isFlag(quiet)
         )
@@ -2045,36 +1952,18 @@ NULL
 
 #' Import a gene cluster text file (`.gct`)
 #'
-#' @note Updated 2023-07-07.
+#' @note Updated 2023-09-20.
 #' @noRd
 #'
 #' @seealso
 #' - https://software.broadinstitute.org/software/igv/GCT
 `import,PipetteGCTFile` <- # nolint
     function(con,
-             format, # missing
-             text, # missing
-             metadata = getOption(
-                 x = "acid.import.metadata",
-                 default = FALSE
-             ),
-             quiet = getOption(
-                 x = "acid.quiet",
-                 default = FALSE
-             ),
+             metadata = FALSE,
+             quiet = FALSE,
              return = c("matrix", "data.frame")) {
-        if (missing(format)) {
-            format <- NULL
-        }
-        if (missing(text)) {
-            text <- NULL
-        }
         return <- match.arg(return)
-        assert(
-            is.null(format),
-            is.null(text),
-            isFlag(quiet)
-        )
+        assert(isFlag(quiet))
         object <- import(
             con = .resource(con),
             format = "tsv",
@@ -2128,29 +2017,14 @@ NULL
 
 #' Import a gene matrix transposed file (`.gmt`)
 #'
-#' @note Updated 2023-07-07.
+#' @note Updated 2023-09-20.
 #' @noRd
 #'
-#' @seealso `fgsea::gmtPathways()`.
+#' @seealso
+#' - `fgsea::gmtPathways()`.
 `import,PipetteGMTFile` <- # nolint
-    function(con,
-             format, # missing
-             text, # missing
-             quiet = getOption(
-                 x = "acid.quiet",
-                 default = FALSE
-             )) {
-        if (missing(format)) {
-            format <- NULL
-        }
-        if (missing(text)) {
-            text <- NULL
-        }
-        assert(
-            is.null(format),
-            is.null(text),
-            isFlag(quiet)
-        )
+    function(con, quiet = FALSE) {
+        assert(isFlag(quiet))
         lines <- import(
             con = .resource(con),
             format = "lines",
@@ -2172,27 +2046,11 @@ NULL
 
 #' Import a gene matrix file (`.gmx`)
 #'
-#' @note Updated 2023-07-07.
+#' @note Updated 2023-09-20.
 #' @noRd
 `import,PipetteGMXFile` <- # nolint
-    function(con,
-             format, # missing
-             text, # missing
-             quiet = getOption(
-                 x = "acid.quiet",
-                 default = FALSE
-             )) {
-        if (missing(format)) {
-            format <- NULL
-        }
-        if (missing(text)) {
-            text <- NULL
-        }
-        assert(
-            is.null(format),
-            is.null(text),
-            isFlag(quiet)
-        )
+    function(con, quiet = FALSE) {
+        assert(isFlag(quiet))
         lines <- import(
             con = .resource(con),
             format = "lines",
@@ -2217,27 +2075,11 @@ NULL
 
 #' Import a mutation annotation format file (`.maf`)
 #'
-#' @note Updated 2023-07-07.
+#' @note Updated 2023-09-20.
 #' @noRd
 `import,PipetteMAFFile` <- # nolint
-    function(con,
-             format, # missing
-             text, # missing
-             quiet = getOption(
-                 x = "acid.quiet",
-                 default = FALSE
-             )) {
-        if (missing(format)) {
-            format <- NULL
-        }
-        if (missing(text)) {
-            text <- NULL
-        }
-        assert(
-            is.null(format),
-            is.null(text),
-            isFlag(quiet)
-        )
+    function(con, quiet = FALSE) {
+        assert(isFlag(quiet))
         file <- .resource(con)
         whatPkg <- "maftools"
         whatFun <- "read.maf"
@@ -2262,27 +2104,11 @@ NULL
 
 #' Import an open biomedical ontologies file (`.obo`)
 #'
-#' @note Updated 2023-07-07.
+#' @note Updated 2023-09-20.
 #' @noRd
 `import,PipetteOBOFile` <- # nolint
-    function(con,
-             format, # missing
-             text, # missing
-             quiet = getOption(
-                 x = "acid.quiet",
-                 default = FALSE
-             )) {
-        if (missing(format)) {
-            format <- NULL
-        }
-        if (missing(text)) {
-            text <- NULL
-        }
-        assert(
-            is.null(format),
-            is.null(text),
-            isFlag(quiet)
-        )
+    function(con, quiet = FALSE) {
+        assert(isFlag(quiet))
         file <- .resource(con)
         whatPkg <- "ontologyIndex"
         whatFun <- "get_ontology"
@@ -2328,37 +2154,18 @@ NULL
 
 #' Import a file using `rio::import()`
 #'
-#' @note Updated 2023-07-07.
+#' @note Updated 2023-09-20.
 #' @noRd
 `import,PipetteRioFile` <- # nolint
     function(con,
-             format, # missing
-             text, # missing
              rownames = TRUE,
              rownameCol = NULL,
              colnames = TRUE,
-             makeNames = getOption(
-                 x = "acid.import.make.names",
-                 default = syntactic::makeNames
-             ),
-             metadata = getOption(
-                 x = "acid.import.metadata",
-                 default = FALSE
-             ),
-             quiet = getOption(
-                 x = "acid.quiet",
-                 default = FALSE
-             ),
+             makeNames = syntactic::makeNames,
+             metadata = FALSE,
+             quiet = FALSE,
              ...) {
-        if (missing(format)) {
-            format <- NULL
-        }
-        if (missing(text)) {
-            text <- NULL
-        }
         assert(
-            is.null(format),
-            is.null(text),
             isFlag(rownames),
             isScalar(rownameCol) || is.null(rownameCol),
             isFlag(colnames) || isCharacter(colnames),
@@ -2399,32 +2206,16 @@ NULL
 
 #' Import file using `rtracklayer::import()`
 #'
-#' @note Updated 2023-07-07.
+#' @note Updated 2023-09-20.
 #' @noRd
 #'
 #' @note Using `tryCatch()` here to error if there are any warnings.
 `import,PipetteRtracklayerFile` <- # nolint
     function(con,
-             format, # missing
-             text, # missing
-             metadata = getOption(
-                 x = "acid.import.metadata",
-                 default = FALSE
-             ),
-             quiet = getOption(
-                 x = "acid.quiet",
-                 default = FALSE
-             ),
+             metadata = FALSE,
+             quiet = FALSE,
              ...) {
-        if (missing(format)) {
-            format <- NULL
-        }
-        if (missing(text)) {
-            text <- NULL
-        }
         assert(
-            is.null(format),
-            is.null(text),
             isFlag(metadata),
             isFlag(quiet)
         )
@@ -2527,113 +2318,77 @@ setMethod(
     definition = `import,PipetteExcelFile`
 )
 
-#' #' @rdname import
-#' #' @export
-#' setMethod(
-#'     f = "import",
-#'     signature = signature(
-#'         con = "PipetteBAMFile",
-#'         format = "missing",
-#'         text = "missing"
-#'     ),
-#'     definition = `import,PipetteBAMFile`
-#' )
-#'
-#' #' @rdname import
-#' #' @export
-#' setMethod(
-#'     f = "import",
-#'     signature = signature(
-#'         con = "PipetteBCFFile",
-#'         format = "missing",
-#'         text = "missing"
-#'     ),
-#'     definition = `import,PipetteBCFFile`
-#' )
-#'
-#' #' @rdname import
-#' #' @export
-#' setMethod(
-#'     f = "import",
-#'     signature = signature(
-#'         con = "PipetteCRAMFile",
-#'         format = "missing",
-#'         text = "missing"
-#'     ),
-#'     definition = `import,PipetteCRAMFile`
-#' )
-#'
-#' #' @rdname import
-#' #' @export
-#' setMethod(
-#'     f = "import",
-#'     signature = signature(
-#'         con = "PipetteFASTAFile",
-#'         format = "missing",
-#'         text = "missing"
-#'     ),
-#'     definition = `import,PipetteFASTAFile`
-#' )
-#'
-#' #' @rdname import
-#' #' @export
-#' setMethod(
-#'     f = "import",
-#'     signature = signature(
-#'         con = "PipetteFASTQFile",
-#'         format = "missing",
-#'         text = "missing"
-#'     ),
-#'     definition = `import,PipetteFASTQFile`
-#' )
-#'
-#' #' @rdname import
-#' #' @export
-#' setMethod(
-#'     f = "import",
-#'     signature = signature(
-#'         con = "PipetteGCTFile",
-#'         format = "missing",
-#'         text = "missing"
-#'     ),
-#'     definition = `import,PipetteGCTFile`
-#' )
-#'
-#' #' @rdname import
-#' #' @export
-#' setMethod(
-#'     f = "import",
-#'     signature = signature(
-#'         con = "PipetteGMTFile",
-#'         format = "missing",
-#'         text = "missing"
-#'     ),
-#'     definition = `import,PipetteGMTFile`
-#' )
-#'
-#' #' @rdname import
-#' #' @export
-#' setMethod(
-#'     f = "import",
-#'     signature = signature(
-#'         con = "PipetteGMXFile",
-#'         format = "missing",
-#'         text = "missing"
-#'     ),
-#'     definition = `import,PipetteGMXFile`
-#' )
-#'
-#' #' @rdname import
-#' #' @export
-#' setMethod(
-#'     f = "import",
-#'     signature = signature(
-#'         con = "PipetteGRPFile",
-#'         format = "missing",
-#'         text = "missing"
-#'     ),
-#'     definition = `import,PipetteGRPFile`
-#' )
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(con = "PipetteBAMFile"),
+    definition = `import,PipetteBAMFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(con = "PipetteBCFFile"),
+    definition = `import,PipetteBCFFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(con = "PipetteCRAMFile"),
+    definition = `import,PipetteCRAMFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(con = "PipetteFASTAFile"),
+    definition = `import,PipetteFASTAFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(con = "PipetteFASTQFile"),
+    definition = `import,PipetteFASTQFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(con = "PipetteGCTFile"),
+    definition = `import,PipetteGCTFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(con = "PipetteGMTFile"),
+    definition = `import,PipetteGMTFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(con = "PipetteGMXFile"),
+    definition = `import,PipetteGMXFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(con = "PipetteGRPFile"),
+    definition = `import,PipetteGRPFile`
+)
 
 #' @rdname import
 #' @export
@@ -2643,18 +2398,13 @@ setMethod(
     definition = `import,PipetteJSONFile`
 )
 
-#' #' @rdname import
-#' #' @export
-#' setMethod(
-#'     f = "import",
-#'     signature = signature(
-#'         con = "PipetteMAFFile",
-#'         format = "missing",
-#'         text = "missing"
-#'     ),
-#'     definition = `import,PipetteMAFFile`
-#' )
-NULL
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(con = "PipetteMAFFile"),
+    definition = `import,PipetteMAFFile`
+)
 
 #' @rdname import
 #' @export
@@ -2664,18 +2414,13 @@ setMethod(
     definition = `import,PipetteMTXFile`
 )
 
-#' #' @rdname import
-#' #' @export
-#' setMethod(
-#'     f = "import",
-#'     signature = signature(
-#'         con = "PipetteOBOFile",
-#'         format = "missing",
-#'         text = "missing"
-#'     ),
-#'     definition = `import,PipetteOBOFile`
-#' )
-NULL
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(con = "PipetteOBOFile"),
+    definition = `import,PipetteOBOFile`
+)
 
 #' @rdname import
 #' @export
@@ -2685,29 +2430,21 @@ setMethod(
     definition = `import,PipettePZFXFile`
 )
 
-#' #' @rdname import
-#' #' @export
-#' setMethod(
-#'     f = "import",
-#'     signature = signature(
-#'         con = "PipetteSAMFile",
-#'         format = "missing",
-#'         text = "missing"
-#'     ),
-#'     definition = `import,PipetteSAMFile`
-#' )
-#'
-#' #' @rdname import
-#' #' @export
-#' setMethod(
-#'     f = "import",
-#'     signature = signature(
-#'         con = "PipetteVCFFile",
-#'         format = "missing",
-#'         text = "missing"
-#'     ),
-#'     definition = `import,PipetteVCFFile`
-#' )
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(con = "PipetteSAMFile"),
+    definition = `import,PipetteSAMFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(con = "PipetteVCFFile"),
+    definition = `import,PipetteVCFFile`
+)
 
 #' @rdname import
 #' @export
@@ -2717,38 +2454,26 @@ setMethod(
     definition = `import,PipetteYAMLFile`
 )
 
-#' #' @rdname import
-#' #' @export
-#' setMethod(
-#'     f = "import",
-#'     signature = signature(
-#'         con = "PipetteBcbioCountsFile",
-#'         format = "missing",
-#'         text = "missing"
-#'     ),
-#'     definition = `import,PipetteBcbioCountsFile`
-#' )
-#'
-#' #' @rdname import
-#' #' @export
-#' setMethod(
-#'     f = "import",
-#'     signature = signature(
-#'         con = "PipetteRioFile",
-#'         format = "missing",
-#'         text = "missing"
-#'     ),
-#'     definition = `import,PipetteRioFile`
-#' )
-#'
-#' #' @rdname import
-#' #' @export
-#' setMethod(
-#'     f = "import",
-#'     signature = signature(
-#'         con = "PipetteRtracklayerFile",
-#'         format = "missing",
-#'         text = "missing"
-#'     ),
-#'     definition = `import,PipetteRtracklayerFile`
-#' )
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(con = "PipetteBcbioCountsFile"),
+    definition = `import,PipetteBcbioCountsFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(con = "PipetteRioFile"),
+    definition = `import,PipetteRioFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(con = "PipetteRtracklayerFile"),
+    definition = `import,PipetteRtracklayerFile`
+)
