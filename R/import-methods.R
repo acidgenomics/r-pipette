@@ -904,11 +904,7 @@ NULL
 #' @note Updated 2023-09-20.
 #' @noRd
 `import,PipetteRDataFile` <- # nolint
-    function(con,
-             quiet = getOption(
-                 x = "acid.quiet",
-                 default = FALSE
-             )) {
+    function(con, quiet = FALSE) {
         assert(isFlag(quiet))
         file <- .resource(con)
         whatPkg <- "base"
@@ -2648,18 +2644,14 @@ setMethod(
     definition = `import,PipetteRDSFile`
 )
 
-#' #' @rdname import
-#' #' @export
-#' setMethod(
-#'     f = "import",
-#'     signature = signature(
-#'         con = "PipetteRDataFile",
-#'         format = "missing",
-#'         text = "missing"
-#'     ),
-#'     definition = `import,PipetteRDataFile`
-#' )
-#'
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(con = "PipetteRDataFile"),
+    definition = `import,PipetteRDataFile`
+)
+
 #' #' @rdname import
 #' #' @export
 #' setMethod(
