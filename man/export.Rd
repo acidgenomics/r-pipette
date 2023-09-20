@@ -83,17 +83,23 @@ export(object, con, ...)
 \S4method{export}{ANY,missing}(object, con, ...)
 }
 \arguments{
-\item{object}{Object.
-An object supporting \code{dim()}, or a supported class capable of being coerced
-to \code{data.frame}, to be written to disk.}
+\item{object}{Object.}
 
-\item{con}{\code{character(1)}, \code{missing}, or \code{NULL}.
-File path.
-Alternatively, can leave unset and use \code{ext} and \code{dir} arguments instead.}
+\item{con}{\code{character(1)} or \code{connection}.
+Data connection. Use \code{character(1)} to represent a file path.}
+
+\item{rownames}{\code{logical(1)}.
+Apply to row names.}
+
+\item{colnames}{\code{logical(1)}.
+Apply to column names.}
 
 \item{quote}{\code{logical(1)}.
 Surround any \code{character} or \code{factor} columns by double quotes.
 Recommended by default.}
+
+\item{overwrite}{\code{logical(1)}.
+Overwrite existing file on disk.}
 
 \item{engine}{\code{character(1)}.
 Engine (package) to use for export.
@@ -105,6 +111,9 @@ Currently supported:
 \item readr
 }}
 
+\item{quiet}{\code{logical(1)}.
+Perform command quietly, suppressing messages.}
+
 \item{append}{\code{logical(1)}.
 Append to output file.
 When enabled, automatically sets \code{overwrite} argument to \code{FALSE}.
@@ -113,8 +122,7 @@ Requires readr package to be installed.}
 \item{...}{Additional arguments.}
 }
 \value{
-Invisible \code{character}.
-File path(s).
+Invisible \code{character} or \code{list} of file paths.
 }
 \description{
 Export data from R

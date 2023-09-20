@@ -85,6 +85,8 @@
 #'
 #' `GMTFile` and `OBOFile` are also supported by BiocSet package.
 #'
+#' @inheritParams AcidRoxygen::params
+#'
 #' @param format `character(1)` or `NULL`.
 #' An optional file format type, which can be used to override the file format
 #' inferred from `con`. Only recommended for file and URL paths that don't
@@ -113,6 +115,9 @@
 #' @param makeNames `function`.
 #' Apply syntactic naming function to (column) names.
 #' Function is never applied to row names, when they are defined in object.
+#'
+#' @param metadata `logical(1)`.
+#' Slot useful metadata about the import into the object.
 #'
 #' @param moleculeType `character(1)`.
 #' Molecule type, either DNA or RNA.
