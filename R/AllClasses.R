@@ -102,6 +102,15 @@ setClass(
     Class = "PipetteFile",
     contains = "SimpleList"
 )
+setValidity(
+    Class = "PipetteFile",
+    method = function(object) {
+        validate(
+            isString(object[["resource"]]),
+            isString(object[["origResource"]], nullOK = TRUE)
+        )
+    }
+)
 
 
 
