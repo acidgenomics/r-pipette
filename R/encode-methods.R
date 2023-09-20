@@ -1,3 +1,7 @@
+## FIXME Consider reworking to use "object[idx] <- lapply(" approach from factorize.
+
+
+
 #' @name encode
 #' @inherit AcidGenerics::encode
 #' @note Updated 2023-09-20.

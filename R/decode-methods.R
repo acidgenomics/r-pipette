@@ -1,3 +1,7 @@
+## FIXME Consider reworking to use "object[idx] <- lapply(" approach from factorize.
+
+
+
 #' Decode data that uses run-length encoding
 #'
 #' @name decode
@@ -59,7 +63,6 @@ NULL
                 if (isFALSE(eval)) {
                     return(x)
                 }
-                x <- unname(x)
                 if (is(x, "Rle")) {
                     x <- decode(x)
                 }

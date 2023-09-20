@@ -1,3 +1,7 @@
+## FIXME Consider reworking to use "object[idx] <- lapply(" approach from factorize.
+
+
+
 #' @name unfactorize
 #' @inherit AcidGenerics::unfactorize
 #' @note Updated 2023-09-20.
@@ -81,7 +85,6 @@ NULL
                 if (isFALSE(eval)) {
                     return(x)
                 }
-                x <- unname(x)
                 if (!is.factor(x)) {
                     return(x)
                 }
