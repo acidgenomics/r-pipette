@@ -51,7 +51,7 @@ NULL
             idx <- seq(from = 1L, to = ncol(object))
             lgl <- idx %in% j
         }
-        lgl <- Map(
+        lgl <- unlist(Map(
             f = function(x, eval) {
                 if (isFALSE(eval)) {
                     return(FALSE)
@@ -67,8 +67,7 @@ NULL
             },
             x = object,
             eval = lgl
-        )
-        lgl <- unlist(x = lgl, recursive = FALSE, use.names = FALSE)
+        ))
         if (!any(lgl)) {
             return(object)
         }

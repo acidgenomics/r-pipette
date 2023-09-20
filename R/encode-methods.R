@@ -1,7 +1,3 @@
-## FIXME Consider reworking to use "object[idx] <- lapply(" approach from factorize.
-
-
-
 #' @name encode
 #' @inherit AcidGenerics::encode
 #' @note Updated 2023-09-20.
@@ -33,8 +29,6 @@ NULL
 
 
 
-## FIXME Figure out which columns to encode here.
-
 ## Updated 2023-09-20.
 `encode,DFrame` <- # nolint
     function(x, j = NULL) {
@@ -58,35 +52,22 @@ NULL
             idx <- seq(from = 1L, to = ncol(x))
             lgl <- idx %in% j
         }
-        ## FIXME Check for atomic or Rle.
-        lst <- Map(
+        lgl <- unlist(Map(
             f = function(x, eval) {
                 if (isFALSE(eval)) {
+                    return(FALSE)
                 }
-                if (is(x, "List")) {
-                    return(x)
-                }
-                ## Decode Rle, if necessary.
-                if (is(x, "Rle")) {
-                    x <- decode(x)
-                }
-                ## Adjust (drop) factor levels, if necessary.
-                if (is.factor(x)) {
-                    x <- droplevels(x)
-                }
-                ## Use run-length encoding on atomics.
-                if (is.atomic(x)) {
-                    x <- Rle(x)
-                }
-                x
+                is.atomic(x)
             },
             x = x,
             eval = lgl
-        )
-        out <- as.DataFrame(lst)
-        dimnames(out) <- dimnames(x)
-        metadata(out) <- metadata(x)
-        out
+        ))
+        if (!any(lgl)) {
+            return(x)
+        }
+        idx <- which(lgl)
+        x[idx] <- lapply(X = x[idx], FUN = encode)
+        x
     }
 
 
