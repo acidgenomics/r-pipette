@@ -93,7 +93,7 @@ NULL
         out <- as.DataFrame(lst)
         dimnames(out) <- dimnames(object)
         metadata(out) <- metadata(object)
-        df
+        out
     }
 
 
