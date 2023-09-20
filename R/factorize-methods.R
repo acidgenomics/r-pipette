@@ -73,16 +73,14 @@ NULL
             return(object)
         }
         idx <- which(lgl)
-        object[idx] <- lapply(
-            X = object[idx],
-            FUN = function(x) {
-                if (!is.factor(x)) {
-                    x <- as.factor(x)
-                }
-                x <- droplevels(x)
-                x
+        .factorize <- function(x) {
+            if (!is.factor(x)) {
+                x <- as.factor(x)
             }
-        )
+            x <- droplevels(x)
+            x
+        }
+        object[idx] <- lapply(X = object[idx], FUN = .factorize)
         object
     }
 
