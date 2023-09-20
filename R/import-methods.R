@@ -1318,36 +1318,17 @@ NULL
 
 #' Import a GraphPad Prism file (`.pzfx`)
 #'
-#' @note Updated 2023-07-07.
+#' @note Updated 2023-09-20.
 #' @noRd
 #'
 #' @note This function doesn't support optional column names.
 `import,PipettePZFXFile` <- # nolint
     function(con,
-             format, # missing
-             text, # missing
              sheet = 1L,
-             makeNames = getOption(
-                 x = "acid.import.make.names",
-                 default = syntactic::makeNames
-             ),
-             metadata = getOption(
-                 x = "acid.import.metadata",
-                 default = FALSE
-             ),
-             quiet = getOption(
-                 x = "acid.quiet",
-                 default = FALSE
-             )) {
-        if (missing(format)) {
-            format <- NULL
-        }
-        if (missing(text)) {
-            text <- NULL
-        }
+             makeNames = syntactic::makeNames,
+             metadata = FALSE,
+             quiet = FALSE) {
         assert(
-            is.null(format),
-            is.null(text),
             isScalar(sheet),
             is.function(makeNames) ||
                 is.null(makeNames) ||
@@ -1365,10 +1346,7 @@ NULL
                 whatFun = whatFun
             )
         }
-        args <- list(
-            "path" = file,
-            "table" = sheet
-        )
+        args <- list("path" = file, "table" = sheet)
         what <- .getFunction(f = whatFun, pkg = whatPkg)
         object <- do.call(what = what, args = args)
         object <- removeNA(object)
@@ -2739,19 +2717,16 @@ setMethod(
 #'     ),
 #'     definition = `import,PipetteOBOFile`
 #' )
-#'
-#' #' @rdname import
-#' #' @export
-#' setMethod(
-#'     f = "import",
-#'     signature = signature(
-#'         con = "PipettePZFXFile",
-#'         format = "missing",
-#'         text = "missing"
-#'     ),
-#'     definition = `import,PipettePZFXFile`
-#' )
-#'
+NULL
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(con = "PipettePZFXFile"),
+    definition = `import,PipettePZFXFile`
+)
+
 #' #' @rdname import
 #' #' @export
 #' setMethod(
