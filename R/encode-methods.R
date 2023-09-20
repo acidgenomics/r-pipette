@@ -13,7 +13,8 @@
 #'
 #' @param ... Additional arguments.
 #'
-#' @seealso `Rle()`.
+#' @seealso
+#' - `Rle()`.
 #'
 #' @return Modified object.
 #' All `atomic` columns will be encoded to `Rle` S4 class.
@@ -31,6 +32,8 @@
 NULL
 
 
+
+## FIXME Figure out which columns to encode here.
 
 ## Updated 2023-09-20.
 `encode,DFrame` <- # nolint
@@ -55,8 +58,11 @@ NULL
             idx <- seq(from = 1L, to = ncol(x))
             lgl <- idx %in% j
         }
+        ## FIXME Check for atomic or Rle.
         lst <- Map(
-            f = function(x) {
+            f = function(x, eval) {
+                if (isFALSE(eval)) {
+                }
                 if (is(x, "List")) {
                     return(x)
                 }
@@ -96,6 +102,32 @@ NULL
 
 
 
+## Updated 2023-09-19.
+`encode,Rle` <- # nolint
+    function(x) {
+        x
+    }
+
+
+
+## Updated 2023-09-19.
+`encode,atomic` <- # nolint
+    function(x) {
+        Rle(x)
+    }
+
+
+
+## Updated 2023-09-19.
+`encode,factor` <- # nolint
+    function(x) {
+        x <- Rle(x)
+        x <- droplevels(x)
+        x
+    }
+
+
+
 #' @rdname encode
 #' @export
 setMethod(
@@ -110,4 +142,28 @@ setMethod(
     f = "encode",
     signature = signature(x = "Ranges"),
     definition = `encode,Ranges`
+)
+
+#' @rdname encode
+#' @export
+setMethod(
+    f = "encode",
+    signature = signature(x = "Rle"),
+    definition = `encode,Rle`
+)
+
+#' @rdname encode
+#' @export
+setMethod(
+    f = "encode",
+    signature = signature(x = "atomic"),
+    definition = `encode,atomic`
+)
+
+#' @rdname encode
+#' @export
+setMethod(
+    f = "encode",
+    signature = signature(x = "factor"),
+    definition = `encode,factor`
 )

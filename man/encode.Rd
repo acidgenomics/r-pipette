@@ -4,6 +4,9 @@
 \alias{encode}
 \alias{encode,DFrame-method}
 \alias{encode,Ranges-method}
+\alias{encode,Rle-method}
+\alias{encode,atomic-method}
+\alias{encode,factor-method}
 \title{Encode using run-length encoding}
 \usage{
 encode(x, ...)
@@ -11,6 +14,12 @@ encode(x, ...)
 \S4method{encode}{DFrame}(x, j = NULL)
 
 \S4method{encode}{Ranges}(x)
+
+\S4method{encode}{Rle}(x)
+
+\S4method{encode}{atomic}(x)
+
+\S4method{encode}{factor}(x)
 }
 \arguments{
 \item{x}{Object.}
@@ -42,5 +51,7 @@ object <- encode(object)
 lapply(object, class)
 }
 \seealso{
-\code{Rle()}.
+\itemize{
+\item \code{Rle()}.
+}
 }
