@@ -14,6 +14,18 @@
 #' object <- GRanges
 #' object <- droplevels2(object)
 #' print(object)
+#'
+#' ## Rle ====
+#' object <- Rle(factor(c("a", "a", "b", "b"), levels = c("a", "b", "c")))
+#' print(object)
+#' object <- droplevels2(object)
+#' print(object)
+#'
+#' ## factor ====
+#' object <- factor(c("a", "a", "b", "b"), levels = c("a", "b", "c"))
+#' print(object)
+#' object <- droplevels2(object)
+#' print(object)
 NULL
 
 
@@ -21,25 +33,16 @@ NULL
 ## Updated 2023-09-12.
 `droplevels2,DFrame` <- # nolint
     function(x) {
-        except <- !bapply(
-            X = x,
-            FUN = function(x) {
-                if (is(x, "Rle")) {
-                    x <- decode(x)
-                }
-                is.factor(x)
-            }
-        )
-        if (all(except)) {
+        if (!(hasCols(x) && hasRows(x))) {
             return(x)
         }
-        lst <- SimpleList(as.list(x))
-        lst <- droplevels(x = lst, except = except)
-        out <- as.DataFrame(lst)
-        dimnames(out) <- dimnames(x)
-        metadata(out) <- metadata(x)
-        out <- as(out, Class = simpleClass(x))
-        out
+        lgl <- bapply(X = x, FUN = isAny, classes = c("factor", "Rle"))
+        if (!any(lgl)) {
+            return(x)
+        }
+        idx <- which(lgl)
+        object[idx] <- lapply(X = object[idx], FUN = droplevels2)
+        object
     }
 
 
@@ -55,6 +58,24 @@ NULL
 
 
 
+## Updated 2023-09-20.
+`droplevels2,factor` <- # nolint
+    function(x) {
+        droplevels(x)
+    }
+
+
+
+## Updated 2023-09-20.
+`droplevels2,Rle` <- # nolint
+    `droplevels2,factor`
+
+## Updated 2023-09-20.
+`droplevels2,data.frame` <- # nolint
+    `droplevels2,DFrame`
+
+
+
 #' @rdname droplevels2
 setMethod(
     f = "droplevels2",
@@ -67,4 +88,25 @@ setMethod(
     f = "droplevels2",
     signature = signature(x = "Ranges"),
     definition = `droplevels2,Ranges`
+)
+
+#' @rdname droplevels2
+setMethod(
+    f = "droplevels2",
+    signature = signature(x = "Rle"),
+    definition = `droplevels2,Rle`
+)
+
+#' @rdname droplevels2
+setMethod(
+    f = "droplevels2",
+    signature = signature(x = "data.frame"),
+    definition = `droplevels2,data.frame`
+)
+
+#' @rdname droplevels2
+setMethod(
+    f = "droplevels2",
+    signature = signature(x = "factor"),
+    definition = `droplevels2,factor`
 )
