@@ -111,9 +111,6 @@ When enabled, automatically sets \code{overwrite} argument to \code{FALSE}.
 Requires readr package to be installed.}
 
 \item{...}{Additional arguments.}
-
-\item{format}{\code{character(1)}, \code{missing}, or \code{NULL}.
-\emph{Currently not supported.}}
 }
 \value{
 Invisible \code{character}.
