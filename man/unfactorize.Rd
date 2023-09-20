@@ -33,11 +33,14 @@ object <- as.factor(c(100L, 100L, 101L, 101L))
 ## Coercion with `as.numeric` or `as.integer` don't work the way we want.
 print(as.numeric(object))
 print(as.integer(object))
+object <- factorize(object)
+print(object)
 }
 \seealso{
 \itemize{
 \item Warning section of \code{help("factor")}.
 \item R FAQ 7.10: How do I convert factors to numeric?
+\item \code{stringsAsFactors} for \code{read.table} and \code{data.frame}.
 \item https://stackoverflow.com/questions/3418128/
 \item forcats package.
 }
