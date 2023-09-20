@@ -1,7 +1,3 @@
-## FIXME Check usage of "format" variable.
-
-
-
 #' @name import
 #' @inherit AcidGenerics::import
 #' @note Updated 2023-09-20.

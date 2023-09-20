@@ -1,7 +1,3 @@
-## FIXME Check usage of "format" variable.
-
-
-
 #' @name export
 #' @inherit AcidGenerics::export
 #' @note Updated 2023-09-20.
@@ -471,7 +467,7 @@ NULL
                     "quote" = quote,
                     "row.names" = FALSE,
                     "sep" = switch(
-                        EXPR = format,
+                        EXPR = fileExt(file),
                         "csv" = ",",
                         "tsv" = "\t"
                     )
@@ -492,7 +488,7 @@ NULL
                     "quote" = quote,
                     "row.names" = FALSE,
                     "sep" = switch(
-                        EXPR = format,
+                        EXPR = fileExt(file),
                         "csv" = ",",
                         "tsv" = "\t"
                     ),
@@ -513,7 +509,7 @@ NULL
                     "append" = FALSE,
                     "col_names" = colnames,
                     "delim" = switch(
-                        EXPR = format,
+                        EXPR = fileExt(file),
                         "csv" = ",",
                         "tsv" = "\t"
                     ),
