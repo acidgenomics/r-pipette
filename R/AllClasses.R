@@ -100,14 +100,14 @@
 #' - BROADPEAK, NARROWPEAK
 setClass(
     Class = "PipetteFile",
-    contains = "SimpleList"
+    slots = c("resource", "origResource")
 )
 setValidity(
     Class = "PipetteFile",
     method = function(object) {
         validate(
-            isString(object[["resource"]]),
-            isString(object[["origResource"]], nullOK = TRUE)
+            isString(slot(object, "resource")),
+            isString(slot(object, "origResource"), nullOK = TRUE)
         )
     }
 )
