@@ -850,11 +850,10 @@ NULL
 
 
 
-## Updated 2023-09-19.
+## Updated 2023-09-20.
 `import,textConnection` <- # nolint
     function(con,
              format = c("csv", "tsv"),
-             text, # missing
              colnames = TRUE,
              quote = "\"",
              naStrings = naStrings,
@@ -862,13 +861,9 @@ NULL
                  x = "acid.quiet",
                  default = FALSE
              )) {
-        if (missing(text)) {
-            text <- NULL
-        }
         assert(
             is(con, "textConnection"),
             isString(format),
-            is.null(text),
             isString(quote),
             isCharacter(naStrings),
             isFlag(quiet)
@@ -912,28 +907,16 @@ NULL
 
 #' Import an R data file containing multiple objects (`.rda`)
 #'
-#' @note Updated 2023-07-07.
+#' @note Updated 2023-09-20.
 #' @noRd
 `import,PipetteRDataFile` <- # nolint
     function(con,
-             format, # missing
-             text, # missing
              quiet = getOption(
                  x = "acid.quiet",
                  default = FALSE
              )) {
-        if (missing(format)) {
-            format <- NULL
-        }
-        if (missing(text)) {
-            text <- NULL
-        }
-        assert(
-            is.null(format),
-            is.null(text),
-            isFlag(quiet)
-        )
-        file <- resource(con)
+        assert(isFlag(quiet))
+        file <- .resource(con)
         whatPkg <- "base"
         whatFun <- "load"
         if (isFALSE(quiet)) {
@@ -995,7 +978,7 @@ NULL
             is.null(text),
             isFlag(quiet)
         )
-        file <- resource(con)
+        file <- .resource(con)
         whatPkg <- "base"
         whatFun <- "readRDS"
         if (isFALSE(quiet)) {
@@ -1089,7 +1072,7 @@ NULL
         if (isTRUE(verbose)) {
             assert(isFALSE(quiet))
         }
-        file <- resource(con)
+        file <- .resource(con)
         ext <- switch(
             EXPR = class(con),
             "PipetteCSVFile" = "csv",
@@ -1287,7 +1270,7 @@ NULL
             isFlag(metadata),
             isFlag(quiet)
         )
-        file <- resource(con)
+        file <- .resource(con)
         whatPkg <- "readxl"
         whatFun <- "read_excel"
         if (isFALSE(quiet)) {
@@ -1359,7 +1342,7 @@ NULL
         if (missing(text)) {
             text <- NULL
         }
-        file <- resource(con)
+        file <- .resource(con)
         origFile <- attr(con, which = "origResource")
         if (is.null(origFile)) {
             origFile <- file # nocov
@@ -1469,7 +1452,7 @@ NULL
             isFlag(metadata),
             isFlag(quiet)
         )
-        file <- resource(con)
+        file <- .resource(con)
         whatPkg <- "pzfx"
         whatFun <- "read_pzfx"
         if (isFALSE(quiet)) {
@@ -1567,7 +1550,7 @@ NULL
                 )
             )
         }
-        file <- resource(con)
+        file <- .resource(con)
         whatPkg <- match.arg(arg = engine, choices = .engines)
         switch(
             EXPR = whatPkg,
@@ -1698,7 +1681,7 @@ NULL
             isFlag(metadata),
             isFlag(quiet)
         )
-        file <- resource(con)
+        file <- .resource(con)
         whatPkg <- "jsonlite"
         whatFun <- "read_json"
         if (isFALSE(quiet)) {
@@ -1751,7 +1734,7 @@ NULL
             isFlag(metadata),
             isFlag(quiet)
         )
-        file <- resource(con)
+        file <- .resource(con)
         whatPkg <- "yaml"
         whatFun <- "yaml.load_file"
         if (isFALSE(quiet)) {
@@ -1801,7 +1784,7 @@ NULL
             is.null(text),
             isFlag(quiet)
         )
-        file <- resource(con)
+        file <- .resource(con)
         whatPkg <- "Rsamtools"
         whatFun <- "scanBam"
         if (isFALSE(quiet)) {
@@ -1848,7 +1831,7 @@ NULL
             is.null(text),
             isFlag(quiet)
         )
-        file <- resource(con)
+        file <- .resource(con)
         whatPkg <- "Rsamtools"
         whatFun <- "scanBcf"
         if (isFALSE(quiet)) {
@@ -1932,7 +1915,7 @@ NULL
             isFlag(quiet)
         )
         object <- import(
-            con = resource(con),
+            con = .resource(con),
             format = "tsv",
             rownames = FALSE,
             colnames = TRUE,
@@ -1996,7 +1979,7 @@ NULL
             is.null(text),
             isFlag(quiet)
         )
-        file <- resource(con)
+        file <- .resource(con)
         whatPkg <- "Rsamtools"
         whatFun <- "scanBam"
         if (isFALSE(quiet)) {
@@ -2067,7 +2050,7 @@ NULL
             isFlag(quiet)
         )
         moleculeType <- match.arg(moleculeType)
-        file <- resource(con)
+        file <- .resource(con)
         whatPkg <- "Biostrings"
         whatFun <- paste0("read", moleculeType, "StringSet")
         if (isFALSE(quiet)) {
@@ -2208,7 +2191,7 @@ NULL
             isFlag(quiet)
         )
         moleculeType <- match.arg(moleculeType)
-        file <- resource(con)
+        file <- .resource(con)
         whatPkg <- "Biostrings"
         whatFun <- paste0("read", moleculeType, "StringSet")
         if (isFALSE(quiet)) {
@@ -2275,7 +2258,7 @@ NULL
             isFlag(quiet)
         )
         object <- import(
-            con = resource(con),
+            con = .resource(con),
             format = "tsv",
             engine = "readr",
             skip = 2L,
@@ -2290,7 +2273,7 @@ NULL
             )
         )
         header <- import(
-            con = resource(con),
+            con = .resource(con),
             format = "lines",
             nMax = 2L,
             quiet = TRUE
@@ -2351,7 +2334,7 @@ NULL
             isFlag(quiet)
         )
         lines <- import(
-            con = resource(con),
+            con = .resource(con),
             format = "lines",
             metadata = FALSE,
             quiet = quiet
@@ -2393,7 +2376,7 @@ NULL
             isFlag(quiet)
         )
         lines <- import(
-            con = resource(con),
+            con = .resource(con),
             format = "lines",
             metadata = FALSE,
             quiet = quiet
@@ -2437,7 +2420,7 @@ NULL
             is.null(text),
             isFlag(quiet)
         )
-        file <- resource(con)
+        file <- .resource(con)
         whatPkg <- "maftools"
         whatFun <- "read.maf"
         if (isFALSE(quiet)) {
@@ -2482,7 +2465,7 @@ NULL
             is.null(text),
             isFlag(quiet)
         )
-        file <- resource(con)
+        file <- .resource(con)
         whatPkg <- "ontologyIndex"
         whatFun <- "get_ontology"
         if (isFALSE(quiet)) {
@@ -2567,7 +2550,7 @@ NULL
             isFlag(metadata),
             isFlag(quiet)
         )
-        file <- resource(con)
+        file <- .resource(con)
         whatPkg <- "rio"
         whatFun <- "import"
         if (isFALSE(quiet)) {
@@ -2627,7 +2610,7 @@ NULL
             isFlag(metadata),
             isFlag(quiet)
         )
-        file <- resource(con)
+        file <- .resource(con)
         whatPkg <- "rtracklayer"
         whatFun <- "import"
         if (isFALSE(quiet)) {
@@ -2670,18 +2653,14 @@ NULL
 
 ## S4 method exports ===========================================================
 
-#' #' @rdname import
-#' #' @export
-#' setMethod(
-#'     f = "import",
-#'     signature = signature(
-#'         con = "character",
-#'         format = "missing",
-#'         text = "missing"
-#'     ),
-#'     definition = `import,character`
-#' )
-#'
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(con = "character"),
+    definition = `import,character`
+)
+
 #' #' @rdname import
 #' #' @export
 #' setMethod(
