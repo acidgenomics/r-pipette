@@ -219,45 +219,23 @@ NULL
 
 
 
-## Updated 2022-09-13.
+## Updated 2022-09-20.
 `export,atomic` <- # nolint
     function(object,
              con,
-             format, # missing
              append = FALSE,
-             overwrite = getOption(
-                 x = "acid.overwrite",
-                 default = TRUE
-             ),
-             engine = getOption(
-                 x = "acid.export.engine",
-                 default = "base"
-             ),
-             quiet = getOption(
-                 x = "acid.quiet",
-                 default = FALSE
-             ),
-             verbose = getOption(
-                 x = "acid.verbose",
-                 default = FALSE
-             )) {
-        if (missing(format)) {
-            format <- NULL
-        }
+             overwrite = TRUE,
+             engine = c("base", "data.table", "readr"),
+             quiet = FALSE) {
         object <- as.character(object)
         assert(
             isString(con),
-            is.null(format),
             isFlag(overwrite),
             isFlag(append),
             isString(engine),
-            isFlag(quiet),
-            isFlag(verbose)
+            isFlag(quiet)
         )
-        if (isTRUE(verbose)) {
-            assert(isFALSE(quiet))
-        }
-        whatPkg <- match.arg(arg = engine, choices = .engines)
+        whatPkg <- match.arg(engine)
         assert(requireNamespaces(whatPkg))
         if (isTRUE(append)) {
             assert(
@@ -313,7 +291,7 @@ NULL
                     "na" = "NA",
                     "quote" = FALSE,
                     "sep" = "\n",
-                    "verbose" = verbose
+                    "verbose" = FALSE
                 )
             },
             "readr" = {
@@ -359,7 +337,7 @@ NULL
 
 #' Export `data.frame` method
 #'
-#' @note Updated 2023-09-19.
+#' @note Updated 2023-09-20.
 #' @noRd
 #'
 #' @details
@@ -370,26 +348,12 @@ NULL
 `export,data.frame` <- # nolint
     function(object,
              con,
-             format, # missing
              rownames = TRUE,
              colnames = TRUE,
              quote = TRUE,
-             overwrite = getOption(
-                 x = "acid.overwrite",
-                 default = TRUE
-             ),
-             engine = getOption(
-                 x = "acid.export.engine",
-                 default = "base"
-             ),
-             quiet = getOption(
-                 x = "acid.quiet",
-                 default = FALSE
-             )) {
-        if (missing(format)) {
-            format <- NULL
-        }
-        verbose <- getOption(x = "acid.verbose", default = FALSE)
+             overwrite = TRUE,
+             engine = c("base", "data.table", "readr"),
+             quiet = FALSE) {
         ## We prefer camel case formatting, so handle edge case of GRangesList
         ## coercion resulting in hard-coded snake case formatted names. This is
         ## intended primarily for export of `RefSeqTranscripts` object.
