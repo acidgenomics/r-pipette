@@ -224,7 +224,6 @@ NULL
             isString(con),
             isFlag(overwrite),
             isFlag(append),
-            isString(engine),
             isFlag(quiet)
         )
         whatPkg <- match.arg(engine)

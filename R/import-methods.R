@@ -1001,7 +1001,6 @@ NULL
             is.character(comment) && length(comment) <= 1L,
             isInt(skip), isNonNegative(skip),
             isPositive(nMax),
-            isString(engine),
             is.function(makeNames) ||
                 is.null(makeNames) ||
                 isFALSE(makeNames),
