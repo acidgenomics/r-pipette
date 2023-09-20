@@ -1381,12 +1381,6 @@ NULL
              metadata = FALSE,
              engine = c("base", "data.table", "readr"),
              quiet = FALSE) {
-        if (missing(format)) {
-            format <- NULL
-        }
-        if (missing(text)) {
-            text <- NULL
-        }
         assert(
             is.character(comment) && length(comment) <= 1L,
             isInt(skip),
@@ -1511,29 +1505,13 @@ NULL
 
 #' Import a JSON file (`.json`)
 #'
-#' @note Updated 2023-07-07.
+#' @note Updated 2023-09-20.
 #' @noRd
 `import,PipetteJSONFile` <- # nolint
     function(con,
-             format, # missing
-             text, # missing
-             metadata = getOption(
-                 x = "acid.import.metadata",
-                 default = FALSE
-             ),
-             quiet = getOption(
-                 x = "acid.quiet",
-                 default = FALSE
-             )) {
-        if (missing(format)) {
-            format <- NULL
-        }
-        if (missing(text)) {
-            text <- NULL
-        }
+             metadata = FALSE,
+             quiet = FALSE) {
         assert(
-            is.null(format),
-            is.null(text),
             isFlag(metadata),
             isFlag(quiet)
         )
@@ -1564,29 +1542,13 @@ NULL
 
 #' Import a YAML file (`.yaml`, `.yml`)
 #'
-#' @note Updated 2023-07-07.
+#' @note Updated 2023-09-20.
 #' @noRd
 `import,PipetteYAMLFile` <- # nolint
     function(con,
-             format, # missing
-             text, # missing
-             metadata = getOption(
-                 x = "acid.import.metadata",
-                 default = FALSE
-             ),
-             quiet = getOption(
-                 x = "acid.quiet",
-                 default = FALSE
-             )) {
-        if (missing(format)) {
-            format <- NULL
-        }
-        if (missing(text)) {
-            text <- NULL
-        }
+             metadata = FALSE,
+             quiet = FALSE) {
         assert(
-            is.null(format),
-            is.null(text),
             isFlag(metadata),
             isFlag(quiet)
         )
@@ -2672,19 +2634,15 @@ setMethod(
 #'     ),
 #'     definition = `import,PipetteGRPFile`
 #' )
-#'
-#' #' @rdname import
-#' #' @export
-#' setMethod(
-#'     f = "import",
-#'     signature = signature(
-#'         con = "PipetteJSONFile",
-#'         format = "missing",
-#'         text = "missing"
-#'     ),
-#'     definition = `import,PipetteJSONFile`
-#' )
-#'
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(con = "PipetteJSONFile"),
+    definition = `import,PipetteJSONFile`
+)
+
 #' #' @rdname import
 #' #' @export
 #' setMethod(
@@ -2750,19 +2708,15 @@ setMethod(
 #'     ),
 #'     definition = `import,PipetteVCFFile`
 #' )
-#'
-#' #' @rdname import
-#' #' @export
-#' setMethod(
-#'     f = "import",
-#'     signature = signature(
-#'         con = "PipetteYAMLFile",
-#'         format = "missing",
-#'         text = "missing"
-#'     ),
-#'     definition = `import,PipetteYAMLFile`
-#' )
-#'
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(con = "PipetteYAMLFile"),
+    definition = `import,PipetteYAMLFile`
+)
+
 #' #' @rdname import
 #' #' @export
 #' setMethod(
