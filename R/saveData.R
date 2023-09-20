@@ -121,7 +121,7 @@ saveData <-
                 alertWarning("No files were saved.")
                 return(invisible(NULL))
             }
-            objects <- objects[!file.exists(files)] # nocov
+            objects <- objects[!file.exists(files)]
         }
         switch(
             EXPR = ext,

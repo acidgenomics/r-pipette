@@ -125,7 +125,7 @@ NULL
     } else if (is(object, "Matrix")) {
         key <- "Matrix"
     } else {
-        abort(sprintf("{.arg %s} argument is required.", "con")) # nocov
+        abort(sprintf("{.arg %s} argument is required.", "con"))
     }
     choices <- .exportFormatChoices
     ext <- choices[[key]][[1L]]
@@ -410,7 +410,7 @@ NULL
                             )
                         },
                         error = function(e) {
-                            NULL # nocov
+                            NULL
                         }
                     )
                     if (
@@ -424,17 +424,15 @@ NULL
             ## Discard any remaining non-atomic columns we can't coerce.
             keep <- bapply(X = object, FUN = is.atomic, USE.NAMES = TRUE)
             if (!all(keep)) {
-                ## nocov start
                 alertWarning(sprintf(
                     "Dropping non-atomic columns: %s.",
                     toInlineString(names(keep)[!keep], n = 10L)
                 ))
                 object <- object[, keep, drop = FALSE]
-                ## nocov end
             }
         }
         if (isFALSE(rownames)) {
-            rownames(object) <- NULL # nocov
+            rownames(object) <- NULL
         }
         if (hasRownames(object)) {
             assert(areDisjointSets("rowname", colnames(object)))
