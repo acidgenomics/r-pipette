@@ -2,25 +2,38 @@
 % Please edit documentation in R/AllGenerics.R, R/export-methods.R
 \name{export}
 \alias{export}
-\title{Export data from R}
+\alias{export,ANY,missing-method}
+\title{#' @rdname export
+#' @export
+setMethod(
+f = "export",
+signature = signature(
+object = "DFrame",
+con = "character",
+format = "missing"
+),
+definition = \verb{export,DFrame}
+)}
 \usage{
 export(object, con, ...)
+
+\S4method{export}{ANY,missing}(object, con, ...)
 }
 \arguments{
-\item{...}{Additional arguments.}
-
 \item{object}{Object.
 An object supporting \code{dim()}, or a supported class capable of being coerced
 to \code{data.frame}, to be written to disk.}
+
+\item{con}{\code{character(1)}, \code{missing}, or \code{NULL}.
+File path.
+Alternatively, can leave unset and use \code{ext} and \code{dir} arguments instead.}
+
+\item{...}{Additional arguments.}
 
 \item{append}{\code{logical(1)}.
 Append to output file.
 When enabled, automatically sets \code{overwrite} argument to \code{FALSE}.
 Requires readr package to be installed.}
-
-\item{con}{\code{character(1)}, \code{missing}, or \code{NULL}.
-File path.
-Alternatively, can leave unset and use \code{ext} and \code{dir} arguments instead.}
 
 \item{engine}{\code{character(1)}.
 Engine (package) to use for export.
@@ -44,7 +57,78 @@ Invisible \code{character}.
 File path(s).
 }
 \description{
-Export data from R
+#' @rdname export
+#' @export
+setMethod(
+f = "export",
+signature = signature(
+object = "GRanges",
+con = "character",
+format = "missing"
+),
+definition = \verb{export,GRanges}
+)
+}
+\details{
+#' @rdname export
+#' @export
+setMethod(
+f = "export",
+signature = signature(
+object = "GRangesList",
+con = "character",
+format = "missing"
+),
+definition = \verb{export,GRangesList}
+)
+
+#' @rdname export
+#' @export
+setMethod(
+f = "export",
+signature = signature(
+object = "Matrix",
+con = "character",
+format = "missing"
+),
+definition = \verb{export,Matrix}
+)
+
+#' @rdname export
+#' @export
+setMethod(
+f = "export",
+signature = signature(
+object = "atomic",
+con = "character",
+format = "missing"
+),
+definition = \verb{export,atomic}
+)
+
+#' @rdname export
+#' @export
+setMethod(
+f = "export",
+signature = signature(
+object = "data.frame",
+con = "character",
+format = "missing"
+),
+definition = \verb{export,data.frame}
+)
+
+#' @rdname export
+#' @export
+setMethod(
+f = "export",
+signature = signature(
+object = "matrix",
+con = "character",
+format = "missing"
+),
+definition = \verb{export,matrix}
+)
 }
 \note{
 Updated 2023-09-20.
