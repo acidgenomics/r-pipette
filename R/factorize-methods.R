@@ -89,17 +89,17 @@ NULL
 
 
 
+## Updated 2021-10-14.
+`factorize,data.frame` <- # nolint
+    `factorize,DFrame`
+
+
+
 ## Updated 2023-09-20.
 `factorize,factor` <- # nolint
     function(object) {
         droplevels(object)
     }
-
-
-
-## Updated 2021-10-14.
-`factorize,data.frame` <- # nolint
-    `factorize,DFrame`
 
 
 
@@ -115,16 +115,16 @@ setMethod(
 #' @export
 setMethod(
     f = "factorize",
-    signature = signature(object = "data.frame"),
-    definition = `factorize,data.frame`
+    signature = signature(object = "atomic"),
+    definition = `factorize,atomic`
 )
 
 #' @rdname factorize
 #' @export
 setMethod(
     f = "factorize",
-    signature = signature(object = "atomic"),
-    definition = `factorize,atomic`
+    signature = signature(object = "data.frame"),
+    definition = `factorize,data.frame`
 )
 
 #' @rdname factorize

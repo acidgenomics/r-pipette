@@ -30,30 +30,19 @@ NULL
 
 
 
-## FIXME Need to rework to not construct the whole data frame...
-## figure out where we need to apply first.
-## Can optimize by checking to see if we need to apply first.
-
 ## Updated 2023-09-20.
 `sanitizeNA,DFrame` <- # nolint
     function(object) {
         if (!(hasCols(object) && hasRows(object))) {
             return(object)
         }
-        lst <- lapply(
-            X = object,
-            FUN = function(x) {
-                if (is.character(x)) {
-                    sanitizeNA(x)
-                } else {
-                    x
-                }
-            }
-        )
-        out <- as.DataFrame(lst)
-        dimnames(out) <- dimnames(object)
-        metadata(out) <- metadata(object)
-        out
+        lgl <- bapply(X = object, FUN = is.character)
+        if (!any(lgl)) {
+            return(object)
+        }
+        idx <- which(lgl)
+        object[idx] <- lapply(X = object[idx], FUN = sanitizeNA)
+        object
     }
 
 
@@ -88,47 +77,16 @@ NULL
 
 
 
-## FIXME Rework to use the same code as DFrame.
-## Updated 2021-06-09.
+## Updated 2023-09-20.
 `sanitizeNA,data.frame` <- # nolint
-    function(object) {
-        if (!(hasCols(object) && hasRows(object))) {
-            return(object)
-        }
-        assert(allAreAtomic(object))
-        if (hasRownames(object)) {
-            rownames <- rownames(object)
-        } else {
-            rownames <- NULL
-        }
-        list <- lapply(
-            X = object,
-            FUN = function(x) {
-                if (is.character(x)) {
-                    sanitizeNA(x)
-                } else {
-                    x
-                }
-            }
-        )
-        out <- data.frame(
-            list,
-            row.names = rownames,
-            stringsAsFactors = FALSE
-        )
-        ## This step ensures we keep `tbl_df`, `data.table` class, if necessary.
-        if (!identical(class(object), "data.frame")) {
-            out <- as(out, class(object)[[1L]])
-        }
-        out
-    }
+    `sanitizeNA,DFrame`
 
 
 
 ## Don't use `as.factor()` and then reset levels using a separate `levels()`
 ## call here. It can cause a single value to flip to the first element in the
 ## levels vector.
-##
+
 ## Updated 2021-08-05.
 `sanitizeNA,factor` <- # nolint
     function(object) {
