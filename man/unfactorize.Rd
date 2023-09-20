@@ -4,6 +4,7 @@
 \alias{unfactorize}
 \alias{unfactorize,factor-method}
 \alias{unfactorize,DFrame-method}
+\alias{unfactorize,data.frame-method}
 \title{Unfactorize}
 \usage{
 unfactorize(object, ...)
@@ -11,6 +12,8 @@ unfactorize(object, ...)
 \S4method{unfactorize}{factor}(object)
 
 \S4method{unfactorize}{DFrame}(object, j = NULL)
+
+\S4method{unfactorize}{data.frame}(object, j = NULL)
 }
 \arguments{
 \item{object}{Object.}
