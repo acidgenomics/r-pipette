@@ -73,4 +73,26 @@ test_that("Column selection with j", {
             row.names = c("AAA", "BBB", "CCC", "DDD")
         )
     )
+    expect_error(
+        object = unfactorize(
+            object = data.frame(
+                "a" = as.factor(c(100L, 100L, 101L, 101L)),
+                "b" = as.factor(c("a", "b", "a", "b")),
+                row.names = c("AAA", "BBB", "CCC", "DDD")
+            ),
+            j = 1L:3L
+        ),
+        regexp = "length"
+    )
+    expect_error(
+        object = unfactorize(
+            object = data.frame(
+                "a" = as.factor(c(100L, 100L, 101L, 101L)),
+                "b" = as.factor(c("a", "b", "a", "b")),
+                row.names = c("AAA", "BBB", "CCC", "DDD")
+            ),
+            j = "c"
+        ),
+        regexp = "isSubset"
+    )
 })
