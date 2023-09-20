@@ -3,11 +3,14 @@
 \name{import}
 \alias{import}
 \alias{import,character-method}
+\alias{import,PipetteRDSFile-method}
 \title{Import data into R}
 \usage{
 import(con, format, text, ...)
 
 \S4method{import}{character}(con, format = NULL, ...)
+
+\S4method{import}{PipetteRDSFile}(con, quiet = FALSE)
 }
 \arguments{
 \item{con}{\code{character(1)} or \code{connection}.

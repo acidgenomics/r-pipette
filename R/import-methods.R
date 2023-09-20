@@ -606,7 +606,7 @@ NULL
 #' @noRd
 .origResource <- function(object) {
     assert(is(object, "PipetteFile"))
-    x <- object[["origResource"]]
+    x <- slot(object, "origResource")
     assert(isString(x, nullOK = TRUE))
     x
 }
@@ -618,7 +618,8 @@ NULL
 #' @note Updated 2023-09-20.
 #' @noRd
 `.origResource<-` <- function(object, value) {
-    object[["origResource"]] <- value
+    assert(is(object, "PipetteFile"))
+    slot(object, "origResource") <- value
     object
 }
 
@@ -630,7 +631,7 @@ NULL
 #' @noRd
 .resource <- function(object) {
     assert(is(object, "PipetteFile"))
-    x <- object[["resource"]]
+    x <- slot(object, "resource")
     assert(isString(x))
     x
 }
@@ -846,7 +847,7 @@ NULL
 ## Updated 2023-09-20.
 `import,textConnection` <- # nolint
     function(con,
-             format = c("csv", "tsv"),
+             format,
              colnames = TRUE,
              quote = "\"",
              naStrings = naStrings,
@@ -861,7 +862,7 @@ NULL
             isCharacter(naStrings),
             isFlag(quiet)
         )
-        format <- match.arg(format)
+        format <- match.arg(arg = format, choices = c("csv", "tsv"))
         whatPkg <- "base"
         whatFun <- "read.table"
         args <- list(
@@ -950,27 +951,11 @@ NULL
 
 #' Import an R data serialized file (`.rds`)
 #'
-#' @note Updated 2023-07-07.
+#' @note Updated 2023-09-20.
 #' @noRd
 `import,PipetteRDSFile` <- # nolint
-    function(con,
-             format, # missing
-             text, # missing
-             quiet = getOption(
-                 x = "acid.quiet",
-                 default = FALSE
-             )) {
-        if (missing(format)) {
-            format <- NULL
-        }
-        if (missing(text)) {
-            text <- NULL
-        }
-        assert(
-            is.null(format),
-            is.null(text),
-            isFlag(quiet)
-        )
+    function(con, quiet = FALSE) {
+        assert(isFlag(quiet))
         file <- .resource(con)
         whatPkg <- "base"
         whatFun <- "readRDS"
@@ -2654,30 +2639,15 @@ setMethod(
     definition = `import,character`
 )
 
-#' #' @rdname import
-#' #' @export
-#' setMethod(
-#'     f = "import",
-#'     signature = signature(
-#'         con = "character",
-#'         format = "character",
-#'         text = "missing"
-#'     ),
-#'     definition = `import,character`
-#' )
-#'
-#' #' @rdname import
-#' #' @export
-#' setMethod(
-#'     f = "import",
-#'     signature = signature(
-#'         con = "PipetteRDSFile",
-#'         format = "missing",
-#'         text = "missing"
-#'     ),
-#'     definition = `import,PipetteRDSFile`
-#' )
-#'
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(con = "PipetteRDSFile"),
+    definition = `import,PipetteRDSFile`
+)
+
 #' #' @rdname import
 #' #' @export
 #' setMethod(
