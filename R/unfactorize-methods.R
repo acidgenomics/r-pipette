@@ -47,6 +47,7 @@ NULL
             lvl <- as.numeric(lvl)
         }
         out <- lvl[idx]
+        names(out) <- names(object)
         out
     }
 
