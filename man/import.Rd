@@ -7,7 +7,7 @@
 \usage{
 import(con, format, text, ...)
 
-\S4method{import}{character}(con, format, ...)
+\S4method{import}{character}(con, format = NULL, ...)
 }
 \arguments{
 \item{con}{\code{character(1)} or \code{connection}.
@@ -16,7 +16,7 @@ or URL. Less commonly, can create a \code{textConnection} to a character vector
 of source code lines (text), which is useful for reformatting malformed files
 directly in R.}
 
-\item{format}{\code{character(1)} or \code{missing}.
+\item{format}{\code{character(1)} or \code{NULL}.
 An optional file format type, which can be used to override the file format
 inferred from \code{con}. Only recommended for file and URL paths that don't
 contain an extension.}

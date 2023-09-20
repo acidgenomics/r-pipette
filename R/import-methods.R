@@ -91,7 +91,7 @@
 #'
 #' `GMTFile` and `OBOFile` are also supported by BiocSet package.
 #'
-#' @param format `character(1)` or `missing`.
+#' @param format `character(1)` or `NULL`.
 #' An optional file format type, which can be used to override the file format
 #' inferred from `con`. Only recommended for file and URL paths that don't
 #' contain an extension.
@@ -771,15 +771,8 @@ NULL
 #' @noRd
 `import,character` <- # nolint
     function(con,
-             format,
+             format = NULL,
              ...) {
-        if (
-            missing(format) ||
-                identical(format, "auto") ||
-                identical(format, "none")
-        ) {
-            format <- NULL
-        }
         dots <- list(...)
         if (isSubset("quiet", names(dots))) {
             quiet <- dots[["quiet"]]
