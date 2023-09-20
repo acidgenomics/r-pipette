@@ -4,6 +4,9 @@
 \alias{droplevels2}
 \alias{droplevels2,DFrame-method}
 \alias{droplevels2,Ranges-method}
+\alias{droplevels2,Rle-method}
+\alias{droplevels2,data.frame-method}
+\alias{droplevels2,factor-method}
 \title{Drop factor levels}
 \usage{
 droplevels2(x, ...)
@@ -11,6 +14,12 @@ droplevels2(x, ...)
 \S4method{droplevels2}{DFrame}(x)
 
 \S4method{droplevels2}{Ranges}(x)
+
+\S4method{droplevels2}{Rle}(x)
+
+\S4method{droplevels2}{data.frame}(x)
+
+\S4method{droplevels2}{factor}(x)
 }
 \arguments{
 \item{x}{Object.}
@@ -31,6 +40,18 @@ data(GRanges, package = "AcidTest")
 
 ## Ranges ====
 object <- GRanges
+object <- droplevels2(object)
+print(object)
+
+## Rle ====
+object <- Rle(factor(c("a", "a", "b", "b"), levels = c("a", "b", "c")))
+print(object)
+object <- droplevels2(object)
+print(object)
+
+## factor ====
+object <- factor(c("a", "a", "b", "b"), levels = c("a", "b", "c"))
+print(object)
 object <- droplevels2(object)
 print(object)
 }
