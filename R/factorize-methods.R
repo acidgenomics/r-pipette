@@ -1,7 +1,3 @@
-## FIXME Allow the user to specify which columns.
-
-
-
 #' @name factorize
 #' @inherit AcidGenerics::factorize
 #' @note Updated 2023-09-20.
