@@ -38,11 +38,10 @@ import(con, ...)
   comment = "",
   skip = 0L,
   nMax = Inf,
-  engine = "base",
+  engine = c("base", "data.table", "readr"),
   makeNames = syntactic::makeNames,
   metadata = FALSE,
-  quiet = FALSE,
-  verbose = FALSE
+  quiet = FALSE
 )
 
 \S4method{import}{PipetteLinesFile}(
@@ -53,9 +52,8 @@ import(con, ...)
   stripWhitespace = FALSE,
   removeBlank = FALSE,
   metadata = FALSE,
-  engine = "base",
-  quiet = FALSE,
-  verbose = FALSE
+  engine = c("base", "data.table", "readr"),
+  quiet = FALSE
 )
 
 \S4method{import}{PipetteExcelFile}(

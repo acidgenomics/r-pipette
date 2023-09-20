@@ -3,14 +3,6 @@
 
 
 
-#' Import/export engines for parsing plain text delimited files
-#'
-#' @note Updated 2021-10-21.
-#' @noRd
-.engines <- c("base", "data.table", "readr")
-
-
-
 #' R data extension pattern
 #'
 #' @note Updated 2020-10-07.
