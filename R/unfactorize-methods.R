@@ -66,6 +66,9 @@ NULL
     function(object, j = NULL) {
         assert(is.null(j) || is.vector(j))
         if (is.null(j)) {
+            if (!(hasCols(object) && hasRows(object))) {
+                return(object)
+            }
             lgl <- rep(x = TRUE, times = ncol(object))
         } else if (is.character(j)) {
             assert(
