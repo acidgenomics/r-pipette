@@ -20,6 +20,8 @@ unfactorize(object, ...)
 
 \item{j}{\code{vector}.
 Column names or positions to evaluate.}
+
+\item{...}{Additional arguments.}
 }
 \value{
 Modified object, with \code{factor} coerced back to atomic vector.
