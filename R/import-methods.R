@@ -560,7 +560,7 @@ NULL
                 mode <- "wb"
             } else {
                 ## Write (default).
-                mode <- "w" # nocov
+                mode <- "w"
             }
             download(
                 url = url,
@@ -673,7 +673,7 @@ NULL
         }
         ## Check that manual column names are correct.
         if (isCharacter(colnames)) {
-            assert(identical(colnames(object), colnames)) # nocov
+            assert(identical(colnames(object), colnames))
         }
         ## Attempt to set row names automatically for data frames.
         if (
@@ -687,7 +687,7 @@ NULL
             if (!is.null(rownameCol)) {
                 assert(isScalar(rownameCol))
                 if (!isString(rownameCol)) {
-                    rownameCol <- colnames(object)[[rownameCol]] # nocov
+                    rownameCol <- colnames(object)[[rownameCol]]
                 }
                 assert(
                     isString(rownameCol),
@@ -708,13 +708,11 @@ NULL
         }
         if (hasNames(object)) {
             if (hasDuplicates(names(object))) {
-                ## nocov start
                 dupes <- sort(names(object)[duplicated(names(object))])
                 alertWarning(sprintf(
                     "Duplicate names: {.var %s}.",
                     toInlineString(dupes, n = 5L)
                 ))
-                ## nocov end
             }
             ## Ensure names are syntactically valid, when applicable.
             if (is.function(makeNames)) {
@@ -727,7 +725,7 @@ NULL
                     error = function(e) NULL
                 )
                 if (isFALSE(hasValidNames(object))) {
-                    alertWarning("Invalid names detected.") # nocov
+                    alertWarning("Invalid names detected.")
                 }
             }
             assert(hasNoDuplicates(names(object)))
@@ -928,7 +926,7 @@ NULL
                     validObject(object)
                 },
                 error = function(e) {
-                    conditionMessage(e) # nocov
+                    conditionMessage(e)
                 }
             )
         }
@@ -963,7 +961,7 @@ NULL
                     validObject(object)
                 },
                 error = function(e) {
-                    conditionMessage(e) # nocov
+                    conditionMessage(e)
                 }
             )
         }
@@ -1017,7 +1015,10 @@ NULL
         )
         whatPkg <- match.arg(engine)
         if (identical(ext, "table")) {
-            whatPkg <- "base" # nocov
+            assert(
+                identical(whatPkg, "base"),
+                msg = "Only base engine is supported for table."
+            )
         }
         switch(
             EXPR = whatPkg,
@@ -1042,10 +1043,8 @@ NULL
                     "strip.white" = TRUE
                 )
                 if (isCharacter(colnames)) {
-                    ## nocov start
                     args[["header"]] <- FALSE
                     args[["col.names"]] <- colnames
-                    ## nocov end
                 } else {
                     args[["header"]] <- colnames
                 }
@@ -1053,7 +1052,6 @@ NULL
             "data.table" = {
                 whatFun <- "fread"
                 if (isString(comment)) {
-                    ## nocov start
                     abort(sprintf(
                         paste0(
                             "{.pkg %s}::{.fun %s} does not support ",
@@ -1063,7 +1061,6 @@ NULL
                         whatPkg, whatFun,
                         "https://github.com/Rdatatable/data.table/issues/856"
                     ))
-                    ## nocov end
                 }
                 args <- list(
                     "file" = file,
@@ -1081,10 +1078,8 @@ NULL
                     "verbose" = FALSE
                 )
                 if (isCharacter(colnames)) {
-                    ## nocov start
                     args[["header"]] <- FALSE
                     args[["col.names"]] <- colnames
-                    ## nocov end
                 } else if (isTRUE(colnames)) {
                     ## Usage of "auto" instead of TRUE will attempt to handle
                     ## malformed columns, similar to readr engine.
@@ -1243,7 +1238,7 @@ NULL
         file <- .resource(con)
         origFile <- .origResource(con)
         if (is.null(origFile)) {
-            origFile <- file # nocov
+            origFile <- file
         }
         if (missing(rownamesFile)) {
             rownamesFile <- paste0(origFile, ".rownames")
@@ -1276,7 +1271,7 @@ NULL
                 quiet = quiet
             ),
             error = function(e) {
-                NULL # nocov
+                NULL
             }
         )
         if (isAFile(rownamesFile)) {
@@ -1290,7 +1285,7 @@ NULL
                 quiet = quiet
             ),
             error = function(e) {
-                NULL # nocov
+                NULL
             }
         )
         if (isAFile(colnamesFile)) {
@@ -2238,7 +2233,7 @@ NULL
                 object <- do.call(what = what, args = args)
             },
             warning = function(w) {
-                abort(w) # nocov
+                abort(w)
             }
         )
         .returnImport(

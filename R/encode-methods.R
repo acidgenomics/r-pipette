@@ -4,7 +4,7 @@
 
 #' @name encode
 #' @inherit AcidGenerics::encode
-#' @note Updated 2023-09-19.
+#' @note Updated 2023-09-20.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
@@ -30,16 +30,21 @@ NULL
 
 ## Updated 2023-09-20.
 `encode,DFrame` <- # nolint
-    function(x) {
-        if (!(hasCols(x) && hasRows(x))) {
-            return(x) # nocov
+    function(x, j = NULL) {
+        assert(is.null(j) || is.vector(j))
+        if (is.null(j)) {
+            if (!(hasCols(x) && hasRows(x))) {
+                return(x)
+            }
         }
+
+
         ## FIXME Rework to support specific columns.
         list <- lapply(
             X = x,
             FUN = function(x) {
                 if (is(x, "List")) {
-                    return(x) # nocov
+                    return(x)
                 }
                 ## Decode Rle, if necessary.
                 if (is(x, "Rle")) {
@@ -47,7 +52,7 @@ NULL
                 }
                 ## Adjust (drop) factor levels, if necessary.
                 if (is.factor(x)) {
-                    x <- droplevels(x) # nocov
+                    x <- droplevels(x)
                 }
                 ## Use run-length encoding on atomics.
                 if (is.atomic(x)) {

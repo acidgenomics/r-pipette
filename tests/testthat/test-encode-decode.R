@@ -1,3 +1,5 @@
+## FIXME Add coverage of column selection for encode.
+
 test_that("DFrame", {
     x <- df
     x <- encode(x)

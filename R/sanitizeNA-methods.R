@@ -29,7 +29,7 @@ NULL
 `sanitizeNA,DFrame` <- # nolint
     function(object) {
         if (!(hasCols(object) && hasRows(object))) {
-            return(object) # nocov
+            return(object)
         }
         lst <- lapply(
             X = object,
@@ -37,7 +37,7 @@ NULL
                 if (is.character(x)) {
                     sanitizeNA(x)
                 } else {
-                    x # nocov
+                    x
                 }
             }
         )
@@ -83,11 +83,11 @@ NULL
 `sanitizeNA,data.frame` <- # nolint
     function(object) {
         if (!(hasCols(object) && hasRows(object))) {
-            return(object) # nocov
+            return(object)
         }
         assert(allAreAtomic(object))
         if (hasRownames(object)) {
-            rownames <- rownames(object) # nocov
+            rownames <- rownames(object)
         } else {
             rownames <- NULL
         }
@@ -97,7 +97,7 @@ NULL
                 if (is.character(x)) {
                     sanitizeNA(x)
                 } else {
-                    x # nocov
+                    x
                 }
             }
         )
@@ -108,7 +108,7 @@ NULL
         )
         ## This step ensures we keep `tbl_df`, `data.table` class, if necessary.
         if (!identical(class(object), "data.frame")) {
-            out <- as(out, class(object)[[1L]]) # nocov
+            out <- as(out, class(object)[[1L]])
         }
         out
     }
