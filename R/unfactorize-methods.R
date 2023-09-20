@@ -2,6 +2,9 @@
 #' @inherit AcidGenerics::unfactorize
 #' @note Updated 2023-09-20.
 #'
+#' @param j `vector`.
+#' Column names or positions to evaluate.
+#'
 #' @return Modified object, with `factor` coerced back to atomic vector.
 #'
 #' @seealso
@@ -42,18 +45,43 @@ NULL
 
 ## Updated 2023-09-20.
 `unfactorize,data.frame` <- # nolint
-    function(object) {
-        lst <- lapply(
-            X = object,
-            FUN = function(x) {
-                if (is.factor(x)) {
-                    unfactorize(x)
-                } else {
-                    x
-                }
-            }
+    function(object, j = NULL) {
+        assert(is.null(j) || is.vector(j))
+        if (is.null(j)) {
+            lgl <- rep(x = TRUE, times = ncol(object))
+        } else if (is.character(j)) {
+            assert(
+                hasColnames(object),
+                isSubset(j, colnames(object))
+            )
+            lgl <- colnames(object) %in% j
+        } else {
+            assert(length(j) <= ncol(object))
+            idx <- seq(from = 1L, to = ncol(object))
+            lgl <- idx %in% j
+        }
+        assert(
+            is.logical(lgl),
+            hasLength(lgl, n = ncol(object))
         )
-        df <- as.data.frame(lst)
+        lst <- Map(
+            f = function(x, eval) {
+                if (isFALSE(eval)) {
+                    return(x)
+                }
+                if (!is.factor(x)) {
+                    return(x)
+                }
+                unfactorize(x)
+            },
+            x = object,
+            eval = lgl
+        )
+        if (is(object, "DFrame")) {
+            df <- as.DataFrame(lst)
+        } else {
+            df <- as.data.frame(lst)
+        }
         dimnames(df) <- dimnames(object)
         df
     }
@@ -62,21 +90,7 @@ NULL
 
 ## Updated 2023-09-20.
 `unfactorize,DFrame` <- # nolint
-    function(object) {
-        lst <- lapply(
-            X = object,
-            FUN = function(x) {
-                if (is.factor(x)) {
-                    unfactorize(x)
-                } else {
-                    x
-                }
-            }
-        )
-        df <- as.DataFrame(lst)
-        dimnames(df) <- dimnames(object)
-        df
-    }
+    `unfactorize,data.frame`
 
 
 
