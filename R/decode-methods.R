@@ -30,7 +30,7 @@ NULL
 `decode,DFrame` <- # nolint
     function(x, j = NULL) {
         assert(is.null(j) || is.vector(j))
-        if (is.null(x)) {
+        if (is.null(j)) {
             if (!(hasCols(x) && hasRows(x))) {
                 return(x)
             }
