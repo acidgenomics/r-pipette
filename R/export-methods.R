@@ -370,11 +370,8 @@ NULL
             isFlag(colnames),
             isFlag(quote),
             isFlag(overwrite),
-            isFlag(quiet)
-        )
-        format <- match.arg(
-            arg = fileExt(con),
-            choices = .exportFormatChoices[["delim"]]
+            isFlag(quiet),
+            isSubset(fileExt(con), .exportFormatChoices[["delim"]])
         )
         whatPkg <- match.arg(engine)
         assert(requireNamespaces(whatPkg))
@@ -461,10 +458,7 @@ NULL
                 replacement = "",
                 x = file
             )
-            format <- match.arg(
-                arg = fileExt(file),
-                choices = c("csv", "tsv")
-            )
+            assert(isSubset(fileExt(file), c("csv", "tsv")))
         }
         switch(
             EXPR = whatPkg,
@@ -583,11 +577,8 @@ NULL
             hasLength(object),
             isString(con),
             isFlag(overwrite),
-            isFlag(quiet)
-        )
-        format <- match.arg(
-            arg = fileExt(con),
-            choices = .exportFormatChoices[["Matrix"]]
+            isFlag(quiet),
+            isSubset(fileExt(con), .exportFormatChoices[["Matrix"]])
         )
         file <- con
         whatFile <- con
