@@ -73,15 +73,26 @@ NULL
             return(object)
         }
         idx <- which(lgl)
-        .factorize <- function(x) {
-            if (!is.factor(x)) {
-                x <- as.factor(x)
-            }
-            x <- droplevels(x)
-            x
-        }
-        object[idx] <- lapply(X = object[idx], FUN = .factorize)
+        object[idx] <- lapply(X = object[idx], FUN = factorize)
         object
+    }
+
+
+
+## Updated 2023-09-20.
+`factorize,atomic` <- # nolint
+    function(object) {
+        out <- as.factor(object)
+        names(out) <- names(object)
+        out
+    }
+
+
+
+## Updated 2023-09-20.
+`factorize,factor` <- # nolint
+    function(object) {
+        droplevels(object)
     }
 
 
@@ -106,4 +117,20 @@ setMethod(
     f = "factorize",
     signature = signature(object = "data.frame"),
     definition = `factorize,data.frame`
+)
+
+#' @rdname factorize
+#' @export
+setMethod(
+    f = "factorize",
+    signature = signature(object = "atomic"),
+    definition = `factorize,atomic`
+)
+
+#' @rdname factorize
+#' @export
+setMethod(
+    f = "factorize",
+    signature = signature(object = "factor"),
+    definition = `factorize,factor`
 )
