@@ -77,7 +77,7 @@ NULL
             lgl <- idx %in% j
         }
         ## FIXME Now figure out which columns are factor.
-        lgl <- Map(
+        lgl <- unlist(Map(
             f = function(x, eval) {
                 if (isFALSE(eval)) {
                     return(FALSE)
@@ -86,8 +86,7 @@ NULL
             },
             x = object,
             eval = lgl
-        )
-        lgl <- unlist(x = lgl, recursive = FALSE, use.names = FALSE)
+        ))
         if (!any(lgl)) {
             return(object)
         }
