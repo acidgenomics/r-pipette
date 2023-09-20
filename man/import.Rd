@@ -2,15 +2,26 @@
 % Please edit documentation in R/AllGenerics.R, R/import-methods.R
 \name{import}
 \alias{import}
+\alias{import,character-method}
 \title{Import data into R}
 \usage{
 import(con, format, text, ...)
+
+\S4method{import}{character}(con, format, ...)
 }
 \arguments{
+\item{con}{\code{character(1)} or \code{connection}.
+Data connection. Most commonly, use \code{character(1)} to represent a file path
+or URL. Less commonly, can create a \code{textConnection} to a character vector
+of source code lines (text), which is useful for reformatting malformed files
+directly in R.}
+
 \item{format}{\code{character(1)} or \code{missing}.
 An optional file format type, which can be used to override the file format
 inferred from \code{con}. Only recommended for file and URL paths that don't
 contain an extension.}
+
+\item{...}{Additional arguments.}
 
 \item{colnames}{\code{logical(1)} or \code{character}.
 Automatically assign column names, using the first header row.
