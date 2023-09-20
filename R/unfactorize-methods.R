@@ -23,15 +23,6 @@
 #' object <- factorize(object)
 #' print(object)
 #'
-#' ## data.frame ====
-#' object <- data.frame(
-#'     "a" = as.factor(c(100L, 100L, 101L, 101L)),
-#'     "b" = as.factor(c("a", "b", "a", "b"))
-#' )
-#' print(object)
-#' object <- unfactorize(object)
-#' print(object)
-#'
 #' ## DFrame ====
 #' object <- S4Vectors::DataFrame(
 #'     "a" = as.factor(c(100L, 100L, 101L, 101L)),
@@ -62,7 +53,7 @@ NULL
 
 
 ## Updated 2023-09-20.
-`unfactorize,data.frame` <- # nolint
+`unfactorize,DFrame` <- # nolint
     function(object, j = NULL) {
         assert(is.null(j) || is.vector(j))
         if (is.null(j)) {
@@ -90,6 +81,7 @@ NULL
                 if (isFALSE(eval)) {
                     return(x)
                 }
+                x <- unname(x)
                 if (!is.factor(x)) {
                     return(x)
                 }
@@ -98,20 +90,11 @@ NULL
             x = object,
             eval = lgl
         )
-        if (is(object, "DFrame")) {
-            df <- as.DataFrame(lst)
-        } else {
-            df <- as.data.frame(lst)
-        }
-        dimnames(df) <- dimnames(object)
+        out <- as.DataFrame(lst)
+        dimnames(out) <- dimnames(object)
+        metadata(out) <- metadata(object)
         df
     }
-
-
-
-## Updated 2023-09-20.
-`unfactorize,DFrame` <- # nolint
-    `unfactorize,data.frame`
 
 
 
@@ -121,14 +104,6 @@ setMethod(
     f = "unfactorize",
     signature = signature(object = "factor"),
     definition = `unfactorize,factor`
-)
-
-#' @export
-#' @rdname unfactorize
-setMethod(
-    f = "unfactorize",
-    signature = signature(object = "data.frame"),
-    definition = `unfactorize,data.frame`
 )
 
 #' @export

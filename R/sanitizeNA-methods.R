@@ -25,15 +25,13 @@ NULL
 
 
 
-## Updated 2023-04-26.
+## Updated 2023-09-20.
 `sanitizeNA,DFrame` <- # nolint
     function(object) {
         if (!(hasCols(object) && hasRows(object))) {
             return(object) # nocov
         }
-        meta <- metadata(object)
-        rn <- rownames(object)
-        list <- lapply(
+        lst <- lapply(
             X = object,
             FUN = function(x) {
                 if (is.character(x)) {
@@ -43,9 +41,9 @@ NULL
                 }
             }
         )
-        out <- as.DataFrame(list)
-        rownames(out) <- rn
-        metadata(out) <- meta
+        out <- as.DataFrame(lst)
+        dimnames(out) <- dimnames(object)
+        metadata(out) <- metadata(object)
         out
     }
 

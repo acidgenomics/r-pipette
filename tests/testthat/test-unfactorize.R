@@ -12,21 +12,6 @@ test_that("factor", {
     }
 })
 
-test_that("data.frame", {
-    expect_identical(
-        object = unfactorize(data.frame(
-            "a" = as.factor(c(100L, 100L, 101L, 101L)),
-            "b" = as.factor(c("a", "b", "a", "b")),
-            row.names = c("AAA", "BBB", "CCC", "DDD")
-        )),
-        expected = data.frame(
-            "a" = c(100L, 100L, 101L, 101L),
-            "b" = c("a", "b", "a", "b"),
-            row.names = c("AAA", "BBB", "CCC", "DDD")
-        )
-    )
-})
-
 test_that("DFrame", {
     expect_identical(
         object = unfactorize(DataFrame(
@@ -45,14 +30,14 @@ test_that("DFrame", {
 test_that("Column selection with j", {
     expect_identical(
         object = unfactorize(
-            object = data.frame(
+            object = DataFrame(
                 "a" = as.factor(c(100L, 100L, 101L, 101L)),
                 "b" = as.factor(c("a", "b", "a", "b")),
                 row.names = c("AAA", "BBB", "CCC", "DDD")
             ),
             j = 2L
         ),
-        expected = data.frame(
+        expected = DataFrame(
             "a" = as.factor(c(100L, 100L, 101L, 101L)),
             "b" = c("a", "b", "a", "b"),
             row.names = c("AAA", "BBB", "CCC", "DDD")
@@ -60,14 +45,14 @@ test_that("Column selection with j", {
     )
     expect_identical(
         object = unfactorize(
-            object = data.frame(
+            object = DataFrame(
                 "a" = as.factor(c(100L, 100L, 101L, 101L)),
                 "b" = as.factor(c("a", "b", "a", "b")),
                 row.names = c("AAA", "BBB", "CCC", "DDD")
             ),
             j = "a"
         ),
-        expected = data.frame(
+        expected = DataFrame(
             "a" = c(100L, 100L, 101L, 101L),
             "b" = as.factor(c("a", "b", "a", "b")),
             row.names = c("AAA", "BBB", "CCC", "DDD")
@@ -75,7 +60,7 @@ test_that("Column selection with j", {
     )
     expect_error(
         object = unfactorize(
-            object = data.frame(
+            object = DataFrame(
                 "a" = as.factor(c(100L, 100L, 101L, 101L)),
                 "b" = as.factor(c("a", "b", "a", "b")),
                 row.names = c("AAA", "BBB", "CCC", "DDD")
@@ -86,7 +71,7 @@ test_that("Column selection with j", {
     )
     expect_error(
         object = unfactorize(
-            object = data.frame(
+            object = DataFrame(
                 "a" = as.factor(c(100L, 100L, 101L, 101L)),
                 "b" = as.factor(c("a", "b", "a", "b")),
                 row.names = c("AAA", "BBB", "CCC", "DDD")

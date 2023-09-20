@@ -8,12 +8,20 @@
 \usage{
 decode(x, ...)
 
-\S4method{decode}{DFrame}(x)
+\S4method{decode}{DFrame}(x, j = NULL)
 
 \S4method{decode}{Ranges}(x)
 }
 \arguments{
 \item{x}{Object.}
+
+\item{j}{Indices specifying elements to extract or replace. Indices are \code{numeric} or
+\code{character} vectors, empty (\code{missing}), or \code{NULL}.
+
+For more information:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{help(topic = "Extract", package = "base")
+}\if{html}{\out{</div>}}}
 
 \item{...}{Additional arguments.}
 }
@@ -25,7 +33,7 @@ Columns will be decoded and no longer \code{Rle} class.
 Decode data that uses run-length encoding
 }
 \note{
-Updated 2022-02-22.
+Updated 2023-09-20.
 }
 \examples{
 data(DFrame, package = "AcidTest")
@@ -39,6 +47,7 @@ lapply(object, class)
 }
 \seealso{
 \itemize{
-\item \code{S4Vectors::decode()}.
+\item \code{S4Vectors::decode}.
+\item \code{S4Vectors::Rle}.
 }
 }

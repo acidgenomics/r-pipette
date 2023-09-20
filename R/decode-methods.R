@@ -1,11 +1,7 @@
-## FIXME Allow the user to specify which columns.
-
-
-
 #' Decode data that uses run-length encoding
 #'
 #' @name decode
-#' @note Updated 2022-02-22.
+#' @note Updated 2023-09-20.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
@@ -14,7 +10,8 @@
 #' Columns will be decoded and no longer `Rle` class.
 #'
 #' @seealso
-#' - `S4Vectors::decode()`.
+#' - `S4Vectors::decode`.
+#' - `S4Vectors::Rle`.
 #'
 #' @examples
 #' data(DFrame, package = "AcidTest")
@@ -31,13 +28,33 @@ NULL
 
 ## Updated 2023-09-12.
 `decode,DFrame` <- # nolint
-    function(x) {
-        if (!(hasCols(x) && hasRows(x))) {
-            return(x)
+    function(x, j = NULL) {
+        assert(is.null(j) || is.vector(j))
+        if (is.null(x)) {
+            if (!(hasCols(x) && hasRows(x))) {
+                return(x)
+            }
+            lgl <- rep(x = TRUE, times = ncol(x))
+        } else if (is.character(j)) {
+            assert(
+                hasColnames(x),
+                isSubset(j, colnames(x))
+            )
+            lgl <- colnames(x) %in% j
+        } else {
+            assert(length(j) <= ncol(x))
+            idx <- seq(from = 1L, to = ncol(x))
+            lgl <- idx %in% j
         }
-        lst <- lapply(
-            X = x,
-            FUN = function(x) {
+        assert(
+            is.logical(lgl),
+            hasLength(lgl, n = ncol(x))
+        )
+        lst <- Map(
+            f = function(x, eval) {
+                if (isFALSE(eval)) {
+                    return(x)
+                }
                 x <- unname(x)
                 if (is(x, "Rle")) {
                     x <- decode(x)
@@ -46,10 +63,12 @@ NULL
                     x <- droplevels(x)
                 }
                 x
-            }
+            },
+            x = x,
+            eval = lgl
         )
         out <- as.DataFrame(lst)
-        rownames(out) <- rownames(x)
+        dimnames(out) <- dimnames(x)
         metadata(out) <- metadata(x)
         out
     }
