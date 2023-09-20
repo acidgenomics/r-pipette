@@ -36,7 +36,7 @@ NULL
         lst <- SimpleList(as.list(x))
         lst <- droplevels(x = lst, except = except)
         out <- as.DataFrame(lst)
-        rownames(out) <- rownames(x)
+        dimnames(out) <- dimnames(x)
         metadata(out) <- metadata(x)
         out <- as(out, Class = simpleClass(x))
         out
