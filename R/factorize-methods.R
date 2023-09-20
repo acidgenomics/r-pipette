@@ -32,27 +32,30 @@ NULL
 
 
 
-## Updated 2023-01-31.
+## Updated 2023-09-20.
 `factorize,DFrame` <- # nolint
-    function(object) {
-        isFactor <- bapply(
-            X = object,
-            FUN = function(x) {
-                if (is.factor(x)) {
-                    return(TRUE)
+    function(object, j = NULL) {
+        assert(is.null(j) || is.vector(j))
+        if (is.null(j)) {
+            lgl <- bapply(
+                X = object,
+                FUN = function(x) {
+                    if (is.factor(x)) {
+                        return(TRUE)
+                    }
+                    if (isS4(x) || !is.atomic(x) || is.logical(x)) {
+                        return(FALSE)
+                    }
+                    ok <- hasDuplicates(na.omit(x))
+                    ok
                 }
-                if (isS4(x) || !is.atomic(x) || is.logical(x)) {
-                    return(FALSE)
-                }
-                ok <- hasDuplicates(na.omit(x))
-                ok
-            }
-        )
-        if (!any(isFactor)) {
+            )
+        }
+        if (!any(lgl)) {
             return(object)
         }
         object <- as(object, "DFrame")
-        idx <- which(isFactor)
+        idx <- which(lgl)
         object[idx] <- lapply(
             X = object[idx],
             FUN = function(x) {
