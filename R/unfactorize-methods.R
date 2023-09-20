@@ -76,7 +76,6 @@ NULL
             idx <- seq(from = 1L, to = ncol(object))
             lgl <- idx %in% j
         }
-        ## FIXME Now figure out which columns are factor.
         lgl <- unlist(Map(
             f = function(x, eval) {
                 if (isFALSE(eval)) {
