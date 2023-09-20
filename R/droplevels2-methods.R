@@ -59,16 +59,23 @@ NULL
 
 
 ## Updated 2023-09-20.
-`droplevels2,factor` <- # nolint
+`droplevels2,Rle` <- # nolint
     function(x) {
+        if (!is.factor(runValue(x))) {
+            return(x)
+        }
         droplevels(x)
     }
 
 
 
 ## Updated 2023-09-20.
-`droplevels2,Rle` <- # nolint
-    `droplevels2,factor`
+`droplevels2,factor` <- # nolint
+    function(x) {
+        droplevels(x)
+    }
+
+
 
 ## Updated 2023-09-20.
 `droplevels2,data.frame` <- # nolint
