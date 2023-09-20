@@ -12,7 +12,7 @@ NULL
 
 #' @importFrom AcidGenerics as.DataFrame atomize droplevels2 encode export
 #' factorize import matchRownameColumn metadata2 metadata2<- removeNA sanitizeNA
-#' sanitizePercent
+#' sanitizePercent unfactorize
 #' @importFrom BiocGenerics anyDuplicated as.data.frame do.call end lapply start
 #' strand which width
 #' @importFrom GenomicRanges seqnames
