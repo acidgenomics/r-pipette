@@ -1,7 +1,7 @@
 test_that("factor", {
     vecs <- list(
         c(100L, 100L, 101L, 101L, NA),
-        c(100.1, 100, 100.1, 100, NA),
+        c(100.1, 100.0, 100.1, 100.0, NA),
         c("a", "b", "a", "b", NA)
     )
     for (vec in vecs) {
