@@ -1,5 +1,6 @@
 ## FIXME Need to rework the "resource" usage.
 ## FIXME Need to update the signature.
+## FIXME Need to rework origResource.
 
 
 
@@ -293,7 +294,7 @@ NULL
 
 #' Inform the user about start of file import
 #'
-#' @note Updated 2022-05-12.
+#' @note Updated 2023-09-20.
 #' @noRd
 .alertImport <-
     function(con,
@@ -304,9 +305,9 @@ NULL
             isString(whatPkg),
             isString(whatFun)
         )
-        file <- attr(x = con, which = "origResource")
+        file <- .origResource(con)
         if (is.null(file)) {
-            file <- resource(con)
+            file <- .resource(con)
         }
         fileType <- ifelse(test = isAURL(file), yes = "url", no = "file")
         ## Handle edge case of cleaning Google Sheets URL.
@@ -599,6 +600,43 @@ NULL
 
 
 
+#' Original resource
+#'
+#' @note Updated 2023-09-20.
+#' @noRd
+.origResource <- function(object) {
+    assert(is(object, "PipetteFile"))
+    x <- object[["origResource"]]
+    assert(isString(x, nullOK = TRUE))
+    x
+}
+
+
+
+#' Assign original resource
+#'
+#' @note Updated 2023-09-20.
+#' @noRd
+`.origResource<-` <- function(object, value) {
+    object[["origResource"]] <- value
+    object
+}
+
+
+
+#' Resource
+#'
+#' @note Updated 2023-09-20.
+#' @noRd
+.resource <- function(object) {
+    assert(is(object, "PipetteFile"))
+    x <- object[["resource"]]
+    assert(isString(x))
+    x
+}
+
+
+
 #' Return standardized import object
 #'
 #' @note Updated 2021-09-24.
@@ -631,9 +669,9 @@ NULL
             isString(whatFun, nullOK = TRUE),
             isFlag(quiet)
         )
-        file <- attr(x = con, which = "origResource")
+        file <- .origResource(con)
         if (is.null(file)) {
-            file <- resource(con)
+            file <- .resource(con)
         }
         if (!is.null(rownameCol)) {
             rownames <- TRUE
@@ -729,12 +767,11 @@ NULL
 #' Allow Google Sheets import using rio, by matching the URL.
 #' Otherwise, coerce the file extension to uppercase, for easy matching.
 #'
-#' @note Updated 2023-06-29.
+#' @note Updated 2023-09-20.
 #' @noRd
 `import,character` <- # nolint
     function(con,
              format,
-             text, # missing
              ...) {
         if (
             missing(format) ||
@@ -742,9 +779,6 @@ NULL
                 identical(format, "none")
         ) {
             format <- NULL
-        }
-        if (missing(text)) {
-            text <- NULL
         }
         dots <- list(...)
         if (isSubset("quiet", names(dots))) {
@@ -754,7 +788,6 @@ NULL
         }
         assert(
             isString(format, nullOK = TRUE),
-            is.null(text),
             isFlag(quiet)
         )
         if (isMatchingRegex(
@@ -784,11 +817,7 @@ NULL
         assert(
             hasMethod(
                 f = "import",
-                signature = signature(
-                    con = class,
-                    format = "missing",
-                    text = "missing"
-                ),
+                signature = signature(con = class),
                 where = asNamespace(.pkgName)
             )
         )
@@ -804,13 +833,15 @@ NULL
                 }
                 resource <- .localOrRemoteFile(con, quiet = quiet)
                 con <- new(Class = class, resource = resource)
-                attr(con, which = "origResource") <- origResource
+                .origResource(con) <- origResource
             }
         )
-        validObject(con)
-        assert(is(con, "PipetteFile"))
+        assert(
+            is(con, "PipetteFile"),
+            validObject(con)
+        )
         out <- import(con = con, ...)
-        resource <- resource(con)
+        resource <- .resource(con)
         if (isATempFile(resource)) {
             file.remove(resource)
         }
