@@ -1,3 +1,7 @@
+## FIXME Allow the user to specify which columns.
+
+
+
 #' Decode data that uses run-length encoding
 #'
 #' @name decode
