@@ -47,14 +47,14 @@ Updated 2021-10-14.
 }
 \examples{
 ## data.table ====
-if (goalie::isInstalled("data.table")) {
+if (requireNamespace("data.table", quietly = TRUE)) {
     data(data.table, package = "AcidTest")
     object <- data.table
     matchRownameColumn(object)
 }
 
 ## tbl_df ====
-if (goalie::isInstalled("tibble")) {
+if (requireNamespace("tibble", quietly = TRUE)) {
     data(tibble, package = "AcidTest")
     object <- tibble
     matchRownameColumn(object)
