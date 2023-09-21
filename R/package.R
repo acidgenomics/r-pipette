@@ -46,7 +46,7 @@ NULL
 #' bapply compressExtPattern extPattern formalCompress hasColnames hasCols
 #' hasDimnames hasDuplicates hasLength hasNames hasNoDuplicates hasRownames
 #' hasRows hasValidNames hasValidDimnames isADir isAFile isATempFile isAURL
-#' isAnExistingURL isAny isCharacter isFlag isInstalled isInt isMatchingFixed
+#' isAnExistingURL isAny isCharacter isFlag isInt isMatchingFixed
 #' isMatchingRegex isNonNegative isPositive isScalar isString isSubset
 #' requireNamespaces validNames validate
 #' @importFrom jsonlite read_json
