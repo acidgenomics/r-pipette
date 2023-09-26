@@ -1,7 +1,3 @@
-## FIXME Need to add support for date.
-
-
-
 #' @name encode
 #' @inherit AcidGenerics::encode
 #' @note Updated 2023-09-26.
