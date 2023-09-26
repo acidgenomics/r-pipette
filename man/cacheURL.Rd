@@ -4,13 +4,7 @@
 \alias{cacheURL}
 \title{Download and cache a file}
 \usage{
-cacheURL(
-  url,
-  pkg = "BiocFileCache",
-  update = FALSE,
-  ask = FALSE,
-  verbose = TRUE
-)
+cacheURL(url, pkg = "pipette", update = FALSE, ask = FALSE, verbose = TRUE)
 }
 \arguments{
 \item{url}{\code{character(1)}.
@@ -42,7 +36,7 @@ BiocFileCache is not installed, URL will be downloaded as a temporary file
 instead.
 }
 \note{
-Updated 2023-09-22.
+Updated 2023-09-26.
 }
 \examples{
 url <- AcidBase::pasteURL(

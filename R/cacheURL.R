@@ -6,7 +6,7 @@
 #' Download and cache a file
 #'
 #' @export
-#' @note Updated 2023-09-22.
+#' @note Updated 2023-09-26.
 #'
 #' @details
 #' Caching requires BiocFileCache and tools packages to be installed. If
@@ -41,7 +41,7 @@
 #' print(file)
 cacheURL <-
     function(url,
-             pkg = "BiocFileCache",
+             pkg = "pipette",
              update = FALSE,
              ask = FALSE,
              verbose = TRUE) {
