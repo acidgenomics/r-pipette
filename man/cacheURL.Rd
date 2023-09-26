@@ -39,11 +39,7 @@ instead.
 Updated 2023-09-26.
 }
 \examples{
-url <- AcidBase::pasteURL(
-    pipetteTestsURL,
-    "biocfilecache-test.txt",
-    protocol = "none"
-)
+url <- AcidBase::pasteURL(pipetteTestsURL, "biocfilecache-test.txt")
 file <- cacheURL(url)
 print(file)
 }

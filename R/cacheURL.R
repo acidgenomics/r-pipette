@@ -1,8 +1,3 @@
-## FIXME If BiocFileCache isn't installed, inform the user but download
-## to temporary directory instead.
-
-
-
 #' Download and cache a file
 #'
 #' @export
@@ -32,11 +27,7 @@
 #' - `BiocFileCache::bfcinfo()`.
 #'
 #' @examples
-#' url <- AcidBase::pasteURL(
-#'     pipetteTestsURL,
-#'     "biocfilecache-test.txt",
-#'     protocol = "none"
-#' )
+#' url <- AcidBase::pasteURL(pipetteTestsURL, "biocfilecache-test.txt")
 #' file <- cacheURL(url)
 #' print(file)
 cacheURL <-
@@ -52,11 +43,11 @@ cacheURL <-
             isFlag(ask),
             isFlag(verbose)
         )
-        ## FIXME Add support for this.
         ## Download as a temporary file if BiocFacheCache is not installed.
         if (!isInstalled("BiocFileCache")) {
-            stop("FIXME")
-            return("FIXME")
+            destfile <- file.path(tempdir2(), basename(url))
+            download.file(url = url, destfile = destfile, quiet = !verbose)
+            return(destfile)
         }
         bfc <- .biocPackageCache(pkg = pkg, ask = ask)
         query <- BiocFileCache::bfcquery(
