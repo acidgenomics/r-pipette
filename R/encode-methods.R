@@ -1,6 +1,10 @@
+## FIXME Need to add support for date.
+
+
+
 #' @name encode
 #' @inherit AcidGenerics::encode
-#' @note Updated 2023-09-20.
+#' @note Updated 2023-09-26.
 #'
 #' @inheritParams AcidRoxygen::params
 #'
@@ -26,6 +30,14 @@
 #' object <- encode(object)
 #' lapply(object, class)
 NULL
+
+
+
+## Updated 2023-09-26.
+`encode,Date` <- # nolint
+    function(x) {
+        x
+    }
 
 
 
@@ -108,6 +120,14 @@ NULL
     }
 
 
+
+#' @rdname encode
+#' @export
+setMethod(
+    f = "encode",
+    signature = signature(x = "Date"),
+    definition = `encode,Date`
+)
 
 #' @rdname encode
 #' @export
