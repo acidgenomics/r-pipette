@@ -37,10 +37,12 @@ Cached file path on disk.
 Download and cache a file
 }
 \details{
-Requires BiocFileCache and tools packages to be installed.
+Caching requires BiocFileCache and tools packages to be installed. If
+BiocFileCache is not installed, URL will be downloaded as a temporary file
+instead.
 }
 \note{
-Updated 2023-09-14.
+Updated 2023-09-22.
 }
 \examples{
 url <- AcidBase::pasteURL(
