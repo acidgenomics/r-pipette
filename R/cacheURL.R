@@ -47,6 +47,7 @@ cacheURL <-
         if (!isInstalled("BiocFileCache")) {
             destfile <- file.path(tempdir2(), basename(url))
             download.file(url = url, destfile = destfile, quiet = !verbose)
+            assert(isAFile(destfile))
             return(destfile)
         }
         bfc <- .biocPackageCache(pkg = pkg, ask = ask)
