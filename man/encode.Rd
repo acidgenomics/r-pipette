@@ -2,6 +2,7 @@
 % Please edit documentation in R/AllGenerics.R, R/encode-methods.R
 \name{encode}
 \alias{encode}
+\alias{encode,Date-method}
 \alias{encode,DFrame-method}
 \alias{encode,Ranges-method}
 \alias{encode,Rle-method}
@@ -10,6 +11,8 @@
 \title{Encode using run-length encoding}
 \usage{
 encode(x, ...)
+
+\S4method{encode}{Date}(x)
 
 \S4method{encode}{DFrame}(x, j = NULL)
 
@@ -37,7 +40,7 @@ All \code{atomic} columns will be encoded to \code{Rle} S4 class.
 Encode using run-length encoding
 }
 \note{
-Updated 2023-09-20.
+Updated 2023-09-26.
 }
 \examples{
 ## DFrame ====
