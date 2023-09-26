@@ -1,10 +1,17 @@
+## FIXME If BiocFileCache isn't installed, inform the user but download
+## to temporary directory instead.
+
+
+
 #' Download and cache a file
 #'
 #' @export
-#' @note Updated 2023-09-14.
+#' @note Updated 2023-09-22.
 #'
 #' @details
-#' Requires BiocFileCache and tools packages to be installed.
+#' Caching requires BiocFileCache and tools packages to be installed. If
+#' BiocFileCache is not installed, URL will be downloaded as a temporary file
+#' instead.
 #'
 #' @inheritParams AcidRoxygen::params
 #'
@@ -39,13 +46,18 @@ cacheURL <-
              ask = FALSE,
              verbose = TRUE) {
         assert(
-            requireNamespaces("BiocFileCache"),
             isAnExistingURL(url),
             isString(pkg),
             isFlag(update),
             isFlag(ask),
             isFlag(verbose)
         )
+        ## FIXME Add support for this.
+        ## Download as a temporary file if BiocFacheCache is not installed.
+        if (!isInstalled("BiocFileCache")) {
+            stop("FIXME")
+            return("FIXME")
+        }
         bfc <- .biocPackageCache(pkg = pkg, ask = ask)
         query <- BiocFileCache::bfcquery(
             x = bfc,
