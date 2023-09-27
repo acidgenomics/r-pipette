@@ -24,14 +24,33 @@ Updated 2023-09-27.
 }
 \examples{
 ## character ====
+## CSV format.
 object <- c(
-    "aaa\tbbb",
-    "ccc\tddd\teee",
-    "fff\tggg\thhh\tiii"
+    "\"aaa\",\"bbb\",\"ccc\",\"ddd\"",
+    "\"eee\",\"fff\",\"ggg\"",
+    "\"hhh\",\"iii\""
+)
+print(object)
+object <- fillLines(object, format = "csv")
+print(object)
+con <- textConnection(object)
+object <- import(con, format = "csv")
+print(object)
+close(con)
+
+## TSV format.
+object <- c(
+    "aaa\tbbb\tccc\tddd",
+    "eee\tfff\tggg",
+    "hhh\tiii"
 )
 print(object)
 object <- fillLines(object, format = "tsv")
 print(object)
+con <- textConnection(object)
+object <- import(con, format = "tsv")
+print(object)
+close(con)
 }
 \seealso{
 \itemize{
