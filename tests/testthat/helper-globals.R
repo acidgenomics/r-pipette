@@ -40,7 +40,7 @@ engines <- c("base", "data.table", "readr")
 DataFrame <- S4Vectors::DataFrame
 GRanges <- GenomicRanges::GRanges
 hasInternet <- goalie::hasInternet
-isAnExistingURL <- goalie::isAnExistingURL
+isAnExistingUrl <- goalie::isAnExistingUrl
 isSubset <- goalie::isSubset
 isWindows <- goalie::isWindows
 mcols <- S4Vectors::mcols

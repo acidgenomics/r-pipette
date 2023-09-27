@@ -1,5 +1,5 @@
-#' @name removeNA
-#' @inherit AcidGenerics::removeNA
+#' @name removeNa
+#' @inherit AcidGenerics::removeNa
 #' @note Updated 2021-10-14.
 #'
 #' @inheritParams AcidRoxygen::params
@@ -7,8 +7,8 @@
 #'
 #' @examples
 #' ## atomic ====
-#' removeNA(c("hello", "world", NA))
-#' removeNA(c(1, 2, NA))
+#' removeNa(c("hello", "world", NA))
+#' removeNa(c(1, 2, NA))
 #'
 #' ## matrix ====
 #' from <- matrix(
@@ -17,7 +17,7 @@
 #'     ncol = 3
 #' )
 #' print(from)
-#' to <- removeNA(from)
+#' to <- removeNa(from)
 #' print(to)
 #'
 #' ## DFrame ====
@@ -27,7 +27,7 @@
 #'     "c" = c("B", NA, "D")
 #' )
 #' print(from)
-#' to <- removeNA(from)
+#' to <- removeNa(from)
 #' print(to)
 NULL
 
@@ -41,7 +41,7 @@ NULL
 
 
 ## Updated 2019-07-19.
-`removeNA,atomic` <- # nolint
+`removeNa,atomic` <- # nolint
     function(object) {
         na.omit(object)
     }
@@ -49,7 +49,7 @@ NULL
 
 
 ## Updated 2019-07-19.
-`removeNA,matrix` <- # nolint
+`removeNa,matrix` <- # nolint
     function(object) {
         keepRows <- apply(X = object, MARGIN = 1L, FUN = .allNonNA)
         keepCols <- apply(X = object, MARGIN = 2L, FUN = .allNonNA)
@@ -59,55 +59,55 @@ NULL
 
 
 ## Updated 2023-04-26.
-`removeNA,DFrame` <- # nolint
-    `removeNA,matrix`
+`removeNa,DFrame` <- # nolint
+    `removeNa,matrix`
 
 ## Updated 2021-02-02.
-`removeNA,Matrix` <- # nolint
-    `removeNA,matrix`
+`removeNa,Matrix` <- # nolint
+    `removeNa,matrix`
 
 ## Updated 2019-07-19.
-`removeNA,data.frame` <- # nolint
-    `removeNA,matrix`
+`removeNa,data.frame` <- # nolint
+    `removeNa,matrix`
 
 
 
-#' @rdname removeNA
+#' @rdname removeNa
 #' @export
 setMethod(
-    f = "removeNA",
+    f = "removeNa",
     signature = signature(object = "DFrame"),
-    definition = `removeNA,DFrame`
+    definition = `removeNa,DFrame`
 )
 
-#' @rdname removeNA
+#' @rdname removeNa
 #' @export
 setMethod(
-    f = "removeNA",
+    f = "removeNa",
     signature = signature(object = "Matrix"),
-    definition = `removeNA,Matrix`
+    definition = `removeNa,Matrix`
 )
 
-#' @rdname removeNA
+#' @rdname removeNa
 #' @export
 setMethod(
-    f = "removeNA",
+    f = "removeNa",
     signature = signature(object = "atomic"),
-    definition = `removeNA,atomic`
+    definition = `removeNa,atomic`
 )
 
-#' @rdname removeNA
+#' @rdname removeNa
 #' @export
 setMethod(
-    f = "removeNA",
+    f = "removeNa",
     signature = signature(object = "data.frame"),
-    definition = `removeNA,data.frame`
+    definition = `removeNa,data.frame`
 )
 
-#' @rdname removeNA
+#' @rdname removeNa
 #' @export
 setMethod(
-    f = "removeNA",
+    f = "removeNa",
     signature = signature(object = "matrix"),
-    definition = `removeNA,matrix`
+    definition = `removeNa,matrix`
 )

@@ -1,5 +1,5 @@
-#' @name sanitizeNA
-#' @inherit AcidGenerics::sanitizeNA
+#' @name sanitizeNa
+#' @inherit AcidGenerics::sanitizeNa
 #' @note Updated 2023-09-20.
 #'
 #' @inheritParams AcidRoxygen::params
@@ -9,7 +9,7 @@
 #' ## character ====
 #' from <- as.character(c(1L, "x", "", "NA", "NULL"))
 #' print(from)
-#' to <- sanitizeNA(from)
+#' to <- sanitizeNa(from)
 #' print(to)
 #'
 #' ## DFrame ====
@@ -19,14 +19,14 @@
 #'     row.names = c("c", "d")
 #' )
 #' print(from)
-#' to <- sanitizeNA(from)
+#' to <- sanitizeNa(from)
 #' print(to)
 NULL
 
 
 
 ## Updated 2023-09-20.
-`sanitizeNA,DFrame` <- # nolint
+`sanitizeNa,DFrame` <- # nolint
     function(object) {
         if (!(hasCols(object) && hasRows(object))) {
             return(object)
@@ -36,14 +36,14 @@ NULL
             return(object)
         }
         idx <- which(lgl)
-        object[idx] <- lapply(X = object[idx], FUN = sanitizeNA)
+        object[idx] <- lapply(X = object[idx], FUN = sanitizeNa)
         object
     }
 
 
 
 ## Updated 2019-07-19.
-`sanitizeNA,atomic` <- # nolint
+`sanitizeNa,atomic` <- # nolint
     function(object) {
         object
     }
@@ -52,7 +52,7 @@ NULL
 
 ## Note that names will be kept here after the gsub call.
 ## Updated 2021-01-13.
-`sanitizeNA,character` <- # nolint
+`sanitizeNa,character` <- # nolint
     function(object) {
         patterns <- c(
             "^$",
@@ -73,8 +73,8 @@ NULL
 
 
 ## Updated 2023-09-20.
-`sanitizeNA,data.frame` <- # nolint
-    `sanitizeNA,DFrame`
+`sanitizeNa,data.frame` <- # nolint
+    `sanitizeNa,DFrame`
 
 
 
@@ -83,12 +83,12 @@ NULL
 ## levels vector.
 
 ## Updated 2021-08-05.
-`sanitizeNA,factor` <- # nolint
+`sanitizeNa,factor` <- # nolint
     function(object) {
         x <- object
-        levels <- unique(sanitizeNA(levels(x)))
+        levels <- unique(sanitizeNa(levels(x)))
         x <- as.character(x)
-        x <- sanitizeNA(x)
+        x <- sanitizeNa(x)
         x <- factor(x = x, levels = levels)
         names(x) <- names(object)
         x
@@ -96,42 +96,42 @@ NULL
 
 
 
-#' @rdname sanitizeNA
+#' @rdname sanitizeNa
 #' @export
 setMethod(
-    f = "sanitizeNA",
+    f = "sanitizeNa",
     signature = signature(object = "DFrame"),
-    definition = `sanitizeNA,DFrame`
+    definition = `sanitizeNa,DFrame`
 )
 
-#' @rdname sanitizeNA
+#' @rdname sanitizeNa
 #' @export
 setMethod(
-    f = "sanitizeNA",
+    f = "sanitizeNa",
     signature = signature(object = "atomic"),
-    definition = `sanitizeNA,atomic`
+    definition = `sanitizeNa,atomic`
 )
 
-#' @rdname sanitizeNA
+#' @rdname sanitizeNa
 #' @export
 setMethod(
-    f = "sanitizeNA",
+    f = "sanitizeNa",
     signature = signature(object = "character"),
-    definition = `sanitizeNA,character`
+    definition = `sanitizeNa,character`
 )
 
-#' @rdname sanitizeNA
+#' @rdname sanitizeNa
 #' @export
 setMethod(
-    f = "sanitizeNA",
+    f = "sanitizeNa",
     signature = signature(object = "data.frame"),
-    definition = `sanitizeNA,data.frame`
+    definition = `sanitizeNa,data.frame`
 )
 
-#' @rdname sanitizeNA
+#' @rdname sanitizeNa
 #' @export
 setMethod(
-    f = "sanitizeNA",
+    f = "sanitizeNa",
     signature = signature(object = "factor"),
-    definition = `sanitizeNA,factor`
+    definition = `sanitizeNa,factor`
 )

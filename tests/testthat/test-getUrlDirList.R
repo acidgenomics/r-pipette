@@ -1,14 +1,14 @@
 test_that("NCBI FTP", {
-    url <- pasteURL(
+    url <- pasteUrl(
         "ftp.ncbi.nlm.nih.gov", "genomes",
         protocol = "ftp"
     )
-    skip_if_not(isAnExistingURL(paste0(url, "/")))
+    skip_if_not(isAnExistingUrl(paste0(url, "/")))
     expect_identical(
         object = with_collate(
             new = "C",
             code = {
-                getURLDirList(url, type = "all")
+                getUrlDirList(url, type = "all")
             }
         ),
         expected = c(
@@ -37,7 +37,7 @@ test_that("NCBI FTP", {
         object = with_collate(
             new = "C",
             code = {
-                getURLDirList(url, type = "dirs")
+                getUrlDirList(url, type = "dirs")
             }
         ),
         expected = c(
@@ -58,7 +58,7 @@ test_that("NCBI FTP", {
         object = with_collate(
             new = "C",
             code = {
-                getURLDirList(url, type = "files")
+                getUrlDirList(url, type = "files")
             }
         ),
         expected = c(
@@ -73,19 +73,19 @@ test_that("NCBI FTP", {
         )
     )
     expect_identical(
-        object = getURLDirList(
+        object = getUrlDirList(
             url = url,
             pattern = "^refseq$",
             absolute = TRUE
         ),
-        expected = pasteURL(url, "refseq")
+        expected = pasteUrl(url, "refseq")
     )
     expect_identical(
-        object = getURLDirList(url = url, pattern = "^refseq$"),
+        object = getUrlDirList(url = url, pattern = "^refseq$"),
         expected = "refseq"
     )
     expect_error(
-        object = getURLDirList(
+        object = getUrlDirList(
             url = url,
             pattern = "^refseq/$",
             absolute = TRUE
@@ -95,16 +95,16 @@ test_that("NCBI FTP", {
 })
 
 test_that("NCBI HTTPS", {
-    url <- pasteURL(
+    url <- pasteUrl(
         "ftp.ncbi.nlm.nih.gov", "genomes",
         protocol = "https"
     )
-    skip_if_not(isAnExistingURL(url))
+    skip_if_not(isAnExistingUrl(url))
     expect_identical(
         object = with_collate(
             new = "C",
             code = {
-                getURLDirList(url, type = "all")
+                getUrlDirList(url, type = "all")
             }
         ),
         expected = c(
@@ -133,7 +133,7 @@ test_that("NCBI HTTPS", {
         object = with_collate(
             new = "C",
             code = {
-                getURLDirList(url, type = "dirs")
+                getUrlDirList(url, type = "dirs")
             }
         ),
         expected = c(
@@ -156,7 +156,7 @@ test_that("NCBI HTTPS", {
         object = with_collate(
             new = "C",
             code = {
-                getURLDirList(url, type = "files")
+                getUrlDirList(url, type = "files")
             }
         ),
         expected = c(
@@ -169,19 +169,19 @@ test_that("NCBI HTTPS", {
         )
     )
     expect_identical(
-        object = getURLDirList(
+        object = getUrlDirList(
             url = url,
             pattern = "^refseq$",
             absolute = TRUE
         ),
-        expected = pasteURL(url, "refseq")
+        expected = pasteUrl(url, "refseq")
     )
     expect_identical(
-        object = getURLDirList(url = url, pattern = "^refseq$"),
+        object = getUrlDirList(url = url, pattern = "^refseq$"),
         expected = "refseq"
     )
     expect_error(
-        object = getURLDirList(
+        object = getUrlDirList(
             url = url,
             pattern = "^refseq/$",
             absolute = TRUE
@@ -194,7 +194,7 @@ test_that("NCBI HTTPS", {
 ## checking HTTPS protocol here for time being.
 
 test_that("Ensembl HTTPS", {
-    url <- pasteURL(
+    url <- pasteUrl(
         "ftp.ensembl.org",
         "pub",
         "release-110",
@@ -203,12 +203,12 @@ test_that("Ensembl HTTPS", {
         "cdna",
         protocol = "https"
     )
-    skip_if_not(isAnExistingURL(url))
+    skip_if_not(isAnExistingUrl(url))
     expect_identical(
         object = with_collate(
             new = "C",
             code = {
-                getURLDirList(url)
+                getUrlDirList(url)
             }
         ),
         expected = c(

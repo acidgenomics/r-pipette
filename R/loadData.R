@@ -68,7 +68,7 @@ loadData <-
         assert(
             isADir(dir),
             is.environment(envir),
-            isCharacter(list, nullOK = TRUE),
+            isCharacter(list, nullOk = TRUE),
             isFlag(overwrite)
         )
         if (isCharacter(list)) {
@@ -209,7 +209,7 @@ loadData <-
             x = tolower(basename(file)),
             pattern = "\\.rd[a|ata]$"
         ),
-        isString(name, nullOK = TRUE),
+        isString(name, nullOk = TRUE),
         is.environment(envir),
         isFlag(overwrite)
     )

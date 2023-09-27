@@ -735,7 +735,7 @@ test_that("FASTQ", {
 })
 
 test_that("Google Sheets", {
-    url <- pasteURL(
+    url <- pasteUrl(
         "docs.google.com",
         "spreadsheets",
         "d",

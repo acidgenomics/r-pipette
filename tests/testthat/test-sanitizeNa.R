@@ -1,4 +1,4 @@
-test_that("sanitizeNA", {
+test_that("sanitizeNa", {
     Map(
         object = list(
             "character" = c(1L, "x", "", "NA"),
@@ -36,7 +36,7 @@ test_that("sanitizeNA", {
         ),
         f = function(object, expected) {
             expect_identical(
-                object = sanitizeNA(object),
+                object = sanitizeNa(object),
                 expected = expected
             )
         }
@@ -58,7 +58,7 @@ test_that("Harden against unexpected factor level swap", {
         )
     )
     expect_identical(
-        object = sanitizeNA(object),
+        object = sanitizeNa(object),
         expected = object
     )
 })
@@ -69,7 +69,7 @@ test_that("Named factor", {
     names(x) <- letters[seq_len(length(x))]
     expect_false(anyNA(x))
     expect_s3_class(x, "factor")
-    y <- sanitizeNA(x)
+    y <- sanitizeNa(x)
     expect_named(x, names(y))
     expect_true(anyNA(y))
     expect_s3_class(y, "factor")
@@ -77,5 +77,5 @@ test_that("Named factor", {
 
 
 test_that("Don't modify atomic", {
-    expect_identical(sanitizeNA(NA), NA)
+    expect_identical(sanitizeNa(NA), NA)
 })

@@ -107,7 +107,7 @@ setValidity(
     method = function(object) {
         validate(
             isString(slot(object, "resource")),
-            isString(slot(object, "origResource"), nullOK = TRUE)
+            isString(slot(object, "origResource"), nullOk = TRUE)
         )
     }
 )
