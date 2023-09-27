@@ -16,7 +16,7 @@
 #'
 #' @examples
 #' ## character ====
-#' ## CSV mode.
+#' ## CSV format.
 #' object <- c(
 #'     "\"aaa\",\"bbb\",\"ccc\",\"ddd\"",
 #'     "\"eee\",\"fff\",\"ggg\"",
@@ -30,7 +30,7 @@
 #' print(object)
 #' close(con)
 #'
-#' ## TSV mode.
+#' ## TSV format.
 #' object <- c(
 #'     "aaa\tbbb\tccc\tddd",
 #'     "eee\tfff\tggg",
