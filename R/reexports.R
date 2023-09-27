@@ -2,6 +2,6 @@
 #' @export
 AcidBase::initDir
 
-#' @importFrom AcidBase pasteURL
+#' @importFrom AcidBase pasteUrl
 #' @export
-AcidBase::pasteURL
+AcidBase::pasteUrl

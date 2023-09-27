@@ -68,7 +68,7 @@ invisible(Map(
     file = files,
     MoreArgs = list(
         "envir" = environment(),
-        "remoteDir" = pipetteTestsURL
+        "remoteDir" = pipetteTestsUrl
     )
 ))
 rm(files)

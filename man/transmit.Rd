@@ -45,7 +45,7 @@ Updated 2023-09-19.
 }
 \examples{
 remoteDir <- "ftp://ftp.ncbi.nlm.nih.gov/genomes/"
-if (goalie::isAnExistingURL(remoteDir)) {
+if (goalie::isAnExistingUrl(remoteDir)) {
     localDir <- AcidBase::tempdir2()
     readme <- transmit(
         remoteDir = remoteDir,

@@ -70,16 +70,16 @@ NULL
 #' @usage metadata2(x, which, ...) <- value
 NULL
 
-#' @rdname removeNA
-#' @name removeNA
+#' @rdname removeNa
+#' @name removeNa
 #' @export
-#' @usage removeNA(object, ...)
+#' @usage removeNa(object, ...)
 NULL
 
-#' @rdname sanitizeNA
-#' @name sanitizeNA
+#' @rdname sanitizeNa
+#' @name sanitizeNa
 #' @export
-#' @usage sanitizeNA(object, ...)
+#' @usage sanitizeNa(object, ...)
 NULL
 
 #' @rdname sanitizePercent

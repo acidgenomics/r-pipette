@@ -29,7 +29,7 @@
 #'
 #' @examples
 #' remoteDir <- "ftp://ftp.ncbi.nlm.nih.gov/genomes/"
-#' if (goalie::isAnExistingURL(remoteDir)) {
+#' if (goalie::isAnExistingUrl(remoteDir)) {
 #'     localDir <- AcidBase::tempdir2()
 #'     readme <- transmit(
 #'         remoteDir = remoteDir,
@@ -51,9 +51,9 @@ transmit <-
              download = TRUE) {
         assert(
             ## We check that the URL exists after we add trailing slash below.
-            isAURL(remoteDir),
+            isAUrl(remoteDir),
             isMatchingRegex(x = remoteDir, pattern = "^ftp\\://"),
-            isString(pattern, nullOK = TRUE),
+            isString(pattern, nullOk = TRUE),
             isAny(rename, classes = c("character", "NULL")),
             isFlag(compress),
             isFlag(download)
@@ -61,7 +61,7 @@ transmit <-
         if (!isMatchingRegex(pattern = "/$", x = remoteDir)) {
             remoteDir <- paste0(remoteDir, "/")
         }
-        assert(isAnExistingURL(remoteDir))
+        assert(isAnExistingUrl(remoteDir))
         if (isTRUE(download)) {
             localDir <- initDir(localDir)
         }
@@ -109,7 +109,7 @@ transmit <-
                 toInlineString(remoteFiles, n = 10L, class = "file")
             ))
         }
-        remotePaths <- pasteURL(remoteDir, remoteFiles, protocol = "none")
+        remotePaths <- pasteUrl(remoteDir, remoteFiles, protocol = "none")
         if (isFALSE(download)) {
             return(remotePaths)
         }

@@ -30,11 +30,11 @@
 #'
 #' @examples
 #' url <- "ftp://ftp.ncbi.nlm.nih.gov/genomes/"
-#' if (goalie::isAnExistingURL(url)) {
-#'     x <- getURLDirList(url)
+#' if (goalie::isAnExistingUrl(url)) {
+#'     x <- getUrlDirList(url)
 #'     print(x)
 #' }
-getURLDirList <-
+getUrlDirList <-
     function(url,
              type = c("all", "dirs", "files"),
              pattern = NULL,
@@ -42,14 +42,14 @@ getURLDirList <-
         assert(
             isString(url),
             isMatchingRegex(x = url, pattern = "^(ftp|http|https)://"),
-            isString(pattern, nullOK = TRUE),
+            isString(pattern, nullOk = TRUE),
             isFlag(absolute)
         )
         type <- match.arg(type)
         if (!isMatchingRegex(x = url, pattern = "/$")) {
             url <- paste0(url, "/")
         }
-        assert(isAnExistingURL(url))
+        assert(isAnExistingUrl(url))
         destfile <- tempfile()
         status <- try(
             expr = {

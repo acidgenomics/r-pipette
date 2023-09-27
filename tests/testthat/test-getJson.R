@@ -1,12 +1,12 @@
 test_that("UCSC Genome Browser API", {
-    url <- pasteURL(
+    url <- pasteUrl(
         "api.genome.ucsc.edu",
         "list",
         "ucscGenomes",
         protocol = "https"
     )
-    skip_if_not(isAnExistingURL(url))
-    json <- getJSON(url)
+    skip_if_not(isAnExistingUrl(url))
+    json <- getJson(url)
     expect_type(json, "list")
 })
 
@@ -14,7 +14,7 @@ test_that("UCSC Genome Browser API", {
 ## at the moment to avoid build checks hanging.
 
 ## > test_that("Ensembl REST API", {
-## >     url <- pasteURL(
+## >     url <- pasteUrl(
 ## >         "rest.ensembl.org",
 ## >         "info",
 ## >         "assembly",
@@ -24,7 +24,7 @@ test_that("UCSC Genome Browser API", {
 ## >         ),
 ## >         protocol = "https"
 ## >     )
-## >     skip_if_not(isAnExistingURL(url))
-## >     json <- getJSON(url)
+## >     skip_if_not(isAnExistingUrl(url))
+## >     json <- getJson(url)
 ## >     expect_type(json, "list")
 ## > })

@@ -308,7 +308,7 @@ NULL
         if (is.null(file)) {
             file <- .resource(con)
         }
-        fileType <- ifelse(test = isAURL(file), yes = "url", no = "file")
+        fileType <- ifelse(test = isAUrl(file), yes = "url", no = "file")
         ## Handle edge case of cleaning Google Sheets URL.
         if (identical(fileType, "url")) {
             file <- sub(pattern = "\\#.+$", replacement = "", x = file)
@@ -516,8 +516,8 @@ NULL
 #' basename(x)
 #'
 #' ## Remote
-#' file <- AcidBase::pasteURL(
-#'     pipetteTestsURL,
+#' file <- AcidBase::pasteUrl(
+#'     pipetteTestsUrl,
 #'     "hgnc.txt.gz",
 #'     protocol = "none"
 #' )
@@ -537,8 +537,8 @@ NULL
             yes = "",
             no = paste0(".", fileExt)
         )
-        if (isAURL(file)) {
-            assert(isAnExistingURL(file))
+        if (isAUrl(file)) {
+            assert(isAnExistingUrl(file))
             url <- file
             file <- tempfile(
                 pattern = tmpPrefix,
@@ -606,7 +606,7 @@ NULL
 .origResource <- function(object) {
     assert(is(object, "PipetteFile"))
     x <- slot(object, "origResource")
-    assert(isString(x, nullOK = TRUE))
+    assert(isString(x, nullOk = TRUE))
     x
 }
 
@@ -665,8 +665,8 @@ NULL
                 is.null(makeNames) ||
                 isFALSE(makeNames),
             isFlag(metadata),
-            isString(whatPkg, nullOK = TRUE),
-            isString(whatFun, nullOK = TRUE),
+            isString(whatPkg, nullOk = TRUE),
+            isString(whatFun, nullOk = TRUE),
             isFlag(quiet)
         )
         file <- .origResource(con)
@@ -778,7 +778,7 @@ NULL
             quiet <- FALSE
         }
         assert(
-            isString(format, nullOK = TRUE),
+            isString(format, nullOk = TRUE),
             isFlag(quiet)
         )
         if (isMatchingRegex(
@@ -1213,7 +1213,7 @@ NULL
             make.names = FALSE,
             stringsAsFactors = FALSE
         )
-        object <- removeNA(object)
+        object <- removeNa(object)
         .returnImport(
             object = object,
             con = con,
@@ -1252,8 +1252,8 @@ NULL
             colnamesFile <- paste0(origFile, ".colnames")
         }
         assert(
-            isString(rownamesFile, nullOK = TRUE),
-            isString(colnamesFile, nullOK = TRUE),
+            isString(rownamesFile, nullOk = TRUE),
+            isString(colnamesFile, nullOk = TRUE),
             isFlag(metadata),
             isFlag(quiet)
         )
@@ -1342,7 +1342,7 @@ NULL
         args <- list("path" = file, "table" = sheet)
         what <- .getFunction(f = whatFun, pkg = whatPkg)
         object <- do.call(what = what, args = args)
-        object <- removeNA(object)
+        object <- removeNa(object)
         .returnImport(
             object = object,
             con = con,
