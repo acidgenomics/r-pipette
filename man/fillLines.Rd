@@ -4,10 +4,13 @@
 \alias{fillLines}
 \title{Fill delimited lines with NA values}
 \usage{
-fillLines(object, sep = c("\\t", ","))
+fillLines(object, format = c("csv", "tsv"))
 }
 \arguments{
 \item{object}{\code{character}.}
+
+\item{format}{\code{character(1)}.
+Delimited input format.}
 }
 \value{
 \code{character}.
@@ -27,7 +30,7 @@ object <- c(
     "fff\tggg\thhh\tiii"
 )
 print(object)
-object <- fillLines(object, sep = "\t")
+object <- fillLines(object, format = "tsv")
 print(object)
 }
 \seealso{
