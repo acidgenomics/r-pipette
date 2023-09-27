@@ -12,21 +12,21 @@
 #'
 #' @examples
 #' ## Access the UCSC Genome Browser API.
-#' url <- pasteURL(
+#' url <- pasteUrl(
 #'     "api.genome.ucsc.edu",
 #'     "list",
 #'     "ucscGenomes",
 #'     protocol = "https"
 #' )
-#' if (goalie::isAnExistingURL(url)) {
-#'     json <- getJSON(url)
+#' if (goalie::isAnExistingUrl(url)) {
+#'     json <- getJson(url)
 #'     print(names(json))
 #' }
 #'
 #' ## Access Ensembl genome assembly metadata.
 #' ## The Ensembl REST API server is prone to connection issues, so keeping
 #' ## disabled here in the working example.
-#' ## > url <- pasteURL(
+#' ## > url <- pasteUrl(
 #' ## >     "rest.ensembl.org",
 #' ## >     "info",
 #' ## >     "assembly",
@@ -36,14 +36,14 @@
 #' ## >     ),
 #' ## >     protocol = "https"
 #' ## > )
-#' ## > if (goalie::isAnExistingURL(url)) {
-#' ## >     json <- getJSON(url)
+#' ## > if (goalie::isAnExistingUrl(url)) {
+#' ## >     json <- getJson(url)
 #' ## >     print(names(json))
 #' ## > }
-getJSON <- function(url) {
+getJson <- function(url) {
     assert(
         requireNamespaces("httr2"),
-        isAnExistingURL(url)
+        isAnExistingUrl(url)
     )
     req <- httr2::request(url)
     resp <- httr2::req_perform(req)

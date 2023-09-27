@@ -20,7 +20,7 @@ NULL
 ## S4 generics and methods =====================================================
 
 #' @importFrom AcidGenerics as.DataFrame atomize droplevels2 encode export
-#' factorize import matchRownameColumn metadata2 metadata2<- removeNA sanitizeNA
+#' factorize import matchRownameColumn metadata2 metadata2<- removeNa sanitizeNa
 #' sanitizePercent unfactorize
 #' @importFrom BiocGenerics anyDuplicated as.data.frame do.call end lapply start
 #' strand which width
@@ -35,18 +35,18 @@ NULL
 ## Standard functions ==========================================================
 
 #' @importFrom AcidBase basenameSansExt compress decompress dots download
-#' fileExt initDir methodFunction pasteURL realpath simpleClass standardizeCall
+#' fileExt initDir methodFunction pasteUrl realpath simpleClass standardizeCall
 #' tempdir2
 #' @importFrom AcidCLI abort alert alertInfo alertSuccess alertWarning
 #' toInlineString
 #' @importFrom Matrix readMM writeMM
-#' @importFrom goalie assert allAreAtomic allAreExisting allAreExistingURLs
+#' @importFrom goalie assert allAreAtomic allAreExisting allAreExistingUrls
 #' allAreFiles allAreIntegerish allAreMatchingFixed allAreMatchingRegex
 #' allAreNonExisting allHaveAccess areDisjointSets areSameLength areSetEqual
 #' bapply compressExtPattern extPattern formalCompress hasColnames hasCols
 #' hasDimnames hasDuplicates hasLength hasNames hasNoDuplicates hasRownames
-#' hasRows hasValidNames hasValidDimnames isADir isAFile isATempFile isAURL
-#' isAnExistingURL isAny isCharacter isFlag isInstalled isInt isMatchingFixed
+#' hasRows hasValidNames hasValidDimnames isADir isAFile isATempFile isAUrl
+#' isAnExistingUrl isAny isCharacter isFlag isInstalled isInt isMatchingFixed
 #' isMatchingRegex isNonNegative isPositive isScalar isString isSubset
 #' requireNamespaces validNames validate
 #' @importFrom jsonlite read_json

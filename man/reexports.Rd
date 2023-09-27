@@ -4,7 +4,7 @@
 \name{reexports}
 \alias{reexports}
 \alias{initDir}
-\alias{pasteURL}
+\alias{pasteUrl}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -12,6 +12,6 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{AcidBase}{\code{\link[AcidBase]{initDir}}, \code{\link[AcidBase]{pasteURL}}}
+  \item{AcidBase}{\code{\link[AcidBase]{initDir}}, \code{\link[AcidBase]{pasteUrl}}}
 }}
 

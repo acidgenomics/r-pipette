@@ -27,17 +27,17 @@
 #' - `BiocFileCache::bfcinfo()`.
 #'
 #' @examples
-#' url <- AcidBase::pasteURL(pipetteTestsURL, "biocfilecache-test.txt")
-#' file <- cacheURL(url)
+#' url <- AcidBase::pasteUrl(pipetteTestsUrl, "biocfilecache-test.txt")
+#' file <- cacheUrl(url)
 #' print(file)
-cacheURL <-
+cacheUrl <-
     function(url,
              pkg = "pipette",
              update = FALSE,
              ask = FALSE,
              verbose = TRUE) {
         assert(
-            isAnExistingURL(url),
+            isAnExistingUrl(url),
             isString(pkg),
             isFlag(update),
             isFlag(ask),

@@ -1,6 +1,6 @@
 ## Note that only FTP is currently supported.
 remoteDir <- "ftp://ftp.ncbi.nlm.nih.gov/genomes/"
-skip_if_not(isAnExistingURL(remoteDir))
+skip_if_not(isAnExistingUrl(remoteDir))
 
 test_that("Get README file", {
     tempdir <- tempdir2()
@@ -43,7 +43,7 @@ test_that("Rename and compress", {
 
 test_that("URL return", {
     url <- transmit(
-        remoteDir = pasteURL(
+        remoteDir = pasteUrl(
             "ftp.pantherdb.org",
             "sequence_classifications",
             "current_release",
@@ -53,7 +53,7 @@ test_that("URL return", {
         pattern = "human",
         download = FALSE
     )
-    expect_true(isAURL(url))
+    expect_true(isAUrl(url))
 })
 
 test_that("Invalid parameters", {

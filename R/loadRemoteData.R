@@ -14,8 +14,8 @@
 #' Local object name as the name, and the remote URL as the value.
 #'
 #' @examples
-#' url <- AcidBase::pasteURL(
-#'     pipetteTestsURL,
+#' url <- AcidBase::pasteUrl(
+#'     pipetteTestsUrl,
 #'     "rnaseq_counts.rds",
 #'     protocol = "none"
 #' )
@@ -30,7 +30,7 @@ loadRemoteData <-
                  default = TRUE
              )) {
         assert(
-            allAreExistingURLs(url),
+            allAreExistingUrls(url),
             is.environment(envir),
             isFlag(overwrite)
         )
