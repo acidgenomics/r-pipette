@@ -4,28 +4,28 @@
 \alias{import}
 \alias{import,character-method}
 \alias{import,textConnection-method}
-\alias{import,PipetteRDSFile-method}
+\alias{import,PipetteRdsFile-method}
 \alias{import,PipetteRDataFile-method}
 \alias{import,PipetteDelimFile-method}
 \alias{import,PipetteLinesFile-method}
 \alias{import,PipetteExcelFile-method}
-\alias{import,PipetteBAMFile-method}
-\alias{import,PipetteBCFFile-method}
-\alias{import,PipetteCRAMFile-method}
-\alias{import,PipetteFASTAFile-method}
-\alias{import,PipetteFASTQFile-method}
-\alias{import,PipetteGCTFile-method}
-\alias{import,PipetteGMTFile-method}
-\alias{import,PipetteGMXFile-method}
-\alias{import,PipetteGRPFile-method}
-\alias{import,PipetteJSONFile-method}
-\alias{import,PipetteMAFFile-method}
-\alias{import,PipetteMTXFile-method}
-\alias{import,PipetteOBOFile-method}
-\alias{import,PipettePZFXFile-method}
-\alias{import,PipetteSAMFile-method}
-\alias{import,PipetteVCFFile-method}
-\alias{import,PipetteYAMLFile-method}
+\alias{import,PipetteBamFile-method}
+\alias{import,PipetteBcfFile-method}
+\alias{import,PipetteCramFile-method}
+\alias{import,PipetteFastaFile-method}
+\alias{import,PipetteFastqFile-method}
+\alias{import,PipetteGctFile-method}
+\alias{import,PipetteGmtFile-method}
+\alias{import,PipetteGmxFile-method}
+\alias{import,PipetteGrpFile-method}
+\alias{import,PipetteJsonFile-method}
+\alias{import,PipetteMafFile-method}
+\alias{import,PipetteMtxFile-method}
+\alias{import,PipetteOboFile-method}
+\alias{import,PipettePzfxFile-method}
+\alias{import,PipetteSamFile-method}
+\alias{import,PipetteVcfFile-method}
+\alias{import,PipetteYamlFile-method}
 \alias{import,PipetteBcbioCountsFile-method}
 \alias{import,PipetteRioFile-method}
 \alias{import,PipetteRtracklayerFile-method}
@@ -44,7 +44,7 @@ import(con, ...)
   quiet = FALSE
 )
 
-\S4method{import}{PipetteRDSFile}(con, quiet = FALSE)
+\S4method{import}{PipetteRdsFile}(con, quiet = FALSE)
 
 \S4method{import}{PipetteRDataFile}(con, quiet = FALSE)
 
@@ -90,43 +90,43 @@ import(con, ...)
   quiet = FALSE
 )
 
-\S4method{import}{PipetteBAMFile}(con, quiet = FALSE)
+\S4method{import}{PipetteBamFile}(con, quiet = FALSE)
 
-\S4method{import}{PipetteBCFFile}(con, quiet = FALSE)
+\S4method{import}{PipetteBcfFile}(con, quiet = FALSE)
 
-\S4method{import}{PipetteCRAMFile}(con, quiet = FALSE)
+\S4method{import}{PipetteCramFile}(con, quiet = FALSE)
 
-\S4method{import}{PipetteFASTAFile}(
+\S4method{import}{PipetteFastaFile}(
   con,
   moleculeType = c("DNA", "RNA", "AA"),
   metadata = FALSE,
   quiet = FALSE
 )
 
-\S4method{import}{PipetteFASTQFile}(con, moleculeType = c("DNA", "RNA"), metadata = FALSE, quiet = FALSE)
+\S4method{import}{PipetteFastqFile}(con, moleculeType = c("DNA", "RNA"), metadata = FALSE, quiet = FALSE)
 
-\S4method{import}{PipetteGCTFile}(
+\S4method{import}{PipetteGctFile}(
   con,
   metadata = FALSE,
   quiet = FALSE,
   return = c("matrix", "data.frame")
 )
 
-\S4method{import}{PipetteGMTFile}(con, quiet = FALSE)
+\S4method{import}{PipetteGmtFile}(con, quiet = FALSE)
 
-\S4method{import}{PipetteGMXFile}(con, quiet = FALSE)
+\S4method{import}{PipetteGmxFile}(con, quiet = FALSE)
 
-\S4method{import}{PipetteGRPFile}(con, quiet = FALSE)
+\S4method{import}{PipetteGrpFile}(con, quiet = FALSE)
 
-\S4method{import}{PipetteJSONFile}(con, metadata = FALSE, quiet = FALSE)
+\S4method{import}{PipetteJsonFile}(con, metadata = FALSE, quiet = FALSE)
 
-\S4method{import}{PipetteMAFFile}(con, quiet = FALSE)
+\S4method{import}{PipetteMafFile}(con, quiet = FALSE)
 
-\S4method{import}{PipetteMTXFile}(con, rownamesFile, colnamesFile, metadata = FALSE, quiet = FALSE)
+\S4method{import}{PipetteMtxFile}(con, rownamesFile, colnamesFile, metadata = FALSE, quiet = FALSE)
 
-\S4method{import}{PipetteOBOFile}(con, quiet = FALSE)
+\S4method{import}{PipetteOboFile}(con, quiet = FALSE)
 
-\S4method{import}{PipettePZFXFile}(
+\S4method{import}{PipettePzfxFile}(
   con,
   sheet = 1L,
   makeNames = syntactic::makeNames,
@@ -134,11 +134,11 @@ import(con, ...)
   quiet = FALSE
 )
 
-\S4method{import}{PipetteSAMFile}(con, quiet = FALSE)
+\S4method{import}{PipetteSamFile}(con, quiet = FALSE)
 
-\S4method{import}{PipetteVCFFile}(con, quiet = FALSE)
+\S4method{import}{PipetteVcfFile}(con, quiet = FALSE)
 
-\S4method{import}{PipetteYAMLFile}(con, metadata = FALSE, quiet = FALSE)
+\S4method{import}{PipetteYamlFile}(con, metadata = FALSE, quiet = FALSE)
 
 \S4method{import}{PipetteBcbioCountsFile}(con, metadata = FALSE, quiet = FALSE)
 
