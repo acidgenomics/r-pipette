@@ -944,7 +944,7 @@ NULL
 #'
 #' @note Updated 2023-09-20.
 #' @noRd
-`import,PipetteRDSFile` <- # nolint
+`import,PipetteRdsFile` <- # nolint
     function(con, quiet = FALSE) {
         assert(isFlag(quiet))
         file <- .resource(con)
@@ -1013,8 +1013,8 @@ NULL
         file <- .resource(con)
         ext <- switch(
             EXPR = class(con),
-            "PipetteCSVFile" = "csv",
-            "PipetteTSVFile" = "tsv",
+            "PipetteCsvFile" = "csv",
+            "PipetteTsvFile" = "tsv",
             "PipetteTableFile" = "table",
             "table"
         )
@@ -1234,7 +1234,7 @@ NULL
 #'
 #' @note Updated 2023-09-20.
 #' @noRd
-`import,PipetteMTXFile` <- # nolint
+`import,PipetteMtxFile` <- # nolint
     function(con,
              rownamesFile,
              colnamesFile,
@@ -1315,7 +1315,7 @@ NULL
 #' @noRd
 #'
 #' @note This function doesn't support optional column names.
-`import,PipettePZFXFile` <- # nolint
+`import,PipettePzfxFile` <- # nolint
     function(con,
              sheet = 1L,
              makeNames = syntactic::makeNames,
@@ -1500,7 +1500,7 @@ NULL
 #'
 #' @note Updated 2023-09-20.
 #' @noRd
-`import,PipetteJSONFile` <- # nolint
+`import,PipetteJsonFile` <- # nolint
     function(con,
              metadata = FALSE,
              quiet = FALSE) {
@@ -1537,7 +1537,7 @@ NULL
 #'
 #' @note Updated 2023-09-20.
 #' @noRd
-`import,PipetteYAMLFile` <- # nolint
+`import,PipetteYamlFile` <- # nolint
     function(con,
              metadata = FALSE,
              quiet = FALSE) {
@@ -1576,7 +1576,7 @@ NULL
 #'
 #' @note Updated 2023-09-20.
 #' @noRd
-`import,PipetteBAMFile` <- # nolint
+`import,PipetteBamFile` <- # nolint
     function(con,
              quiet = FALSE) {
         assert(isFlag(quiet))
@@ -1608,7 +1608,7 @@ NULL
 #'
 #' @note Updated 2023-09-20.
 #' @noRd
-`import,PipetteBCFFile` <- # nolint
+`import,PipetteBcfFile` <- # nolint
     function(con, quiet = FALSE) {
         assert(isFlag(quiet))
         file <- .resource(con)
@@ -1723,7 +1723,7 @@ NULL
 #'
 #' @note Updated 2023-09-20.
 #' @noRd
-`import,PipetteCRAMFile` <- # nolint
+`import,PipetteCramFile` <- # nolint
     function(con, quiet = FALSE) {
         assert(
             requireNamespaces("Rsamtools"),
@@ -1774,7 +1774,7 @@ NULL
 #' - `"DNA"`: `DNAStringSet`.
 #' - `"RNA"`: `RNAStringSet`.
 #' - `"AA"`: `AAStringSet`.
-`import,PipetteFASTAFile` <- # nolint
+`import,PipetteFastaFile` <- # nolint
     function(con,
              moleculeType = c("DNA", "RNA", "AA"),
              metadata = FALSE,
@@ -1899,7 +1899,7 @@ NULL
 #' @return Varies, depending on the `moleculeType` argument:
 #' - `"DNA"`: `DNAStringSet`.
 #' - `"RNA"`: `RNAStringSet`.
-`import,PipetteFASTQFile` <- # nolint
+`import,PipetteFastqFile` <- # nolint
     function(con,
              moleculeType = c("DNA", "RNA"),
              metadata = FALSE,
@@ -1950,7 +1950,7 @@ NULL
 #'
 #' @seealso
 #' - https://software.broadinstitute.org/software/igv/GCT
-`import,PipetteGCTFile` <- # nolint
+`import,PipetteGctFile` <- # nolint
     function(con,
              metadata = FALSE,
              quiet = FALSE,
@@ -2015,7 +2015,7 @@ NULL
 #'
 #' @seealso
 #' - `fgsea::gmtPathways()`.
-`import,PipetteGMTFile` <- # nolint
+`import,PipetteGmtFile` <- # nolint
     function(con, quiet = FALSE) {
         assert(isFlag(quiet))
         lines <- import(
@@ -2041,7 +2041,7 @@ NULL
 #'
 #' @note Updated 2023-09-20.
 #' @noRd
-`import,PipetteGMXFile` <- # nolint
+`import,PipetteGmxFile` <- # nolint
     function(con, quiet = FALSE) {
         assert(isFlag(quiet))
         lines <- import(
@@ -2061,8 +2061,8 @@ NULL
 #'
 #' @note Updated 2023-07-07.
 #' @noRd
-`import,PipetteGRPFile` <- # nolint
-    `import,PipetteGMXFile`
+`import,PipetteGrpFile` <- # nolint
+    `import,PipetteGmxFile`
 
 
 
@@ -2070,7 +2070,7 @@ NULL
 #'
 #' @note Updated 2023-09-20.
 #' @noRd
-`import,PipetteMAFFile` <- # nolint
+`import,PipetteMafFile` <- # nolint
     function(con, quiet = FALSE) {
         assert(isFlag(quiet))
         file <- .resource(con)
@@ -2099,7 +2099,7 @@ NULL
 #'
 #' @note Updated 2023-09-20.
 #' @noRd
-`import,PipetteOBOFile` <- # nolint
+`import,PipetteOboFile` <- # nolint
     function(con, quiet = FALSE) {
         assert(isFlag(quiet))
         file <- .resource(con)
@@ -2129,8 +2129,8 @@ NULL
 #'
 #' @note Updated 2023-07-12.
 #' @noRd
-`import,PipetteSAMFile` <- # nolint
-    `import,PipetteCRAMFile`
+`import,PipetteSamFile` <- # nolint
+    `import,PipetteCramFile`
 
 
 
@@ -2138,8 +2138,8 @@ NULL
 #'
 #' @note Updated 2023-07-12.
 #' @noRd
-`import,PipetteVCFFile` <- # nolint
-    `import,PipetteBCFFile`
+`import,PipetteVcfFile` <- # nolint
+    `import,PipetteBcfFile`
 
 
 
@@ -2275,8 +2275,8 @@ setMethod(
 #' @export
 setMethod(
     f = "import",
-    signature = signature(con = "PipetteRDSFile"),
-    definition = `import,PipetteRDSFile`
+    signature = signature(con = "PipetteRdsFile"),
+    definition = `import,PipetteRdsFile`
 )
 
 #' @rdname import
@@ -2315,136 +2315,136 @@ setMethod(
 #' @export
 setMethod(
     f = "import",
-    signature = signature(con = "PipetteBAMFile"),
-    definition = `import,PipetteBAMFile`
+    signature = signature(con = "PipetteBamFile"),
+    definition = `import,PipetteBamFile`
 )
 
 #' @rdname import
 #' @export
 setMethod(
     f = "import",
-    signature = signature(con = "PipetteBCFFile"),
-    definition = `import,PipetteBCFFile`
+    signature = signature(con = "PipetteBcfFile"),
+    definition = `import,PipetteBcfFile`
 )
 
 #' @rdname import
 #' @export
 setMethod(
     f = "import",
-    signature = signature(con = "PipetteCRAMFile"),
-    definition = `import,PipetteCRAMFile`
+    signature = signature(con = "PipetteCramFile"),
+    definition = `import,PipetteCramFile`
 )
 
 #' @rdname import
 #' @export
 setMethod(
     f = "import",
-    signature = signature(con = "PipetteFASTAFile"),
-    definition = `import,PipetteFASTAFile`
+    signature = signature(con = "PipetteFastaFile"),
+    definition = `import,PipetteFastaFile`
 )
 
 #' @rdname import
 #' @export
 setMethod(
     f = "import",
-    signature = signature(con = "PipetteFASTQFile"),
-    definition = `import,PipetteFASTQFile`
+    signature = signature(con = "PipetteFastqFile"),
+    definition = `import,PipetteFastqFile`
 )
 
 #' @rdname import
 #' @export
 setMethod(
     f = "import",
-    signature = signature(con = "PipetteGCTFile"),
-    definition = `import,PipetteGCTFile`
+    signature = signature(con = "PipetteGctFile"),
+    definition = `import,PipetteGctFile`
 )
 
 #' @rdname import
 #' @export
 setMethod(
     f = "import",
-    signature = signature(con = "PipetteGMTFile"),
-    definition = `import,PipetteGMTFile`
+    signature = signature(con = "PipetteGmtFile"),
+    definition = `import,PipetteGmtFile`
 )
 
 #' @rdname import
 #' @export
 setMethod(
     f = "import",
-    signature = signature(con = "PipetteGMXFile"),
-    definition = `import,PipetteGMXFile`
+    signature = signature(con = "PipetteGmxFile"),
+    definition = `import,PipetteGmxFile`
 )
 
 #' @rdname import
 #' @export
 setMethod(
     f = "import",
-    signature = signature(con = "PipetteGRPFile"),
-    definition = `import,PipetteGRPFile`
+    signature = signature(con = "PipetteGrpFile"),
+    definition = `import,PipetteGrpFile`
 )
 
 #' @rdname import
 #' @export
 setMethod(
     f = "import",
-    signature = signature(con = "PipetteJSONFile"),
-    definition = `import,PipetteJSONFile`
+    signature = signature(con = "PipetteJsonFile"),
+    definition = `import,PipetteJsonFile`
 )
 
 #' @rdname import
 #' @export
 setMethod(
     f = "import",
-    signature = signature(con = "PipetteMAFFile"),
-    definition = `import,PipetteMAFFile`
+    signature = signature(con = "PipetteMafFile"),
+    definition = `import,PipetteMafFile`
 )
 
 #' @rdname import
 #' @export
 setMethod(
     f = "import",
-    signature = signature(con = "PipetteMTXFile"),
-    definition = `import,PipetteMTXFile`
+    signature = signature(con = "PipetteMtxFile"),
+    definition = `import,PipetteMtxFile`
 )
 
 #' @rdname import
 #' @export
 setMethod(
     f = "import",
-    signature = signature(con = "PipetteOBOFile"),
-    definition = `import,PipetteOBOFile`
+    signature = signature(con = "PipetteOboFile"),
+    definition = `import,PipetteOboFile`
 )
 
 #' @rdname import
 #' @export
 setMethod(
     f = "import",
-    signature = signature(con = "PipettePZFXFile"),
-    definition = `import,PipettePZFXFile`
+    signature = signature(con = "PipettePzfxFile"),
+    definition = `import,PipettePzfxFile`
 )
 
 #' @rdname import
 #' @export
 setMethod(
     f = "import",
-    signature = signature(con = "PipetteSAMFile"),
-    definition = `import,PipetteSAMFile`
+    signature = signature(con = "PipetteSamFile"),
+    definition = `import,PipetteSamFile`
 )
 
 #' @rdname import
 #' @export
 setMethod(
     f = "import",
-    signature = signature(con = "PipetteVCFFile"),
-    definition = `import,PipetteVCFFile`
+    signature = signature(con = "PipetteVcfFile"),
+    definition = `import,PipetteVcfFile`
 )
 
 #' @rdname import
 #' @export
 setMethod(
     f = "import",
-    signature = signature(con = "PipetteYAMLFile"),
-    definition = `import,PipetteYAMLFile`
+    signature = signature(con = "PipetteYamlFile"),
+    definition = `import,PipetteYamlFile`
 )
 
 #' @rdname import

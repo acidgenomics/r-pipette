@@ -8,29 +8,29 @@
 \alias{PipetteLinesFile-class}
 \alias{PipetteRioFile-class}
 \alias{PipetteRtracklayerFile-class}
-\alias{PipetteBAMFile-class}
-\alias{PipetteBCFFile-class}
+\alias{PipetteBamFile-class}
+\alias{PipetteBcfFile-class}
 \alias{PipetteBcbioCountsFile-class}
-\alias{PipetteCRAMFile-class}
-\alias{PipetteCSVFile-class}
-\alias{PipetteFASTAFile-class}
-\alias{PipetteFASTQFile-class}
-\alias{PipetteGCTFile-class}
-\alias{PipetteGMTFile-class}
-\alias{PipetteGMXFile-class}
-\alias{PipetteGRPFile-class}
-\alias{PipetteJSONFile-class}
-\alias{PipetteMAFFile-class}
-\alias{PipetteMTXFile-class}
-\alias{PipetteOBOFile-class}
-\alias{PipettePZFXFile-class}
+\alias{PipetteCramFile-class}
+\alias{PipetteCsvFile-class}
+\alias{PipetteFastaFile-class}
+\alias{PipetteFastqFile-class}
+\alias{PipetteGctFile-class}
+\alias{PipetteGmtFile-class}
+\alias{PipetteGmxFile-class}
+\alias{PipetteGrpFile-class}
+\alias{PipetteJsonFile-class}
+\alias{PipetteMafFile-class}
+\alias{PipetteMtxFile-class}
+\alias{PipetteOboFile-class}
+\alias{PipettePzfxFile-class}
 \alias{PipetteRDataFile-class}
-\alias{PipetteSAMFile-class}
-\alias{PipetteRDSFile-class}
+\alias{PipetteSamFile-class}
+\alias{PipetteRdsFile-class}
 \alias{PipetteTableFile-class}
-\alias{PipetteTSVFile-class}
-\alias{PipetteVCFFile-class}
-\alias{PipetteYAMLFile-class}
+\alias{PipetteTsvFile-class}
+\alias{PipetteVcfFile-class}
+\alias{PipetteYamlFile-class}
 \title{File extension classes}
 \description{
 Currently intended for use with \code{import} function.
@@ -41,29 +41,29 @@ Updated 2023-09-20.
 \section{Primary classes}{
 
 \itemize{
-\item \code{PipetteBAMFile}: Binary sequence alignment map (BAM).
-\item \code{PipetteBCFFile}: Binary variant call format (BCF).
+\item \code{PipetteBamFile}: Binary sequence alignment map (BAM).
+\item \code{PipetteBcfFile}: Binary variant call format (BCF).
 \item \code{PipetteBcbioCountsFile}: bcbio-nextgen counts file.
-\item \code{PipetteCRAMFile}: Compressed reference-oriented alignment map (CRAM).
-\item \code{PipetteCSVFile}: Comma-separated values file (CSV).
-\item \code{PipetteFASTAFile}: FASTA file.
-\item \code{PipetteFASTQFile}: FASTQ file.
-\item \code{PipetteGCTFile}: Gene Cluster Text file (GCT).
-\item \code{PipetteGMTFile}: Gene matrix transposed file (GMT).
-\item \code{PipetteGMXFile}: Gene matrix file (GMX).
-\item \code{PipetteGRPFile}: Gene set file (GRP).
-\item \code{PipetteJSONFile}: JSON file.
-\item \code{PipetteMAFFile}: Mutation annotation format file (MAF).
-\item \code{PipetteMTXFile}: MatrixMarket exchange file (MTX).
-\item \code{PipetteOBOFile}: Open Biomedical Ontologies file (OBO).
-\item \code{PipettePZFXFile}: GraphPad Prism file (PZFX).
-\item \code{PipetteRDSFile}: R data file containing a single, serialized object (RDS).
+\item \code{PipetteCramFile}: Compressed reference-oriented alignment map (CRAM).
+\item \code{PipetteCsvFile}: Comma-separated values file (CSV).
+\item \code{PipetteFastaFile}: FASTA file.
+\item \code{PipetteFastqFile}: FASTQ file.
+\item \code{PipetteGctFile}: Gene Cluster Text file (GCT).
+\item \code{PipetteGmtFile}: Gene matrix transposed file (GMT).
+\item \code{PipetteGmxFile}: Gene matrix file (GMX).
+\item \code{PipetteGrpFile}: Gene set file (GRP).
+\item \code{PipetteJsonFile}: JSON file.
+\item \code{PipetteMafFile}: Mutation annotation format file (MAF).
+\item \code{PipetteMtxFile}: MatrixMarket exchange file (MTX).
+\item \code{PipetteOboFile}: Open Biomedical Ontologies file (OBO).
+\item \code{PipettePzfxFile}: GraphPad Prism file (PZFX).
+\item \code{PipetteRdsFile}: R data file containing a single, serialized object (RDS).
 \item \code{PipetteRDataFile}: R Data file containing multiple objects (RData/RDA).
-\item \code{PipetteSAMFile}: Sequence alignment map (SAM).
-\item \code{PipetteTSVFile}: Tab-separated values file (TSV).
+\item \code{PipetteSamFile}: Sequence alignment map (SAM).
+\item \code{PipetteTsvFile}: Tab-separated values file (TSV).
 \item \code{PipetteTableFile}: Base R table file (TXT).
-\item \code{PipetteVCFFile}: Variant call format (VCF).
-\item \code{PipetteYAMLFile}: YAML file.
+\item \code{PipetteVcfFile}: Variant call format (VCF).
+\item \code{PipetteYamlFile}: YAML file.
 }
 }
 

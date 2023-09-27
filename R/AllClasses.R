@@ -7,29 +7,29 @@
 #'
 #' @section Primary classes:
 #'
-#' - `PipetteBAMFile`: Binary sequence alignment map (BAM).
-#' - `PipetteBCFFile`: Binary variant call format (BCF).
+#' - `PipetteBamFile`: Binary sequence alignment map (BAM).
+#' - `PipetteBcfFile`: Binary variant call format (BCF).
 #' - `PipetteBcbioCountsFile`: bcbio-nextgen counts file.
-#' - `PipetteCRAMFile`: Compressed reference-oriented alignment map (CRAM).
-#' - `PipetteCSVFile`: Comma-separated values file (CSV).
-#' - `PipetteFASTAFile`: FASTA file.
-#' - `PipetteFASTQFile`: FASTQ file.
-#' - `PipetteGCTFile`: Gene Cluster Text file (GCT).
-#' - `PipetteGMTFile`: Gene matrix transposed file (GMT).
-#' - `PipetteGMXFile`: Gene matrix file (GMX).
-#' - `PipetteGRPFile`: Gene set file (GRP).
-#' - `PipetteJSONFile`: JSON file.
-#' - `PipetteMAFFile`: Mutation annotation format file (MAF).
-#' - `PipetteMTXFile`: MatrixMarket exchange file (MTX).
-#' - `PipetteOBOFile`: Open Biomedical Ontologies file (OBO).
-#' - `PipettePZFXFile`: GraphPad Prism file (PZFX).
-#' - `PipetteRDSFile`: R data file containing a single, serialized object (RDS).
+#' - `PipetteCramFile`: Compressed reference-oriented alignment map (CRAM).
+#' - `PipetteCsvFile`: Comma-separated values file (CSV).
+#' - `PipetteFastaFile`: FASTA file.
+#' - `PipetteFastqFile`: FASTQ file.
+#' - `PipetteGctFile`: Gene Cluster Text file (GCT).
+#' - `PipetteGmtFile`: Gene matrix transposed file (GMT).
+#' - `PipetteGmxFile`: Gene matrix file (GMX).
+#' - `PipetteGrpFile`: Gene set file (GRP).
+#' - `PipetteJsonFile`: JSON file.
+#' - `PipetteMafFile`: Mutation annotation format file (MAF).
+#' - `PipetteMtxFile`: MatrixMarket exchange file (MTX).
+#' - `PipetteOboFile`: Open Biomedical Ontologies file (OBO).
+#' - `PipettePzfxFile`: GraphPad Prism file (PZFX).
+#' - `PipetteRdsFile`: R data file containing a single, serialized object (RDS).
 #' - `PipetteRDataFile`: R Data file containing multiple objects (RData/RDA).
-#' - `PipetteSAMFile`: Sequence alignment map (SAM).
-#' - `PipetteTSVFile`: Tab-separated values file (TSV).
+#' - `PipetteSamFile`: Sequence alignment map (SAM).
+#' - `PipetteTsvFile`: Tab-separated values file (TSV).
 #' - `PipetteTableFile`: Base R table file (TXT).
-#' - `PipetteVCFFile`: Variant call format (VCF).
-#' - `PipetteYAMLFile`: YAML file.
+#' - `PipetteVcfFile`: Variant call format (VCF).
+#' - `PipetteYamlFile`: YAML file.
 #'
 #' @section `PipetteDelimFile-class`:
 #'
@@ -162,14 +162,14 @@ setClass(
 #' @rdname PipetteFile-class
 #' @export
 setClass(
-    Class = "PipetteBAMFile",
+    Class = "PipetteBamFile",
     contains = "PipetteFile"
 )
 
 #' @rdname PipetteFile-class
 #' @export
 setClass(
-    Class = "PipetteBCFFile",
+    Class = "PipetteBcfFile",
     contains = "PipetteFile"
 )
 
@@ -183,91 +183,91 @@ setClass(
 #' @rdname PipetteFile-class
 #' @export
 setClass(
-    Class = "PipetteCRAMFile",
+    Class = "PipetteCramFile",
     contains = "PipetteFile"
 )
 
 #' @rdname PipetteFile-class
 #' @export
 setClass(
-    Class = "PipetteCSVFile",
+    Class = "PipetteCsvFile",
     contains = "PipetteDelimFile"
 )
 
 #' @rdname PipetteFile-class
 #' @export
 setClass(
-    Class = "PipetteFASTAFile",
+    Class = "PipetteFastaFile",
     contains = "PipetteFile"
 )
 
 #' @rdname PipetteFile-class
 #' @export
 setClass(
-    Class = "PipetteFASTQFile",
+    Class = "PipetteFastqFile",
     contains = "PipetteFile"
 )
 
 #' @rdname PipetteFile-class
 #' @export
 setClass(
-    Class = "PipetteGCTFile",
+    Class = "PipetteGctFile",
     contains = "PipetteDelimFile"
 )
 
 #' @rdname PipetteFile-class
 #' @export
 setClass(
-    Class = "PipetteGMTFile",
+    Class = "PipetteGmtFile",
     contains = "PipetteFile"
 )
 
 #' @rdname PipetteFile-class
 #' @export
 setClass(
-    Class = "PipetteGMXFile",
+    Class = "PipetteGmxFile",
     contains = "PipetteFile"
 )
 
 #' @rdname PipetteFile-class
 #' @export
 setClass(
-    Class = "PipetteGRPFile",
+    Class = "PipetteGrpFile",
     contains = "PipetteFile"
 )
 
 #' @rdname PipetteFile-class
 #' @export
 setClass(
-    Class = "PipetteJSONFile",
+    Class = "PipetteJsonFile",
     contains = "PipetteFile"
 )
 
 #' @rdname PipetteFile-class
 #' @export
 setClass(
-    Class = "PipetteMAFFile",
+    Class = "PipetteMafFile",
     contains = "PipetteFile"
 )
 
 #' @rdname PipetteFile-class
 #' @export
 setClass(
-    Class = "PipetteMTXFile",
+    Class = "PipetteMtxFile",
     contains = "PipetteFile"
 )
 
 #' @rdname PipetteFile-class
 #' @export
 setClass(
-    Class = "PipetteOBOFile",
+    Class = "PipetteOboFile",
     contains = "PipetteFile"
 )
 
 #' @rdname PipetteFile-class
 #' @export
 setClass(
-    Class = "PipettePZFXFile",
+    Class = "PipettePzfxFile",
     contains = "PipetteFile"
 )
 
@@ -281,14 +281,14 @@ setClass(
 #' @rdname PipetteFile-class
 #' @export
 setClass(
-    Class = "PipetteSAMFile",
+    Class = "PipetteSamFile",
     contains = "PipetteFile"
 )
 
 #' @rdname PipetteFile-class
 #' @export
 setClass(
-    Class = "PipetteRDSFile",
+    Class = "PipetteRdsFile",
     contains = "PipetteFile"
 )
 
@@ -302,20 +302,20 @@ setClass(
 #' @rdname PipetteFile-class
 #' @export
 setClass(
-    Class = "PipetteTSVFile",
+    Class = "PipetteTsvFile",
     contains = "PipetteDelimFile"
 )
 
 #' @rdname PipetteFile-class
 #' @export
 setClass(
-    Class = "PipetteVCFFile",
+    Class = "PipetteVcfFile",
     contains = "PipetteFile"
 )
 
 #' @rdname PipetteFile-class
 #' @export
 setClass(
-    Class = "PipetteYAMLFile",
+    Class = "PipetteYamlFile",
     contains = "PipetteFile"
 )
