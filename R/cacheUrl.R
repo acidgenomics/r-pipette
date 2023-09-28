@@ -92,7 +92,7 @@ cacheUrl <-
 
 #' Prepare BiocFileCache for package
 #'
-#' @note Updated 2023-09-14.
+#' @note Updated 2023-09-28.
 #' @noRd
 #'
 #' @seealso
@@ -105,7 +105,11 @@ cacheUrl <-
         isString(pkg),
         isFlag(ask)
     )
-    cache <- tools::R_user_dir(package = pkg, which = "cache")
+    cache <- file.path(
+        tools::R_user_dir(package = pkg, which = "cache"),
+        "BiocFileCache"
+    )
+    cache <- initDir(cache)
     bfc <- BiocFileCache::BiocFileCache(cache = cache, ask = ask)
     bfc
 }
