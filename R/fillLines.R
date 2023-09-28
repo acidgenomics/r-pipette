@@ -45,7 +45,11 @@
 #' close(con)
 fillLines <- function(object, format = c("csv", "tsv")) {
     format <- match.arg(format)
-    sep <- switch(EXPR = format, "csv" = ",", "tsv" = "\t")
+    sep <- switch(
+        EXPR = format,
+        "csv" = ",",
+        "tsv" = "\t"
+    )
     assert(
         is.character(object),
         isMatchingFixed(x = object[[1L]], pattern = sep)
