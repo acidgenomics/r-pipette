@@ -22,7 +22,7 @@ for (engine in engines) {
     test_that(
         desc = paste("R script", engine, sep = " : "),
         code = {
-            con <- file.path("cache", "example.R")
+            con <- file.path(cacheDir, "example.R")
             object <- import(
                 con = con,
                 engine = engine
@@ -304,7 +304,7 @@ for (engine in engines) {
         test_that(
             desc = paste(ext, engine, sep = " : "),
             code = {
-                con <- file.path("cache", paste0("example.", ext))
+                con <- file.path(cacheDir, paste0("example.", ext))
                 object <- import(
                     con = con,
                     engine = engine,
@@ -332,13 +332,13 @@ for (engine in engines) {
 }
 
 test_that("Deprecated 'file' argument", {
-    object <- import(file.path("cache", "example.csv"))
+    object <- import(file.path(cacheDir, "example.csv"))
     expect_s3_class(object, "data.frame")
 })
 
 test_that("GCT", {
     object <- import(
-        con = file.path("cache", "example.gct"),
+        con = file.path(cacheDir, "example.gct"),
         metadata = TRUE,
         return = "matrix"
     )
@@ -360,7 +360,7 @@ test_that("GCT", {
         expected = "readr::read_delim"
     )
     object <- import(
-        con = file.path("cache", "example.gct"),
+        con = file.path(cacheDir, "example.gct"),
         metadata = TRUE,
         return = "data.frame"
     )
@@ -385,7 +385,7 @@ test_that("GCT", {
 
 test_that("GFF3", {
     object <- import(
-        con = file.path("cache", "example.gff3"),
+        con = file.path(cacheDir, "example.gff3"),
         metadata = TRUE
     )
     expect_s4_class(object, "GRanges")
@@ -433,7 +433,7 @@ test_that("GFF3", {
 
 test_that("GTF", {
     object <- import(
-        con = file.path("cache", "example.gtf"),
+        con = file.path(cacheDir, "example.gtf"),
         metadata = TRUE
     )
     expect_s4_class(object, "GRanges")
@@ -476,7 +476,7 @@ test_that("GTF", {
 
 test_that("MTX", {
     object <- import(
-        con = file.path("cache", "single_cell_counts.mtx.gz"),
+        con = file.path(cacheDir, "single_cell_counts.mtx.gz"),
         metadata = TRUE
     )
     expect_s4_class(object, "sparseMatrix")
@@ -495,14 +495,14 @@ test_that("MTX", {
 })
 
 test_that("R data", {
-    object <- import(file.path("cache", "example.rda"))
+    object <- import(file.path(cacheDir, "example.rda"))
     expect_s4_class(object, "DFrame")
     expect_null(metadata(object)[["import"]])
     expect_null(attr(object, which = "import"))
 })
 
 test_that("R data serialized", {
-    object <- import(file.path("cache", "example.rds"))
+    object <- import(file.path(cacheDir, "example.rds"))
     expect_s4_class(object, "DFrame")
     expect_null(metadata(object)[["import"]])
     expect_null(attr(object, which = "import"))
@@ -510,7 +510,7 @@ test_that("R data serialized", {
 
 test_that("Error on RDA containing multiple objects.", {
     expect_error(
-        object = import(file.path("cache", "multi.rda")),
+        object = import(file.path(cacheDir, "multi.rda")),
         regexp = "single"
     )
 })
@@ -526,7 +526,7 @@ test_that("MSigDB hallmark", {
             "entrez" = c("3726", "2920", "467", "4792", "7128")
         ),
         f = function(file, ids) {
-            file <- file.path("cache", file)
+            file <- file.path(cacheDir, file)
             object <- import(file)
             expect_length(object, 50L)
             expect_identical(
@@ -545,7 +545,7 @@ test_that("T_CELL_ACTIVATION", {
         gmx = "geneset.gmx",
         grp = "geneset.grp"
     )) {
-        file <- file.path("cache", file)
+        file <- file.path(cacheDir, file)
         object <- import(file)
         expect_named(object, "T_CELL_ACTIVATION")
         expect_length(object[[1L]], 44L)
@@ -558,7 +558,7 @@ test_that("T_CELL_ACTIVATION", {
 
 test_that("JSON/YAML", {
     for (ext in c("json", "yml")) {
-        file <- file.path("cache", paste0("example.", ext))
+        file <- file.path(cacheDir, paste0("example.", ext))
         object <- import(file)
         expect_type(object, "list")
     }
@@ -578,7 +578,7 @@ test_that("'rio::import()', e.g. Stata DTA file", {
 
 test_that("OBO", {
     skip_if_not_installed(pkg = "ontologyIndex")
-    file <- file.path("cache", "example.obo")
+    file <- file.path(cacheDir, "example.obo")
     x <- import(file)
     expect_s3_class(x, "ontology_index")
     expect_length(x, 25L)
@@ -602,7 +602,7 @@ test_that("PZFX", {
 test_that("XLSX", {
     skip_if_not_installed(pkg = "readxl")
     skip_on_os("windows")
-    file <- file.path("cache", "example.xlsx")
+    file <- file.path(cacheDir, "example.xlsx")
     expect_identical(
         object = import(
             con = file,
@@ -635,7 +635,7 @@ test_that("XLSX", {
 })
 
 test_that("XLS", {
-    file <- file.path("cache", "example.xls")
+    file <- file.path(cacheDir, "example.xls")
     skip_on_os("windows")
     expect_identical(
         object = import(
@@ -670,7 +670,7 @@ test_that("XLS", {
 
 test_that("bcbio counts", {
     object <- import(
-        con = file.path("cache", "example.counts"),
+        con = file.path(cacheDir, "example.counts"),
         metadata = TRUE
     )
     expect_type(object, "integer")
@@ -700,7 +700,7 @@ test_that("bcbio counts", {
 })
 
 test_that("FASTA", {
-    file <- file.path("cache", "example.fa.gz")
+    file <- file.path(cacheDir, "example.fa.gz")
     object <- import(
         con = file,
         moleculeType = "DNA",
@@ -720,7 +720,7 @@ test_that("FASTA", {
 })
 
 test_that("FASTQ", {
-    file <- file.path("cache", "example.fq.gz")
+    file <- file.path(cacheDir, "example.fq.gz")
     object <- import(
         con = file,
         moleculeType = "DNA",
@@ -748,7 +748,7 @@ test_that("Google Sheets", {
 })
 
 test_that("MAF", {
-    file <- file.path("cache", "example.maf")
+    file <- file.path(cacheDir, "example.maf")
     object <- import(file)
     expect_s4_class(object, "MAF")
     expect_identical(
@@ -758,7 +758,7 @@ test_that("MAF", {
 })
 
 test_that("BAM/SAM (and CRAM)", {
-    files <- file.path("cache", c("example.bam", "example.sam"))
+    files <- file.path(cacheDir, c("example.bam", "example.sam"))
     for (file in files) {
         object <- import(file)
         expect_type(object, "list")
@@ -784,7 +784,7 @@ test_that("BAM/SAM (and CRAM)", {
 })
 
 test_that("BCF/VCF", {
-    files <- file.path("cache", c("example.bcf.gz", "example.vcf.gz"))
+    files <- file.path(cacheDir, c("example.bcf.gz", "example.vcf.gz"))
     for (file in files) {
         object <- import(file)
         expect_type(object, "list")

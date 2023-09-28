@@ -1,4 +1,4 @@
-dir <- "cache"
+dir <- cacheDir
 
 test_that("R data", {
     envir <- new.env()
@@ -36,7 +36,7 @@ test_that("Standard evaluation", {
 })
 
 test_that("List mode", {
-    object <- loadData(list = "serialized", dir = "cache")
+    object <- loadData(list = "serialized", dir = cacheDir)
     expect_identical(basename(object), "serialized.rds")
 })
 
