@@ -63,11 +63,8 @@ naStrings <- c(
 #'
 #' @export
 #' @keywords internal
-#' @note Updated 2021-03-16.
+#' @note Updated 2023-09-28.
 #'
 #' @examples
 #' pipetteTestsUrl
-pipetteTestsUrl <- paste0(
-    "https://r.acidgenomics.com/testdata/pipette/",
-    "v", .pkgVersion$major, ".", .pkgVersion$minor # nolint
-)
+pipetteTestsUrl <- "https://r.acidgenomics.com/testdata/pipette"
