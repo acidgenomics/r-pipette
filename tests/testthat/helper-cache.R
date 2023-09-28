@@ -6,7 +6,7 @@ cacheDir <- file.path(
     tools::R_user_dir(package = .pkgName, which = "cache"),
     "testthat"
 )
-dir.create(cacheDir, showWarnings = FALSE)
+dir.create(cacheDir, showWarnings = FALSE, recursive = TRUE)
 files <- c(
     "example.counts",
     "example.csv",
