@@ -2,10 +2,7 @@ if (isFALSE(goalie::hasInternet())) {
     warning("No Internet connection detected.")
     return(invisible(NULL))
 }
-cacheDir <- file.path(
-    tools::R_user_dir(package = .pkgName, which = "cache"),
-    "testthat"
-)
+cacheDir <- file.path(AcidBase::pkgCacheDir(.pkgName), "testthat")
 dir.create(cacheDir, showWarnings = FALSE, recursive = TRUE)
 files <- c(
     "example.counts",
