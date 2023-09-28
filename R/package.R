@@ -36,7 +36,7 @@ NULL
 
 #' @importFrom AcidBase basenameSansExt compress decompress dots download
 #' fileExt initDir methodFunction pasteUrl realpath simpleClass standardizeCall
-#' tempdir2
+#' strRemoveEmpty tempdir2
 #' @importFrom AcidCLI abort alert alertInfo alertSuccess alertWarning
 #' toInlineString
 #' @importFrom Matrix readMM writeMM
