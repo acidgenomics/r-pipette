@@ -1,7 +1,7 @@
 #' Download and cache a file
 #'
 #' @export
-#' @note Updated 2023-09-26.
+#' @note Updated 2023-09-28.
 #'
 #' @details
 #' Caching requires BiocFileCache and tools packages to be installed. If
@@ -45,38 +45,33 @@ cacheUrl <-
         )
         ## Download as a temporary file if BiocFacheCache is not installed.
         if (!isInstalled("BiocFileCache")) {
-            destfile <- file.path(tempdir2(), basename(url))
-            download.file(url = url, destfile = destfile, quiet = !verbose)
+            cacheDir <- file.path(pkgCacheDir(pkg), randomString())
+            cacheDir <- initDir(cacheDir)
+            destfile <- file.path(cacheDir, basename(url))
+            download(url = url, destfile = destfile, quiet = !verbose)
             assert(isAFile(destfile))
             return(destfile)
         }
-        bfc <- .biocPackageCache(pkg = pkg, ask = ask)
+        bfc <- .biocPkgCache(pkg = pkg, ask = ask)
         query <- BiocFileCache::bfcquery(
-            x = bfc,
-            query = url,
-            field = "fpath",
-            exact = TRUE
+            x = bfc, query = url, field = "fpath", exact = TRUE
         )
         rid <- query[["rid"]]
         if (!hasLength(rid)) {
             if (isTRUE(verbose)) {
                 alert(sprintf(
                     "Caching URL at {.url %s} into {.path %s}.",
-                    url,
-                    BiocFileCache::bfccache(bfc)
+                    url, BiocFileCache::bfccache(bfc)
                 ))
             }
             add <- BiocFileCache::bfcadd(
-                x = bfc,
-                rname = basename(url),
-                fpath = url,
-                download = TRUE
+                x = bfc, rname = basename(url), fpath = url, download = TRUE
             )
             rid <- names(add)[[1L]]
             assert(isString(rid))
         }
         if (isTRUE(update)) {
-            ## Note that some servers will return NA here, which isn't helpful.
+            ## Some servers will return NA here, which isn't helpful.
             up <- BiocFileCache::bfcneedsupdate(x = bfc, rids = rid)
             if (isTRUE(up)) {
                 BiocFileCache::bfcdownload(x = bfc, rid = rid, ask = ask)
@@ -96,20 +91,14 @@ cacheUrl <-
 #' @noRd
 #'
 #' @seealso
-#' - `Sys.getenv("R_USER_CACHE_DIR")`.
-#' - `Sys.getenv("XDG_CACHE_HOME")`.
-#' - `rappdirs::user_cache_dir()`.
-.biocPackageCache <- function(pkg, ask) {
+#' - `AcidBase::cacheDir()`.
+.biocPkgCache <- function(pkg, ask) {
     assert(
         requireNamespaces(c("BiocFileCache", "tools")),
         isString(pkg),
         isFlag(ask)
     )
-    cache <- file.path(
-        tools::R_user_dir(package = pkg, which = "cache"),
-        "BiocFileCache"
-    )
-    cache <- initDir(cache)
+    cache <- initDir(file.path(pkgCacheDir(pkg), "BiocFileCache"))
     bfc <- BiocFileCache::BiocFileCache(cache = cache, ask = ask)
     bfc
 }
