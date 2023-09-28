@@ -1,4 +1,4 @@
-dir <- "cache"
+dir <- cacheDir
 
 test_that("RDS, overwrite mode", {
     envir <- new.env()
