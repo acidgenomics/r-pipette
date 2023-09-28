@@ -1362,7 +1362,7 @@ NULL
 
 #' Import source code lines
 #'
-#' @note Updated 2023-09-20.
+#' @note Updated 2023-09-28.
 #' @noRd
 `import,PipetteLinesFile` <- # nolint
     function(con,
@@ -1466,8 +1466,7 @@ NULL
             )
         }
         if (isTRUE(removeBlank)) {
-            assert(requireNamespaces("stringi"))
-            object <- stringi::stri_remove_empty(object)
+            object <- strRemoveEmpty(object, naOk = TRUE, spacesOk = TRUE)
         }
         if (isString(comment)) {
             keep <- !grepl(pattern = paste0("^", comment), x = object)
