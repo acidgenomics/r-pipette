@@ -1,6 +1,6 @@
 #' @name import
 #' @inherit AcidGenerics::import
-#' @note Updated 2023-09-20.
+#' @note Updated 2023-09-28.
 #'
 #' @details
 #' `import()` supports automatic loading of common file types, by wrapping
@@ -325,7 +325,7 @@ NULL
 
 #' Map file format extension to corresponding S4 file class
 #'
-#' @note Updated 2022-07-07.
+#' @note Updated 2023-09-28.
 #' @noRd
 .formatToFileClass <-
     function(format) {
@@ -338,10 +338,10 @@ NULL
                 ignore.case = FALSE
             ),
             "arff" = "Rio",
-            "bam" = "BAM",
+            "bam" = "Bam",
             "bash" = "Lines",
             "bcbio-counts" = "BcbioCounts",
-            "bcf" = "BCF",
+            "bcf" = "Bcf",
             "bed" = "Rtracklayer",
             "bed15" = "Rtracklayer",
             "bedgraph" = "Rtracklayer",
@@ -350,51 +350,51 @@ NULL
             "broadpeak" = "Rtracklayer",
             "bw" = "Rtracklayer",
             "counts" = "BcbioCounts",
-            "cram" = "CRAM",
-            "csv" = "CSV",
+            "cram" = "Cram",
+            "csv" = "Csv",
             "dbf" = "Rio",
             "dif" = "Rio",
             "dta" = "Rio",
             "excel" = "Excel",
-            "fa" = "FASTA",
-            "fasta" = "FASTA",
-            "fastq" = "FASTQ",
-            "fq" = "FASTQ",
+            "fa" = "Fasta",
+            "fasta" = "Fasta",
+            "fastq" = "Fastq",
+            "fq" = "Fastq",
             "fwf" = "Rio",
-            "gct" = "GCT",
+            "gct" = "Gct",
             "gff" = "Rtracklayer",
             "gff1" = "Rtracklayer",
             "gff2" = "Rtracklayer",
             "gff3" = "Rtracklayer",
-            "gmt" = "GMT",
-            "gmx" = "GMX",
-            "grp" = "GRP",
+            "gmt" = "Gmt",
+            "gmx" = "Gmx",
+            "grp" = "Grp",
             "gsheet" = "Rio",
             "gtf" = "Rtracklayer",
-            "json" = "JSON",
+            "json" = "Json",
             "lines" = "Lines",
             "log" = "Lines",
-            "maf" = "MAF",
+            "maf" = "Maf",
             "mat" = "Rio",
             "md" = "Lines",
             "mtp" = "Rio",
-            "mtx" = "MTX",
+            "mtx" = "Mtx",
             "narrowpeak" = "Rtracklayer",
-            "obo" = "OBO",
+            "obo" = "Obo",
             "ods" = "Rio",
             "por" = "Rio",
             "psv" = "Rio",
             "py" = "Lines",
-            "pzfx" = "PZFX",
+            "pzfx" = "Pzfx",
             "r" = "Lines",
             "rda" = "RData",
             "rdata" = "RData",
-            "rds" = "RDS",
+            "rds" = "Rds",
             "rec" = "Rio",
             "rio" = "Rio",
             "rmd" = "Lines",
             "rtracklayer" = "Rtracklayer",
-            "sam" = "SAM",
+            "sam" = "Sam",
             "sas7bdat" = "Rio",
             "sav" = "Rio",
             "sh" = "Lines",
@@ -412,15 +412,15 @@ NULL
                     "lines", "table"
                 ))
             },
-            "tsv" = "TSV",
-            "vcf" = "VCF",
+            "tsv" = "Tsv",
+            "vcf" = "Vcf",
             "wig" = "Rtracklayer",
             "xls" = "Excel",
             "xlsb" = "Excel",
             "xlsx" = "Excel",
             "xpt" = "Rio",
-            "yaml" = "YAML",
-            "yml" = "YAML",
+            "yaml" = "Yaml",
+            "yml" = "Yaml",
             "zsh" = "Lines",
             abort(sprintf(
                 "{.pkg %s} does not support {.var %s} extension.",
