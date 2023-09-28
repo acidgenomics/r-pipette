@@ -1,7 +1,7 @@
 #' Get remote URL directory listing
 #'
 #' @export
-#' @note Updated 2023-09-19.
+#' @note Updated 2023-09-28.
 #'
 #' @details
 #' FTP and HTTP(S) servers are supported.
@@ -53,11 +53,7 @@ getUrlDirList <-
         destfile <- tempfile()
         status <- try(
             expr = {
-                download.file(
-                    url = url,
-                    destfile = destfile,
-                    quiet = TRUE
-                )
+                download(url = url, destfile = destfile, quiet = TRUE)
             },
             silent = TRUE
         )
@@ -110,7 +106,7 @@ getUrlDirList <-
 #' @noRd
 #'
 #' @param x `character`.
-#' Source code lines from `download.file`.
+#' Source code lines.
 #'
 #' @return `character`.
 #' File and directory basenames.
@@ -224,7 +220,7 @@ getUrlDirList <-
 #' @noRd
 #'
 #' @param x `character`.
-#' Source code lines from `download.file`.
+#' Source code lines.
 #'
 #' @param type `character(1)`.
 #' Type of files to return.
