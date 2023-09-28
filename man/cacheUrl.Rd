@@ -36,7 +36,7 @@ BiocFileCache is not installed, URL will be downloaded as a temporary file
 instead.
 }
 \note{
-Updated 2023-09-26.
+Updated 2023-09-28.
 }
 \examples{
 url <- AcidBase::pasteUrl(pipetteTestsUrl, "biocfilecache-test.txt")

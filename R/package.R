@@ -35,8 +35,8 @@ NULL
 ## Standard functions ==========================================================
 
 #' @importFrom AcidBase basenameSansExt compress decompress dots download
-#' fileExt initDir methodFunction pasteUrl realpath simpleClass standardizeCall
-#' strRemoveEmpty tempdir2
+#' fileExt initDir methodFunction pasteUrl pkgCacheDir randomString realpath
+#' simpleClass standardizeCall strRemoveEmpty tempdir2
 #' @importFrom AcidCLI abort alert alertInfo alertSuccess alertWarning
 #' toInlineString
 #' @importFrom Matrix readMM writeMM
@@ -52,6 +52,6 @@ NULL
 #' @importFrom jsonlite read_json
 #' @importFrom methods as is hasMethod new setGeneric signature slot slot<-
 #' validObject
-#' @importFrom utils download.file packageName packageVersion
+#' @importFrom utils packageName packageVersion
 #' @importFrom yaml yaml.load_file
 NULL
