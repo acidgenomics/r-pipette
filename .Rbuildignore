@@ -9,6 +9,5 @@
 ^data-raw$
 ^doc$
 ^docs$
-^longtests$
 ^pkgdown$
 ^todo\.org$
