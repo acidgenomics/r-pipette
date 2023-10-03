@@ -37,7 +37,7 @@ Imports:
     methods,
     utils
 Suggests:
-    AcidDevTools,
+    AcidDevTools (>= 0.7.0),
     AcidTest (>= 0.7.2),
     BiocFileCache (>= 2.8.0),
     Biostrings (>= 2.68.0),
