@@ -1,5 +1,27 @@
 # Release notes
 
+## pipette 0.14.0 (2023-10-03)
+
+New functions:
+
+- `fillLines`: Utility function for fixing malformed CSV and TSV files.
+- `unfactorize`: New generic function that intelligently converts a factor
+  back to its original atomic data type.
+
+Major changes:
+
+- The `import` and `export` generics are now defined in AcidGenerics rather
+  than extending from BiocIO. This helps simplify the methods, removing options
+  that we never use.
+- Now enforcing strict camel case for all function names.
+- The pipette file classes are now named in strict upper camel case.
+- Renamed `cacheURL` to `cacheUrl`.
+- Renamed `getJSON` to `getJson`.
+- Renamed `getURLDirList` to `getUrlDirList`.
+- Renamed `pipetteTestsURL` to `pipetteTestsUrl`.
+- Renamed `removeNA` to `removeNa`.
+- Renamed `sanitizeNA` to `sanitizeNa`.
+
 ## pipette 0.13.0 (2023-09-19)
 
 Major changes:
@@ -1277,5 +1299,6 @@ Initial release. Migrated input-output (IO) functions from [basejump][].
 [appveyor ci]: https://www.appveyor.com/
 [basejump]: https://r.acidgenomics.com/packages/acidbase/
 [testthat]: https://testthat.r-lib.org/
+[travis ci]: https://www.travis-ci.com/
 [travis ci]: https://www.travis-ci.com/
 [travis ci]: https://www.travis-ci.com/
