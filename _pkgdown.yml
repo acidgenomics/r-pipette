@@ -24,10 +24,9 @@ reference:
       - starts_with("save")
   - title: File transfers
     contents:
-      - cacheURL
+      - starts_with("cache")
       - checksums
-      - getJSON
-      - getURLDirList
+      - starts_with("get")
       - transmit
   - title: Coercion
     contents:
@@ -41,11 +40,13 @@ reference:
       - droplevels2
       - encode
       - factorize
+      - fillLines
       - matchRownameColumn
       - metadata2
       - naStrings
-      - removeNA
+      - starts_with("remove")
       - starts_with("sanitize")
+      - unfactorize
   - title: S4 classes
     contents:
       - ends_with("-class")
