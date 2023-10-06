@@ -21,7 +21,7 @@ NULL
 
 
 
-## Updated 2023-04-26.
+## Updated 2023-10-06.
 `atomize,DFrame` <- ## nolint
     function(object) {
         if (!hasLength(object)) {
@@ -29,7 +29,7 @@ NULL
         }
         rn <- rownames(object)
         object <- decode(object)
-        object <- as.data.frame(object)
+        object <- as.data.frame(object, optional = TRUE)
         object <- atomize(object)
         object <- as(object, "DFrame")
         rownames(object) <- rn
