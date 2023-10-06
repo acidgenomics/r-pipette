@@ -1,6 +1,6 @@
 #' @name as.DataFrame
 #' @inherit AcidGenerics::as.DataFrame
-#' @note Updated 2023-09-12.
+#' @note Updated 2023-10-06.
 #'
 #' @param ... Additional arguments.
 #'
@@ -103,10 +103,15 @@ NULL
 
 
 
-## Updated 2022-02-08.
+## Updated 2023-10-06.
 `as.DataFrame,matrix` <- # nolint
     function(x) {
-        to <- as.data.frame(x, stringsAsFactors = FALSE)
+        to <- as.data.frame(
+            x = x,
+            optional = TRUE,
+            make.names = FALSE,
+            stringsAsFactors = FALSE
+        )
         to <- as(to, "DFrame")
         ## Move row names automatically, if defined.
         if (!hasRownames(to)) {
