@@ -1,6 +1,8 @@
 #+TITLE: pipette
 #+STARTUP: content
 * Development
+** TODO Export class support ideas.
+    SplitDFrameList, DFrameList, List, list.
 ** TODO Rework the title. CRAN warning:
     Pipette Biological Data in and Out of R
 ** TODO Need to improve export of matrix with row names defined.
