@@ -319,7 +319,7 @@ NULL
 
 #' Export `data.frame` method
 #'
-#' @note Updated 2023-09-20.
+#' @note Updated 2023-10-06.
 #' @noRd
 #'
 #' @details
@@ -342,7 +342,7 @@ NULL
         if (is(object, "GRangesList")) {
             dfMode <- "GRangesList"
         }
-        object <- as.data.frame(object)
+        object <- as.data.frame(object, optional = TRUE)
         switch(
             EXPR = dfMode,
             "GRangesList" = {
