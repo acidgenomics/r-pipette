@@ -979,7 +979,7 @@ NULL
 
 #' Import a delimited file (e.g. `.csv`, `.tsv`).
 #'
-#' @note Updated 2023-09-20.
+#' @note Updated 2023-10-06.
 #' @noRd
 `import,PipetteDelimFile` <- # nolint
     function(con,
@@ -1131,6 +1131,7 @@ NULL
         if (!identical(class(object), "data.frame")) {
             object <- as.data.frame(
                 x = object,
+                optional = TRUE,
                 make.names = FALSE,
                 stringsAsFactors = FALSE
             )
@@ -1210,6 +1211,7 @@ NULL
         options(warn = warn) # nolint
         object <- as.data.frame(
             x = object,
+            optional = TRUE,
             make.names = FALSE,
             stringsAsFactors = FALSE
         )
