@@ -1,7 +1,7 @@
 #' Coerce object to data.frame
 #'
 #' @name as.data.frame
-#' @note Updated 2022-02-08.
+#' @note Updated 2023-10-06.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param row.names,optional
@@ -71,43 +71,47 @@ NULL
                 toInlineString(invalid, n = 10L)
             ))
         }
-        ## Don't use `as.data.frame()` here. It can unexpectedly sanitize row
-        ## names (e.g. gene symbols), whereas the `as()` method does not.
-        as(x, "data.frame")
+        as.data.frame(x, optional = TRUE)
     }
 
-## Updated 2023-04-26.
+
+
+## Updated 2023-10-06.
 `as.data.frame,IRanges` <- # nolint
     function(x,
              row.names = NULL, # nolint
              optional = FALSE,
              ...) {
-        if (missing(row.names)) {
-            row.names <- names(x) # nolint
-        }
-        if (!is.null(names(x))) {
-            names(x) <- NULL
-        }
-        args <- list(
+        dfArgs <- list(
             "start" = start(x),
             "end" = end(x),
             "width" = width(x),
             "row.names" = row.names,
-            "check.rows" = TRUE,
-            "check.names" = FALSE,
+            "check.rows" = !optional,
+            "check.names" = !optional,
             "stringsAsFactors" = FALSE
         )
         mcols <- mcols(x, use.names = FALSE)
         if (!is.null(mcols)) {
-            args[["mcols"]] <- as.data.frame(mcols)
+            dfArgs[["mcols"]] <- as.data.frame(mcols, optional = optional)
         }
-        do.call(what = data.frame, args = args)
+        do.call(what = data.frame, args = dfArgs)
     }
 
-## Updated 2019-07-20.
+
+
+## Updated 2023-10-06.
 `as.data.frame,Matrix` <- # nolint
-    function(x, ...) {
-        as.data.frame(as.matrix(x), ...)
+    function(x,
+             row.names = NULL, # nolint
+             optional = FALSE,
+             ...) {
+        as.data.frame(
+            x = as.matrix(x),
+            row.names = row.names,
+            optional = optional,
+            ...
+        )
     }
 
 
@@ -116,7 +120,7 @@ NULL
 #' @export
 setMethod(
     f = "as.data.frame",
-    signature = signature("IRanges"),
+    signature = signature(x = "IRanges"),
     definition = `as.data.frame,IRanges`
 )
 
@@ -124,6 +128,6 @@ setMethod(
 #' @export
 setMethod(
     f = "as.data.frame",
-    signature = signature("Matrix"),
+    signature = signature(x = "Matrix"),
     definition = `as.data.frame,Matrix`
 )
