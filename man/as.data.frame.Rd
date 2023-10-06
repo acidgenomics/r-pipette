@@ -26,7 +26,7 @@ as.data.frame(x, row.names = NULL, optional = FALSE, ...)
 Coerce object to data.frame
 }
 \note{
-Updated 2022-02-08.
+Updated 2023-10-06.
 }
 \examples{
 data(
