@@ -1,5 +1,14 @@
 # Release notes
 
+## pipette 0.14.1 (2023-10-06)
+
+Minor changes:
+
+- `import`: Improved edge case handling of datasets with invalid names.
+- `as.data.frame`: Improved internal coercion code for `Matrix` and `IRanges`.
+- `as.DataFrame`: Ensure we set `optional = TRUE` internally during
+  `as.data.frame` call.
+
 ## pipette 0.14.0 (2023-10-03)
 
 New functions:
