@@ -758,6 +758,7 @@ test_that("MAF", {
 })
 
 test_that("BAM/SAM (and CRAM)", {
+    skip_on_os("windows")
     files <- file.path(cacheDir, c("example.bam", "example.sam"))
     for (file in files) {
         object <- import(file)
@@ -784,6 +785,7 @@ test_that("BAM/SAM (and CRAM)", {
 })
 
 test_that("BCF/VCF", {
+    skip_on_os("windows")
     files <- file.path(cacheDir, c("example.bcf.gz", "example.vcf.gz"))
     for (file in files) {
         object <- import(file)
