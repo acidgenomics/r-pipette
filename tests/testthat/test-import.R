@@ -868,3 +868,23 @@ test_that("textConnection : TSV", {
     )
     close(con)
 })
+
+test_that("textConnection : JSON", {
+    file <- file.path(cacheDir, "example.json")
+    lines <- import(file, format = "lines")
+    con <- textConnection(lines)
+    x <- import(file)
+    y <- import(con, format = "json")
+    expect_identical(x, y)
+    close(con)
+})
+
+test_that("textConnection : YAML", {
+    file <- file.path(cacheDir, "example.yml")
+    lines <- import(file, format = "lines")
+    con <- textConnection(lines)
+    x <- import(file)
+    y <- import(con, format = "yaml")
+    expect_identical(x, y)
+    close(con)
+})

@@ -1,6 +1,6 @@
 #' @name import
 #' @inherit AcidGenerics::import
-#' @note Updated 2023-09-28.
+#' @note Updated 2023-11-03.
 #'
 #' @details
 #' `import()` supports automatic loading of common file types, by wrapping
@@ -842,10 +842,10 @@ NULL
 
 
 
-## Updated 2023-09-20.
+## Updated 2023-11-03.
 `import,textConnection` <- # nolint
     function(con,
-             format = c("csv", "tsv"),
+             format = c("csv", "tsv", "json", "yaml"),
              colnames = TRUE,
              quote = "\"",
              naStrings = pipette::naStrings,
@@ -858,35 +858,58 @@ NULL
             isFlag(quiet)
         )
         format <- match.arg(format)
-        whatPkg <- "base"
-        whatFun <- "read.table"
-        args <- list(
-            "file" = con,
-            "blank.lines.skip" = FALSE,
-            "fill" = FALSE,
-            "na.strings" = naStrings,
-            "quote" = quote,
-            "sep" = switch(
+        if (isSubset(format, c("json", "yaml"))) {
+            switch(
                 EXPR = format,
-                "csv" = ",",
-                "tsv" = "\t"
+                "json" = {
+                    whatPkg <- "jsonlite"
+                    whatFun <- "fromJSON"
+                    args <- list(
+                        "txt" = readLines(con),
+                        "simplifyVector" = FALSE,
+                        "flatten" = FALSE
+                    )
+                },
+                "yaml" = {
+                    whatPkg <- "yaml"
+                    whatFun <- "read_yaml"
+                    args <- list("text" = readLines(con))
+                }
             )
-        )
-        if (isCharacter(colnames)) {
-            args[["header"]] <- FALSE
-            args[["col.names"]] <- colnames
+            what <- .getFunction(f = whatFun, pkg = whatPkg)
+            object <- do.call(what = what, args = args)
+            assert(is.list(object))
         } else {
-            args[["header"]] <- colnames
+            whatPkg <- "base"
+            whatFun <- "read.table"
+            args <- list(
+                "file" = con,
+                "blank.lines.skip" = FALSE,
+                "fill" = FALSE,
+                "na.strings" = naStrings,
+                "quote" = quote,
+                "sep" = switch(
+                    EXPR = format,
+                    "csv" = ",",
+                    "tsv" = "\t"
+                )
+            )
+            if (isCharacter(colnames)) {
+                args[["header"]] <- FALSE
+                args[["col.names"]] <- colnames
+            } else {
+                args[["header"]] <- colnames
+            }
+            if (isFALSE(quiet)) {
+                alert(sprintf(
+                    "Importing text connection with {.pkg %s}::{.fun %s}.",
+                    whatPkg, whatFun
+                ))
+            }
+            what <- .getFunction(f = whatFun, pkg = whatPkg)
+            object <- do.call(what = what, args = args)
+            assert(is.data.frame(object))
         }
-        if (isFALSE(quiet)) {
-            alert(sprintf(
-                "Importing text connection with {.pkg %s}::{.fun %s}.",
-                whatPkg, whatFun
-            ))
-        }
-        what <- .getFunction(f = whatFun, pkg = whatPkg)
-        object <- do.call(what = what, args = args)
-        assert(is.data.frame(object))
         object
     }
 
@@ -1536,7 +1559,7 @@ NULL
 
 #' Import a YAML file (`.yaml`, `.yml`)
 #'
-#' @note Updated 2023-09-20.
+#' @note Updated 2023-11-03.
 #' @noRd
 `import,PipetteYamlFile` <- # nolint
     function(con,
@@ -1548,7 +1571,7 @@ NULL
         )
         file <- .resource(con)
         whatPkg <- "yaml"
-        whatFun <- "yaml.load_file"
+        whatFun <- "read_yaml"
         if (isFALSE(quiet)) {
             .alertImport(
                 con = con,
@@ -1556,7 +1579,7 @@ NULL
                 whatFun = whatFun
             )
         }
-        args <- list("input" = file)
+        args <- list("file" = file)
         what <- .getFunction(f = whatFun, pkg = whatPkg)
         object <- do.call(what = what, args = args)
         .returnImport(
