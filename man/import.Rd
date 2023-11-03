@@ -37,7 +37,7 @@ import(con, ...)
 
 \S4method{import}{textConnection}(
   con,
-  format = c("csv", "tsv"),
+  format = c("csv", "tsv", "json", "yaml"),
   colnames = TRUE,
   quote = "\\"",
   naStrings = pipette::naStrings,
@@ -343,7 +343,7 @@ arguments. Remote URLs and compressed files are supported. If you need more
 complex import settings, just call the wrapped importer directly instead.
 }
 \note{
-Updated 2023-09-28.
+Updated 2023-11-03.
 }
 \section{Row and column names}{
 
