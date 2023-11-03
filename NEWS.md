@@ -1,5 +1,17 @@
 # Release notes
 
+## pipette 0.14.2 (2023-11-03)
+
+Major changes:
+
+- `import` now supports import of JSON and YAML lines via `textConnection`.
+  This is very useful for importing return from CLI tools, such as `aws`.
+
+Minor changes:
+
+- `import`: Now using `read_yaml` internally instead of `yaml.load_file` from
+  the yaml package.
+
 ## pipette 0.14.1 (2023-10-06)
 
 Minor changes:
