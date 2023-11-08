@@ -114,7 +114,7 @@ NULL
     } else if (is.atomic(object)) {
         key <- "character"
     } else {
-        abort(sprintf("{.cls %s} is not supported.", simpleClass(object)))
+        return(character())
     }
     choices <- .exportFormatChoices
     ext <- choices[[key]][[1L]]
@@ -158,7 +158,7 @@ NULL
 
 #' Easy export of an object to working directory
 #'
-#' @note Updated 2023-09-20.
+#' @note Updated 2023-11-08.
 #' @noRd
 `export,ANY,missing` <- # nolint
     function(object, con, ...) {
@@ -194,6 +194,12 @@ NULL
         assert(is.symbol(sym), msg = .symError)
         name <- as.character(sym)
         ext <- .defaultExt(object)
+        if (!hasLength(ext)) {
+            abort(sprintf(
+                "{.cls %s} is not supported. Use {.var %s} to define output.",
+                simpleClass(object), "con"
+            ))
+        }
         con <- file.path(dir, paste0(name, ".", ext))
         export(object = object, con = con, ...)
     }
@@ -558,8 +564,11 @@ NULL
                 "quiet" = quiet
             ),
             f = function(object, name, con, overwrite, quiet) {
+                con <- file.path(con, name)
                 ext <- .defaultExt(object)
-                con <- file.path(con, paste0(name, ".", ext))
+                if (isString(ext)) {
+                    con <- paste0(con, ".", ext)
+                }
                 export(
                     object = object,
                     con = con,

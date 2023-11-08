@@ -258,6 +258,31 @@ for (format in .exportFormatChoices[["Matrix"]]) {
     )
 }
 
+test_that("list", {
+    testdir <- tempdir2()
+    object <- list("a" = c("a", "b", "c"), "b" = c("c", "d", "e"))
+    out <- export(object, con = testdir)
+    expect_identical(
+        object = basename(out),
+        expected = c("a.txt", "b.txt")
+    )
+    expect_true(allAreFiles(out))
+    unlink2(testdir)
+    testdir <- tempdir2()
+    object <- list(
+        "a" = list(
+            "aa" = c("a", "b", "c"),
+            "ab" = c("d", "e", "f")
+        ),
+        "b" = list(
+            "ba" = c("g", "h", "i"),
+            "bb" = c("j", "k", "l")
+        )
+    )
+    out <- export(object, con = testdir)
+    unlink2(testdir)
+})
+
 test_that("Invalid input", {
     object <- sparse
     expect_error(
