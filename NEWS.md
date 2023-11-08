@@ -8,6 +8,11 @@ Major changes:
   of supported objects. We may use this method in for other classes, such
   as `SummarizedExperiment` in AcidExperiment package in a future update.
 
+Minor changes:
+
+- `export`: `GRangesList` method is now defined and split out from `data.frame`
+  method, to handle edge case of undesirable column name coercion.
+
 ## pipette 0.14.2 (2023-11-03)
 
 Major changes:
