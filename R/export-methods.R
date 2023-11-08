@@ -552,23 +552,24 @@ NULL
         out <- Map(
             name = names(object),
             object = object,
-            ext = .defaultExt(object),
             MoreArgs = list(
                 "con" = con,
                 "overwrite" = overwrite,
                 "quiet" = quiet
             ),
-            f = function(object, name, ext, con, overwrite, quiet) {
+            f = function(object, name, con, overwrite, quiet) {
+                ext <- .defaultExt(object)
                 con <- file.path(con, paste0(name, ".", ext))
                 export(
                     object = object,
-                    con = "FIXME",
+                    con = con,
                     overwrite = overwrite,
                     quiet = quiet
                 )
             },
             USE.NAMES = TRUE
         )
+        out <- unlist(out, recursive = FALSE, use.names = TRUE)
         invisible(out)
     }
 
@@ -777,6 +778,17 @@ setMethod(
         con = "character"
     ),
     definition = `export,data.frame`
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "list",
+        con = "character"
+    ),
+    definition = `export,list`
 )
 
 #' @rdname export
