@@ -36,16 +36,9 @@ export(object, con, ...)
   quiet = FALSE
 )
 
-\S4method{export}{GRangesList,character}(
-  object,
-  con,
-  rownames = TRUE,
-  colnames = TRUE,
-  quote = TRUE,
-  overwrite = TRUE,
-  engine = c("base", "data.table", "readr"),
-  quiet = FALSE
-)
+\S4method{export}{GRangesList,character}(object, con, overwrite = TRUE, quiet = FALSE)
+
+\S4method{export}{GRangesList,character}(object, con, overwrite = TRUE, quiet = FALSE)
 
 \S4method{export}{Matrix,character}(object, con, overwrite = TRUE, quiet = FALSE)
 
@@ -128,7 +121,7 @@ Invisible \code{character} or \code{list} of file paths.
 Export data from R
 }
 \note{
-Updated 2023-09-20.
+Updated 2023-11-08.
 }
 \section{Output file format extension}{
 
