@@ -578,7 +578,6 @@ NULL
             },
             USE.NAMES = TRUE
         )
-        out <- unlist(out, recursive = FALSE, use.names = TRUE)
         invisible(out)
     }
 
