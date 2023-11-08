@@ -114,7 +114,7 @@ NULL
     } else if (is.atomic(object)) {
         key <- "character"
     } else {
-        abort(sprintf("{.arg %s} argument is required.", "con"))
+        abort(sprintf("{.cls %s} is not supported.", simpleClass(object)))
     }
     choices <- .exportFormatChoices
     ext <- choices[[key]][[1L]]
