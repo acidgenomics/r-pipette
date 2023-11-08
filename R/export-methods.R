@@ -101,6 +101,7 @@ NULL
 #' @note Updated 2023-11-08.
 #' @noRd
 #'
+#' @details
 #' Can consider exporting this as a generic and making it object-oriented in a
 #' future package update, to better support custom methods defined outside of
 #' the package.

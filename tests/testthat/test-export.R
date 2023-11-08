@@ -321,6 +321,10 @@ test_that("List", {
     unlink2(testdir)
 })
 
+## FIXME Add coverage for DFrameList.
+## FIXME Add coverage for SplitDFrameList.
+## FIXME Add coverage for GRangesList
+
 test_that("Invalid input", {
     object <- sparse
     expect_error(
