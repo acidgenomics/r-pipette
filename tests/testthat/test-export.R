@@ -288,6 +288,39 @@ test_that("list", {
     unlink2(testdir)
 })
 
+test_that("List", {
+    testdir <- tempdir2()
+    object <- List(
+        "a" = c("a", "b", "c"),
+        "b" = c("c", "d", "e")
+    )
+    out <- export(object, con = testdir)
+    expect_identical(
+        object = basename(unlist(out)),
+        expected = c("a.txt", "b.txt")
+    )
+    expect_true(allAreFiles(unlist(out)))
+    unlink2(testdir)
+    testdir <- tempdir2()
+    object <- List(
+        "a" = List(
+            "aa" = c("a", "b", "c"),
+            "ab" = c("d", "e", "f")
+        ),
+        "b" = List(
+            "ba" = c("g", "h", "i"),
+            "bb" = c("j", "k", "l")
+        )
+    )
+    out <- export(object, con = testdir)
+    expect_identical(
+        object = basename(unlist(out)),
+        expected = c("aa.txt", "ab.txt", "ba.txt", "bb.txt")
+    )
+    expect_true(allAreFiles(unlist(out)))
+    unlink2(testdir)
+})
+
 test_that("Invalid input", {
     object <- sparse
     expect_error(
