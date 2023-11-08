@@ -8,6 +8,7 @@
 \alias{export,Matrix,character-method}
 \alias{export,atomic,character-method}
 \alias{export,data.frame,character-method}
+\alias{export,list,character-method}
 \alias{export,matrix,character-method}
 \alias{export,ANY,missing-method}
 \title{Export data from R}
@@ -59,6 +60,8 @@ export(object, con, ...)
   engine = c("base", "data.table", "readr"),
   quiet = FALSE
 )
+
+\S4method{export}{list,character}(object, con, overwrite = TRUE, quiet = FALSE)
 
 \S4method{export}{matrix,character}(
   object,
