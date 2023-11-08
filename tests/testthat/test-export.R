@@ -263,10 +263,10 @@ test_that("list", {
     object <- list("a" = c("a", "b", "c"), "b" = c("c", "d", "e"))
     out <- export(object, con = testdir)
     expect_identical(
-        object = basename(out),
+        object = basename(unlist(out)),
         expected = c("a.txt", "b.txt")
     )
-    expect_true(allAreFiles(out))
+    expect_true(allAreFiles(unlist(out)))
     unlink2(testdir)
     testdir <- tempdir2()
     object <- list(
@@ -280,6 +280,11 @@ test_that("list", {
         )
     )
     out <- export(object, con = testdir)
+    expect_identical(
+        object = basename(unlist(out)),
+        expected = c("aa.txt", "ab.txt", "ba.txt", "bb.txt")
+    )
+    expect_true(allAreFiles(unlist(out)))
     unlink2(testdir)
 })
 
