@@ -96,25 +96,23 @@ NULL
 
 
 
-## Updated 2023-09-19.
+## Updated 2023-11-08.
 .defaultExt <- function(object) {
-    if (is.atomic(object)) {
-        key <- "character"
-    } else if (
-        isAny(
-            x = object,
-            classes = c(
-                "matrix",
-                "data.frame",
-                "DFrame",
-                "GRanges",
-                "GRangesList"
-            )
+    if (isAny(
+        x = object,
+        classes = c(
+            "matrix",
+            "data.frame",
+            "DFrame",
+            "GRanges",
+            "GRangesList"
         )
-    ) {
+    )) {
         key <- "delim"
     } else if (is(object, "Matrix")) {
         key <- "Matrix"
+    } else if (is.atomic(object)) {
+        key <- "character"
     } else {
         abort(sprintf("{.arg %s} argument is required.", "con"))
     }
@@ -534,7 +532,7 @@ NULL
 
 
 
-#' Export `list`
+#' Export `list` method
 #'
 #' @note Updated 2023-11-08.
 #' @noRd
@@ -543,6 +541,35 @@ NULL
              con,
              overwrite = TRUE,
              quiet = FALSE) {
+        assert(
+            validObject(object),
+            hasNames(object),
+            isString(con),
+            isFlag(overwrite),
+            isFlag(quiet)
+        )
+        con <- initDir(con)
+        out <- Map(
+            name = names(object),
+            object = object,
+            ext = .defaultExt(object),
+            MoreArgs = list(
+                "con" = con,
+                "overwrite" = overwrite,
+                "quiet" = quiet
+            ),
+            f = function(object, name, ext, con, overwrite, quiet) {
+                con <- file.path(con, paste0(name, ".", ext))
+                export(
+                    object = object,
+                    con = "FIXME",
+                    overwrite = overwrite,
+                    quiet = quiet
+                )
+            },
+            USE.NAMES = TRUE
+        )
+        invisible(out)
     }
 
 
@@ -706,17 +733,6 @@ setMethod(
         con = "character"
     ),
     definition = `export,GRanges`
-)
-
-#' @rdname export
-#' @export
-setMethod(
-    f = "export",
-    signature = signature(
-        object = "GRangesList",
-        con = "character"
-    ),
-    definition = `export,GRangesList`
 )
 
 #' @rdname export

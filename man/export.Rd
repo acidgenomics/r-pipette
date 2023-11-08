@@ -38,8 +38,6 @@ export(object, con, ...)
 
 \S4method{export}{GRangesList,character}(object, con, overwrite = TRUE, quiet = FALSE)
 
-\S4method{export}{GRangesList,character}(object, con, overwrite = TRUE, quiet = FALSE)
-
 \S4method{export}{Matrix,character}(object, con, overwrite = TRUE, quiet = FALSE)
 
 \S4method{export}{atomic,character}(
