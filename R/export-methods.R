@@ -96,7 +96,14 @@ NULL
 
 
 
-## Updated 2023-11-08.
+#' Return default extension for object
+#'
+#' @note Updated 2023-11-08.
+#' @noRd
+#'
+#' Can consider exporting this as a generic and making it object-oriented in a
+#' future package update, to better support custom methods defined outside of
+#' the package.
 .defaultExt <- function(object) {
     if (isAny(
         x = object,
