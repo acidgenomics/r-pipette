@@ -1,6 +1,6 @@
 #' @name export
 #' @inherit AcidGenerics::export
-#' @note Updated 2023-09-20.
+#' @note Updated 2023-11-08.
 #'
 #' @section Output file format extension:
 #'
@@ -202,7 +202,7 @@ NULL
 
 
 
-## Updated 2023-09-20.
+## Updated 2023-11-08.
 `export,atomic` <- # nolint
     function(object,
              con,
@@ -210,15 +210,16 @@ NULL
              overwrite = TRUE,
              engine = c("base", "data.table", "readr"),
              quiet = FALSE) {
-        object <- as.character(object)
+        whatPkg <- match.arg(engine)
         assert(
+            requireNamespaces(whatPkg),
+            validObject(object),
             isString(con),
             isFlag(overwrite),
             isFlag(append),
             isFlag(quiet)
         )
-        whatPkg <- match.arg(engine)
-        assert(requireNamespaces(whatPkg))
+        object <- as.character(object)
         if (isTRUE(append)) {
             assert(
                 !identical(whatPkg, "base"),
@@ -319,7 +320,7 @@ NULL
 
 #' Export `data.frame` method
 #'
-#' @note Updated 2023-10-06.
+#' @note Updated 2023-11-08.
 #' @noRd
 #'
 #' @details
@@ -336,36 +337,20 @@ NULL
              overwrite = TRUE,
              engine = c("base", "data.table", "readr"),
              quiet = FALSE) {
-        ## Handle edge cases where `as.data.frame` coercion generates
-        ## undesirable extra columns.
-        dfMode <- "default"
-        if (is(object, "GRangesList")) {
-            dfMode <- "GRangesList"
-        }
-        object <- as.data.frame(object, optional = TRUE)
-        switch(
-            EXPR = dfMode,
-            "GRangesList" = {
-                assert(isSubset(c("group", "group_name"), colnames(object)))
-                colnames(object)[
-                    colnames(object) == "group_name"
-                ] <- "groupName"
-            }
-        )
-        ## Allowing export of empty objects, so don't check for length,
-        ## rows, or columns here.
+        whatPkg <- match.arg(engine)
         assert(
+            requireNamespaces(whatPkg),
+            validObject(object),
             hasNoDuplicates(colnames(object)),
             isString(con),
+            isSubset(fileExt(con), .exportFormatChoices[["delim"]]),
             isFlag(rownames),
             isFlag(colnames),
             isFlag(quote),
             isFlag(overwrite),
-            isFlag(quiet),
-            isSubset(fileExt(con), .exportFormatChoices[["delim"]])
+            isFlag(quiet)
         )
-        whatPkg <- match.arg(engine)
-        assert(requireNamespaces(whatPkg))
+        object <- as.data.frame(object, optional = TRUE)
         file <- con
         whatFile <- con
         compressExt <- fileExt(path = file, pattern = compressExtPattern)
@@ -549,6 +534,42 @@ NULL
 
 
 
+#' Export `list`
+#'
+#' @note Updated 2023-11-08.
+#' @noRd
+`export,list` <- # nolint
+    function(object,
+             con,
+             overwrite = TRUE,
+             quiet = FALSE) {
+    }
+
+
+
+#' Export `GRangesList` method
+#'
+#' @note Updated 2023-11-08.
+#' @noRd
+`export,GRangesList` <- # nolint
+    function(object,
+             con,
+             overwrite = TRUE,
+             quiet = FALSE) {
+        assert(validObject(object))
+        object <- as.data.frame(object, optional = TRUE)
+        assert(isSubset(c("group", "group_name"), colnames(object)))
+        colnames(object)[colnames(object) == "group_name"] <- "groupName"
+        export(
+            object = object,
+            con = con,
+            overwrite = overwrite,
+            quiet = quiet
+        )
+    }
+
+
+
 #' Export `Matrix` (e.g. `sparseMatrix`) method
 #'
 #' @note Updated 2023-09-20.
@@ -563,19 +584,19 @@ NULL
              con,
              overwrite = TRUE,
              quiet = FALSE) {
+        whatPkg <- "Matrix"
+        whatFun <- "writeMM"
         assert(
+            requireNamespaces(whatPkg),
             validObject(object),
             hasLength(object),
             isString(con),
+            isSubset(fileExt(con), .exportFormatChoices[["Matrix"]]),
             isFlag(overwrite),
-            isFlag(quiet),
-            isSubset(fileExt(con), .exportFormatChoices[["Matrix"]])
+            isFlag(quiet)
         )
         file <- con
         whatFile <- con
-        whatPkg <- "Matrix"
-        whatFun <- "writeMM"
-        assert(requireNamespaces(whatPkg))
         compressExt <- fileExt(path = file, pattern = compressExtPattern)
         compress <- !is.na(compressExt)
         if (isAFile(file)) {
@@ -658,9 +679,6 @@ NULL
 `export,GRanges` <- # nolint
     `export,data.frame`
 
-`export,GRangesList` <- # nolint
-    `export,data.frame`
-
 `export,matrix` <- # nolint
     `export,data.frame`
 
@@ -688,6 +706,17 @@ setMethod(
         con = "character"
     ),
     definition = `export,GRanges`
+)
+
+#' @rdname export
+#' @export
+setMethod(
+    f = "export",
+    signature = signature(
+        object = "GRangesList",
+        con = "character"
+    ),
+    definition = `export,GRangesList`
 )
 
 #' @rdname export
