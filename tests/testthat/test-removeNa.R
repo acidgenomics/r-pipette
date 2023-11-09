@@ -13,6 +13,7 @@ test_that("removeNa", {
             )
         ),
         expected = list(
+            ## nolint start
             "character" = structure(
                 .Data = c("hello", "world"),
                 na.action = structure(3L, class = "omit")
@@ -21,6 +22,7 @@ test_that("removeNa", {
                 .Data = c(1L, 2L),
                 na.action = structure(3L, class = "omit")
             ),
+            ## nolint end
             "DFrame" = DataFrame(
                 "a" = c("A", "C"),
                 "c" = c("B", "D"),
