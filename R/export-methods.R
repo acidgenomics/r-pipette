@@ -595,29 +595,6 @@ NULL
 
 
 
-#' Export `GRangesList` method
-#'
-#' @note Updated 2023-11-08.
-#' @noRd
-`export,GRangesList` <- # nolint
-    function(object,
-             con,
-             overwrite = TRUE,
-             quiet = FALSE) {
-        assert(validObject(object))
-        object <- as.data.frame(object, optional = TRUE)
-        assert(isSubset(c("group", "group_name"), colnames(object)))
-        colnames(object)[colnames(object) == "group_name"] <- "groupName"
-        export(
-            object = object,
-            con = con,
-            overwrite = overwrite,
-            quiet = quiet
-        )
-    }
-
-
-
 #' Export `Matrix` (e.g. `sparseMatrix`) method
 #'
 #' @note Updated 2023-09-20.
@@ -757,17 +734,6 @@ setMethod(
         con = "character"
     ),
     definition = `export,GRanges`
-)
-
-#' @rdname export
-#' @export
-setMethod(
-    f = "export",
-    signature = signature(
-        object = "GRangesList",
-        con = "character"
-    ),
-    definition = `export,GRangesList`
 )
 
 #' @rdname export
