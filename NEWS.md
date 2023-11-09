@@ -15,6 +15,7 @@ Minor changes:
 
 - `export`: `GRangesList` method is now defined and split out from `data.frame`
   method, to handle edge case of undesirable column name coercion.
+- Resolve new lints detected by lintr 3.1.1.
 
 ## pipette 0.14.2 (2023-11-03)
 
