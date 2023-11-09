@@ -4,7 +4,6 @@
 \alias{export}
 \alias{export,DFrame,character-method}
 \alias{export,GRanges,character-method}
-\alias{export,GRangesList,character-method}
 \alias{export,List,character-method}
 \alias{export,Matrix,character-method}
 \alias{export,atomic,character-method}
@@ -37,8 +36,6 @@ export(object, con, ...)
   engine = c("base", "data.table", "readr"),
   quiet = FALSE
 )
-
-\S4method{export}{GRangesList,character}(object, con, overwrite = TRUE, quiet = FALSE)
 
 \S4method{export}{List,character}(object, con, overwrite = TRUE, quiet = FALSE)
 
