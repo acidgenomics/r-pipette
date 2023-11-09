@@ -2,7 +2,7 @@ Package: pipette
 Title: Pipette Biological Data In and Out of R
 Description: Input/output functions for biological data formats.
 Version: 0.15.0
-Date: 2023-11-08
+Date: 2023-11-09
 Authors@R: c(
     person(
         "Michael", "Steinbaugh",
@@ -38,7 +38,7 @@ Imports:
     utils
 Suggests:
     AcidDevTools (>= 0.7.3),
-    AcidTest (>= 0.8.0),
+    AcidTest (>= 0.9.0),
     BiocFileCache (>= 2.8.0),
     Biostrings (>= 2.68.0),
     Rsamtools (>= 2.16.0),
