@@ -9,8 +9,11 @@ data <- utils::data
 
 data(
     DFrame,
+    DFrameList,
     GRanges,
+    GRangesList,
     IRanges,
+    SplitDFrameList,
     matrix,
     sparseMatrix,
     package = "AcidTest",
