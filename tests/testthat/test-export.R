@@ -365,14 +365,13 @@ test_that("SplitDFrameList", {
     unlink2(testdir)
 })
 
-## FIXME This isn't working correctly, need to rethink.
 test_that("GRangesList", {
     testdir <- tempdir2()
     object <- GRangesList
     out <- export(object, con = testdir)
     expect_identical(
         object = basename(unlist(out)),
-        expected = c("1.csv", "2.csv")
+        expected = c("1.csv", "2.csv", "3.csv")
     )
     expect_true(allAreFiles(unlist(out)))
     unlink2(testdir)
