@@ -341,9 +341,42 @@ test_that("List : recursive", {
     unlink2(testdir)
 })
 
-## FIXME Add coverage for DFrameList.
-## FIXME Add coverage for SplitDFrameList.
-## FIXME Add coverage for GRangesList
+test_that("DFrameList", {
+    testdir <- tempdir2()
+    object <- DFrameList
+    out <- export(object, con = testdir)
+    expect_identical(
+        object = basename(unlist(out)),
+        expected = c("1.csv", "2.csv")
+    )
+    expect_true(allAreFiles(unlist(out)))
+    unlink2(testdir)
+})
+
+test_that("SplitDFrameList", {
+    testdir <- tempdir2()
+    object <- SplitDFrameList
+    out <- export(object, con = testdir)
+    expect_identical(
+        object = basename(unlist(out)),
+        expected = c("1.csv", "2.csv")
+    )
+    expect_true(allAreFiles(unlist(out)))
+    unlink2(testdir)
+})
+
+## FIXME This isn't working correctly, need to rethink.
+test_that("GRangesList", {
+    testdir <- tempdir2()
+    object <- GRangesList
+    out <- export(object, con = testdir)
+    expect_identical(
+        object = basename(unlist(out)),
+        expected = c("1.csv", "2.csv")
+    )
+    expect_true(allAreFiles(unlist(out)))
+    unlink2(testdir)
+})
 
 test_that("Invalid input", {
     object <- sparse
