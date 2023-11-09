@@ -565,7 +565,7 @@ NULL
         con <- initDir(con)
         names <- names(object)
         if (is.null(names)) {
-            names <- as.character(seq_along(object))
+            names <- autopadZeros(seq_along(object))
         }
         out <- Map(
             name = names,
