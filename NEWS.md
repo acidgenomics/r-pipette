@@ -1,12 +1,15 @@
 # Release notes
 
-## pipette 0.15.0 (2023-11-08)
+## pipette 0.15.0 (2023-11-09)
 
 Major changes:
 
 - `export` now supports `list` and S4Vectors `List`, for recursive export
   of supported objects. We may use this method in for other classes, such
   as `SummarizedExperiment` in AcidExperiment package in a future update.
+- `export`: `GRangesList` export method now inherits from `List`, and writes
+  each object in list as a separate file to disk, rather than grouping in a
+  `data.frame` coercion step first.
 
 Minor changes:
 
