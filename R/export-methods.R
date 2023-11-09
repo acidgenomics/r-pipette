@@ -548,7 +548,7 @@ NULL
 
 #' Export `list` method
 #'
-#' @note Updated 2023-11-08.
+#' @note Updated 2023-11-09.
 #' @noRd
 `export,list` <- # nolint
     function(object,
@@ -557,14 +557,18 @@ NULL
              quiet = FALSE) {
         assert(
             validObject(object),
-            hasNames(object),
+            hasLength(object),
             isString(con),
             isFlag(overwrite),
             isFlag(quiet)
         )
         con <- initDir(con)
+        names <- names(object)
+        if (is.null(names)) {
+            names <- as.character(seq_along(object))
+        }
         out <- Map(
-            name = names(object),
+            name = names,
             object = object,
             MoreArgs = list(
                 "con" = con,
