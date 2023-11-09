@@ -258,7 +258,7 @@ for (format in .exportFormatChoices[["Matrix"]]) {
     )
 }
 
-test_that("list", {
+test_that("list : single level", {
     testdir <- tempdir2()
     object <- list("a" = c("a", "b", "c"), "b" = c("c", "d", "e"))
     out <- export(object, con = testdir)
@@ -268,6 +268,9 @@ test_that("list", {
     )
     expect_true(allAreFiles(unlist(out)))
     unlink2(testdir)
+})
+
+test_that("list : recursive", {
     testdir <- tempdir2()
     object <- list(
         "a" = list(
@@ -288,7 +291,21 @@ test_that("list", {
     unlink2(testdir)
 })
 
-test_that("List", {
+test_that("list : autopad zeros", {
+    testdir <- tempdir2()
+    object <- list("a", "b", "c", "d", "e", "f", "g", "h", "i", "j")
+    out <- export(object, con = testdir)
+    expect_identical(
+        object = basename(unlist(out)),
+        expected = c(
+            "01.txt", "02.txt", "03.txt", "04.txt", "05.txt",
+            "06.txt", "07.txt", "08.txt", "09.txt", "10.txt"
+        )
+    )
+    unlink2(testdir)
+})
+
+test_that("List : single level", {
     testdir <- tempdir2()
     object <- List(
         "a" = c("a", "b", "c"),
@@ -301,6 +318,9 @@ test_that("List", {
     )
     expect_true(allAreFiles(unlist(out)))
     unlink2(testdir)
+})
+
+test_that("List : recursive", {
     testdir <- tempdir2()
     object <- List(
         "a" = List(
