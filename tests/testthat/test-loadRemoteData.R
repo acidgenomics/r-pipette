@@ -2,7 +2,7 @@ skip_if_not(hasInternet())
 
 test_that("loadRemoteData", {
     envir <- new.env()
-    url <- paste(pipetteTestsUrl, "example.rds", sep = "/")
+    url <- pasteUrl(pipetteTestsUrl, "example.rds")
     object <- loadRemoteData(url, envir = envir)
     ## Character matrix of loaded files.
     expect_type(object, "character")
@@ -16,7 +16,7 @@ test_that("Overwrite mode", {
     envir[["example"]] <- TRUE
     expect_error(
         object = loadRemoteData(
-            url = paste(pipetteTestsUrl, "example.rda", sep = "/"),
+            url = pasteUrl(pipetteTestsUrl, "example.rda"),
             envir = envir,
             overwrite = FALSE
         ),
@@ -24,7 +24,7 @@ test_that("Overwrite mode", {
     )
     expect_type(
         loadRemoteData(
-            url = paste(pipetteTestsUrl, "example.rda", sep = "/"),
+            url = pasteUrl(pipetteTestsUrl, "example.rda"),
             envir = envir,
             overwrite = TRUE
         ),
@@ -35,7 +35,7 @@ test_that("Overwrite mode", {
 test_that("Invalid arguments", {
     expect_error(
         object = loadRemoteData(
-            url = paste(pipetteTestsUrl, "example.csv", sep = "/")
+            url = pasteUrl(pipetteTestsUrl, "example.csv")
         ),
         regexp = "rds"
     )
@@ -45,7 +45,7 @@ test_that("Invalid arguments", {
     )
     expect_error(
         object = loadRemoteData(
-            url = paste(paste(pipetteTestsUrl, "example.rda", sep = "/")),
+            url = pasteUrl(pipetteTestsUrl, "example.rda"),
             envir = "XXX"
         ),
         regexp = "is.environment"
