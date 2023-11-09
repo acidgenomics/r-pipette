@@ -393,7 +393,7 @@ See also:
 \section{Gene cluster text format (GCT)}{
 
 
-Refer to the \href{https://software.broadinstitute.org/software/igv/GCT}{IGV GCT website} for details.
+Refer to the \href{https://igv.org/doc/desktop/}{IGV website} for details.
 }
 
 \section{GSEA gene set files}{

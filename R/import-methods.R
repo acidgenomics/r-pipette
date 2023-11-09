@@ -49,9 +49,9 @@
 #'
 #' @section Gene cluster text format (GCT):
 #'
-#' Refer to the [IGV GCT website][] for details.
+#' Refer to the [IGV website][] for details.
 #'
-#' [IGV GCT website]: https://software.broadinstitute.org/software/igv/GCT
+#' [IGV website]: https://igv.org/doc/desktop/
 #'
 #' @section GSEA gene set files:
 #'
@@ -1973,7 +1973,7 @@ NULL
 #' @noRd
 #'
 #' @seealso
-#' - https://software.broadinstitute.org/software/igv/GCT
+#' - https://igv.org/doc/desktop/
 `import,PipetteGctFile` <- # nolint
     function(con,
              metadata = FALSE,

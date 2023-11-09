@@ -9,7 +9,7 @@ lst <- AcidDevTools::cacheTestFiles(
         "example.fa.gz",
         ## Klein Lab inDrops R3 FASTQ file (from bcbio-nextgen unit tests).
         "example.fq.gz",
-        ## https://software.broadinstitute.org/software/igv/GCT
+        ## https://igv.org/doc/desktop/
         "example.gct",
         "example.gtf",
         "example.gff3",
