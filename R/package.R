@@ -27,7 +27,7 @@ NULL
 #' @importFrom GenomicRanges seqnames
 #' @importFrom S4Vectors DataFrame Rle SimpleList as.factor decode droplevels
 #' head mcols mcols<- metadata metadata<- na.omit runValue tail
-#' @importFrom syntactic makeNames
+#' @importFrom syntactic autopadZeros makeNames
 NULL
 
 
