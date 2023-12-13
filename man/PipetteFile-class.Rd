@@ -15,6 +15,7 @@
 \alias{PipetteCsvFile-class}
 \alias{PipetteFastaFile-class}
 \alias{PipetteFastqFile-class}
+\alias{PipetteGafFile-class}
 \alias{PipetteGctFile-class}
 \alias{PipetteGmtFile-class}
 \alias{PipetteGmxFile-class}
@@ -36,7 +37,7 @@
 Currently intended for use with \code{import} function.
 }
 \note{
-Updated 2023-09-20.
+Updated 2023-12-13.
 }
 \section{Primary classes}{
 
@@ -48,6 +49,7 @@ Updated 2023-09-20.
 \item \code{PipetteCsvFile}: Comma-separated values file (CSV).
 \item \code{PipetteFastaFile}: FASTA file.
 \item \code{PipetteFastqFile}: FASTQ file.
+\item \code{PipetteGafFile}: Gene Ontology (GO) annotation file (GAF).
 \item \code{PipetteGctFile}: Gene Cluster Text file (GCT).
 \item \code{PipetteGmtFile}: Gene matrix transposed file (GMT).
 \item \code{PipetteGmxFile}: Gene matrix file (GMX).
