@@ -9,6 +9,8 @@ lst <- AcidDevTools::cacheTestFiles(
         "example.fa.gz",
         ## Klein Lab inDrops R3 FASTQ file (from bcbio-nextgen unit tests).
         "example.fq.gz",
+        ## https://geneontology.org/gene-associations/goa_human_rna.gaf.gz
+        "example.gaf.gz",
         ## https://igv.org/doc/desktop/
         "example.gct",
         "example.gtf",
