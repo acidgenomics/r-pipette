@@ -18,6 +18,27 @@ test_that("No extension", {
     unlink2(con)
 })
 
+test_that("R data", {
+    object <- import(file.path(cacheDir, "example.rda"))
+    expect_s4_class(object, "DFrame")
+    expect_null(metadata(object)[["import"]])
+    expect_null(attr(object, which = "import"))
+})
+
+test_that("R data serialized", {
+    object <- import(file.path(cacheDir, "example.rds"))
+    expect_s4_class(object, "DFrame")
+    expect_null(metadata(object)[["import"]])
+    expect_null(attr(object, which = "import"))
+})
+
+test_that("Error on RDA containing multiple objects.", {
+    expect_error(
+        object = import(file.path(cacheDir, "multi.rda")),
+        regexp = "single"
+    )
+})
+
 for (engine in engines) {
     test_that(
         desc = paste("R script", engine, sep = " : "),
@@ -494,27 +515,6 @@ test_that("MTX", {
     )
 })
 
-test_that("R data", {
-    object <- import(file.path(cacheDir, "example.rda"))
-    expect_s4_class(object, "DFrame")
-    expect_null(metadata(object)[["import"]])
-    expect_null(attr(object, which = "import"))
-})
-
-test_that("R data serialized", {
-    object <- import(file.path(cacheDir, "example.rds"))
-    expect_s4_class(object, "DFrame")
-    expect_null(metadata(object)[["import"]])
-    expect_null(attr(object, which = "import"))
-})
-
-test_that("Error on RDA containing multiple objects.", {
-    expect_error(
-        object = import(file.path(cacheDir, "multi.rda")),
-        regexp = "single"
-    )
-})
-
 test_that("MSigDB hallmark", {
     Map(
         file = c(
@@ -539,7 +539,7 @@ test_that("MSigDB hallmark", {
     )
 })
 
-test_that("T_CELL_ACTIVATION", {
+test_that("MSigDB T_CELL_ACTIVATION", {
     for (file in c(
         gmt = "geneset.gmt",
         gmx = "geneset.gmx",
@@ -574,6 +574,14 @@ test_that("'rio::import()', e.g. Stata DTA file", {
         colnames(x),
         c("sepallength", "sepalwidth", "petallength", "petalwidth", "species")
     )
+})
+
+test_that("GAF", {
+    skip_if_not_installed(pkg = "BaseSet")
+    file <- file.path(cacheDir, "example.gaf.gz")
+    x <- import(file)
+    expect_s4_class(x, "TidySet")
+    expect_length(x, 880L)
 })
 
 test_that("OBO", {
