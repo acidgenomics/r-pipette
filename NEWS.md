@@ -6,6 +6,7 @@ Minor changes:
 
 - `import`: Added support for Gene Ontology (GO) annotation files (GAF).
   Useful for importing data from the Gene Ontology Annotation (GOA) database.
+- Miscellaneous documentation improvements for `import`.
 
 ## pipette 0.15.0 (2023-11-09)
 
