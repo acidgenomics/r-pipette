@@ -3,7 +3,7 @@
 #' Currently intended for use with `import` function.
 #'
 #' @export
-#' @note Updated 2023-09-20.
+#' @note Updated 2023-12-13.
 #'
 #' @section Primary classes:
 #'
@@ -14,6 +14,7 @@
 #' - `PipetteCsvFile`: Comma-separated values file (CSV).
 #' - `PipetteFastaFile`: FASTA file.
 #' - `PipetteFastqFile`: FASTQ file.
+#' - `PipetteGafFile`: Gene Ontology (GO) annotation file (GAF).
 #' - `PipetteGctFile`: Gene Cluster Text file (GCT).
 #' - `PipetteGmtFile`: Gene matrix transposed file (GMT).
 #' - `PipetteGmxFile`: Gene matrix file (GMX).
@@ -205,6 +206,13 @@ setClass(
 #' @export
 setClass(
     Class = "PipetteFastqFile",
+    contains = "PipetteFile"
+)
+
+#' @rdname PipetteFile-class
+#' @export
+setClass(
+    Class = "PipetteGafFile",
     contains = "PipetteFile"
 )
 

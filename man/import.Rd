@@ -14,6 +14,7 @@
 \alias{import,PipetteCramFile-method}
 \alias{import,PipetteFastaFile-method}
 \alias{import,PipetteFastqFile-method}
+\alias{import,PipetteGafFile-method}
 \alias{import,PipetteGctFile-method}
 \alias{import,PipetteGmtFile-method}
 \alias{import,PipetteGmxFile-method}
@@ -104,6 +105,8 @@ import(con, ...)
 )
 
 \S4method{import}{PipetteFastqFile}(con, moleculeType = c("DNA", "RNA"), metadata = FALSE, quiet = FALSE)
+
+\S4method{import}{PipetteGafFile}(con, quiet = FALSE)
 
 \S4method{import}{PipetteGctFile}(
   con,
@@ -216,13 +219,7 @@ Maximum number of lines to parse.
 
 \item{engine}{\code{character(1)}.
 Engine (package) to use for import.
-
-Currently supported:
-\itemize{
-\item base
-\item data.table
-\item readr
-}}
+Currently supported:\code{"base"}, \code{"data.table"}, or \code{"readr"}.}
 
 \item{makeNames}{\code{function}.
 Apply syntactic naming function to (column) names.
@@ -291,6 +288,9 @@ Imported by \code{pzfx::read_pzfx()}.
 \item \strong{General feature format} (\code{GFF}, \code{GFF1}, \code{GFF2}, \code{GFF3}, \code{GTF}):
 \code{GRanges}.\cr
 Imported by \code{rtracklayer::import()}.
+\item \strong{Gene Ontology (GO) annotation file} (\code{GAF}):
+\code{TidySet}.\cr
+Imported by \code{BaseSet::getGAF()}.
 \item \strong{MatrixMarket exchange sparse matrix} (\code{MTX}):
 \code{sparseMatrix}.\cr
 Imported by \code{Matrix::readMM()}.
@@ -343,7 +343,7 @@ arguments. Remote URLs and compressed files are supported. If you need more
 complex import settings, just call the wrapped importer directly instead.
 }
 \note{
-Updated 2023-11-03.
+Updated 2023-12-13.
 }
 \section{Row and column names}{
 
@@ -449,6 +449,7 @@ print(head(x))
 \seealso{
 Packages:
 \itemize{
+\item \href{https://cran.r-project.org/package=BaseSet}{BaseSet}.
 \item \href{https://bioconductor.org/packages/BiocIO/}{BiocIO}.
 \item \href{https://r-datatable.com/}{data.table}.
 \item \href{https://readr.tidyverse.org/}{readr}.
@@ -462,7 +463,10 @@ Packages:
 
 Import functions:
 \itemize{
+\item \code{BaseSet::getGAF()}.
 \item \code{BiocIO::import()}.
+\item \code{Rsamtools::scanBam()}.
+\item \code{Rsamtools::scanBcf()}.
 \item \code{data.table::fread()}.
 \item \code{maftools::read.maf()}.
 \item \code{readr::read_delim()}.
@@ -470,7 +474,5 @@ Import functions:
 \item \code{rtracklayer::import()}.
 \item \code{utils::read.table()}.
 \item \code{vroom::vroom()}.
-\item \code{Rsamtools::scanBam}.
-\item \code{Rsamtools::scanBcf}.
 }
 }
