@@ -1,6 +1,6 @@
 #' @name import
 #' @inherit AcidGenerics::import
-#' @note Updated 2023-11-03.
+#' @note Updated 2023-12-13.
 #'
 #' @details
 #' `import()` supports automatic loading of common file types, by wrapping
@@ -106,11 +106,7 @@
 #'
 #' @param engine `character(1)`.
 #' Engine (package) to use for import.
-#'
-#' Currently supported:
-#' - base
-#' - data.table
-#' - readr
+#' Currently supported:`"base"`, `"data.table"`, or `"readr"`.
 #'
 #' @param makeNames `function`.
 #' Apply syntactic naming function to (column) names.
@@ -208,6 +204,9 @@
 #' - **General feature format** (`GFF`, `GFF1`, `GFF2`, `GFF3`, `GTF`):
 #' `GRanges`.\cr
 #' Imported by `rtracklayer::import()`.
+#' - **Gene Ontology (GO) annotation file** (`GAF`):
+#' `TidySet`.\cr
+#' Imported by `BaseSet::getGAF()`.
 #' - **MatrixMarket exchange sparse matrix** (`MTX`):
 #' `sparseMatrix`.\cr
 #' Imported by `Matrix::readMM()`.
@@ -252,6 +251,7 @@
 #' @seealso
 #' Packages:
 #'
+#' - [BaseSet](https://cran.r-project.org/package=BaseSet).
 #' - [BiocIO](https://bioconductor.org/packages/BiocIO/).
 #' - [data.table](https://r-datatable.com/).
 #' - [readr](https://readr.tidyverse.org/).
@@ -264,7 +264,10 @@
 #'
 #' Import functions:
 #'
+#' - `BaseSet::getGAF()`.
 #' - `BiocIO::import()`.
+#' - `Rsamtools::scanBam()`.
+#' - `Rsamtools::scanBcf()`.
 #' - `data.table::fread()`.
 #' - `maftools::read.maf()`.
 #' - `readr::read_delim()`.
@@ -272,8 +275,6 @@
 #' - `rtracklayer::import()`.
 #' - `utils::read.table()`.
 #' - `vroom::vroom()`.
-#' - `Rsamtools::scanBam`.
-#' - `Rsamtools::scanBcf`.
 #'
 #' @examples
 #' con <- system.file("extdata", "example.csv", package = "pipette")
@@ -325,7 +326,7 @@ NULL
 
 #' Map file format extension to corresponding S4 file class
 #'
-#' @note Updated 2023-09-28.
+#' @note Updated 2023-12-13.
 #' @noRd
 .formatToFileClass <-
     function(format) {
@@ -361,6 +362,7 @@ NULL
             "fastq" = "Fastq",
             "fq" = "Fastq",
             "fwf" = "Rio",
+            "gaf" = "Gaf",
             "gct" = "Gct",
             "gff" = "Rtracklayer",
             "gff1" = "Rtracklayer",
@@ -546,20 +548,8 @@ NULL
                 fileext = tmpFileExt
             )
             if (isSubset(
-                x = fileExt(
-                    path = url,
-                    pattern = "\\.([a-zA-Z0-9]+)$"
-                ),
-                y = c(
-                    "bz2",
-                    "gz",
-                    "rda",
-                    "rds",
-                    "xls",
-                    "xlsx",
-                    "xz",
-                    "zip"
-                )
+                x = fileExt(path = url, pattern = "\\.([a-zA-Z0-9]+)$"),
+                y = c("bz2", "gz", "rda", "rds", "xls", "xlsx", "xz", "zip")
             )) {
                 ## Write binary.
                 mode <- "wb"
@@ -768,9 +758,7 @@ NULL
 #' @note Updated 2023-09-20.
 #' @noRd
 `import,character` <- # nolint
-    function(con,
-             format = NULL,
-             ...) {
+    function(con, format = NULL, ...) {
         dots <- list(...)
         if (isSubset("quiet", names(dots))) {
             quiet <- dots[["quiet"]]
@@ -1525,9 +1513,7 @@ NULL
 #' @note Updated 2023-09-20.
 #' @noRd
 `import,PipetteJsonFile` <- # nolint
-    function(con,
-             metadata = FALSE,
-             quiet = FALSE) {
+    function(con, metadata = FALSE, quiet = FALSE) {
         assert(
             isFlag(metadata),
             isFlag(quiet)
@@ -1562,9 +1548,7 @@ NULL
 #' @note Updated 2023-11-03.
 #' @noRd
 `import,PipetteYamlFile` <- # nolint
-    function(con,
-             metadata = FALSE,
-             quiet = FALSE) {
+    function(con, metadata = FALSE, quiet = FALSE) {
         assert(
             isFlag(metadata),
             isFlag(quiet)
@@ -1601,8 +1585,7 @@ NULL
 #' @note Updated 2023-09-20.
 #' @noRd
 `import,PipetteBamFile` <- # nolint
-    function(con,
-             quiet = FALSE) {
+    function(con, quiet = FALSE) {
         assert(isFlag(quiet))
         file <- .resource(con)
         whatPkg <- "Rsamtools"
@@ -1695,9 +1678,7 @@ NULL
 #' @note Updated 2023-09-20.
 #' @noRd
 `import,PipetteBcbioCountsFile` <- # nolint
-    function(con,
-             metadata = FALSE,
-             quiet = FALSE) {
+    function(con, metadata = FALSE, quiet = FALSE) {
         assert(
             isFlag(metadata),
             isFlag(quiet)
@@ -1963,6 +1944,32 @@ NULL
             whatFun = whatFun,
             quiet = quiet
         )
+    }
+
+
+
+#' Import a Gene Ontology (GO) annotation file (`.gaf`)
+#'
+#' @note Updated 2023-12-13.
+#' @noRd
+`import,PipetteGafFile` <- # nolint
+    function(con, quiet = FALSE) {
+        assert(isFlag(quiet))
+        file <- .resource(con)
+        whatPkg <- "BaseSet"
+        whatFun <- "getGAF"
+        if (isFALSE(quiet)) {
+            .alertImport(
+                con = con,
+                whatPkg = whatPkg,
+                whatFun = whatFun
+            )
+        }
+        args <- list("x" = file)
+        what <- .getFunction(f = whatFun, pkg = whatPkg)
+        object <- do.call(what = what, args = args)
+        assert(is(object, "TidySet"))
+        object
     }
 
 
@@ -2373,6 +2380,14 @@ setMethod(
     f = "import",
     signature = signature(con = "PipetteFastqFile"),
     definition = `import,PipetteFastqFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(con = "PipetteGafFile"),
+    definition = `import,PipetteGafFile`
 )
 
 #' @rdname import
