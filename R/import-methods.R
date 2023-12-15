@@ -1950,25 +1950,48 @@ NULL
 
 #' Import a Gene Ontology (GO) annotation file (`.gaf`)
 #'
-#' @note Updated 2023-12-13.
+#' @note Updated 2023-12-15.
 #' @noRd
+#'
+#' @seealso
+## - https://geneontology.org/docs/go-annotation-file-gaf-format-2.2/
+#' - http://current.geneontology.org/products/pages/downloads.html
+#' - https://www.ebi.ac.uk/GOA/
+#' - https://www.ncbi.nlm.nih.gov/gene/
+#' - `BaseSet::getGAF()`
 `import,PipetteGafFile` <- # nolint
-    function(con, quiet = FALSE) {
-        assert(isFlag(quiet))
-        file <- .resource(con)
-        whatPkg <- "BaseSet"
-        whatFun <- "getGAF"
-        if (isFALSE(quiet)) {
-            .alertImport(
-                con = con,
-                whatPkg = whatPkg,
-                whatFun = whatFun
-            )
-        }
-        args <- list("x" = file)
-        what <- .getFunction(f = whatFun, pkg = whatPkg)
-        object <- do.call(what = what, args = args)
-        assert(is(object, "TidySet"))
+    function(con, metadata = FALSE, quiet = FALSE) {
+        assert(
+            isFlag(metadata),
+            isFlag(quiet)
+        )
+        object <- import(
+            con = .resource(con),
+            format = "tsv",
+            colnames = c(
+                gaf_columns <- c(
+                    "db",
+                    "dbObjectId",
+                    "dbObjectSymbol",
+                    "qualifier",
+                    "goId",
+                    "dbReference",
+                    "evidenceCode",
+                    "withFrom",
+                    "aspect",
+                    "dbObjectName",
+                    "dbObjectSynonym",
+                    "dbObjectType",
+                    "taxon",
+                    "date",
+                    "assignedBy",
+                    "annotationExtension",
+                    "geneProductFormId"
+                )
+            ),
+            comment = "!"
+        )
+        assert(is.data.frame(object))
         object
     }
 
@@ -1976,7 +1999,7 @@ NULL
 
 #' Import a gene cluster text file (`.gct`)
 #'
-#' @note Updated 2023-09-20.
+#' @note Updated 2023-12-15.
 #' @noRd
 #'
 #' @seealso
@@ -1986,8 +2009,11 @@ NULL
              metadata = FALSE,
              quiet = FALSE,
              return = c("matrix", "data.frame")) {
+        assert(
+            isFlag(metadata),
+            isFlag(quiet)
+        )
         return <- match.arg(return)
-        assert(isFlag(quiet))
         object <- import(
             con = .resource(con),
             format = "tsv",
