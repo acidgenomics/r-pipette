@@ -106,7 +106,7 @@ import(con, ...)
 
 \S4method{import}{PipetteFastqFile}(con, moleculeType = c("DNA", "RNA"), metadata = FALSE, quiet = FALSE)
 
-\S4method{import}{PipetteGafFile}(con, quiet = FALSE)
+\S4method{import}{PipetteGafFile}(con, metadata = FALSE, quiet = FALSE)
 
 \S4method{import}{PipetteGctFile}(
   con,
@@ -289,8 +289,8 @@ Imported by \code{pzfx::read_pzfx()}.
 \code{GRanges}.\cr
 Imported by \code{rtracklayer::import()}.
 \item \strong{Gene Ontology (GO) annotation file} (\code{GAF}):
-\code{TidySet}.\cr
-Imported by \code{BaseSet::getGAF()}.
+\code{data.frame} with 17 columns.\cr
+Imported by \code{base::read.delim()}.
 \item \strong{MatrixMarket exchange sparse matrix} (\code{MTX}):
 \code{sparseMatrix}.\cr
 Imported by \code{Matrix::readMM()}.
@@ -343,7 +343,7 @@ arguments. Remote URLs and compressed files are supported. If you need more
 complex import settings, just call the wrapped importer directly instead.
 }
 \note{
-Updated 2023-12-13.
+Updated 2023-12-15.
 }
 \section{Row and column names}{
 

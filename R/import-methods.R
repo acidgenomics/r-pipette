@@ -1,6 +1,6 @@
 #' @name import
 #' @inherit AcidGenerics::import
-#' @note Updated 2023-12-13.
+#' @note Updated 2023-12-15.
 #'
 #' @details
 #' `import()` supports automatic loading of common file types, by wrapping
@@ -205,8 +205,8 @@
 #' `GRanges`.\cr
 #' Imported by `rtracklayer::import()`.
 #' - **Gene Ontology (GO) annotation file** (`GAF`):
-#' `TidySet`.\cr
-#' Imported by `BaseSet::getGAF()`.
+#' `data.frame` with 17 columns.\cr
+#' Imported by `base::read.delim()`.
 #' - **MatrixMarket exchange sparse matrix** (`MTX`):
 #' `sparseMatrix`.\cr
 #' Imported by `Matrix::readMM()`.
@@ -1957,7 +1957,6 @@ NULL
 ## - https://geneontology.org/docs/go-annotation-file-gaf-format-2.2/
 #' - http://current.geneontology.org/products/pages/downloads.html
 #' - https://www.ebi.ac.uk/GOA/
-#' - https://www.ncbi.nlm.nih.gov/gene/
 #' - `BaseSet::getGAF()`
 `import,PipetteGafFile` <- # nolint
     function(con, metadata = FALSE, quiet = FALSE) {
@@ -1987,7 +1986,9 @@ NULL
                 "annotationExtension",
                 "geneProductFormId"
             ),
-            comment = "!"
+            comment = "!",
+            metadata = metadata,
+            quiet = quiet
         )
         assert(is.data.frame(object))
         object
