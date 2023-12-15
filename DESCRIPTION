@@ -2,7 +2,7 @@ Package: pipette
 Title: Pipette Biological Data In and Out of R
 Description: Input/output functions for biological data formats.
 Version: 0.15.2.9000
-Date: 2023-12-13
+Date: 2023-12-15
 Authors@R: c(
     person(
         "Michael", "Steinbaugh",
@@ -25,11 +25,11 @@ Imports:
     AcidBase (>= 0.7.2),
     AcidCLI (>= 0.3.0),
     AcidGenerics (>= 0.7.5),
-    BiocGenerics (>= 0.46.0),
-    GenomicRanges (>= 1.52.0),
-    IRanges (>= 2.34.0),
+    BiocGenerics (>= 0.48.0),
+    GenomicRanges (>= 1.54.0),
+    IRanges (>= 2.36.0),
     Matrix (>= 1.6.4),
-    S4Vectors (>= 0.38.0),
+    S4Vectors (>= 0.40.0),
     goalie (>= 0.7.7),
     jsonlite (>= 1.8.8),
     syntactic (>= 0.7.1),
@@ -39,19 +39,19 @@ Imports:
 Suggests:
     AcidDevTools (>= 0.7.3),
     AcidTest (>= 0.9.0),
-    BiocFileCache (>= 2.8.0),
-    Biostrings (>= 2.68.0),
-    Rsamtools (>= 2.16.0),
-    data.table (>= 1.14.8),
+    BiocFileCache (>= 2.10.0),
+    Biostrings (>= 2.70.0),
+    Rsamtools (>= 2.18.0),
+    data.table (>= 1.14.10),
     digest (>= 0.6.33),
-    httr2 (>= 0.2.3),
-    maftools (>= 2.16.0),
+    httr2 (>= 1.0.0),
+    maftools (>= 2.18.0),
     ontologyIndex (>= 2.11),
     pzfx (>= 0.3.0),
     readr (>= 2.1.4),
     readxl (>= 1.4.3),
     rio (>= 1.0.1),
-    rtracklayer (>= 1.60.0),
+    rtracklayer (>= 1.62.0),
     testthat (>= 3.2.0),
     tibble (>= 3.2.1),
     withr (>= 2.5.2),
