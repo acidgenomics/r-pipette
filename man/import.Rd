@@ -449,7 +449,6 @@ print(head(x))
 \seealso{
 Packages:
 \itemize{
-\item \href{https://cran.r-project.org/package=BaseSet}{BaseSet}.
 \item \href{https://bioconductor.org/packages/BiocIO/}{BiocIO}.
 \item \href{https://r-datatable.com/}{data.table}.
 \item \href{https://readr.tidyverse.org/}{readr}.
@@ -463,7 +462,6 @@ Packages:
 
 Import functions:
 \itemize{
-\item \code{BaseSet::getGAF()}.
 \item \code{BiocIO::import()}.
 \item \code{Rsamtools::scanBam()}.
 \item \code{Rsamtools::scanBcf()}.
