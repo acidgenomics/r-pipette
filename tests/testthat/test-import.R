@@ -578,9 +578,31 @@ test_that("'rio::import()', e.g. Stata DTA file", {
 
 test_that("GAF", {
     file <- file.path(cacheDir, "example.gaf.gz")
-    x <- import(file)
-    expect_s4_class(x, "TidySet")
-    expect_length(x, 880L)
+    object <- import(file)
+    expect_s3_class(object, "data.frame")
+    expect_identical(dim(object), c(63134L, 17L))
+    expect_identical(
+        object = object[1L, , drop = FALSE],
+        expected = data.frame(
+            "db" = "RNAcentral",
+            "dbObjectId" = "URS0000001346_9606",
+            "dbObjectSymbol" = "URS0000001346_9606",
+            "qualifier" = "enables",
+            "goId" = "GO:0030533",
+            "dbReference" = "GO_REF:0000115",
+            "evidenceCode" = "IEA",
+            "withFrom" = "Rfam:RF00005",
+            "aspect" = "F",
+            "dbObjectName" = "Homo sapiens (human) tRNA-Lys",
+            "dbObjectSynonym" = NA,
+            "dbObjectType" = "tRNA",
+            "taxon" = "taxon:9606",
+            "date" = 20230911L,
+            "assignedBy" = "RNAcentral",
+            "annotationExtension" = NA_character_,
+            "geneProductFormId" = NA
+        )
+    )
 })
 
 test_that("OBO", {
