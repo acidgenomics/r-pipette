@@ -577,7 +577,6 @@ test_that("'rio::import()', e.g. Stata DTA file", {
 })
 
 test_that("GAF", {
-    skip_if_not_installed(pkg = "BaseSet")
     file <- file.path(cacheDir, "example.gaf.gz")
     x <- import(file)
     expect_s4_class(x, "TidySet")
