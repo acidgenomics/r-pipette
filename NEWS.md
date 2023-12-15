@@ -1,5 +1,23 @@
 # Release notes
 
+## pipette 0.15.2 (2023-12-15)
+
+Major changes:
+
+- Updated dependencies to Bioconductor 3.18. These packages are now available
+  on Bioconda.
+
+Minor changes:
+
+- `import`: Reworked GAF file method to simply import as a 17 column
+  `data.frame`. Refer to the Gene Ontology website for details on the GAF
+  file format, which is basically a TSV files with commented lines beginning
+  with `"!"`.
+- Removed BaseSet as a suggested import. The `getGAF` function doesn't work on
+  most of the GAF files available from the Gene Ontology website currently.
+  It only works reliably with the *Homo sapiens* protein annotations, which
+  isn't general enough for our needs currently.
+
 ## pipette 0.15.1 (2023-12-13)
 
 Minor changes:
