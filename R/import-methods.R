@@ -206,7 +206,7 @@
 #' Imported by `rtracklayer::import()`.
 #' - **Gene Ontology (GO) annotation file** (`GAF`):
 #' `data.frame` with 17 columns.\cr
-#' Imported by `base::read.delim()`.
+#' Imported by `base::read.table()`.
 #' - **MatrixMarket exchange sparse matrix** (`MTX`):
 #' `sparseMatrix`.\cr
 #' Imported by `Matrix::readMM()`.

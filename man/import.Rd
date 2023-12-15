@@ -290,7 +290,7 @@ Imported by \code{pzfx::read_pzfx()}.
 Imported by \code{rtracklayer::import()}.
 \item \strong{Gene Ontology (GO) annotation file} (\code{GAF}):
 \code{data.frame} with 17 columns.\cr
-Imported by \code{base::read.delim()}.
+Imported by \code{base::read.table()}.
 \item \strong{MatrixMarket exchange sparse matrix} (\code{MTX}):
 \code{sparseMatrix}.\cr
 Imported by \code{Matrix::readMM()}.
