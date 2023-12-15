@@ -1969,25 +1969,23 @@ NULL
             con = .resource(con),
             format = "tsv",
             colnames = c(
-                gaf_columns <- c(
-                    "db",
-                    "dbObjectId",
-                    "dbObjectSymbol",
-                    "qualifier",
-                    "goId",
-                    "dbReference",
-                    "evidenceCode",
-                    "withFrom",
-                    "aspect",
-                    "dbObjectName",
-                    "dbObjectSynonym",
-                    "dbObjectType",
-                    "taxon",
-                    "date",
-                    "assignedBy",
-                    "annotationExtension",
-                    "geneProductFormId"
-                )
+                "db",
+                "dbObjectId",
+                "dbObjectSymbol",
+                "qualifier",
+                "goId",
+                "dbReference",
+                "evidenceCode",
+                "withFrom",
+                "aspect",
+                "dbObjectName",
+                "dbObjectSynonym",
+                "dbObjectType",
+                "taxon",
+                "date",
+                "assignedBy",
+                "annotationExtension",
+                "geneProductFormId"
             ),
             comment = "!"
         )
