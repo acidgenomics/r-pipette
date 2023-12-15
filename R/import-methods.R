@@ -251,7 +251,6 @@
 #' @seealso
 #' Packages:
 #'
-#' - [BaseSet](https://cran.r-project.org/package=BaseSet).
 #' - [BiocIO](https://bioconductor.org/packages/BiocIO/).
 #' - [data.table](https://r-datatable.com/).
 #' - [readr](https://readr.tidyverse.org/).
@@ -264,7 +263,6 @@
 #'
 #' Import functions:
 #'
-#' - `BaseSet::getGAF()`.
 #' - `BiocIO::import()`.
 #' - `Rsamtools::scanBam()`.
 #' - `Rsamtools::scanBcf()`.
