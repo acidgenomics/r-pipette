@@ -838,7 +838,6 @@ NULL
              quiet = FALSE) {
         assert(
             is(con, "textConnection"),
-            isString(format),
             isString(quote),
             is.character(naStrings),
             isFlag(quiet)
