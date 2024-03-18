@@ -50,8 +50,7 @@ test_that("NCBI FTP", {
             "TARGET",
             "TOOLS",
             "Viruses",
-            "all",
-            "archive"
+            "all"
         )
     )
     expect_identical(
@@ -66,6 +65,7 @@ test_that("NCBI FTP", {
             "README_GFF3.txt",
             "README_assembly_summary.txt",
             "README_change_notice.txt",
+            "archive",
             "check.txt",
             "genbank",
             "refseq",
