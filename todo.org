@@ -1,6 +1,8 @@
 #+TITLE: pipette
 #+STARTUP: content
 * Development
+** TODO Can we add support for `append = TRUE` of lines using base engine?
+    Maybe we can load the vector into memory, add at the end, and then write to disk.
 ** TODO Add support for export of DelayedArray objects, such as DelayedMatrix.
 ** TODO Export class support ideas.
     SplitDFrameList, DFrameList, List, list.
