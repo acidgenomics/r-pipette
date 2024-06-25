@@ -1,6 +1,7 @@
 #+TITLE: pipette
 #+STARTUP: content
 * Development
+** TODO Add support for export of DelayedArray objects, such as DelayedMatrix.
 ** TODO Export class support ideas.
     SplitDFrameList, DFrameList, List, list.
 ** TODO Rework the title. CRAN warning:
