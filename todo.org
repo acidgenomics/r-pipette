@@ -1,6 +1,8 @@
 #+TITLE: pipette
 #+STARTUP: content
 * Development
+** TODO Evaluate adding support for reading files directly from S3.
+    Should we use paws package for this?
 ** TODO Can we add support for `append = TRUE` of lines using base engine?
     Maybe we can load the vector into memory, add at the end, and then write to disk.
 ** TODO Add support for export of DelayedArray objects, such as DelayedMatrix.
