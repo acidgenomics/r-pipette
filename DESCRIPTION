@@ -1,8 +1,8 @@
 Package: pipette
 Title: Pipette Biological Data In and Out of R
 Description: Input/output functions for biological data formats.
-Version: 0.15.3.9000
-Date: 2024-01-02
+Version: 0.15.3
+Date: 2025-03-24
 Authors@R: c(
     person(
         "Michael", "Steinbaugh",
@@ -20,45 +20,45 @@ URL:
 BugReports: https://github.com/acidgenomics/r-pipette/issues/
 License: AGPL-3
 Encoding: UTF-8
-Depends: R (>= 4.3)
+Depends: R (>= 4.0)
 Imports:
-    AcidBase (>= 0.7.3),
-    AcidCLI (>= 0.3.0),
-    AcidGenerics (>= 0.7.6),
-    BiocGenerics (>= 0.48.0),
-    GenomicRanges (>= 1.54.0),
-    IRanges (>= 2.36.0),
-    Matrix (>= 1.6.4),
-    S4Vectors (>= 0.40.0),
-    goalie (>= 0.7.7),
-    jsonlite (>= 1.8.8),
-    syntactic (>= 0.7.1),
-    yaml (>= 2.3.8),
+    AcidBase,
+    AcidCLI,
+    AcidGenerics,
+    BiocGenerics,
+    GenomicRanges,
+    IRanges,
+    Matrix,
+    S4Vectors,
+    goalie,
+    jsonlite,
     methods,
-    utils
+    syntactic,
+    utils,
+    yaml
 Suggests:
-    AcidDevTools (>= 0.7.3),
-    AcidTest (>= 0.9.0),
-    BiocFileCache (>= 2.10.0),
-    Biostrings (>= 2.70.0),
-    Rsamtools (>= 2.18.0),
-    data.table (>= 1.14.10),
-    digest (>= 0.6.33),
-    httr2 (>= 1.0.0),
-    maftools (>= 2.18.0),
-    ontologyIndex (>= 2.11),
-    pzfx (>= 0.3.0),
-    readr (>= 2.1.4),
-    readxl (>= 1.4.3),
-    rio (>= 1.0.1),
-    rtracklayer (>= 1.62.0),
-    testthat (>= 3.2.0),
-    tibble (>= 3.2.1),
-    withr (>= 2.5.2),
-    tools
+    AcidDevTools,
+    AcidTest,
+    BiocFileCache,
+    Biostrings,
+    Rsamtools,
+    data.table,
+    digest,
+    httr2,
+    maftools,
+    ontologyIndex,
+    pzfx,
+    readr,
+    readxl,
+    rio,
+    rtracklayer,
+    testthat,
+    tibble,
+    tools,
+    withr
 Additional_repositories: https://r.acidgenomics.com
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
 biocViews: Infrastructure
