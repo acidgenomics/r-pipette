@@ -1,5 +1,11 @@
 # Release notes
 
+## pipette 0.15.3 (2025-03-24)
+
+Minor changes:
+
+- Relaxed R dependency from 4.3 to 4.0 for better backwards compatibility.
+
 ## pipette 0.15.2 (2023-12-15)
 
 Major changes:
