@@ -42,6 +42,7 @@ test_that("Rename and compress", {
 })
 
 test_that("URL return", {
+    skip_if_not(isAnExistingUrl("ftp://ftp.pantherdb.org/"))
     url <- transmit(
         remoteDir = pasteUrl(
             "ftp.pantherdb.org",
@@ -80,11 +81,16 @@ test_that("Invalid parameters", {
         ),
         regexp = "ftp"
     )
-    expect_error(
-        object = transmit(
-            remoteDir = "ftp://ftp.wormbase.org/pub/",
-            pattern = "^README$"
-        ),
-        regexp = "remoteFiles"
-    )
 })
+
+## > test_that("Invalid parameters : ftp.wormbase.org", {
+## >     remoteDir <- "ftp://ftp.wormbase.org/pub/"
+## >     skip_if_not(isAnExistingUrl(remoteDir))
+## >     expect_error(
+## >         object = transmit(
+## >             remoteDir = remoteDir,
+## >             pattern = "^README$"
+## >         ),
+## >         regexp = "remoteFiles"
+## >     )
+## > })
