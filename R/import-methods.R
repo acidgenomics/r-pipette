@@ -2150,30 +2150,47 @@ NULL
 
 #' Import an open biomedical ontologies file (`.obo`)
 #'
-#' @note Updated 2023-09-20.
+#' @note Updated 2026-05-31.
 #' @noRd
 `import,PipetteOboFile` <- # nolint
     function(con, quiet = FALSE) {
         assert(isFlag(quiet))
         file <- .resource(con)
-        whatPkg <- "ontologyIndex"
-        whatFun <- "get_ontology"
-        if (isFALSE(quiet)) {
-            .alertImport(
-                con = con,
-                whatPkg = whatPkg,
-                whatFun = whatFun
-            )
+        lines <- readLines(file, warn = FALSE)
+        termStarts <- which(lines == "[Term]")
+        if (!hasLength(termStarts)) {
+            return(DataFrame())
         }
-        args <- list(
-            "file" = file,
-            "propagate_relationships" = "is_a",
-            "extract_tags" = "everything"
-        )
-        what <- .getFunction(f = whatFun, pkg = whatPkg)
-        object <- do.call(what = what, args = args)
-        assert(is(object, "ontology_index"))
-        object
+        termEnds <- c(termStarts[-1L] - 1L, length(lines))
+        n <- length(termStarts)
+        ids <- character(n)
+        termNames <- character(n)
+        obsolete <- logical(n)
+        getTag <- function(block, tag) {
+            hit <- grep(
+                pattern = paste0("^", tag, ": "),
+                x = block,
+                value = TRUE
+            )
+            if (!hasLength(hit)) {
+                return(NA_character_)
+            }
+            val <- sub(
+                pattern = paste0("^", tag, ": "),
+                replacement = "",
+                x = hit[[1L]]
+            )
+            ## Strip inline OBO comments (e.g. "value ! comment").
+            sub(pattern = "\\s+!.*$", replacement = "", x = val)
+        }
+        for (i in seq_len(n)) {
+            block <- lines[termStarts[[i]]:termEnds[[i]]]
+            ids[[i]] <- getTag(block, "id")
+            termNames[[i]] <- getTag(block, "name")
+            obs <- getTag(block, "is_obsolete")
+            obsolete[[i]] <- !is.na(obs) && identical(obs, "true")
+        }
+        DataFrame(id = ids, name = termNames, obsolete = obsolete)
     }
 
 
