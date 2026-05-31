@@ -1,6 +1,7 @@
 #+TITLE: pipette
 #+STARTUP: content
 * Development
+** TODO Improve support for loading parquet and duckdb files.
 ** TODO Can we add support for loading H5AD files?
 ** TODO Can we add better support for parsing OWL and OBO files?
 ** TODO Evaluate adding support for export directly to S3.
