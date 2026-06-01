@@ -12,6 +12,6 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{AcidBase}{\code{\link[AcidBase]{initDir}}, \code{\link[AcidBase]{pasteUrl}}}
+  \item{AcidBase}{\code{\link[AcidBase:initDir]{initDir()}}, \code{\link[AcidBase:pasteUrl]{pasteUrl()}}}
 }}
 

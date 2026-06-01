@@ -1,5 +1,5 @@
 linters: linters_with_defaults(
-    # Updated 2023-07-24.
+    # Updated 2026-05-31.
     # > help(topic = "linters", package = "lintr")
     T_and_F_symbol_linter(),
     absolute_path_linter(),
@@ -65,6 +65,7 @@ linters: linters_with_defaults(
     undesirable_function_linter(),
     undesirable_operator_linter(),
     unnecessary_concatenation_linter(),
+    unnecessary_lambda_linter(),
     unreachable_code_linter(),
     vector_logic_linter(),
     whitespace_linter(),
