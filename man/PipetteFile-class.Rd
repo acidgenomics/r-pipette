@@ -23,7 +23,11 @@
 \alias{PipetteJsonFile-class}
 \alias{PipetteMafFile-class}
 \alias{PipetteMtxFile-class}
+\alias{PipetteDuckdbFile-class}
+\alias{PipetteH5adFile-class}
 \alias{PipetteOboFile-class}
+\alias{PipetteOwlFile-class}
+\alias{PipetteParquetFile-class}
 \alias{PipettePzfxFile-class}
 \alias{PipetteRDataFile-class}
 \alias{PipetteSamFile-class}
@@ -37,7 +41,7 @@
 Currently intended for use with \code{import} function.
 }
 \note{
-Updated 2023-12-13.
+Updated 2026-05-31.
 }
 \section{Primary classes}{
 
@@ -47,6 +51,7 @@ Updated 2023-12-13.
 \item \code{PipetteBcbioCountsFile}: bcbio-nextgen counts file.
 \item \code{PipetteCramFile}: Compressed reference-oriented alignment map (CRAM).
 \item \code{PipetteCsvFile}: Comma-separated values file (CSV).
+\item \code{PipetteDuckdbFile}: DuckDB database file (DUCKDB).
 \item \code{PipetteFastaFile}: FASTA file.
 \item \code{PipetteFastqFile}: FASTQ file.
 \item \code{PipetteGafFile}: Gene Ontology (GO) annotation file (GAF).
@@ -54,10 +59,13 @@ Updated 2023-12-13.
 \item \code{PipetteGmtFile}: Gene matrix transposed file (GMT).
 \item \code{PipetteGmxFile}: Gene matrix file (GMX).
 \item \code{PipetteGrpFile}: Gene set file (GRP).
+\item \code{PipetteH5adFile}: AnnData HDF5 file (H5AD).
 \item \code{PipetteJsonFile}: JSON file.
 \item \code{PipetteMafFile}: Mutation annotation format file (MAF).
 \item \code{PipetteMtxFile}: MatrixMarket exchange file (MTX).
 \item \code{PipetteOboFile}: Open Biomedical Ontologies file (OBO).
+\item \code{PipetteOwlFile}: Web Ontology Language file (OWL).
+\item \code{PipetteParquetFile}: Apache Parquet file (PARQUET).
 \item \code{PipettePzfxFile}: GraphPad Prism file (PZFX).
 \item \code{PipetteRdsFile}: R data file containing a single, serialized object (RDS).
 \item \code{PipetteRDataFile}: R Data file containing multiple objects (RData/RDA).

@@ -41,11 +41,18 @@ Suggests:
     AcidTest,
     BiocFileCache,
     Biostrings,
+    DBI,
     Rsamtools,
+    SingleCellExperiment,
+    anndataR,
+    arrow,
     data.table,
     digest,
+    duckdb,
     httr2,
     maftools,
+    nanoparquet,
+    paws.storage,
     pzfx,
     readr,
     readxl,
@@ -54,10 +61,12 @@ Suggests:
     testthat,
     tibble,
     tools,
-    withr
+    withr,
+    xml2,
+    zellkonverter
 Additional_repositories: https://r.acidgenomics.com
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
 biocViews: Infrastructure
+Config/roxygen2/version: 8.0.0

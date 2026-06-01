@@ -41,7 +41,7 @@ Overwrite existing file on disk.}
 \item{compress}{logical or character string specifying whether saving
     to a named file is to use compression.  \code{TRUE} corresponds to
     \command{gzip} compression, and character strings \code{"gzip"},
-    \code{"bzip2"} or \code{"xz"} specify the type of
+    \code{"bzip2"}, \code{"xz"} or \code{"zstd"} specify the type of
     compression.  Ignored when \code{file} is a connection and
     for workspace format version 1.}
 

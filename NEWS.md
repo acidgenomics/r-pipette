@@ -1,5 +1,40 @@
 # Release notes
 
+## pipette 0.16.0 (2026-05-31)
+
+Major changes:
+
+- `import`: Added support for Apache Parquet files (`.parquet`). Uses
+  `nanoparquet` by default; falls back to `arrow` when available.
+- `import`: Added support for DuckDB database files (`.duckdb`). Uses `DBI`
+  and `duckdb`. Single-table databases are returned as a `data.frame`;
+  multi-table databases are returned as a named `list`. A `table` or `query`
+  parameter can be passed to select or filter data.
+- `import`: Added support for AnnData HDF5 files (`.h5ad`), the standard
+  format for single-cell and spatial analyses from the scverse ecosystem
+  (scanpy, squidpy, AnnData). Returns a `SingleCellExperiment`. Uses
+  `anndataR` (native R, no Python required) by default; falls back to
+  `zellkonverter` when specified via the `engine` argument.
+- `import`: Added support for Web Ontology Language files (`.owl`). Parses
+  OBO Foundry-style RDF/XML using `xml2`. Returns a `DataFrame` with `id`,
+  `name`, `isA`, `def`, and `obsolete` columns.
+- `import`: Enhanced OBO file parser to extract additional fields:
+  `namespace`, `def`, `is_a`, `synonym`, and `xref`. A `fields` parameter
+  controls which columns are returned.
+- `import`: Added transparent AWS S3 support. Pass `s3://bucket/key` URIs
+  directly to `import()`. Requires the `paws.storage` package.
+- `export`: Added Parquet export for `data.frame`, `DFrame`, `matrix`, and
+  `GRanges` objects. Use a `.parquet` file extension with `export()`.
+- `export`: Added transparent AWS S3 support. Pass `s3://bucket/key` URIs
+  as the `con` argument to `export()`. Requires the `paws.storage` package.
+
+Minor changes:
+
+- Updated linter configuration (`.lintr`) to include
+  `unnecessary_lambda_linter()` from lintr 3.1.
+- Added `air.toml` for the Air R formatter with matching 80-character line
+  width and 4-space indent settings.
+
 ## pipette 0.15.3 (2025-03-24)
 
 Minor changes:
