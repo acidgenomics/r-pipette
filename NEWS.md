@@ -35,6 +35,10 @@ Minor changes:
 - Added `air.toml` for the Air R formatter with matching 80-character line
   width and 4-space indent settings.
 
+License changes:
+
+- Switched from AGPL-3.0 to Apache-2.0.
+
 ## pipette 0.15.3 (2025-03-24)
 
 Minor changes:
