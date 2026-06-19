@@ -37,3 +37,8 @@ R
 [bioconda]: https://bioconda.github.io/
 [conda]: https://docs.conda.io/
 [r]: https://www.r-project.org/
+
+
+## License
+
+Apache-2.0 — Copyright 2018 Acid Genomics LLC — see [LICENSE.md](LICENSE.md).

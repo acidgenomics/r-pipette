@@ -353,6 +353,7 @@ NULL
             "csv" = "Csv",
             "dbf" = "Rio",
             "dif" = "Rio",
+            "duckdb" = "Duckdb",
             "dta" = "Rio",
             "excel" = "Excel",
             "fa" = "Fasta",
@@ -371,6 +372,7 @@ NULL
             "grp" = "Grp",
             "gsheet" = "Rio",
             "gtf" = "Rtracklayer",
+            "h5ad" = "H5ad",
             "json" = "Json",
             "lines" = "Lines",
             "log" = "Lines",
@@ -382,6 +384,8 @@ NULL
             "narrowpeak" = "Rtracklayer",
             "obo" = "Obo",
             "ods" = "Rio",
+            "owl" = "Owl",
+            "parquet" = "Parquet",
             "por" = "Rio",
             "psv" = "Rio",
             "py" = "Lines",
@@ -537,7 +541,9 @@ NULL
             yes = "",
             no = paste0(".", fileExt)
         )
-        if (isAUrl(file)) {
+        if (.isS3Uri(file)) {
+            file <- .s3Download(uri = file, quiet = quiet)
+        } else if (isAUrl(file)) {
             assert(isAnExistingUrl(file))
             url <- file
             file <- tempfile(
@@ -2150,30 +2156,111 @@ NULL
 
 #' Import an open biomedical ontologies file (`.obo`)
 #'
-#' @note Updated 2023-09-20.
+#' @note Updated 2026-05-31.
 #' @noRd
 `import,PipetteOboFile` <- # nolint
-    function(con, quiet = FALSE) {
-        assert(isFlag(quiet))
-        file <- .resource(con)
-        whatPkg <- "ontologyIndex"
-        whatFun <- "get_ontology"
-        if (isFALSE(quiet)) {
-            .alertImport(
-                con = con,
-                whatPkg = whatPkg,
-                whatFun = whatFun
-            )
-        }
-        args <- list(
-            "file" = file,
-            "propagate_relationships" = "is_a",
-            "extract_tags" = "everything"
+    function(con,
+             fields = c(
+                 "id", "name", "namespace",
+                 "def", "is_a", "obsolete"
+             ),
+             quiet = FALSE) {
+        assert(
+            isCharacter(fields),
+            isFlag(quiet)
         )
-        what <- .getFunction(f = whatFun, pkg = whatPkg)
-        object <- do.call(what = what, args = args)
-        assert(is(object, "ontology_index"))
-        object
+        file <- .resource(con)
+        lines <- readLines(file, warn = FALSE)
+        termStarts <- which(lines == "[Term]")
+        if (!hasLength(termStarts)) {
+            return(DataFrame())
+        }
+        termEnds <- c(termStarts[-1L] - 1L, length(lines))
+        n <- length(termStarts)
+        ## Single-value tag extractor. Strips inline comments (e.g. "! ...").
+        getTag <- function(block, tag) {
+            hit <- grep(
+                pattern = paste0("^", tag, ": "),
+                x = block,
+                value = TRUE
+            )
+            if (!hasLength(hit)) {
+                return(NA_character_)
+            }
+            val <- sub(
+                pattern = paste0("^", tag, ": "),
+                replacement = "",
+                x = hit[[1L]]
+            )
+            sub(pattern = "\\s+!.*$", replacement = "", x = val)
+        }
+        ## Multi-value tag extractor. Returns pipe-separated string or NA.
+        getTagMulti <- function(block, tag) {
+            hits <- grep(
+                pattern = paste0("^", tag, ": "),
+                x = block,
+                value = TRUE
+            )
+            if (!hasLength(hits)) {
+                return(NA_character_)
+            }
+            vals <- sub(
+                pattern = paste0("^", tag, ": "),
+                replacement = "",
+                x = hits
+            )
+            vals <- sub(pattern = "\\s+!.*$", replacement = "", x = vals)
+            paste(vals, collapse = "|")
+        }
+        ids <- character(n)
+        termNames <- character(n)
+        namespaces <- character(n)
+        defs <- character(n)
+        isA <- character(n)
+        synonyms <- character(n)
+        xrefs <- character(n)
+        obsolete <- logical(n)
+        for (i in seq_len(n)) {
+            block <- lines[termStarts[[i]]:termEnds[[i]]]
+            ids[[i]] <- getTag(block, "id")
+            termNames[[i]] <- getTag(block, "name")
+            namespaces[[i]] <- getTag(block, "namespace")
+            rawDef <- getTag(block, "def")
+            defs[[i]] <- if (is.na(rawDef)) {
+                NA_character_
+            } else {
+                ## Strip leading/trailing quotes and trailing xref block.
+                sub(
+                    pattern = "^\"(.+?)\".*$",
+                    replacement = "\\1",
+                    x = rawDef
+                )
+            }
+            isA[[i]] <- getTagMulti(block, "is_a")
+            synonyms[[i]] <- getTagMulti(block, "synonym")
+            xrefs[[i]] <- getTagMulti(block, "xref")
+            obs <- getTag(block, "is_obsolete")
+            obsolete[[i]] <- !is.na(obs) && identical(obs, "true")
+        }
+        out <- DataFrame(
+            id = ids,
+            name = termNames,
+            namespace = namespaces,
+            def = defs,
+            is_a = isA,
+            synonym = synonyms,
+            xref = xrefs,
+            obsolete = obsolete
+        )
+        allFields <- c(
+            "id", "name", "namespace",
+            "def", "is_a", "synonym", "xref", "obsolete"
+        )
+        keep <- intersect(allFields, fields)
+        if (!hasLength(keep)) {
+            abort("No valid fields specified.")
+        }
+        out[, keep, drop = FALSE]
     }
 
 
@@ -2193,6 +2280,285 @@ NULL
 #' @noRd
 `import,PipetteVcfFile` <- # nolint
     `import,PipetteBcfFile`
+
+
+
+## New format importers ========================================================
+
+#' Import a Web Ontology Language file (`.owl`)
+#'
+#' @note Updated 2026-05-31.
+#' @noRd
+`import,PipetteOwlFile` <- # nolint
+    function(con, quiet = FALSE) {
+        assert(isFlag(quiet))
+        file <- .resource(con)
+        whatPkg <- "xml2"
+        whatFun <- "read_xml"
+        assert(requireNamespaces(whatPkg))
+        if (isFALSE(quiet)) {
+            .alertImport(
+                con = con,
+                whatPkg = whatPkg,
+                whatFun = whatFun
+            )
+        }
+        doc <- xml2::read_xml(file)
+        ns <- c(
+            "rdf" =
+                "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+            "rdfs" =
+                "http://www.w3.org/2000/01/rdf-schema#",
+            "owl" =
+                "http://www.w3.org/2002/07/owl#",
+            "obo" =
+                "http://purl.obolibrary.org/obo/",
+            "oboInOwl" =
+                "http://www.geneontology.org/formats/oboInOwl#"
+        )
+        nodes <- xml2::xml_find_all(doc, "//owl:Class[@rdf:about]", ns)
+        if (!hasLength(nodes)) {
+            return(DataFrame())
+        }
+        n <- length(nodes)
+        ids <- xml2::xml_attr(nodes, "about")
+        termNames <- vapply(
+            X = nodes,
+            FUN = function(node) {
+                lbl <- xml2::xml_find_first(
+                    node, "./rdfs:label", ns
+                )
+                if (inherits(lbl, "xml_missing")) {
+                    NA_character_
+                } else {
+                    xml2::xml_text(lbl)
+                }
+            },
+            FUN.VALUE = character(1L)
+        )
+        isA <- vapply(
+            X = nodes,
+            FUN = function(node) {
+                parents <- xml2::xml_find_all(
+                    node,
+                    "./rdfs:subClassOf[@rdf:resource]",
+                    ns
+                )
+                if (!hasLength(parents)) {
+                    return(NA_character_)
+                }
+                paste(
+                    xml2::xml_attr(parents, "resource"),
+                    collapse = "|"
+                )
+            },
+            FUN.VALUE = character(1L)
+        )
+        defs <- vapply(
+            X = nodes,
+            FUN = function(node) {
+                ## IAO_0000115 is the OBO standard definition annotation.
+                defNode <- xml2::xml_find_first(
+                    node, "./obo:IAO_0000115", ns
+                )
+                if (inherits(defNode, "xml_missing")) {
+                    NA_character_
+                } else {
+                    xml2::xml_text(defNode)
+                }
+            },
+            FUN.VALUE = character(1L)
+        )
+        obsolete <- vapply(
+            X = nodes,
+            FUN = function(node) {
+                depNode <- xml2::xml_find_first(
+                    node, "./owl:deprecated", ns
+                )
+                if (inherits(depNode, "xml_missing")) {
+                    return(FALSE)
+                }
+                identical(xml2::xml_text(depNode), "true")
+            },
+            FUN.VALUE = logical(1L)
+        )
+        DataFrame(
+            id = ids,
+            name = termNames,
+            isA = isA,
+            def = defs,
+            obsolete = obsolete
+        )
+    }
+
+
+
+#' Import an Apache Parquet file (`.parquet`)
+#'
+#' @note Updated 2026-05-31.
+#' @noRd
+`import,PipetteParquetFile` <- # nolint
+    function(con,
+             rownames = TRUE,
+             rownameCol = NULL,
+             colnames = TRUE,
+             makeNames = syntactic::makeNames,
+             engine = c("nanoparquet", "arrow"),
+             metadata = FALSE,
+             quiet = FALSE) {
+        engine <- match.arg(engine)
+        assert(
+            isFlag(rownames),
+            isScalar(rownameCol) || is.null(rownameCol),
+            isFlag(colnames) || isCharacter(colnames),
+            is.function(makeNames) ||
+                is.null(makeNames) ||
+                isFALSE(makeNames),
+            isFlag(metadata),
+            isFlag(quiet)
+        )
+        file <- .resource(con)
+        switch(
+            EXPR = engine,
+            "nanoparquet" = {
+                whatPkg <- "nanoparquet"
+                whatFun <- "read_parquet"
+            },
+            "arrow" = {
+                whatPkg <- "arrow"
+                whatFun <- "read_parquet"
+            }
+        )
+        assert(requireNamespaces(whatPkg))
+        if (isFALSE(quiet)) {
+            .alertImport(
+                con = con,
+                whatPkg = whatPkg,
+                whatFun = whatFun
+            )
+        }
+        args <- list("file" = file)
+        what <- .getFunction(f = whatFun, pkg = whatPkg)
+        object <- do.call(what = what, args = args)
+        object <- as.data.frame(object)
+        .returnImport(
+            object = object,
+            con = con,
+            rownames = rownames,
+            rownameCol = rownameCol,
+            colnames = colnames,
+            makeNames = makeNames,
+            metadata = metadata,
+            whatPkg = whatPkg,
+            whatFun = whatFun,
+            quiet = quiet
+        )
+    }
+
+
+
+#' Import a DuckDB database file (`.duckdb`)
+#'
+#' @note Updated 2026-05-31.
+#' @noRd
+`import,PipetteDuckdbFile` <- # nolint
+    function(con,
+             table = NULL,
+             query = NULL,
+             quiet = FALSE) {
+        assert(
+            isString(table, nullOk = TRUE),
+            isString(query, nullOk = TRUE),
+            isFlag(quiet)
+        )
+        file <- .resource(con)
+        assert(requireNamespaces(c("DBI", "duckdb")))
+        if (isFALSE(quiet)) {
+            .alertImport(
+                con = con,
+                whatPkg = "duckdb",
+                whatFun = "dbConnect"
+            )
+        }
+        drv <- duckdb::duckdb()
+        conn <- DBI::dbConnect(drv, dbdir = file, read_only = TRUE)
+        on.exit(DBI::dbDisconnect(conn, shutdown = TRUE), add = TRUE)
+        if (!is.null(query)) {
+            object <- DBI::dbGetQuery(conn, query)
+        } else if (!is.null(table)) {
+            object <- DBI::dbReadTable(conn, table)
+        } else {
+            tables <- DBI::dbListTables(conn)
+            if (!hasLength(tables)) {
+                return(data.frame())
+            }
+            if (isScalar(tables)) {
+                object <- DBI::dbReadTable(conn, tables)
+            } else {
+                if (isFALSE(quiet)) {
+                    alertInfo(sprintf(
+                        fmt = paste(
+                            "Multiple tables found: %s.",
+                            "Returning as named list.",
+                            "Use {.arg %s} to select one.",
+                            sep = "\n"
+                        ),
+                        toInlineString(tables, n = 5L),
+                        "table"
+                    ))
+                }
+                object <- lapply(
+                    X = tables,
+                    FUN = function(tbl) DBI::dbReadTable(conn, tbl)
+                )
+                names(object) <- tables
+            }
+        }
+        object
+    }
+
+
+
+#' Import an AnnData HDF5 file (`.h5ad`)
+#'
+#' @note Updated 2026-05-31.
+#' @noRd
+`import,PipetteH5adFile` <- # nolint
+    function(con,
+             engine = c("anndataR", "zellkonverter"),
+             quiet = FALSE) {
+        engine <- match.arg(engine)
+        assert(isFlag(quiet))
+        file <- .resource(con)
+        switch(
+            EXPR = engine,
+            "anndataR" = {
+                whatPkg <- "anndataR"
+                whatFun <- "read_h5ad"
+            },
+            "zellkonverter" = {
+                whatPkg <- "zellkonverter"
+                whatFun <- "readH5AD"
+            }
+        )
+        assert(requireNamespaces(whatPkg))
+        if (isFALSE(quiet)) {
+            .alertImport(
+                con = con,
+                whatPkg = whatPkg,
+                whatFun = whatFun
+            )
+        }
+        args <- list("file" = file)
+        what <- .getFunction(f = whatFun, pkg = whatPkg)
+        object <- do.call(what = what, args = args)
+        if (identical(engine, "anndataR")) {
+            assert(requireNamespaces("SingleCellExperiment"))
+            object <- anndataR::to_SingleCellExperiment(object)
+        }
+        assert(is(object, "SingleCellExperiment"))
+        object
+    }
 
 
 
@@ -2530,4 +2896,36 @@ setMethod(
     f = "import",
     signature = signature(con = "PipetteRtracklayerFile"),
     definition = `import,PipetteRtracklayerFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(con = "PipetteOwlFile"),
+    definition = `import,PipetteOwlFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(con = "PipetteParquetFile"),
+    definition = `import,PipetteParquetFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(con = "PipetteDuckdbFile"),
+    definition = `import,PipetteDuckdbFile`
+)
+
+#' @rdname import
+#' @export
+setMethod(
+    f = "import",
+    signature = signature(con = "PipetteH5adFile"),
+    definition = `import,PipetteH5adFile`
 )

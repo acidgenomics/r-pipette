@@ -3,7 +3,7 @@
 #' Currently intended for use with `import` function.
 #'
 #' @export
-#' @note Updated 2023-12-13.
+#' @note Updated 2026-05-31.
 #'
 #' @section Primary classes:
 #'
@@ -12,6 +12,7 @@
 #' - `PipetteBcbioCountsFile`: bcbio-nextgen counts file.
 #' - `PipetteCramFile`: Compressed reference-oriented alignment map (CRAM).
 #' - `PipetteCsvFile`: Comma-separated values file (CSV).
+#' - `PipetteDuckdbFile`: DuckDB database file (DUCKDB).
 #' - `PipetteFastaFile`: FASTA file.
 #' - `PipetteFastqFile`: FASTQ file.
 #' - `PipetteGafFile`: Gene Ontology (GO) annotation file (GAF).
@@ -19,10 +20,13 @@
 #' - `PipetteGmtFile`: Gene matrix transposed file (GMT).
 #' - `PipetteGmxFile`: Gene matrix file (GMX).
 #' - `PipetteGrpFile`: Gene set file (GRP).
+#' - `PipetteH5adFile`: AnnData HDF5 file (H5AD).
 #' - `PipetteJsonFile`: JSON file.
 #' - `PipetteMafFile`: Mutation annotation format file (MAF).
 #' - `PipetteMtxFile`: MatrixMarket exchange file (MTX).
 #' - `PipetteOboFile`: Open Biomedical Ontologies file (OBO).
+#' - `PipetteOwlFile`: Web Ontology Language file (OWL).
+#' - `PipetteParquetFile`: Apache Parquet file (PARQUET).
 #' - `PipettePzfxFile`: GraphPad Prism file (PZFX).
 #' - `PipetteRdsFile`: R data file containing a single, serialized object (RDS).
 #' - `PipetteRDataFile`: R Data file containing multiple objects (RData/RDA).
@@ -268,7 +272,35 @@ setClass(
 #' @rdname PipetteFile-class
 #' @export
 setClass(
+    Class = "PipetteDuckdbFile",
+    contains = "PipetteFile"
+)
+
+#' @rdname PipetteFile-class
+#' @export
+setClass(
+    Class = "PipetteH5adFile",
+    contains = "PipetteFile"
+)
+
+#' @rdname PipetteFile-class
+#' @export
+setClass(
     Class = "PipetteOboFile",
+    contains = "PipetteFile"
+)
+
+#' @rdname PipetteFile-class
+#' @export
+setClass(
+    Class = "PipetteOwlFile",
+    contains = "PipetteFile"
+)
+
+#' @rdname PipetteFile-class
+#' @export
+setClass(
+    Class = "PipetteParquetFile",
     contains = "PipetteFile"
 )
 
