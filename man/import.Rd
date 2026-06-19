@@ -30,6 +30,10 @@
 \alias{import,PipetteBcbioCountsFile-method}
 \alias{import,PipetteRioFile-method}
 \alias{import,PipetteRtracklayerFile-method}
+\alias{import,PipetteOwlFile-method}
+\alias{import,PipetteParquetFile-method}
+\alias{import,PipetteDuckdbFile-method}
+\alias{import,PipetteH5adFile-method}
 \title{Import data into R}
 \usage{
 import(con, ...)
@@ -127,7 +131,11 @@ import(con, ...)
 
 \S4method{import}{PipetteMtxFile}(con, rownamesFile, colnamesFile, metadata = FALSE, quiet = FALSE)
 
-\S4method{import}{PipetteOboFile}(con, quiet = FALSE)
+\S4method{import}{PipetteOboFile}(
+  con,
+  fields = c("id", "name", "namespace", "def", "is_a", "obsolete"),
+  quiet = FALSE
+)
 
 \S4method{import}{PipettePzfxFile}(
   con,
@@ -157,6 +165,23 @@ import(con, ...)
 )
 
 \S4method{import}{PipetteRtracklayerFile}(con, metadata = FALSE, quiet = FALSE, ...)
+
+\S4method{import}{PipetteOwlFile}(con, quiet = FALSE)
+
+\S4method{import}{PipetteParquetFile}(
+  con,
+  rownames = TRUE,
+  rownameCol = NULL,
+  colnames = TRUE,
+  makeNames = syntactic::makeNames,
+  engine = c("nanoparquet", "arrow"),
+  metadata = FALSE,
+  quiet = FALSE
+)
+
+\S4method{import}{PipetteDuckdbFile}(con, table = NULL, query = NULL, quiet = FALSE)
+
+\S4method{import}{PipetteH5adFile}(con, engine = c("anndataR", "zellkonverter"), quiet = FALSE)
 }
 \arguments{
 \item{con}{\code{character(1)} or \code{connection}.

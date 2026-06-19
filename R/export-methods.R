@@ -81,7 +81,70 @@ NULL
 
 
 
-## Updated 2021-09-27.
+## Updated 2026-05-31.
+## Export a data frame to Apache Parquet format.
+.exportParquet <- function(object, con, rownames = TRUE, overwrite, quiet) {
+    assert(
+        is.data.frame(object),
+        isString(con),
+        isFlag(rownames),
+        isFlag(overwrite),
+        isFlag(quiet)
+    )
+    object <- as.data.frame(object, optional = TRUE)
+    if (isTRUE(rownames) && hasRownames(object)) {
+        assert(areDisjointSets("rowname", colnames(object)))
+        object[["rowname"]] <- rownames(object)
+        rownames(object) <- NULL
+        object <- object[
+            ,
+            c("rowname", setdiff(colnames(object), "rowname")),
+            drop = FALSE
+        ]
+    }
+    if (isAFile(con)) {
+        if (isTRUE(overwrite)) {
+            if (isFALSE(quiet)) {
+                alertWarning(sprintf("Overwriting {.file %s}.", con))
+            }
+            file.remove(con)
+        } else {
+            abort(sprintf("File exists: {.file %s}.", con))
+        }
+    }
+    if (isInstalled("nanoparquet")) {
+        whatPkg <- "nanoparquet"
+        whatFun <- "write_parquet"
+    } else if (isInstalled("arrow")) {
+        whatPkg <- "arrow"
+        whatFun <- "write_parquet"
+    } else {
+        abort(paste(
+            "Install {.pkg nanoparquet} or {.pkg arrow}",
+            "to export Parquet files."
+        ))
+    }
+    if (isFALSE(quiet)) {
+        .alertExport(
+            whatFile = con,
+            whatPkg = whatPkg,
+            whatFun = whatFun
+        )
+    }
+    initDir(dirname(con))
+    what <- .getFunction(f = whatFun, pkg = whatPkg)
+    if (identical(whatPkg, "nanoparquet")) {
+        do.call(what = what, args = list("x" = object, "file" = con))
+    } else {
+        do.call(what = what, args = list("x" = object, "sink" = con))
+    }
+    con <- realpath(con)
+    invisible(con)
+}
+
+
+
+## Updated 2026-05-31.
 .alertExport <- function(whatFile, whatPkg, whatFun) {
     assert(
         isString(whatFile),
@@ -132,7 +195,7 @@ NULL
 
 
 
-## Updated 2021-10-21.
+## Updated 2026-05-31.
 .exportFormatChoices <- list(
     "Matrix" = c(
         "mtx.gz",
@@ -158,7 +221,8 @@ NULL
         "tsv.bz2",
         "tsv.gz",
         "tsv.xz",
-        "tsv.zip"
+        "tsv.zip",
+        "parquet"
     )
 )
 
@@ -231,6 +295,11 @@ NULL
             isFlag(append),
             isFlag(quiet)
         )
+        ## S3 URI: write to a temp file and upload after export.
+        s3Uri <- if (.isS3Uri(con)) con else NULL
+        if (!is.null(s3Uri)) {
+            con <- .s3TempPath(con)
+        }
         object <- as.character(object)
         if (isTRUE(append)) {
             assert(
@@ -325,6 +394,11 @@ NULL
             )
         }
         con <- realpath(con)
+        if (!is.null(s3Uri)) {
+            .s3Upload(file = con, uri = s3Uri, quiet = quiet)
+            file.remove(con)
+            return(invisible(s3Uri))
+        }
         invisible(con)
     }
 
@@ -332,7 +406,7 @@ NULL
 
 #' Export `data.frame` method
 #'
-#' @note Updated 2023-11-08.
+#' @note Updated 2026-05-31.
 #' @noRd
 #'
 #' @details
@@ -340,6 +414,10 @@ NULL
 #' `data.table`, `tbl_df`, and `DFrame` classes. Note that `rio::export()`
 #' doesn't preserve row names by default, so we're ensuring row names get
 #' coerced to "rowname" column consistently here.
+#'
+#' Parquet export is handled transparently when the output file has a
+#' `.parquet` extension. Uses `nanoparquet` by default; falls back to `arrow`
+#' when `nanoparquet` is not installed.
 `export,data.frame` <- # nolint
     function(object,
              con,
@@ -349,9 +427,7 @@ NULL
              overwrite = TRUE,
              engine = c("base", "data.table", "readr"),
              quiet = FALSE) {
-        whatPkg <- match.arg(engine)
         assert(
-            requireNamespaces(whatPkg),
             validObject(object),
             hasNoDuplicates(colnames(object)),
             isString(con),
@@ -362,6 +438,31 @@ NULL
             isFlag(overwrite),
             isFlag(quiet)
         )
+        ## Parquet export delegates to nanoparquet or arrow.
+        if (identical(fileExt(con), "parquet")) {
+            s3Uri <- if (.isS3Uri(con)) con else NULL
+            localCon <- if (!is.null(s3Uri)) .s3TempPath(con) else con
+            result <- .exportParquet(
+                object = object,
+                con = localCon,
+                rownames = rownames,
+                overwrite = overwrite,
+                quiet = quiet
+            )
+            if (!is.null(s3Uri)) {
+                .s3Upload(file = localCon, uri = s3Uri, quiet = quiet)
+                file.remove(localCon)
+                return(invisible(s3Uri))
+            }
+            return(result)
+        }
+        ## S3 URI: write to a temp file and upload after export.
+        s3Uri <- if (.isS3Uri(con)) con else NULL
+        if (!is.null(s3Uri)) {
+            con <- .s3TempPath(con)
+        }
+        whatPkg <- match.arg(engine)
+        assert(requireNamespaces(whatPkg))
         object <- as.data.frame(object, optional = TRUE)
         file <- con
         whatFile <- con
@@ -541,6 +642,11 @@ NULL
             )
         }
         file <- realpath(file)
+        if (!is.null(s3Uri)) {
+            .s3Upload(file = file, uri = s3Uri, quiet = quiet)
+            file.remove(file)
+            return(invisible(s3Uri))
+        }
         invisible(file)
     }
 
@@ -603,7 +709,7 @@ NULL
 #' @details
 #' Note that "file" is referring to the matrix file.
 #' The correponding column and row sidecar files are generated automatically.
-#' Consider adding HDF5 support in a future update.
+#' H5AD import is now supported via `import,PipetteH5adFile`.
 `export,Matrix` <- # nolint
     function(object,
              con,

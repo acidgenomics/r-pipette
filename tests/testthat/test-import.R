@@ -606,11 +606,11 @@ test_that("GAF", {
 })
 
 test_that("OBO", {
-    skip_if_not_installed(pkg = "ontologyIndex")
     file <- file.path(cacheDir, "example.obo")
     x <- import(file)
-    expect_s3_class(x, "ontology_index")
-    expect_length(x, 25L)
+    expect_s4_class(x, "DFrame")
+    expect_identical(colnames(x), c("id", "name", "obsolete"))
+    expect_gt(nrow(x), 0L)
 })
 
 test_that("PZFX", {

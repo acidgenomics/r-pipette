@@ -1,8 +1,8 @@
 Package: pipette
 Title: Pipette Biological Data In and Out of R
 Description: Input/output functions for biological data formats.
-Version: 0.15.3
-Date: 2025-03-24
+Version: 0.16.0
+Date: 2026-05-31
 Authors@R: c(
     person(
         "Michael", "Steinbaugh",
@@ -18,19 +18,19 @@ URL:
     https://r.acidgenomics.com/packages/pipette/,
     https://github.com/acidgenomics/r-pipette/
 BugReports: https://github.com/acidgenomics/r-pipette/issues/
-License: AGPL-3
+License: Apache License (>= 2)
 Encoding: UTF-8
 Depends: R (>= 4.0)
 Imports:
-    AcidBase,
+    AcidBase (>= 0.7.5),
     AcidCLI,
-    AcidGenerics,
+    AcidGenerics (>= 0.7.6),
     BiocGenerics,
     GenomicRanges,
     IRanges,
     Matrix,
     S4Vectors,
-    goalie,
+    goalie (>= 0.7.8),
     jsonlite,
     methods,
     syntactic,
@@ -41,12 +41,18 @@ Suggests:
     AcidTest,
     BiocFileCache,
     Biostrings,
+    DBI,
     Rsamtools,
+    SingleCellExperiment,
+    anndataR,
+    arrow,
     data.table,
     digest,
+    duckdb,
     httr2,
     maftools,
-    ontologyIndex,
+    nanoparquet,
+    paws.storage,
     pzfx,
     readr,
     readxl,
@@ -55,10 +61,12 @@ Suggests:
     testthat,
     tibble,
     tools,
-    withr
+    withr,
+    xml2,
+    zellkonverter
 Additional_repositories: https://r.acidgenomics.com
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
 biocViews: Infrastructure
+Config/roxygen2/version: 8.0.0
