@@ -1,6 +1,6 @@
 # pipette
 
-[![Install with Bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](http://bioconda.github.io/recipes/r-pipette/README.html) ![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)
+[![Install with Bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg)](https://bioconda.github.io/recipes/r-pipette/README.html) ![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)
 
 Pipette biological data in and out of R.
 
@@ -37,7 +37,6 @@ R
 [bioconda]: https://bioconda.github.io/
 [conda]: https://docs.conda.io/
 [r]: https://www.r-project.org/
-
 
 ## License
 
