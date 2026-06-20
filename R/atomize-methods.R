@@ -20,7 +20,6 @@
 NULL
 
 
-
 ## Updated 2023-10-06.
 `atomize,DFrame` <- ## nolint
     function(object) {
@@ -37,7 +36,6 @@ NULL
     }
 
 
-
 ## Updated 2022-05-25.
 `atomize,Ranges` <- # nolint
     function(object) {
@@ -47,7 +45,6 @@ NULL
         mcols(object) <- atomize(mcols(object))
         object
     }
-
 
 
 ## Updated 2022-05-25.
@@ -77,7 +74,6 @@ NULL
         object <- object[, keep, drop = FALSE]
         object
     }
-
 
 
 #' @rdname atomize

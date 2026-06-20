@@ -38,17 +38,18 @@
 NULL
 
 
-
 ## Updated 2023-04-26.
 `matchRownameColumn,DFrame` <- # nolint
-    function(object,
-             choices = c(
-                 "rn",
-                 "row.name",
-                 "row.names",
-                 "rowname",
-                 "rownames"
-             )) {
+    function(
+        object,
+        choices = c(
+            "rn",
+            "row.name",
+            "row.names",
+            "rowname",
+            "rownames"
+        )
+    ) {
         assert(!hasRownames(object))
         match <- na.omit(match(
             x = choices,
@@ -72,11 +73,9 @@ NULL
     }
 
 
-
 ## Updated 2021-10-14.
 `matchRownameColumn,data.frame` <- # nolint
     `matchRownameColumn,DFrame`
-
 
 
 #' @rdname matchRownameColumn

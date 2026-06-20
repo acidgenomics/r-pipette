@@ -24,7 +24,6 @@
 NULL
 
 
-
 ## Updated 2023-09-20.
 `sanitizeNa,DFrame` <- # nolint
     function(object) {
@@ -41,13 +40,11 @@ NULL
     }
 
 
-
 ## Updated 2019-07-19.
 `sanitizeNa,atomic` <- # nolint
     function(object) {
         object
     }
-
 
 
 ## Note that names will be kept here after the gsub call.
@@ -71,11 +68,9 @@ NULL
     }
 
 
-
 ## Updated 2023-09-20.
 `sanitizeNa,data.frame` <- # nolint
     `sanitizeNa,DFrame`
-
 
 
 ## Don't use `as.factor()` and then reset levels using a separate `levels()`
@@ -93,7 +88,6 @@ NULL
         names(x) <- names(object)
         x
     }
-
 
 
 #' @rdname sanitizeNa

@@ -35,10 +35,12 @@
 #'     print(x)
 #' }
 getUrlDirList <-
-    function(url,
-             type = c("all", "dirs", "files"),
-             pattern = NULL,
-             absolute = FALSE) {
+    function(
+        url,
+        type = c("all", "dirs", "files"),
+        pattern = NULL,
+        absolute = FALSE
+    ) {
         assert(
             isString(url),
             isMatchingRegex(x = url, pattern = "^(ftp|http|https)://"),
@@ -63,7 +65,7 @@ getUrlDirList <-
         )
         x <- import(con = destfile, format = "lines", quiet = TRUE)
         unlink(destfile)
-        protocol <- strsplit(url, split = ":")[[1L]][[1L]]
+        protocol <- strsplit(url, split = ":", fixed = TRUE)[[1L]][[1L]]
         x <- switch(
             EXPR = protocol,
             "ftp" = {
@@ -97,7 +99,6 @@ getUrlDirList <-
         }
         x
     }
-
 
 
 #' Get list of files from an FTP server
@@ -194,14 +195,14 @@ getUrlDirList <-
         switch(
             EXPR = type,
             "dirs" = {
-                keep <- grepl(pattern = "^d", x = df[["perms"]])
+                keep <- startsWith(df[["perms"]], "d")
                 if (!any(keep)) {
                     return(character())
                 }
                 df <- df[keep, , drop = FALSE]
             },
             "files" = {
-                keep <- !grepl(pattern = "^d", x = df[["perms"]])
+                keep <- !startsWith(df[["perms"]], "d")
                 if (!any(keep)) {
                     return(character())
                 }
@@ -211,7 +212,6 @@ getUrlDirList <-
         out <- df[["basename"]]
         out
     }
-
 
 
 #' Get list of files from an HTTP(S) server
@@ -228,7 +228,7 @@ getUrlDirList <-
     function(x, type = c("all", "dirs", "files")) {
         assert(isCharacter(x))
         type <- match.arg(type)
-        if (!any(grepl(pattern = "^<h1>Index of", x = x))) {
+        if (!any(startsWith(x, "<h1>Index of"))) {
             return(character())
         }
         ## Reformat input as CSV.
@@ -284,14 +284,14 @@ getUrlDirList <-
         switch(
             EXPR = type,
             "dirs" = {
-                keep <- grepl(pattern = "/$", x = df[["basename"]])
+                keep <- endsWith(df[["basename"]], "/")
                 if (!any(keep)) {
                     return(character())
                 }
                 df <- df[keep, , drop = FALSE]
             },
             "files" = {
-                keep <- !grepl(pattern = "/$", x = df[["basename"]])
+                keep <- !endsWith(df[["basename"]], "/")
                 if (!any(keep)) {
                     return(character())
                 }

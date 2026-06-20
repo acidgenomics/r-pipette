@@ -54,17 +54,19 @@
 #' ## Clean up.
 #' rm(example, inherits = TRUE)
 loadData <-
-    function(...,
-             dir = getOption(
-                 x = "acid.load.dir",
-                 default = getwd()
-             ),
-             envir = globalenv(),
-             list = NULL,
-             overwrite = getOption(
-                 x = "acid.overwrite",
-                 default = TRUE
-             )) {
+    function(
+        ...,
+        dir = getOption(
+            x = "acid.load.dir",
+            default = getwd()
+        ),
+        envir = globalenv(),
+        list = NULL,
+        overwrite = getOption(
+            x = "acid.overwrite",
+            default = TRUE
+        )
+    ) {
         assert(
             isADir(dir),
             is.environment(envir),
@@ -86,15 +88,19 @@ loadData <-
             files <- .listData(names = names, dir = dir)
         }
         assert(allAreFiles(files))
-        if (allAreMatchingRegex(
-            x = tolower(basename(files)),
-            pattern = "\\.rds$"
-        )) {
+        if (
+            allAreMatchingRegex(
+                x = tolower(basename(files)),
+                pattern = "\\.rds$"
+            )
+        ) {
             fun <- .loadRDS
-        } else if (allAreMatchingRegex(
-            x = tolower(basename(files)),
-            pattern = "\\.rd[a|ata]$"
-        )) {
+        } else if (
+            allAreMatchingRegex(
+                x = tolower(basename(files)),
+                pattern = "\\.rd[a|ata]$"
+            )
+        ) {
             fun <- .loadRDA
         } else {
             abort(sprintf(
@@ -118,7 +124,6 @@ loadData <-
     }
 
 
-
 ## Updated 2022-05-03.
 .listData <- function(names, dir) {
     assert(isCharacter(names))
@@ -135,12 +140,16 @@ loadData <-
             if (!hasLength(files)) {
                 abort(sprintf(
                     "{.file %s} is missing in {.path %s}.\n%s",
-                    name, dir, .rdataLoadError
+                    name,
+                    dir,
+                    .rdataLoadError
                 ))
             } else if (length(files) > 1L) {
                 abort(sprintf(
                     "{.file %s} is not unique at {.path %s}.\n%s",
-                    name, dir, .rdataLoadError
+                    name,
+                    dir,
+                    .rdataLoadError
                 ))
             }
             files
@@ -157,7 +166,6 @@ loadData <-
 }
 
 
-
 ## Updated 2021-08-24.
 .loadExistsError <- function(name) {
     abort(sprintf(
@@ -166,10 +174,10 @@ loadData <-
             "Set {.code %s} to disable this check.",
             sep = "\n"
         ),
-        name, "overwrite = TRUE"
+        name,
+        "overwrite = TRUE"
     ))
 }
-
 
 
 ## Updated 2022-05-03.
@@ -199,9 +207,8 @@ loadData <-
 }
 
 
-
 ## Last modified 2022-05-03.
-.loadRDA <- function(file, name = NULL, envir, overwrite) {
+.loadRDA <- function(file, envir, overwrite, name = NULL) {
     file <- realpath(file)
     assert(
         isAFile(file),
@@ -246,7 +253,9 @@ loadData <-
                 "This can lead to accidental object replacement.",
                 sep = "\n"
             ),
-            basename(file), name, loaded
+            basename(file),
+            name,
+            loaded
         ))
     }
     assert(identical(name, loaded))

@@ -27,7 +27,6 @@
 NULL
 
 
-
 ## Updated 2023-09-20.
 `factorize,DFrame` <- # nolint
     function(object, j = NULL) {
@@ -77,7 +76,6 @@ NULL
     }
 
 
-
 ## Updated 2023-09-20.
 `factorize,atomic` <- # nolint
     function(object) {
@@ -87,11 +85,9 @@ NULL
     }
 
 
-
 ## Updated 2021-10-14.
 `factorize,data.frame` <- # nolint
     `factorize,DFrame`
-
 
 
 ## Updated 2023-09-20.
@@ -99,7 +95,6 @@ NULL
     function(object) {
         droplevels(object)
     }
-
 
 
 #' @rdname factorize

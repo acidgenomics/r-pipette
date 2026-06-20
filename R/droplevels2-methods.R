@@ -30,7 +30,6 @@
 NULL
 
 
-
 ## Updated 2023-09-12.
 `droplevels2,DFrame` <- # nolint
     function(x) {
@@ -47,7 +46,6 @@ NULL
     }
 
 
-
 ## Updated 2021-02-03.
 `droplevels2,Ranges` <- # nolint
     function(x) {
@@ -56,7 +54,6 @@ NULL
         }
         x
     }
-
 
 
 ## Updated 2023-09-20.
@@ -69,7 +66,6 @@ NULL
     }
 
 
-
 ## Updated 2023-09-20.
 `droplevels2,factor` <- # nolint
     function(x) {
@@ -77,11 +73,9 @@ NULL
     }
 
 
-
 ## Updated 2023-09-20.
 `droplevels2,data.frame` <- # nolint
     `droplevels2,DFrame`
-
 
 
 #' @rdname droplevels2

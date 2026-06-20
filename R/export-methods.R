@@ -80,10 +80,9 @@
 NULL
 
 
-
 ## Updated 2026-05-31.
 ## Export a data frame to Apache Parquet format.
-.exportParquet <- function(object, con, rownames = TRUE, overwrite, quiet) {
+.exportParquet <- function(object, con, overwrite, quiet, rownames = TRUE) {
     assert(
         is.data.frame(object),
         isString(con),
@@ -96,21 +95,19 @@ NULL
         assert(areDisjointSets("rowname", colnames(object)))
         object[["rowname"]] <- rownames(object)
         rownames(object) <- NULL
-        object <- object[
-            ,
+        object <- object[,
             c("rowname", setdiff(colnames(object), "rowname")),
             drop = FALSE
         ]
     }
     if (isAFile(con)) {
-        if (isTRUE(overwrite)) {
-            if (isFALSE(quiet)) {
-                alertWarning(sprintf("Overwriting {.file %s}.", con))
-            }
-            file.remove(con)
-        } else {
+        if (isFALSE(overwrite)) {
             abort(sprintf("File exists: {.file %s}.", con))
         }
+        if (isFALSE(quiet)) {
+            alertWarning(sprintf("Overwriting {.file %s}.", con))
+        }
+        file.remove(con)
     }
     if (isInstalled("nanoparquet")) {
         whatPkg <- "nanoparquet"
@@ -143,7 +140,6 @@ NULL
 }
 
 
-
 ## Updated 2026-05-31.
 .alertExport <- function(whatFile, whatPkg, whatFun) {
     assert(
@@ -153,10 +149,11 @@ NULL
     )
     alert(sprintf(
         "Exporting {.file %s} using {.pkg %s}::{.fun %s}.",
-        whatFile, whatPkg, whatFun
+        whatFile,
+        whatPkg,
+        whatFun
     ))
 }
-
 
 
 #' Return default extension for object
@@ -169,16 +166,18 @@ NULL
 #' future package update, to better support custom methods defined outside of
 #' the package.
 .defaultExt <- function(object) {
-    if (isAny(
-        x = object,
-        classes = c(
-            "matrix",
-            "data.frame",
-            "DFrame",
-            "GRanges",
-            "GRangesList"
+    if (
+        isAny(
+            x = object,
+            classes = c(
+                "matrix",
+                "data.frame",
+                "DFrame",
+                "GRanges",
+                "GRangesList"
+            )
         )
-    )) {
+    ) {
         key <- "delim"
     } else if (is(object, "Matrix")) {
         key <- "Matrix"
@@ -192,7 +191,6 @@ NULL
     assert(isString(ext))
     ext
 }
-
 
 
 ## Updated 2026-05-31.
@@ -227,7 +225,6 @@ NULL
 )
 
 
-
 #' Easy export of an object to working directory
 #'
 #' @note Updated 2023-11-08.
@@ -238,19 +235,22 @@ NULL
         if (isSubset("ext", names(dots))) {
             abort(sprintf(
                 "Use {.arg %s} instead of {.arg %s}.",
-                "con", "ext"
+                "con",
+                "ext"
             ))
         }
         if (isSubset("file", names(dots))) {
             abort(sprintf(
                 "Use {.arg %s} instead of {.arg %s}.",
-                "con", "file"
+                "con",
+                "file"
             ))
         }
         if (isSubset("format", names(dots))) {
             abort(sprintf(
                 "Use {.arg %s} instead of {.arg %s}.",
-                "con", "format"
+                "con",
+                "format"
             ))
         }
         if (missing(con)) {
@@ -269,7 +269,8 @@ NULL
         if (!hasLength(ext)) {
             abort(sprintf(
                 "{.cls %s} is not supported. Use {.var %s} to define output.",
-                simpleClass(object), "con"
+                simpleClass(object),
+                "con"
             ))
         }
         con <- file.path(dir, paste0(name, ".", ext))
@@ -277,15 +278,16 @@ NULL
     }
 
 
-
 ## Updated 2023-11-08.
 `export,atomic` <- # nolint
-    function(object,
-             con,
-             append = FALSE,
-             overwrite = TRUE,
-             engine = c("base", "data.table", "readr"),
-             quiet = FALSE) {
+    function(
+        object,
+        con,
+        append = FALSE,
+        overwrite = TRUE,
+        engine = c("base", "data.table", "readr"),
+        quiet = FALSE
+    ) {
         whatPkg <- match.arg(engine)
         assert(
             requireNamespaces(whatPkg),
@@ -306,7 +308,8 @@ NULL
                 !identical(whatPkg, "base"),
                 msg = sprintf(
                     "'%s' engine not supported when '%s' is enabled.",
-                    "base", "append"
+                    "base",
+                    "append"
                 )
             )
             overwrite <- FALSE
@@ -403,7 +406,6 @@ NULL
     }
 
 
-
 #' Export `data.frame` method
 #'
 #' @note Updated 2026-05-31.
@@ -419,14 +421,16 @@ NULL
 #' `.parquet` extension. Uses `nanoparquet` by default; falls back to `arrow`
 #' when `nanoparquet` is not installed.
 `export,data.frame` <- # nolint
-    function(object,
-             con,
-             rownames = TRUE,
-             colnames = TRUE,
-             quote = TRUE,
-             overwrite = TRUE,
-             engine = c("base", "data.table", "readr"),
-             quiet = FALSE) {
+    function(
+        object,
+        con,
+        rownames = TRUE,
+        colnames = TRUE,
+        quote = TRUE,
+        overwrite = TRUE,
+        engine = c("base", "data.table", "readr"),
+        quiet = FALSE
+    ) {
         assert(
             validObject(object),
             hasNoDuplicates(colnames(object)),
@@ -469,11 +473,13 @@ NULL
         compressExt <- fileExt(path = file, pattern = compressExtPattern)
         compress <- !is.na(compressExt)
         ## Handle non-atomic columns (i.e. nested list columns).
-        nonatomicCols <- which(!bapply(
-            X = object,
-            FUN = is.atomic,
-            USE.NAMES = TRUE
-        ))
+        nonatomicCols <- which(
+            !bapply(
+                X = object,
+                FUN = is.atomic,
+                USE.NAMES = TRUE
+            )
+        )
         if (hasLength(nonatomicCols)) {
             ## Attempt to keep simple list columns and return reformatted as
             ## delimited character strings.
@@ -524,22 +530,20 @@ NULL
             assert(areDisjointSets("rowname", colnames(object)))
             object[["rowname"]] <- rownames(object)
             rownames(object) <- NULL
-            object <- object[
-                ,
+            object <- object[,
                 c("rowname", setdiff(colnames(object), "rowname")),
                 drop = FALSE
             ]
         }
         if (isAFile(file)) {
             file <- realpath(file)
-            if (isTRUE(overwrite)) {
-                if (isFALSE(quiet)) {
-                    alertWarning(sprintf("Overwriting {.file %s}.", file))
-                }
-                file.remove(file)
-            } else {
+            if (isFALSE(overwrite)) {
                 abort(sprintf("File exists: {.file %s}.", file))
             }
+            if (isFALSE(quiet)) {
+                alertWarning(sprintf("Overwriting {.file %s}.", file))
+            }
+            file.remove(file)
         }
         if (isTRUE(compress)) {
             file <- sub(
@@ -651,16 +655,12 @@ NULL
     }
 
 
-
 #' Export `list` method
 #'
 #' @note Updated 2023-11-09.
 #' @noRd
 `export,list` <- # nolint
-    function(object,
-             con,
-             overwrite = TRUE,
-             quiet = FALSE) {
+    function(object, con, overwrite = TRUE, quiet = FALSE) {
         assert(
             validObject(object),
             hasLength(object),
@@ -700,7 +700,6 @@ NULL
     }
 
 
-
 #' Export `Matrix` (e.g. `sparseMatrix`) method
 #'
 #' @note Updated 2023-09-20.
@@ -711,10 +710,7 @@ NULL
 #' The correponding column and row sidecar files are generated automatically.
 #' H5AD import is now supported via `import,PipetteH5adFile`.
 `export,Matrix` <- # nolint
-    function(object,
-             con,
-             overwrite = TRUE,
-             quiet = FALSE) {
+    function(object, con, overwrite = TRUE, quiet = FALSE) {
         whatPkg <- "Matrix"
         whatFun <- "writeMM"
         assert(
@@ -732,14 +728,17 @@ NULL
         compress <- !is.na(compressExt)
         if (isAFile(file)) {
             file <- realpath(file)
-            if (isTRUE(overwrite) && isFALSE(quiet)) {
-                alertWarning(sprintf(
-                    fmt = "Overwriting {.file %s} at {.path %s}.",
-                    basename(file), realpath(dirname(file))
-                ))
-            } else {
+            if (isFALSE(overwrite)) {
                 abort(sprintf("File exists: {.file %s}.", file))
             }
+            if (isFALSE(quiet)) {
+                alertWarning(sprintf(
+                    fmt = "Overwriting {.file %s} at {.path %s}.",
+                    basename(file),
+                    realpath(dirname(file))
+                ))
+            }
+            file.remove(file)
         }
         if (isTRUE(compress)) {
             file <- sub(
@@ -803,7 +802,6 @@ NULL
     }
 
 
-
 `export,DFrame` <- # nolint
     `export,data.frame`
 
@@ -815,7 +813,6 @@ NULL
 
 `export,matrix` <- # nolint
     `export,data.frame`
-
 
 
 ## S4 method exports ===========================================================

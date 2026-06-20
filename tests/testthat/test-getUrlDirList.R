@@ -1,16 +1,14 @@
 test_that("NCBI FTP", {
     url <- pasteUrl(
-        "ftp.ncbi.nlm.nih.gov", "genomes",
+        "ftp.ncbi.nlm.nih.gov",
+        "genomes",
         protocol = "ftp"
     )
     skip_if_not(isAnExistingUrl(paste0(url, "/")))
     expect_identical(
-        object = with_collate(
-            new = "C",
-            code = {
-                getUrlDirList(url, type = "all")
-            }
-        ),
+        object = with_collate(new = "C", code = {
+            getUrlDirList(url, type = "all")
+        }),
         expected = c(
             "ASSEMBLY_REPORTS",
             "CLUSTERS",
@@ -34,12 +32,9 @@ test_that("NCBI FTP", {
         )
     )
     expect_identical(
-        object = with_collate(
-            new = "C",
-            code = {
-                getUrlDirList(url, type = "dirs")
-            }
-        ),
+        object = with_collate(new = "C", code = {
+            getUrlDirList(url, type = "dirs")
+        }),
         expected = c(
             "ASSEMBLY_REPORTS",
             "CLUSTERS",
@@ -54,12 +49,9 @@ test_that("NCBI FTP", {
         )
     )
     expect_identical(
-        object = with_collate(
-            new = "C",
-            code = {
-                getUrlDirList(url, type = "files")
-            }
-        ),
+        object = with_collate(new = "C", code = {
+            getUrlDirList(url, type = "files")
+        }),
         expected = c(
             "README.txt",
             "README_GFF3.txt",
@@ -96,17 +88,15 @@ test_that("NCBI FTP", {
 
 test_that("NCBI HTTPS", {
     url <- pasteUrl(
-        "ftp.ncbi.nlm.nih.gov", "genomes",
+        "ftp.ncbi.nlm.nih.gov",
+        "genomes",
         protocol = "https"
     )
     skip_if_not(isAnExistingUrl(url))
     expect_identical(
-        object = with_collate(
-            new = "C",
-            code = {
-                getUrlDirList(url, type = "all")
-            }
-        ),
+        object = with_collate(new = "C", code = {
+            getUrlDirList(url, type = "all")
+        }),
         expected = c(
             "ASSEMBLY_REPORTS",
             "CLUSTERS",
@@ -130,12 +120,9 @@ test_that("NCBI HTTPS", {
         )
     )
     expect_identical(
-        object = with_collate(
-            new = "C",
-            code = {
-                getUrlDirList(url, type = "dirs")
-            }
-        ),
+        object = with_collate(new = "C", code = {
+            getUrlDirList(url, type = "dirs")
+        }),
         expected = c(
             "ASSEMBLY_REPORTS",
             "CLUSTERS",
@@ -153,12 +140,9 @@ test_that("NCBI HTTPS", {
         )
     )
     expect_identical(
-        object = with_collate(
-            new = "C",
-            code = {
-                getUrlDirList(url, type = "files")
-            }
-        ),
+        object = with_collate(new = "C", code = {
+            getUrlDirList(url, type = "files")
+        }),
         expected = c(
             "README.txt",
             "README_GFF3.txt",
@@ -205,12 +189,9 @@ test_that("Ensembl HTTPS", {
     )
     skip_if_not(isAnExistingUrl(url))
     expect_identical(
-        object = with_collate(
-            new = "C",
-            code = {
-                getUrlDirList(url)
-            }
-        ),
+        object = with_collate(new = "C", code = {
+            getUrlDirList(url)
+        }),
         expected = c(
             "CHECKSUMS",
             "Homo_sapiens.GRCh38.cdna.abinitio.fa.gz",
