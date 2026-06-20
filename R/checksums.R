@@ -18,11 +18,9 @@
 NULL
 
 
-
 ## Updated 2023-08-24.
 .digest <-
-    function(file,
-             algo = c("md5", "sha256")) {
+    function(file, algo = c("md5", "sha256")) {
         assert(
             requireNamespaces("digest"),
             isAFile(file)
@@ -43,7 +41,6 @@ NULL
 md5 <- function(file) {
     .digest(file = file, algo = "md5")
 }
-
 
 
 #' @rdname checksums

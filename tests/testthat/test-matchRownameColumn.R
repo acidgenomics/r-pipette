@@ -4,7 +4,7 @@ test_that("NULL return", {
 })
 
 test_that("Match failure", {
-    df <- data.frame(rn = "a", rowname = "b")
+    df <- data.frame(rn = "a", rowname = "b", stringsAsFactors = FALSE)
     expect_error(
         object = matchRownameColumn(df),
         regexp = "Multiple"

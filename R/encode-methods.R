@@ -28,13 +28,11 @@
 NULL
 
 
-
 ## Updated 2023-09-26.
 `encode,Date` <- # nolint
     function(x) {
         x
     }
-
 
 
 ## Updated 2023-09-20.
@@ -79,7 +77,6 @@ NULL
     }
 
 
-
 ## Updated 2023-09-19.
 `encode,Ranges` <- # nolint
     function(x) {
@@ -90,13 +87,11 @@ NULL
     }
 
 
-
 ## Updated 2023-09-19.
 `encode,Rle` <- # nolint
     function(x) {
         x
     }
-
 
 
 ## Updated 2023-09-19.
@@ -106,7 +101,6 @@ NULL
     }
 
 
-
 ## Updated 2023-09-19.
 `encode,factor` <- # nolint
     function(x) {
@@ -114,7 +108,6 @@ NULL
         x <- droplevels(x)
         x
     }
-
 
 
 #' @rdname encode

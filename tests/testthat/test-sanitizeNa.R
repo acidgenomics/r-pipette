@@ -66,7 +66,7 @@ test_that("Harden against unexpected factor level swap", {
 test_that("Named factor", {
     x <- rep(c("a", "b", "NA"), times = 2L, each = 2L)
     x <- as.factor(x)
-    names(x) <- letters[seq_len(length(x))]
+    names(x) <- letters[seq_along(x)]
     expect_false(anyNA(x))
     expect_s3_class(x, "factor")
     y <- sanitizeNa(x)

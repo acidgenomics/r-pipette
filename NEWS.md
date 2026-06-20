@@ -1,5 +1,12 @@
 # Release notes
 
+## pipette 0.16.1 (2026-06-19)
+
+Minor changes:
+
+- Modernized tooling: removed per-package `.lintr` in favour of global
+  `~/.lintr`; added `air.toml`; migrated to roxygen2 8.0.
+
 ## pipette 0.16.0 (2026-05-31)
 
 Major changes:

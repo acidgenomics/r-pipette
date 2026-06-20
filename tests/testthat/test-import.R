@@ -277,47 +277,44 @@ for (engine in engines) {
             unlink2(con)
         }
     )
-    test_that(
-        desc = "'stripWhitespace' argument",
-        code = {
-            con <- file.path(tempdir2(), "lines.txt")
-            vec <- c(
-                "  aaa",
-                "bbb  ",
-                " ccc ",
-                "  ddd  ",
+    test_that(desc = "'stripWhitespace' argument", code = {
+        con <- file.path(tempdir2(), "lines.txt")
+        vec <- c(
+            "  aaa",
+            "bbb  ",
+            " ccc ",
+            "  ddd  ",
+            "eee",
+            "   "
+        )
+        writeLines(text = vec, con = con)
+        expect_identical(
+            object = import(
+                con = con,
+                format = "lines",
+                stripWhitespace = FALSE,
+                engine = engine
+            ),
+            expected = vec
+        )
+        expect_identical(
+            object = import(
+                con = con,
+                format = "lines",
+                stripWhitespace = TRUE,
+                engine = engine
+            ),
+            expected = c(
+                "aaa",
+                "bbb",
+                "ccc",
+                "ddd",
                 "eee",
-                "   "
+                ""
             )
-            writeLines(text = vec, con = con)
-            expect_identical(
-                object = import(
-                    con = con,
-                    format = "lines",
-                    stripWhitespace = FALSE,
-                    engine = engine
-                ),
-                expected = vec
-            )
-            expect_identical(
-                object = import(
-                    con = con,
-                    format = "lines",
-                    stripWhitespace = TRUE,
-                    engine = engine
-                ),
-                expected = c(
-                    "aaa",
-                    "bbb",
-                    "ccc",
-                    "ddd",
-                    "eee",
-                    ""
-                )
-            )
-            unlink2(con)
-        }
-    )
+        )
+        unlink2(con)
+    })
 }
 
 for (engine in engines) {
@@ -600,7 +597,8 @@ test_that("GAF", {
             "date" = 20230911L,
             "assignedBy" = "RNAcentral",
             "annotationExtension" = NA_character_,
-            "geneProductFormId" = NA
+            "geneProductFormId" = NA,
+            stringsAsFactors = FALSE
         )
     )
 })
@@ -622,8 +620,12 @@ test_that("PZFX", {
         colnames(x),
         c(
             "Minutes",
-            "Control_1", "Control_2", "Control_3",
-            "Treated_1", "Treated_2", "Treated_3"
+            "Control_1",
+            "Control_2",
+            "Control_3",
+            "Treated_1",
+            "Treated_2",
+            "Treated_3"
         )
     )
 })
@@ -657,7 +659,8 @@ test_that("XLSX", {
                 "sample2",
                 "sample3",
                 "sample4"
-            )
+            ),
+            stringsAsFactors = FALSE
         )
     )
     expect_true(hasRownames(import(con = file, rownameCol = "rowname")))
@@ -691,7 +694,8 @@ test_that("XLS", {
                 "sample2",
                 "sample3",
                 "sample4"
-            )
+            ),
+            stringsAsFactors = FALSE
         )
     )
     expect_true(hasRownames(import(con = file, rownameCol = "rowname")))
@@ -849,7 +853,8 @@ test_that("textConnection : CSV", {
         ),
         expected = data.frame(
             "a" = c("c", "e"),
-            "b" = c("d", "f")
+            "b" = c("d", "f"),
+            stringsAsFactors = FALSE
         )
     )
     close(con)
@@ -862,7 +867,8 @@ test_that("textConnection : CSV", {
         ),
         expected = data.frame(
             "V1" = c("a", "c", "e"),
-            "V2" = c("b", "d", "f")
+            "V2" = c("b", "d", "f"),
+            stringsAsFactors = FALSE
         )
     )
     close(con)
@@ -879,7 +885,8 @@ test_that("textConnection : TSV", {
         ),
         expected = data.frame(
             "a" = c("c", "e"),
-            "b" = c("d", "f")
+            "b" = c("d", "f"),
+            stringsAsFactors = FALSE
         )
     )
     close(con)
@@ -892,7 +899,8 @@ test_that("textConnection : TSV", {
         ),
         expected = data.frame(
             "V1" = c("a", "c", "e"),
-            "V2" = c("b", "d", "f")
+            "V2" = c("b", "d", "f"),
+            stringsAsFactors = FALSE
         )
     )
     close(con)

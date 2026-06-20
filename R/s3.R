@@ -4,9 +4,8 @@
 #' @noRd
 .isS3Uri <- function(x) {
     assert(isString(x))
-    grepl(pattern = "^s3://", x = x, fixed = FALSE)
+    startsWith(x, "s3://")
 }
-
 
 
 #' Parse an S3 URI into bucket and key components
@@ -32,7 +31,6 @@
     key <- substr(path, start = idx[[1L]] + 1L, stop = nchar(path))
     list("bucket" = bucket, "key" = key)
 }
-
 
 
 #' Download a file from S3 to a local temp file
@@ -67,13 +65,12 @@
         tmpdir = tempdir2(),
         fileext = tmpFileExt
     )
-    svc <- paws.storage::s3()
+    svc <- paws.storage::s3() # nolint: namespace_linter.
     resp <- svc$get_object(Bucket = bucket, Key = key)
     writeBin(resp[["Body"]], con = tmpFile)
     assert(isAFile(tmpFile))
     tmpFile
 }
-
 
 
 #' Create a local temp path mirroring the extension of an S3 URI
@@ -94,7 +91,6 @@
         fileext = tmpFileExt
     )
 }
-
 
 
 #' Upload a local file to S3
@@ -124,7 +120,7 @@
         what = "raw",
         n = file.info(file)[["size"]]
     )
-    svc <- paws.storage::s3()
+    svc <- paws.storage::s3() # nolint: namespace_linter.
     svc$put_object(Body = body, Bucket = bucket, Key = key)
     invisible(uri)
 }

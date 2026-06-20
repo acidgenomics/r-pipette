@@ -2,13 +2,11 @@
 .pkgVersion <- packageVersion(.pkgName)
 
 
-
 #' R data extension pattern
 #'
 #' @note Updated 2020-10-07.
 #' @noRd
 .rdataExtPattern <- "\\.(rd[a|ata|s])$"
-
 
 
 #' R data load error
@@ -21,9 +19,10 @@
         "R data files must contain ",
         "{.var %s}, {.var %s}, or {.var %s} extension."
     ),
-    "rda", "rds", "RData"
+    "rda",
+    "rds",
+    "RData"
 )
-
 
 
 ## Updated 2021-03-16.
@@ -31,7 +30,6 @@
     "'export()' requires 'name' argument when 'object'",
     "is passed in directly, not as a symbol."
 )
-
 
 
 #' NA strings
@@ -56,7 +54,6 @@ naStrings <- c(
     "na",
     "null"
 )
-
 
 
 #' pipette test data URL

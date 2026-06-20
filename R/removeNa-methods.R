@@ -32,12 +32,10 @@
 NULL
 
 
-
 ## Updated 2019-07-19.
 .allNonNA <- function(x) {
     !all(is.na(x))
 }
-
 
 
 ## Updated 2019-07-19.
@@ -47,7 +45,6 @@ NULL
     }
 
 
-
 ## Updated 2019-07-19.
 `removeNa,matrix` <- # nolint
     function(object) {
@@ -55,7 +52,6 @@ NULL
         keepCols <- apply(X = object, MARGIN = 2L, FUN = .allNonNA)
         object[keepRows, keepCols, drop = FALSE]
     }
-
 
 
 ## Updated 2023-04-26.
@@ -69,7 +65,6 @@ NULL
 ## Updated 2019-07-19.
 `removeNa,data.frame` <- # nolint
     `removeNa,matrix`
-
 
 
 #' @rdname removeNa

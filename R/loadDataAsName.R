@@ -18,16 +18,18 @@
 #' loadDataAsName(renamed = example, dir = dir)
 #' class(renamed)
 loadDataAsName <-
-    function(...,
-             dir = getOption(
-                 x = "acid.load.dir",
-                 default = getwd()
-             ),
-             envir = globalenv(),
-             overwrite = getOption(
-                 x = "acid.overwrite",
-                 default = TRUE
-             )) {
+    function(
+        ...,
+        dir = getOption(
+            x = "acid.load.dir",
+            default = getwd()
+        ),
+        envir = globalenv(),
+        overwrite = getOption(
+            x = "acid.overwrite",
+            default = TRUE
+        )
+    ) {
         assert(
             isADir(dir),
             is.environment(envir),
@@ -50,10 +52,12 @@ loadDataAsName <-
         ) {
             .loadExistsError(names)
         }
-        if (allAreMatchingRegex(
-            x = tolower(basename(files)),
-            pattern = "\\.rds$"
-        )) {
+        if (
+            allAreMatchingRegex(
+                x = tolower(basename(files)),
+                pattern = "\\.rds$"
+            )
+        ) {
             ## R data serialized: assign directly.
             invisible(Map(
                 name = names(files),
@@ -64,10 +68,12 @@ loadDataAsName <-
                 },
                 MoreArgs = list("envir" = envir)
             ))
-        } else if (allAreMatchingRegex(
-            x = tolower(basename(files)),
-            pattern = "\\.rd[a|ata]$"
-        )) {
+        } else if (
+            allAreMatchingRegex(
+                x = tolower(basename(files)),
+                pattern = "\\.rd[a|ata]$"
+            )
+        ) {
             ## R data: use safe loading.
             safe <- new.env()
             invisible(Map(

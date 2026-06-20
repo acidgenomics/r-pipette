@@ -20,7 +20,8 @@ test_that("CSV", {
             "aaa" = c("eee", "hhh"),
             "bbb" = c("fff", "iii"),
             "ccc" = c("ggg", NA_character_),
-            "ddd" = rep(NA, 2L)
+            "ddd" = rep(NA, 2L),
+            stringsAsFactors = FALSE
         )
     )
     close(con)
@@ -48,7 +49,8 @@ test_that("TSV", {
             "aaa" = c("eee", "hhh"),
             "bbb" = c("fff", "iii"),
             "ccc" = c("ggg", NA_character_),
-            "ddd" = rep(NA, 2L)
+            "ddd" = rep(NA, 2L),
+            stringsAsFactors = FALSE
         )
     )
     close(con)

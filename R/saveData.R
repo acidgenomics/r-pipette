@@ -65,25 +65,27 @@
 #' ## Clean up.
 #' AcidBase::unlink2(dir)
 saveData <-
-    function(...,
-             dir = getOption(
-                 x = "acid.save.dir",
-                 default = getwd()
-             ),
-             ext = getOption(
-                 x = "acid.save.ext",
-                 default = "rds"
-             ),
-             overwrite = getOption(
-                 x = "acid.overwrite",
-                 default = TRUE
-             ),
-             compress = getOption(
-                 x = "acid.save.compress",
-                 default = TRUE
-             ),
-             list = NULL,
-             envir = parent.frame()) {
+    function(
+        ...,
+        dir = getOption(
+            x = "acid.save.dir",
+            default = getwd()
+        ),
+        ext = getOption(
+            x = "acid.save.ext",
+            default = "rds"
+        ),
+        overwrite = getOption(
+            x = "acid.overwrite",
+            default = TRUE
+        ),
+        compress = getOption(
+            x = "acid.save.compress",
+            default = TRUE
+        ),
+        list = NULL,
+        envir = parent.frame()
+    ) {
         assert(
             isString(dir),
             isFlag(overwrite),

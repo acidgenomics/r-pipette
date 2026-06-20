@@ -118,7 +118,6 @@ setValidity(
 )
 
 
-
 ## File extension groups =======================================================
 
 #' @rdname PipetteFile-class
@@ -143,7 +142,6 @@ setClass(
 )
 
 
-
 ## Handoff classes =============================================================
 
 #' @rdname PipetteFile-class
@@ -159,7 +157,6 @@ setClass(
     Class = "PipetteRtracklayerFile",
     contains = "PipetteFile"
 )
-
 
 
 ## File extensions =============================================================
