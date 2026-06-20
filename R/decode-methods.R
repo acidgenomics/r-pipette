@@ -29,7 +29,6 @@
 NULL
 
 
-
 ## Updated 2023-09-12.
 `decode,DFrame` <- # nolint
     function(x, j = NULL) {
@@ -72,7 +71,6 @@ NULL
     }
 
 
-
 ## Updated 2019-07-20.
 `decode,Ranges` <- # nolint
     function(x) {
@@ -81,7 +79,6 @@ NULL
         }
         x
     }
-
 
 
 #' @rdname decode

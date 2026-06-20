@@ -28,7 +28,6 @@
 NULL
 
 
-
 #' Coerce an S4 `DFrame` to a standard `data.frame`.
 #'
 #' @note Updated 2023-04-26.
@@ -75,13 +74,14 @@ NULL
     }
 
 
-
 ## Updated 2023-10-06.
 `as.data.frame,IRanges` <- # nolint
-    function(x,
-             row.names = NULL, # nolint
-             optional = FALSE,
-             ...) {
+    function(
+        x,
+        row.names = NULL, # nolint
+        optional = FALSE,
+        ...
+    ) {
         dfArgs <- list(
             "start" = start(x),
             "end" = end(x),
@@ -99,13 +99,14 @@ NULL
     }
 
 
-
 ## Updated 2023-10-06.
 `as.data.frame,Matrix` <- # nolint
-    function(x,
-             row.names = NULL, # nolint
-             optional = FALSE,
-             ...) {
+    function(
+        x,
+        row.names = NULL, # nolint
+        optional = FALSE,
+        ...
+    ) {
         as.data.frame(
             x = as.matrix(x),
             row.names = row.names,
@@ -113,7 +114,6 @@ NULL
             ...
         )
     }
-
 
 
 #' @rdname as.data.frame

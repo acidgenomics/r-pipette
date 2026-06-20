@@ -31,11 +31,13 @@
 #' file <- cacheUrl(url)
 #' print(file)
 cacheUrl <-
-    function(url,
-             pkg = "pipette",
-             update = FALSE,
-             ask = FALSE,
-             verbose = TRUE) {
+    function(
+        url,
+        pkg = "pipette",
+        update = FALSE,
+        ask = FALSE,
+        verbose = TRUE
+    ) {
         assert(
             isAnExistingUrl(url),
             isString(pkg),
@@ -54,18 +56,25 @@ cacheUrl <-
         }
         bfc <- .biocPkgCache(pkg = pkg, ask = ask)
         query <- BiocFileCache::bfcquery(
-            x = bfc, query = url, field = "fpath", exact = TRUE
+            x = bfc,
+            query = url,
+            field = "fpath",
+            exact = TRUE
         )
         rid <- query[["rid"]]
         if (!hasLength(rid)) {
             if (isTRUE(verbose)) {
                 alert(sprintf(
                     "Caching URL at {.url %s} into {.path %s}.",
-                    url, BiocFileCache::bfccache(bfc)
+                    url,
+                    BiocFileCache::bfccache(bfc)
                 ))
             }
             add <- BiocFileCache::bfcadd(
-                x = bfc, rname = basename(url), fpath = url, download = TRUE
+                x = bfc,
+                rname = basename(url),
+                fpath = url,
+                download = TRUE
             )
             rid <- names(add)[[1L]]
             assert(isString(rid))
@@ -82,7 +91,6 @@ cacheUrl <-
         out <- unname(rpath)
         out
     }
-
 
 
 #' Prepare BiocFileCache for package

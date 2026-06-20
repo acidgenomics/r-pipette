@@ -23,12 +23,14 @@
 #' x <- loadRemoteData(url)
 #' print(x)
 loadRemoteData <-
-    function(url,
-             envir = globalenv(),
-             overwrite = getOption(
-                 x = "acid.overwrite",
-                 default = TRUE
-             )) {
+    function(
+        url,
+        envir = globalenv(),
+        overwrite = getOption(
+            x = "acid.overwrite",
+            default = TRUE
+        )
+    ) {
         assert(
             allAreExistingUrls(url),
             is.environment(envir),

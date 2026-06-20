@@ -6,7 +6,8 @@ names(paths) <- c("object1", "object2")
 
 test_that("R data serialized", {
     object <- saveData(
-        object1, object2,
+        object1,
+        object2,
         ext = "rds",
         dir = dir,
         overwrite = TRUE
@@ -16,20 +17,28 @@ test_that("R data serialized", {
 
 test_that("R data", {
     object <- saveData(
-        object1, object2,
+        object1,
+        object2,
         ext = "rda",
         dir = dir,
         overwrite = TRUE
     )
-    paths <- gsub(pattern = "\\.rds", replacement = ".rda", x = paths)
+    paths <- gsub(
+        pattern = ".rds",
+        replacement = ".rda",
+        x = paths,
+        fixed = TRUE
+    )
     expect_identical(object, paths)
 })
 
 test_that("overwrite = FALSE", {
     expect_message(
         object = saveData(
-            object1, object2,
-            dir = dir, overwrite = FALSE
+            object1,
+            object2,
+            dir = dir,
+            overwrite = FALSE
         ),
         regexp = "No files were saved."
     )
