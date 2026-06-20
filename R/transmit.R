@@ -43,12 +43,14 @@
 #'     AcidBase::unlink2(localDir)
 #' }
 transmit <-
-    function(remoteDir,
-             localDir = getwd(),
-             pattern = NULL,
-             rename = NULL,
-             compress = FALSE,
-             download = TRUE) {
+    function(
+        remoteDir,
+        localDir = getwd(),
+        pattern = NULL,
+        rename = NULL,
+        compress = FALSE,
+        download = TRUE
+    ) {
         assert(
             ## We check that the URL exists after we add trailing slash below.
             isAUrl(remoteDir),
@@ -73,7 +75,7 @@ transmit <-
         ## `drwxrwxr-x`: Directory
         ## Match files but not dirs (`"^d"`) or symlinks (`"^l"`).
         remoteFiles <-
-            remoteFiles[grepl(pattern = "^-", x = remoteFiles)]
+            remoteFiles[startsWith(remoteFiles, "-")]
         remoteFiles <- strsplit(
             x = remoteFiles,
             split = "[[:space:]]+",

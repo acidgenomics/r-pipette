@@ -46,7 +46,6 @@
 NULL
 
 
-
 ## Intended for S3 class, or S4 class that doesn't support `metadata()`.
 ## Updated 2019-10-24.
 `metadata2,ANY` <- # nolint
@@ -54,7 +53,6 @@ NULL
         assert(isString(which))
         attr(x = x, which = which, exact = TRUE)
     }
-
 
 
 ## Intended for S4 class supporting `metadata()`.
@@ -66,7 +64,6 @@ NULL
     }
 
 
-
 ## Intended for S3 class, or S4 class that doesn't support `metadata()`.
 ## Updated 2019-10-24.
 `metadata2<-,ANY,ANY` <- # nolint
@@ -76,7 +73,6 @@ NULL
     }
 
 
-
 ## Intended for S3 class, or S4 class that doesn't support `metadata()`.
 ## Updated 2019-10-24.
 `metadata2<-,Annotated,ANY` <- # nolint
@@ -84,7 +80,6 @@ NULL
         metadata(x)[[which]] <- value
         x
     }
-
 
 
 #' @rdname metadata2
@@ -108,7 +103,6 @@ setMethod(
     ),
     definition = `metadata2,Annotated`
 )
-
 
 
 #' @rdname metadata2

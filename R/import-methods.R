@@ -287,7 +287,6 @@
 NULL
 
 
-
 ## Internal functions ==========================================================
 
 #' Inform the user about start of file import
@@ -295,9 +294,7 @@ NULL
 #' @note Updated 2023-09-20.
 #' @noRd
 .alertImport <-
-    function(con,
-             whatPkg,
-             whatFun) {
+    function(con, whatPkg, whatFun) {
         assert(
             is(con, "PipetteFile"),
             isString(whatPkg),
@@ -314,12 +311,13 @@ NULL
         }
         alert(sprintf(
             "Importing {.%s %s} using {.pkg %s}::{.fun %s}.",
-            fileType, file,
-            whatPkg, whatFun
+            fileType,
+            file,
+            whatPkg,
+            whatFun
         ))
         invisible(TRUE)
     }
-
 
 
 #' Map file format extension to corresponding S4 file class
@@ -413,7 +411,8 @@ NULL
                     ),
                     "txt",
                     "format",
-                    "lines", "table"
+                    "lines",
+                    "table"
                 ))
             },
             "tsv" = "Tsv",
@@ -428,13 +427,13 @@ NULL
             "zsh" = "Lines",
             abort(sprintf(
                 "{.pkg %s} does not support {.var %s} extension.",
-                .pkgName, format
+                .pkgName,
+                format
             ))
         )
         class <- paste0("Pipette", class, "File")
         class
     }
-
 
 
 #' Get function
@@ -461,7 +460,6 @@ NULL
     }
 
 
-
 #' Internal importer for a sparse matrix sidecar file (e.g. `.rownames`)
 #'
 #' @note Updated 2021-09-25.
@@ -482,7 +480,6 @@ NULL
         )
         object
     }
-
 
 
 #' Dynamically handle a local or remote file path
@@ -551,10 +548,12 @@ NULL
                 tmpdir = tmpDir,
                 fileext = tmpFileExt
             )
-            if (isSubset(
-                x = fileExt(path = url, pattern = "\\.([a-zA-Z0-9]+)$"),
-                y = c("bz2", "gz", "rda", "rds", "xls", "xlsx", "xz", "zip")
-            )) {
+            if (
+                isSubset(
+                    x = fileExt(path = url, pattern = "\\.([a-zA-Z0-9]+)$"),
+                    y = c("bz2", "gz", "rda", "rds", "xls", "xlsx", "xz", "zip")
+                )
+            ) {
                 ## Write binary.
                 mode <- "wb"
             } else {
@@ -570,10 +569,12 @@ NULL
         }
         assert(isAFile(file))
         if (isMatchingRegex(pattern = compressExtPattern, x = file)) {
-            if (!isMatchingFixed(
-                pattern = file.path(tmpDir, tmpPrefix),
-                x = file
-            )) {
+            if (
+                !isMatchingFixed(
+                    pattern = file.path(tmpDir, tmpPrefix),
+                    x = file
+                )
+            ) {
                 tmpFile <- tempfile(
                     pattern = tmpPrefix,
                     tmpdir = tmpDir,
@@ -592,7 +593,6 @@ NULL
     }
 
 
-
 #' Original resource
 #'
 #' @note Updated 2023-09-20.
@@ -605,7 +605,6 @@ NULL
 }
 
 
-
 #' Assign original resource
 #'
 #' @note Updated 2023-09-20.
@@ -615,7 +614,6 @@ NULL
     slot(object, "origResource") <- value
     object
 }
-
 
 
 #' Resource
@@ -630,25 +628,26 @@ NULL
 }
 
 
-
 #' Return standardized import object
 #'
 #' @note Updated 2021-09-24.
 #' @noRd
 .returnImport <-
-    function(object,
-             con,
-             rownames = FALSE,
-             rownameCol = NULL,
-             colnames = FALSE,
-             makeNames = FALSE,
-             metadata = FALSE,
-             whatPkg = NULL,
-             whatFun = NULL,
-             quiet = getOption(
-                 x = "acid.quiet",
-                 default = FALSE
-             )) {
+    function(
+        object,
+        con,
+        rownames = FALSE,
+        rownameCol = NULL,
+        colnames = FALSE,
+        makeNames = FALSE,
+        metadata = FALSE,
+        whatPkg = NULL,
+        whatFun = NULL,
+        quiet = getOption(
+            x = "acid.quiet",
+            default = FALSE
+        )
+    ) {
         validObject(object)
         assert(
             is(con, "PipetteFile"),
@@ -748,7 +747,6 @@ NULL
     }
 
 
-
 ## Primary S4 methods ==========================================================
 
 #' Primary `import` method, that hands off to classed file-extension variants
@@ -773,10 +771,12 @@ NULL
             isString(format, nullOk = TRUE),
             isFlag(quiet)
         )
-        if (isMatchingRegex(
-            pattern = "^https://docs\\.google\\.com/spreadsheets",
-            x = con
-        )) {
+        if (
+            isMatchingRegex(
+                pattern = "^https://docs\\.google\\.com/spreadsheets",
+                x = con
+            )
+        ) {
             format <- "gsheet"
         }
         if (is.null(format)) {
@@ -791,9 +791,11 @@ NULL
                     "Refer to {.pkg %s}::{.fun %s} for details.",
                     sep = "\n"
                 ),
-                "con", basename(con),
+                "con",
+                basename(con),
                 "format",
-                "pipette", "import"
+                "pipette",
+                "import"
             )
         )
         class <- .formatToFileClass(format)
@@ -833,15 +835,16 @@ NULL
     }
 
 
-
 ## Updated 2023-11-03.
 `import,textConnection` <- # nolint
-    function(con,
-             format = c("csv", "tsv", "json", "yaml"),
-             colnames = TRUE,
-             quote = "\"",
-             naStrings = pipette::naStrings,
-             quiet = FALSE) {
+    function(
+        con,
+        format = c("csv", "tsv", "json", "yaml"),
+        colnames = TRUE,
+        quote = "\"",
+        naStrings = pipette::naStrings,
+        quiet = FALSE
+    ) {
         assert(
             is(con, "textConnection"),
             isString(quote),
@@ -894,7 +897,8 @@ NULL
             if (isFALSE(quiet)) {
                 alert(sprintf(
                     "Importing text connection with {.pkg %s}::{.fun %s}.",
-                    whatPkg, whatFun
+                    whatPkg,
+                    whatFun
                 ))
             }
             what <- .getFunction(f = whatFun, pkg = whatPkg)
@@ -903,7 +907,6 @@ NULL
         }
         object
     }
-
 
 
 ## R data importers ============================================================
@@ -953,7 +956,6 @@ NULL
     }
 
 
-
 #' Import an R data serialized file (`.rds`)
 #'
 #' @note Updated 2023-09-20.
@@ -988,7 +990,6 @@ NULL
     }
 
 
-
 ## Array importers =============================================================
 
 #' Import a delimited file (e.g. `.csv`, `.tsv`).
@@ -996,19 +997,21 @@ NULL
 #' @note Updated 2023-10-06.
 #' @noRd
 `import,PipetteDelimFile` <- # nolint
-    function(con,
-             rownames = TRUE,
-             rownameCol = NULL,
-             colnames = TRUE,
-             quote = "\"",
-             naStrings = pipette::naStrings,
-             comment = "",
-             skip = 0L,
-             nMax = Inf,
-             engine = c("base", "data.table", "readr"),
-             makeNames = syntactic::makeNames,
-             metadata = FALSE,
-             quiet = FALSE) {
+    function(
+        con,
+        rownames = TRUE,
+        rownameCol = NULL,
+        colnames = TRUE,
+        quote = "\"",
+        naStrings = pipette::naStrings,
+        comment = "",
+        skip = 0L,
+        nMax = Inf,
+        engine = c("base", "data.table", "readr"),
+        makeNames = syntactic::makeNames,
+        metadata = FALSE,
+        quiet = FALSE
+    ) {
         assert(
             isFlag(rownames),
             isScalar(rownameCol) || is.null(rownameCol),
@@ -1016,7 +1019,8 @@ NULL
             is.character(quote) && length(quote) <= 1L,
             is.character(naStrings),
             is.character(comment) && length(comment) <= 1L,
-            isInt(skip), isNonNegative(skip),
+            isInt(skip),
+            isNonNegative(skip),
             isPositive(nMax),
             is.function(makeNames) ||
                 is.null(makeNames) ||
@@ -1077,7 +1081,8 @@ NULL
                             "comment exclusion.\n",
                             "See also: {.url %s}."
                         ),
-                        whatPkg, whatFun,
+                        whatPkg,
+                        whatFun,
                         "https://github.com/Rdatatable/data.table/issues/856"
                     ))
                 }
@@ -1112,7 +1117,7 @@ NULL
                 args <- list(
                     "file" = file,
                     "col_names" = colnames,
-                    "col_types" = readr::cols(),
+                    "col_types" = readr::cols(), # nolint: namespace_linter.
                     "comment" = comment,
                     "delim" = switch(
                         EXPR = ext,
@@ -1166,29 +1171,31 @@ NULL
     }
 
 
-
 #' Import a Microsoft Excel worksheet (`.xlsx`)
 #'
 #' @note Updated 2023-09-20.
 #' @noRd
 `import,PipetteExcelFile` <- # nolint
-    function(con,
-             sheet = 1L,
-             rownames = TRUE,
-             rownameCol = NULL,
-             colnames = TRUE,
-             skip = 0L,
-             nMax = Inf,
-             naStrings = pipette::naStrings,
-             makeNames = syntactic::makeNames,
-             metadata = FALSE,
-             quiet = FALSE) {
+    function(
+        con,
+        sheet = 1L,
+        rownames = TRUE,
+        rownameCol = NULL,
+        colnames = TRUE,
+        skip = 0L,
+        nMax = Inf,
+        naStrings = pipette::naStrings,
+        makeNames = syntactic::makeNames,
+        metadata = FALSE,
+        quiet = FALSE
+    ) {
         assert(
             isScalar(sheet),
             isFlag(rownames) || isCharacter(rownames),
             isScalar(rownameCol) || is.null(rownameCol),
             isFlag(colnames) || isCharacter(colnames),
-            isInt(skip), isNonNegative(skip),
+            isInt(skip),
+            isNonNegative(skip),
             isPositive(nMax),
             is.character(naStrings),
             is.function(makeNames) ||
@@ -1245,17 +1252,12 @@ NULL
     }
 
 
-
 #' Import a sparse matrix file (`.mtx`)
 #'
 #' @note Updated 2023-09-20.
 #' @noRd
 `import,PipetteMtxFile` <- # nolint
-    function(con,
-             rownamesFile,
-             colnamesFile,
-             metadata = FALSE,
-             quiet = FALSE) {
+    function(con, rownamesFile, colnamesFile, metadata = FALSE, quiet = FALSE) {
         file <- .resource(con)
         origFile <- .origResource(con)
         if (is.null(origFile)) {
@@ -1324,7 +1326,6 @@ NULL
     }
 
 
-
 #' Import a GraphPad Prism file (`.pzfx`)
 #'
 #' @note Updated 2023-09-20.
@@ -1332,11 +1333,13 @@ NULL
 #'
 #' @note This function doesn't support optional column names.
 `import,PipettePzfxFile` <- # nolint
-    function(con,
-             sheet = 1L,
-             makeNames = syntactic::makeNames,
-             metadata = FALSE,
-             quiet = FALSE) {
+    function(
+        con,
+        sheet = 1L,
+        makeNames = syntactic::makeNames,
+        metadata = FALSE,
+        quiet = FALSE
+    ) {
         assert(
             isScalar(sheet),
             is.function(makeNames) ||
@@ -1373,7 +1376,6 @@ NULL
     }
 
 
-
 ## Non-array importers =========================================================
 
 #' Import source code lines
@@ -1381,19 +1383,22 @@ NULL
 #' @note Updated 2023-09-28.
 #' @noRd
 `import,PipetteLinesFile` <- # nolint
-    function(con,
-             comment = "",
-             skip = 0L,
-             nMax = Inf,
-             stripWhitespace = FALSE,
-             removeBlank = FALSE,
-             metadata = FALSE,
-             engine = c("base", "data.table", "readr"),
-             quiet = FALSE) {
+    function(
+        con,
+        comment = "",
+        skip = 0L,
+        nMax = Inf,
+        stripWhitespace = FALSE,
+        removeBlank = FALSE,
+        metadata = FALSE,
+        engine = c("base", "data.table", "readr"),
+        quiet = FALSE
+    ) {
         assert(
             is.character(comment) && length(comment) <= 1L,
             isInt(skip),
-            isInt(skip), isNonNegative(skip),
+            isInt(skip),
+            isNonNegative(skip),
             isPositive(nMax),
             isFlag(stripWhitespace),
             isFlag(removeBlank),
@@ -1408,8 +1413,10 @@ NULL
                         "'%s' or '%s' arguments are not supported when ",
                         "either '%s' or '%s' are enabled."
                     ),
-                    "nMax", "skip",
-                    "comment", "removeBlank"
+                    "nMax",
+                    "skip",
+                    "comment",
+                    "removeBlank"
                 )
             )
         }
@@ -1510,7 +1517,6 @@ NULL
     }
 
 
-
 #' Import a JSON file (`.json`)
 #'
 #' @note Updated 2023-09-20.
@@ -1543,7 +1549,6 @@ NULL
             quiet = quiet
         )
     }
-
 
 
 #' Import a YAML file (`.yaml`, `.yml`)
@@ -1580,7 +1585,6 @@ NULL
     }
 
 
-
 ## Bioinformatics importers ====================================================
 
 #' Import a binary sequencing alignment file (`.bam`)
@@ -1611,7 +1615,6 @@ NULL
         object <- object[[1L]]
         object
     }
-
 
 
 #' Import a binary variant call file (`.bcf`)
@@ -1671,7 +1674,6 @@ NULL
     }
 
 
-
 #' Import bcbio count matrix generated by featureCounts
 #'
 #' @details
@@ -1710,8 +1712,7 @@ NULL
             if (isFALSE(quiet)) {
                 alertInfo("Annotated counts detected.")
             }
-            object <- object[
-                ,
+            object <- object[,
                 c("symbol", setdiff(colnames(object), "symbol")),
                 drop = FALSE
             ]
@@ -1724,7 +1725,6 @@ NULL
         }
         object
     }
-
 
 
 #' Import a compressed reference-oriented alignment map file (`.cram`)
@@ -1767,7 +1767,6 @@ NULL
     }
 
 
-
 #' Import a FASTA file
 #'
 #' @note Updated 2023-09-20.
@@ -1783,10 +1782,12 @@ NULL
 #' - `"RNA"`: `RNAStringSet`.
 #' - `"AA"`: `AAStringSet`.
 `import,PipetteFastaFile` <- # nolint
-    function(con,
-             moleculeType = c("DNA", "RNA", "AA"),
-             metadata = FALSE,
-             quiet = FALSE) {
+    function(
+        con,
+        moleculeType = c("DNA", "RNA", "AA"),
+        metadata = FALSE,
+        quiet = FALSE
+    ) {
         assert(
             isFlag(metadata),
             isFlag(quiet)
@@ -1817,10 +1818,12 @@ NULL
             },
             warning = function(w) {
                 msg <- w[["message"]]
-                if (isMatchingFixed(
-                    x = msg,
-                    pattern = "invalid one-letter sequence codes"
-                )) {
+                if (
+                    isMatchingFixed(
+                        x = msg,
+                        pattern = "invalid one-letter sequence codes"
+                    )
+                ) {
                     msg <- paste(
                         msg,
                         "Ensure that 'moleculeType' argument is correct.",
@@ -1832,10 +1835,12 @@ NULL
         )
         assert(is(object, paste0(moleculeType, "StringSet")))
         if (hasNames(object)) {
-            if (allAreMatchingRegex(
-                pattern = "\\bMI(MAT)?[0-9]+\\b",
-                x = names(object)
-            )) {
+            if (
+                allAreMatchingRegex(
+                    pattern = "\\bMI(MAT)?[0-9]+\\b",
+                    x = names(object)
+                )
+            ) {
                 alertInfo("miRBase FASTA file detected.")
                 spl <- strsplit(
                     x = names(object),
@@ -1860,11 +1865,15 @@ NULL
                 names(object) <- names
                 rownames(attributes) <- names
                 metadata(object)[["attributes"]] <- attributes
-            } else if (allAreMatchingFixed(
-                pattern = "|", x = names(object)
-            )) {
+            } else if (
+                allAreMatchingFixed(
+                    pattern = "|",
+                    x = names(object)
+                )
+            ) {
                 alertInfo(sprintf(
-                    "Splitting attributes by {.var %s} separator.", "|"
+                    "Splitting attributes by {.var %s} separator.",
+                    "|"
                 ))
                 attributes <- strsplit(
                     x = names(object),
@@ -1895,7 +1904,6 @@ NULL
     }
 
 
-
 #' Import a FASTQ file
 #'
 #' @note Updated 2023-09-20.
@@ -1908,10 +1916,12 @@ NULL
 #' - `"DNA"`: `DNAStringSet`.
 #' - `"RNA"`: `RNAStringSet`.
 `import,PipetteFastqFile` <- # nolint
-    function(con,
-             moleculeType = c("DNA", "RNA"),
-             metadata = FALSE,
-             quiet = FALSE) {
+    function(
+        con,
+        moleculeType = c("DNA", "RNA"),
+        metadata = FALSE,
+        quiet = FALSE
+    ) {
         assert(
             isFlag(metadata),
             isFlag(quiet)
@@ -1948,7 +1958,6 @@ NULL
             quiet = quiet
         )
     }
-
 
 
 #' Import a Gene Ontology (GO) annotation file (`.gaf`)
@@ -1998,7 +2007,6 @@ NULL
     }
 
 
-
 #' Import a gene cluster text file (`.gct`)
 #'
 #' @note Updated 2023-12-15.
@@ -2007,10 +2015,12 @@ NULL
 #' @seealso
 #' - https://igv.org/doc/desktop/
 `import,PipetteGctFile` <- # nolint
-    function(con,
-             metadata = FALSE,
-             quiet = FALSE,
-             return = c("matrix", "data.frame")) {
+    function(
+        con,
+        metadata = FALSE,
+        quiet = FALSE,
+        return = c("matrix", "data.frame")
+    ) {
         assert(
             isFlag(metadata),
             isFlag(quiet)
@@ -2066,7 +2076,6 @@ NULL
     }
 
 
-
 #' Import a gene matrix transposed file (`.gmt`)
 #'
 #' @note Updated 2023-09-20.
@@ -2083,7 +2092,7 @@ NULL
             metadata = FALSE,
             quiet = quiet
         )
-        lines <- strsplit(lines, split = "\t")
+        lines <- strsplit(lines, split = "\t", fixed = TRUE)
         object <- lapply(lines, tail, n = -2L)
         names(object) <- vapply(
             X = lines,
@@ -2093,7 +2102,6 @@ NULL
         )
         object
     }
-
 
 
 #' Import a gene matrix file (`.gmx`)
@@ -2115,14 +2123,12 @@ NULL
     }
 
 
-
 #' Import a gene set file (`.grp`)
 #'
 #' @note Updated 2023-07-07.
 #' @noRd
 `import,PipetteGrpFile` <- # nolint
     `import,PipetteGmxFile`
-
 
 
 #' Import a mutation annotation format file (`.maf`)
@@ -2153,18 +2159,23 @@ NULL
     }
 
 
-
 #' Import an open biomedical ontologies file (`.obo`)
 #'
 #' @note Updated 2026-05-31.
 #' @noRd
 `import,PipetteOboFile` <- # nolint
-    function(con,
-             fields = c(
-                 "id", "name", "namespace",
-                 "def", "is_a", "obsolete"
-             ),
-             quiet = FALSE) {
+    function(
+        con,
+        fields = c(
+            "id",
+            "name",
+            "namespace",
+            "def",
+            "is_a",
+            "obsolete"
+        ),
+        quiet = FALSE
+    ) {
         assert(
             isCharacter(fields),
             isFlag(quiet)
@@ -2253,8 +2264,14 @@ NULL
             obsolete = obsolete
         )
         allFields <- c(
-            "id", "name", "namespace",
-            "def", "is_a", "synonym", "xref", "obsolete"
+            "id",
+            "name",
+            "namespace",
+            "def",
+            "is_a",
+            "synonym",
+            "xref",
+            "obsolete"
         )
         keep <- intersect(allFields, fields)
         if (!hasLength(keep)) {
@@ -2262,7 +2279,6 @@ NULL
         }
         out[, keep, drop = FALSE]
     }
-
 
 
 #' Import a sequence alignment map file (`.sam`)
@@ -2273,14 +2289,12 @@ NULL
     `import,PipetteCramFile`
 
 
-
 #' Import a variant call file (`.vcf`)
 #'
 #' @note Updated 2023-07-12.
 #' @noRd
 `import,PipetteVcfFile` <- # nolint
     `import,PipetteBcfFile`
-
 
 
 ## New format importers ========================================================
@@ -2305,16 +2319,11 @@ NULL
         }
         doc <- xml2::read_xml(file)
         ns <- c(
-            "rdf" =
-                "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-            "rdfs" =
-                "http://www.w3.org/2000/01/rdf-schema#",
-            "owl" =
-                "http://www.w3.org/2002/07/owl#",
-            "obo" =
-                "http://purl.obolibrary.org/obo/",
-            "oboInOwl" =
-                "http://www.geneontology.org/formats/oboInOwl#"
+            "rdf" = "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+            "rdfs" = "http://www.w3.org/2000/01/rdf-schema#",
+            "owl" = "http://www.w3.org/2002/07/owl#",
+            "obo" = "http://purl.obolibrary.org/obo/",
+            "oboInOwl" = "http://www.geneontology.org/formats/oboInOwl#"
         )
         nodes <- xml2::xml_find_all(doc, "//owl:Class[@rdf:about]", ns)
         if (!hasLength(nodes)) {
@@ -2326,7 +2335,9 @@ NULL
             X = nodes,
             FUN = function(node) {
                 lbl <- xml2::xml_find_first(
-                    node, "./rdfs:label", ns
+                    node,
+                    "./rdfs:label",
+                    ns
                 )
                 if (inherits(lbl, "xml_missing")) {
                     NA_character_
@@ -2359,7 +2370,9 @@ NULL
             FUN = function(node) {
                 ## IAO_0000115 is the OBO standard definition annotation.
                 defNode <- xml2::xml_find_first(
-                    node, "./obo:IAO_0000115", ns
+                    node,
+                    "./obo:IAO_0000115",
+                    ns
                 )
                 if (inherits(defNode, "xml_missing")) {
                     NA_character_
@@ -2373,7 +2386,9 @@ NULL
             X = nodes,
             FUN = function(node) {
                 depNode <- xml2::xml_find_first(
-                    node, "./owl:deprecated", ns
+                    node,
+                    "./owl:deprecated",
+                    ns
                 )
                 if (inherits(depNode, "xml_missing")) {
                     return(FALSE)
@@ -2392,20 +2407,21 @@ NULL
     }
 
 
-
 #' Import an Apache Parquet file (`.parquet`)
 #'
 #' @note Updated 2026-05-31.
 #' @noRd
 `import,PipetteParquetFile` <- # nolint
-    function(con,
-             rownames = TRUE,
-             rownameCol = NULL,
-             colnames = TRUE,
-             makeNames = syntactic::makeNames,
-             engine = c("nanoparquet", "arrow"),
-             metadata = FALSE,
-             quiet = FALSE) {
+    function(
+        con,
+        rownames = TRUE,
+        rownameCol = NULL,
+        colnames = TRUE,
+        makeNames = syntactic::makeNames,
+        engine = c("nanoparquet", "arrow"),
+        metadata = FALSE,
+        quiet = FALSE
+    ) {
         engine <- match.arg(engine)
         assert(
             isFlag(rownames),
@@ -2456,16 +2472,12 @@ NULL
     }
 
 
-
 #' Import a DuckDB database file (`.duckdb`)
 #'
 #' @note Updated 2026-05-31.
 #' @noRd
 `import,PipetteDuckdbFile` <- # nolint
-    function(con,
-             table = NULL,
-             query = NULL,
-             quiet = FALSE) {
+    function(con, table = NULL, query = NULL, quiet = FALSE) {
         assert(
             isString(table, nullOk = TRUE),
             isString(query, nullOk = TRUE),
@@ -2480,7 +2492,7 @@ NULL
                 whatFun = "dbConnect"
             )
         }
-        drv <- duckdb::duckdb()
+        drv <- duckdb::duckdb() # nolint: namespace_linter.
         conn <- DBI::dbConnect(drv, dbdir = file, read_only = TRUE)
         on.exit(DBI::dbDisconnect(conn, shutdown = TRUE), add = TRUE)
         if (!is.null(query)) {
@@ -2518,15 +2530,12 @@ NULL
     }
 
 
-
 #' Import an AnnData HDF5 file (`.h5ad`)
 #'
 #' @note Updated 2026-05-31.
 #' @noRd
 `import,PipetteH5adFile` <- # nolint
-    function(con,
-             engine = c("anndataR", "zellkonverter"),
-             quiet = FALSE) {
+    function(con, engine = c("anndataR", "zellkonverter"), quiet = FALSE) {
         engine <- match.arg(engine)
         assert(isFlag(quiet))
         file <- .resource(con)
@@ -2554,12 +2563,12 @@ NULL
         object <- do.call(what = what, args = args)
         if (identical(engine, "anndataR")) {
             assert(requireNamespaces("SingleCellExperiment"))
+            ## nolint next: namespace_linter.
             object <- anndataR::to_SingleCellExperiment(object)
         }
         assert(is(object, "SingleCellExperiment"))
         object
     }
-
 
 
 ## Handoff methods =============================================================
@@ -2569,14 +2578,16 @@ NULL
 #' @note Updated 2023-09-20.
 #' @noRd
 `import,PipetteRioFile` <- # nolint
-    function(con,
-             rownames = TRUE,
-             rownameCol = NULL,
-             colnames = TRUE,
-             makeNames = syntactic::makeNames,
-             metadata = FALSE,
-             quiet = FALSE,
-             ...) {
+    function(
+        con,
+        rownames = TRUE,
+        rownameCol = NULL,
+        colnames = TRUE,
+        makeNames = syntactic::makeNames,
+        metadata = FALSE,
+        quiet = FALSE,
+        ...
+    ) {
         assert(
             isFlag(rownames),
             isScalar(rownameCol) || is.null(rownameCol),
@@ -2615,7 +2626,6 @@ NULL
     }
 
 
-
 #' Import file using `rtracklayer::import()`
 #'
 #' @note Updated 2023-09-20.
@@ -2623,10 +2633,7 @@ NULL
 #'
 #' @note Using `tryCatch()` here to error if there are any warnings.
 `import,PipetteRtracklayerFile` <- # nolint
-    function(con,
-             metadata = FALSE,
-             quiet = FALSE,
-             ...) {
+    function(con, metadata = FALSE, quiet = FALSE, ...) {
         assert(
             isFlag(metadata),
             isFlag(quiet)
@@ -2669,7 +2676,6 @@ NULL
             quiet = quiet
         )
     }
-
 
 
 ## S4 method exports ===========================================================

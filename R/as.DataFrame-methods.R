@@ -27,10 +27,10 @@
 NULL
 
 
-
 ## Updated 2023-09-12.
 `as.DataFrame,list` <- # nolint
-    function(x) { # nolint
+    function(x) {
+        # nolint
         if (!hasLength(x)) {
             return(DataFrame())
         }
@@ -95,12 +95,12 @@ NULL
             identical(dim(df), c(nrows, ncols)),
             msg = sprintf(
                 "Dimension mismatch during {.cls %s} to {.cls %s} coercion.",
-                "list", "DFrame"
+                "list",
+                "DFrame"
             )
         )
         df
     }
-
 
 
 ## Updated 2023-10-06.
@@ -125,7 +125,6 @@ NULL
     }
 
 
-
 ## Updated 2023-04-26.
 `as.DataFrame,GRanges` <- # nolint
     function(x) {
@@ -141,7 +140,6 @@ NULL
     }
 
 
-
 ## Updated 2023-04-26.
 `as.DataFrame,IRanges` <- # nolint
     function(x) {
@@ -155,13 +153,11 @@ NULL
     }
 
 
-
 ## Updated 2022-02-08.
 `as.DataFrame,Matrix` <- # nolint
     function(x) {
         as.DataFrame(as.matrix(x))
     }
-
 
 
 ## Updated 2022-03-22.
@@ -171,17 +167,14 @@ NULL
     }
 
 
-
 ## Updated 2022-02-08.
 `as.DataFrame,data.frame` <- # nolint
     `as.DataFrame,matrix`
 
 
-
 ## Updated 2022-02-08.
 `as.DataFrame,matrix` <- # nolint
     `as.DataFrame,matrix`
-
 
 
 #' @rdname as.DataFrame

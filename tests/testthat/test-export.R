@@ -162,7 +162,8 @@ for (format in .exportFormatChoices[["delim"]]) {
         test_that(
             desc = paste(
                 "Invalid input",
-                format, class,
+                format,
+                class,
                 sep = " : "
             ),
             code = {
@@ -298,8 +299,16 @@ test_that("list : autopad zeros", {
     expect_identical(
         object = basename(unlist(out)),
         expected = c(
-            "01.txt", "02.txt", "03.txt", "04.txt", "05.txt",
-            "06.txt", "07.txt", "08.txt", "09.txt", "10.txt"
+            "01.txt",
+            "02.txt",
+            "03.txt",
+            "04.txt",
+            "05.txt",
+            "06.txt",
+            "07.txt",
+            "08.txt",
+            "09.txt",
+            "10.txt"
         )
     )
     unlink2(testdir)

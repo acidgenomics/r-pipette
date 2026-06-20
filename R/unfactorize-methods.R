@@ -36,7 +36,6 @@
 NULL
 
 
-
 ## Using the R FAQ 7.10 recommended approach here.
 ## Updated 2023-09-20.
 `unfactorize,factor` <- # nolint
@@ -52,7 +51,6 @@ NULL
         names(out) <- names(object)
         out
     }
-
 
 
 ## Updated 2023-09-20.
@@ -97,11 +95,9 @@ NULL
     }
 
 
-
 ## Updated 2021-10-14.
 `unfactorize,data.frame` <- # nolint
     `unfactorize,DFrame`
-
 
 
 #' @export
