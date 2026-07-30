@@ -477,7 +477,7 @@ NULL
             !bapply(
                 X = object,
                 FUN = is.atomic,
-                USE.NAMES = TRUE
+                useNames = TRUE
             )
         )
         if (hasLength(nonatomicCols)) {
@@ -486,7 +486,7 @@ NULL
             listCols <- which(bapply(
                 X = object,
                 FUN = is.list,
-                USE.NAMES = TRUE
+                useNames = TRUE
             ))
             if (hasLength(listCols)) {
                 for (listCol in listCols) {
@@ -514,7 +514,7 @@ NULL
                 }
             }
             ## Discard any remaining non-atomic columns we can't coerce.
-            keep <- bapply(X = object, FUN = is.atomic, USE.NAMES = TRUE)
+            keep <- bapply(X = object, FUN = is.atomic, useNames = TRUE)
             if (!all(keep)) {
                 alertWarning(sprintf(
                     "Dropping non-atomic columns: %s.",
