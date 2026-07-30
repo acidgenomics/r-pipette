@@ -1,3 +1,5 @@
+## nolint start
+
 #' @importFrom AcidBase initDir
 #' @export
 AcidBase::initDir
@@ -5,3 +7,5 @@ AcidBase::initDir
 #' @importFrom AcidBase pasteUrl
 #' @export
 AcidBase::pasteUrl
+
+## nolint end

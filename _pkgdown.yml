@@ -11,7 +11,7 @@ navbar:
   structure:
     right: [acid, github]
 news:
-  - one_page: false
+  one_page: false
 reference:
   - title: Import/export
     contents:
@@ -52,4 +52,4 @@ reference:
       - ends_with("-class")
 template:
   bootstrap: 5
-url: https://r.acidgenomics.com/packages/pipette
+url: https://r.acidgenomics.com/pipette

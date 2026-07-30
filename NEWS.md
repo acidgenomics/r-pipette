@@ -1,4 +1,33 @@
-# Release notes
+## pipette 0.16.2 (2026-07-30)
+
+Bug fixes:
+
+- `export`: fixed three calls to `goalie::bapply()` that passed `USE.NAMES`
+  instead of `useNames`. The mismatched argument silently fell through
+  `bapply()`'s `...` and collided with its own internal `USE.NAMES` argument
+  to `vapply()`, aborting with "formal argument matched by multiple actual
+  arguments" whenever exporting an object with non-atomic columns.
+- Bumped `AcidBase` dependency floor to `>= 0.7.8`. `.localOrRemoteFile()`
+  passes its own `mode` (computed from the file extension) to `download()`
+  through `...`. Below `0.7.8`, `AcidBase::download()` hardcoded
+  `mode = "wb"` internally while still forwarding `...`, so any text-mode
+  download (`mode = "w"`) collided and aborted with "formal argument
+  matched by multiple actual arguments".
+
+Minor changes:
+
+- `import`: marked the `syntactic::makeNames` parameter default (five
+  methods) with `# nolint` instead of dropping the qualifier. The parameter
+  is itself named `makeNames`, so an unqualified default of `makeNames`
+  (rather than `syntactic::makeNames`) triggers "promise already under
+  evaluation: recursive default argument reference" -- the parameter tries
+  to resolve its own unset self as its default. `namespace_linter` flags
+  this as a redundant `::` because `makeNames` is imported via
+  `@importFrom`, but the qualifier is load-bearing here, not stylistic.
+- `reexports.R`: added `## nolint start`/`## nolint end` around the
+  re-export idiom, matching the convention used elsewhere in the fleet —
+  `namespace_linter` can't distinguish an intentional `pkg::symbol`
+  re-export from a redundant one.
 
 ## pipette 0.16.1 (2026-06-19)
 
@@ -1410,10 +1439,10 @@ Minor changes:
 
 Initial release. Migrated input-output (IO) functions from [basejump][].
 
-[acidbase]: https://r.acidgenomics.com/packages/acidbase/
+[acidbase]: https://r.acidgenomics.com/acidbase/
 [acid genomics]: https://acidgenomics.com/
 [appveyor ci]: https://www.appveyor.com/
-[basejump]: https://r.acidgenomics.com/packages/acidbase/
+[basejump]: https://r.acidgenomics.com/acidbase/
 [testthat]: https://testthat.r-lib.org/
 [travis ci]: https://www.travis-ci.com/
 [travis ci]: https://www.travis-ci.com/

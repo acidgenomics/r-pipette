@@ -1008,7 +1008,7 @@ NULL
         skip = 0L,
         nMax = Inf,
         engine = c("base", "data.table", "readr"),
-        makeNames = syntactic::makeNames,
+        makeNames = syntactic::makeNames, # nolint
         metadata = FALSE,
         quiet = FALSE
     ) {
@@ -1185,7 +1185,7 @@ NULL
         skip = 0L,
         nMax = Inf,
         naStrings = pipette::naStrings,
-        makeNames = syntactic::makeNames,
+        makeNames = syntactic::makeNames, # nolint
         metadata = FALSE,
         quiet = FALSE
     ) {
@@ -1336,7 +1336,7 @@ NULL
     function(
         con,
         sheet = 1L,
-        makeNames = syntactic::makeNames,
+        makeNames = syntactic::makeNames, # nolint
         metadata = FALSE,
         quiet = FALSE
     ) {
@@ -2417,7 +2417,7 @@ NULL
         rownames = TRUE,
         rownameCol = NULL,
         colnames = TRUE,
-        makeNames = syntactic::makeNames,
+        makeNames = syntactic::makeNames, # nolint
         engine = c("nanoparquet", "arrow"),
         metadata = FALSE,
         quiet = FALSE
@@ -2583,7 +2583,7 @@ NULL
         rownames = TRUE,
         rownameCol = NULL,
         colnames = TRUE,
-        makeNames = syntactic::makeNames,
+        makeNames = syntactic::makeNames, # nolint
         metadata = FALSE,
         quiet = FALSE,
         ...
